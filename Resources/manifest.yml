@@ -1,5 +1,5 @@
-﻿defaultWindowTitle: Space Station 14
-windowIconSet: /Textures/Logo/icon
-splashLogo: /Textures/Logo/logo.png
+﻿defaultWindowTitle: Kрасная Звезда # RS14-Theme
+windowIconSet: /Textures/Logo/icon-restar # RS14-Theme
+splashLogo: /Textures/Logo/logo-redstar.png # RS14-Theme
 
 # PJB PLEASE
