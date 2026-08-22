@@ -23,10 +23,6 @@
       map: [ "enum.PdaVisualLayers.IdLight" ]
       shader: "unshaded"
       visible: false
-    # RS14-start
-    - state: "insert_overlay"
-      map: [ "enum.PdaVisualLayers.Pen" ]
-    # RS14-end
   - type: Icon
     sprite: Objects/Devices/pda.rsi
     state: pda
@@ -151,10 +147,6 @@
       map: [ "enum.PdaVisualLayers.IdLight" ]
       shader: "unshaded"
       visible: false
-    # RS14-start
-    - state: "insert_overlay"
-      map: [ "enum.PdaVisualLayers.Pen" ]
-    # RS14-end
 
 - type: entity
   parent: BasePDA
@@ -1120,8 +1112,6 @@
       map: [ "enum.PdaVisualLayers.IdLight" ]
       shader: "unshaded"
       visible: false
-    - state: "insert_overlay"
-      map: [ "enum.PdaVisualLayers.Pen" ]
   # RS14-end
   - type: Pda
     id: SyndicateIDCard
