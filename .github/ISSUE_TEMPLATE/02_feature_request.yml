@@ -1,0 +1,41 @@
+﻿name: Предложить улучшение
+description: Предложите новую механику, изменение или улучшение проекта.
+title: "[Suggestion] "
+labels:
+  - feature
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Есть идея для Красной Звезды?
+
+        Опишите, что именно хочется улучшить и зачем. Так предложение будет проще обсудить.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Что хочется улучшить?
+      description: Какую проблему или потребность решает предложение?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Предложение
+      description: Как вы предлагаете это реализовать?
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Альтернативы
+      description: Есть ли другие варианты решения?
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Дополнительная информация
+      description: Ссылки, изображения, примеры из других проектов и всё, что поможет понять идею.

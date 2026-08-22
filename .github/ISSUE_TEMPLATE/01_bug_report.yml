@@ -1,0 +1,54 @@
+﻿name: Сообщить об ошибке
+description: Что-то работает не так? Расскажите нам об этом.
+title: "[Bug] "
+labels:
+  - bug
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Спасибо за сообщение об ошибке.
+
+        Постарайтесь описать проблему так, чтобы её можно было воспроизвести и проверить.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Описание
+      description: Что произошло?
+      placeholder: Опишите проблему как можно понятнее.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Как воспроизвести
+      description: Какие действия приводят к ошибке?
+      placeholder: |
+        1. Сделать ...
+        2. Использовать ...
+        3. Происходит ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Ожидаемое поведение
+      description: Что должно было произойти вместо этого?
+    validations:
+      required: true
+
+  - type: textarea
+    id: media
+    attributes:
+      label: Скриншоты, видео или логи
+      description: Если есть, приложите материалы, которые помогут разобраться в проблеме.
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Дополнительная информация
+      description: Карта, Round ID, режим игры или другие полезные детали.
