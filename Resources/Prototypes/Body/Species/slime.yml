@@ -1,5 +1,5 @@
 - type: markingsGroup
-  parent: Undergarments
+  # parent: Undergarments # Disabled in favor of inventory-slot underwear.
   id: Slime
   limits:
     enum.HumanoidVisualLayers.Hair:
