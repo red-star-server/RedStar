@@ -202,16 +202,16 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: dwarfism
-      UndergarmentTop:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Human/displacement.rsi
-            state: dwarfism
-      UndergarmentBottom:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Human/displacement.rsi
-            state: dwarfism
+      #UndergarmentTop:
+      #  sizeMaps:
+      #    32:
+      #      sprite: Mobs/Species/Human/displacement.rsi
+      #      state: dwarfism
+      #UndergarmentBottom:
+      #  sizeMaps:
+      #    32:
+      #      sprite: Mobs/Species/Human/displacement.rsi
+      #      state: dwarfism
       Special:
         sizeMaps:
           32:

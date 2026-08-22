@@ -62,14 +62,14 @@
     enum.HumanoidVisualLayers.TailOverlay:
       limit: 1
       required: false
-    enum.HumanoidVisualLayers.UndergarmentTop:
-      limit: 1
-      required: false
-      nudityDefault: [ UndergarmentTopTanktopVox ]
-    enum.HumanoidVisualLayers.UndergarmentBottom:
-      limit: 1
-      required: false
-      nudityDefault: [ UndergarmentBottomBoxersVox ]
+    #enum.HumanoidVisualLayers.UndergarmentTop:
+    #  limit: 1
+    #  required: false
+    #  nudityDefault: [ UndergarmentTopTanktopVox ]
+    #enum.HumanoidVisualLayers.UndergarmentBottom:
+    #  limit: 1
+    #  required: false
+    #  nudityDefault: [ UndergarmentBottomBoxersVox ]
 
 - type: entity
   parent: BaseSpeciesAppearance

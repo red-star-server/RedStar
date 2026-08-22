@@ -51,14 +51,14 @@
     enum.HumanoidVisualLayers.RFoot:
       limit: 2
       required: false
-    enum.HumanoidVisualLayers.UndergarmentTop:
-      limit: 1
-      required: false
-      nudityDefault: [ UndergarmentTopTanktopVulpkanin ]
-    enum.HumanoidVisualLayers.UndergarmentBottom:
-      limit: 1
-      required: false
-      nudityDefault: [ UndergarmentBottomBoxersVulpkanin ]
+    #enum.HumanoidVisualLayers.UndergarmentTop:
+    #  limit: 1
+    #  required: false
+    #  nudityDefault: [ UndergarmentTopTanktopVulpkanin ]
+    #enum.HumanoidVisualLayers.UndergarmentBottom:
+    #  limit: 1
+    #  required: false
+    #  nudityDefault: [ UndergarmentBottomBoxersVulpkanin ]
 
 - type: entity
   parent: BaseSpeciesAppearance

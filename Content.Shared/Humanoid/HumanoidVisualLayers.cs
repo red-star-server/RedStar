@@ -11,8 +11,10 @@ namespace Content.Shared.Humanoid
         TailOverlay, // markings that go ontop of tails
         Hair,
         FacialHair,
-        UndergarmentTop,
-        UndergarmentBottom,
+        // RS14-start
+        // UndergarmentTop,
+        // UndergarmentBottom,
+        // RS14-end
         Chest,
         Head,
         Snout,
