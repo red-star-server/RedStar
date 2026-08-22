@@ -1,0 +1,17 @@
+﻿ent-ClothingUnderwearSocksHeadOfSecurity = head of security's socks
+    .desc = Standard head of security's socks.
+ent-ClothingUnderwearSocksPilot = pilot's socks
+    .desc = Standard pilot's socks.
+ent-ClothingUnderwearSocksBrigmedic = brigmedic's socks
+    .desc = Standard brigmedic's socks.
+ent-ClothingUnderwearSocksCadet = security cadet's socks
+    .desc = Standard security cadet's socks.
+ent-ClothingUnderwearSocksDetective = detective's socks
+    .desc = Standard detective's socks.
+ent-ClothingUnderwearSocksSecurityOfficer = security officer's socks
+    .desc = Standard security officer's socks.
+    .desc = Standard senior officer's socks.
+ent-ClothingUnderwearSocksWarden = warden's socks
+    .desc = Standard warden's socks.
+ent-ClothingUnderwearSocksWardenHelper = warden assistant's socks
+    .desc = Standard warden assistant's socks.

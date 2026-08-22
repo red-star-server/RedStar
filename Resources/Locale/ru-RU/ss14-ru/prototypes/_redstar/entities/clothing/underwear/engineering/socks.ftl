@@ -1,0 +1,9 @@
+﻿ent-ClothingUnderwearSocksChiefEngineer = носки старшего инженера
+    .desc = Стандартные носки старшего инженера.
+ent-ClothingUnderwearSocksEngineer = носки инженера
+    .desc = Стандартные носки инженера.
+ent-ClothingUnderwearSocksAtmos = носки атмосферного техника
+    .desc = Стандартные носки атмосферного техника.
+    .desc = Стандартные носки бригадира.
+ent-ClothingUnderwearSocksTechnicalAssistant = носки технического ассистента
+    .desc = Стандартные носки технического ассистента.

@@ -1,0 +1,73 @@
+﻿# Boxers
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersAtmosphericTechnician
+  name: atmospheric technician's boxers
+  description: Standard atmospheric technician's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Engineering/atmospheric_technician/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersChiefEngineer
+  name: chief engineer's boxers
+  description: Standard chief engineer's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Engineering/chief_engineer/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersStationEngineer
+  name: station engineer's boxers
+  description: Standard station engineer's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Engineering/engineer/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersTechnicalAssistant
+  name: technical assistant's boxers
+  description: Standard technical assistant's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Engineering/technical_assistant/man.rsi
+
+# Panties
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesAtmosphericTechnician
+  name: atmospheric technician's panties
+  description: Standard atmospheric technician's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Engineering/atmospheric_technician/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesChiefEngineer
+  name: chief engineer's panties
+  description: Standard chief engineer's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Engineering/chief_engineer/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesStationEngineer
+  name: station engineer's panties
+  description: Standard station engineer's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Engineering/engineer/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesTechnicalAssistant
+  name: technical assistant's panties
+  description: Standard technical assistant's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Engineering/technical_assistant/women/pants.rsi

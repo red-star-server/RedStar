@@ -1,0 +1,12 @@
+﻿ent-ClothingUnderwearBottomBoxersNuclearOperative = nuclear operative's boxers
+    .desc = Standard nuclear operative's underwear.
+ent-ClothingUnderwearBottomBoxersPirate = pirate's boxers
+    .desc = Standard pirate's underwear.
+ent-ClothingUnderwearBottomBoxersSyndicateAgent = syndicate agent's boxers
+    .desc = Standard syndicate agent's underwear.
+ent-ClothingUnderwearBottomPantiesNuclearOperative = nuclear operative's panties
+    .desc = Standard nuclear operative's underwear.
+ent-ClothingUnderwearBottomPantiesPirate = pirate's panties
+    .desc = Standard pirate's underwear.
+ent-ClothingUnderwearBottomPantiesSyndicateAgent = syndicate agent's panties
+    .desc = Standard syndicate agent's underwear.

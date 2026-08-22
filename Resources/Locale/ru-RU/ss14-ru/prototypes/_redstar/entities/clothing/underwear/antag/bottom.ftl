@@ -1,0 +1,12 @@
+﻿ent-ClothingUnderwearBottomBoxersNuclearOperative = боксеры ядерного оперативника
+    .desc = Стандартное нижнее бельё ядерного оперативника.
+ent-ClothingUnderwearBottomBoxersPirate = боксеры капера
+    .desc = Стандартное нижнее бельё капера.
+ent-ClothingUnderwearBottomBoxersSyndicateAgent = боксеры агента синдиката
+    .desc = Стандартное нижнее бельё агента синдиката.
+ent-ClothingUnderwearBottomPantiesNuclearOperative = стринги ядерного оперативника
+    .desc = Стандартное нижнее бельё ядерного оперативника.
+ent-ClothingUnderwearBottomPantiesPirate = стринги капера
+    .desc = Стандартное нижнее бельё капера.
+ent-ClothingUnderwearBottomPantiesSyndicateAgent = стринги агента синдиката
+    .desc = Стандартное нижнее бельё агента синдиката.

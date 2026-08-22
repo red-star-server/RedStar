@@ -1,0 +1,24 @@
+﻿# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersQuartermaster
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersQuartermaster
+
+- type: loadout
+  id: UnderwearBottomPantiesQuartermaster
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesQuartermaster
+
+- type: loadout
+  id: UnderwearTopBraQuartermaster
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraQuartermaster

@@ -213,3 +213,4 @@ loadout-group-tramdriver-jumpsuit = Tram driver jumpsuit
 loadout-group-tramdriver-outerclothing = Tram driver suit
 loadout-group-tramdriver-hat = Tram driver hat
 loadout-group-tramdriver-gloves = Tram driver gloves
+loadout-group-underwear = Underwear

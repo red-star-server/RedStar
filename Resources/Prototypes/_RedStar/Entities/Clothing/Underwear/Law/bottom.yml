@@ -1,0 +1,73 @@
+﻿# Boxers
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersNanotrasenRepresentative
+  name: nanotrasen representative's boxers
+  description: Standard nanotrasen representative's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Law/representative/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersNanotrasenCareerTrainer
+  name: nanotrasen career trainer's boxers
+  description: Standard nanotrasen career trainer's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Centcomm/trainer/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersLawyer
+  name: lawyer's boxers
+  description: Standard lawyer's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Law/lawyer/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersMagistrate
+  name: magistrate's boxers
+  description: Standard magistrate's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Law/magistrate/man.rsi
+
+# Panties
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesNanotrasenRepresentative
+  name: nanotrasen representative's panties
+  description: Standard nanotrasen representative's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Law/representative/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesNanotrasenCareerTrainer
+  name: nanotrasen career trainer's panties
+  description: Standard nanotrasen career trainer's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Centcomm/trainer/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesLawyer
+  name: lawyer's panties
+  description: Standard lawyer's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Law/lawyer/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesMagistrate
+  name: magistrate's panties
+  description: Standard magistrate's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Law/magistrate/women/pants.rsi

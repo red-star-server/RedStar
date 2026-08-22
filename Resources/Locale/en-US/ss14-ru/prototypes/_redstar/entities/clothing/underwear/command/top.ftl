@@ -1,0 +1,12 @@
+﻿ent-ClothingUnderwearTopBraCaptain = captain's bra
+    .desc = Standard captain's underwear.
+ent-ClothingUnderwearTopBraCBURN = CBURN bra
+    .desc = Standard CBURN's underwear.
+ent-ClothingUnderwearTopBraCentcomm = CentCom bra
+    .desc = Standard CentCom's underwear.
+ent-ClothingUnderwearTopBraDeathSquad = death squad bra
+    .desc = Standard death squad's underwear.
+ent-ClothingUnderwearTopBraERT = ERT bra
+    .desc = Standard ERT's underwear.
+ent-ClothingUnderwearTopBraBlueShieldOfficer = blueshield officer's bra
+    .desc = Standard blueshield officer's underwear.

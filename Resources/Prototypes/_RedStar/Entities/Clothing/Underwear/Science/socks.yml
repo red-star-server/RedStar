@@ -1,0 +1,26 @@
+﻿- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksResearchDirector
+  name: research director's socks
+  description: Standard research director's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Science/research_director/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksScientist
+  name: scientist's socks
+  description: Standard scientist's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Science/scientist/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksResearchAssistant
+  name: research assistant's socks
+  description: Standard research assistant's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Science/research_assistant/socks.rsi

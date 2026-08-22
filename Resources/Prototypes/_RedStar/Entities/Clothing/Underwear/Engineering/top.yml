@@ -1,0 +1,35 @@
+﻿- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraAtmosphericTechnician
+  name: atmospheric technician's bra
+  description: Standard atmospheric technician's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Engineering/atmospheric_technician/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraChiefEngineer
+  name: chief engineer's bra
+  description: Standard chief engineer's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Engineering/chief_engineer/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraStationEngineer
+  name: station engineer's bra
+  description: Standard station engineer's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Engineering/engineer/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraTechnicalAssistant
+  name: technical assistant's bra
+  description: Standard technical assistant's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Engineering/technical_assistant/women/bra.rsi

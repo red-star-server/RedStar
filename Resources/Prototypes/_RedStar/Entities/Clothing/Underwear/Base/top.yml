@@ -1,0 +1,54 @@
+﻿- type: entity
+  abstract: true
+  parent: [SolutionFood, Clothing]
+  id: ClothingUnderwearTopBase
+  name: based underweart
+  description: You should not see this.
+  components:
+  - type: Sprite
+    state: icon
+  - type: Item
+    size: Small
+  - type: Clothing
+    slots: [underweart]
+  - type: Edible
+    requiresSpecialDigestion: true
+  - type: Solution
+    solution:
+      maxVol: 5
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 5
+  - type: Tag
+    tags:
+      - ClothMade
+  - type: PhysicalComposition
+    materialComposition:
+      Cloth: 100
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraWhite
+  name: bra
+  description: Standard underwear for female SSSP personnel.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Base/Top/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraSports
+  name: sports bra
+  description: Standard underwear for female SSSP personnel.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Base/Top/sportsbra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraSportsAlternative
+  name: alternative sports bra
+  description: Standard underwear for female SSSP personnel.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Base/Top/sportsbraalt.rsi

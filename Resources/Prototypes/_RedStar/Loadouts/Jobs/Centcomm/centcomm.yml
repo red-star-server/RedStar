@@ -1,0 +1,96 @@
+﻿# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersCentcomm
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersCentcomm
+
+- type: loadout
+  id: UnderwearBottomPantiesCentcomm
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesCentcomm
+
+- type: loadout
+  id: UnderwearTopBraCentcomm
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraCentcomm
+
+- type: loadout
+  id: UnderwearBottomBoxersERT
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersERT
+
+- type: loadout
+  id: UnderwearBottomPantiesERT
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesERT
+
+- type: loadout
+  id: UnderwearTopBraERT
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraERT
+
+- type: loadout
+  id: UnderwearBottomBoxersCBURN
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersCBURN
+
+- type: loadout
+  id: UnderwearBottomPantiesCBURN
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesCBURN
+
+- type: loadout
+  id: UnderwearTopBraCBURN
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraCBURN
+
+- type: loadout
+  id: UnderwearBottomBoxersDeathSquad
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersDeathSquad
+
+- type: loadout
+  id: UnderwearBottomPantiesDeathSquad
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesDeathSquad
+
+- type: loadout
+  id: UnderwearTopBraDeathSquad
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraDeathSquad

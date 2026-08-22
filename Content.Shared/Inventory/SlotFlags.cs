@@ -26,6 +26,12 @@ public enum SlotFlags
     LEGS = 1 << 13,
     FEET = 1 << 14,
     SUITSTORAGE = 1 << 15,
+    // RS14-start
+    UNDERWEART = 1 << 16,
+    UNDERWEARB = 1 << 17,
+    SOCKS = 1 << 18,
+    FINGER = 1 << 19,
+    // RS14-end
     All = ~NONE,
 
     WITHOUT_POCKET = All & ~POCKET

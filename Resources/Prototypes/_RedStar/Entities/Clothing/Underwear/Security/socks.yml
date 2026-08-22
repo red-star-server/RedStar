@@ -1,0 +1,71 @@
+﻿- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksHeadOfSecurity
+  name: head of security's socks
+  description: Standard head of security's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Security/head_of_security/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksPilot
+  name: pilot's socks
+  description: Standard pilot's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Security/pilot/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksBrigmedic
+  name: brigmedic's socks
+  description: Standard brigmedic's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Security/brigmedic/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksCadet
+  name: security cadet's socks
+  description: Standard security cadet's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Security/cadet/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksDetective
+  name: detective's socks
+  description: Standard detective's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Security/detective/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksSecurityOfficer
+  name: security officer's socks
+  description: Standard security officer's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Security/security_officer/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksWarden
+  name: warden's socks
+  description: Standard warden's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Security/warden/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksWardenHelper
+  name: warden assistant's socks
+  description: Standard warden assistant's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Security/warden_helper/socks.rsi

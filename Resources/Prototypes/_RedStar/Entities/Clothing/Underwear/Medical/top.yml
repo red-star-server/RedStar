@@ -1,0 +1,71 @@
+﻿- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraChemist
+  name: chemist's bra
+  description: Standard chemist's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Medical/chemist/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraChiefMedicalOfficer
+  name: chief medical officer's bra
+  description: Standard chief medical officer's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Medical/cmo/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraMedicalDoctor
+  name: doctor's bra
+  description: Standard doctor's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Medical/doctor/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraMedicalIntern
+  name: medical intern's bra
+  description: Standard medical intern's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Medical/intern/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraParamedic
+  name: paramedic's bra
+  description: Standard paramedic's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Medical/paramedic/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraPsychologist
+  name: psychologist's bra
+  description: Standard psychologist's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Medical/psychologist/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraSurgeon
+  name: surgeon's bra
+  description: Standard surgeon's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Medical/surgeon/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraVirologist
+  name: virologist's bra
+  description: Standard virologist's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Medical/virologist/women/bra.rsi

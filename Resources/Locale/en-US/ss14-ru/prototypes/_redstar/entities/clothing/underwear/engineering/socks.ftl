@@ -1,0 +1,9 @@
+﻿ent-ClothingUnderwearSocksChiefEngineer = chief engineer's socks
+    .desc = Standard chief engineer's socks.
+ent-ClothingUnderwearSocksEngineer = engineer's socks
+    .desc = Standard engineer's socks.
+ent-ClothingUnderwearSocksAtmos = atmospheric technician's socks
+    .desc = Standard atmospheric technician's socks.
+    .desc = Standard senior engineer's socks.
+ent-ClothingUnderwearSocksTechnicalAssistant = technical assistant's socks
+    .desc = Standard technical assistant's socks.

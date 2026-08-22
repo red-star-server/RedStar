@@ -1,0 +1,72 @@
+﻿# Boxers
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersCargoTechnician
+  name: cargo technician's boxers
+  description: Standard cargo technician's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Cargo/cargo_technician/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersQuartermaster
+  name: quartermaster's boxers
+  description: Standard quartermaster's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Cargo/quartermaster/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersSalvageSpecialist
+  name: salvage specialist's boxers
+  description: Standard salvage specialist's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Cargo/salvage_specialist/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersShaftMiner
+  name: shaft miner's boxers
+  description: Standard shaft miner's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Cargo/miner/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesCargoTechnician
+  name: cargo technician's panties
+  description: Standard cargo technician's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Cargo/cargo_technician/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesQuartermaster
+  name: quartermaster's panties
+  description: Standard quartermaster's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Cargo/quartermaster/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesSalvageSpecialist
+  name: salvage specialist's panties
+  description: Standard salvage specialist's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Cargo/salvage_specialist/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesShaftMiner
+  name: shaft miner's panties
+  description: Standard shaft miner's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Cargo/miner/women/pants.rsi

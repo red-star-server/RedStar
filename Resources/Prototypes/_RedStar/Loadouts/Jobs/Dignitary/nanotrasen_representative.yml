@@ -1,0 +1,24 @@
+﻿# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersNanotrasenRepresentative
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersNanotrasenRepresentative
+
+- type: loadout
+  id: UnderwearBottomPantiesNanotrasenRepresentative
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesNanotrasenRepresentative
+
+- type: loadout
+  id: UnderwearTopBraNanotrasenRepresentative
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraNanotrasenRepresentative

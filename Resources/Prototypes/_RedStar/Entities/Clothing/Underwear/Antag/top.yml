@@ -1,0 +1,26 @@
+﻿- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraNuclearOperative
+  name: nuclear operative's bra
+  description: Standard nuclear operative's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Antag/nuclear_operative/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraPirate
+  name: pirate's bra
+  description: Standard pirate's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Antag/pirate/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraSyndicateAgent
+  name: syndicate agent's bra
+  description: Standard syndicate agent's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Antag/syndicate_agent/women/bra.rsi

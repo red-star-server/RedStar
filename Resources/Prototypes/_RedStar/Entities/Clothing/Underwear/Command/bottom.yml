@@ -1,0 +1,109 @@
+﻿# Boxers
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersCaptain
+  name: captain's boxers
+  description: Standard captain's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Command/captain/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersCBURN
+  name: CBURN boxers
+  description: Standard CBURN's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Centcomm/cburn/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersCentcomm
+  name: CentCom boxers
+  description: Standard CentCom's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Centcomm/centcomm/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersDeathSquad
+  name: black boxers
+  description: Standard black boxers.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Centcomm/death_squad/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersERT
+  name: ERT boxers
+  description: Standard ERT's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Centcomm/ert/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersBlueShieldOfficer
+  name: blueshield officer's boxers
+  description: Standard blueshield officer's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Command/blueshield/man.rsi
+
+# Panties
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesCaptain
+  name: captain's panties
+  description: Standard captain's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Command/captain/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesCBURN
+  name: CBURN panties
+  description: Standard CBURN's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Centcomm/cburn/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesCentcomm
+  name: CentCom panties
+  description: Standard CentCom's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Centcomm/centcomm/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesDeathSquad
+  name: death squad panties
+  description: Standard death squad's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Centcomm/death_squad/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesERT
+  name: ERT panties
+  description: Standard ERT's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Centcomm/ert/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesBlueShieldOfficer
+  name: blueshield officer's panties
+  description: Standard blueshield officer's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Command/blueshield/women/pants.rsi

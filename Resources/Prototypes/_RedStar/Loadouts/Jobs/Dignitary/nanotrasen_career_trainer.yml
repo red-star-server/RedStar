@@ -1,0 +1,24 @@
+﻿# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersNanotrasenCareerTrainer
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersNanotrasenCareerTrainer
+
+- type: loadout
+  id: UnderwearBottomPantiesNanotrasenCareerTrainer
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesNanotrasenCareerTrainer
+
+- type: loadout
+  id: UnderwearTopBraNanotrasenCareerTrainer
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraNanotrasenCareerTrainer

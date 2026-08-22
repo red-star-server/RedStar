@@ -1,0 +1,17 @@
+﻿ent-ClothingUnderwearSocksChiefMedicalOfficer = chief medical officer's socks
+    .desc = Standard chief medical officer's socks.
+ent-ClothingUnderwearSocksChemist = chemist's socks
+    .desc = Standard chemist's socks.
+ent-ClothingUnderwearSocksMedicalIntern = medical intern's socks
+    .desc = Standard medical intern's socks.
+ent-ClothingUnderwearSocksMedicalDoctor = doctor's socks
+    .desc = Standard doctor's socks.
+ent-ClothingUnderwearSocksParamedic = paramedic's socks
+    .desc = Standard paramedic's socks.
+ent-ClothingUnderwearSocksPsychologist = psychologist's socks
+    .desc = Standard psychologist's socks.
+ent-ClothingUnderwearSocksSurgeon = surgeon's socks
+    .desc = Standard surgeon's socks.
+ent-ClothingUnderwearSocksVirologist = virologist's socks
+    .desc = Standard virologist's socks.
+    .desc = Standard senior physician's socks.

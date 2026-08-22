@@ -1,0 +1,35 @@
+﻿- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraCargoTechnician
+  name: cargo technician's bra
+  description: Standard cargo technician's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Cargo/cargo_technician/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraQuartermaster
+  name: quartermaster's bra
+  description: Standard quartermaster's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Cargo/quartermaster/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraSalvageSpecialist
+  name: salvage specialist's bra
+  description: Standard salvage specialist's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Cargo/salvage_specialist/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraShaftMiner
+  name: shaft miner's bra
+  description: Standard shaft miner's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Cargo/miner/women/bra.rsi

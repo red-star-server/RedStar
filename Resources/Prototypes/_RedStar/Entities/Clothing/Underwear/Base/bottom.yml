@@ -1,0 +1,45 @@
+﻿- type: entity
+  abstract: true
+  parent: [SolutionFood, Clothing]
+  id: ClothingUnderwearBottomBase
+  name: based underwearb
+  description: You should not see this.
+  components:
+  - type: Sprite
+    state: icon
+  - type: Item
+    size: Small
+  - type: Clothing
+    slots: [underwearb]
+  - type: Edible
+    requiresSpecialDigestion: true
+  - type: Solution
+    solution:
+      maxVol: 5
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 5
+  - type: Tag
+    tags:
+      - ClothMade
+  - type: PhysicalComposition
+    materialComposition:
+      Cloth: 100
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersWhite
+  name: boxers
+  description: Standard underwear for Nanotrasen staff.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Base/Bottom/boxers.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesWhite
+  name: panties
+  description: Standard underwear for female Nanotrasen staff.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Base/Bottom/panties.rsi

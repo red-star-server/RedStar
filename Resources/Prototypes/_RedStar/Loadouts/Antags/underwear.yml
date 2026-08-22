@@ -1,0 +1,72 @@
+﻿# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersNuclearOperative
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersNuclearOperative
+
+- type: loadout
+  id: UnderwearBottomPantiesNuclearOperative
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesNuclearOperative
+
+- type: loadout
+  id: UnderwearTopBraNuclearOperative
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraNuclearOperative
+
+- type: loadout
+  id: UnderwearBottomBoxersPirate
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersPirate
+
+- type: loadout
+  id: UnderwearBottomPantiesPirate
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesPirate
+
+- type: loadout
+  id: UnderwearTopBraPirate
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraPirate
+
+- type: loadout
+  id: UnderwearBottomBoxersSyndicateAgent
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersSyndicateAgent
+
+- type: loadout
+  id: UnderwearBottomPantiesSyndicateAgent
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesSyndicateAgent
+
+- type: loadout
+  id: UnderwearTopBraSyndicateAgent
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraSyndicateAgent

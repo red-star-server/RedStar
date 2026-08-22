@@ -1,0 +1,55 @@
+﻿# Boxers
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersNuclearOperative
+  name: nuclear operative's boxers
+  description: Standard nuclear operative's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Antag/nuclear_operative/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersPirate
+  name: pirate's boxers
+  description: Standard pirate's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Antag/pirate/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersSyndicateAgent
+  name: syndicate agent's boxers
+  description: Standard syndicate agent's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Antag/syndicate_agent/man.rsi
+
+# Panties
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesNuclearOperative
+  name: nuclear operative's panties
+  description: Standard nuclear operative's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Antag/nuclear_operative/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesPirate
+  name: pirate's panties
+  description: Standard pirate's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Antag/pirate/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesSyndicateAgent
+  name: syndicate agent's panties
+  description: Standard syndicate agent's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Antag/syndicate_agent/women/pants.rsi

@@ -1,0 +1,71 @@
+﻿- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraBrigmedic
+  name: brigmedic's bra
+  description: Standard brigmedic's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Security/brigmedic/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraSecurityCadet
+  name: security cadet's bra
+  description: Standard security cadet's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Security/cadet/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraDetective
+  name: detective's bra
+  description: Standard detective's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Security/detective/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraHeadOfSecurity
+  name: head of security's bra
+  description: Standard head of security's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Security/head_of_security/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraPilot
+  name: pilot's bra
+  description: Standard pilot's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Security/pilot/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraSecurityOfficer
+  name: security officer's bra
+  description: Standard security officer's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Security/security_officer/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraWarden
+  name: warden's bra
+  description: Standard warden's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Security/warden/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraWardenHelper
+  name: warden assistant's bra
+  description: Standard warden assistant's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Security/warden_helper/women/bra.rsi

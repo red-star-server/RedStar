@@ -1,0 +1,71 @@
+﻿- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksChiefMedicalOfficer
+  name: chief medical officer's socks
+  description: Standard chief medical officer's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Medical/cmo/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksChemist
+  name: chemist's socks
+  description: Standard chemist's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Medical/chemist/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksMedicalIntern
+  name: medical intern's socks
+  description: Standard medical intern's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Medical/intern/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksMedicalDoctor
+  name: doctor's socks
+  description: Standard doctor's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Medical/doctor/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksParamedic
+  name: paramedic's socks
+  description: Standard paramedic's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Medical/paramedic/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksPsychologist
+  name: psychologist's socks
+  description: Standard psychologist's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Medical/psychologist/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksSurgeon
+  name: surgeon's socks
+  description: Standard surgeon's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Medical/surgeon/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksVirologist
+  name: virologist's socks
+  description: Standard virologist's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Medical/virologist/socks.rsi

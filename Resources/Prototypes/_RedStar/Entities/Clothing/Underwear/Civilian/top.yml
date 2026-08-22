@@ -1,0 +1,107 @@
+﻿- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraBartender
+  name: bartender's bra
+  description: Standard bartender's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/bartender/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraBotanist
+  name: botanist's bra
+  description: Standard botanist's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/botanist/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraChaplain
+  name: chaplain's bra
+  description: Standard chaplain's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/chaplain/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraChef
+  name: chef's bra
+  description: Standard chef's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/chef/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraClown
+  name: clown's bra
+  description: Standard clown's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/clown/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraHeadOfPersonnel
+  name: head of personnel's bra
+  description: Standard head of personnel's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/head_of_personnel/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraJanitor
+  name: janitor's bra
+  description: Standard janitor's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/janitor/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraLibrarian
+  name: librarian's bra
+  description: Standard librarian's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/librarian/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraMime
+  name: mime's bra
+  description: Standard mime's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/mime/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraMusician
+  name: musician's bra
+  description: Standard musician's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/musician/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraReporter
+  name: reporter's bra
+  description: Standard reporter's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/reporter/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraService
+  name: service worker's bra
+  description: Standard service worker's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/service/women/bra.rsi

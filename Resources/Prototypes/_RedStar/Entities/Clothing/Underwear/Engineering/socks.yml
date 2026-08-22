@@ -1,0 +1,35 @@
+﻿- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksChiefEngineer
+  name: chief engineer's socks
+  description: Standard chief engineer's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Engineering/chief_engineer/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksEngineer
+  name: engineer's socks
+  description: Standard engineer's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Engineering/engineer/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksAtmos
+  name: atmospheric technician's socks
+  description: Standard atmospheric technician's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Engineering/atmospheric_technician/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksTechnicalAssistant
+  name: technical assistant's socks
+  description: Standard technical assistant's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Engineering/technical_assistant/socks.rsi

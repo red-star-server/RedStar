@@ -1,0 +1,17 @@
+﻿ent-ClothingUnderwearTopBraChemist = chemist's bra
+    .desc = Standard chemist's underwear.
+ent-ClothingUnderwearTopBraChiefMedicalOfficer = chief medical officer's bra
+    .desc = Standard chief medical officer's underwear.
+ent-ClothingUnderwearTopBraMedicalDoctor = doctor's bra
+    .desc = Standard doctor's underwear.
+ent-ClothingUnderwearTopBraMedicalIntern = medical intern's bra
+    .desc = Standard medical intern's underwear.
+ent-ClothingUnderwearTopBraParamedic = paramedic's bra
+    .desc = Standard paramedic's underwear.
+ent-ClothingUnderwearTopBraPsychologist = psychologist's bra
+    .desc = Standard psychologist's underwear.
+ent-ClothingUnderwearTopBraSurgeon = surgeon's bra
+    .desc = Standard surgeon's underwear.
+ent-ClothingUnderwearTopBraVirologist = virologist's bra
+    .desc = Standard virologist's underwear.
+    .desc = Standard senior physician's underwear.

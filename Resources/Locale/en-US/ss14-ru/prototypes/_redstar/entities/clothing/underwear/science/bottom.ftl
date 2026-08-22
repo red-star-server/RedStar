@@ -1,0 +1,14 @@
+﻿ent-ClothingUnderwearBottomBoxersResearchAssistant = research assistant's boxers
+    .desc = Standard research assistant's underwear.
+ent-ClothingUnderwearBottomBoxersResearchDirector = research director's boxers
+    .desc = Standard research director's underwear.
+ent-ClothingUnderwearBottomBoxersScientist = scientist's boxers
+    .desc = Standard scientist's underwear.
+    .desc = Standard senior researcher's underwear.
+ent-ClothingUnderwearBottomPantiesResearchAssistant = research assistant's panties
+    .desc = Standard research assistant's underwear.
+ent-ClothingUnderwearBottomPantiesResearchDirector = research director's panties
+    .desc = Standard research director's underwear.
+ent-ClothingUnderwearBottomPantiesScientist = scientist's panties
+    .desc = Standard scientist's underwear.
+    .desc = Standard senior researcher's underwear.

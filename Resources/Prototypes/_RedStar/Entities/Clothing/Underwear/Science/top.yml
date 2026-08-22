@@ -1,0 +1,26 @@
+﻿- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraResearchAssistant
+  name: research assistant's bra
+  description: Standard research assistant's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Science/research_assistant/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraResearchDirector
+  name: research director's bra
+  description: Standard research director's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Science/research_director/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraScientist
+  name: scientist's bra
+  description: Standard scientist's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Science/scientist/women/bra.rsi

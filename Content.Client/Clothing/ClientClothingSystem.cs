@@ -44,6 +44,9 @@ public sealed partial class ClientClothingSystem : ClothingSystem
         {"pocket1", "POCKET1"},
         {"pocket2", "POCKET2"},
         {"suitstorage", "SUITSTORAGE"},
+        {"socks", "SOCKS"}, // RS14
+        {"underweart", "UNDERWEART"}, // RS14
+        {"underwearb", "UNDERWEARB"}, // RS14
     };
 
     [Dependency] private IResourceCache _cache = default!;

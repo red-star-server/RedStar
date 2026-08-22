@@ -1,0 +1,116 @@
+﻿- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksHeadOfPersonnel
+  name: head of personnel's socks
+  description: Standard head of personnel's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/head_of_personnel/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksService
+  name: service worker's socks
+  description: Standard service worker's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/service/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksBartender
+  name: bartender's socks
+  description: Standard bartender's socks. Resemble everyone's favorite foamy drink.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/bartender/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksBotanist
+  name: botanist's socks
+  description: Standard botanist's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/botanist/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksChaplain
+  name: chaplain's socks
+  description: Standard chaplain's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/chaplain/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksChef
+  name: chef's socks
+  description: Standard chef's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/chef/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksClown
+  name: clown's socks
+  description: Standard clown's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/clown/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksJanitor
+  name: janitor's socks
+  description: Standard janitor's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/janitor/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksLibrarian
+  name: librarian's socks
+  description: Standard librarian's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/librarian/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksMime
+  name: mime's socks
+  description: Standard mime's socks. Smell... like pie?
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/mime/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksMusician
+  name: musician's socks
+  description: Standard musician's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/mime/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksCurator
+  name: curator's socks
+  description: Standard curator's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/reporter/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksReporter
+  name: reporter's socks
+  description: Standard reporter's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/reporter/socks.rsi

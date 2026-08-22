@@ -1,0 +1,216 @@
+﻿# Boxers
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersBartender
+  name: bartender's boxers
+  description: Standard bartender's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/bartender/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersBotanist
+  name: botanist's boxers
+  description: Standard botanist's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/botanist/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersChaplain
+  name: chaplain's boxers
+  description: Standard chaplain's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/chaplain/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersChef
+  name: chef's boxers
+  description: Standard chef's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/chef/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersClown
+  name: clown's boxers
+  description: Standard clown's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/clown/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersHeadOfPersonnel
+  name: head of personnel's boxers
+  description: Standard head of personnel's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/head_of_personnel/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersJanitor
+  name: janitor's boxers
+  description: Standard janitor's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/janitor/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersLibrarian
+  name: librarian's boxers
+  description: Standard librarian's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/librarian/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersMime
+  name: mime's boxers
+  description: Standard mime's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/mime/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersMusician
+  name: musician's boxers
+  description: Standard musician's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/musician/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersReporter
+  name: reporter's boxers
+  description: Standard reporter's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/reporter/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersService
+  name: service worker's boxers
+  description: Standard service worker's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/service/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesBartender
+  name: bartender's panties
+  description: Standard bartender's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/bartender/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesBotanist
+  name: botanist's panties
+  description: Standard botanist's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/botanist/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesChaplain
+  name: chaplain's panties
+  description: Standard chaplain's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/chaplain/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesChef
+  name: chef's panties
+  description: Standard chef's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/chef/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesClown
+  name: clown's panties
+  description: Standard clown's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/clown/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesHeadOfPersonnel
+  name: head of personnel's panties
+  description: Standard head of personnel's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/head_of_personnel/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesJanitor
+  name: janitor's panties
+  description: Standard janitor's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/janitor/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesLibrarian
+  name: librarian's panties
+  description: Standard librarian's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/librarian/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesMime
+  name: mime's panties
+  description: Standard mime's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/mime/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesMusician
+  name: musician's panties
+  description: Standard musician's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/musician/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesReporter
+  name: reporter's panties
+  description: Standard reporter's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/reporter/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesService
+  name: service worker's panties
+  description: Standard service worker's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Civilian/service/women/pants.rsi

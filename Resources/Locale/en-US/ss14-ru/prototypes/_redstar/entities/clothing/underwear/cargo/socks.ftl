@@ -1,0 +1,9 @@
+﻿ent-ClothingUnderwearSocksQuartermaster = quartermaster's socks
+    .desc = Standard quartermaster's socks.
+ent-ClothingUnderwearSocksCargoTech = cargo technician's socks
+    .desc = Standard cargo technician's socks.
+ent-ClothingUnderwearSocksSalvage = salvage specialist's socks
+    .desc = Standard salvage specialist's socks.
+ent-ClothingUnderwearSocksShaftMiner = shaft miner's socks
+    .desc = Standard shaft miner's socks.
+    .desc = Standard senior courier's socks.

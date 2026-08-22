@@ -1,0 +1,53 @@
+﻿- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraCaptain
+  name: captain's bra
+  description: Standard captain's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Command/captain/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraCBURN
+  name: CBURN bra
+  description: Standard CBURN's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Centcomm/cburn/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraCentcomm
+  name: CentCom bra
+  description: Standard CentCom's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Centcomm/centcomm/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraDeathSquad
+  name: death squad bra
+  description: Standard death squad's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Centcomm/death_squad/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraERT
+  name: ERT bra
+  description: Standard ERT's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Centcomm/ert/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraBlueShieldOfficer
+  name: blueshield officer's bra
+  description: Standard blueshield officer's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Command/blueshield/women/bra.rsi

@@ -1,0 +1,26 @@
+﻿- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSockNanotrasenRepresentative
+  name: nanotrasen representative's socks
+  description: Standard nanotrasen representative's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Law/representative/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSockLawyer
+  name: lawyer's socks
+  description: Standard lawyer's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Law/lawyer/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSockMagistrate
+  name: magistrate's socks
+  description: Standard magistrate's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Law/magistrate/socks.rsi
