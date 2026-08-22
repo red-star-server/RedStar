@@ -2,17 +2,17 @@
   id: None
   onlyGroupWhitelisted: true
 
-#- type: markingsGroup
-#  id: Undergarments
-#  limits:
-#    enum.HumanoidVisualLayers.UndergarmentTop:
-#      limit: 1
-#      required: false
-#      nudityDefault: [ UndergarmentTopTanktop ]
-#    enum.HumanoidVisualLayers.UndergarmentBottom:
-#      limit: 1
-#      required: false
-#      nudityDefault: [ UndergarmentBottomBoxers ]
+- type: markingsGroup
+  id: Undergarments
+  limits:
+    enum.HumanoidVisualLayers.UndergarmentTop:
+      limit: 1
+      required: false
+      nudityDefault: [ UndergarmentTopTanktop ]
+    enum.HumanoidVisualLayers.UndergarmentBottom:
+      limit: 1
+      required: false
+      nudityDefault: [ UndergarmentBottomBoxers ]
 
 - type: entity
   id: OrganBase
