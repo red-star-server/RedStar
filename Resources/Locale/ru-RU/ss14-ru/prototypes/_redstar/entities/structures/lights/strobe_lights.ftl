@@ -1,0 +1,12 @@
+﻿ent-PoweredStrobeLight = { ent-PoweredStrobeLightEmpty }
+    .suffix = Заполненный, Включён
+    .desc = { ent-PoweredStrobeLightEmpty.desc }
+ent-PoweredStrobeLightPoliceEnabled = { ent-PoweredStrobeLightPolice }
+    .suffix = Заполненный, Включён, Полиция
+    .desc = { ent-PoweredStrobeLightPolice.desc }
+ent-PoweredStrobeLightSirenEnabled = { ent-PoweredStrobeLightSiren }
+    .suffix = Заполненный, Включён, Сирена
+    .desc = { ent-PoweredStrobeLightSiren.desc }
+ent-PoweredStrobeLightEpsilonEnabled = { ent-PoweredStrobeLightEpsilon }
+    .suffix = Заполненный, Включён, Эпсилон
+    .desc = { ent-PoweredStrobeLightEpsilon.desc }
