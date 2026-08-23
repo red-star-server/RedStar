@@ -19,6 +19,12 @@
   - sneeze!
   - sneezes!
   - sneezed!
+  # Corvax-Localization-Start
+  - чихнул
+  - чихнул!
+  - чихает
+  - чихает!
+  # Corvax-Localization-End
 
 - type: emote
   id: Cough
@@ -42,6 +48,11 @@
     - cough!
     - coughs!
     - coughed!
+    # Corvax-Localization-Start
+    - кашель
+    - кашляет
+    - кашлянул
+    # Corvax-Localization-End
 
 - type: emote
   id: CatMeow
@@ -82,6 +93,10 @@
   chatTriggers:
     - yawn
     - yawns
+    # Corvax-Localization-Start
+    - зевок
+    - зевает
+    # Corvax-Localization-End
 
 - type: emote
   id: Snore
