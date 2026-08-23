@@ -235,16 +235,6 @@
   - UnderwearBottomPantiesMagistrate
 
 - type: loadoutGroup
-  id: NanotrasenRepresentativeUnderwear
-  name: loadout-group-underwear
-  minLimit: 2
-  hidden: true
-  loadouts:
-  - UnderwearBottomBoxersNanotrasenRepresentative
-  - UnderwearTopBraNanotrasenRepresentative
-  - UnderwearBottomPantiesNanotrasenRepresentative
-
-- type: loadoutGroup
   id: LawyerUnderwear
   name: loadout-group-underwear
   minLimit: 2
@@ -345,26 +335,6 @@
   - UnderwearBottomBoxersWarden
   - UnderwearTopBraWarden
   - UnderwearBottomPantiesWarden
-
-- type: loadoutGroup
-  id: PilotUnderwear
-  name: loadout-group-underwear
-  minLimit: 2
-  hidden: true
-  loadouts:
-  - UnderwearBottomBoxersPilot
-  - UnderwearTopBraPilot
-  - UnderwearBottomPantiesPilot
-
-- type: loadoutGroup
-  id: WardenHelperUnderwear
-  name: loadout-group-underwear
-  minLimit: 2
-  hidden: true
-  loadouts:
-  - UnderwearBottomBoxersWardenHelper
-  - UnderwearTopBraWardenHelper
-  - UnderwearBottomPantiesWardenHelper
 
 # Dignitary
 - type: loadoutGroup

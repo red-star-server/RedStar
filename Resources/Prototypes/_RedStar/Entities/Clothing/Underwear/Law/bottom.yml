@@ -1,15 +1,6 @@
 ﻿# Boxers
 - type: entity
   parent: ClothingUnderwearBottomBase
-  id: ClothingUnderwearBottomBoxersNanotrasenRepresentative
-  name: nanotrasen representative's boxers
-  description: Standard nanotrasen representative's underwear.
-  components:
-  - type: Sprite
-    sprite: _RedStar/Clothing/Underwear/Law/representative/man.rsi
-
-- type: entity
-  parent: ClothingUnderwearBottomBase
   id: ClothingUnderwearBottomBoxersLawyer
   name: lawyer's boxers
   description: Standard lawyer's underwear.
@@ -27,15 +18,6 @@
     sprite: _RedStar/Clothing/Underwear/Law/magistrate/man.rsi
 
 # Panties
-- type: entity
-  parent: ClothingUnderwearBottomBase
-  id: ClothingUnderwearBottomPantiesNanotrasenRepresentative
-  name: nanotrasen representative's panties
-  description: Standard nanotrasen representative's underwear.
-  components:
-  - type: Sprite
-    sprite: _RedStar/Clothing/Underwear/Law/representative/women/pants.rsi
-
 - type: entity
   parent: ClothingUnderwearBottomBase
   id: ClothingUnderwearBottomPantiesLawyer

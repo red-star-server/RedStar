@@ -1,9 +1,5 @@
-﻿ent-ClothingUnderwearBottomBoxersNanotrasenRepresentative = боксеры представителя следственного комитета
-    .desc = Стандартное нижнее бельё представителя следственного комитета.
-ent-ClothingUnderwearBottomBoxersLawyer = боксеры юриста
+﻿ent-ClothingUnderwearBottomBoxersLawyer = боксеры юриста
     .desc = Стандартное нижнее бельё юриста.
-ent-ClothingUnderwearBottomPantiesNanotrasenRepresentative = стринги представителя следственного комитета
-    .desc = Стандартное нижнее бельё представителя следственного комитета.
 ent-ClothingUnderwearBottomBoxersMagistrate = боксеры судьи
     .desc = Стандартное нижнее бельё судьи.
 ent-ClothingUnderwearBottomPantiesLawyer = стринги юриста

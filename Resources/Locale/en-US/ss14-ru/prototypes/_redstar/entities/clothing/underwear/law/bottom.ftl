@@ -1,11 +1,7 @@
-﻿ent-ClothingUnderwearBottomBoxersNanotrasenRepresentative = nanotrasen representative's boxers
-    .desc = Standard nanotrasen representative's underwear.
-ent-ClothingUnderwearBottomBoxersLawyer = lawyer's boxers
+﻿ent-ClothingUnderwearBottomBoxersLawyer = lawyer's boxers
     .desc = Standard lawyer's underwear.
 ent-ClothingUnderwearBottomBoxersMagistrate = magistrate's boxers
     .desc = Standard magistrate's underwear.
-ent-ClothingUnderwearBottomPantiesNanotrasenRepresentative = nanotrasen representative's panties
-    .desc = Standard nanotrasen representative's underwear.
 ent-ClothingUnderwearBottomPantiesLawyer = lawyer's panties
     .desc = Standard lawyer's underwear.
 ent-ClothingUnderwearBottomPantiesMagistrate = magistrate's panties
