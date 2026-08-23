@@ -4,3 +4,7 @@ ent-ClothingUnderwearTopBraPirate = pirate's bra
     .desc = Standard pirate's underwear.
 ent-ClothingUnderwearTopBraSyndicateAgent = syndicate agent's bra
     .desc = Standard syndicate agent's underwear.
+ent-ClothingUnderwearTopBraNinja = ninja's bra
+    .desc = Standard space ninja's underwear.
+ent-ClothingUnderwearTopBraWizard = wizard's bra
+    .desc = Standard wizard's underwear.

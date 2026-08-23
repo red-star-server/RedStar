@@ -497,3 +497,23 @@
   - UnderwearBottomBoxersSyndicateAgent
   - UnderwearTopBraSyndicateAgent
   - UnderwearBottomPantiesSyndicateAgent
+
+- type: loadoutGroup
+  id: NinjaUnderwear
+  name: loadout-group-underwear
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - UnderwearBottomBoxersNinja
+  - UnderwearTopBraNinja
+  - UnderwearBottomPantiesNinja
+
+- type: loadoutGroup
+  id: WizardUnderwear
+  name: loadout-group-underwear
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - UnderwearBottomBoxersWizard
+  - UnderwearTopBraWizard
+  - UnderwearBottomPantiesWizard
