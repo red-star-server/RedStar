@@ -33,14 +33,14 @@ namespace Content.Shared.Humanoid
                         ("first", GetFirstName(speciesProto, gender)));
                 case SpeciesNaming.TheFirstofLast:
                     return Loc.GetString("namepreset-thefirstoflast",
-                        ("first", GetFirstName(speciesProto, gender)), ("last", GetLastName(speciesProto)));
+                        ("first", GetFirstName(speciesProto, gender)), ("last", GetLastName(speciesProto, gender))); // Corvax-LastnameGender
                 case SpeciesNaming.FirstDashFirst:
                     return Loc.GetString("namepreset-firstdashfirst",
                         ("first1", GetFirstName(speciesProto, gender)), ("first2", GetFirstName(speciesProto, gender)));
                 case SpeciesNaming.FirstLast:
                 default:
                     return Loc.GetString("namepreset-firstlast",
-                        ("first", GetFirstName(speciesProto, gender)), ("last", GetLastName(speciesProto)));
+                        ("first", GetFirstName(speciesProto, gender)), ("last", GetLastName(speciesProto, gender))); // Corvax-LastnameGender
             }
         }
 
@@ -53,16 +53,27 @@ namespace Content.Shared.Humanoid
                 case Gender.Female:
                     return _random.Pick(ProtoMan.Index(speciesProto.FemaleFirstNames));
                 default:
-                    if (_random.Prob(0.5f))
-                        return _random.Pick(ProtoMan.Index(speciesProto.MaleFirstNames));
-                    else
-                        return _random.Pick(ProtoMan.Index(speciesProto.FemaleFirstNames));
+                    return _random.Pick(_random.Prob(0.5f)
+                        ? ProtoMan.Index(speciesProto.MaleFirstNames)
+                        : ProtoMan.Index(speciesProto.FemaleFirstNames));
             }
         }
 
-        public string GetLastName(SpeciesPrototype speciesProto)
+        // Corvax-LastnameGender-Start: Added custom gender split logic
+        public string GetLastName(SpeciesPrototype speciesProto, Gender? gender = null)
         {
-            return _random.Pick(ProtoMan.Index(speciesProto.LastNames));
+            switch (gender)
+            {
+                case Gender.Male:
+                    return _random.Pick(ProtoMan.Index(speciesProto.MaleLastNames));
+                case Gender.Female:
+                    return _random.Pick(ProtoMan.Index(speciesProto.FemaleLastNames));
+                default:
+                    return _random.Pick(_random.Prob(0.5f)
+                        ? ProtoMan.Index(speciesProto.MaleLastNames) 
+                        : ProtoMan.Index(speciesProto.FemaleLastNames));
+            }
         }
+        // Corvax-LastnameGender-End
     }
 }
