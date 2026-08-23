@@ -94,6 +94,14 @@
     ClothingHandsGlovesColorPurple: 2
     ClothingEyesGlassesCheapSunglasses: 3
     # DO NOT ADD MORE, USE UNIFORM DYING
+    # ADT-start
+    ClothingFootWrapsWhite: 3
+    ClothingFootWrapsBlack: 3
+    ClothingFootWrapsBrown: 3
+    ClothingFootWrapsHighBlack: 3
+    ClothingFootWrapsHighWhite: 3
+    ClothingFootWrapsHighBrown: 3
+    # ADT-end
   contrabandInventory:
     ClothingMaskNeckGaiter: 2
     ClothingUniformJumpsuitTacticool: 1
