@@ -46,7 +46,7 @@
 - type: roleLoadout
   id: JobPassenger
   groups:
-  - PassengerUnderwear # RS14
+  - DefaultWhiteUnderwear # RS14
   - GroupTankHarness
   - PassengerJumpsuit
   - CommonBackpack

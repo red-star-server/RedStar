@@ -192,16 +192,6 @@
   - UnderwearTopBraMusician
   - UnderwearBottomPantiesMusician
 
-- type: loadoutGroup
-  id: PassengerUnderwear
-  name: loadout-group-underwear
-  minLimit: 2
-  hidden: true
-  loadouts:
-  - UnderwearBottomBoxersPassenger
-  - UnderwearTopBraPassenger
-  - UnderwearBottomPantiesPassenger
-
 # Command
 - type: loadoutGroup
   id: CaptainUnderwear
