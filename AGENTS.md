@@ -45,15 +45,25 @@ Generic changes that could reasonably be upstreamed should use the normal upstre
 
 ## Editing upstream code
 
-Do not add downstream marker comments such as:
+Mark RedStar-specific changes made to upstream files with `RS14` comments.
+
+For a single changed line, add an end-of-line marker using the file's comment syntax:
 
 ```text
-// RedStar
+SomeChangedCode(); // RS14
+someChangedValue: true # RS14
+```
+
+For a contiguous block of changed lines, wrap the block with `RS14-start` and `RS14-end` markers using the file's comment syntax:
+
+```text
 // RS14-start
+SomeChangedCode();
+MoreChangedCode();
 // RS14-end
 ```
 
-Git history is the source of truth for project-specific modifications.
+Do not add markers to unchanged code, new files under RedStar-specific directories such as `_RedStar`, or every line inside an already marked block. Prefer a single-line marker for a one-line change and block markers only when the change spans multiple related lines.
 
 Keep changes to upstream files as small as reasonably possible to reduce future merge conflicts.
 
