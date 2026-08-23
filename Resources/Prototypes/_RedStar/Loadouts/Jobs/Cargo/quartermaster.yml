@@ -22,3 +22,8 @@
     proto: FemaleUnderwear
   equipment:
     underweart: ClothingUnderwearTopBraQuartermaster
+
+- type: loadout
+  id: UnderwearSocksQuartermaster
+  equipment:
+    socks: ClothingUnderwearSocksQuartermaster

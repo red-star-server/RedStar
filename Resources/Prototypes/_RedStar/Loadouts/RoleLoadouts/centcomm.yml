@@ -1,0 +1,47 @@
+- type: roleLoadout
+  id: JobCentralCommandOfficial
+  groups:
+  - CentcommUnderwear
+
+# Emergency Response Team
+- type: roleLoadout
+  id: JobERTLeader
+  groups:
+  - ERTUnderwear
+
+- type: roleLoadout
+  id: JobERTChaplain
+  groups:
+  - ERTUnderwear
+
+- type: roleLoadout
+  id: JobERTEngineer
+  groups:
+  - ERTUnderwear
+
+- type: roleLoadout
+  id: JobERTSecurity
+  groups:
+  - ERTUnderwear
+
+- type: roleLoadout
+  id: JobERTMedical
+  groups:
+  - ERTUnderwear
+
+- type: roleLoadout
+  id: JobERTJanitor
+  groups:
+  - ERTUnderwear
+
+# CBURN
+- type: roleLoadout
+  id: JobCBURN
+  groups:
+  - CBURNUnderwear
+
+# Death Squad
+- type: roleLoadout
+  id: JobDeathSquad
+  groups:
+  - DeathSquadUnderwear

@@ -99,15 +99,6 @@
 
 - type: entity
   parent: ClothingUnderwearSocksBase
-  id: ClothingUnderwearSocksCurator
-  name: curator's socks
-  description: Standard curator's socks.
-  components:
-  - type: Sprite
-    sprite: _RedStar/Clothing/Underwear/Civilian/reporter/socks.rsi
-
-- type: entity
-  parent: ClothingUnderwearSocksBase
   id: ClothingUnderwearSocksReporter
   name: reporter's socks
   description: Standard reporter's socks.

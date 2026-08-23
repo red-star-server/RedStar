@@ -23,5 +23,10 @@
   equipment:
     underweart: ClothingUnderwearTopBraReporter
 
+- type: loadout
+  id: UnderwearSocksReporter
+  equipment:
+    socks: ClothingUnderwearSocksReporter
+
 
 
