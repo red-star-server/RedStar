@@ -18,70 +18,70 @@
 
 - type: guideEntry
   id: RedStarRule0
-  name: Правило 0
+  name: guide-entry-redstar-rule-0
   priority: 1
   ruleEntry: true
   text: "/ServerInfo/_RedStar/Guidebook/ServerRules/Rule0.xml"
 
 - type: guideEntry
   id: RedStarRule1
-  name: Правило 1
+  name: guide-entry-redstar-rule-1
   priority: 2
   ruleEntry: true
   text: "/ServerInfo/_RedStar/Guidebook/ServerRules/Rule1.xml"
 
 - type: guideEntry
   id: RedStarRule2
-  name: Правило 2
+  name: guide-entry-redstar-rule-2
   priority: 3
   ruleEntry: true
   text: "/ServerInfo/_RedStar/Guidebook/ServerRules/Rule2.xml"
 
 - type: guideEntry
   id: RedStarRule3
-  name: Правило 3
+  name: guide-entry-redstar-rule-3
   priority: 4
   ruleEntry: true
   text: "/ServerInfo/_RedStar/Guidebook/ServerRules/Rule3.xml"
 
 - type: guideEntry
   id: RedStarRule4
-  name: Правило 4
+  name: guide-entry-redstar-rule-4
   priority: 5
   ruleEntry: true
   text: "/ServerInfo/_RedStar/Guidebook/ServerRules/Rule4.xml"
 
 - type: guideEntry
   id: RedStarRule5
-  name: Правило 5
+  name: guide-entry-redstar-rule-5
   priority: 6
   ruleEntry: true
   text: "/ServerInfo/_RedStar/Guidebook/ServerRules/Rule5.xml"
 
 - type: guideEntry
   id: RedStarRule6
-  name: Правило 6
+  name: guide-entry-redstar-rule-6
   priority: 7
   ruleEntry: true
   text: "/ServerInfo/_RedStar/Guidebook/ServerRules/Rule6.xml"
 
 - type: guideEntry
   id: RedStarRule7
-  name: Правило 7
+  name: guide-entry-redstar-rule-7
   priority: 8
   ruleEntry: true
   text: "/ServerInfo/_RedStar/Guidebook/ServerRules/Rule7.xml"
 
 - type: guideEntry
   id: RedStarRule8
-  name: Правило 8
+  name: guide-entry-redstar-rule-8
   priority: 9
   ruleEntry: true
   text: "/ServerInfo/_RedStar/Guidebook/ServerRules/Rule8.xml"
 
 - type: guideEntry
   id: RedStarRule9
-  name: Правило 9
+  name: guide-entry-redstar-rule-9
   priority: 10
   ruleEntry: true
   text: "/ServerInfo/_RedStar/Guidebook/ServerRules/Rule9.xml"

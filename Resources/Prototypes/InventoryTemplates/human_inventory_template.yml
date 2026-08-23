@@ -13,7 +13,7 @@
       slotTexture: socks
       slotFlags: SOCKS
       stripTime: 6
-      uiWindowPos: 3,1
+      uiWindowPos: 3,3
       strippingWindowPos: 0,6
       displayName: Socks
       stripHidden: true
@@ -29,15 +29,16 @@
       slotTexture: underweart
       slotFlags: UNDERWEART
       stripTime: 6
-      uiWindowPos: 3,3
+      uiWindowPos: 3,1
       strippingWindowPos: 2,6
       displayName: Bra
       stripHidden: true
-    - name: finger
-      slotFlags: FINGER
+    - name: handAccessory
+      slotTexture: handAccessory
+      slotFlags: HANDACCESSORY
       uiWindowPos: 2,0
       strippingWindowPos: 2,3
-      displayName: Ring
+      displayName: Hand accessory
     # RS14-end
     - name: jumpsuit
       slotTexture: uniform

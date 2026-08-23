@@ -30,7 +30,7 @@ public enum SlotFlags
     UNDERWEART = 1 << 16,
     UNDERWEARB = 1 << 17,
     SOCKS = 1 << 18,
-    FINGER = 1 << 19,
+    HANDACCESSORY = 1 << 19,
     // RS14-end
     All = ~NONE,
 
