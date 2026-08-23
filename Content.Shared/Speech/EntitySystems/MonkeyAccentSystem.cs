@@ -30,23 +30,23 @@ public sealed partial class MonkeyAccentSystem : RelayAccentSystem<MonkeyAccentC
                 {
                     foreach (var __ in word)
                     {
-                        accentedMessage.Append('O');
+                        accentedMessage.Append('У');  // Corvax-Localization
                     }
 
                     if (random.NextDouble() >= 0.3)
-                        accentedMessage.Append('K');
+                        accentedMessage.Append('К');  // Corvax-Localization
                 }
                 else
-                    accentedMessage.Append('O');
+                    accentedMessage.Append('У');  // Corvax-Localization
             }
             else
             {
                 foreach (var __ in word)
                 {
                     if (random.NextDouble() >= 0.8)
-                        accentedMessage.Append('H');
+                        accentedMessage.Append('Г');  // Corvax-Localization
                     else
-                        accentedMessage.Append('A');
+                        accentedMessage.Append('А');  // Corvax-Localization
                 }
 
             }

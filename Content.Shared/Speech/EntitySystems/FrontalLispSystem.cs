@@ -1,5 +1,6 @@
 using System.Text.RegularExpressions;
 using Content.Shared.Speech.Components;
+using Robust.Shared.Random;
 
 namespace Content.Shared.Speech.EntitySystems;
 
@@ -11,7 +12,19 @@ public sealed partial class FrontalLispSystem : RelayAccentSystem<FrontalLispCom
     private static readonly Regex RegexUpperEcks = new("[E]+[Xx]+[Cc]*|[X]+");
     private static readonly Regex RegexLowerEcks = new("[e]+[x]+[c]*|[x]+");
     // @formatter:on
-
+    // Corvax-Localization Start
+    private static readonly Regex _regexLowerC = new("с");// для "с" на "ш"/"с"
+    private static readonly Regex _regexUpperC = new("С");// для "С" на "Ш"/"С"
+    private static readonly Regex _regexLowerCh = new("ч");// для "ч" на "ш"/"ч"
+    private static readonly Regex _regexUpperCh = new("Ч");// для "Ч" на "Ш"/"Ч"
+    private static readonly Regex _regexLowerTs = new("ц");// для "ц" на "ч"/"ц"
+    private static readonly Regex _regexUpperTs = new("Ц");// для "Ц" на "Ч"/"Ц"
+    private static readonly Regex _regexLowerT = new(@"\B[т](?![АЕЁИОУЫЭЮЯаеёиоуыэюя])");
+    private static readonly Regex _regexUpperT = new(@"\B[Т](?![АЕЁИОУЫЭЮЯаеёиоуыэюя])");
+    private static readonly Regex _regexLowerZ = new("з");// для "з" на "ж"/"з"
+    private static readonly Regex _regexUpperZ = new("З");// для "З" на "Ж"/"З"
+    // Corvax-Localization End
+    [Dependency] private IRobustRandom _random = default!; // Corvax-Localization
     public override string Accentuate(string message, Entity<FrontalLispComponent>? ent = null)
     {
         // handles ts, sc(i|e|y), c(i|e|y), ps, st(io(u|n)), ch(i|e), z, s
@@ -20,6 +33,20 @@ public sealed partial class FrontalLispSystem : RelayAccentSystem<FrontalLispCom
         // handles ex(c), x
         message = RegexUpperEcks.Replace(message, "EKTH");
         message = RegexLowerEcks.Replace(message, "ekth");
+
+        // Corvax-Localization Start
+        message = _regexLowerC.Replace(message, _random.Prob(0.90f) ? "ш" : "с");
+        message = _regexUpperC.Replace(message, _random.Prob(0.90f) ? "Ш" : "С");
+        message = _regexLowerCh.Replace(message, _random.Prob(0.90f) ? "ш" : "ч");
+        message = _regexUpperCh.Replace(message, _random.Prob(0.90f) ? "Ш" : "Ч");
+        message = _regexLowerTs.Replace(message, _random.Prob(0.90f) ? "ч" : "ц");
+        message = _regexUpperTs.Replace(message, _random.Prob(0.90f) ? "Ч" : "Ц");
+        message = _regexLowerT.Replace(message, _random.Prob(0.90f) ? "ч" : "т");
+        message = _regexUpperT.Replace(message, _random.Prob(0.90f) ? "Ч" : "Т");
+        message = _regexLowerZ.Replace(message, _random.Prob(0.90f) ? "ж" : "з");
+        message = _regexUpperZ.Replace(message, _random.Prob(0.90f) ? "Ж" : "З");
+        // Corvax-Localization End
+
         return message;
     }
 }

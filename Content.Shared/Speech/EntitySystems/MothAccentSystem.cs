@@ -1,12 +1,27 @@
 ﻿using System.Text.RegularExpressions;
 using Content.Shared.Speech.Components;
+using Robust.Shared.Random;
 
 namespace Content.Shared.Speech.EntitySystems;
 
 public sealed partial class MothAccentSystem : RelayAccentSystem<MothAccentComponent>
 {
+    [Dependency] private IRobustRandom _random = default!; // Corvax-Localization
+
     private static readonly Regex RegexLowerBuzz = new("z{1,3}");
     private static readonly Regex RegexUpperBuzz = new("Z{1,3}");
+
+    // Corvax-Localization-Start
+    private static readonly Regex _regexLowerZh = new("ж+");
+    private static readonly Regex _regexUpperZh = new("Ж+");
+    private static readonly Regex _regexLowerZ = new("з+");
+    private static readonly Regex _regexUpperZ = new("З+");
+
+    private static readonly List<string> _replacementsZh = new() { "жж", "жжж" };
+    private static readonly List<string> _replacementsZhUpper = new() { "ЖЖ", "ЖЖЖ" };
+    private static readonly List<string> _replacementsZ = new() { "зз", "ззз" };
+    private static readonly List<string> _replacementsZUpper = new() { "ЗЗ", "ЗЗЗ" };
+    // Corvax-Localization-End
 
     public override string Accentuate(string message, Entity<MothAccentComponent>? ent = null)
     {
@@ -14,6 +29,13 @@ public sealed partial class MothAccentSystem : RelayAccentSystem<MothAccentCompo
         message = RegexLowerBuzz.Replace(message, "zzz");
         // buZZZ
         message = RegexUpperBuzz.Replace(message, "ZZZ");
+
+        // Corvax-Localization-Start
+        message = _regexLowerZh.Replace(message, _random.Pick(_replacementsZh));
+        message = _regexUpperZh.Replace(message, _random.Pick(_replacementsZhUpper));
+        message = _regexLowerZ.Replace(message, _random.Pick(_replacementsZ));    // используем существующий regexLowerZ
+        message = _regexUpperZ.Replace(message, _random.Pick(_replacementsZUpper)); // используем существующий regexUpperZ
+        // Corvax-Localization-End
 
         return message;
     }
