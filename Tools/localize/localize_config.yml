@@ -1,0 +1,10 @@
+ignored_paths: # Игнорирует указанные пути до папок/файлов
+- "Resources/Locale/ru-RU/_RedStar"
+- "Resources/Locale/ru-RU/datasets"
+ignored_untranslated_paths: # Игнорирует предупреждения в указанных путях до папок/файлов
+- "Resources/Locale/ru-RU/robust-toolbox/input.ftl" # лучше просто это не трогать №2
+- "Resources/Locale/ru-RU/ss14-ru/prototypes/entities/mobs/player/humanoid.ftl" # её заприватил элюзив
+###
+- "Resources/Locale/ru-RU/atmos/gases.ftl"
+- "Resources/Locale/ru-RU/magic/spells-actions.ftl"
+- "Resources/Locale/ru-RU/speech/speech-chatsan.ftl"
