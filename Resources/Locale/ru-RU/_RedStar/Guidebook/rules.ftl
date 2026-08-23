@@ -1,0 +1,10 @@
+guide-entry-redstar-rule-0 = Правило 0: Не будь мудаком
+guide-entry-redstar-rule-1 = Правило 1: Гриферство
+guide-entry-redstar-rule-2 = Правило 2: Убийство и РДМ
+guide-entry-redstar-rule-3 = Правило 3: Логика персонажа
+guide-entry-redstar-rule-4 = Правило 4: Общение и оскорбления
+guide-entry-redstar-rule-5 = Правило 5: Метагейм
+guide-entry-redstar-rule-6 = Правило 6: Павергейм
+guide-entry-redstar-rule-7 = Правило 7: Нечестная игра
+guide-entry-redstar-rule-8 = Правило 8: ERP
+guide-entry-redstar-rule-9 = Правило 9: Игра за антагониста
