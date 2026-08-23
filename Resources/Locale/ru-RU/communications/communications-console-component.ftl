@@ -19,7 +19,7 @@ comms-console-station-announcements-header = Объявление станции
 comms-console-station-broadcast-header = Трансляция станции
 comms-console-announce-tab-title = Связь
 comms-console-broadcast-tab-title = Экран
-comms-console-char-limit = {$count}/{$max}
+comms-console-char-limit = { $count }/{ $max }
 
 # Popup
 comms-console-permission-denied = В доступе отказано
@@ -47,6 +47,3 @@ comms-console-level-Red-flavour-label = Сохраняйте бдительно�
 comms-console-level-Gamma-flavour-label = Рекомендуется проявлять крайнюю осторожность
 comms-console-level-Delta-flavour-label = Удачи :)
 comms-console-level-Epsilon-flavour-label = Контракты расторгнуты
-
-#CorvaxFix There no Delta code in Ban-Sing-Se
-comms-console-level-DeltaNuke-flavour-label = Удачи :)

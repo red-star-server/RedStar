@@ -1,8 +1,7 @@
-﻿ent-ClothingUnderwearTopBraBartender = бра бармена
+ent-ClothingUnderwearTopBraBartender = бра бармена
     .desc = Стандартное нижнее бельё бармена.
 ent-ClothingUnderwearTopBraBotanist = бра агронома
     .desc = Стандартное нижнее бельё агронома.
-    .desc = Стандартное нижнее бельё боксёра.
 ent-ClothingUnderwearTopBraChaplain = бра священника
     .desc = Стандартное нижнее бельё священника.
 ent-ClothingUnderwearTopBraChef = бра шефа
@@ -23,4 +22,3 @@ ent-ClothingUnderwearTopBraReporter = бра корресподента
     .desc = Стандартное нижнее бельё корресподента.
 ent-ClothingUnderwearTopBraService = бра сервисного работника
     .desc = Стандартное нижнее бельё сервисного работника.
-    .desc = Стандартное нижнее бельё ветеринара.

@@ -6,7 +6,7 @@ command-description-xenoartifact-totalresearch =
     Получает все исследовательские очки, которые в данный момент можно извлечь из артефакта.
 command-description-xenoartifact-averageresearch =
     Вычисляет количество очков исследований, которое сгенерированный ксеноартефакт выдаст при полной активации.
-command-description-xenoartifact-unlockallNodes =
+command-description-xenoartifact-unlockallnodes =
     Разблокирует все узлы артефакта.
 
 command-description-xenoartifact-createnode =
@@ -26,4 +26,4 @@ command-spawnartifactwithnode-spawn-artifact-item-hint = использоват�
 command-spawnartifactwithnode-spawn-artifact-structure-hint = использовать полноразмерный артефакт
 command-spawnartifactwithnode-spawn-artifact-type-hint = <artifact entity proto id>
 
-command-xenoartifact-common-node-hint = глубина {$depth} узел {$nodeId} стимулятор {$nodeDetail}
+command-xenoartifact-common-node-hint = глубина { $depth } узел { $nodeId } стимулятор { $nodeDetail }

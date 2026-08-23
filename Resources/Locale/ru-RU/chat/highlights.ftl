@@ -51,6 +51,5 @@ highlights-reporter = репортёр, репортер, журналист
 highlights-psychologist = психолог
 
 # Silicon
-highlights-personal-ai = персональный ии, "пии"
 highlights-borg = киборг, борг
 highlights-stationai = станционный ии, "ии", "сии"

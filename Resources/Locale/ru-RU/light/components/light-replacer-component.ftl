@@ -15,8 +15,8 @@ comp-light-replacer-select-lights = Выбрать { $light }.
 comp-light-replacer-open-empty = { CAPITALIZE(THE($light-replacer)) } совершенно пуст!
 
 # Label
-comp-light-replacer-label = Труба: {$tube}
-                            Лампа: {$bulb}
+comp-light-replacer-label = Труба: { $tube }
+                            Лампа: { $bulb }
 
 ### Examine
 

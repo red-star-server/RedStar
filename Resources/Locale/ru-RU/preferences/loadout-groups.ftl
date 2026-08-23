@@ -213,3 +213,4 @@ loadout-group-tramdriver-jumpsuit = Водитель трамвая, комби�
 loadout-group-tramdriver-outerclothing = Водитель трамвая, костюм
 loadout-group-tramdriver-hat = Водитель трамвая, голова
 loadout-group-tramdriver-gloves = Водитель трамвая, перчатки
+loadout-group-underwear = Нижнее белье

@@ -72,8 +72,8 @@ entity-effect-guidebook-satiate =
         [1] Утоляет
         *[other] утолить
     } { $relative ->
-        [1] {$type}
-        *[other] {$type} с { NATURALFIXED($relative, 3) }х эффективностью
+        [1] { $type }
+        *[other] { $type } с { NATURALFIXED($relative, 3) }х эффективностью
     }
 
 entity-effect-guidebook-health-change =
@@ -575,13 +575,13 @@ entity-effect-guidebook-plant-mutate-exude-gasses =
     { $chance ->
         [1] Мутирует
         *[other] мутировать
-    } выделение растением газов от {$minValue} до {$maxValue} молей
+    } выделение растением газов от { $minValue } до { $maxValue } молей
 
 entity-effect-guidebook-plant-mutate-consume-gasses =
     { $chance ->
         [1] Мутирует
         *[other] мутировать
-    } потребление растением газов от {$minValue} до {$maxValue} молей
+    } потребление растением газов от { $minValue } до { $maxValue } молей
 
 entity-effect-guidebook-plant-mutate-chemicals =
     { $chance ->

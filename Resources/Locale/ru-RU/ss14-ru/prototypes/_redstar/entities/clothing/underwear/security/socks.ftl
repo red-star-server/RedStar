@@ -1,4 +1,4 @@
-﻿ent-ClothingUnderwearSocksHeadOfSecurity = носки начальника милиции
+ent-ClothingUnderwearSocksHeadOfSecurity = носки начальника милиции
     .desc = Стандартные носки начальника милиции.
 ent-ClothingUnderwearSocksBrigmedic = носки дежурного врача
     .desc = Стандартные носки дежурного врача.

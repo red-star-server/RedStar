@@ -1,4 +1,4 @@
-﻿ent-ClothingUnderwearTopBraCaptain = бра капитана
+ent-ClothingUnderwearTopBraCaptain = бра капитана
     .desc = Стандартное нижнее бельё капитана.
 ent-ClothingUnderwearTopBraCBURN = бра РХБЗЗ
     .desc = Стандартное нижнее бельё РХБЗЗ.

@@ -1,4 +1,4 @@
-﻿ent-ClothingUnderwearTopBraChemist = бра химика
+ent-ClothingUnderwearTopBraChemist = бра химика
     .desc = Стандартное нижнее бельё химика.
 ent-ClothingUnderwearTopBraChiefMedicalOfficer = бра главного врача
     .desc = Стандартное нижнее бельё главного врача.
@@ -10,7 +10,6 @@ ent-ClothingUnderwearTopBraParamedic = бра фельдшера
     .desc = Стандартное нижнее бельё фельдшера.
 ent-ClothingUnderwearTopBraPsychologist = бра психиатра
     .desc = Стандартное нижнее бельё психиатра.
-    .desc = Стандартное нижнее бельё ведущего врача.
 ent-ClothingUnderwearTopBraSurgeon = бра хирурга
     .desc = Стандартное нижнее бельё хирурга.
 ent-ClothingUnderwearTopBraVirologist = бра вирусолога

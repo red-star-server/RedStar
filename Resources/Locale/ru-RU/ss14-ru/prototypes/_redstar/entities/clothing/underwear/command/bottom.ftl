@@ -1,4 +1,4 @@
-﻿ent-ClothingUnderwearBottomBoxersCaptain = боксеры капитана
+ent-ClothingUnderwearBottomBoxersCaptain = боксеры капитана
     .desc = Стандартное нижнее бельё капитана.
 ent-ClothingUnderwearBottomBoxersCBURN = боксеры РХБЗЗ
     .desc = Стандартное нижнее бельё РХБЗЗ.

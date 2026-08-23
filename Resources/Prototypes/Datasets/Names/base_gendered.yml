@@ -2,10 +2,24 @@
   id: NamesFirstMale
   values:
     prefix: names-first-male-dataset-
-    count: 666
+    count: 986 # RS14
 
 - type: localizedDataset
   id: NamesFirstFemale
   values:
     prefix: names-first-female-dataset-
-    count: 771
+    count: 1145 # RS14
+
+# RS14-start
+- type: localizedDataset
+  id: NamesHumanLastMale
+  values:
+    prefix: names-last-male-dataset-
+    count: 470
+
+- type: localizedDataset
+  id: NamesHumanLastFemale
+  values:
+    prefix: names-last-female-dataset-
+    count: 249
+# RS14-end

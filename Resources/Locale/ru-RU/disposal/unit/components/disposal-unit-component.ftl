@@ -12,7 +12,6 @@ ui-disposal-unit-button-power = Питание
 
 ## Verbs
 disposal-flush-verb-get-data-text = Смыть
-disposal-self-insert-verb-get-data-text = Залезть внутрь
 disposal-eject-verb-get-data-text = Извлечь всё
 
 ## Errors

@@ -1,2 +1,2 @@
-﻿ent-ClothingUnderwearSockLawyer = носки юриста
+ent-ClothingUnderwearSockLawyer = носки юриста
     .desc = Стандартные носки юриста.

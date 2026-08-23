@@ -1,4 +1,4 @@
-﻿ent-ClothingUnderwearBottomBoxersNuclearOperative = боксеры ядерного оперативника
+ent-ClothingUnderwearBottomBoxersNuclearOperative = боксеры ядерного оперативника
     .desc = Стандартное нижнее бельё ядерного оперативника.
 ent-ClothingUnderwearBottomBoxersPirate = боксеры капера
     .desc = Стандартное нижнее бельё капера.
