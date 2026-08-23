@@ -245,16 +245,6 @@
   - UnderwearBottomPantiesNanotrasenRepresentative
 
 - type: loadoutGroup
-  id: NanotrasenCareerTrainerUnderwear
-  name: loadout-group-underwear
-  minLimit: 2
-  hidden: true
-  loadouts:
-  - UnderwearBottomBoxersNanotrasenCareerTrainer
-  - UnderwearTopBraNanotrasenCareerTrainer
-  - UnderwearBottomPantiesNanotrasenCareerTrainer
-
-- type: loadoutGroup
   id: LawyerUnderwear
   name: loadout-group-underwear
   minLimit: 2

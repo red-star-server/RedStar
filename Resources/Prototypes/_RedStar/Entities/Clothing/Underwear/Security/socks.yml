@@ -9,15 +9,6 @@
 
 - type: entity
   parent: ClothingUnderwearSocksBase
-  id: ClothingUnderwearSocksPilot
-  name: pilot's socks
-  description: Standard pilot's socks.
-  components:
-  - type: Sprite
-    sprite: _RedStar/Clothing/Underwear/Security/pilot/socks.rsi
-
-- type: entity
-  parent: ClothingUnderwearSocksBase
   id: ClothingUnderwearSocksBrigmedic
   name: brigmedic's socks
   description: Standard brigmedic's socks.
@@ -60,12 +51,3 @@
   components:
   - type: Sprite
     sprite: _RedStar/Clothing/Underwear/Security/warden/socks.rsi
-
-- type: entity
-  parent: ClothingUnderwearSocksBase
-  id: ClothingUnderwearSocksWardenHelper
-  name: warden assistant's socks
-  description: Standard warden assistant's socks.
-  components:
-  - type: Sprite
-    sprite: _RedStar/Clothing/Underwear/Security/warden_helper/socks.rsi
