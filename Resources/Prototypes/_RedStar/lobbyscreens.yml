@@ -1,0 +1,44 @@
+- type: lobbyBackground
+  id: Anime1
+  background: /Textures/_RedStar/LobbyScreens/Anime1.webp
+
+- type: lobbyBackground
+  id: Anime2
+  background: /Textures/_RedStar/LobbyScreens/Anime2.webp
+
+- type: lobbyBackground
+  id: Union1
+  background: /Textures/_RedStar/LobbyScreens/union1.webp
+
+- type: lobbyBackground
+  id: Zavod
+  background: /Textures/_RedStar/LobbyScreens/zavod.webp
+
+- type: lobbyBackground
+  id: moli_utilizatori
+  background: /Textures/_RedStar/LobbyScreens/moli_utilizatori.webp
+
+- type: lobbyBackground
+  id: communist_banquet
+  background: /Textures/_RedStar/LobbyScreens/communist_banquet.webp
+
+- type: lobbyBackground
+  id: SlavaMilicii
+  background: /Textures/_RedStar/LobbyScreens/SlavaMilicii.webp
+
+- type: lobbyBackground
+  id: ShkafAtmosfera
+  background: /Textures/_RedStar/LobbyScreens/ShkafAtmosfera.webp
+
+#- type: lobbyBackground
+#  id: ShkafNewYear
+#  background: /Textures/_RedStar/LobbyScreens/ShkafNewYear.webp
+
+- type: lobbyBackground
+  id: Soyuz3
+  background: /Textures/_RedStar/LobbyScreens/Soyuz3.webp
+
+- type: lobbyBackground
+  id: RedStar
+  background: /Textures/_RedStar/LobbyScreens/redstar.webp
+
