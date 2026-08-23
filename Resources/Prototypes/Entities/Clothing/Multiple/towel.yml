@@ -71,30 +71,30 @@
   - type: Sprite
     layers:
     - state: icon
-      color: "#004787"
+      color: "#316e4a" # RS14
     - state: iconstripe
-      color: "#EAE8E8"
+      color: "#f0cc8f" # RS14
     - state: NTmono
-      color: "#EAE8E8"
+      color: "#f0cc8f" # RS14
   - type: Item
     inhandVisuals:
       left:
       - state: inhand-left
-        color: "#004787"
+        color: "#316e4a" # RS14
       right:
       - state: inhand-right
-        color: "#004787"
+        color: "#316e4a" # RS14
   - type: Clothing
     clothingVisuals:
       head:
       - state: equipped-HELMET
-        color: "#004787"
+        color: "#316e4a" # RS14
       jumpsuit:
       - state: equipped-INNERCLOTHING
-        color: "#004787"
+        color: "#316e4a" # RS14
       belt:
       - state: equipped-BELT
-        color: "#004787"
+        color: "#316e4a" # RS14
   - type: Fiber
     fiberColor: fibers-regal-blue
 
