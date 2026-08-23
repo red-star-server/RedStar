@@ -1,35 +1,8 @@
 ﻿- type: entity
   parent: ClothingUnderwearTopBase
-  id: ClothingUnderwearTopBraNanotrasenRepresentative
-  name: nanotrasen representative's bra
-  description: Standard nanotrasen representative's underwear.
-  components:
-  - type: Sprite
-    sprite: _RedStar/Clothing/Underwear/Law/representative/women/bra.rsi
-
-- type: entity
-  parent: ClothingUnderwearTopBase
-  id: ClothingUnderwearTopBraNanotrasenCareerTrainer
-  name: nanotrasen career trainer's bra
-  description: Standard nanotrasen career trainer's underwear.
-  components:
-  - type: Sprite
-    sprite: _RedStar/Clothing/Underwear/Centcomm/trainer/women/bra.rsi
-
-- type: entity
-  parent: ClothingUnderwearTopBase
   id: ClothingUnderwearTopBraLawyer
   name: lawyer's bra
   description: Standard lawyer's underwear.
   components:
   - type: Sprite
     sprite: _RedStar/Clothing/Underwear/Law/lawyer/women/bra.rsi
-
-- type: entity
-  parent: ClothingUnderwearTopBase
-  id: ClothingUnderwearTopBraMagistrate
-  name: magistrate's bra
-  description: Standard magistrate's underwear.
-  components:
-  - type: Sprite
-    sprite: _RedStar/Clothing/Underwear/Law/magistrate/women/bra.rsi

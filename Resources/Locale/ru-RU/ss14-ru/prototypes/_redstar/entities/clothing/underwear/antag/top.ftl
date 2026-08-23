@@ -4,3 +4,7 @@ ent-ClothingUnderwearTopBraPirate = бра капера
     .desc = Стандартное нижнее бельё капера.
 ent-ClothingUnderwearTopBraSyndicateAgent = бра агента синдиката
     .desc = Стандартное нижнее бельё агента синдиката.
+ent-ClothingUnderwearTopBraNinja = бра космического ниндзя
+    .desc = Стандартное нижнее бельё космического ниндзя.
+ent-ClothingUnderwearTopBraWizard = бра мага
+    .desc = Стандартное нижнее бельё мага.

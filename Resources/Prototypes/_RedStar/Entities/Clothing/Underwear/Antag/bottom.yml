@@ -26,6 +26,24 @@
   - type: Sprite
     sprite: _RedStar/Clothing/Underwear/Antag/syndicate_agent/man.rsi
 
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersNinja
+  name: ninja's boxers
+  description: Standard space ninja's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Antag/ninja/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersWizard
+  name: wizard's boxers
+  description: Standard wizard's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Antag/wizard/man.rsi
+
 # Panties
 - type: entity
   parent: ClothingUnderwearBottomBase
@@ -53,3 +71,21 @@
   components:
   - type: Sprite
     sprite: _RedStar/Clothing/Underwear/Antag/syndicate_agent/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesNinja
+  name: ninja's panties
+  description: Standard space ninja's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Antag/ninja/women/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesWizard
+  name: wizard's panties
+  description: Standard wizard's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Antag/wizard/women/pants.rsi

@@ -36,15 +36,6 @@
 
 - type: entity
   parent: ClothingUnderwearTopBase
-  id: ClothingUnderwearTopBraPilot
-  name: pilot's bra
-  description: Standard pilot's underwear.
-  components:
-  - type: Sprite
-    sprite: _RedStar/Clothing/Underwear/Security/pilot/women/bra.rsi
-
-- type: entity
-  parent: ClothingUnderwearTopBase
   id: ClothingUnderwearTopBraSecurityOfficer
   name: security officer's bra
   description: Standard security officer's underwear.
@@ -60,12 +51,3 @@
   components:
   - type: Sprite
     sprite: _RedStar/Clothing/Underwear/Security/warden/women/bra.rsi
-
-- type: entity
-  parent: ClothingUnderwearTopBase
-  id: ClothingUnderwearTopBraWardenHelper
-  name: warden assistant's bra
-  description: Standard warden assistant's underwear.
-  components:
-  - type: Sprite
-    sprite: _RedStar/Clothing/Underwear/Security/warden_helper/women/bra.rsi

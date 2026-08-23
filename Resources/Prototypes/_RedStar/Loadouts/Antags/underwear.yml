@@ -70,3 +70,51 @@
     proto: FemaleUnderwear
   equipment:
     underweart: ClothingUnderwearTopBraSyndicateAgent
+
+- type: loadout
+  id: UnderwearBottomBoxersNinja
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersNinja
+
+- type: loadout
+  id: UnderwearBottomPantiesNinja
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesNinja
+
+- type: loadout
+  id: UnderwearTopBraNinja
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraNinja
+
+- type: loadout
+  id: UnderwearBottomBoxersWizard
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersWizard
+
+- type: loadout
+  id: UnderwearBottomPantiesWizard
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesWizard
+
+- type: loadout
+  id: UnderwearTopBraWizard
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraWizard

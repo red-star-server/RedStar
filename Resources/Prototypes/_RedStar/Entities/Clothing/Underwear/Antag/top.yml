@@ -24,3 +24,21 @@
   components:
   - type: Sprite
     sprite: _RedStar/Clothing/Underwear/Antag/syndicate_agent/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraNinja
+  name: ninja's bra
+  description: Standard space ninja's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Antag/ninja/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraWizard
+  name: wizard's bra
+  description: Standard wizard's underwear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Antag/wizard/women/bra.rsi

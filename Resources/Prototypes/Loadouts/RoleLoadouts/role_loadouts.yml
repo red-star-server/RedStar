@@ -46,7 +46,7 @@
 - type: roleLoadout
   id: JobPassenger
   groups:
-  - PassengerUnderwear # RS14
+  - DefaultWhiteUnderwear # RS14
   - GroupTankHarness
   - PassengerJumpsuit
   - CommonBackpack
@@ -585,6 +585,7 @@
 - type: roleLoadout
   id: RoleSurvivalExtendedAntag # Used by antagonists that spawn off-station (e.g wizards)
   groups:
+  - WizardUnderwear # RS14
   - SurvivalExtendedAntag
   - GroupSpeciesBreathTool
   - GroupTankHarness
@@ -639,4 +640,5 @@
 - type: roleLoadout
   id: RoleSurvivalSpaceNinja
   groups:
+  - NinjaUnderwear # RS14
   - GroupEVATank

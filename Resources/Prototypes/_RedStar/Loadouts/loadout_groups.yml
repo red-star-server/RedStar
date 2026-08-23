@@ -13,470 +13,450 @@
 - type: loadoutGroup
   id: AtmosphericTechnicianUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersAtmosphericTechnician
   - UnderwearTopBraAtmosphericTechnician
   - UnderwearBottomPantiesAtmosphericTechnician
+  - UnderwearSocksAtmosphericTechnician
 
 - type: loadoutGroup
   id: ChiefEngineerUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersChiefEngineer
   - UnderwearTopBraChiefEngineer
   - UnderwearBottomPantiesChiefEngineer
+  - UnderwearSocksChiefEngineer
 
 - type: loadoutGroup
   id: StationEngineerUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersStationEngineer
   - UnderwearTopBraStationEngineer
   - UnderwearBottomPantiesStationEngineer
+  - UnderwearSocksStationEngineer
 
 - type: loadoutGroup
   id: TechnicalAssistantUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersTechnicalAssistant
   - UnderwearTopBraTechnicalAssistant
   - UnderwearBottomPantiesTechnicalAssistant
+  - UnderwearSocksTechnicalAssistant
 
 # Cargo
 - type: loadoutGroup
   id: CargoTechnicianUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersCargoTechnician
   - UnderwearTopBraCargoTechnician
   - UnderwearBottomPantiesCargoTechnician
+  - UnderwearSocksCargoTechnician
 
 - type: loadoutGroup
   id: QuartermasterUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersQuartermaster
   - UnderwearTopBraQuartermaster
   - UnderwearBottomPantiesQuartermaster
+  - UnderwearSocksQuartermaster
 
 - type: loadoutGroup
   id: SalvageSpecialistUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersSalvageSpecialist
   - UnderwearTopBraSalvageSpecialist
   - UnderwearBottomPantiesSalvageSpecialist
+  - UnderwearSocksSalvageSpecialist
 
 - type: loadoutGroup
   id: ShaftMinerUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersShaftMiner
   - UnderwearTopBraShaftMiner
   - UnderwearBottomPantiesShaftMiner
+  - UnderwearSocksShaftMiner
 
 # Civilian
 - type: loadoutGroup
   id: ServiceWorkerUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersServiceWorker
   - UnderwearTopBraServiceWorker
   - UnderwearBottomPantiesServiceWorker
+  - UnderwearSocksServiceWorker
 
 - type: loadoutGroup
   id: BartenderUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersBartender
   - UnderwearTopBraBartender
   - UnderwearBottomPantiesBartender
+  - UnderwearSocksBartender
 
 - type: loadoutGroup
   id: BotanistUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersBotanist
   - UnderwearTopBraBotanist
   - UnderwearBottomPantiesBotanist
+  - UnderwearSocksBotanist
 
 - type: loadoutGroup
   id: ChefUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersChef
   - UnderwearTopBraChef
   - UnderwearBottomPantiesChef
+  - UnderwearSocksChef
 
 - type: loadoutGroup
   id: ChaplainUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersChaplain
   - UnderwearTopBraChaplain
   - UnderwearBottomPantiesChaplain
+  - UnderwearSocksChaplain
 
 - type: loadoutGroup
   id: ClownUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersClown
   - UnderwearTopBraClown
   - UnderwearBottomPantiesClown
+  - UnderwearSocksClown
 
 - type: loadoutGroup
   id: JanitorUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersJanitor
   - UnderwearTopBraJanitor
   - UnderwearBottomPantiesJanitor
+  - UnderwearSocksJanitor
 
 - type: loadoutGroup
   id: LibrarianUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersLibrarian
   - UnderwearTopBraLibrarian
   - UnderwearBottomPantiesLibrarian
+  - UnderwearSocksLibrarian
 
 - type: loadoutGroup
   id: MimeUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersMime
   - UnderwearTopBraMime
   - UnderwearBottomPantiesMime
+  - UnderwearSocksMime
 
 - type: loadoutGroup
   id: MusicianUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersMusician
   - UnderwearTopBraMusician
   - UnderwearBottomPantiesMusician
-
-- type: loadoutGroup
-  id: PassengerUnderwear
-  name: loadout-group-underwear
-  minLimit: 2
-  hidden: true
-  loadouts:
-  - UnderwearBottomBoxersPassenger
-  - UnderwearTopBraPassenger
-  - UnderwearBottomPantiesPassenger
+  - UnderwearSocksMusician
 
 # Command
 - type: loadoutGroup
   id: CaptainUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersCaptain
   - UnderwearTopBraCaptain
   - UnderwearBottomPantiesCaptain
+  - UnderwearSocksCaptain
 
 - type: loadoutGroup
   id: HeadOfPersonnelUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersHeadOfPersonnel
   - UnderwearTopBraHeadOfPersonnel
   - UnderwearBottomPantiesHeadOfPersonnel
+  - UnderwearSocksHeadOfPersonnel
 
 # Law
 - type: loadoutGroup
-  id: MagistrateUnderwear
-  name: loadout-group-underwear
-  minLimit: 2
-  hidden: true
-  loadouts:
-  - UnderwearBottomBoxersMagistrate
-  - UnderwearTopBraMagistrate
-  - UnderwearBottomPantiesMagistrate
-
-- type: loadoutGroup
-  id: NanotrasenRepresentativeUnderwear
-  name: loadout-group-underwear
-  minLimit: 2
-  hidden: true
-  loadouts:
-  - UnderwearBottomBoxersNanotrasenRepresentative
-  - UnderwearTopBraNanotrasenRepresentative
-  - UnderwearBottomPantiesNanotrasenRepresentative
-
-- type: loadoutGroup
-  id: NanotrasenCareerTrainerUnderwear
-  name: loadout-group-underwear
-  minLimit: 2
-  hidden: true
-  loadouts:
-  - UnderwearBottomBoxersNanotrasenCareerTrainer
-  - UnderwearTopBraNanotrasenCareerTrainer
-  - UnderwearBottomPantiesNanotrasenCareerTrainer
-
-- type: loadoutGroup
   id: LawyerUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersLawyer
   - UnderwearTopBraLawyer
   - UnderwearBottomPantiesLawyer
+  - UnderwearSocksLawyer
 
 # Science
 - type: loadoutGroup
   id: ResearchDirectorUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersResearchDirector
   - UnderwearTopBraResearchDirector
   - UnderwearBottomPantiesResearchDirector
+  - UnderwearSocksResearchDirector
 
 - type: loadoutGroup
   id: ScientistUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersScientist
   - UnderwearTopBraScientist
   - UnderwearBottomPantiesScientist
+  - UnderwearSocksScientist
 
 - type: loadoutGroup
   id: ResearchAssistantUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersResearchAssistant
   - UnderwearTopBraResearchAssistant
   - UnderwearBottomPantiesResearchAssistant
+  - UnderwearSocksResearchAssistant
 
 # Security
 - type: loadoutGroup
   id: BrigmedicUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersBrigmedic
   - UnderwearTopBraBrigmedic
   - UnderwearBottomPantiesBrigmedic
+  - UnderwearSocksBrigmedic
 
 - type: loadoutGroup
   id: DetectiveUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersDetective
   - UnderwearTopBraDetective
   - UnderwearBottomPantiesDetective
+  - UnderwearSocksDetective
 
 - type: loadoutGroup
   id: HeadOfSecurityUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersHeadOfSecurity
   - UnderwearTopBraHeadOfSecurity
   - UnderwearBottomPantiesHeadOfSecurity
+  - UnderwearSocksHeadOfSecurity
 
 - type: loadoutGroup
   id: SecurityCadetUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersSecurityCadet
   - UnderwearTopBraSecurityCadet
   - UnderwearBottomPantiesSecurityCadet
+  - UnderwearSocksSecurityCadet
 
 - type: loadoutGroup
   id: SecurityOfficerUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersSecurityOfficer
   - UnderwearTopBraSecurityOfficer
   - UnderwearBottomPantiesSecurityOfficer
+  - UnderwearSocksSecurityOfficer
 
 - type: loadoutGroup
   id: WardenUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersWarden
   - UnderwearTopBraWarden
   - UnderwearBottomPantiesWarden
-
-- type: loadoutGroup
-  id: PilotUnderwear
-  name: loadout-group-underwear
-  minLimit: 2
-  hidden: true
-  loadouts:
-  - UnderwearBottomBoxersPilot
-  - UnderwearTopBraPilot
-  - UnderwearBottomPantiesPilot
-
-- type: loadoutGroup
-  id: WardenHelperUnderwear
-  name: loadout-group-underwear
-  minLimit: 2
-  hidden: true
-  loadouts:
-  - UnderwearBottomBoxersWardenHelper
-  - UnderwearTopBraWardenHelper
-  - UnderwearBottomPantiesWardenHelper
+  - UnderwearSocksWarden
 
 # Dignitary
 - type: loadoutGroup
   id: BlueshieldOfficerUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersBlueshieldOfficer
   - UnderwearTopBraBlueshieldOfficer
   - UnderwearBottomPantiesBlueshieldOfficer
+  - UnderwearSocksBlueshieldOfficer
 
 # Wildcards
 - type: loadoutGroup
   id: ReporterUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersReporter
   - UnderwearTopBraReporter
   - UnderwearBottomPantiesReporter
+  - UnderwearSocksReporter
 
 - type: loadoutGroup
   id: ChemistUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersChemist
   - UnderwearTopBraChemist
   - UnderwearBottomPantiesChemist
+  - UnderwearSocksChemist
 
 - type: loadoutGroup
   id: ChiefMedicalOfficerUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersChiefMedicalOfficer
   - UnderwearTopBraChiefMedicalOfficer
   - UnderwearBottomPantiesChiefMedicalOfficer
+  - UnderwearSocksChiefMedicalOfficer
 
 - type: loadoutGroup
   id: MedicalDoctorUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersMedicalDoctor
   - UnderwearTopBraMedicalDoctor
   - UnderwearBottomPantiesMedicalDoctor
+  - UnderwearSocksMedicalDoctor
 
 - type: loadoutGroup
   id: MedicalInternUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersMedicalIntern
   - UnderwearTopBraMedicalIntern
   - UnderwearBottomPantiesMedicalIntern
+  - UnderwearSocksMedicalIntern
 
 - type: loadoutGroup
   id: ParamedicUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersParamedic
   - UnderwearTopBraParamedic
   - UnderwearBottomPantiesParamedic
+  - UnderwearSocksParamedic
 
 - type: loadoutGroup
   id: PsychologistUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersPsychologist
   - UnderwearTopBraPsychologist
   - UnderwearBottomPantiesPsychologist
+  - UnderwearSocksPsychologist
 
 - type: loadoutGroup
   id: SurgeonUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersSurgeon
   - UnderwearTopBraSurgeon
   - UnderwearBottomPantiesSurgeon
+  - UnderwearSocksSurgeon
 
 - type: loadoutGroup
   id: VirologistUnderwear
   name: loadout-group-underwear
-  minLimit: 2
+  minLimit: 3
   hidden: true
   loadouts:
   - UnderwearBottomBoxersVirologist
   - UnderwearTopBraVirologist
   - UnderwearBottomPantiesVirologist
+  - UnderwearSocksVirologist
 
 - type: loadoutGroup
   id: CentcommUnderwear
@@ -547,3 +527,23 @@
   - UnderwearBottomBoxersSyndicateAgent
   - UnderwearTopBraSyndicateAgent
   - UnderwearBottomPantiesSyndicateAgent
+
+- type: loadoutGroup
+  id: NinjaUnderwear
+  name: loadout-group-underwear
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - UnderwearBottomBoxersNinja
+  - UnderwearTopBraNinja
+  - UnderwearBottomPantiesNinja
+
+- type: loadoutGroup
+  id: WizardUnderwear
+  name: loadout-group-underwear
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - UnderwearBottomBoxersWizard
+  - UnderwearTopBraWizard
+  - UnderwearBottomPantiesWizard

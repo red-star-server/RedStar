@@ -10,7 +10,3 @@ ent-ClothingUnderwearSocksSecurityOfficer = носки милиционера
     .desc = Стандартные носки милиционера.
 ent-ClothingUnderwearSocksWarden = носки старшего следователя
     .desc = Стандартные носки старшего следователя.
-ent-ClothingUnderwearSocksPilot = носки пилота
-    .desc = Стандартные носки пилота.
-ent-ClothingUnderwearSocksWardenHelper = носки помощника старшего следователя
-    .desc = Стандартные носки помощника старшего следователя.

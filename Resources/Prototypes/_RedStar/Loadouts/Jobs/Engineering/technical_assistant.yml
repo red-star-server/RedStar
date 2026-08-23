@@ -22,3 +22,8 @@
     proto: FemaleUnderwear
   equipment:
     underweart: ClothingUnderwearTopBraTechnicalAssistant
+
+- type: loadout
+  id: UnderwearSocksTechnicalAssistant
+  equipment:
+    socks: ClothingUnderwearSocksTechnicalAssistant
