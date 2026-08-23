@@ -41,7 +41,7 @@
   container:
     entity: WrappedParcel
     containerId: contents
-  cost: 2500
+  cost: 5000 # RS14
   category: cargoproduct-category-name-service
   group: market
 
