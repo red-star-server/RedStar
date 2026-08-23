@@ -8,15 +8,6 @@
   - type: Sprite
     sprite: _RedStar/Clothing/Underwear/Law/lawyer/man.rsi
 
-- type: entity
-  parent: ClothingUnderwearBottomBase
-  id: ClothingUnderwearBottomBoxersMagistrate
-  name: magistrate's boxers
-  description: Standard magistrate's underwear.
-  components:
-  - type: Sprite
-    sprite: _RedStar/Clothing/Underwear/Law/magistrate/man.rsi
-
 # Panties
 - type: entity
   parent: ClothingUnderwearBottomBase
@@ -26,12 +17,3 @@
   components:
   - type: Sprite
     sprite: _RedStar/Clothing/Underwear/Law/lawyer/women/pants.rsi
-
-- type: entity
-  parent: ClothingUnderwearBottomBase
-  id: ClothingUnderwearBottomPantiesMagistrate
-  name: magistrate's panties
-  description: Standard magistrate's underwear.
-  components:
-  - type: Sprite
-    sprite: _RedStar/Clothing/Underwear/Law/magistrate/women/pants.rsi

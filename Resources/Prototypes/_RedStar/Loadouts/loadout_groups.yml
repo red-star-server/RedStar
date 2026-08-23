@@ -235,17 +235,6 @@
 
 # Law
 - type: loadoutGroup
-  id: MagistrateUnderwear
-  name: loadout-group-underwear
-  minLimit: 3
-  hidden: true
-  loadouts:
-  - UnderwearBottomBoxersMagistrate
-  - UnderwearTopBraMagistrate
-  - UnderwearBottomPantiesMagistrate
-  - UnderwearSocksMagistrate
-
-- type: loadoutGroup
   id: LawyerUnderwear
   name: loadout-group-underwear
   minLimit: 3
