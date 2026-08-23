@@ -18,6 +18,7 @@
     sprite: Objects/Devices/wristwatch.rsi
     slots:
     - gloves
+    - handAccessory # RS14
   - type: Appearance
   - type: Damageable
   - type: Injurable
