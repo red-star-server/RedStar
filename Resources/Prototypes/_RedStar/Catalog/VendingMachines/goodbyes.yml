@@ -1,0 +1,5 @@
+﻿- type: localizedDataset
+  id: UndieMateGoodbyes
+  values:
+    prefix: thankyou-undies-
+    count: 7

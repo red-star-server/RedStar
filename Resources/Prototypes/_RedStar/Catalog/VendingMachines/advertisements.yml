@@ -1,0 +1,5 @@
+﻿- type: localizedDataset
+  id: UndieMateAds
+  values:
+    prefix: advertisement-undies-
+    count: 12

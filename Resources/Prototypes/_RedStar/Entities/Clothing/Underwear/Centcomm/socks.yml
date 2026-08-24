@@ -1,0 +1,8 @@
+﻿- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksBlueShieldOfficer
+  name: blueshield officer's socks
+  description: Standard blueshield officer's socks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Command/blueshield/socks.rsi

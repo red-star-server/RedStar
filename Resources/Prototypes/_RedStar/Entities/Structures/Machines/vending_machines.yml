@@ -1,0 +1,27 @@
+﻿- type: entity
+  parent: VendingMachine
+  id: VendingMachineUnderwear
+  name: UndieMate
+  description: A vending machine for underwear.
+  components:
+  - type: VendingMachine
+    pack: UndieMateInventory
+  - type: DatasetVocalizer
+    dataset: UndieMateAds
+  - type: SpeakOnUIClosed
+    pack: UndieMateGoodbyes
+  - type: Speech
+  - type: PointLight
+    radius: 1.5
+    energy: 2.0 # reduced energy since the color is pure white
+    color: "#FFFFFF"
+  - type: Sprite
+    sprite: _RedStar/Structures/Machines/VendingMachines/undiemate.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
