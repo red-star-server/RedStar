@@ -118,6 +118,13 @@
           32:
             sprite: Mobs/Species/Vulpkanin/displacement.rsi
             state: shoes
+      # RS14-start
+      socks:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+            state: shoes
+      # RS14-end
       head:
         sizeMaps:
           32:

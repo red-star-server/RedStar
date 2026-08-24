@@ -82,6 +82,13 @@
           32:
             sprite: Mobs/Species/Moth/displacement.rsi
             state: shoes
+      # RS14-start
+      socks:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Moth/displacement.rsi
+            state: shoes
+      # RS14-end
     displacements:
       jumpsuit:
         sizeMaps:
@@ -108,6 +115,13 @@
           32:
             sprite: Mobs/Species/Moth/displacement.rsi
             state: shoes
+      # RS14-start
+      socks:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Moth/displacement.rsi
+            state: shoes
+      # RS14-end
   - type: InitialBody
     organs:
       Torso: OrganMothTorso
