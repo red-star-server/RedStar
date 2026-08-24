@@ -1,3 +1,5 @@
+ent-ClothingFootWrapsBase = { ent-ClothingShoesBaseButcherable }
+    .desc = { ent-ClothingShoesBaseButcherable.desc }
 ent-ClothingFootWrapsWhite = белые обмотки
     .desc = Пара кусков ткани для тех, кому некомфортно в обычных человеческих ботинках. Их вполне можно намотать на руки.
 ent-ClothingFootWrapsBlack = черные обмотки

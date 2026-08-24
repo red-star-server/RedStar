@@ -12,3 +12,5 @@ ent-StatusEffectClumsyGuaranteed = { ent-StatusEffectClumsyAll }
     .desc = { ent-StatusEffectClumsyAll.desc }
 ent-StatusEffectClumsyMaid = { ent-StatusEffectClumsyAll }
     .desc = { ent-StatusEffectClumsyAll.desc }
+ent-StatusEffectClumsyDrunk = { ent-MobStatusEffectDebuff }
+    .desc = { ent-MobStatusEffectDebuff.desc }

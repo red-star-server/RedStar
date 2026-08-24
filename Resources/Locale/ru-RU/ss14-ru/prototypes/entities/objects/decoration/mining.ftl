@@ -10,5 +10,5 @@ ent-WoodenSupportBeam = деревянная опорная балка
     .desc = { ent-BaseWoodenSupport.desc }
 ent-WoodenSupportWall = деревянная опорная стена
     .desc = Старая, гнилая стена.
-ent-WoodenSupportWallBroken = сломанная деревянная опора
+ent-WoodenSupportWallBroken = { ent-BaseWoodenSupport }
     .desc = { ent-BaseWoodenSupport.desc }

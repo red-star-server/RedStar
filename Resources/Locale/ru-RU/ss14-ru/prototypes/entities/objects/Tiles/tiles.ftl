@@ -61,17 +61,15 @@ ent-FloorTileItemTechmaintDark = тёмный технический пол
 ent-FloorTileItemPlastic = пластиковая плитка
     .desc = { ent-FloorTileItemBase.desc }
 ent-FloorTileItemDarkPlastic = тёмная пластиковая плитка
-    .desc = { ent-FloorTileItemBase.desc }
+    .desc = { ent-FloorTileItemPlastic.desc }
 ent-FloorTileItemWhitePlastic = белая пластиковая плитка
-    .desc = { ent-FloorTileItemBase.desc }
+    .desc = { ent-FloorTileItemPlastic.desc }
 ent-FloorTileItemLino = линолеум
     .desc = { ent-FloorTileItemBase.desc }
 ent-FloorTileItemBlue = голубая плитка
     .desc = { ent-FloorTileItemBase.desc }
 ent-FloorTileItemLime = лаймовая плитка
     .desc = { ent-FloorTileItemBase.desc }
-
-# Departmental
 ent-FloorTileItemFreezer = плитка морозильника
     .desc = { ent-FloorTileItemBase.desc }
 ent-FloorTileItemBar = барная плитка
@@ -84,8 +82,6 @@ ent-FloorTileItemKitchen = кухонная плитка
     .desc = { ent-FloorTileItemBase.desc }
 ent-FloorTileItemLaundry = плитка прачечной
     .desc = { ent-FloorTileItemBase.desc }
-
-# Carpets
 ent-FloorTileItemArcadeBlue = синий пол аркады
     .desc = { ent-FloorTileItemBase.desc }
 ent-FloorTileItemArcadeRed = красный пол аркады
@@ -98,14 +94,10 @@ ent-FloorTileItemBoxing = пол боксёрского ринга
     .desc = { ent-FloorTileItemBase.desc }
 ent-FloorTileItemGym = пол спортзала
     .desc = { ent-FloorTileItemBase.desc }
-
-# Materials
 ent-FloorTileItemGold = золотая плитка
     .desc = { ent-FloorTileItemBase.desc }
 ent-FloorTileItemSilver = серебряная плитка
     .desc = { ent-FloorTileItemBase.desc }
-
-# Terrain
 ent-FloorTileItemGrass = плитка травы
     .desc = { ent-FloorTileItemBase.desc }
 ent-FloorTileItemGrassJungle = плитка травы джунглей

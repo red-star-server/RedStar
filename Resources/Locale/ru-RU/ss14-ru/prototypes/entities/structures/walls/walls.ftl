@@ -63,6 +63,7 @@ ent-WallReinforcedChitin = укреплённый экзодермис
     .desc = { ent-BaseWall.desc }
 ent-WallXenoborg = мехадермическая стена
     .desc = { ent-WallPlastitanium.desc }
+    .suffix = { ent-WallPlastitanium.suffix }
 ent-WallXenoborgDiagonal = мехадермическая стена
     .desc = { ent-WallPlastitaniumDiagonal.desc }
     .suffix = Диагональ
