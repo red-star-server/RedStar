@@ -138,26 +138,28 @@
       - id: ClothingShoesBootsCowboyFancy
       - id: ClothingHeadHatCowboyBountyHunter
       # Pins
-      - !type:GroupSelector
-        children:
-        - id: ClothingNeckLGBTPin
-        - id: ClothingNeckAllyPin
-        - id: ClothingNeckAromanticPin
-        - id: ClothingNeckAsexualPin
-        - id: ClothingNeckAroacePin
-        - id: ClothingNeckBisexualPin
-        - id: ClothingNeckGayPin
-        - id: ClothingNeckIntersexPin
-        - id: ClothingNeckLesbianPin
-        - id: ClothingNeckNonBinaryPin
-        - id: ClothingNeckPansexualPin
-        - id: ClothingNeckPluralPin
-        - id: ClothingNeckOmnisexualPin
-        - id: ClothingNeckGenderqueerPin
-        - id: ClothingNeckGenderfluidPin
-        - id: ClothingNeckTransPin
-        - id: ClothingNeckAutismPin
-        - id: ClothingNeckGoldAutismPin
+      # RS14-start
+      #- !type:GroupSelector
+      #  children:
+      #  - id: ClothingNeckLGBTPin
+      #  - id: ClothingNeckAllyPin
+      #  - id: ClothingNeckAromanticPin
+      #  - id: ClothingNeckAsexualPin
+      #  - id: ClothingNeckAroacePin
+      #  - id: ClothingNeckBisexualPin
+      #  - id: ClothingNeckGayPin
+      #  - id: ClothingNeckIntersexPin
+      #  - id: ClothingNeckLesbianPin
+      #  - id: ClothingNeckNonBinaryPin
+      #  - id: ClothingNeckPansexualPin
+      #  - id: ClothingNeckPluralPin
+      #  - id: ClothingNeckOmnisexualPin
+      #  - id: ClothingNeckGenderqueerPin
+      #  - id: ClothingNeckGenderfluidPin
+      #  - id: ClothingNeckTransPin
+      #  - id: ClothingNeckAutismPin
+      #  - id: ClothingNeckGoldAutismPin
+      # RS14-end
     # Rare Group
     - !type:GroupSelector
       weight: 15
