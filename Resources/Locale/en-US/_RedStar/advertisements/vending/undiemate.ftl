@@ -1,0 +1,20 @@
+﻿advertisement-undies-1 = Comfort starts with what no one else can see.
+advertisement-undies-2 = Classics, lace, and something a little bolder!
+advertisement-undies-3 = Modest, daring, or barely there—the choice is yours!
+advertisement-undies-4 = Put on something special. Or almost nothing at all.
+advertisement-undies-5 = Want to feel irresistible? Start with your underwear!
+advertisement-undies-6 = For dates, parties, and completely ordinary shifts. Sure, sure.
+advertisement-undies-7 = You can look stunning even under a spacesuit!
+advertisement-undies-8 = Your jumpsuit doesn't need to know what's underneath.
+advertisement-undies-9 = Underwear for every occasion. Even that one.
+advertisement-undies-10 = Warning: New underwear may cause a sudden surge of confidence!
+advertisement-undies-11 = Underwear got you down? Stop by UndieMate!
+advertisement-undies-12 = Security reminds you: seductive underwear is not armor.
+
+thankyou-undies-1 = Enjoy your new underwear!
+thankyou-undies-2 = Bold choice! We like it.
+thankyou-undies-3 = Hope it fits perfectly!
+thankyou-undies-4 = No one will know. Unless you tell them.
+thankyou-undies-5 = Now all you need is the right occasion!
+thankyou-undies-6 = Thank you for your purchase! And yes—it looks good on you.
+thankyou-undies-7 = No returns on worn underwear!
