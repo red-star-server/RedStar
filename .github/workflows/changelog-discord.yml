@@ -19,10 +19,13 @@ jobs:
 
       - name: Render Discord payload
         id: render
+        env:
+          ROLE_ID: ${{ vars.CHANGELOG_DISCORD_ROLE_ID }}
         run: |
           python3 Tools/changelogs/pr_changelog.py \
             --event-file "$GITHUB_EVENT_PATH" \
-            --output-file discord_payload.json
+            --output-file discord_payload.json \
+            --role-id "$ROLE_ID"
 
           if [ -f discord_payload.json ]; then
             echo "should_send=true" >> "$GITHUB_OUTPUT"
@@ -42,19 +45,3 @@ jobs:
             --fail \
             --silent \
             --show-error
-
-      - name: Ping changelog waiters
-        if: steps.render.outputs.should_send == 'true' && vars.CHANGELOG_DISCORD_ROLE_ID != ''
-        env:
-          WEBHOOK_URL: ${{ secrets.CHANGELOG_DISCORD_WEBHOOK }}
-          ROLE_ID: ${{ vars.CHANGELOG_DISCORD_ROLE_ID }}
-        run: |
-          jq -n --arg role_id "$ROLE_ID" \
-            '{content: ("<@&" + $role_id + ">"), allowed_mentions: {parse: [], roles: [$role_id]}}' |
-            curl -X POST \
-              -H "Content-Type: application/json" \
-              --data-binary @- \
-              "$WEBHOOK_URL" \
-              --fail \
-              --silent \
-              --show-error

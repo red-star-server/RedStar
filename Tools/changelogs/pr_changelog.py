@@ -65,7 +65,11 @@ def main() -> int:
     parser.add_argument("--event-file", required=True, type=Path)
     parser.add_argument("--output-file", required=True, type=Path)
     parser.add_argument("--username", default="Красная Звезда")
+    parser.add_argument("--role-id")
     args = parser.parse_args()
+
+    if args.role_id and not args.role_id.isdigit():
+        parser.error("--role-id must contain only digits")
 
     event = json.loads(args.event_file.read_text(encoding="utf-8"))
     pull_request = event["pull_request"]
@@ -96,6 +100,10 @@ def main() -> int:
             }
         ],
     }
+
+    if args.role_id:
+        payload["content"] = f"<@&{args.role_id}>"
+        payload["allowed_mentions"]["roles"] = [args.role_id]
 
     args.output_file.write_text(
         json.dumps(payload, ensure_ascii=False, indent=2),
