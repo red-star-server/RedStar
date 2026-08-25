@@ -1,9 +1,4 @@
-﻿/*
- * This file is sublicensed under MIT License
- * https://github.com/space-wizards/space-station-14/blob/master/LICENSE.TXT
- */
-
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Humanoid;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
@@ -11,7 +6,7 @@ using Content.Shared.Preferences.Loadouts.Effects;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
-namespace Content.Shared._RedStar.Preferences.Loadouts.Effects;
+namespace Content.Shared._Sirena.Preferences.Loadouts.Effects;
 
 public sealed partial class SexLoadoutEffect : LoadoutEffect
 {
