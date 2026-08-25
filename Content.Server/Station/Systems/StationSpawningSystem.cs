@@ -137,11 +137,15 @@ public sealed partial class StationSpawningSystem : SharedStationSpawningSystem
             _visualBody.ApplyProfileTo(entity.Value, profile);
             _humanoidProfile.ApplyProfileTo(entity.Value, profile);
             _metaSystem.SetEntityName(entity.Value, profile.Name);
-
-            if (profile.FlavorText != "" && _configurationManager.GetCVar(CCVars.FlavorText))
+            // RS14-start
+            if (_configurationManager.GetCVar(CCVars.FlavorText))
             {
-                AddComp<DetailExaminableComponent>(entity.Value).Content = profile.FlavorText;
+                var detail = EnsureComp<DetailExaminableComponent>(entity.Value);
+                detail.Content = profile.FlavorText;
+                detail.ErpStatus = profile.ErpStatus;
+                Dirty(entity.Value, detail);
             }
+            // RS14-end
         }
 
         if (loadout != null)

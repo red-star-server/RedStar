@@ -1,3 +1,4 @@
+using Content.Shared._Sirena.Humanoid;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Verbs;
@@ -30,7 +31,15 @@ public sealed partial class DetailExaminableSystem : EntitySystem
             Act = () =>
             {
                 var markup = new FormattedMessage();
-                markup.AddMarkupPermissive(ent.Comp.Content);
+                // RS14-start
+                if (!string.IsNullOrWhiteSpace(ent.Comp.Content))
+                {
+                    markup.AddMarkupPermissive(ent.Comp.Content);
+                    markup.PushNewline();
+                }
+
+                AddErpStatus(markup, ent.Comp.ErpStatus);
+                // RS14-end
                 _examine.SendExamineTooltip(user, ent, markup, false, false);
             },
             Text = Loc.GetString("detail-examinable-verb-text"),
@@ -42,4 +51,19 @@ public sealed partial class DetailExaminableSystem : EntitySystem
 
         args.Verbs.Add(verb);
     }
+
+    // RS14-start
+    private void AddErpStatus(FormattedMessage message, ErpStatus status)
+    {
+        var (locId, color) = status switch
+        {
+            ErpStatus.Partial => ("humanoid-erp-status-partial", Color.Yellow),
+            ErpStatus.Full => ("humanoid-erp-status-full", Color.LimeGreen),
+            _ => ("humanoid-erp-status-no", Color.Red),
+        };
+
+        message.PushColor(color);
+        message.AddText(Loc.GetString(locId));
+    }
+    // RS14-end
 }

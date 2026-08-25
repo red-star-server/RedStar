@@ -1,6 +1,7 @@
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Content.Shared._Sirena.Humanoid;
 using Content.Shared.CCVar;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.EntityEffects.Effects;
@@ -77,6 +78,11 @@ namespace Content.Shared.Preferences
         /// </summary>
         [DataField]
         public string FlavorText { get; set; } = string.Empty;
+
+        // RS14-start
+        [DataField]
+        public ErpStatus ErpStatus { get; private set; } = ErpStatus.No;
+        // RS14-end
 
         /// <summary>
         /// Associated <see cref="SpeciesPrototype"/> for this profile.
@@ -193,6 +199,7 @@ namespace Content.Shared.Preferences
                 new HashSet<ProtoId<TraitPrototype>>(other.TraitPreferences),
                 new Dictionary<string, RoleLoadout>(other.Loadouts))
         {
+            ErpStatus = other.ErpStatus; // RS14
         }
 
         /// <summary>
@@ -397,6 +404,13 @@ namespace Content.Shared.Preferences
         {
             return new(this) { FlavorText = flavorText };
         }
+
+        // RS14-start
+        public HumanoidCharacterProfile WithErpStatus(ErpStatus status)
+        {
+            return new(this) { ErpStatus = status };
+        }
+        // RS14-end
 
         public HumanoidCharacterProfile WithAge(int age)
         {
@@ -625,6 +639,7 @@ namespace Content.Shared.Preferences
             if (!_traitPreferences.SequenceEqual(other._traitPreferences)) return false;
             if (!Loadouts.SequenceEqual(other.Loadouts)) return false;
             if (FlavorText != other.FlavorText) return false;
+            if (ErpStatus != other.ErpStatus) return false; // RS14
             return Appearance.Equals(other.Appearance);
         }
 
@@ -633,6 +648,10 @@ namespace Content.Shared.Preferences
             var configManager = collection.Resolve<IConfigurationManager>();
             var prototypeManager = collection.Resolve<IPrototypeManager>();
 
+            // RS14-start
+            if (!Enum.IsDefined(ErpStatus))
+                ErpStatus = default;
+            // RS14-end
             if (!prototypeManager.TryIndex(Species, out var speciesPrototype) || speciesPrototype.RoundStart == false)
             {
                 Species = HumanoidCharacterProfile.DefaultSpecies;
@@ -886,6 +905,7 @@ namespace Content.Shared.Preferences
             hashCode.Add(Appearance);
             hashCode.Add((int)SpawnPriority);
             hashCode.Add((int)PreferenceUnavailable);
+            hashCode.Add((int)ErpStatus); // RS14
             return hashCode.ToHashCode();
         }
 

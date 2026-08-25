@@ -3,6 +3,7 @@ using System.Threading;
 using Content.IntegrationTests.Fixtures;
 using Content.Server.Database;
 using Content.Server.Preferences.Managers;
+using Content.Shared._Sirena.Humanoid;
 using Content.Shared.Body;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
@@ -42,7 +43,7 @@ namespace Content.IntegrationTests.Tests.Preferences
 
         private static HumanoidCharacterProfile CharlieCharlieson()
         {
-            return new()
+            return new HumanoidCharacterProfile // RS14
             {
                 Name = "Charlie Charlieson",
                 FlavorText = "The biggest boy around.",
@@ -52,7 +53,7 @@ namespace Content.IntegrationTests.Tests.Preferences
                     Color.Azure,
                     Color.Beige,
                     new ())
-            };
+            }.WithErpStatus(ErpStatus.Partial); // RS14
         }
 
         private static ServerDbSqlite GetDb(RobustIntegrationTest.ServerIntegrationInstance server)

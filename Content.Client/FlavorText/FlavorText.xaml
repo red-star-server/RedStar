@@ -1,5 +1,9 @@
 ﻿<Control Name="CFlavorText" xmlns="https://spacestation14.io">
     <BoxContainer Orientation="Vertical" HorizontalExpand="True">
         <TextEdit Name="CFlavorTextInput" Access="Public" MinSize="220 100" Margin="10" HorizontalExpand="True" VerticalExpand="True" />
+        <BoxContainer Orientation="Horizontal" Margin="10 0 10 10">
+            <Label Text="{Loc 'humanoid-profile-editor-erp-status-label'}" VerticalAlignment="Center" Margin="0 0 8 0" />
+            <OptionButton Name="CErpStatusOption" Access="Public" HorizontalExpand="True" />
+        </BoxContainer>
     </BoxContainer>
 </Control>

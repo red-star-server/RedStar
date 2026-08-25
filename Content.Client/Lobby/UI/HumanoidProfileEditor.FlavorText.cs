@@ -1,3 +1,4 @@
+using Content.Shared._Sirena.Humanoid;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Utility;
 
@@ -26,6 +27,10 @@ public sealed partial class HumanoidProfileEditor
             _flavorTextEdit = _flavorText.CFlavorTextInput;
 
             _flavorText.OnFlavorTextChanged += OnFlavorTextChange;
+            // RS14-start
+            _flavorText.OnErpStatusChanged += OnErpStatusChange;
+            _flavorText.SetErpStatus(Profile?.ErpStatus ?? ErpStatus.No);
+            // RS14-end
         }
         else
         {
@@ -34,6 +39,7 @@ public sealed partial class HumanoidProfileEditor
 
             TabContainer.RemoveChild(_flavorText);
             _flavorText.OnFlavorTextChanged -= OnFlavorTextChange;
+            _flavorText.OnErpStatusChanged -= OnErpStatusChange; // RS14
             _flavorText.Dispose();
             _flavorTextEdit?.Dispose();
             _flavorTextEdit = null;
@@ -50,11 +56,23 @@ public sealed partial class HumanoidProfileEditor
         SetDirty();
     }
 
+    // RS14-start
+    private void OnErpStatusChange(ErpStatus status)
+    {
+        if (Profile is null)
+            return;
+
+        Profile = Profile.WithErpStatus(status);
+        SetDirty();
+    }
+    // RS14-end
+
     private void UpdateFlavorTextEdit()
     {
         if (_flavorTextEdit != null)
         {
             _flavorTextEdit.TextRope = new Rope.Leaf(Profile?.FlavorText ?? "");
+            _flavorText?.SetErpStatus(Profile?.ErpStatus ?? ErpStatus.No); // RS14
         }
     }
 }
