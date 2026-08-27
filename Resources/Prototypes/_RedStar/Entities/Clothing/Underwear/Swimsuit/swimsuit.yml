@@ -1,0 +1,109 @@
+﻿- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomSwimHalter
+  name: swimsuit
+  description: A stylish swimsuit for swimming, sunbathing, or lounging by the pool.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Swimsuit/swim_halter.rsi
+  - type: Clothing
+    sprite: _RedStar/Clothing/Underwear/Swimsuit/swim_halter.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomSwimOnePiece
+  name: swimsuit
+  description: A stylish swimsuit for swimming, sunbathing, or lounging by the pool.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Swimsuit/swim_onepiece.rsi
+  - type: Clothing
+    sprite: _RedStar/Clothing/Underwear/Swimsuit/swim_onepiece.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomSwimStrapless
+  name: swimsuit
+  description: A stylish swimsuit for swimming, sunbathing, or lounging by the pool.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Swimsuit/swim_strapless.rsi
+  - type: Clothing
+    sprite: _RedStar/Clothing/Underwear/Swimsuit/swim_strapless.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomSwimStripe
+  name: swimsuit
+  description: A stylish swimsuit for swimming, sunbathing, or lounging by the pool.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Swimsuit/swim_stripe.rsi
+  - type: Clothing
+    sprite: _RedStar/Clothing/Underwear/Swimsuit/swim_stripe.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomSwimBlack
+  name: black swimsuit
+  description: A stylish black swimsuit for the beach or pool.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Swimsuit/swim_black.rsi
+  - type: Clothing
+    sprite: _RedStar/Clothing/Underwear/Swimsuit/swim_black.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomSwimBlue
+  name: blue swimsuit
+  description: A bright blue swimsuit perfect for summer days.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Swimsuit/swim_blue.rsi
+  - type: Clothing
+    sprite: _RedStar/Clothing/Underwear/Swimsuit/swim_blue.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomSwimDarkGreen
+  name: dark green swimsuit
+  description: A dark green swimsuit with a classic look.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Swimsuit/swim_dark_green.rsi
+  - type: Clothing
+    sprite: _RedStar/Clothing/Underwear/Swimsuit/swim_dark_green.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomSwimGreen
+  name: green swimsuit
+  description: A vibrant green swimsuit for the bold.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Swimsuit/swim_green.rsi
+  - type: Clothing
+    sprite: _RedStar/Clothing/Underwear/Swimsuit/swim_green.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomSwimPurple
+  name: purple swimsuit
+  description: A beautiful purple swimsuit with elegant design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Swimsuit/swim_purp.rsi
+  - type: Clothing
+    sprite: _RedStar/Clothing/Underwear/Swimsuit/swim_purp.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomSwimRed
+  name: red swimsuit
+  description: A stunning red swimsuit that catches the eye.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Swimsuit/swim_red.rsi
+  - type: Clothing
+    sprite: _RedStar/Clothing/Underwear/Swimsuit/swim_red.rsi

@@ -35,3 +35,16 @@
       ClothingUnderwearStockingsBlackPaws: 2
       ClothingUnderSocksCoder: 3
       ClothingUnderSocksBee: 3
+  - name: vending-machine-category-swimwear
+    icon: { entity: ClothingUnderwearBottomSwimHalter }
+    startingInventory:
+      ClothingUnderwearBottomSwimHalter: 3
+      ClothingUnderwearBottomSwimOnePiece: 3
+      ClothingUnderwearBottomSwimStrapless: 3
+      ClothingUnderwearBottomSwimStripe: 3
+      ClothingUnderwearBottomSwimBlack: 3
+      ClothingUnderwearBottomSwimBlue: 3
+      ClothingUnderwearBottomSwimDarkGreen: 3
+      ClothingUnderwearBottomSwimGreen: 3
+      ClothingUnderwearBottomSwimPurple: 3
+      ClothingUnderwearBottomSwimRed: 3
