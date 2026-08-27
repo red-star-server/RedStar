@@ -1,26 +1,37 @@
 ﻿- type: vendingMachineInventory
   id: UndieMateInventory
-  startingInventory:
-    ClothingUnderwearTopBraWhite: 5
-    ClothingUnderwearTopBraSports: 5
-    ClothingUnderwearTopBraSportsAlternative: 5
-    ClothingUnderwearBottomPantiesWhite: 5
-    ClothingUnderwearBottomBoxersWhite: 5
-    ClothingUnderwearSocksShort: 5
-    ClothingUnderwearSocksNormal: 5
-    ClothingUnderwearSocksHigh: 5
-    ClothingUnderwearSocksThigh: 2
-    ClothingUnderwearStockingsBlack: 2
-    ClothingUnderwearSocksNylon: 2
-    ClothingUnderwearSocksNylonWhite: 2
-    ClothingUnderwearStockingsBlackPaws: 2
-    ClothingUnderSocksCoder: 3
-    ClothingUnderSocksBee: 3
-  contrabandInventory:
-    ClothingUnderwearTopBraCentcomm: 1
-    ClothingUnderwearBottomPantiesCentcomm: 1
-    ClothingUnderwearBottomBoxersCentcomm: 1
-  emaggedInventory:
-    ClothingUnderwearTopBraSyndicateAgent: 1
-    ClothingUnderwearBottomPantiesSyndicateAgent: 1
-    ClothingUnderwearBottomBoxersSyndicateAgent: 1
+  categories:
+  - name: vending-machine-category-top
+    icon: { entity: ClothingUnderwearTopBraWhite }
+    startingInventory:
+      ClothingUnderwearTopBraWhite: 5
+      ClothingUnderwearTopBraSports: 5
+      ClothingUnderwearTopBraSportsAlternative: 5
+    contrabandInventory:
+      ClothingUnderwearTopBraCentcomm: 1
+    emaggedInventory:
+      ClothingUnderwearTopBraSyndicateAgent: 1
+  - name: vending-machine-category-bottom
+    icon: { entity: ClothingUnderwearBottomPantiesWhite }
+    startingInventory:
+      ClothingUnderwearBottomPantiesWhite: 5
+      ClothingUnderwearBottomBoxersWhite: 5
+    contrabandInventory:
+      ClothingUnderwearBottomPantiesCentcomm: 1
+      ClothingUnderwearBottomBoxersCentcomm: 1
+    emaggedInventory:
+      ClothingUnderwearBottomPantiesSyndicateAgent: 1
+      ClothingUnderwearBottomBoxersSyndicateAgent: 1
+  - name: vending-machine-category-socks
+    icon: { entity: ClothingUnderwearSocksNormal }
+    startingInventory:
+      ClothingUnderwearSocksShort: 5
+      ClothingUnderwearSocksNormal: 5
+      ClothingUnderwearSocksHigh: 5
+      ClothingUnderwearSocksThigh: 2
+      ClothingUnderwearStockingsBlack: 2
+      ClothingUnderwearSocksNylon: 2
+      ClothingUnderwearSocksNylonWhite: 2
+      ClothingUnderwearStockingsBlackPaws: 2
+      ClothingUnderSocksCoder: 3
+      ClothingUnderSocksBee: 3
