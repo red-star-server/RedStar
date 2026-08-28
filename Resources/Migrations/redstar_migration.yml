@@ -62,3 +62,6 @@ RubberPig: null
 Garlands: null
 HighSecSatelliteLocked: HighSecCommandLocked
 HighSecVaultLocked: HighSecCommandLocked
+LootSpawnerContraband: null
+LootSpawnerContrabandHigh: null
+LootSpawnerContrabandLow: null
