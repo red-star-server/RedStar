@@ -299,6 +299,37 @@ namespace Content.Server.Cargo.Systems
             return tradeDestination;
         }
 
+        // RS14-start
+        /// <summary>
+        /// Tries to find a free incoming cargo pallet for the specified station.
+        /// </summary>
+        public bool TryGetCargoDeliveryCoordinates(EntityUid station, out EntityCoordinates coordinates)
+        {
+            coordinates = default;
+
+            if (!TryComp<StationDataComponent>(station, out var stationData))
+                return false;
+
+            _listEnts.Clear();
+            GetTradeStations(stationData, ref _listEnts);
+
+            foreach (var trade in _listEnts)
+            {
+                var tradePads = GetCargoPallets(trade, BuySellType.Buy);
+                _random.Shuffle(tradePads);
+
+                var freePads = GetFreeCargoPallets(trade, tradePads);
+                if (freePads.Count == 0)
+                    continue;
+
+                coordinates = new EntityCoordinates(trade, freePads[0].Transform.LocalPosition);
+                return true;
+            }
+
+            return false;
+        }
+        // RS14-end
+
         private void GetTradeStations(StationDataComponent data, ref List<EntityUid> ents)
         {
             foreach (var gridUid in data.Grids)

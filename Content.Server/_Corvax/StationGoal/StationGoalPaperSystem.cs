@@ -1,14 +1,12 @@
-using Content.Server.Cargo.Components;
+using Content.Server.Cargo.Systems;
 using Content.Server.Fax;
 using Content.Server.MassMedia.Systems;
 using Content.Server.Station.Systems;
 using Content.Shared._Corvax.CCCVars;
-using Content.Shared.Cargo.Components;
 using Content.Shared.Fax.Components;
 using Content.Shared.GameTicking;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -25,7 +23,7 @@ public sealed partial class StationGoalPaperSystem : EntitySystem
     [Dependency] private NewsSystem _news = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private StationSystem _station = default!;
-    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private CargoSystem _cargo = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
 
     [SubscribeLocalEvent]
@@ -112,39 +110,18 @@ public sealed partial class StationGoalPaperSystem : EntitySystem
     /// </summary>
     private void TryDeliverGoalCargo(EntityUid station, StationGoalPrototype goal)
     {
-        if (goal.Spawns.Count == 0) return;
+        if (goal.Spawns.Count == 0 ||
+            !_cargo.TryGetCargoDeliveryCoordinates(station, out var coordinates))
+            return;
 
-        var pallets = new List<EntityCoordinates>();
-        var query = EntityQueryEnumerator<CargoPalletComponent, TransformComponent>();
-        while (query.MoveNext(out var palletUid, out var pallet, out var palletXform))
-        {
-            var grid = palletXform.ParentUid;
-            if ((pallet.PalletType & BuySellType.Buy) == 0 ||
-                !palletXform.Anchored ||
-                _station.GetOwningStation(grid) != station ||
-                !HasComp<TradeStationComponent>(grid))
-            {
-                continue;
-            }
-
-            var aabb = _lookup.GetAABBNoContainer(palletUid, palletXform.LocalPosition, palletXform.LocalRotation);
-            if (_lookup.AnyLocalEntitiesIntersecting(grid, aabb, LookupFlags.Dynamic))
-                continue;
-
-            pallets.Add(new EntityCoordinates(grid, palletXform.LocalPosition));
-        }
-
-        if (pallets.Count == 0) return;
-
-        var selectedPallet = _random.Pick(pallets);
         foreach (var spawnEnt in goal.Spawns)
         {
-            SpawnAtPosition(spawnEnt, selectedPallet);
+            SpawnAtPosition(spawnEnt, coordinates);
         }
     }
 
     /// <summary>
-    ///     Publishes a news article about the station goal in the mass media.
+    /// Publishes a news article about the station goal in the mass media.
     /// </summary>
     private void PublishStationGoalNews(EntityUid ent, StationGoalPrototype goal)
     {
