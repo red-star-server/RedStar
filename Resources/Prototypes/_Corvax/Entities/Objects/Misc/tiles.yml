@@ -11,8 +11,8 @@
     heldPrefix: wood
   - type: FloorTile
     outputs:
-      - Plating
-      - FloorWoodParquet
+    - Plating
+    - FloorWoodParquet
   - type: Stack
     stackType: FloorTileItemWoodParquet
 
@@ -29,8 +29,8 @@
     heldPrefix: wood-black
   - type: FloorTile
     outputs:
-      - Plating
-      - FloorWoodBlack
+    - Plating
+    - FloorWoodBlack
   - type: Stack
     stackType: FloorTileItemWoodBlack
 
@@ -47,8 +47,8 @@
     heldPrefix: wood-dark
   - type: FloorTile
     outputs:
-      - Plating
-      - FloorWoodDark
+    - Plating
+    - FloorWoodDark
   - type: Stack
     stackType: FloorTileItemWoodDark
 
@@ -65,8 +65,8 @@
     heldPrefix: wood-light
   - type: FloorTile
     outputs:
-      - Plating
-      - FloorWoodLight
+    - Plating
+    - FloorWoodLight
   - type: Stack
     stackType: FloorTileItemWoodLight
 
@@ -83,8 +83,8 @@
     heldPrefix: wood-red
   - type: FloorTile
     outputs:
-      - Plating
-      - FloorWoodRed
+    - Plating
+    - FloorWoodRed
   - type: Stack
     stackType: FloorTileItemWoodRed
 
@@ -101,8 +101,8 @@
     heldPrefix: wood-black
   - type: FloorTile
     outputs:
-      - Plating
-      - FloorWoodLargeBlack
+    - Plating
+    - FloorWoodLargeBlack
   - type: Stack
     stackType: FloorTileItemWoodLargeBlack
 
@@ -116,8 +116,8 @@
     heldPrefix: wood-dark
   - type: FloorTile
     outputs:
-      - Plating
-      - FloorWoodLargeDark
+    - Plating
+    - FloorWoodLargeDark
   - type: Stack
     stackType: FloorTileItemWoodLargeDark
 
@@ -134,8 +134,8 @@
     heldPrefix: wood-light
   - type: FloorTile
     outputs:
-      - Plating
-      - FloorWoodLargeLight
+    - Plating
+    - FloorWoodLargeLight
   - type: Stack
     stackType: FloorTileItemWoodLargeLight
 
@@ -152,8 +152,8 @@
     heldPrefix: wood-red
   - type: FloorTile
     outputs:
-      - Plating
-      - FloorWoodLargeRed
+    - Plating
+    - FloorWoodLargeRed
   - type: Stack
     stackType: FloorTileItemWoodLargeRed
 
@@ -170,8 +170,8 @@
     heldPrefix: wood-black
   - type: FloorTile
     outputs:
-      - Plating
-      - FloorWoodParquetBlack
+    - Plating
+    - FloorWoodParquetBlack
   - type: Stack
     stackType: FloorTileItemWoodParquetBlack
 
@@ -188,8 +188,8 @@
     heldPrefix: wood-dark
   - type: FloorTile
     outputs:
-      - Plating
-      - FloorWoodParquetDark
+    - Plating
+    - FloorWoodParquetDark
   - type: Stack
     stackType: FloorTileItemWoodParquetDark
 
@@ -206,8 +206,8 @@
     heldPrefix: wood-light
   - type: FloorTile
     outputs:
-      - Plating
-      - FloorWoodParquetLight
+    - Plating
+    - FloorWoodParquetLight
   - type: Stack
     stackType: FloorTileItemWoodParquetLight
 
@@ -224,8 +224,8 @@
     heldPrefix: wood-red
   - type: FloorTile
     outputs:
-      - Plating
-      - FloorWoodParquetRed
+    - Plating
+    - FloorWoodParquetRed
   - type: Stack
     stackType: FloorTileItemWoodParquetRed
 
@@ -242,8 +242,8 @@
     heldPrefix: wood-black
   - type: FloorTile
     outputs:
-      - Plating
-      - FloorWoodChessBlack
+    - Plating
+    - FloorWoodChessBlack
   - type: Stack
     stackType: FloorTileItemWoodChessBlack
 
@@ -260,8 +260,8 @@
     heldPrefix: wood-dark
   - type: FloorTile
     outputs:
-      - Plating
-      - FloorWoodChessDark
+    - Plating
+    - FloorWoodChessDark
   - type: Stack
     stackType: FloorTileItemWoodChessDark
 
@@ -278,8 +278,8 @@
     heldPrefix: wood-light
   - type: FloorTile
     outputs:
-      - Plating
-      - FloorWoodChessLight
+    - Plating
+    - FloorWoodChessLight
   - type: Stack
     stackType: FloorTileItemWoodChessLight
 
@@ -296,7 +296,7 @@
     heldPrefix: wood-red
   - type: FloorTile
     outputs:
-      - Plating
-      - FloorWoodChessRed
+    - Plating
+    - FloorWoodChessRed
   - type: Stack
     stackType: FloorTileItemWoodChessRed
