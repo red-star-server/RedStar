@@ -47,11 +47,11 @@ PrintedDocumentReportStation: null
 PrintedDocumentSentence: null
 SpawnMobGorillaLargo: null
 SpawnPointPilot: null
-SpawnPointSeniorEngineer: null
-SpawnPointSeniorOfficer: null
-SpawnPointSeniorPhysician: null
-SpawnPointSeniorResearcher: null
 SpawnPointSurgeon: null
+ERTSpawnerEngineering: null
+ERTSpawnerLeader: null
+ERTSpawnerMedical: null
+ERTSpawnerSrcurity: null
 BarSignAlcoholic: null
 ClothingOuterVestArmorMedSec: null
 ClothingOuterVestArmorSec: null
