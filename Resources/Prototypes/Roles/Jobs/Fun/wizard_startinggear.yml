@@ -37,5 +37,5 @@
   equipment:
     eyes: ClothingEyesGlassesCheapSunglasses
     mask: ClothingMaskBreath
-    # neck: ClothingNeckLGBTPin # RS14
+    neck: ClothingNeckLGBTPin
     gloves: ClothingHandsGlovesColorBlack

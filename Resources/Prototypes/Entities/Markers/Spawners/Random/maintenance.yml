@@ -138,9 +138,9 @@
       - id: ClothingShoesBootsCowboyFancy
       - id: ClothingHeadHatCowboyBountyHunter
       # Pins
+      - !type:GroupSelector
+        children:
       # RS14-start
-      #- !type:GroupSelector
-      #  children:
       #  - id: ClothingNeckLGBTPin
       #  - id: ClothingNeckAllyPin
       #  - id: ClothingNeckAromanticPin
@@ -159,6 +159,15 @@
       #  - id: ClothingNeckTransPin
       #  - id: ClothingNeckAutismPin
       #  - id: ClothingNeckGoldAutismPin
+        - id: ClothingNeckUSSPPin
+        - id: ClothingNeckEarthPin
+        - id: ClothingNeckLogistikaPin
+        - id: ClothingNeckDonkPin
+        - id: ClothingNeckDeForestPin
+        - id: ClothingNeckNakamuraPin
+        - id: ClothingNeckVitezstviPin
+        - id: ClothingNeckNanoTrasenPin
+        - id: ClothingNeckSyndicakePin
       # RS14-end
     # Rare Group
     - !type:GroupSelector
