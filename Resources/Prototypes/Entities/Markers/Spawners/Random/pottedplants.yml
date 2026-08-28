@@ -37,6 +37,13 @@
       - id: PottedPlant23
       - id: PottedPlant24
       - id: PottedPlant26
+      # RS14-start
+      - id: PottedPlantAlt0
+      - id: PottedPlantAlt1
+      - id: PottedPlantAlt2
+      - id: PottedPlantAlt3
+      - id: PottedPlantAlt4
+      # RS14-end
 
 - type: entity
   parent: MarkerBase
