@@ -111,13 +111,13 @@ public sealed partial class StationGoalSystem : EntitySystem
     private void TryDeliverGoalCargo(EntityUid station, StationGoalPrototype goal)
     {
         if (goal.Spawns.Count == 0 ||
-            !_cargo.TryGetCargoDeliveryCoordinates(station, out var coordinates))
+            !_cargo.TryGetCargoDeliveryCoordinates(station, 1, out _, out var coordinates))
             return;
 
+        var deliveryCoordinates = coordinates[0];
+
         foreach (var spawnEnt in goal.Spawns)
-        {
-            SpawnAtPosition(spawnEnt, coordinates);
-        }
+            SpawnAtPosition(spawnEnt, deliveryCoordinates);
     }
 
     /// <summary>

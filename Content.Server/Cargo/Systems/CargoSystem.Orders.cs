@@ -301,11 +301,16 @@ namespace Content.Server.Cargo.Systems
 
         // RS14-start
         /// <summary>
-        /// Tries to find a free incoming cargo pallet for the specified station.
+        /// Tries to find free incoming cargo delivery coordinates for the specified station.
         /// </summary>
-        public bool TryGetCargoDeliveryCoordinates(EntityUid station, out EntityCoordinates coordinates)
+        public bool TryGetCargoDeliveryCoordinates(
+            EntityUid station,
+            int count,
+            out EntityUid destination,
+            out List<EntityCoordinates> coordinates)
         {
-            coordinates = default;
+            destination = default;
+            coordinates = [];
 
             if (!TryComp<StationDataComponent>(station, out var stationData))
                 return false;
@@ -319,10 +324,16 @@ namespace Content.Server.Cargo.Systems
                 _random.Shuffle(tradePads);
 
                 var freePads = GetFreeCargoPallets(trade, tradePads);
-                if (freePads.Count == 0)
+                if (freePads.Count < count)
                     continue;
 
-                coordinates = new EntityCoordinates(trade, freePads[0].Transform.LocalPosition);
+                destination = trade;
+
+                for (var i = 0; i < count; i++)
+                {
+                    coordinates.Add(new EntityCoordinates(trade, freePads[i].Transform.LocalPosition));
+                }
+
                 return true;
             }
 
