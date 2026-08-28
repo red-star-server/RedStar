@@ -38,7 +38,7 @@ public sealed partial class StationGoalCommand : IConsoleCommand
             return;
         }
 
-        var stationGoalPaper = _entManager.System<StationGoalPaperSystem>();
+        var stationGoalPaper = _entManager.System<StationGoalSystem>();
         if (!stationGoalPaper.SendStationGoal(euid.Value, protoId))
         {
             shell.WriteError("Station goal was not sent");

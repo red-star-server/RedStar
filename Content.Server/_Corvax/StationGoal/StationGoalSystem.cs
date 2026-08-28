@@ -15,7 +15,7 @@ namespace Content.Server._Corvax.StationGoal;
 /// <summary>
 /// System to spawn paper with station goal.
 /// </summary>
-public sealed partial class StationGoalPaperSystem : EntitySystem
+public sealed partial class StationGoalSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private IRobustRandom _random = default!;
