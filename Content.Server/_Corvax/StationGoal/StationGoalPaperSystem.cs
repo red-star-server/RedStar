@@ -12,156 +12,155 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
-namespace Content.Server._Corvax.StationGoal
-{
-    /// <summary>
-    /// System to spawn paper with station goal.
-    /// </summary>
-    public sealed partial class StationGoalPaperSystem : EntitySystem
-    {
-        [Dependency] private IPrototypeManager _proto = default!;
-        [Dependency] private IRobustRandom _random = default!;
-        [Dependency] private FaxSystem _fax = default!;
-        [Dependency] private NewsSystem _news = default!;
-        [Dependency] private IPlayerManager _playerManager = default!;
-        [Dependency] private StationSystem _station = default!;
-        [Dependency] private EntityLookupSystem _lookup = default!;
-        [Dependency] private IConfigurationManager _cfg = default!;
+namespace Content.Server._Corvax.StationGoal;
 
-        [SubscribeLocalEvent]
-        private void OnRoundStarted(RoundStartedEvent ev)
+/// <summary>
+/// System to spawn paper with station goal.
+/// </summary>
+public sealed partial class StationGoalPaperSystem : EntitySystem
+{
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private FaxSystem _fax = default!;
+    [Dependency] private NewsSystem _news = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private StationSystem _station = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+
+    [SubscribeLocalEvent]
+    private void OnRoundStarted(RoundStartedEvent ev)
+    {
+        if (!_cfg.GetCVar(CCCVars.StationGoal))
+            return;
+
+        var playerCount = _playerManager.PlayerCount;
+
+        var query = EntityQueryEnumerator<StationGoalComponent>();
+        while (query.MoveNext(out var uid, out var station))
         {
-            if (!_cfg.GetCVar(CCCVars.StationGoal))
+            var tempGoals = new List<ProtoId<StationGoalPrototype>>(station.Goals);
+            StationGoalPrototype? selGoal = null;
+            while (tempGoals.Count > 0)
+            {
+                var goalId = _random.Pick(tempGoals);
+                var goalProto = _proto.Index(goalId);
+
+                if (playerCount > goalProto.MaxPlayers ||
+                    playerCount < goalProto.MinPlayers)
+                {
+                    tempGoals.Remove(goalId);
+                    continue;
+                }
+
+                selGoal = goalProto;
+                break;
+            }
+
+            if (selGoal is null)
                 return;
 
-            var playerCount = _playerManager.PlayerCount;
-
-            var query = EntityQueryEnumerator<StationGoalComponent>();
-            while (query.MoveNext(out var uid, out var station))
+            if (SendStationGoal(uid, selGoal))
             {
-                var tempGoals = new List<ProtoId<StationGoalPrototype>>(station.Goals);
-                StationGoalPrototype? selGoal = null;
-                while (tempGoals.Count > 0)
-                {
-                    var goalId = _random.Pick(tempGoals);
-                    var goalProto = _proto.Index(goalId);
-
-                    if (playerCount > goalProto.MaxPlayers ||
-                        playerCount < goalProto.MinPlayers)
-                    {
-                        tempGoals.Remove(goalId);
-                        continue;
-                    }
-
-                    selGoal = goalProto;
-                    break;
-                }
-
-                if (selGoal is null)
-                    return;
-
-                if (SendStationGoal(uid, selGoal))
-                {
-                    Log.Info($"Goal {selGoal.ID} has been sent to station {MetaData(uid).EntityName}");
-                }
+                Log.Info($"Goal {selGoal.ID} has been sent to station {MetaData(uid).EntityName}");
             }
         }
+    }
 
-        public bool SendStationGoal(EntityUid ent, ProtoId<StationGoalPrototype> goal)
+    public bool SendStationGoal(EntityUid ent, ProtoId<StationGoalPrototype> goal)
+    {
+        return SendStationGoal(ent, _proto.Index(goal));
+    }
+
+    /// <summary>
+    /// Send a station goal on selected station to all faxes which are authorized to receive it.
+    /// </summary>
+    /// <returns>True if at least one fax received paper</returns>
+    private bool SendStationGoal(EntityUid ent, StationGoalPrototype goal)
+    {
+        var printout = new FaxPrintout(
+            Loc.GetString(goal.Text, ("station", MetaData(ent).EntityName)),
+            Loc.GetString("station-goal-fax-paper-name"),
+            null,
+            null,
+            "paper_stamp-centcom",
+            [new() { StampedName = Loc.GetString("stamp-component-stamped-name-centcom"), StampedColor = Color.FromHex("#006600") }]
+        );
+
+        var wasSent = false;
+        var query = EntityQueryEnumerator<FaxMachineComponent>();
+        while (query.MoveNext(out var faxUid, out var fax))
         {
-            return SendStationGoal(ent, _proto.Index(goal));
+            if (!fax.ReceiveAllStationGoals && !(fax.ReceiveStationGoal && _station.GetOwningStation(faxUid) == ent))
+                continue;
+
+            _fax.Receive(faxUid, printout, null, fax);
+
+            wasSent |= fax.ReceiveStationGoal;
         }
 
-        /// <summary>
-        /// Send a station goal on selected station to all faxes which are authorized to receive it.
-        /// </summary>
-        /// <returns>True if at least one fax received paper</returns>
-        private bool SendStationGoal(EntityUid ent, StationGoalPrototype goal)
+        // Publish news if at least one fax received the goal.
+        if (!wasSent) return wasSent;
+        PublishStationGoalNews(ent, goal);
+        TryDeliverGoalCargo(ent, goal);
+
+        return wasSent;
+    }
+
+    /// <summary>
+    /// Delivers the items required by a station goal to a free incoming cargo pallet.
+    /// </summary>
+    private void TryDeliverGoalCargo(EntityUid station, StationGoalPrototype goal)
+    {
+        if (goal.Spawns.Count == 0) return;
+
+        var pallets = new List<EntityCoordinates>();
+        var query = EntityQueryEnumerator<CargoPalletComponent, TransformComponent>();
+        while (query.MoveNext(out var palletUid, out var pallet, out var palletXform))
         {
-            var printout = new FaxPrintout(
-                Loc.GetString(goal.Text, ("station", MetaData(ent).EntityName)),
-                Loc.GetString("station-goal-fax-paper-name"),
-                null,
-                null,
-                "paper_stamp-centcom",
-                [new() { StampedName = Loc.GetString("stamp-component-stamped-name-centcom"), StampedColor = Color.FromHex("#006600") }]
-            );
-
-            var wasSent = false;
-            var query = EntityQueryEnumerator<FaxMachineComponent>();
-            while (query.MoveNext(out var faxUid, out var fax))
+            var grid = palletXform.ParentUid;
+            if ((pallet.PalletType & BuySellType.Buy) == 0 ||
+                !palletXform.Anchored ||
+                _station.GetOwningStation(grid) != station ||
+                !HasComp<TradeStationComponent>(grid))
             {
-                if (!fax.ReceiveAllStationGoals && !(fax.ReceiveStationGoal && _station.GetOwningStation(faxUid) == ent))
-                    continue;
-
-                _fax.Receive(faxUid, printout, null, fax);
-
-                wasSent |= fax.ReceiveStationGoal;
+                continue;
             }
 
-            // Publish news if at least one fax received the goal.
-            if (!wasSent) return wasSent;
-            PublishStationGoalNews(ent, goal);
-            TryDeliverGoalCargo(ent, goal);
+            var aabb = _lookup.GetAABBNoContainer(palletUid, palletXform.LocalPosition, palletXform.LocalRotation);
+            if (_lookup.AnyLocalEntitiesIntersecting(grid, aabb, LookupFlags.Dynamic))
+                continue;
 
-            return wasSent;
+            pallets.Add(new EntityCoordinates(grid, palletXform.LocalPosition));
         }
 
-        /// <summary>
-        /// Delivers the items required by a station goal to a free incoming cargo pallet.
-        /// </summary>
-        private void TryDeliverGoalCargo(EntityUid station, StationGoalPrototype goal)
+        if (pallets.Count == 0) return;
+
+        var selectedPallet = _random.Pick(pallets);
+        foreach (var spawnEnt in goal.Spawns)
         {
-            if (goal.Spawns.Count == 0) return;
-
-            var pallets = new List<EntityCoordinates>();
-            var query = EntityQueryEnumerator<CargoPalletComponent, TransformComponent>();
-            while (query.MoveNext(out var palletUid, out var pallet, out var palletXform))
-            {
-                var grid = palletXform.ParentUid;
-                if ((pallet.PalletType & BuySellType.Buy) == 0 ||
-                    !palletXform.Anchored ||
-                    _station.GetOwningStation(grid) != station ||
-                    !HasComp<TradeStationComponent>(grid))
-                {
-                    continue;
-                }
-
-                var aabb = _lookup.GetAABBNoContainer(palletUid, palletXform.LocalPosition, palletXform.LocalRotation);
-                if (_lookup.AnyLocalEntitiesIntersecting(grid, aabb, LookupFlags.Dynamic))
-                    continue;
-
-                pallets.Add(new EntityCoordinates(grid, palletXform.LocalPosition));
-            }
-
-            if (pallets.Count == 0) return;
-
-            var selectedPallet = _random.Pick(pallets);
-            foreach (var spawnEnt in goal.Spawns)
-            {
-                SpawnAtPosition(spawnEnt, selectedPallet);
-            }
+            SpawnAtPosition(spawnEnt, selectedPallet);
         }
+    }
 
-        /// <summary>
-        ///     Publishes a news article about the station goal in the mass media.
-        /// </summary>
-        private void PublishStationGoalNews(EntityUid ent, StationGoalPrototype goal)
+    /// <summary>
+    ///     Publishes a news article about the station goal in the mass media.
+    /// </summary>
+    private void PublishStationGoalNews(EntityUid ent, StationGoalPrototype goal)
+    {
+        var stationName = MetaData(ent).EntityName;
+
+        var title = Loc.GetString("station-goal-news-title", ("station", stationName));
+
+        var content = Loc.GetString(goal.Text, ("station", stationName));
+        var endPattern = Loc.GetString("station-goal-end");
+
+        if (content.EndsWith(endPattern))
         {
-            var stationName = MetaData(ent).EntityName;
-
-            var title = Loc.GetString("station-goal-news-title", ("station", stationName));
-
-            var content = Loc.GetString(goal.Text, ("station", stationName));
-            var endPattern = Loc.GetString("station-goal-end");
-
-            if (content.EndsWith(endPattern))
-            {
-                content = content[..^endPattern.Length];
-                content = content.TrimEnd();
-            }
-
-            _news.TryAddNews(ent, title, content, out _, Loc.GetString("station-goal-news-author"));
+            content = content[..^endPattern.Length];
+            content = content.TrimEnd();
         }
+
+        _news.TryAddNews(ent, title, content, out _, Loc.GetString("station-goal-news-author"));
     }
 }
