@@ -1,11 +1,14 @@
+using Content.Server.Cargo.Components;
 using Content.Server.Fax;
 using Content.Server.MassMedia.Systems;
 using Content.Server.Station.Systems;
 using Content.Shared._Corvax.CCCVars;
+using Content.Shared.Cargo.Components;
 using Content.Shared.Fax.Components;
 using Content.Shared.GameTicking;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -22,6 +25,7 @@ namespace Content.Server._Corvax.StationGoal
         [Dependency] private NewsSystem _news = default!;
         [Dependency] private IPlayerManager _playerManager = default!;
         [Dependency] private StationSystem _station = default!;
+        [Dependency] private EntityLookupSystem _lookup = default!;
         [Dependency] private IConfigurationManager _cfg = default!;
 
         [SubscribeLocalEvent]
@@ -72,7 +76,7 @@ namespace Content.Server._Corvax.StationGoal
         /// Send a station goal on selected station to all faxes which are authorized to receive it.
         /// </summary>
         /// <returns>True if at least one fax received paper</returns>
-        public bool SendStationGoal(EntityUid ent, StationGoalPrototype goal)
+        private bool SendStationGoal(EntityUid ent, StationGoalPrototype goal)
         {
             var printout = new FaxPrintout(
                 Loc.GetString(goal.Text, ("station", MetaData(ent).EntityName)),
@@ -92,19 +96,51 @@ namespace Content.Server._Corvax.StationGoal
 
                 _fax.Receive(faxUid, printout, null, fax);
 
-                foreach (var spawnEnt in goal.Spawns)
-                    SpawnAtPosition(spawnEnt, Transform(faxUid).Coordinates);
-
                 wasSent |= fax.ReceiveStationGoal;
             }
 
             // Publish news if at least one fax received the goal.
-            if (wasSent)
-            {
-                PublishStationGoalNews(ent, goal);
-            }
+            if (!wasSent) return wasSent;
+            PublishStationGoalNews(ent, goal);
+            TryDeliverGoalCargo(ent, goal);
 
             return wasSent;
+        }
+
+        /// <summary>
+        /// Delivers the items required by a station goal to a free incoming cargo pallet.
+        /// </summary>
+        private void TryDeliverGoalCargo(EntityUid station, StationGoalPrototype goal)
+        {
+            if (goal.Spawns.Count == 0) return;
+
+            var pallets = new List<EntityCoordinates>();
+            var query = EntityQueryEnumerator<CargoPalletComponent, TransformComponent>();
+            while (query.MoveNext(out var palletUid, out var pallet, out var palletXform))
+            {
+                var grid = palletXform.ParentUid;
+                if ((pallet.PalletType & BuySellType.Buy) == 0 ||
+                    !palletXform.Anchored ||
+                    _station.GetOwningStation(grid) != station ||
+                    !HasComp<TradeStationComponent>(grid))
+                {
+                    continue;
+                }
+
+                var aabb = _lookup.GetAABBNoContainer(palletUid, palletXform.LocalPosition, palletXform.LocalRotation);
+                if (_lookup.AnyLocalEntitiesIntersecting(grid, aabb, LookupFlags.Dynamic))
+                    continue;
+
+                pallets.Add(new EntityCoordinates(grid, palletXform.LocalPosition));
+            }
+
+            if (pallets.Count == 0) return;
+
+            var selectedPallet = _random.Pick(pallets);
+            foreach (var spawnEnt in goal.Spawns)
+            {
+                SpawnAtPosition(spawnEnt, selectedPallet);
+            }
         }
 
         /// <summary>
