@@ -327,3 +327,7 @@
 - type: tileAlias
   id: FloorAsphalt
   target: FloorConcrete
+
+- type: tileAlias # RS14
+  id: FloorWoodChess
+  target: FloorWoodTile

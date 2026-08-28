@@ -1,0 +1,118 @@
+﻿- type: tile
+  id: FloorWoodParquet
+  parent: FloorWood
+  name: tiles-wood-parquet
+  sprite: /Textures/_Corvax/Tiles/Wood/wood_parquet.png
+  itemDrop: FloorTileItemWood
+
+- type: tile
+  id: FloorWoodBlack
+  parent: FloorWood
+  name: tiles-wood-black
+  sprite: /Textures/_Corvax/Tiles/Wood/wood_black.png
+  itemDrop: FloorTileItemWoodBlack
+
+- type: tile
+  id: FloorWoodLargeBlack
+  parent: FloorWood
+  name: tiles-wood-large-black
+  sprite: /Textures/_Corvax/Tiles/Wood/wood_large_black.png
+  itemDrop: FloorTileItemWoodBlack
+
+- type: tile
+  id: FloorWoodParquetBlack
+  parent: FloorWood
+  name: tiles-wood-parquet-black
+  sprite: /Textures/_Corvax/Tiles/Wood/wood_parquet_black.png
+  itemDrop: FloorTileItemWoodBlack
+
+- type: tile
+  id: FloorWoodChessBlack
+  parent: FloorWood
+  name: tiles-wood-chess-black
+  sprite: /Textures/_Corvax/Tiles/Wood/wood_chess_black.png
+  itemDrop: FloorTileItemWoodBlack
+
+- type: tile
+  id: FloorWoodDark
+  parent: FloorWood
+  name: tiles-wood-dark
+  sprite: /Textures/_Corvax/Tiles/Wood/wood_dark.png
+  itemDrop: FloorTileItemWoodDark
+
+- type: tile
+  id: FloorWoodLargeDark
+  parent: FloorWood
+  name: tiles-wood-large-dark
+  sprite: /Textures/_Corvax/Tiles/Wood/wood_large_dark.png
+  itemDrop: FloorTileItemWoodDark
+
+- type: tile
+  id: FloorWoodParquetDark
+  parent: FloorWood
+  name: tiles-wood-parquet-dark
+  sprite: /Textures/_Corvax/Tiles/Wood/wood_parquet_dark.png
+  itemDrop: FloorTileItemWoodDark
+
+- type: tile
+  id: FloorWoodChessDark
+  parent: FloorWood
+  name: tiles-wood-chess-dark
+  sprite: /Textures/_Corvax/Tiles/Wood/wood_chess_dark.png
+  itemDrop: FloorTileItemWoodDark
+
+- type: tile
+  id: FloorWoodLight
+  parent: FloorWood
+  name: tiles-wood-light
+  sprite: /Textures/_Corvax/Tiles/Wood/wood_light.png
+  itemDrop: FloorTileItemWoodLight
+
+- type: tile
+  id: FloorWoodLargeLight
+  parent: FloorWood
+  name: tiles-wood-large-light
+  sprite: /Textures/_Corvax/Tiles/Wood/wood_large_light.png
+  itemDrop: FloorTileItemWoodLight
+
+- type: tile
+  id: FloorWoodParquetLight
+  parent: FloorWood
+  name: tiles-wood-parquet-light
+  sprite: /Textures/_Corvax/Tiles/Wood/wood_parquet_light.png
+  itemDrop: FloorTileItemWoodLight
+
+- type: tile
+  id: FloorWoodChessLight
+  parent: FloorWood
+  name: tiles-wood-chess-light
+  sprite: /Textures/_Corvax/Tiles/Wood/wood_chess_light.png
+  itemDrop: FloorTileItemWoodLight
+
+- type: tile
+  id: FloorWoodRed
+  parent: FloorWood
+  name: tiles-wood-red
+  sprite: /Textures/_Corvax/Tiles/Wood/wood_red.png
+  itemDrop: FloorTileItemWoodRed
+
+- type: tile
+  id: FloorWoodLargeRed
+  parent: FloorWood
+  name: tiles-wood-large-red
+  sprite: /Textures/_Corvax/Tiles/Wood/wood_large_red.png
+  itemDrop: FloorTileItemWoodRed
+
+- type: tile
+  id: FloorWoodParquetRed
+  parent: FloorWood
+  name: tiles-wood-parquet-red
+  sprite: /Textures/_Corvax/Tiles/Wood/wood_parquet_red.png
+  itemDrop: FloorTileItemWoodRed
+
+- type: tile
+  id: FloorWoodChessRed
+  parent: FloorWood
+  name: tiles-wood-chess-red
+  sprite: /Textures/_Corvax/Tiles/Wood/wood_chess_red.png
+  itemDrop: FloorTileItemWoodRed
