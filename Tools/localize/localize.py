@@ -382,9 +382,11 @@ class LocalizationManager:
         ignore_paths: List[Path] = []
         ignore_untranslated_paths: List[Path] = []
 
-        config_path = Path(config_file).resolve()
-        if not config_path.exists():
-            config_path = (self.root_dir / config_file).resolve()
+        config_path = Path(config_file)
+        if not config_path.is_absolute():
+            config_path = (Path(__file__).resolve().parent / config_path).resolve()
+        else:
+            config_path = config_path.resolve()
 
         if config_path.exists():
             try:
