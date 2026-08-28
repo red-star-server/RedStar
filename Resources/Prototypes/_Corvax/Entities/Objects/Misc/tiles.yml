@@ -113,6 +113,8 @@
   components:
   - type: Sprite
     sprite: _Corvax/Objects/Tiles/wood.rsi
+  - type: Item
+    sprite: _Corvax/Objects/Tiles/wood.rsi
     heldPrefix: wood-dark
   - type: FloorTile
     outputs:
