@@ -60,3 +60,5 @@ ClothingOuterCoatLabSecurityMedic: null
 ClothingShoesBootsJackSec: null
 RubberPig: null
 Garlands: null
+HighSecSatelliteLocked: HighSecCommandLocked
+HighSecVaultLocked: HighSecCommandLocked
