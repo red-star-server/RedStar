@@ -295,7 +295,90 @@ namespace Content.Server.Database
             return profile;
         }
         #endregion
+        // RS14-start
+        #region Sponsors
+        public async Task<SponsorRecord?> GetSponsorAsync(NetUserId userId)
+        {
+            await using var db = await GetDb();
 
+            return await db.DbContext.Sponsor
+                .Where(x => x.PlayerId == userId.UserId)
+                .Select(x => new SponsorRecord(
+                    x.PlayerId,
+                    x.Tier,
+                    x.OocColor,
+                    x.GhostColor))
+                .SingleOrDefaultAsync();
+        }
+
+        public async Task SetSponsorTierAsync(NetUserId userId, string tier)
+        {
+            await using var db = await GetDb();
+
+            var sponsor = await db.DbContext.Sponsor
+                .SingleOrDefaultAsync(x => x.PlayerId == userId.UserId);
+
+            if (sponsor == null)
+            {
+                sponsor = new Sponsor
+                {
+                    PlayerId = userId.UserId,
+                    Tier = tier,
+                };
+
+                db.DbContext.Sponsor.Add(sponsor);
+            }
+            else
+            {
+                sponsor.Tier = tier;
+            }
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task RemoveSponsorAsync(NetUserId userId)
+        {
+            await using var db = await GetDb();
+
+            var sponsor = await db.DbContext.Sponsor
+                .SingleOrDefaultAsync(x => x.PlayerId == userId.UserId);
+
+            if (sponsor == null)
+                return;
+
+            db.DbContext.Sponsor.Remove(sponsor);
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task SetSponsorOocColorAsync(NetUserId userId, Color? color)
+        {
+            await using var db = await GetDb();
+
+            var sponsor = await db.DbContext.Sponsor
+                .SingleOrDefaultAsync(x => x.PlayerId == userId.UserId);
+
+            if (sponsor == null)
+                return;
+
+            sponsor.OocColor = color?.ToHex();
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task SetSponsorGhostColorAsync(NetUserId userId, Color? color)
+        {
+            await using var db = await GetDb();
+
+            var sponsor = await db.DbContext.Sponsor
+                .SingleOrDefaultAsync(x => x.PlayerId == userId.UserId);
+
+            if (sponsor == null)
+                return;
+
+            sponsor.GhostColor = color?.ToHex();
+            await db.DbContext.SaveChangesAsync();
+        }
+        #endregion
+        // RS14-end
         #region User Ids
         public async Task<NetUserId?> GetAssignedUserIdAsync(string name)
         {

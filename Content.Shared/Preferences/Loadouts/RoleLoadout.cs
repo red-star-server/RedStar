@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared._RedStar.Sponsors;
 using Content.Shared.CCVar;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Random;
@@ -283,6 +284,14 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
 
         foreach (var effect in loadoutProto.Effects)
         {
+            // RS14-start
+            if (effect is SponsorLoadoutEffect sponsorEffect)
+            {
+                valid = valid &&
+                        sponsorEffect.ValidateSponsor(loadoutProto.ID, session, collection, out reason);
+                continue;
+            }
+            // RS14-end
             valid = valid && effect.Validate(profile, this, session, collection, out reason);
         }
 
