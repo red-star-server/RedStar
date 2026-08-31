@@ -8,13 +8,6 @@
   - CircuitImprinterMachineCircuitboard
 
 - type: latheRecipePack
-  id: GrenadeTriggersStatic
-  recipes:
-  - TimerTrigger
-  - SignalTrigger
-  - VoiceTrigger
-
-- type: latheRecipePack
   id: MiningToolsStatic
   recipes:
   - Fulton

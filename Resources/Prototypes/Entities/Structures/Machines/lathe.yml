@@ -195,22 +195,28 @@
     runningState: building
     unlitIdleState: unlit
     unlitRunningState: unlit-building
-    staticPacks:
-    - ChemistryStatic
-    - SurgeryStatic
+    # RS14-start - Department recipes are handled by techfabs.
+    # staticPacks:
+    # - ChemistryStatic
+    # - SurgeryStatic
+    # RS14-end
     dynamicPacks:
     - AdvancedTools
-    - ScienceEquipment
-    - ScienceExplosives
+    # RS14-start - Department recipes are handled by techfabs.
+    # - ScienceEquipment
+    # - ScienceExplosives
+    # RS14-end
     - ScienceClothing
     - PowerCells
-    - ScienceWeapons
-    - Mining
-    - AtmosTools
-    - EngineeringWeapons
-    - Chemistry
-    - Janitor
-    - Instruments
+    # RS14-start - Department recipes are handled by techfabs.
+    # - ScienceWeapons
+    # - Mining
+    # - AtmosTools
+    # - EngineeringWeapons
+    # - Chemistry
+    # - Janitor
+    # - Instruments
+    # RS14-end
     - Equipment
   - type: EmagLatheRecipes
     emagDynamicPacks:
@@ -254,23 +260,31 @@
     idleState: icon
     runningState: building
     staticPacks:
-    - ScienceBoardsStatic
-    - ServiceBoardsStatic
-    - CargoBoardsStatic
-    - MedicalBoardsStatic
-    - EngineeringBoardsStatic
+    # RS14-start - Department boards are handled by techfabs.
+    # - ScienceBoardsStatic
+    # - ServiceBoardsStatic
+    # - CargoBoardsStatic
+    # - MedicalBoardsStatic
+    # - EngineeringBoardsStatic
+    # RS14-end
+    - SharedBoardsStatic # RS14
     dynamicPacks:
-    - EngineeringBoards
-    - CargoBoards
-    - MedicalBoards
-    - ServiceBoards
-    - ScienceBoards
-    - CameraBoards
-    - MechBoards
-    - ShuttleBoards
-  - type: EmagLatheRecipes
-    emagDynamicPacks:
-    - SecurityBoards
+    # RS14-start - Department boards are handled by techfabs.
+    # - EngineeringBoards
+    # - CargoBoards
+    # - MedicalBoards
+    # - ServiceBoards
+    # - ScienceBoards
+    # - CameraBoards
+    # - MechBoards
+    # - ShuttleBoards
+    # RS14-end
+    - SharedBoards # RS14
+  # RS14-start - Security boards are handled by the security techfab.
+  # - type: EmagLatheRecipes
+  #   emagDynamicPacks:
+  #   - SecurityBoards
+  # RS14-end
   - type: MaterialStorage
     whitelist: *StandardMaterialWhitelist
   - type: OreSiloClient

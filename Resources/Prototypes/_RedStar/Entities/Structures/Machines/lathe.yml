@@ -157,7 +157,6 @@
     - SurgeryStatic
     - ScienceBoardsStatic
     - ScienceExplosives
-    - GrenadeTriggersStatic
     dynamicPacks:
     - AdvancedTools
     - ScienceEquipment

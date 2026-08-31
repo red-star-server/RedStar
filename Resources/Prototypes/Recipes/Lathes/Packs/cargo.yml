@@ -29,4 +29,4 @@
   recipes:
   - OreProcessorIndustrialMachineCircuitboard
   - CargoTelepadMachineCircuitboard
-  - ShuttleGunKineticCircuitboard
+  # - ShuttleGunKineticCircuitboard # RS14 - Moved to SalvageSecurityBoards.

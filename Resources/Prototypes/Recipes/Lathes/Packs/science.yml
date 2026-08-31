@@ -3,9 +3,11 @@
 - type: latheRecipePack
   id: ScienceBoardsStatic
   recipes:
-  - ProtolatheMachineCircuitboard
-  - AutolatheMachineCircuitboard
-  - CircuitImprinterMachineCircuitboard
+  # RS14-start - Moved to SharedBoardsStatic.
+  # - ProtolatheMachineCircuitboard
+  # - AutolatheMachineCircuitboard
+  # - CircuitImprinterMachineCircuitboard
+  # RS14-end
   - ExosuitFabricatorMachineCircuitboard
   - CutterMachineCircuitboard
   - BorgChargerCircuitboard
@@ -74,9 +76,11 @@
   - ProtolatheHyperConvectionMachineCircuitboard
   - CircuitImprinterHyperConvectionMachineCircuitboard
   - TechDiskComputerCircuitboard
-  - FlatpackerMachineCircuitboard
-  - SheetifierMachineCircuitboard
-  - PowerCageRechargerCircuitboard
+  # RS14-start - Moved to SharedBoards.
+  # - FlatpackerMachineCircuitboard
+  # - SheetifierMachineCircuitboard
+  # - PowerCageRechargerCircuitboard
+  # RS14-end
   - AnalysisComputerCircuitboard
   - AnomalyVesselCircuitboard
   - AnomalyVesselExperimentalCircuitboard
