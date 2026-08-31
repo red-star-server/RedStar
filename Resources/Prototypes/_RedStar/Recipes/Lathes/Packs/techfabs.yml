@@ -1,0 +1,48 @@
+## Static
+
+- type: latheRecipePack
+  id: SharedBoardsStatic
+  recipes:
+  - ProtolatheMachineCircuitboard
+  - AutolatheMachineCircuitboard
+  - CircuitImprinterMachineCircuitboard
+
+- type: latheRecipePack
+  id: MiningToolsStatic
+  recipes:
+  - Fulton
+  - FultonBeacon
+
+- type: latheRecipePack
+  id: SalvageExplosivesStatic
+  recipes:
+  - SeismicCharge
+
+## Dynamic
+
+- type: latheRecipePack
+  id: SharedBoards
+  recipes:
+  - TurboItemRechargerCircuitboard
+  - FlatpackerMachineCircuitboard
+  - SheetifierMachineCircuitboard
+  - PowerCageRechargerCircuitboard
+
+- type: latheRecipePack
+  id: MechBoardsCargo
+  recipes:
+  - RipleyCentralElectronics
+  - RipleyPeripheralsElectronics
+
+- type: latheRecipePack
+  id: MechBoardsCivilian
+  recipes:
+  - HonkerCentralElectronics
+  - HonkerPeripheralsElectronics
+  - HonkerTargetingElectronics
+
+- type: latheRecipePack
+  id: MechBoardsScience
+  recipes:
+  - HamtrCentralElectronics
+  - HamtrPeripheralsElectronics

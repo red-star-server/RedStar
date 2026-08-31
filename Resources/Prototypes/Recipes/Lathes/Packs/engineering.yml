@@ -61,8 +61,10 @@
   - PowerDrill
   - WelderExperimental
   - JawsOfLife
-  - Fulton
-  - FultonBeacon
+  # RS14-start - Moved to MiningToolsStatic for the cargo techfab.
+  # - Fulton
+  # - FultonBeacon
+  # RS14-end
 
 - type: latheRecipePack
   id: AtmosTools
