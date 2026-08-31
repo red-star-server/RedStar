@@ -34,34 +34,23 @@
     - CablesStatic
     - MaterialsStatic
     - LightsStatic
-    - LatheMiscStatic
     - PowerCellsStatic
     - ElectronicsStatic
-    - MiscSignallersStatic
-    - NailgunStatic
-    - NailsStatic
     dynamicPacks:
-    - ConstructionBagOfHolding
     - AdvancedTools
     - AtmosTools
     - EngineeringWeapons
     - PowerCells
     - Equipment
-    - SpecOpsGoogles
     - EngineeringBoards
     - SharedBoards
     - CameraBoards
     - ShuttleBoards
-    - ShuttleBoardsGoob
-    - BluespaceTheory
     - ScienceClothing
-    - UpgradeKits
   - type: EmagLatheRecipes
-    emagStaticPacks:
-    - NailgunEvilStatic
     emagDynamicPacks:
-    - SecurityBoards # TF2 reference, go build fucking turrets
-    - MiningBoards
+    - SecurityBoards
+    - SalvageSecurityBoards
   - type: MaterialStorage
     whitelist: *StandardMaterialWhitelist
   - type: LatheAnnouncing
@@ -97,35 +86,26 @@
     - ToolsStatic
     - SharedBoardsStatic
     - CargoBoardsStatic
-    - CargoBoardsStaticGoob
     - CablesStatic
     - PartsStatic
-    - LatheMiscStatic
     - PowerCellsStatic
     - MiningToolsStatic
-    - MiscSignallersStatic
     - CargoStatic
     dynamicPacks:
     - AdvancedTools
     - Mining
     - PowerCells
     - Equipment
-    - MiningWeapons
-    - MiningBoards
-    - MiningUpgrades
+    - SalvageSecurityWeapons
+    - SalvageSecurityBoards
     - MechBoardsCargo
-    - MechWeaponsSalvage
-    - SpecOpsGoogles
     - CargoBoards
     - SharedBoards
     - ShuttleBoards
-    - ShuttleBoardsGoob
-    - BluespaceTheory
     - ScienceClothing
-    - ConstructionBagOfHolding
   - type: EmagLatheRecipes
     emagStaticPacks:
-    - SalvageExplosivesStatic # Seismic charges - they're pretty cheap in salvage vendor anyway so why not
+    - SalvageExplosivesStatic
     emagDynamicPacks:
     - SecurityExplosives
   - type: MaterialStorage
@@ -164,11 +144,9 @@
     - EngineeringBoardsStatic
     - CircuitFloorsStatic
     - MedicalBoardsStatic
-    - MedicalBoardsStaticGoob
     - ChemistryStatic
     - ToolsStatic
     - PartsStatic
-    - LatheMiscStatic
     - AtmosStatic
     - CablesStatic
     - MaterialsStatic
@@ -178,9 +156,8 @@
     - ElectronicsStatic
     - SurgeryStatic
     - ScienceBoardsStatic
-    - ScienceExplosives # Goobstation - Roundstart Grenade Tech
-    - GrenadeTriggersStatic # Goobstation - Roundstart Grenade Tech
-    - MiscSignallersStatic
+    - ScienceExplosives
+    - GrenadeTriggersStatic
     dynamicPacks:
     - AdvancedTools
     - ScienceEquipment
@@ -192,28 +169,16 @@
     - Chemistry
     - Janitor
     - Equipment
-    - MedicalBoards #Goob
-    - Surgery
-    - SpecOpsGoogles
+    - MedicalBoards
     - EngineeringBoards
     - SharedBoards
     - ScienceBoards
-    - ScienceBoardsGoob
     - ShuttleBoards
-    - ShuttleBoardsGoob
-    - MedicalBoardsGoob
-    - BluespaceTheory
-    - ExperimentalScienceGoob
     - MechBoardsScience
-    - Pinpointers
-    - Genetics
-    - XenobioPack
-    - XenobagHoldingPack
   - type: EmagLatheRecipes
     emagDynamicPacks:
-    - MechBoardsSecurity
     - MechBoardsCargo
-    - MechBoardsCivilian # Evil ass traitor scientist in a honker... with a rocket launcher because the honker is emagged too.
+    - MechBoardsCivilian
   - type: MaterialStorage
     whitelist: *StandardMaterialWhitelist
   - type: LatheAnnouncing
@@ -247,32 +212,19 @@
     unlitRunningState: unlit-building
     staticPacks:
     - ServiceBoardsStatic
-    - ServiceBoardsStaticGoob
     - MaterialsStatic
     - LightsStatic
     - ServiceStatic
     - PowerCellsStatic
-    - LatheMiscStatic
     - PartsStatic
     - ChemistryStatic
-    - TapeRecorderStatic
-    - CondimentStatic
     dynamicPacks:
     - Janitor
     - Instruments
-    - MedicalMisc
     - MechBoardsCivilian
-    - MechWeaponsCivilian
     - ServiceBoards
     - SharedBoards
     - CameraBoards
-    - ServiceTools
-    - ServiceBoardsGoob # goob
-    - EntertainmentPack # goob
-    - BartendingPack # goob
-  - type: EmagLatheRecipes
-    emagStaticPacks:
-    - ServiceBoardsEvilStatic # Donk Co microwave circiutboard
   - type: MaterialStorage
     whitelist: *StandardMaterialWhitelist
   - type: LatheAnnouncing
