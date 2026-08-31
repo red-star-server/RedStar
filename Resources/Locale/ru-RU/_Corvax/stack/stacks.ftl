@@ -1,4 +1,4 @@
-﻿black-wood-floor = деревянный чёрный пол
+black-wood-floor = деревянный чёрный пол
 dark-wood-floor = деревянный тёмный пол
 light-wood-floor = деревянный светлый пол
 red-wood-floor = деревянный красный пол
