@@ -1,3 +1,4 @@
+using Content.Server._RedStar.Sponsors;
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
@@ -24,6 +25,7 @@ using Content.Server.Preferences.Managers;
 using Content.Server.ServerInfo;
 using Content.Server.ServerUpdates;
 using Content.Server.Voting.Managers;
+using Content.Shared._RedStar.Sponsors;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Administration.Managers;
 using Content.Shared.Chat;
@@ -83,5 +85,7 @@ internal static class ServerContentIoC
         deps.Register<ServerFeedbackManager>();
         deps.Register<ISharedFeedbackManager, ServerFeedbackManager>();
         deps.Register<WhitelistManager>();
+        deps.Register<ServerSponsorManager>(); // RS14
+        deps.Register<ISponsorManager, ServerSponsorManager>(); // RS14
     }
 }

@@ -1,3 +1,4 @@
+using Content.Client._RedStar.Sponsors;
 using Content.Client.Administration.Managers;
 using Content.Client.Audio.Midi;
 using Content.Client.Changelog;
@@ -20,6 +21,7 @@ using Content.Client.Screenshot;
 using Content.Client.Stylesheets;
 using Content.Client.Viewport;
 using Content.Client.Voting;
+using Content.Shared._RedStar.Sponsors;
 using Content.Shared.Administration.Logs;
 using Content.Client.Lobby;
 using Content.Client.Players.RateLimiting;
@@ -68,6 +70,8 @@ namespace Content.Client.IoC
             collection.Register<ClientFeedbackManager>();
             collection.Register<ISharedFeedbackManager, ClientFeedbackManager>();
             collection.Register<MidiFileCollectionManager>();
+            collection.Register<ClientSponsorManager>(); // RS14
+            collection.Register<ISponsorManager, ClientSponsorManager>(); // RS14
         }
     }
 }

@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using Content.Server._RedStar.Sponsors;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.Connection.IPIntel;
@@ -63,6 +64,7 @@ namespace Content.Server.Connection
         [Dependency] private IHttpClientHolder _http = default!;
         [Dependency] private IAdminManager _adminManager = default!;
         [Dependency] private IEntityManager _entityManager = default!;
+        [Dependency] private ServerSponsorManager _sponsorManager = default!; // RS14
 
         private GameTicker? _ticker;
 
@@ -296,6 +298,7 @@ namespace Content.Server.Connection
                             _ticker.PlayerGameStatuses.TryGetValue(userId, out var status) &&
                             status == PlayerGameStatus.JoinedGame;
             var adminBypass = _cfg.GetCVar(CCVars.AdminBypassMaxPlayers) && adminData != null;
+            var sponsorBypass = await _sponsorManager.HasPriorityJoinAsync(userId); // RS14
             var softPlayerCount = _plyMgr.PlayerCount;
 
             if (!_cfg.GetCVar(CCVars.AdminsCountForMaxPlayers))
@@ -303,7 +306,7 @@ namespace Content.Server.Connection
                 softPlayerCount -= _adminManager.ActiveAdmins.Count();
             }
 
-            if ((softPlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) && !adminBypass) && !wasInGame)
+            if ((softPlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) && !adminBypass && !sponsorBypass) && !wasInGame) // RS14
             {
                 return (ConnectionDenyReason.Full, Loc.GetString("soft-player-cap-full"), null);
             }
