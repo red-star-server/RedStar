@@ -50,7 +50,6 @@
   - type: EmagLatheRecipes
     emagDynamicPacks:
     - SecurityBoards
-    - SalvageSecurityBoards
   - type: MaterialStorage
     whitelist: *StandardMaterialWhitelist
   - type: LatheAnnouncing
@@ -96,7 +95,6 @@
     - PowerCells
     - Equipment
     - SalvageSecurityWeapons
-    - SalvageSecurityBoards
     - MechBoardsCargo
     - CargoBoards
     - SharedBoards
