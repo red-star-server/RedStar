@@ -7,7 +7,7 @@
     sprite: _Corvax/Objects/Tiles/wood.rsi
     state: wood_parquet
   - type: Item
-    sprite: _Corvax/Objects/Tiles/wood.rsi
+    sprite: Objects/Tiles/tile.rsi
     heldPrefix: wood
   - type: FloorTile
     outputs:
@@ -113,6 +113,7 @@
   components:
   - type: Sprite
     sprite: _Corvax/Objects/Tiles/wood.rsi
+    state: wood_large_dark
   - type: Item
     sprite: _Corvax/Objects/Tiles/wood.rsi
     heldPrefix: wood-dark
