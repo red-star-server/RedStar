@@ -95,10 +95,6 @@ public sealed partial class ServerSponsorManager : ISponsorManager
         => _sponsors.TryGetValue(userId, out var data) &&
            SponsorTierHelpers.HasLoadout(_prototypes, data, loadout);
 
-    public bool HasPriorityJoin(NetUserId userId)
-        => _sponsors.TryGetValue(userId, out var data) &&
-           SponsorTierHelpers.HasPriorityJoin(_prototypes, data);
-
     public bool TryGetOocColor(NetUserId userId, out Color color)
     {
         if (_sponsors.TryGetValue(userId, out var data) &&
