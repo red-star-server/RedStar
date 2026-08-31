@@ -1,0 +1,11 @@
+﻿- type: entity
+  parent: CrateChemistrySecure
+  id: CrateGoalRomerol
+  name: romerol shipment
+  description: Contains a secured shipment of romerol. Requires Chemistry access to open.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: PillRomerol
+        amount: 3
