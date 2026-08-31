@@ -201,8 +201,8 @@
     # - SurgeryStatic
     # RS14-end
     dynamicPacks:
-    - AdvancedTools
     # RS14-start - Department recipes are handled by techfabs.
+    # - AdvancedTools
     # - ScienceEquipment
     # - ScienceExplosives
     # RS14-end

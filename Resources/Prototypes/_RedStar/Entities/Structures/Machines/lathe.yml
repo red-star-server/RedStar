@@ -92,7 +92,6 @@
     - MiningToolsStatic
     - CargoStatic
     dynamicPacks:
-    - AdvancedTools
     - Mining
     - PowerCells
     - Equipment
@@ -158,7 +157,6 @@
     - ScienceBoardsStatic
     - ScienceExplosives
     dynamicPacks:
-    - AdvancedTools
     - ScienceEquipment
     - ScienceClothing
     - ScienceWeapons
