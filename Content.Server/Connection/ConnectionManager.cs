@@ -298,7 +298,6 @@ namespace Content.Server.Connection
                             _ticker.PlayerGameStatuses.TryGetValue(userId, out var status) &&
                             status == PlayerGameStatus.JoinedGame;
             var adminBypass = _cfg.GetCVar(CCVars.AdminBypassMaxPlayers) && adminData != null;
-            var sponsorBypass = await _sponsorManager.HasPriorityJoinAsync(userId); // RS14
             var softPlayerCount = _plyMgr.PlayerCount;
 
             if (!_cfg.GetCVar(CCVars.AdminsCountForMaxPlayers))
@@ -306,10 +305,15 @@ namespace Content.Server.Connection
                 softPlayerCount -= _adminManager.ActiveAdmins.Count();
             }
 
-            if ((softPlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) && !adminBypass && !sponsorBypass) && !wasInGame) // RS14
+            // RS14-start
+            if (softPlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) &&
+                !adminBypass &&
+                !wasInGame &&
+                !await _sponsorManager.HasPriorityJoinAsync(userId))
             {
                 return (ConnectionDenyReason.Full, Loc.GetString("soft-player-cap-full"), null);
             }
+            // RS14-end
 
             // Checks for whitelist IF it's enabled AND the user isn't an admin. Admins are always allowed.
             if (_cfg.GetCVar(CCVars.WhitelistEnabled) && adminData is null)

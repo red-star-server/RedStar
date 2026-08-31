@@ -28,15 +28,19 @@ public sealed partial class SponsorSystem : EntitySystem
 
     public async Task SyncPlayerAsync(NetUserId userId)
     {
-        var data = await _manager.RefreshAsync(userId);
+        if (!_players.TryGetSessionById(userId, out var session))
+            return;
 
-        if (_players.TryGetSessionById(userId, out var session))
-        {
-            RaiseNetworkEvent(new SponsorDataChangedEvent(data), session);
+        SponsorData? data;
+        if (_manager.TryGetData(userId, out var cached))
+            data = cached;
+        else
+            data = await _manager.RefreshAsync(userId);
 
-            if (session.AttachedEntity is { } entity && HasComp<GhostComponent>(entity))
-                ApplyGhostColor(entity, userId);
-        }
+        RaiseNetworkEvent(new SponsorDataChangedEvent(data), session);
+
+        if (session.AttachedEntity is { } entity && HasComp<GhostComponent>(entity))
+            ApplyGhostColor(entity, userId);
     }
 
     private async void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs args)

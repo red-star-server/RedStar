@@ -56,7 +56,10 @@ public sealed partial class ServerSponsorManager : ISponsorManager
             return false;
 
         await _db.SetSponsorTierAsync(userId, tier);
-        await RefreshAsync(userId);
+
+        if (_sponsors.TryGetValue(userId, out var data))
+            _sponsors[userId] = data with { Tier = tier };
+
         return true;
     }
 
@@ -73,7 +76,7 @@ public sealed partial class ServerSponsorManager : ISponsorManager
             return false;
 
         await _db.SetSponsorOocColorAsync(userId, color);
-        await RefreshAsync(userId);
+        _sponsors[userId] = data with { OocColor = color };
         return true;
     }
 
@@ -84,7 +87,7 @@ public sealed partial class ServerSponsorManager : ISponsorManager
             return false;
 
         await _db.SetSponsorGhostColorAsync(userId, color);
-        await RefreshAsync(userId);
+        _sponsors[userId] = data with { GhostColor = color };
         return true;
     }
 
