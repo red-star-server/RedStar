@@ -54,7 +54,15 @@ namespace Content.Server.Database
         Task DeleteSlotAndSetSelectedIndex(NetUserId userId, int deleteSlot, int newSlot);
         Task<Preference?> GetPlayerPreferencesAsync(NetUserId userId, CancellationToken cancel);
         #endregion
-
+        // RS14-start
+        #region Sponsors
+        Task<SponsorRecord?> GetSponsorAsync(NetUserId userId);
+        Task SetSponsorTierAsync(NetUserId userId, string tier);
+        Task RemoveSponsorAsync(NetUserId userId);
+        Task SetSponsorOocColorAsync(NetUserId userId, Color? color);
+        Task SetSponsorGhostColorAsync(NetUserId userId, Color? color);
+        #endregion
+        // RS14-end
         #region User Ids
         // Username assignment (for guest accounts, so they persist GUID)
         Task AssignUserIdAsync(string name, NetUserId userId);
@@ -518,7 +526,37 @@ namespace Content.Server.Database
             DbReadOpsMetric.Inc();
             return RunDbCommand(() => _db.GetPlayerPreferencesAsync(userId, cancel));
         }
+        // RS14-start
+        public Task<SponsorRecord?> GetSponsorAsync(NetUserId userId)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetSponsorAsync(userId));
+        }
 
+        public Task SetSponsorTierAsync(NetUserId userId, string tier)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.SetSponsorTierAsync(userId, tier));
+        }
+
+        public Task RemoveSponsorAsync(NetUserId userId)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.RemoveSponsorAsync(userId));
+        }
+
+        public Task SetSponsorOocColorAsync(NetUserId userId, Color? color)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.SetSponsorOocColorAsync(userId, color));
+        }
+
+        public Task SetSponsorGhostColorAsync(NetUserId userId, Color? color)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.SetSponsorGhostColorAsync(userId, color));
+        }
+        // RS14-end
         public Task AssignUserIdAsync(string name, NetUserId userId)
         {
             DbWriteOpsMetric.Inc();

@@ -1,0 +1,12 @@
+- type: sponsorTier
+  id: Sympathizer
+  name: Сочувствующий
+  oocColor: true
+  ghostColor: true
+
+- type: sponsorTier
+  id: Comrade
+  name: Товарищ
+  parent: Sympathizer
+  priorityJoin: true
+  loadouts: []
