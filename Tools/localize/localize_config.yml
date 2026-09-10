@@ -1,6 +1,8 @@
 ignored_paths: # Игнорирует указанные пути до папок/файлов
 - "Resources/Locale/ru-RU/_RedStar"
 - "Resources/Locale/ru-RU/datasets"
+- "Resources/Locale/ru-RU/ss14-ru/prototypes/entities/structures/piping"
+- "Resources/Locale/ru-RU/ss14-ru/prototypes/entities/structures/specific/atmospherics"
 ignored_untranslated_paths: # Игнорирует предупреждения в указанных путях до папок/файлов
 - "Resources/Locale/ru-RU/robust-toolbox/input.ftl" # лучше просто это не трогать №2
 - "Resources/Locale/ru-RU/ss14-ru/prototypes/entities/mobs/player/humanoid.ftl" # её заприватил элюзив
