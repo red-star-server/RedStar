@@ -1,0 +1,91 @@
+﻿- type: entity
+  abstract: true
+  id: BaseVeinBlueSpaceCrystal
+  suffix: BlueSpace crystal
+  description: An ore vein rich with bluespace crystal.
+  components:
+  - type: OreVein
+    oreChance: 1.0
+    currentOre: OreBlueSpaceCrystal
+  - type: Sprite
+    layers:
+    - state: rock_bluespace_crystal
+      sprite: _RedStar/Structures/Walls/stone-ore.rsi
+      map: [ "enum.MiningScannerVisualLayers.Overlay" ]
+
+- type: entity
+  parent: [ BaseVeinBlueSpaceCrystal, AsteroidRock ]
+  id: AsteroidRockBlueSpaceCrystal
+
+- type: entity
+  parent: [ BaseVeinBlueSpaceCrystal, IronRock ]
+  id: IronRockBlueSpaceCrystal
+
+- type: entity
+  parent: [ BaseVeinBlueSpaceCrystal, WallRockSnow ]
+  id: WallRockSnowBlueSpaceCrystal
+
+- type: entity
+  parent: [ BaseVeinBlueSpaceCrystal, WallRockSand ]
+  id: WallRockSandBlueSpaceCrystal
+
+- type: entity
+  parent: [ BaseVeinBlueSpaceCrystal, WallRockChromite ]
+  id: WallRockChromiteBlueSpaceCrystal
+
+- type: entity
+  parent: [ BaseVeinBlueSpaceCrystal, WallRock ]
+  id: WallRockBlueSpaceCrystal
+  components:
+  - type: EntityRemap
+    mask:
+      AsteroidRock: AsteroidRockBlueSpaceCrystal
+      WallRockChromite: WallRockChromiteBlueSpaceCrystal
+      WallRockSand: WallRockSandBlueSpaceCrystal
+      WallRockSnow: WallRockSnowBlueSpaceCrystal
+
+- type: entity
+  abstract: true
+  id: BaseVeinRedSpaceCrystal
+  suffix: RedSpace crystal
+  description: An ore vein rich with redspace crystal.
+  components:
+  - type: OreVein
+    oreChance: 1.0
+    currentOre: OreRedSpaceCrystal
+  - type: Sprite
+    layers:
+    - state: rock_redspace_crystal
+      sprite: _RedStar/Structures/Walls/stone-ore.rsi
+      map: [ "enum.MiningScannerVisualLayers.Overlay" ]
+
+- type: entity
+  parent: [ BaseVeinRedSpaceCrystal, AsteroidRock ]
+  id: AsteroidRockRedSpaceCrystal
+
+- type: entity
+  parent: [ BaseVeinRedSpaceCrystal, IronRock ]
+  id: IronRockRedSpaceCrystal
+
+- type: entity
+  parent: [ BaseVeinRedSpaceCrystal, WallRockSnow ]
+  id: WallRockSnowRedSpaceCrystal
+
+- type: entity
+  parent: [ BaseVeinRedSpaceCrystal, WallRockSand ]
+  id: WallRockSandRedSpaceCrystal
+
+- type: entity
+  parent: [ BaseVeinRedSpaceCrystal, WallRockChromite ]
+  id: WallRockChromiteRedSpaceCrystal
+
+- type: entity
+  parent: [ BaseVeinRedSpaceCrystal, WallRock ]
+  id: WallRockRedSpaceCrystal
+  components:
+  - type: EntityRemap
+    mask:
+      AsteroidRock: AsteroidRockRedSpaceCrystal
+      WallRockChromite: WallRockChromiteRedSpaceCrystal
+      WallRockSand: WallRockSandRedSpaceCrystal
+      WallRockSnow: WallRockSnowRedSpaceCrystal

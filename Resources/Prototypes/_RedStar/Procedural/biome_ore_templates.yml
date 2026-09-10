@@ -1,0 +1,25 @@
+﻿- type: biomeMarkerLayer
+  id: OreBlueSpaceCrystal
+  entityMask:
+    AsteroidRock: AsteroidRockBlueSpaceCrystal
+    WallRock: WallRockBlueSpaceCrystal
+    WallRockChromite: WallRockChromiteBlueSpaceCrystal
+    WallRockSand: WallRockSandBlueSpaceCrystal
+    WallRockSnow: WallRockSnowBlueSpaceCrystal
+  maxCount: 3
+  minGroupSize: 1
+  maxGroupSize: 2
+  radius: 4
+
+- type: biomeMarkerLayer
+  id: OreRedSpaceCrystal
+  entityMask:
+    AsteroidRock: AsteroidRockRedSpaceCrystal
+    WallRock: WallRockRedSpaceCrystal
+    WallRockChromite: WallRockChromiteRedSpaceCrystal
+    WallRockSand: WallRockSandRedSpaceCrystal
+    WallRockSnow: WallRockSnowRedSpaceCrystal
+  maxCount: 3
+  minGroupSize: 1
+  maxGroupSize: 2
+  radius: 4

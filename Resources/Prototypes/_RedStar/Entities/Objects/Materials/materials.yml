@@ -1,0 +1,69 @@
+﻿- type: entity
+  parent: MaterialBase
+  id: MaterialBlueSpaceCrystal
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: BlueSpaceCrystal
+    baseLayer: base
+    layerStates:
+    - bluespace_crystal
+    - bluespace_crystal_2
+    - bluespace_crystal_3
+  - type: Sprite
+    sprite: _RedStar/Objects/Materials/materials.rsi
+    state: bluespace_crystal
+    layers:
+    - state: bluespace_crystal
+      map: ["base"]
+  - type: Item
+    heldPrefix: bluespace_crystal
+  - type: PhysicalComposition
+    materialComposition:
+      BlueSpaceCrystal: 100
+  - type: Tag
+    tags:
+    - RawMaterial
+
+- type: entity
+  parent: MaterialBlueSpaceCrystal
+  id: MaterialBlueSpaceCrystal1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialRedSpaceCrystal
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: RedSpaceCrystal
+    baseLayer: base
+    layerStates:
+    - redspace_crystal
+    - redspace_crystal_2
+    - redspace_crystal_3
+  - type: Sprite
+    sprite: _RedStar/Objects/Materials/materials.rsi
+    state: redspace_crystal
+    layers:
+    - state: redspace_crystal
+      map: ["base"]
+  - type: Item
+    heldPrefix: redspace_crystal
+  - type: PhysicalComposition
+    materialComposition:
+      RedSpaceCrystal: 100
+  - type: Tag
+    tags:
+    - RawMaterial
+
+- type: entity
+  parent: MaterialRSCrystal
+  id: MaterialRSCrystal1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1

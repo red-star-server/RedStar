@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "license": "CC-BY-NC-SA-3.0",
+  "copyright": "Taken from tg at https://github.com/tgstation/tgstation/blob/master/icons/obj/stack_objects.dmi, edited by andrew_fenriz (discord)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "bluespace_crystal"
+    },
+    {
+      "name": "bluespace-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "bluespace-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "redspace_crystal"
+    },
+    {
+      "name": "redspace-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "redspace-inhand-right",
+      "directions": 4
+    }
+  ]
+}

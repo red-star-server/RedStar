@@ -642,6 +642,7 @@
     - OreSmelting
     - RGlassSmelting
     - AdvancedSmelting
+    - SpaceSmelting # RS14
 
 - type: entity
   parent: BaseLathe

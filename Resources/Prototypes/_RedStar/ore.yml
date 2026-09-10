@@ -1,0 +1,11 @@
+﻿- type: ore
+  id: OreBlueSpaceCrystal
+  oreEntity: RawBlueSpaceCrystalOre1
+  minOreYield: 1
+  maxOreYield: 2
+
+- type: ore
+  id: OreRedSpaceCrystal
+  oreEntity: RawRedSpaceCrystalOre1
+  minOreYield: 1
+  maxOreYield: 2

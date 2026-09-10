@@ -1,0 +1,13 @@
+﻿- type: stack
+  id: BlueSpaceCrystal
+  name: stack-bluespace-crystal
+  icon: { sprite: _RedStar/Objects/Materials/materials.rsi, state: bluespace_crystal }
+  spawn: MaterialBlueSpaceCrystal1
+  maxCount: 30
+
+- type: stack
+  id: RedSpaceCrystal
+  name: stack-redspace-crystal
+  icon: { sprite: _RedStar/Objects/Materials/materials.rsi, state: redspace_crystal }
+  spawn: MaterialRedSpaceCrystal1
+  maxCount: 30

@@ -1,0 +1,17 @@
+﻿- type: material
+  id: BlueSpaceCrystal
+  stackEntity: MaterialBlueSpaceCrystal1
+  name: materials-bluespace-crystal
+  unit: materials-unit-piece
+  icon: { sprite: _RedStar/Objects/Materials/materials.rsi, state: bluespace_crystal }
+  color: "#80ffff"
+  price: 1.175
+
+- type: material
+  id: RedSpaceCrystal
+  stackEntity: MaterialRedSpaceCrystal1
+  name: materials-redspace-crystal
+  unit: materials-unit-piece
+  icon: { sprite: _RedStar/Objects/Materials/materials.rsi, state: redspace_crystal }
+  color: "#ff0000"
+  price: 1.175

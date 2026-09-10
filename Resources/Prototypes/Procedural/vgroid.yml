@@ -95,6 +95,20 @@
       count: 60 # you don't really hit it on purpose so it should be common
       minGroupSize: 1
       maxGroupSize: 1
+    # RS14-start
+    - !type:OreDunGen
+      replacement: IronRock
+      entity: IronRockBlueSpaceCrystal
+      count: 10
+      minGroupSize: 1
+      maxGroupSize: 2
+    - !type:OreDunGen
+      replacement: IronRock
+      entity: IronRockRedSpaceCrystal
+      count: 10
+      minGroupSize: 1
+      maxGroupSize: 2
+    # RS14-end
 
 # Configs
 - type: dungeonConfig

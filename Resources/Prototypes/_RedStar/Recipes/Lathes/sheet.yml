@@ -1,0 +1,13 @@
+﻿- type: latheRecipe
+  id: MaterialBlueSpaceCrystal
+  result: MaterialBlueSpaceCrystal1
+  completetime: 0
+  materials:
+    RawBlueSpaceCrystal: 100
+
+- type: latheRecipe
+  id: MaterialRedSpaceCrystal
+  result: MaterialRedSpaceCrystal1
+  completetime: 0
+  materials:
+    RawRedSpaceCrystal: 100

@@ -10,6 +10,11 @@
     OrePlasma: 0.20
     OreUranium: 0.20
     OreArtifactFragment: 0.10
+    # RS14-start
+    OreDiamond: 0.6
+    OreBlueSpaceCrystal: 0.3
+    OreRedSpaceCrystal: 0.3
+    # RS14-end
 
 - type: oreDunGen
   id: OreIron
