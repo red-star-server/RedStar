@@ -228,6 +228,13 @@
   parent: [ BaseGoldCircuitboardRecipe, BaseResearchMachineRecipeCategory ]
   id: StationTeleporterMachineCircuitboard
   result: StationTeleporterMachineCircuitboard
+  # RS14-start
+  materials:
+    Steel: 100
+    Glass: 500
+    Gold: 100
+    BlueSpaceCrystal: 300
+  # RS14-end
 
 # Anomaly
 - type: latheRecipe
@@ -311,6 +318,13 @@
   parent: [ BaseGoldCircuitboardRecipe, BaseSupplyMachineRecipeCategory ]
   id: CargoTelepadMachineCircuitboard
   result: CargoTelepadMachineCircuitboard
+  # RS14-start
+  materials:
+    Steel: 100
+    Glass: 500
+    Gold: 100
+    BlueSpaceCrystal: 200
+  # RS14-end
 
 - type: latheRecipe
   parent: [ BaseGoldCircuitboardRecipe, BaseSupplyMachineRecipeCategory ]

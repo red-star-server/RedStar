@@ -74,6 +74,13 @@
   parent: [ BaseGoldCircuitboardRecipe, BaseResearchComputerRecipeCategory ]
   id: StationTeleportersControlCircuitboard
   result: StationTeleportersControlCircuitboard
+  # RS14-start
+  materials:
+    Steel: 100
+    Glass: 500
+    Gold: 100
+    BlueSpaceCrystal: 200
+  # RS14-end
 
 # Cameras
 - type: latheRecipe

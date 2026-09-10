@@ -111,6 +111,7 @@
     Steel: 50
     Plastic: 50
     Plasma: 25
+    BlueSpaceCrystal: 100 # RS14
 
 - type: latheRecipe
   parent: BaseToolRecipe
@@ -152,6 +153,7 @@
     Silver: 750
     Plasma: 1500
     Uranium: 150
+    BlueSpaceCrystal: 500 # RS14
 
 - type: latheRecipe
   parent: ClothingBackpackHolding
@@ -204,6 +206,7 @@
     Steel: 700
     Glass: 100
     Uranium: 200
+    RedSpaceCrystal: 200 # RS14
 
 - type: latheRecipe
   id: WeaponProtoKineticAccelerator
