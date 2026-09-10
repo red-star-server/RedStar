@@ -130,6 +130,7 @@
     layers:
     - state: rock_coal
       sprite: Structures/Walls/stone-ore.rsi
+      visible: false # RS14
       map: [ "enum.MiningScannerVisualLayers.Overlay" ]
 
 - type: entity
@@ -145,6 +146,7 @@
     layers:
     - state: rock_gold
       sprite: Structures/Walls/stone-ore.rsi
+      visible: false # RS14
       map: [ "enum.MiningScannerVisualLayers.Overlay" ]
 
 - type: entity
@@ -160,6 +162,7 @@
     layers:
     - state: rock_diamond
       sprite: Structures/Walls/stone-ore.rsi
+      visible: false # RS14
       map: [ "enum.MiningScannerVisualLayers.Overlay" ]
 
 - type: entity
@@ -175,6 +178,7 @@
     layers:
     - state: rock_phoron
       sprite: Structures/Walls/stone-ore.rsi
+      visible: false # RS14
       map: [ "enum.MiningScannerVisualLayers.Overlay" ]
 
 - type: entity
@@ -190,6 +194,7 @@
     layers:
     - state: rock_quartz
       sprite: Structures/Walls/stone-ore.rsi
+      visible: false # RS14
       map: [ "enum.MiningScannerVisualLayers.Overlay" ]
 
 - type: entity
@@ -205,6 +210,7 @@
     layers:
     - state: rock_silver
       sprite: Structures/Walls/stone-ore.rsi
+      visible: false # RS14
       map: [ "enum.MiningScannerVisualLayers.Overlay" ]
 
 - type: entity
@@ -220,6 +226,7 @@
     layers:
     - state: rock_tin
       sprite: Structures/Walls/stone-ore.rsi
+      visible: false # RS14
       map: [ "enum.MiningScannerVisualLayers.Overlay" ]
 
 - type: entity
@@ -235,6 +242,7 @@
     layers:
     - state: rock_uranium
       sprite: Structures/Walls/stone-ore.rsi
+      visible: false # RS14
       map: [ "enum.MiningScannerVisualLayers.Overlay" ]
 
 - type: entity
@@ -250,6 +258,7 @@
     layers:
     - state: rock_salt
       sprite: Structures/Walls/stone-ore.rsi
+      visible: false # RS14
       map: [ "enum.MiningScannerVisualLayers.Overlay" ]
 
 - type: entity
@@ -265,6 +274,7 @@
     layers:
     - state: rock_artifact_fragment
       sprite: Structures/Walls/stone-ore.rsi
+      visible: false # RS14
       map: [ "enum.MiningScannerVisualLayers.Overlay" ]
 
 - type: entity

@@ -11,6 +11,7 @@
     layers:
     - state: rock_bluespace_crystal
       sprite: _RedStar/Structures/Walls/stone-ore.rsi
+      visible: false
       map: [ "enum.MiningScannerVisualLayers.Overlay" ]
 
 - type: entity
@@ -57,6 +58,7 @@
     layers:
     - state: rock_redspace_crystal
       sprite: _RedStar/Structures/Walls/stone-ore.rsi
+      visible: false
       map: [ "enum.MiningScannerVisualLayers.Overlay" ]
 
 - type: entity
