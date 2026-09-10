@@ -1,0 +1,12 @@
+ent-MaterialBlueSpaceCrystal = блюспейс кристалл
+    .desc = Кристалл с необычными пространственными свойствами.
+    .suffix = Полный
+ent-MaterialBlueSpaceCrystal1 = { ent-MaterialBlueSpaceCrystal }
+    .desc = { ent-MaterialBlueSpaceCrystal.desc }
+    .suffix = Один
+ent-MaterialRedSpaceCrystal = редспейс кристалл
+    .desc = Кристалл с нестабильными пространственными свойствами.
+    .suffix = Полный
+ent-MaterialRedSpaceCrystal1 = { ent-MaterialRedSpaceCrystal }
+    .desc = { ent-MaterialRedSpaceCrystal.desc }
+    .suffix = Один

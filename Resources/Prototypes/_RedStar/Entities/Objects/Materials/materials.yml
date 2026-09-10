@@ -1,6 +1,8 @@
 ﻿- type: entity
   parent: MaterialBase
   id: MaterialBlueSpaceCrystal
+  name: bluespace crystal
+  description: A crystal with unusual spatial properties.
   suffix: Full
   components:
   - type: Stack
@@ -17,7 +19,8 @@
     - state: bluespace_crystal
       map: ["base"]
   - type: Item
-    heldPrefix: bluespace_crystal
+    sprite: _RedStar/Objects/Materials/ore.rsi
+    heldPrefix: bluespace
   - type: PhysicalComposition
     materialComposition:
       BlueSpaceCrystal: 100
@@ -36,6 +39,8 @@
 - type: entity
   parent: MaterialBase
   id: MaterialRedSpaceCrystal
+  name: redspace crystal
+  description: A crystal with unstable spatial properties.
   suffix: Full
   components:
   - type: Stack
@@ -52,7 +57,8 @@
     - state: redspace_crystal
       map: ["base"]
   - type: Item
-    heldPrefix: redspace_crystal
+    sprite: _RedStar/Objects/Materials/ore.rsi
+    heldPrefix: redspace
   - type: PhysicalComposition
     materialComposition:
       RedSpaceCrystal: 100

@@ -1,13 +1,13 @@
 ﻿- type: stack
+  parent: BaseMediumStack
   id: RawBlueSpaceCrystalOre
   name: stack-bluespace-crystal-ore
   icon: { sprite: _RedStar/Objects/Materials/ore.rsi, state: bluespace_crystal }
-  spawn: RawBSCrystalOre1
-  maxCount: 30
+  spawn: RawBlueSpaceCrystalOre1
 
 - type: stack
+  parent: BaseMediumStack
   id: RawRedSpaceCrystalOre
   name: stack-redspace-crystal-ore
   icon: { sprite: _RedStar/Objects/Materials/ore.rsi, state: redspace_crystal }
-  spawn: RawRSCrystalOre1
-  maxCount: 30
+  spawn: RawRedSpaceCrystalOre1

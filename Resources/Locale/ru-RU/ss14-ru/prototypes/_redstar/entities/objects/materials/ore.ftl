@@ -1,0 +1,12 @@
+ent-RawBlueSpaceCrystalOre = блюспейс руда
+    .desc = { ent-OreBase.desc }
+    .suffix = Полный
+ent-RawBlueSpaceCrystalOre1 = { ent-RawBlueSpaceCrystalOre }
+    .desc = { ent-RawBlueSpaceCrystalOre.desc }
+    .suffix = Один
+ent-RawRedSpaceCrystalOre = редспейс руда
+    .desc = { ent-OreBase.desc }
+    .suffix = Полный
+ent-RawRedSpaceCrystalOre1 = { ent-RawRedSpaceCrystalOre }
+    .desc = { ent-RawRedSpaceCrystalOre.desc }
+    .suffix = Один

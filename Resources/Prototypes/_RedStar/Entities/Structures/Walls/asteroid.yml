@@ -1,7 +1,7 @@
 ﻿- type: entity
   abstract: true
   id: BaseVeinBlueSpaceCrystal
-  suffix: BlueSpace crystal
+  suffix: Bluespace crystal
   description: An ore vein rich with bluespace crystal.
   components:
   - type: OreVein
@@ -47,7 +47,7 @@
 - type: entity
   abstract: true
   id: BaseVeinRedSpaceCrystal
-  suffix: RedSpace crystal
+  suffix: Redspace crystal
   description: An ore vein rich with redspace crystal.
   components:
   - type: OreVein

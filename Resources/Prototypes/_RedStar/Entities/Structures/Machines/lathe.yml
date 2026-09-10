@@ -51,7 +51,12 @@
     emagDynamicPacks:
     - SecurityBoards
   - type: MaterialStorage
-    whitelist: *StandardMaterialWhitelist
+    whitelist: &StandardMaterialWhitelist
+      tags:
+      - Sheet
+      - RawMaterial
+      - Ingot
+  - type: OreSiloClient
   - type: LatheAnnouncing
     channels: [Engineering]
 
@@ -107,6 +112,7 @@
     - SecurityExplosives
   - type: MaterialStorage
     whitelist: *StandardMaterialWhitelist
+  - type: OreSiloClient
   - type: LatheAnnouncing
     channels: [Supply]
 
@@ -176,6 +182,7 @@
     - MechBoardsCivilian
   - type: MaterialStorage
     whitelist: *StandardMaterialWhitelist
+  - type: OreSiloClient
   - type: LatheAnnouncing
     channels: [Science]
 
@@ -222,5 +229,6 @@
     - CameraBoards
   - type: MaterialStorage
     whitelist: *StandardMaterialWhitelist
+  - type: OreSiloClient
   - type: LatheAnnouncing
     channels: [Service]
