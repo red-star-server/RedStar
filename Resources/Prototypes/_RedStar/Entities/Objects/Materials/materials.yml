@@ -61,8 +61,8 @@
     - RawMaterial
 
 - type: entity
-  parent: MaterialRSCrystal
-  id: MaterialRSCrystal1
+  parent: MaterialRedSpaceCrystal
+  id: MaterialRedSpaceCrystal1
   suffix: Single
   components:
   - type: Stack
