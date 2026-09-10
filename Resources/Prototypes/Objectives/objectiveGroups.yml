@@ -97,6 +97,10 @@
     WantedListCartridgeStealObjective: 1
     ClothingOuterHardsuitVoidParamedStealObjective: 1   #med
     MedicalTechFabCircuitboardStealObjective: 1
+    EngineeringTechFabCircuitboardStealObjective: 1 # RS14
+    CargoTechFabCircuitboardStealObjective: 1 # RS14
+    ScienceTechFabCircuitboardStealObjective: 1 # RS14
+    ServiceTechFabCircuitboardStealObjective: 1 # RS14
     FireAxeStealObjective: 1                            #eng
     AmePartFlatpackStealObjective: 1
     ExpeditionsCircuitboardStealObjective: 1            #sup

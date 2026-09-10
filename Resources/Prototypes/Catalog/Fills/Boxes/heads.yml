@@ -24,6 +24,7 @@
         - id: AtmosMonitoringComputerCircuitboard
         - id: PowerComputerCircuitboard
         - id: SolarControlComputerCircuitboard
+        - id: EngineeringTechFabCircuitboard # RS14
 
 - type: entity
   parent: ToteBase
@@ -49,6 +50,7 @@
         - id: IDComputerCircuitboard
         - id: FundingAllocationComputerCircuitboard
         - id: CargoRequestServiceComputerCircuitboard
+        - id: ServiceTechFabCircuitboard # RS14
 
 - type: entity
   parent: BoxStamps
@@ -91,6 +93,7 @@
         - id: SalvageMagnetMachineCircuitboard
         - id: SalvageJobBoardComputerCircuitboard
         - id: MailTeleporterMachineCircuitboard
+        - id: CargoTechFabCircuitboard # RS14
 
 - type: entity
   parent: BoxStamps
@@ -122,3 +125,4 @@
         - id: AnalysisComputerCircuitboard #Because sometimes round start artis just fucking explode on the pad.
         - id: ArtifactAnalyzerMachineCircuitboard
         - id: StationAiFixerCircuitboard
+        - id: ScienceTechFabCircuitboard # RS14

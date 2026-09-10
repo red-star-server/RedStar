@@ -1,0 +1,43 @@
+- type: entity
+  parent: BaseThiefStealObjective
+  id: EngineeringTechFabCircuitboardStealObjective
+  components:
+  - type: NotJobRequirement
+    jobs: [ ChiefEngineer, StationEngineer, AtmosphericTechnician, TechnicalAssistant ]
+  - type: StealCondition
+    stealGroup: EngineeringTechFabCircuitboard
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: CargoTechFabCircuitboardStealObjective
+  components:
+  - type: NotJobRequirement
+    jobs: [ Quartermaster, CargoTechnician, SalvageSpecialist, ShaftMiner ]
+  - type: StealCondition
+    stealGroup: CargoTechFabCircuitboard
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: ScienceTechFabCircuitboardStealObjective
+  components:
+  - type: NotJobRequirement
+    jobs: [ ResearchDirector, Scientist, ResearchAssistant ]
+  - type: StealCondition
+    stealGroup: ScienceTechFabCircuitboard
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: ServiceTechFabCircuitboardStealObjective
+  components:
+  - type: NotJobRequirement
+    jobs: [ HeadOfPersonnel, Bartender, Botanist, Chef, Janitor, Librarian, Musician, ServiceWorker, Chaplain, Clown, Mime ]
+  - type: StealCondition
+    stealGroup: ServiceTechFabCircuitboard
+  - type: Objective
+    difficulty: 1

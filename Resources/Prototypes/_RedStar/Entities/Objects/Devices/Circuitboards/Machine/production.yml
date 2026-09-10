@@ -1,0 +1,80 @@
+- type: entity
+  abstract: true
+  id: BaseDepartmentTechFabCircuitboard
+  parent: BaseMachineCircuitboard
+
+- type: entity
+  id: EngineeringTechFabCircuitboard
+  parent: BaseDepartmentTechFabCircuitboard
+  name: engineering techfab machine board
+  description: A machine printed circuit board for an engineering techfab.
+  components:
+  - type: Sprite
+    state: engineering
+  - type: MachineBoard
+    prototype: EngineeringTechFab
+    stackRequirements:
+      Manipulator: 4
+    tagRequirements:
+      GlassBeaker:
+        amount: 2
+        defaultPrototype: Beaker
+  - type: StealTarget
+    stealGroup: EngineeringTechFabCircuitboard
+
+- type: entity
+  id: CargoTechFabCircuitboard
+  parent: BaseDepartmentTechFabCircuitboard
+  name: cargo techfab machine board
+  description: A machine printed circuit board for a cargo techfab.
+  components:
+  - type: Sprite
+    state: supply
+  - type: MachineBoard
+    prototype: CargoTechFab
+    stackRequirements:
+      Manipulator: 4
+    tagRequirements:
+      GlassBeaker:
+        amount: 2
+        defaultPrototype: Beaker
+  - type: StealTarget
+    stealGroup: CargoTechFabCircuitboard
+
+- type: entity
+  id: ScienceTechFabCircuitboard
+  parent: BaseDepartmentTechFabCircuitboard
+  name: science techfab machine board
+  description: A machine printed circuit board for a science techfab.
+  components:
+  - type: Sprite
+    state: science
+  - type: MachineBoard
+    prototype: ScienceTechFab
+    stackRequirements:
+      Manipulator: 4
+    tagRequirements:
+      GlassBeaker:
+        amount: 2
+        defaultPrototype: Beaker
+  - type: StealTarget
+    stealGroup: ScienceTechFabCircuitboard
+
+- type: entity
+  id: ServiceTechFabCircuitboard
+  parent: BaseDepartmentTechFabCircuitboard
+  name: service techfab machine board
+  description: A machine printed circuit board for a service techfab.
+  components:
+  - type: Sprite
+    state: service
+  - type: MachineBoard
+    prototype: ServiceTechFab
+    stackRequirements:
+      Manipulator: 4
+    tagRequirements:
+      GlassBeaker:
+        amount: 2
+        defaultPrototype: Beaker
+  - type: StealTarget
+    stealGroup: ServiceTechFabCircuitboard

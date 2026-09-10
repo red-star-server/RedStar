@@ -1,0 +1,27 @@
+- type: stealTargetGroup
+  id: EngineeringTechFabCircuitboard
+  name: steal-target-groups-engineering-tech-fab-circuitboard
+  sprite:
+    sprite: Objects/Misc/module.rsi
+    state: engineering
+
+- type: stealTargetGroup
+  id: CargoTechFabCircuitboard
+  name: steal-target-groups-cargo-tech-fab-circuitboard
+  sprite:
+    sprite: Objects/Misc/module.rsi
+    state: supply
+
+- type: stealTargetGroup
+  id: ScienceTechFabCircuitboard
+  name: steal-target-groups-science-tech-fab-circuitboard
+  sprite:
+    sprite: Objects/Misc/module.rsi
+    state: science
+
+- type: stealTargetGroup
+  id: ServiceTechFabCircuitboard
+  name: steal-target-groups-service-tech-fab-circuitboard
+  sprite:
+    sprite: Objects/Misc/module.rsi
+    state: service
