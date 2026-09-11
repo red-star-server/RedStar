@@ -18,7 +18,7 @@ lathe-category-engineering = Инженерия
 lathe-category-general = Общее
 lathe-category-medical = Медицина
 lathe-category-research = Исследования
-lathe-category-security = Безопасность
+lathe-category-security = Милиция
 lathe-category-service = Сервис
 lathe-category-supply = Снабжение
 

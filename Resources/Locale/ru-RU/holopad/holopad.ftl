@@ -67,7 +67,7 @@ holopad-command-cmo = Командование — ГВ
 holopad-command-qm = Командование — КМ
 holopad-command-ce = Командование — СИ
 holopad-command-rd = Командование — НР
-holopad-command-hos = Командование — ГСБ
+holopad-command-hos = Командование — ГМ
 
 # Science
 holopad-science-anomaly = Научный — Аномалистика
@@ -114,20 +114,20 @@ holopad-engineering-power = Инженерный — Питание
 holopad-engineering-main = Инженерный — Главный
 
 # Security
-holopad-security-front = СБ — Приёмная
-holopad-security-brig = СБ — Бриг
-holopad-security-warden = СБ — Смотритель
-holopad-security-interrogation = СБ — Допросная
-holopad-security-breakroom = СБ — Комната отдыха
-holopad-security-detective = СБ — Детектив
-holopad-security-perma = СБ — Перма
-holopad-security-courtroom = СБ — Зал суда
-holopad-security-lawyer = СБ — АВД
-holopad-security-armory = СБ — Оружейная
-holopad-security-locker-room = СБ — Раздевалка
-holopad-security-brig-med = СБ — Бригмед
-holopad-security-evac-checkpoint = СБ — КПП Эвакуация
-holopad-security-arrivals-checkpoint = СБ — КПП Прибытие
+holopad-security-front = Милиция — Приёмная
+holopad-security-brig = Милиция — Бриг
+holopad-security-warden = Милиция — Смотритель
+holopad-security-interrogation = Милиция — Допросная
+holopad-security-breakroom = Милиция — Комната отдыха
+holopad-security-detective = Милиция — Детектив
+holopad-security-perma = Милиция — Перма
+holopad-security-courtroom = Милиция — Зал суда
+holopad-security-lawyer = Милиция — АВД
+holopad-security-armory = Милиция — Оружейная
+holopad-security-locker-room = Милиция — Раздевалка
+holopad-security-brig-med = Милиция — Бригмед
+holopad-security-evac-checkpoint = Милиция — КПП Эвакуация
+holopad-security-arrivals-checkpoint = Милиция — КПП Прибытие
 
 # Service
 holopad-service-janitor = Сервис — Уборщик
@@ -158,4 +158,4 @@ holopad-station-bridge = Станция — Мостик
 holopad-station-cargo-bay = Станция — Грузовой отсек
 
 # CentComm
-holopad-centcomm-evac = Центком — Эвакуационный шаттл
+holopad-centcomm-evac = Генштаб — Эвакуационный шаттл

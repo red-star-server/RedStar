@@ -11,7 +11,7 @@ cargo-account-science-name = Фонд межзвёздных разработо�
 cargo-account-science-code = РНД
 
 cargo-account-security-name = Резервы обороны станции
-cargo-account-security-code = СБ
+cargo-account-security-code = МИЛ
 
 cargo-account-service-name = Совместные вклады сервиса
 cargo-account-service-code = СРВ

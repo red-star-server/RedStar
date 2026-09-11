@@ -33,14 +33,14 @@ comms-console-announcement-unknown-sender = Неизвестный
 
 # Comms console variant titles
 comms-console-announcement-title-station = Консоль связи
-comms-console-announcement-title-centcom = Центральное командование
+comms-console-announcement-title-centcom = Генеральный штаб
 comms-console-announcement-title-nukie = Ядерные оперативники Синдиката
 comms-console-announcement-title-station-ai = Станционный ИИ
 comms-console-announcement-title-wizard = Волшебник
 
 # Flavor text for alert levels
 comms-console-level-Green-flavour-label = Продолжайте работу
-comms-console-level-Blue-flavour-label = Заполните форму NT-4772-b для отчёта
+comms-console-level-Blue-flavour-label = Заполните форму USSP-4772-b для отчёта
 comms-console-level-Violet-flavour-label = Соблюдайте социальную дистанцию
 comms-console-level-Yellow-flavour-label = Приготовьтесь задержать дыхание
 comms-console-level-Red-flavour-label = Сохраняйте бдительность

@@ -13,6 +13,6 @@ cargoproduct-category-name-livestock = Животноводство
 cargoproduct-category-name-materials = Материалы
 cargoproduct-category-name-medical = Медицина
 cargoproduct-category-name-science = Наука
-cargoproduct-category-name-security = Охрана
+cargoproduct-category-name-security = Милиция
 cargoproduct-category-name-service = Сервис
 cargoproduct-category-name-space = Космос

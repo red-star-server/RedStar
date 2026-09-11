@@ -1,6 +1,6 @@
-advertisement-nanomed-1 = Иди и спаси несколько жизней!
+advertisement-nanomed-1 = Иди и спаси несколько жизней во славу пролетариата!
 advertisement-nanomed-2 = Лучшее снаряжение для вашего медотдела.
-advertisement-nanomed-3 = Только лучшие инструменты.
+advertisement-nanomed-3 = Бесплатная медицина! Не то, что у корпоратов.
 advertisement-nanomed-4 = Натуральные химикаты!
 advertisement-nanomed-5 = Эти штуки спасают жизни.
 advertisement-nanomed-6 = Может сами примете?

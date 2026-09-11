@@ -39,7 +39,7 @@ roles-antag-paradox-clone-objective = Странная пространстве�
 roles-antag-pirate-name = Пират
 
 roles-antag-thief-name = Вор
-roles-antag-thief-objective = Пополните свою личную коллекцию имуществом Nanotrasen, не прибегая к насилию.
+roles-antag-thief-objective = Пополните свою личную коллекцию имуществом СССП, не прибегая к насилию.
 
 roles-antag-dragon-name = Космический дракон
 roles-antag-dragon-objective = Создайте армию карпов для захвата квадранта.

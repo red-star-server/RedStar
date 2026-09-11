@@ -26,6 +26,6 @@ teleporter-name-center = Ангар телепортации
 teleporter-name-salvage = Утилизаторский
 teleporter-name-medical = Медицинский
 teleporter-name-engineering = Инженерный
-teleporter-name-security = Безопасность
+teleporter-name-security = Милиция
 teleporter-name-science = Научный
 teleporter-name-cargo = Снабжение

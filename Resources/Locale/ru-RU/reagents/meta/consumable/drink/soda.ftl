@@ -11,7 +11,7 @@ reagent-name-dr-gibb = доктор Гибб
 reagent-desc-dr-gibb = Восхитительная смесь из 42 различных вкусов.
 
 reagent-name-energy-drink = Ред Булеан
-reagent-desc-energy-drink = Доза энергии! Nanotrasen не несёт ответственности, если у вас вырастут птичьи придатки.
+reagent-desc-energy-drink = Доза энергии! СССП не несёт ответственности, если у вас вырастут птичьи придатки.
 
 reagent-name-grape-soda = виноградная газировка
 reagent-desc-grape-soda = Это винограааааад!

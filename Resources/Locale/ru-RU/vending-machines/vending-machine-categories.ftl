@@ -42,7 +42,7 @@ vending-machine-category-trauma-care = Травматология
 vending-machine-category-chemicals = Химикаты
 
 # Security
-vending-machine-category-security-equipment = Снаряжение службы безопасности
+vending-machine-category-security-equipment = Снаряжение милиции
 vending-machine-category-protective-equipment = Защитное снаряжение
 vending-machine-category-restraints = Средства фиксации
 vending-machine-category-shields = Щиты

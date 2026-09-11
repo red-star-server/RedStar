@@ -1,8 +1,8 @@
 ent-CrateVendingMachineRestockEngineeringFilled = ящик пополнения ИнжеМат
     .desc = Содержит набор пополнения торгомата ИнжеМат. Он же может пополнить торгомат ТвоИнструменты.
     .suffix = { ent-CrateEngineeringSecure.suffix }
-ent-CrateVendingMachineRestockMedicalFilled = ящик пополнения НаноМед
-    .desc = Содержит набор пополнения, совместимый с торгоматами НаноМед и НаноМед Плюс.
+ent-CrateVendingMachineRestockMedicalFilled = ящик пополнения СовМед
+    .desc = Содержит набор пополнения, совместимый с торгоматами СовМед и СовМед Плюс.
     .suffix = { ent-CrateMedicalSecure.suffix }
 ent-CrateVendingMachineRestockChemVendFilled = ящик пополнения ХимкоМат
     .desc = Содержит набор пополнения торгомата ХимкоМат.

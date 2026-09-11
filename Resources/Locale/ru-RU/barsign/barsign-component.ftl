@@ -6,7 +6,7 @@ barsign-ui-set-label = Выбрать вывеску:
 
 ## The Harmbaton
 barsign-prototype-name-harmbaton = Хармбатон
-barsign-prototype-description-harmbaton = Отличные обеды как для сотрудников службы безопасности, так и для пассажиров.
+barsign-prototype-description-harmbaton = Отличные обеды как для сотрудников милиции, так и для пассажиров.
 
 ## The Singulo
 barsign-prototype-name-singulo = Сингуло
@@ -102,7 +102,7 @@ barsign-prototype-description-maltroach = Сквик!
 
 ## Whiskey Echoes
 barsign-prototype-name-whiskeyechoes = Виски Эхо
-barsign-prototype-description-whiskeyechoes = Элитный бар для элитных опер... Подождите, это же станция Nanotrasen. Почему эта вывеска в базе данных?
+barsign-prototype-description-whiskeyechoes = Элитный бар для элитных опер... Подождите, это же станция СССП. Почему эта вывеска в базе данных?
 
 ## EmpBarSign
 barsign-prototype-name-empbarsign = глючащая вывеска бара

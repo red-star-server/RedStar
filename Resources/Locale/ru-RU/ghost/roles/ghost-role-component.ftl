@@ -183,10 +183,10 @@ ghost-role-information-ert-medical-name = ОБР Медик
 ghost-role-information-ert-medical-description = Оказывайте содействие в медицинской помощи для решения проблем станции.
 
 ghost-role-information-cburn-agent-name = РХБЗЗ Оперативник
-ghost-role-information-cburn-agent-description = Высококвалифицированный агент Центком, способный справиться с любыми угрозами.
+ghost-role-information-cburn-agent-description = Высококвалифицированный агент Генштаба, способный справиться с любыми угрозами.
 
-ghost-role-information-centcom-official-name = Представитель Центком
-ghost-role-information-centcom-official-description = Выполняйте обязанности, связанные с Центком, такие как инспекция станции, составление служебных характеристик на руководителей и работа с факсом.
+ghost-role-information-centcom-official-name = Представитель Генштаба
+ghost-role-information-centcom-official-description = Выполняйте обязанности, связанные с Генштабом, такие как инспекция станции, составление служебных характеристик на руководителей и работа с факсом.
 
 ghost-role-information-nukeop-rules = Вы [color={ role-type-team-antagonist-color }][bold]{ role-type-team-antagonist-name }[/bold][/color], в команде с другими Ядерными оперативниками. Помощь агентов на станции не гарантируется.
 
@@ -201,7 +201,7 @@ ghost-role-information-hellspawn-name = Адское отродье
 ghost-role-information-hellspawn-description = Несите смерть всем, кто не повинуется великой богине Нар'Си.
 
 ghost-role-information-Death-Squad-name = Оперативник Эскадрона смерти
-ghost-role-information-Death-Squad-description = Один из лучших агентов внутренних дел Nanotrasen. Ожидайте приказов от Центкома или представителя Центкома.
+ghost-role-information-Death-Squad-description = Один из лучших агентов внутренних дел СССП. Ожидайте приказов от Генштаба или представителя Генштаба.
 ghost-role-information-Death-Squad-rules = Вы обязаны подчиняться приказам своего командира, вы фактически его [color={ role-type-familiar-color }][bold]{ role-type-familiar-name }[/bold][/color].
 
 ghost-role-information-SyndiCat-name = СиндиКот
@@ -265,8 +265,8 @@ ghost-role-information-derelict-mining-cyborg-description = Вы — кибор�
 ghost-role-information-derelict-syndicate-assault-cyborg-name = Брошенный штурмовой киборг Синдиката
 ghost-role-information-derelict-syndicate-assault-cyborg-description = Вы — раняя модель штурмового киборга Синдиката, которая заблудилась в космосе. После долгих лет воздействия ионных бурь вы оказываетесь рядом с космической станцией.
 
-ghost-role-information-security-name = Служба безопасности
-ghost-role-information-security-description = Вы входите в состав оперативной группы службы безопасности, но, похоже, попали в странную ситуацию...
+ghost-role-information-security-name = Милиция
+ghost-role-information-security-description = Вы входите в состав оперативной группы милиции, но, похоже, попали в странную ситуацию...
 
 ghost-role-information-medical-name = Медицинский
 ghost-role-information-medical-virologist-name = Вирусолог
@@ -285,8 +285,8 @@ ghost-role-information-science-description = Вы являетесь часть�
 
 ghost-role-information-civilian-name = Гражданский
 ghost-role-information-civilian-description = Вы просто гуляли, но, похоже, попали в странную ситуацию...
-ghost-role-information-civilian-centcom-lawyer-name = Адвокат Центкома
-ghost-role-information-civilian-centcom-lawyer-description = Адвокат, прямо из Центрального юридического отдела.
+ghost-role-information-civilian-centcom-lawyer-name = Адвокат Генштаба
+ghost-role-information-civilian-centcom-lawyer-description = Адвокат, прямо из Генерального юридического отдела.
 
 ghost-role-information-command-name = Коммандир
 ghost-role-information-command-description = Вы являетесь членом командования, но, похоже, попали в странную ситуацию...
@@ -324,10 +324,10 @@ ghost-role-information-cossack-name = Древний путешественни�
 ghost-role-information-cossack-description = Из истории, потерянной во времени, вы попадаете в наш век.
 
 ghost-role-information-pirate-name = Космический пират
-ghost-role-information-pirate-description = Агх, дружище! Собирайте крутые трофеи, но старайтесь избегать службы безопасности и утилизаторов!
+ghost-role-information-pirate-description = Агх, дружище! Собирайте крутые трофеи, но старайтесь избегать милиции и утилизаторов!
 
 ghost-role-information-pirate-captain-name = Капитан космических пиратов
-ghost-role-information-pirate-captain-description = Агх, дружище! Ты здесь главный, и тебе нужно разработать план, как заполучить эту сочную добычу с помощью крючка или мошенничества. Только постарайтесь избегать службы безопасности и утилизаторов!
+ghost-role-information-pirate-captain-description = Агх, дружище! Ты здесь главный, и тебе нужно разработать план, как заполучить эту сочную добычу с помощью крючка или мошенничества. Только постарайтесь избегать милиции и утилизаторов!
 
 ghost-role-information-artifact-name = Разумный артефакт
 ghost-role-information-artifact-description = Осуществляйте свои инопланетные прихоти. Принудительно активируйте свои узлы во благо или во зло.

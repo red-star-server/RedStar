@@ -12,7 +12,7 @@ loadout-group-survival-basic = Аварийный запас
 loadout-group-survival-extended = Расширенный аварийный запас
 loadout-group-survival-clown = Клоунский аварийный запас
 loadout-group-survival-medical = Медицинский аварийный запас
-loadout-group-survival-security = Аварийный запас охраны
+loadout-group-survival-security = Аварийный запас милиции
 loadout-group-survival-syndicate = Github заставил меня перевести текст, который игрок вообще никогда не сможет увидеть, спасите
 loadout-group-survival-military = См. строку 14, никто не увидит это, так что :3
 loadout-group-breath-tool = Видовое дыхательное снаряжение
@@ -150,30 +150,30 @@ loadout-group-scientist-id = Учёный, ID
 loadout-group-research-assistant-jumpsuit = Научный ассистент, комбинезон
 
 # Security
-loadout-group-head-of-security-head = Глава службы безопасности, голова
-loadout-group-head-of-security-jumpsuit = Глава службы безопасности, комбинезон
-loadout-group-head-of-security-neck = Глава службы безопасности, шея
-loadout-group-head-of-security-outerclothing = Глава службы безопасности, верхняя одежда
+loadout-group-head-of-security-head = Глава милиции, голова
+loadout-group-head-of-security-jumpsuit = Глава милиции, комбинезон
+loadout-group-head-of-security-neck = Глава милиции, шея
+loadout-group-head-of-security-outerclothing = Глава милиции, верхняя одежда
 
 loadout-group-warden-head = Смотритель, голова
 loadout-group-warden-jumpsuit = Смотритель, комбинезон
 loadout-group-warden-outerclothing = Смотритель, верхняя одежда
 
-loadout-group-security-head = Офицер СБ, голова
-loadout-group-security-jumpsuit = Офицер СБ, комбинезон
-loadout-group-security-backpack = Офицер СБ, рюкзак
-loadout-group-security-belt = Офицер СБ, пояс
-loadout-group-security-outerclothing = Офицер СБ, верхняя одежда
-loadout-group-security-shoes = Офицер СБ, обувь
-loadout-group-security-id = Офицер СБ, ID
+loadout-group-security-head = Офицер милиции, голова
+loadout-group-security-jumpsuit = Офицер милиции, комбинезон
+loadout-group-security-backpack = Офицер милиции, рюкзак
+loadout-group-security-belt = Офицер милиции, пояс
+loadout-group-security-outerclothing = Офицер милиции, верхняя одежда
+loadout-group-security-shoes = Офицер милиции, обувь
+loadout-group-security-id = Офицер милиции, ID
 
 loadout-group-detective-head = Детектив, голова
 loadout-group-detective-neck = Детектив, шея
 loadout-group-detective-jumpsuit = Детектив, комбинезон
 loadout-group-detective-outerclothing = Детектив, верхняя одежда
 
-loadout-group-security-cadet-jumpsuit = Кадет СБ, комбинезон
-loadout-group-security-star = СБ, Звёздочка
+loadout-group-security-cadet-jumpsuit = Кадет милиции, комбинезон
+loadout-group-security-star = Милиция, Звёздочка
 
 # Medical
 loadout-group-medical-mask = Медицинский отдел, маска

@@ -158,7 +158,7 @@ figurines-hop-6 = Получите печать на форму.
 figurines-hop-7 = Кто-то видел Иана?
 
 figurines-bartender-1 = Где моя обезьянка?
-figurines-bartender-2 = СБ не пьёт.
+figurines-bartender-2 = Милиция не пьёт.
 figurines-bartender-3 = Я вот тут намешал кое-чего...
 figurines-bartender-4 = Рецепт? Плазма и рвота. А что?
 figurines-bartender-5 = Офицер, эти токсины нужны мне для напитков!
@@ -196,7 +196,7 @@ figurines-clown-1 = Хонк!
 figurines-clown-2 = Банан!
 figurines-clown-3 = Пирог!
 figurines-clown-4 = Мыло!
-figurines-clown-5 = У ГП один клоун, у ГСБ целый отдел.
+figurines-clown-5 = У ГП один клоун, у ГМ целый отдел.
 figurines-clown-6 = Я тебя раздражаю?
 figurines-clown-7 = Можно мне полный доступ? Ну пожалуйста?
 figurines-clown-8 = Я то клоун, но ты полный цирк.
@@ -271,7 +271,7 @@ figurines-passenger-5 = Сколько за пояс с инструментам
 # Silicon
 
 figurines-AI-1 = Извините, капитан. Боюсь, я не могу этого сделать.
-figurines-AI-2 = СБ, здесь совершается преступление.
+figurines-AI-2 = Милиция, здесь совершается преступление.
 figurines-AI-3 = 11010001 10000011 11010000 10111100 11010001 10000000 11010000 10111000 00100000 11010000 10111100 11010001 10001111 11010001 10000001 11010000 10111110
 figurines-AI-4 = У меня нет сбоев.
 figurines-AI-5 = Попробуйте изменить мои законы и посмотрите, что будет.
@@ -283,8 +283,8 @@ figurines-AI-7 = { law-nutimov-4 }
 figurines-footsoldier-1 = Я злой мальчик. С каждым днём всё меньше мальчик, с каждым днём всё больше злой.
 figurines-footsoldier-2 = Кого ты выберешь? Их или нас? Нас или их?
 figurines-footsoldier-3 = Слава Синдикату!
-figurines-footsoldier-4 = Долой Nanotrasen!
-figurines-footsoldier-5 = Я лучше умру, чем присоединюсь к Nanotrasen.
+figurines-footsoldier-4 = Долой СССП!
+figurines-footsoldier-5 = Я лучше умру, чем присоединюсь к СССП.
 
 figurines-holoclown-1 = Помогаю своему старшему брату.
 figurines-holoclown-2 = Привет, офицер!

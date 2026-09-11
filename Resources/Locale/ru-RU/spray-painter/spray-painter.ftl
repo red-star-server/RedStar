@@ -80,7 +80,7 @@ spray-painter-style-airlockstandard-maintenance = Технический
 spray-painter-style-airlockstandard-medical = Медицинский
 spray-painter-style-airlockstandard-salvage = Утилизаторский
 spray-painter-style-airlockstandard-science = Научный
-spray-painter-style-airlockstandard-security = Служба безопасности
+spray-painter-style-airlockstandard-security = Милиция
 spray-painter-style-airlockstandard-virology = Вирусология
 
 spray-painter-style-airlockglass-atmospherics = Атмос
@@ -94,7 +94,7 @@ spray-painter-style-airlockglass-maintenance = Технический
 spray-painter-style-airlockglass-medical = Медицинский
 spray-painter-style-airlockglass-salvage = Утилизаторский
 spray-painter-style-airlockglass-science = Научный
-spray-painter-style-airlockglass-security = Служба безопасности
+spray-painter-style-airlockglass-security = Милиция
 spray-painter-style-airlockglass-virology = Вирусология
 
 # Lockers
@@ -112,7 +112,7 @@ spray-painter-style-locker-electrical = Электрический
 spray-painter-style-locker-engineer = Инженер
 spray-painter-style-locker-evac = Эвак ремонт
 spray-painter-style-locker-hop = ГП
-spray-painter-style-locker-hos = ГСБ
+spray-painter-style-locker-hos = ГМ
 spray-painter-style-locker-medicine = Медицинский
 spray-painter-style-locker-mime = Мим
 spray-painter-style-locker-paramedic = Парамедик
@@ -121,14 +121,14 @@ spray-painter-style-locker-rd = НР
 spray-painter-style-locker-representative = Представитель
 spray-painter-style-locker-salvage = Утилизатор
 spray-painter-style-locker-scientist = Научный
-spray-painter-style-locker-security = Служба безопасности
+spray-painter-style-locker-security = Милиция
 spray-painter-style-locker-welding = Сварочный
 
 spray-painter-style-closet-basic = Обычный
 spray-painter-style-closet-biohazard = Биологическая опасность
 spray-painter-style-closet-biohazard-science = Биологическая опасность (научный)
 spray-painter-style-closet-biohazard-virology = Биологическая опасность (вирусология)
-spray-painter-style-closet-biohazard-security = Биологическая опасность (служба безопасности)
+spray-painter-style-closet-biohazard-security = Биологическая опасность (милиция)
 spray-painter-style-closet-biohazard-janitor = Биологическая опасность (уборщик)
 spray-painter-style-closet-bomb = Сапёрный костюм
 spray-painter-style-closet-bomb-janitor = Сапёрный костюм (уборщик)
@@ -183,7 +183,7 @@ spray-painter-style-cratesecure-medical = Медицинский
 spray-painter-style-cratesecure-plasma = Плазма
 spray-painter-style-cratesecure-private = Личный
 spray-painter-style-cratesecure-science = Научный
-spray-painter-style-cratesecure-secgear = Снаряжение СБ
+spray-painter-style-cratesecure-secgear = Снаряжение милиции
 spray-painter-style-cratesecure-weapon = Оружие
 
 # Canisters

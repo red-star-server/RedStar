@@ -5,12 +5,12 @@ chat-radio-message-wrap-bold = [color={ $color }]{ $channel } [bold]{ $name }[/b
 examine-headset-default-channel = Канал по умолчанию этой гарнитуры [color={ $color }]{ $channel }[/color].
 
 chat-radio-common = Общий
-chat-radio-centcom = Центком
+chat-radio-centcom = Генштаб
 chat-radio-command = Командный
 chat-radio-engineering = Инженерный
 chat-radio-medical = Медицинский
 chat-radio-science = Научный
-chat-radio-security = Безопасность
+chat-radio-security = Милиция
 chat-radio-service = Сервис
 chat-radio-supply = Снабжение
 chat-radio-syndicate = Синдикат

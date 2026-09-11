@@ -25,12 +25,12 @@ construction-graph-tag-eva-suit = ВКД скафандр
 construction-graph-tag-eva-helmet = ВКД шлем
 
 # hud
-construction-graph-tag-security-hud = визор охраны
+construction-graph-tag-security-hud = визор милиции
 construction-graph-tag-medical-hud = медицинский визор
 
 # security
 construction-graph-tag-sun-glasses = солнцезащитные очки
-construction-graph-tag-security-helmet = шлем СБ
+construction-graph-tag-security-helmet = шлем милиции
 
 # materials
 construction-graph-tag-manipulator = модульная машинная часть

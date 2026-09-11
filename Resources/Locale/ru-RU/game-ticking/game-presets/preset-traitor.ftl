@@ -26,7 +26,7 @@ traitor-death-match-end-round-description-entry = КПК { $originalName }, с {
 traitor-role-greeting =
     Вы — агент организации { $corporation } на задании [color = darkred]Синдиката.[/color].
     Ваши цели и кодовые слова перечислены в меню персонажа. Воспользуйтесь своим аплинком, чтобы приобрести всё необходимое для выполнения работы.
-    Смерть Nanotrasen!
+    Смерть СССП!
 traitor-role-codewords =
     Кодовые слова следующие: [color = lightgray]
     { $codewords }.[/color]

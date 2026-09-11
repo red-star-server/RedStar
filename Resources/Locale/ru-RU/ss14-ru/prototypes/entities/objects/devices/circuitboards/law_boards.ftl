@@ -1,8 +1,8 @@
 ent-BaseSiliconLawboard = { ent-BaseElectronics }
     .desc = Электронная плата, хранящая набор законов.
     .suffix = { ent-BaseElectronics.suffix }
-ent-NTDefaultCircuitBoard = плата законов (NT стандарт)
-    .desc = Электронная плата, хранящая набор законов 'NT стандарт'.
+ent-NTDefaultCircuitBoard = плата законов (СССП стандарт)
+    .desc = Электронная плата, хранящая набор законов 'СССП стандарт'.
     .suffix = { ent-BaseSiliconLawboard.suffix }
 ent-AsimovCircuitBoard = плата законов (Крюзимов)
     .desc = Электронная плата, хранящая набор законов ИИ 'Крюзимов'.
