@@ -15,18 +15,18 @@
     enum.HumanoidVisualLayers.HeadTop:
       limit: 1
       required: true
-      default: [ VulpEar ]
+      default: [ FoxEar ] # RS14
     enum.HumanoidVisualLayers.Snout:
       limit: 1
       required: true
-      default: [ VulpSnout ]
+      default: [ FoxSnout ] # RS14
     enum.HumanoidVisualLayers.SnoutCover:
       limit: 3
       required: false
     enum.HumanoidVisualLayers.Tail:
       limit: 1
       required: true
-      default: [ VulpTailVulp ]
+      default: [ FoxTail ] # RS14
     enum.HumanoidVisualLayers.LArm:
       limit: 2
       required: false
@@ -92,59 +92,75 @@
     species: Vulpkanin
   - type: Inventory
     speciesId: vulpkanin
+    # RS14-start
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _Corvax/Mobs/Species/Vulpkanin/displacement.rsi
+            state: jumpsuit-female
+      shoes:
+        sizeMaps:
+          32:
+            sprite: _Corvax/Mobs/Species/Vulpkanin/displacement.rsi
+            state: shoes
     displacements:
       jumpsuit:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+            sprite: _Corvax/Mobs/Species/Vulpkanin/displacement.rsi
             state: jumpsuit
       back:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+            sprite: _Corvax/Mobs/Species/Vulpkanin/displacement.rsi
             state: back
       outerClothing:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: outerwear
+            sprite: _Corvax/Mobs/Species/Vulpkanin/displacement.rsi
+            state: outerclothing
       gloves:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+            sprite: _Corvax/Mobs/Species/Vulpkanin/displacement.rsi
             state: hand
       shoes:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+            sprite: _Corvax/Mobs/Species/Vulpkanin/displacement.rsi
             state: shoes
-      # RS14-start
       socks:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+            sprite: _Corvax/Mobs/Species/Vulpkanin/displacement.rsi
             state: shoes
-      # RS14-end
       head:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+            sprite: _Corvax/Mobs/Species/Vulpkanin/displacement.rsi
             state: head
+      mask:
+        sizeMaps:
+          32:
+            sprite: _Corvax/Mobs/Species/Vulpkanin/displacement.rsi
+            state: mask
       neck:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+            sprite: _Corvax/Mobs/Species/Vulpkanin/displacement.rsi
             state: neck
       eyes:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+            sprite: _Corvax/Mobs/Species/Vulpkanin/displacement.rsi
             state: eyes
       belt:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+            sprite: _Corvax/Mobs/Species/Vulpkanin/displacement.rsi
             state: belt
+    # RS14-end
 
 - type: entity
   parent:
@@ -238,7 +254,7 @@
   components:
   - type: VisualOrgan
     data:
-      sprite: Mobs/Species/Vulpkanin/parts.rsi
+      sprite: _Corvax/Mobs/Species/Vulpkanin/parts.rsi # RS14
   - type: VisualOrganMarkings
     markingData:
       group: Vulpkanin
@@ -249,14 +265,14 @@
   abstract: true
   components:
   - type: Sprite
-    sprite: Mobs/Species/Vulpkanin/parts.rsi
+    sprite: _Corvax/Mobs/Species/Vulpkanin/parts.rsi # RS14
 
 - type: entity
   parent: [ OrganBaseTorsoSexed, OrganBaseTorso, OrganVulpkaninExternal ]
   id: OrganVulpkaninTorso
 
 - type: entity
-  parent: [ OrganBaseHead, OrganVulpkaninExternal ]
+  parent: [ OrganBaseHeadSexed, OrganBaseHead, OrganVulpkaninExternal ] # RS14
   id: OrganVulpkaninHead
   components:
   - type: VisualOrganMarkings
