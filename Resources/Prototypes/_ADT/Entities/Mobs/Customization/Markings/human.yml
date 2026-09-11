@@ -1,0 +1,113 @@
+# Лисий хвост
+- type: marking
+  id: ADTFoxTail
+  bodyPart: Tail
+  groupWhitelist: [ Human, Slime ]
+  coloring:
+    default:
+      type:
+        !type:CategoryColoring
+          category: Hair
+      fallbackTypes:
+        - !type:CategoryColoring
+          category: FacialHair
+        - !type:SkinColoring
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Human/fox_parts.rsi
+    state: tail_fox_wag_stripes_prime # AdventureTime-Sponsors
+  - sprite: _ADT/Mobs/Customization/Human/fox_parts.rsi
+    state: tail_fox_wag_stripes_second # AdventureTime-Sponsors
+  - sprite: _ADT/Mobs/Customization/Human/fox_parts.rsi
+    state: tail_fox_wag_stripes_third # AdventureTime-Sponsors
+
+- type: marking
+  id: ADTMilkyTail
+  bodyPart: Tail
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Human/demon.rsi
+    state: milky_tail
+  - sprite: _ADT/Mobs/Customization/Human/demon.rsi
+    state: milky_tail_secondary
+
+- type: marking
+  id: ADTMilkyEars
+  bodyPart: HeadTop
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Human/demon.rsi
+    state: milky_ears
+
+- type: marking
+  id: ADTMilkyHorns
+  bodyPart: HeadTop
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Human/demon.rsi
+    state: milky_horns
+  - sprite: _ADT/Mobs/Customization/Human/demon.rsi
+    state: milky_horns_secondary
+
+- type: marking
+  id: ADTHorseEars
+  bodyPart: HeadTop
+  groupWhitelist: [ Human, Slime ]
+  coloring:
+    default:
+      type:
+        !type:CategoryColoring
+          category: Hair
+      fallbackTypes:
+        - !type:CategoryColoring
+          category: FacialHair
+        - !type:SkinColoring
+    layers:
+      ears_horse_inner:
+        type:
+          !type:CategoryColoring
+            category: Hair
+        fallbackTypes:
+          - !type:CategoryColoring
+            category: FacialHair
+          - !type:SkinColoring
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Human/horse.rsi
+    state: ears_horse_outer
+  - sprite: _ADT/Mobs/Customization/Human/horse.rsi
+    state: ears_horse_inner
+
+- type: marking
+  id: ADTHorseTail
+  bodyPart: Tail
+  groupWhitelist: [ Human, Slime ]
+  coloring:
+    default:
+      type:
+        !type:CategoryColoring
+          category: Hair
+      fallbackTypes:
+        - !type:CategoryColoring
+          category: FacialHair
+        - !type:SkinColoring
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Human/horse.rsi
+    state: tail_horse
+
+- type: marking
+  id: ADTHumanElfEars
+  bodyPart: HeadTop
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Human/elf.rsi
+    state: elf_ears
+
+
+- type: marking
+  id: ADTHumanElfEars2
+  bodyPart: HeadTop
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Human/elf.rsi
+    state: elf_ears2
+
+

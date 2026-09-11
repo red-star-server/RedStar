@@ -2,6 +2,11 @@
   # parent: Undergarments # Disabled in favor of inventory-slot underwear.
   id: Slime
   limits:
+    # RS14-start
+    enum.HumanoidVisualLayers.HeadTop:
+      limit: 1
+      required: false
+    # RS14-end
     enum.HumanoidVisualLayers.Hair:
       limit: 1
       required: false

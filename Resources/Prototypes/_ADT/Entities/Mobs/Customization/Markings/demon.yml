@@ -1,0 +1,332 @@
+- type: marking
+  id: DemonChestCowSpots
+  bodyPart: Chest
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/custom.rsi
+    state: cow_spots
+
+- type: marking
+  id: DemonChestGuard
+  bodyPart: Chest
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/custom.rsi
+    state: guards_stripes
+
+- type: marking
+  id: DemonChestLinesEmperos
+  bodyPart: Chest
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/custom.rsi
+    state: lines_emperos
+
+- type: marking
+  id: DemonChestQueenLines
+  bodyPart: Chest
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/custom.rsi
+    state: queen_lines
+
+- type: marking
+  id: DemonChestTreeLines
+  bodyPart: Chest
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/custom.rsi
+    state: tree_lines
+
+- type: marking
+  id: DemonChestTrinitySpots
+  bodyPart: Chest
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/custom.rsi
+    state: trinity_spots
+
+#Бороды
+- type: marking
+  id: DemonGoatee
+  bodyPart: FacialHair
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/custom.rsi
+    state: goatee
+
+#Глаза, гетерохромия
+
+- type: marking
+  id: ADTDemonrigth_eye
+  bodyPart: Eyes
+  groupWhitelist: [ Human, Slime ]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: tattoo_eye_r
+
+- type: marking
+  id: ADTDemonleft_eye
+  bodyPart: Eyes
+  groupWhitelist: [ Human, Slime ]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: tattoo_eye_l
+
+- type: marking
+  id: DemonCowEars
+  bodyPart: HeadTop
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/custom.rsi
+    state: cow_ears
+
+- type: marking
+  id: DemonEars
+  bodyPart: HeadTop
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/custom.rsi
+    state: demon_ears
+
+- type: marking
+  id: DemonElfEars
+  bodyPart: HeadTop
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/custom.rsi
+    state: ears_elf
+- type: marking
+  id: DemonCowHorns
+  bodyPart: HeadTop
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/custom.rsi
+    state: cow_horns
+
+- type: marking
+  id: DemonHornsDeer
+  bodyPart: HeadTop
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/custom.rsi
+    state: deer_antlers_horns
+
+- type: marking
+  id: DemonHornsSmall
+  bodyPart: HeadTop
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/custom.rsi
+    state: small_horns
+
+- type: marking
+  id: DemonHornsBuffalo
+  bodyPart: HeadTop
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/custom.rsi
+    state: horns_buffalo
+
+- type: marking
+  id: DemonHornsCarpicorn
+  bodyPart: HeadTop
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/custom.rsi
+    state: horns_capricorn
+
+- type: marking
+  id: DemonHornsDevilOne
+  bodyPart: HeadTop
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/custom.rsi
+    state: horns_devil_one
+
+- type: marking
+  id: DemonHornsDevil
+  bodyPart: HeadTop
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/custom.rsi
+    state: horns_devil
+
+- type: marking
+  id: DemonHornsDevil2
+  bodyPart: HeadTop
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/custom.rsi
+    state: horns_devil2
+
+- type: marking
+  id: DemonHornsDevil3
+  bodyPart: HeadTop
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/custom.rsi
+    state: horns_devil3
+
+- type: marking
+  id: DemonHornsDevil4
+  bodyPart: HeadTop
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/custom.rsi
+    state: horns_devil4
+
+- type: marking
+  id: DemonHornsRam
+  bodyPart: HeadTop
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/custom.rsi
+    state: horns_ram
+
+- type: marking
+  id: DemonHornsUnicorn
+  bodyPart: HeadTop
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/custom.rsi
+    state: horns_unicorn
+
+#Start-Рога от Иллюми, 32x64
+- type: marking
+  id: DemonHornsBackwardHorns
+  bodyPart: HeadTop
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/size_horns32x64.rsi
+    state: backward_horns
+
+- type: marking
+  id: DemonHornsDarkCrown
+  bodyPart: HeadTop
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/size_horns32x64.rsi
+    state: dark_crown
+
+- type: marking
+  id: DemonHornsDevilPrimeSi1
+  bodyPart: HeadTop
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/size_horns32x64.rsi
+    state: devil_prime1_s
+
+- type: marking
+  id: DemonHornsDevilPrime1
+  bodyPart: HeadTop
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/size_horns32x64.rsi
+    state: devil_prime1
+
+- type: marking
+  id: DemonHornsDevilPrime2
+  bodyPart: HeadTop
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/size_horns32x64.rsi
+    state: devil_prime2
+
+- type: marking
+  id: DemonHornsFat_Horn
+  bodyPart: HeadTop
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/size_horns32x64.rsi
+    state: fat_horn
+#End-Рога от Иллюми, 32x64
+
+- type: marking
+  id: DemonTail1
+  bodyPart: Tail
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/base_tail.rsi
+    state: tail
+  - sprite: _ADT/Mobs/Customization/Demon/tails_of_demons.rsi
+    state: demon_tail
+
+- type: marking
+  id: DemonTailLong
+  bodyPart: Tail
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/base_tail.rsi
+    state: tail
+  - sprite: _ADT/Mobs/Customization/Demon/tails_of_demons.rsi
+    state: long
+
+- type: marking
+  id: DemonTailUp
+  bodyPart: Tail
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/base_tail.rsi
+    state: tail
+  - sprite: _ADT/Mobs/Customization/Demon/tails_of_demons.rsi
+    state: up
+
+- type: marking
+  id: MobDemonTailColor
+  bodyPart: Tail
+  groupWhitelist: [ Human, Slime ]
+  sprites:
+    - sprite: _ADT/Mobs/Customization/Demon/base_tail.rsi
+      state: tail
+
+ # Corvax-Wega Animated Tail demons
+- type: marking
+  id: DemonTail1Animated
+  bodyPart: Tail
+  groupWhitelist: []
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/base_tail.rsi
+    state: tail_waggin
+  - sprite: _ADT/Mobs/Customization/Demon/tails_of_demons.rsi
+    state: demon_tail_waggin
+
+- type: marking
+  id: DemonTailLongAnimated
+  bodyPart: Tail
+  groupWhitelist: []
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/base_tail.rsi
+    state: tail_waggin
+  - sprite: _ADT/Mobs/Customization/Demon/tails_of_demons.rsi
+    state: long_waggin
+
+- type: marking
+  id: DemonTailUpAnimated
+  bodyPart: Tail
+  groupWhitelist: []
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/base_tail.rsi
+    state: tail_waggin
+  - sprite: _ADT/Mobs/Customization/Demon/tails_of_demons.rsi
+    state: up_waggin
+
+- type: marking
+  id: MobDemonTailColorAnimated
+  bodyPart: Tail
+  groupWhitelist: []
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Demon/base_tail.rsi
+    state: tail_waggin
+
+
