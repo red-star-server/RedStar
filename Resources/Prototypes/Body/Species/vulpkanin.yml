@@ -226,6 +226,7 @@
     sprite:
       sprite: Effects/creampie.rsi
       state: creampie_vulpkanin
+  - type: GrowlingAccent # RS14
 
 - type: entity
   parent: OrganBaseOrganic
