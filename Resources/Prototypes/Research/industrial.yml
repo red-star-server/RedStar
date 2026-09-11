@@ -166,8 +166,10 @@
     - PowerDrill
     - JawsOfLife
     - BorgModuleAdvancedTool
-    - Fulton
-    - FultonBeacon
+    # RS14-start - Fulton equipment is available by default in the cargo techfab.
+    # - Fulton
+    # - FultonBeacon
+    # RS14-end
 
 - type: technology
   id: MassExcavation
