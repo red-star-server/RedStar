@@ -45,7 +45,8 @@ public sealed class HideableHumanoidLayersTest : InteractionTest
             {
                 ["Head"] = new()
                 {
-                    [HumanoidVisualLayers.SnoutCover] = new List<Marking>() { new("VulpSnoutNose", 1) },
+                [HumanoidVisualLayers.SnoutCover] = new List<Marking>() { new("VulpSnoutNose", 1) },
+                [HumanoidVisualLayers.Snout] = new List<Marking>() { new("FoxSnout", 1) },
                 },
             });
         });
