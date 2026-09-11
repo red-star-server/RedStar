@@ -63,28 +63,28 @@
       jumpsuit:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Human/displacement.rsi
+            sprite: _Corvax/Mobs/Species/displacement.rsi
             state: jumpsuit-female
       head:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Reptilian/displacement.rsi
+            sprite: _Corvax/Mobs/Species/displacement.rsi
             state: head
       mask:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Reptilian/displacement.rsi
+            sprite: _Corvax/Mobs/Species/displacement.rsi
             state: mask
     displacements:
       head:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Reptilian/displacement.rsi
+            sprite: _Corvax/Mobs/Species/displacement.rsi
             state: head
       mask:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Reptilian/displacement.rsi
+            sprite: _Corvax/Mobs/Species/displacement.rsi
             state: mask
   - type: InitialBody
     organs:
