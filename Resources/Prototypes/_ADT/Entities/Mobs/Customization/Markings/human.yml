@@ -1,6 +1,5 @@
-# Лисий хвост
 - type: marking
-  id: ADTFoxTail
+  id: HumanFoxTail
   bodyPart: Tail
   groupWhitelist: [ Human, Slime ]
   coloring:
@@ -14,14 +13,14 @@
         - !type:SkinColoring
   sprites:
   - sprite: _ADT/Mobs/Customization/Human/fox_parts.rsi
-    state: tail_fox_wag_stripes_prime # AdventureTime-Sponsors
+    state: tail_fox_wag_stripes_prime
   - sprite: _ADT/Mobs/Customization/Human/fox_parts.rsi
-    state: tail_fox_wag_stripes_second # AdventureTime-Sponsors
+    state: tail_fox_wag_stripes_second
   - sprite: _ADT/Mobs/Customization/Human/fox_parts.rsi
-    state: tail_fox_wag_stripes_third # AdventureTime-Sponsors
+    state: tail_fox_wag_stripes_third
 
 - type: marking
-  id: ADTMilkyTail
+  id: MilkyTail
   bodyPart: Tail
   groupWhitelist: [ Human, Slime ]
   sprites:
@@ -31,7 +30,7 @@
     state: milky_tail_secondary
 
 - type: marking
-  id: ADTMilkyEars
+  id: MilkyEars
   bodyPart: HeadTop
   groupWhitelist: [ Human, Slime ]
   sprites:
@@ -39,7 +38,7 @@
     state: milky_ears
 
 - type: marking
-  id: ADTMilkyHorns
+  id: MilkyHorns
   bodyPart: HeadTop
   groupWhitelist: [ Human, Slime ]
   sprites:
@@ -49,7 +48,7 @@
     state: milky_horns_secondary
 
 - type: marking
-  id: ADTHorseEars
+  id: HorseEars
   bodyPart: HeadTop
   groupWhitelist: [ Human, Slime ]
   coloring:
@@ -77,7 +76,7 @@
     state: ears_horse_inner
 
 - type: marking
-  id: ADTHorseTail
+  id: HorseTail
   bodyPart: Tail
   groupWhitelist: [ Human, Slime ]
   coloring:
@@ -94,20 +93,17 @@
     state: tail_horse
 
 - type: marking
-  id: ADTHumanElfEars
+  id: HumanElfEars
   bodyPart: HeadTop
   groupWhitelist: [ Human, Slime ]
   sprites:
   - sprite: _ADT/Mobs/Customization/Human/elf.rsi
     state: elf_ears
 
-
 - type: marking
-  id: ADTHumanElfEars2
+  id: HumanElfEars2
   bodyPart: HeadTop
   groupWhitelist: [ Human, Slime ]
   sprites:
   - sprite: _ADT/Mobs/Customization/Human/elf.rsi
     state: elf_ears2
-
-

@@ -1,5 +1,5 @@
 - type: marking
-  id: ADTVulpkanin_skullBreast
+  id: Vulpkanin_skullBreast
   bodyPart: Chest
   groupWhitelist: [Vulpkanin]
   sprites:
@@ -7,7 +7,7 @@
       state: vulp_skull_breast
 
 - type: marking
-  id: ADTVulpkanin_spots
+  id: Vulpkanin_spots
   bodyPart: LLeg
   groupWhitelist: [Vulpkanin]
   sprites:
@@ -15,7 +15,7 @@
       state: vulp_spots
 
 - type: marking
-  id: ADTVulpkanin_spots2
+  id: Vulpkanin_spots2
   bodyPart: LLeg
   groupWhitelist: [Vulpkanin]
   sprites:
@@ -23,7 +23,7 @@
       state: vulp_spots2
 
 - type: marking
-  id: ADTVulpkanin_tattoo
+  id: Vulpkanin_tattoo
   bodyPart: Chest
   groupWhitelist: [Vulpkanin]
   sprites:
@@ -31,7 +31,7 @@
       state: vulp_tattoo
 
 - type: marking
-  id: ADTVulpkanin_wingsBack
+  id: Vulpkanin_wingsBack
   bodyPart: Chest
   groupWhitelist: [Vulpkanin]
   sprites:
@@ -39,7 +39,7 @@
       state: vulp_wings_back
 
 - type: marking
-  id: ADTVulpkanin_bigscarRight
+  id: Vulpkanin_bigscarRight
   bodyPart: Chest
   groupWhitelist: [Vulpkanin]
   sprites:
@@ -47,7 +47,7 @@
       state: vulp_bigscar_right
 
 - type: marking
-  id: ADTVulpkanin_binding
+  id: Vulpkanin_binding
   bodyPart: LLeg
   groupWhitelist: [Vulpkanin]
   sprites:
@@ -55,7 +55,7 @@
       state: vulp_binding
 
 - type: marking
-  id: ADTVulpkanin_braceletArmLeft
+  id: Vulpkanin_braceletArmLeft
   bodyPart: LArm
   groupWhitelist: [Vulpkanin]
   sprites:
@@ -63,7 +63,7 @@
       state: vulp_bracelet_arm_left
 
 - type: marking
-  id: ADTVulpkanin_braceletArmRight
+  id: Vulpkanin_braceletArmRight
   bodyPart: RArm
   groupWhitelist: [Vulpkanin]
   sprites:
@@ -71,7 +71,7 @@
       state: vulp_bracelet_arm_right
 
 - type: marking
-  id: ADTVulpkanin_braceletLegLeft
+  id: Vulpkanin_braceletLegLeft
   bodyPart: LLeg
   groupWhitelist: [Vulpkanin]
   sprites:
@@ -79,7 +79,7 @@
       state: vulp_bracelet_leg_left
 
 - type: marking
-  id: ADTVulpkanin_braceletLegRight
+  id: Vulpkanin_braceletLegRight
   bodyPart: RLeg
   groupWhitelist: [Vulpkanin]
   sprites:
@@ -87,7 +87,7 @@
       state: vulp_bracelet_leg_right
 
 - type: marking
-  id: ADTVulpkanin_lineLeft
+  id: Vulpkanin_lineLeft
   bodyPart: RHand
   groupWhitelist: [Vulpkanin]
   sprites:
@@ -95,7 +95,7 @@
       state: vulp_line_left
 
 - type: marking
-  id: ADTVulpkanin_lineRight
+  id: Vulpkanin_lineRight
   bodyPart: Head
   groupWhitelist: [Vulpkanin]
   sprites:
@@ -103,7 +103,7 @@
       state: vulp_line_right
 
 - type: marking
-  id: ADTVulpkanin_ringArmLeft
+  id: Vulpkanin_ringArmLeft
   bodyPart: LArm
   groupWhitelist: [Vulpkanin]
   sprites:
@@ -111,7 +111,7 @@
       state: vulp_ring_arm_left
 
 - type: marking
-  id: ADTVulpkanin_ringArmRight
+  id: Vulpkanin_ringArmRight
   bodyPart: RArm
   groupWhitelist: [Vulpkanin]
   sprites:
@@ -119,7 +119,7 @@
       state: vulp_ring_arm_right
 
 - type: marking
-  id: ADTVulpkanin_ringEarLeft
+  id: Vulpkanin_ringEarLeft
   bodyPart: Head
   groupWhitelist: [Vulpkanin]
   sprites:
@@ -127,7 +127,7 @@
       state: vulp_ring_ear_left
 
 - type: marking
-  id: ADTVulpkanin_ringEarRight
+  id: Vulpkanin_ringEarRight
   bodyPart: Head
   groupWhitelist: [Vulpkanin]
   sprites:
@@ -135,7 +135,7 @@
       state: vulp_ring_ear_right
 
 - type: marking
-  id: ADTVulpkaninRingLegLeft
+  id: VulpkaninRingLegLeft
   bodyPart: LLeg
   groupWhitelist: [Vulpkanin]
   sprites:
@@ -143,7 +143,7 @@
       state: vulp_ring_leg_left
 
 - type: marking
-  id: ADTVulpkaninRingLegRight
+  id: VulpkaninRingLegRight
   bodyPart: RLeg
   groupWhitelist: [Vulpkanin]
   sprites:
@@ -151,7 +151,7 @@
       state: vulp_ring_leg_right
 
 - type: marking
-  id: ADTVulpkaninRunes
+  id: VulpkaninRunes
   bodyPart: LLeg
   groupWhitelist: [Vulpkanin]
   sprites:
@@ -159,7 +159,7 @@
       state: vulp_runes
 
 - type: marking
-  id: ADTVulpkaninScarRight
+  id: VulpkaninScarRight
   bodyPart: RArm
   groupWhitelist: [Vulpkanin]
   sprites:
@@ -167,7 +167,7 @@
       state: vulp_scar_right
 
 - type: marking
-  id: ADTVulpkaninScar2Left
+  id: VulpkaninScar2Left
   bodyPart: Chest
   groupWhitelist: [Vulpkanin]
   sprites:
@@ -175,7 +175,7 @@
       state: vulp_scar2_left
 
 - type: marking
-  id: ADTVulpkaninScar2Right
+  id: VulpkaninScar2Right
   bodyPart: Chest
   groupWhitelist: [Vulpkanin]
   sprites:
@@ -183,7 +183,7 @@
       state: vulp_scar2_right
 
 - type: marking
-  id: ADTVulpkaninScar3Left
+  id: VulpkaninScar3Left
   bodyPart: Chest
   groupWhitelist: [Vulpkanin]
   sprites:
@@ -191,7 +191,7 @@
       state: vulp_scar3_left
 
 - type: marking
-  id: ADTVulpkaninScar3Right
+  id: VulpkaninScar3Right
   bodyPart: Chest
   groupWhitelist: [Vulpkanin]
   sprites:
@@ -199,7 +199,7 @@
       state: vulp_scar3_right
 
 - type: marking
-  id: ADTVulpkaninScar4Left
+  id: VulpkaninScar4Left
   bodyPart: Chest
   groupWhitelist: [Vulpkanin]
   sprites:
@@ -207,7 +207,7 @@
       state: vulp_scar4_left
 
 - type: marking
-  id: ADTVulpkaninScar4Right
+  id: VulpkaninScar4Right
   bodyPart: Chest
   groupWhitelist: [Vulpkanin]
   sprites:
@@ -215,7 +215,7 @@
       state: vulp_scar4_right
 
 - type: marking
-  id: ADTVulpkaninSkeleton
+  id: VulpkaninSkeleton
   bodyPart: LLeg
   groupWhitelist: [Vulpkanin]
   sprites:
@@ -223,18 +223,16 @@
       state: vulp_skeleton
 
 - type: marking
-  id: ADTVulpkaninSkull
+  id: VulpkaninSkull
   bodyPart: LLeg
   groupWhitelist: [Vulpkanin]
   sprites:
     - sprite: _ADT/Mobs/Customization/Vulpkanin/vulpkanin_customization_adt.rsi
       state: vulp_skull
-#END-customization-Uma-ADT
-#NewVulpCustomisation
 
 # Head Markings (Snout)
 - type: marking
-  id: ADTVulpkaninEarCat
+  id: VulpkaninEarCat
   bodyPart: HeadTop
   groupWhitelist: [Vulpkanin]
   sprites:
@@ -242,7 +240,7 @@
       state: cat
 
 - type: marking
-  id: ADTVulpkaninEarCat2
+  id: VulpkaninEarCat2
   bodyPart: HeadTop
   groupWhitelist: [Vulpkanin]
   sprites:
@@ -250,7 +248,7 @@
       state: cat2
 
 - type: marking
-  id: ADTVulpkaninEarFinnik
+  id: VulpkaninEarFinnik
   bodyPart: HeadTop
   groupWhitelist: [Vulpkanin]
   sprites:
@@ -260,7 +258,7 @@
       state: finnik-2
 
 - type: marking
-  id: ADTVulpkaninEarSharp1
+  id: VulpkaninEarSharp1
   bodyPart: HeadTop
   groupWhitelist: [Vulpkanin]
   sprites:
@@ -268,7 +266,7 @@
       state: sharp1
 
 - type: marking
-  id: ADTVulpkaninEarSharp2
+  id: VulpkaninEarSharp2
   bodyPart: HeadTop
   groupWhitelist: [Vulpkanin]
   sprites:
@@ -276,7 +274,7 @@
       state: sharp2
 
 - type: marking
-  id: ADTVulpkaninEarSharp3
+  id: VulpkaninEarSharp3
   bodyPart: HeadTop
   groupWhitelist: [Vulpkanin]
   sprites:

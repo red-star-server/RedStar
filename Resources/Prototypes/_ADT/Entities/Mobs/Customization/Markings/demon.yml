@@ -46,7 +46,6 @@
   - sprite: _ADT/Mobs/Customization/Demon/custom.rsi
     state: trinity_spots
 
-#Бороды
 - type: marking
   id: DemonGoatee
   bodyPart: FacialHair
@@ -55,10 +54,8 @@
   - sprite: _ADT/Mobs/Customization/Demon/custom.rsi
     state: goatee
 
-#Глаза, гетерохромия
-
 - type: marking
-  id: ADTDemonrigth_eye
+  id: Demonrigth_eye
   bodyPart: Eyes
   groupWhitelist: [ Human, Slime ]
   coloring:
@@ -71,7 +68,7 @@
     state: tattoo_eye_r
 
 - type: marking
-  id: ADTDemonleft_eye
+  id: Demonleft_eye
   bodyPart: Eyes
   groupWhitelist: [ Human, Slime ]
   coloring:
@@ -202,7 +199,6 @@
   - sprite: _ADT/Mobs/Customization/Demon/custom.rsi
     state: horns_unicorn
 
-#Start-Рога от Иллюми, 32x64
 - type: marking
   id: DemonHornsBackwardHorns
   bodyPart: HeadTop
@@ -250,7 +246,6 @@
   sprites:
   - sprite: _ADT/Mobs/Customization/Demon/size_horns32x64.rsi
     state: fat_horn
-#End-Рога от Иллюми, 32x64
 
 - type: marking
   id: DemonTail1
