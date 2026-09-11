@@ -36,6 +36,9 @@
     enum.HumanoidVisualLayers.RFoot:
       limit: 1
       required: false
+    enum.HumanoidVisualLayers.Tail:
+      limit: 1 # RS14
+      required: false
   appearances:
     enum.HumanoidVisualLayers.Hair:
       layerAlpha: 0.72
