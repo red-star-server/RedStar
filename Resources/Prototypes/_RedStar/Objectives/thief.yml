@@ -14,7 +14,7 @@
   id: CargoTechFabCircuitboardStealObjective
   components:
   - type: NotJobRequirement
-    jobs: [ Quartermaster, CargoTechnician, SalvageSpecialist, ShaftMiner ]
+    jobs: [ Quartermaster, CargoTechnician, SalvageSpecialist ]
   - type: StealCondition
     stealGroup: CargoTechFabCircuitboard
   - type: Objective
