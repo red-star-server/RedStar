@@ -159,13 +159,13 @@ loadout-group-warden-head = Смотритель, голова
 loadout-group-warden-jumpsuit = Смотритель, комбинезон
 loadout-group-warden-outerclothing = Смотритель, верхняя одежда
 
-loadout-group-security-head = Офицер милиции, голова
-loadout-group-security-jumpsuit = Офицер милиции, комбинезон
-loadout-group-security-backpack = Офицер милиции, рюкзак
-loadout-group-security-belt = Офицер милиции, пояс
-loadout-group-security-outerclothing = Офицер милиции, верхняя одежда
-loadout-group-security-shoes = Офицер милиции, обувь
-loadout-group-security-id = Офицер милиции, ID
+loadout-group-security-head = Милиционер, голова
+loadout-group-security-jumpsuit = Милиционер, комбинезон
+loadout-group-security-backpack = Милиционер, рюкзак
+loadout-group-security-belt = Милиционер, пояс
+loadout-group-security-outerclothing = Милиционер, верхняя одежда
+loadout-group-security-shoes = Милиционер, обувь
+loadout-group-security-id = Милиционер, ID
 
 loadout-group-detective-head = Детектив, голова
 loadout-group-detective-neck = Детектив, шея
