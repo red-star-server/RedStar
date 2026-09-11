@@ -200,54 +200,6 @@
     state: horns_unicorn
 
 - type: marking
-  id: DemonHornsBackwardHorns
-  bodyPart: HeadTop
-  groupWhitelist: [ Human, Slime ]
-  sprites:
-  - sprite: _ADT/Mobs/Customization/Demon/size_horns32x64.rsi
-    state: backward_horns
-
-- type: marking
-  id: DemonHornsDarkCrown
-  bodyPart: HeadTop
-  groupWhitelist: [ Human, Slime ]
-  sprites:
-  - sprite: _ADT/Mobs/Customization/Demon/size_horns32x64.rsi
-    state: dark_crown
-
-- type: marking
-  id: DemonHornsDevilPrimeSi1
-  bodyPart: HeadTop
-  groupWhitelist: [ Human, Slime ]
-  sprites:
-  - sprite: _ADT/Mobs/Customization/Demon/size_horns32x64.rsi
-    state: devil_prime1_s
-
-- type: marking
-  id: DemonHornsDevilPrime1
-  bodyPart: HeadTop
-  groupWhitelist: [ Human, Slime ]
-  sprites:
-  - sprite: _ADT/Mobs/Customization/Demon/size_horns32x64.rsi
-    state: devil_prime1
-
-- type: marking
-  id: DemonHornsDevilPrime2
-  bodyPart: HeadTop
-  groupWhitelist: [ Human, Slime ]
-  sprites:
-  - sprite: _ADT/Mobs/Customization/Demon/size_horns32x64.rsi
-    state: devil_prime2
-
-- type: marking
-  id: DemonHornsFat_Horn
-  bodyPart: HeadTop
-  groupWhitelist: [ Human, Slime ]
-  sprites:
-  - sprite: _ADT/Mobs/Customization/Demon/size_horns32x64.rsi
-    state: fat_horn
-
-- type: marking
   id: DemonTail1
   bodyPart: Tail
   groupWhitelist: [ Human, Slime ]
