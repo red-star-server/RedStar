@@ -1,5 +1,5 @@
 stamp-component-stamped-name-default = VIP
-stamp-component-stamped-name-detective = Детектив
+stamp-component-stamped-name-detective = Следователь
 stamp-component-stamped-name-mime = Мим
 stamp-component-stamped-name-captain = Капитан
 stamp-component-stamped-name-centcom = Генштаб

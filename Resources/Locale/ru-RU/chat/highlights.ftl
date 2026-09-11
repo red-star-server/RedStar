@@ -8,7 +8,7 @@ highlights-quartermaster = квартирмейстер, "км", "кма", ка�
 highlights-researchdirector = научный руководитель, научрук, "нр", наука, "рнд", "нио", "мостик", "командование"
 
 # Security
-highlights-detective = детектив, "дек", служб, "сб"
+highlights-detective = детектив, "дек", служб, "сб", следак, следователь
 highlights-securitycadet = офицер, кадет, милиция, "сб"
 highlights-securityofficer = офицер, милицияи, "сб"
 highlights-warden = смотрител, варден, милиция, "сб"

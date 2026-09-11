@@ -167,12 +167,12 @@ loadout-group-security-outerclothing = Милиционер, верхняя од
 loadout-group-security-shoes = Милиционер, обувь
 loadout-group-security-id = Милиционер, ID
 
-loadout-group-detective-head = Детектив, голова
-loadout-group-detective-neck = Детектив, шея
-loadout-group-detective-jumpsuit = Детектив, комбинезон
-loadout-group-detective-outerclothing = Детектив, верхняя одежда
+loadout-group-detective-head = Следователь, голова
+loadout-group-detective-neck = Следователь, шея
+loadout-group-detective-jumpsuit = Следователь, комбинезон
+loadout-group-detective-outerclothing = Следователь, верхняя одежда
 
-loadout-group-security-cadet-jumpsuit = Кадет милиции, комбинезон
+loadout-group-security-cadet-jumpsuit = Курсант, комбинезон
 loadout-group-security-star = Милиция, Звёздочка
 
 # Medical

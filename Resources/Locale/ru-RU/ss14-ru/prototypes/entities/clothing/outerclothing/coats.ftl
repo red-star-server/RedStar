@@ -1,9 +1,9 @@
 ent-ClothingOuterCoatBomber = куртка-бомбер
     .desc = Толстая, поношенная кожаная куртка-бомбер периода Второй мировой войны.
-ent-ClothingOuterCoatDetective = тренч детектива
+ent-ClothingOuterCoatDetective = тренч следователя
     .desc = Тренчкот XX века с бронированной подкладкой. Носящий его — серьёзный тип.
 ent-ClothingOuterCoatDetectiveLoadoutGrey = нуарный тренчкот
-    .desc = Ах, ваш верный тренчкот. Пара прорех тут и там придают ему более соответствующий детективу вид. По крайней мере, так вы сказали себе, когда узнали, что починка обойдётся вам в 200 кредитов.
+    .desc = Ах, ваш верный тренчкот. Пара прорех тут и там придают ему более соответствующий следователю вид. По крайней мере, так вы сказали себе, когда узнали, что починка обойдётся вам в 200 кредитов.
 ent-ClothingOuterCoatDetectiveLoadout = { ent-ClothingOuterCoatDetective }
     .desc = { ent-ClothingOuterCoatDetective.desc }
 ent-ClothingOuterCoatGentle = аккуратное пальто

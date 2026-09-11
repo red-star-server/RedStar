@@ -8,7 +8,7 @@ id-card-access-level-head-of-security = Начальник милиции
 id-card-access-level-security = Милиция
 id-card-access-level-armory = Оружейная
 id-card-access-level-brig = Бриг
-id-card-access-level-detective = Детектив
+id-card-access-level-detective = Следователь
 id-card-access-level-genpop-enter = Общий блок Вход
 id-card-access-level-genpop-leave = Общий блок Выход
 

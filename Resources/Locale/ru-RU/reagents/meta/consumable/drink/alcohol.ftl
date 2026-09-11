@@ -200,7 +200,7 @@ reagent-name-long-island-iced-tea = Лонг-Айленд айс ти
 reagent-desc-long-island-iced-tea = Винный шкаф, собранный в вкусную смесь. Предназначен только для женщин-алкоголиков среднего возраста.
 
 reagent-name-manhattan = Манхэттен
-reagent-desc-manhattan = Любимый напиток Детектива под прикрытием. Он никогда не переносил джин...
+reagent-desc-manhattan = Любимый напиток следователя под прикрытием. Он никогда не переносил джин...
 
 reagent-name-manhattan-project = Манхэттенский Проект
 reagent-desc-manhattan-project = Напиток для учёных, размышляющих о том, как взорвать станцию.
