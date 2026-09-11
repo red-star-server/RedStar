@@ -67,7 +67,7 @@ holopad-command-cmo = Командование — ГВ
 holopad-command-qm = Командование — КМ
 holopad-command-ce = Командование — СИ
 holopad-command-rd = Командование — НР
-holopad-command-hos = Командование — ГМ
+holopad-command-hos = Командование — НМ
 
 # Science
 holopad-science-anomaly = Научный — Аномалистика

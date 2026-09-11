@@ -4,7 +4,7 @@ id-card-access-level-head-of-personnel = Глава персонала
 id-card-access-level-cryogenics = Криогеника
 id-card-access-level-emergency-shuttle-repeal = Э.Шаттл Отозвать Все
 
-id-card-access-level-head-of-security = Глава милиции
+id-card-access-level-head-of-security = Начальник милиции
 id-card-access-level-security = Милиция
 id-card-access-level-armory = Оружейная
 id-card-access-level-brig = Бриг

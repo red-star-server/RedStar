@@ -1,7 +1,7 @@
 job-supervisors-centcom = Генеральному штабу
 job-supervisors-captain = капитану
 job-supervisors-hop = главе персонала
-job-supervisors-hos = главе милиции
+job-supervisors-hos = начальнику милиции
 job-supervisors-ce = старшему инженеру
 job-supervisors-cmo = главному врачу
 job-supervisors-rd = научному руководителю
@@ -9,7 +9,7 @@ job-supervisors-qm = квартирмейстеру
 job-supervisors-service = поварам, ботаникам, барменам и главе персонала
 job-supervisors-engineering = инженерам, атмосферным техникам и старшему инженеру
 job-supervisors-medicine = врачам, химикам и главному врачу
-job-supervisors-security = офицерам, смотрителю и главе милиции
+job-supervisors-security = офицерам, смотрителю и начальнику милиции
 job-supervisors-science = учёным и научному руководителю
 job-supervisors-hire = своим нанимателям
 job-supervisors-everyone = вообще всем

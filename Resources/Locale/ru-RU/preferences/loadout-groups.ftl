@@ -150,10 +150,10 @@ loadout-group-scientist-id = Учёный, ID
 loadout-group-research-assistant-jumpsuit = Научный ассистент, комбинезон
 
 # Security
-loadout-group-head-of-security-head = Глава милиции, голова
-loadout-group-head-of-security-jumpsuit = Глава милиции, комбинезон
-loadout-group-head-of-security-neck = Глава милиции, шея
-loadout-group-head-of-security-outerclothing = Глава милиции, верхняя одежда
+loadout-group-head-of-security-head = Начальник милиции, голова
+loadout-group-head-of-security-jumpsuit = Начальник милиции, комбинезон
+loadout-group-head-of-security-neck = Начальник милиции, шея
+loadout-group-head-of-security-outerclothing = Начальник милиции, верхняя одежда
 
 loadout-group-warden-head = Смотритель, голова
 loadout-group-warden-jumpsuit = Смотритель, комбинезон
