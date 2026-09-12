@@ -5,7 +5,7 @@
   unit: materials-unit-piece
   icon: { sprite: _RedStar/Objects/Materials/ore.rsi, state: bluespace_crystal }
   color: "#00ccff"
-  price: 50
+  price: 5
 
 - type: material
   id: RawRedSpaceCrystal
@@ -14,4 +14,4 @@
   unit: materials-unit-piece
   icon: { sprite: _RedStar/Objects/Materials/ore.rsi, state: redspace_crystal }
   color: "#ff0000"
-  price: 50
+  price: 5
