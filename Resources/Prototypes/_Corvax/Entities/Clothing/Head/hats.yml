@@ -1,0 +1,10 @@
+﻿- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadCaptainHat
+  name: captain's hat
+  description: A special hat made to order for the captain.
+  components:
+  - type: Sprite
+    sprite: _Corvax/Clothing/Head/Hats/caphat.rsi
+  - type: Clothing
+    sprite: _Corvax/Clothing/Head/Hats/caphat.rsi
