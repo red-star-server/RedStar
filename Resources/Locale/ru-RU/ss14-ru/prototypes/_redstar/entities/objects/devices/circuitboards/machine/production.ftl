@@ -1,0 +1,15 @@
+ent-BaseDepartmentTechFabCircuitboard = { ent-BaseMachineCircuitboard }
+    .desc = { ent-BaseMachineCircuitboard.desc }
+    .suffix = { ent-BaseMachineCircuitboard.suffix }
+ent-EngineeringTechFabCircuitboard = инженерных техфаб (машинная плата)
+    .desc = Машинная печатная плата инженерного ТехФаба.
+    .suffix = { ent-BaseDepartmentTechFabCircuitboard.suffix }
+ent-CargoTechFabCircuitboard = снабженческий ТехФаб (машинная плата)
+    .desc = Машинная печатная плата снабженческого ТехФаба.
+    .suffix = { ent-BaseDepartmentTechFabCircuitboard.suffix }
+ent-ScienceTechFabCircuitboard = научный техфаб (машинная плата)
+    .desc = Машинная печатная плата научного ТехФаба.
+    .suffix = { ent-BaseDepartmentTechFabCircuitboard.suffix }
+ent-ServiceTechFabCircuitboard = сервисный техфаб (машинная плата)
+    .desc = Машинная печатная плата сервисного ТехФаба.
+    .suffix = { ent-BaseDepartmentTechFabCircuitboard.suffix }
