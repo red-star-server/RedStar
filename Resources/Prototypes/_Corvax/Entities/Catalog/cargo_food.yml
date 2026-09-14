@@ -1,7 +1,7 @@
 ﻿- type: cargoProduct
   id: FoodCrateKvassTank
   icon:
-    sprite: _Corvax/Structures/Storage/kvass.rsi
+    sprite: _Corvax/Structures/Storage/yellow_tank.rsi
     state: icon_kvass
   product: KvassTankFull
   cost: 2000
@@ -11,7 +11,7 @@
 - type: cargoProduct
   id: FoodCrateBeerTank
   icon:
-    sprite: _Corvax/Structures/Storage/kvass.rsi
+    sprite: _Corvax/Structures/Storage/yellow_tank.rsi
     state: icon_beer
   product: BeerTankFull
   cost: 2500
