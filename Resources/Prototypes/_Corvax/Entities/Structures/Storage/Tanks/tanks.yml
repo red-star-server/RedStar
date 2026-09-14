@@ -37,12 +37,11 @@
   id: KvassTankFull
   suffix: Full
   components:
-  - type: SolutionContainerManager
-    solutions:
-      tank:
-        reagents:
-        - ReagentId: Kvass
-          Quantity: 3840
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Kvass
+        Quantity: 3840
 
 # Beer
 - type: entity
@@ -60,9 +59,8 @@
   id: BeerTankFull
   suffix: Full
   components:
-  - type: SolutionContainerManager
-    solutions:
-      tank:
-        reagents:
-        - ReagentId: Beer
-          Quantity: 3840
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Beer
+        Quantity: 3840
