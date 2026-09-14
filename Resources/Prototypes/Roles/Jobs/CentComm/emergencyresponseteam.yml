@@ -33,7 +33,7 @@
     shoes: ClothingShoesBootsMagERT
     mask: ClothingMaskGasERT
     eyes: ClothingEyesHudMedSec
-    neck: Whistle
+    neck: ClothingNeckMantleERTLeader # RS14
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitERTLeader
     id: ERTLeaderPDA
