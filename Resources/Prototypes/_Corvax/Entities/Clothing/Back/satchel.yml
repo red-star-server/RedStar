@@ -1,0 +1,8 @@
+﻿- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelCE
+  name: chief engineer satchel
+  description: A white satchel for best engineers.
+  components:
+  - type: Sprite
+    sprite: _Corvax/Clothing/Back/Satchels/ce.rsi

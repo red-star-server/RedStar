@@ -33,6 +33,14 @@
   - UnderwearSocksChiefEngineer
 
 - type: loadoutGroup
+  id: ChiefEngineerBackpack
+  name: loadout-group-chief-engineer-backpack
+  loadouts:
+  - ChiefEngineerBackpack
+  - ChiefEngineerSatchel
+  - ChiefEngineerDuffel
+
+- type: loadoutGroup
   id: StationEngineerUnderwear
   name: loadout-group-underwear
   minLimit: 3

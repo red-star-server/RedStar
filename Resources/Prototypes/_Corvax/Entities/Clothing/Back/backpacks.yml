@@ -1,0 +1,8 @@
+﻿- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackCE
+  name: chief engineer backpack
+  description: Technicially progressive backpack.
+  components:
+  - type: Sprite
+    sprite: _Corvax/Clothing/Back/Backpacks/ce.rsi
