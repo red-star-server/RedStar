@@ -1,0 +1,21 @@
+﻿- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatCaptain
+  name: captain's jacket
+  description: Captain's formal jacket, inlaid with gold.
+  components:
+  - type: Sprite
+    sprite: _Corvax/Clothing/OuterClothing/Coats/captain_jacket.rsi
+  - type: Clothing
+    sprite: _Corvax/Clothing/OuterClothing/Coats/captain_jacket.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatHOP
+  name: head of personnel's jacket
+  description: Business jacket of the HOP for a professional look.
+  components:
+  - type: Sprite
+    sprite: _Corvax/Clothing/OuterClothing/Coats/hop_jacket.rsi
+  - type: Clothing
+    sprite: _Corvax/Clothing/OuterClothing/Coats/hop_jacket.rsi

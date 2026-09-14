@@ -53,6 +53,10 @@
         max: 15
     - id: PlushieLizardJobCaptain
       prob: 0.02
+    # RS14-start
+    - id: ClothingHeadCaptainHat
+    - id: ClothingOuterCoatCaptain
+    # RS14-end
 
 # No laser table + Laser table
 - type: entityTable
@@ -136,6 +140,9 @@
     - id: ClothingEyesHudCommand
     - id: PlushieLizardJobHeadofpersonnel
       prob: 0.02
+    # RS14-start
+    - id: ClothingOuterCoatHOP
+    # RS14-end
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
