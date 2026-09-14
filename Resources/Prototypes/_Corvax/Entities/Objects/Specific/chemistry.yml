@@ -1,0 +1,12 @@
+﻿- type: entity
+  suffix: opporozidone
+  parent: Beaker
+  id: OpporozidoneBeakerSmall
+  components:
+  - type: Label
+    localizedLabel: reagent-name-opporozidone
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Opporozidone
+        Quantity: 60
