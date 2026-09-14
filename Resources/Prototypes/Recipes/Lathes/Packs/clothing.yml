@@ -26,6 +26,7 @@
   recipes:
   # Captain
   - ClothingHeadHatCapcap
+  - ClothingHeadCaptainHat # RS14
   - ClothingHeadHatCaptain
   - ClothingUniformJumpsuitCaptain
   - ClothingUniformJumpskirtCaptain
@@ -91,6 +92,7 @@
   - ClothingUniformJumpskirtDetective
   - ClothingHeadHatBeretHoS
   - ClothingHeadHatHoshat
+  - ClothingHeadHatCapHoS # RS14
   - ClothingUniformJumpsuitHoS
   - ClothingUniformJumpskirtHoS
   - ClothingUniformJumpsuitHosFormal

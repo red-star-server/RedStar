@@ -1119,6 +1119,7 @@
   loadouts:
   - HeadofSecurityHead
   - HeadofSecurityBeret
+  - HeadofSecurityHat # RS14
 
 - type: loadoutGroup
   id: HeadofSecurityJumpsuit
