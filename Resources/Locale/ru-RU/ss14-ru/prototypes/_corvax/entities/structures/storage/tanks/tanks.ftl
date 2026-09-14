@@ -1,0 +1,14 @@
+﻿ent-YellowTankBase = жёлтая бочка
+    .desc = Та самая бочка с освежающим нектаром.
+ent-KvassTank = { ent-YellowTankBase }
+    .desc = { ent-YellowTankBase.desc }
+    .suffix = Пустой
+ent-KvassTankFull = { ent-YellowTankBase }
+    .desc = { ent-YellowTankBase.desc }
+    .suffix = Полный
+ent-BeerTank = { ent-YellowTankBase }
+    .desc = { ent-YellowTankBase.desc }
+    .suffix = Пустой
+ent-BeerTankFull = { ent-YellowTankBase }
+    .desc = { ent-YellowTankBase.desc }
+    .suffix = Полный
