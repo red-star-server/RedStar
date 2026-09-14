@@ -27,3 +27,15 @@
   id: UnderwearSocksCaptain
   equipment:
     socks: ClothingUnderwearSocksCaptain
+
+# Head
+- type: loadout
+  id: CaptainHat
+  equipment:
+    head: ClothingHeadCaptainHat
+
+# Outer clothing
+- type: loadout
+  id: OuterCoatCaptain
+  equipment:
+    outerClothing: ClothingOuterCoatCaptain

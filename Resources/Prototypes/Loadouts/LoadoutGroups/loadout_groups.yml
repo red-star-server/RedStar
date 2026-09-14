@@ -125,6 +125,7 @@
   loadouts:
   - CaptainHead
   - CaptainCap
+  - CaptainHat # RS14
 
 - type: loadoutGroup
   id: CaptainJumpsuit
@@ -158,6 +159,7 @@
   loadouts:
   - CaptainOuterClothing
   - CaptainWintercoat
+  - OuterCoatCaptain # RS14
 
 #- type: loadoutGroup
 #  id: CaptainJobTrinkets
@@ -202,6 +204,7 @@
   minLimit: 0
   loadouts:
   - HoPWintercoat
+  - OuterCoatHOP # RS14
 
 #- type: loadoutGroup
 #  id: HoPJobTrinkets
@@ -1221,6 +1224,7 @@
   loadouts:
   - ArmorVest
   - ArmorVestSlim
+  - SecurityOfficerOvercoat # RS14
   - SecurityOfficerWintercoat
 
 - type: loadoutGroup

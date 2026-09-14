@@ -27,3 +27,9 @@
   id: UnderwearSocksSecurityOfficer
   equipment:
     socks: ClothingUnderwearSocksSecurityOfficer
+
+# Outerclothing
+- type: loadout
+  id: SecurityOfficerOvercoat
+  equipment:
+    outerClothing: ClothingOuterCoatSecurityOvercoat
