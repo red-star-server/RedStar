@@ -50,3 +50,21 @@
         Blunt: 0.9
         Slash: 0.9
         Piercing: 0.8
+
+- type: entity
+  parent: [BaseEngineeringContraband, ClothingOuterStorageBase]
+  id: ClothingAtmosphericsOveralls
+  name: atmospherics overalls
+  description: A set of fireproof overalls, good for protecting thinner clothes from gas leaks.
+  components:
+  - type: Sprite
+    sprite: _Corvax/Clothing/OuterClothing/Coats/atmos_overalls.rsi
+  - type: Clothing
+    sprite: _Corvax/Clothing/OuterClothing/Coats/atmos_overalls.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-unshaded
+        shader: unshaded
+      - state: equipped-OUTERCLOTHING-unshaded
+        shader: shaded

@@ -944,6 +944,7 @@
   minLimit: 0
   loadouts:
   - AtmosphericTechnicianWintercoat
+  - AtmosphericsOveralls # RS14
 
 - type: loadoutGroup
   id: AtmosphericTechnicianBackpack

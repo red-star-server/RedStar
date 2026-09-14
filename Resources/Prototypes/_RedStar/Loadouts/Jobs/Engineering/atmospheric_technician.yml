@@ -27,3 +27,9 @@
   id: UnderwearSocksAtmosphericTechnician
   equipment:
     socks: ClothingUnderwearSocksAtmos
+
+# OuterClothing
+- type: loadout
+  id: AtmosphericsOveralls
+  equipment:
+    outerClothing: ClothingAtmosphericsOveralls
