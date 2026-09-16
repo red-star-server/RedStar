@@ -1,4 +1,4 @@
-﻿ent-ClothingOuterCoatSecurityOvercoat = шинель милиции
+ent-ClothingOuterCoatSecurityOvercoat = шинель милиции
     .desc = Легкобронированная кожаная шинель, предназначенная для повседневной носки высокопоставленными милиционерами.
 ent-ClothingOuterCoatCaptain = торжественная шинель капитана
     .desc = Капитанская торжественная шинель, инкрустированная золотом.

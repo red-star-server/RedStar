@@ -2,8 +2,8 @@
 - type: entity
   id: ValentineCard
   parent: Paper
-  name: валентинка
-  description: Шаблон данной валентинки был разработан министерством труда и социальной защиты ОПЗ. Говорят эти валентинки способны побороть демографический кризис.
+  name: valentine card
+  description: The template for this Valentine's card was developed by the Ministry of Labor and Social Protection. It is said that these Valentine's cards can help overcome the demographic crisis.
   components:
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi

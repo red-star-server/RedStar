@@ -48,3 +48,6 @@ reagent-desc-Hydroxysomnolene = Побочный продукт метаболи
 
 reagent-name-StrawberryIce = метилендиоксистрахинон
 reagent-desc-StrawberryIce = Особый наркотик, созданный как усиленная версия дезоксиэфедрина. За характерный цвет и сладковатый вкус его прозвали «Клубничным льдом» или «Девичьим льдом». Вызывает невероятную зависимость и сопровождается сильными симптомами ломки. Эйфория от него настолько мощная, что употребившие описывают ощущение полёта сквозь радужные космические просторы. Но для тех, кто прекратит его употребление, последствия могут обернуться бесконечными кошмарами.
+
+reagent-name-nyctalon = nyctalon
+reagent-desc-nyctalon = An irradiated medicine derived from oculine, this drug stimulates the rod and cone cells of the user's retina, enabling excellent night vision. This comes at a consequence of mild radiation sickness.

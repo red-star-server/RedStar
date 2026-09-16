@@ -350,3 +350,6 @@ ghost-role-information-wizard-desc = ТЫ ВОЛШЕБНИК! Покажи ст�
 
 ghost-role-information-emotional-support-scurret-name = Слизенёк эмоциональной поддержки
 ghost-role-information-emotional-support-scurret-description = Поддерживайте экипаж, будьте очаровательными, часто говорите "ва".
+
+ghost-role-information-space-changeling-name = Elder Headslug
+ghost-role-information-space-changeling-description = An adult changeling headslug, eager to assimilate crew members and ready to hide within the station. This headslug is especially frail and needs to find a dead body to assume a humanoid appearance.
