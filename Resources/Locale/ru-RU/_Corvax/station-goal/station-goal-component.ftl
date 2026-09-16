@@ -2,6 +2,10 @@ station-goal-title = ЦЕЛЬ СТАНЦИИ
 station-goal-news-title = Цель { $station }
 station-goal-news-author = Генеральный штаб
 
+station-goal-cargo-sender = Генеральный штаб
+station-goal-cargo-description = Материальное обеспечение выполнения цели станции
+station-goal-cargo-destination = В распоряжение станции
+
 station-goal-singularity =
     { "" }[bold]Второстепенная цель — постройка генератора, основанного на сингулярности.[/bold]
 
