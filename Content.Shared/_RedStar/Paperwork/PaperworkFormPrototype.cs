@@ -2,10 +2,10 @@ using Content.Shared.Paper;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-namespace Content.Shared._RedStar.Photocopier;
+namespace Content.Shared._RedStar.Paperwork;
 
 /// <summary>
-/// Describes a paperwork form that can be selected and printed from a photocopier.
+/// Describes a paperwork form that can be rendered and printed.
 /// </summary>
 [Prototype]
 public sealed partial class PaperworkFormPrototype : IPrototype
@@ -20,19 +20,19 @@ public sealed partial class PaperworkFormPrototype : IPrototype
     public ProtoId<PaperworkCategoryPrototype> Category { get; private set; }
 
     /// <summary>
-    /// The localized title displayed for this form.
+    /// The localized title of this form.
     /// </summary>
     [DataField(required: true)]
     public LocId Name { get; private set; }
 
     /// <summary>
-    /// The resource path to the XML template used to populate the printed form.
+    /// The resource path to the template used to render this form.
     /// </summary>
     [DataField(required: true)]
     public ResPath Template { get; private set; }
 
     /// <summary>
-    /// The paper entity prototype spawned when this form is printed.
+    /// The paper entity prototype used when this form is printed.
     /// </summary>
     [DataField(required: true)]
     public EntProtoId<PaperComponent> PaperPrototype { get; private set; }

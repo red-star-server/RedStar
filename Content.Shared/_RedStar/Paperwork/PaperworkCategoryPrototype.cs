@@ -1,10 +1,10 @@
 ﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-namespace Content.Shared._RedStar.Photocopier;
+namespace Content.Shared._RedStar.Paperwork;
 
 /// <summary>
-/// A category used to group paperwork forms in the photocopier interface.
+/// A category used to group paperwork forms.
 /// </summary>
 [Prototype]
 public sealed partial class PaperworkCategoryPrototype : IPrototype
