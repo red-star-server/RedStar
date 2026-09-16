@@ -1,3 +1,4 @@
+using Content.Server._RedStar.Paperwork;
 using Content.Server.Cargo.Systems;
 using Content.Server.Fax;
 using Content.Server.MassMedia.Systems;
@@ -25,6 +26,7 @@ public sealed partial class StationGoalSystem : EntitySystem
     [Dependency] private StationSystem _station = default!;
     [Dependency] private CargoSystem _cargo = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private PaperworkSystem _paperwork = default!;
 
     [SubscribeLocalEvent]
     private void OnRoundStarted(RoundStartedEvent ev)
@@ -39,6 +41,7 @@ public sealed partial class StationGoalSystem : EntitySystem
         {
             var tempGoals = new List<ProtoId<StationGoalPrototype>>(station.Goals);
             StationGoalPrototype? selGoal = null;
+
             while (tempGoals.Count > 0)
             {
                 var goalId = _random.Pick(tempGoals);
@@ -59,9 +62,7 @@ public sealed partial class StationGoalSystem : EntitySystem
                 return;
 
             if (SendStationGoal(uid, selGoal))
-            {
                 Log.Info($"Goal {selGoal.ID} has been sent to station {MetaData(uid).EntityName}");
-            }
         }
     }
 
@@ -73,23 +74,27 @@ public sealed partial class StationGoalSystem : EntitySystem
     /// <summary>
     /// Send a station goal on selected station to all faxes which are authorized to receive it.
     /// </summary>
-    /// <returns>True if at least one fax received paper</returns>
+    /// <returns>True if at least one fax received paper.</returns>
     private bool SendStationGoal(EntityUid ent, StationGoalPrototype goal)
     {
+        var paperwork = _proto.Index(goal.Paperwork);
+
         var printout = new FaxPrintout(
-            Loc.GetString(goal.Text, ("station", MetaData(ent).EntityName)),
-            Loc.GetString("station-goal-fax-paper-name"),
+            _paperwork.Render(ent, paperwork),
+            Loc.GetString(paperwork.Name),
             null,
+            paperwork.PaperPrototype,
             null,
-            "paper_stamp-centcom",
-            [new() { StampedName = Loc.GetString("stamp-component-stamped-name-centcom"), StampedColor = Color.FromHex("#006600") }]
+            []
         );
 
         var wasSent = false;
+
         var query = EntityQueryEnumerator<FaxMachineComponent>();
         while (query.MoveNext(out var faxUid, out var fax))
         {
-            if (!fax.ReceiveAllStationGoals && !(fax.ReceiveStationGoal && _station.GetOwningStation(faxUid) == ent))
+            if (!fax.ReceiveAllStationGoals &&
+                !(fax.ReceiveStationGoal && _station.GetOwningStation(faxUid) == ent))
                 continue;
 
             _fax.Receive(faxUid, printout, null, fax);
@@ -98,11 +103,13 @@ public sealed partial class StationGoalSystem : EntitySystem
         }
 
         // Publish news if at least one fax received the goal.
-        if (!wasSent) return wasSent;
+        if (!wasSent)
+            return false;
+
         PublishStationGoalNews(ent, goal);
         TryDeliverGoalCargo(ent, goal);
 
-        return wasSent;
+        return true;
     }
 
     /// <summary>
@@ -127,9 +134,14 @@ public sealed partial class StationGoalSystem : EntitySystem
     {
         var stationName = MetaData(ent).EntityName;
 
-        var title = Loc.GetString("station-goal-news-title", ("station", stationName));
+        var title = Loc.GetString(
+            "station-goal-news-title",
+            ("station", stationName));
 
-        var content = Loc.GetString(goal.Text, ("station", stationName));
+        var content = Loc.GetString(
+            goal.NewsText,
+            ("station", stationName));
+
         var endPattern = Loc.GetString("station-goal-end");
 
         if (content.EndsWith(endPattern))
@@ -138,6 +150,11 @@ public sealed partial class StationGoalSystem : EntitySystem
             content = content.TrimEnd();
         }
 
-        _news.TryAddNews(ent, title, content, out _, Loc.GetString("station-goal-news-author"));
+        _news.TryAddNews(
+            ent,
+            title,
+            content,
+            out _,
+            Loc.GetString("station-goal-news-author"));
     }
 }
