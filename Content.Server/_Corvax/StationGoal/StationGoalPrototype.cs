@@ -9,17 +9,11 @@ public sealed partial class StationGoalPrototype : IPrototype
     [IdDataField]
     public string ID { get; private set; } = default!;
 
-    /// <summary>
-    /// The paperwork document sent to the station for this goal.
-    /// </summary>
+    [DataField(required: true)]
+    public LocId Text { get; private set; }
+
     [DataField(required: true)]
     public ProtoId<PaperworkPrototype> Paperwork { get; private set; }
-
-    /// <summary>
-    /// The localized text used when publishing this goal as a news article.
-    /// </summary>
-    [DataField(required: true)]
-    public LocId NewsText { get; private set; }
 
     [DataField]
     public int? MinPlayers;

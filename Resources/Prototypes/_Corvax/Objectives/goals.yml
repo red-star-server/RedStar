@@ -2,102 +2,124 @@
 - type: stationGoal
   id: Singularity
   text: station-goal-singularity
+  paperwork: StationGoal
   minPlayers: 15
 
 - type: stationGoal
   id: SolarPanels
   text: station-goal-solar-panels
+  paperwork: StationGoal
 
 - type: stationGoal
   id: Artifacts
   text: station-goal-artifacts
+  paperwork: StationGoal
   minPlayers: 15
 
 - type: stationGoal
   id: Bank
   text: station-goal-bank
+  paperwork: StationGoal
   minPlayers: 15
 
 - type: stationGoal
   id: Zoo
   text: station-goal-zoo
+  paperwork: StationGoal
 
 - type: stationGoal
   id: MiningOutpost
   text: station-goal-mining-outpost
+  paperwork: StationGoal
   minPlayers: 15
 
 - type: stationGoal
   id: Tesla
   text: station-goal-tesla
+  paperwork: StationGoal
   minPlayers: 15
 
 - type: stationGoal
   id: SecurityTraining
   text: station-goal-security
+  paperwork: StationGoal
   minPlayers: 15
 
 - type: stationGoal
   id: ShuttleMed
   text: station-goal-shuttle-med
+  paperwork: StationGoal
   minPlayers: 10
 
 - type: stationGoal
   id: ShuttleSec
   text: station-goal-shuttle-sec
+  paperwork: StationGoal
   minPlayers: 10
 
 - type: stationGoal
   id: ShuttleRnd
   text: station-goal-shuttle-rnd
+  paperwork: StationGoal
   minPlayers: 10
 
 - type: stationGoal
   id: ShuttleSrv
   text: station-goal-shuttle-srv
+  paperwork: StationGoal
   minPlayers: 10
 
 - type: stationGoal
   id: ShuttleEmergency
   text: station-goal-shuttle-emergency
+  paperwork: StationGoal
   minPlayers: 10
 
 - type: stationGoal
   id: Theatre
   text: station-goal-theatre
+  paperwork: StationGoal
 
 - type: stationGoal
   id: CellAI
   text: station-goal-ai
+  paperwork: StationGoal
   minPlayers: 15
 
 - type: stationGoal
   id: Botany
   text: station-goal-botany
+  paperwork: StationGoal
 
 - type: stationGoal
   id: Bunker
   text: station-goal-bunker
+  paperwork: StationGoal
 
 # Special goals
 - type: stationGoal
   id: FrameRepair
   text: station-goal-frame-repair
+  paperwork: StationGoal
 
 - type: stationGoal
   id: XenobiologyRepair
   text: station-goal-delta-xeno-repair
+  paperwork: StationGoal
 
 - type: stationGoal
   id: VirusologyAmbusol
   text: station-goal-delta-ambusol
+  paperwork: StationGoal
   spawns:
   - CrateGoalRomerol
 
 - type: stationGoal
   id: SectorSecurity
   text: station-goal-split-secure
+  paperwork: StationGoal
 
 - type: stationGoal
   id: AstraRepair
   text: station-goal-astra-repair
+  paperwork: StationGoal

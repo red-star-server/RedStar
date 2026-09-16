@@ -77,10 +77,16 @@ public sealed partial class StationGoalSystem : EntitySystem
     /// <returns>True if at least one fax received paper.</returns>
     private bool SendStationGoal(EntityUid ent, StationGoalPrototype goal)
     {
+        var stationName = MetaData(ent).EntityName;
+
+        var goalText = Loc.GetString(
+            goal.Text,
+            ("station", stationName));
+
         var paperwork = _proto.Index(goal.Paperwork);
 
         var printout = new FaxPrintout(
-            _paperwork.Render(ent, paperwork),
+            _paperwork.Render(ent, paperwork, goalText),
             Loc.GetString(paperwork.Name),
             null,
             paperwork.PaperPrototype,
@@ -106,7 +112,7 @@ public sealed partial class StationGoalSystem : EntitySystem
         if (!wasSent)
             return false;
 
-        PublishStationGoalNews(ent, goal);
+        PublishStationGoalNews(ent, goalText);
         TryDeliverGoalCargo(ent, goal);
 
         return true;
@@ -130,25 +136,13 @@ public sealed partial class StationGoalSystem : EntitySystem
     /// <summary>
     /// Publishes a news article about the station goal in the mass media.
     /// </summary>
-    private void PublishStationGoalNews(EntityUid ent, StationGoalPrototype goal)
+    private void PublishStationGoalNews(EntityUid ent, string content)
     {
         var stationName = MetaData(ent).EntityName;
 
         var title = Loc.GetString(
             "station-goal-news-title",
             ("station", stationName));
-
-        var content = Loc.GetString(
-            goal.NewsText,
-            ("station", stationName));
-
-        var endPattern = Loc.GetString("station-goal-end");
-
-        if (content.EndsWith(endPattern))
-        {
-            content = content[..^endPattern.Length];
-            content = content.TrimEnd();
-        }
 
         _news.TryAddNews(
             ent,

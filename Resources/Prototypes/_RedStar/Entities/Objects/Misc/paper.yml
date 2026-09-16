@@ -181,6 +181,18 @@
   id: PaperPrintedUSSPCentcomm
   suffix: USSP, Centcomm
 
+- type: entity
+  parent: PaperPrintedUSSPCentcomm
+  id: PaperPrintedStationGoal
+  suffix: USSP, Centcomm, Station goal
+  components:
+  - type: Paper
+    stampState: paper_stamp-centcom
+    stampedBy:
+    - stampedName: Генеральный Штаб
+      stampedColor: "#cc0000"
+    editingDisabled: true
+
 # Syndicate
 - type: entity
   parent: PaperPrintedSyndicateBase
