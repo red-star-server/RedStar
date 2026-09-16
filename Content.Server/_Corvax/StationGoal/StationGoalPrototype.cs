@@ -23,24 +23,8 @@ public sealed partial class StationGoalPrototype : IPrototype
     public int? MaxPlayers;
 
     /// <summary>
-    /// Cargo products delivered to the station when this goal is issued.
+    /// Cargo products and their quantities delivered when this goal is issued.
     /// </summary>
     [DataField]
-    public List<StationGoalCargoEntry> StartingEquipment = [];
-}
-
-[DataDefinition]
-public sealed partial class StationGoalCargoEntry
-{
-    /// <summary>
-    /// Cargo product to deliver.
-    /// </summary>
-    [DataField(required: true)]
-    public ProtoId<CargoProductPrototype> Product;
-
-    /// <summary>
-    /// Number of orders of this product to deliver.
-    /// </summary>
-    [DataField]
-    public int Amount = 1;
+    public Dictionary<ProtoId<CargoProductPrototype>, int> StartingEquipment = [];
 }

@@ -112,7 +112,7 @@
   text: station-goal-delta-ambusol
   paperwork: StationGoal
   startingEquipment:
-  - product: StationGoalRomerol
+    StationGoalRomerol: 1
 
 - type: stationGoal
   id: SectorSecurity

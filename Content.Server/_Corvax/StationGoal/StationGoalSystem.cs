@@ -132,17 +132,17 @@ public sealed partial class StationGoalSystem : EntitySystem
             !TryComp<StationBankAccountComponent>(station, out var bank))
             return;
 
-        foreach (var entry in goal.StartingEquipment)
+        foreach (var (productId, amount) in goal.StartingEquipment)
         {
-            if (entry.Amount <= 0)
+            if (amount <= 0)
                 continue;
 
-            var product = _proto.Index(entry.Product);
+            var product = _proto.Index(productId);
 
             _cargo.AddAndApproveOrder(
                 station,
                 product,
-                entry.Amount,
+                amount,
                 Loc.GetString("station-goal-cargo-sender"),
                 Loc.GetString("station-goal-cargo-description"),
                 Loc.GetString("station-goal-cargo-destination"),
