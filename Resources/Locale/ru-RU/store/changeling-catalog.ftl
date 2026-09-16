@@ -28,8 +28,8 @@ changeling-catalog-hallucinogenic-sting-desc = Вызывает у жертвы 
 changeling-catalog-mute-sting-name = Жало немоты
 changeling-catalog-mute-sting-desc = Лишает способности говорить. Эффект незаметен, пока цель не попытается заговорить. Можно использовать на себе.
 
-changeling-catalog-armblade-sting-name = Armblade Sting
-changeling-catalog-armblade-sting-desc = Causes the target to spontaneously grow a dulled armblade after a lengthy delay. Instant with increased duration when used on corpses. Can be used on self.
+changeling-catalog-armblade-sting-name = Жало руки-клинка
+changeling-catalog-armblade-sting-desc = Спустя продолжительное время у цели самопроизвольно вырастает затупленная рука-клинок. На трупах срабатывает мгновенно и действует дольше. Можно использовать на себе.
 
 changeling-catalog-screech-name = Крик ужаса [ВРЕМЕННЫЙ]
 changeling-catalog-screech-desc = Мы издаем пронзительный крик, обезоруживающий тех, кто слышит его без надлежащей защиты слуха. ПОСЛЕ РЕАЛИЗАЦИИ ДАННОЕ ДЕЙСТВИЕ БУДЕТ ПЕРЕВЕДЕНО В ФОРМУ УЖАСА.

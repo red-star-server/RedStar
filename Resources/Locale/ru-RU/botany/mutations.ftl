@@ -8,9 +8,9 @@ mutation-plant-description-unviable = Оно увядает и выглядит 
 mutation-plant-description-seedless = Его плоды не имеют семян.
 mutation-plant-description-sampled = Семена были взяты.
 
-mutation-plant-noun-kudzu = kudzu growth
-mutation-plant-noun-ligneous = ligneous growth
-mutation-plant-noun-scream = mandragora
-mutation-plant-noun-unviable = unviability
-mutation-plant-noun-seedless = seedlessness
-mutation-plant-noun-sampled = clip scarring
+mutation-plant-noun-kudzu = разрастание кудзу
+mutation-plant-noun-ligneous = одревеснение
+mutation-plant-noun-scream = мандрагора
+mutation-plant-noun-unviable = нежизнеспособность
+mutation-plant-noun-seedless = бессемянность
+mutation-plant-noun-sampled = следы взятия образца

@@ -42,10 +42,10 @@ ent-ActionChangelingStingMute = Жало немоты
     .desc = Бесшумно ужалите жертву, впрыскивая ей химические вещества, которые лишают способности говорить.
 
         Требуется 30 химикатов
-ent-ActionChangelingStingArmblade = Armblade Sting
-    .desc = Silently sting a target and cause them to grow a dull armblade after a lengthy delay.
+ent-ActionChangelingStingArmblade = Жало руки-клинка
+    .desc = Незаметно ужальте цель, чтобы спустя продолжительное время у неё выросла затупленная рука-клинок.
 
-        Requires 50 Chemicals.
+        Требуется 50 химикатов.
 ent-ActionChangelingLastResort = "[color=red]Последний шанс[/color]"
     .desc = В момент нужды мы жертвуем своим нынешним телом, яростно расширяясь, чтобы преодолеть препятствия, и преобразуясь в мозгового червя.
 ent-ActionChangelingTakeOverCorpse = Захватить тело

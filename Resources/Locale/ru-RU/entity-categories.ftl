@@ -6,6 +6,6 @@ entity-category-name-mapping = Маппинг
 entity-category-name-donotmap = не маппить
 entity-category-name-status-effects = Статусные эффекты
 entity-category-name-xeno-artifact-effects = Эффекты ксено-артефактов
-entity-category-name-xeno-artifact-triggers = Xeno Artifact triggers
+entity-category-name-xeno-artifact-triggers = Триггеры ксеноартефактов
 
 entity-category-suffix-donotmap = НЕ МАППИТЬ
