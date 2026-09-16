@@ -4,6 +4,6 @@
     sprite: Structures/Storage/Crates/chemcrate_secure.rsi
     state: icon
   product: CrateGoalRomerol
-  cost: 0
+  cost: 10000
   category: cargoproduct-category-name-medical
   group: StationGoal
