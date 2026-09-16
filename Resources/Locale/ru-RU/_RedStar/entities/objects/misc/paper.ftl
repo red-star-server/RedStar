@@ -1,0 +1,47 @@
+ent-PaperPrintedBase = распечатанный документ
+    .desc = Лист бумаги с оформленным заголовком.
+
+ent-PaperPrintedNTCargo = { ent-PaperPrintedBase }
+    .suffix = NanoTrasen, Снабжение
+ent-PaperPrintedNTCivilian = { ent-PaperPrintedBase }
+    .suffix = NanoTrasen, Сервис
+ent-PaperPrintedNTCommand = { ent-PaperPrintedBase }
+    .suffix = NanoTrasen, Командование
+ent-PaperPrintedNTEngineering = { ent-PaperPrintedBase }
+    .suffix = NanoTrasen, Инженерный
+ent-PaperPrintedNTLaw = { ent-PaperPrintedBase }
+    .suffix = NanoTrasen, Юридический
+ent-PaperPrintedNTMedical = { ent-PaperPrintedBase }
+    .suffix = NanoTrasen, Медицинский
+ent-PaperPrintedNTScience = { ent-PaperPrintedBase }
+    .suffix = NanoTrasen, Научный
+ent-PaperPrintedNTSecurity = { ent-PaperPrintedBase }
+    .suffix = NanoTrasen, Служба безопасности
+ent-PaperPrintedNTCentcomm = { ent-PaperPrintedBase }
+    .suffix = NanoTrasen, Центральное командование
+
+ent-PaperPrintedUSSPCargo = { ent-PaperPrintedBase }
+    .suffix = СССП, Снабжение
+ent-PaperPrintedUSSPCivilian = { ent-PaperPrintedBase }
+    .suffix = СССП, Сервис
+ent-PaperPrintedUSSPCommand = { ent-PaperPrintedBase }
+    .suffix = СССП, Командование
+ent-PaperPrintedUSSPEngineering = { ent-PaperPrintedBase }
+    .suffix = СССП, Инженерный
+ent-PaperPrintedUSSPLaw = { ent-PaperPrintedBase }
+    .suffix = СССП, Юридический
+ent-PaperPrintedUSSPMedical = { ent-PaperPrintedBase }
+    .suffix = СССП, Медицинский
+ent-PaperPrintedUSSPScience = { ent-PaperPrintedBase }
+    .suffix = СССП, Научный
+ent-PaperPrintedUSSPSecurity = { ent-PaperPrintedBase }
+    .suffix = СССП, Служба безопасности
+ent-PaperPrintedUSSPCentcomm = { ent-PaperPrintedBase }
+    .suffix = СССП, Генеральный штаб
+
+ent-PaperPrintedSyndicate = { ent-PaperPrintedBase }
+    .suffix = Синдикат
+ent-PaperPrintedNukeopsSyndicateToNT = { ent-PaperPrintedBase }
+    .suffix = Синдикат-NanoTrasen, Ядерные оперативники
+ent-PaperPrintedNukeopsSyndicateToUSSP = { ent-PaperPrintedBase }
+    .suffix = Синдикат-СССП, Ядерные оперативники

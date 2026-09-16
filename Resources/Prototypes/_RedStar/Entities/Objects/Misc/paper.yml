@@ -1,0 +1,204 @@
+﻿# Base
+- type: entity
+  abstract: true
+  parent: Paper
+  id: PaperPrintedBase
+  name: printed document
+  description: A sheet of paper with a formatted header.
+  components:
+  - type: PaperVisuals
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 6.0, 6.0, 6.0, 6.0
+
+# NanoTrasen
+- type: entity
+  abstract: true
+  parent: PaperPrintedBase
+  id: PaperPrintedNanoTrasenBase
+  components:
+  - type: PaperVisuals
+    headerImagePath: "/Textures/_RedStar/Interface/Paper/paper_heading_nt_centcomm.svg.96dpi.png"
+    headerMargin: 0.0, 2.0, 0.0, 0.0
+
+# USSP
+- type: entity
+  abstract: true
+  parent: PaperPrintedBase
+  id: PaperPrintedUSSPBase
+  components:
+  - type: PaperVisuals
+    headerImagePath: "/Textures/_RedStar/Interface/Paper/paper_heading_ussp_centcomm.svg.96dpi.png"
+    headerMargin: 0.0, 4.0, 0.0, 0.0
+
+# Syndicate
+- type: entity
+  abstract: true
+  parent: PaperPrintedBase
+  id: PaperPrintedSyndicateBase
+  components:
+  - type: PaperVisuals
+    headerImagePath: "/Textures/_RedStar/Interface/Paper/paper_heading_syndicate.svg.96dpi.png"
+    headerMargin: 0.0, 4.0, 0.0, 0.0
+
+# NanoTrasen departments
+- type: entity
+  parent: PaperPrintedNanoTrasenBase
+  id: PaperPrintedNTCargo
+  suffix: NanoTrasen, Cargo
+  components:
+  - type: PaperVisuals
+    headerImagePath: "/Textures/_RedStar/Interface/Paper/paper_heading_nt_cargo.svg.96dpi.png"
+
+- type: entity
+  parent: PaperPrintedNanoTrasenBase
+  id: PaperPrintedNTCivilian
+  suffix: NanoTrasen, Service
+  components:
+  - type: PaperVisuals
+    headerImagePath: "/Textures/_RedStar/Interface/Paper/paper_heading_nt_civilian.svg.96dpi.png"
+
+- type: entity
+  parent: PaperPrintedNanoTrasenBase
+  id: PaperPrintedNTCommand
+  suffix: NanoTrasen, Command
+  components:
+  - type: PaperVisuals
+    headerImagePath: "/Textures/_RedStar/Interface/Paper/paper_heading_nt_command.svg.96dpi.png"
+
+- type: entity
+  parent: PaperPrintedNanoTrasenBase
+  id: PaperPrintedNTEngineering
+  suffix: NanoTrasen, Engineering
+  components:
+  - type: PaperVisuals
+    headerImagePath: "/Textures/_RedStar/Interface/Paper/paper_heading_nt_engineering.svg.96dpi.png"
+
+- type: entity
+  parent: PaperPrintedNanoTrasenBase
+  id: PaperPrintedNTLaw
+  suffix: NanoTrasen, Law
+  components:
+  - type: PaperVisuals
+    headerImagePath: "/Textures/_RedStar/Interface/Paper/paper_heading_nt_law.svg.96dpi.png"
+
+- type: entity
+  parent: PaperPrintedNanoTrasenBase
+  id: PaperPrintedNTMedical
+  suffix: NanoTrasen, Medical
+  components:
+  - type: PaperVisuals
+    headerImagePath: "/Textures/_RedStar/Interface/Paper/paper_heading_nt_medical.svg.96dpi.png"
+
+- type: entity
+  parent: PaperPrintedNanoTrasenBase
+  id: PaperPrintedNTScience
+  suffix: NanoTrasen, Science
+  components:
+  - type: PaperVisuals
+    headerImagePath: "/Textures/_RedStar/Interface/Paper/paper_heading_nt_science.svg.96dpi.png"
+
+- type: entity
+  parent: PaperPrintedNanoTrasenBase
+  id: PaperPrintedNTSecurity
+  suffix: NanoTrasen, Security
+  components:
+  - type: PaperVisuals
+    headerImagePath: "/Textures/_RedStar/Interface/Paper/paper_heading_nt_security.svg.96dpi.png"
+
+- type: entity
+  parent: PaperPrintedNanoTrasenBase
+  id: PaperPrintedNTCentcomm
+  suffix: NanoTrasen, Centcomm
+
+# USSP departments
+- type: entity
+  parent: PaperPrintedUSSPBase
+  id: PaperPrintedUSSPCargo
+  suffix: USSP, Cargo
+  components:
+  - type: PaperVisuals
+    headerImagePath: "/Textures/_RedStar/Interface/Paper/paper_heading_ussp_cargo.svg.96dpi.png"
+
+- type: entity
+  parent: PaperPrintedUSSPBase
+  id: PaperPrintedUSSPCivilian
+  suffix: USSP, Service
+  components:
+  - type: PaperVisuals
+    headerImagePath: "/Textures/_RedStar/Interface/Paper/paper_heading_ussp_civilian.svg.96dpi.png"
+
+- type: entity
+  parent: PaperPrintedUSSPBase
+  id: PaperPrintedUSSPCommand
+  suffix: USSP, Command
+  components:
+  - type: PaperVisuals
+    headerImagePath: "/Textures/_RedStar/Interface/Paper/paper_heading_ussp_command.svg.96dpi.png"
+
+- type: entity
+  parent: PaperPrintedUSSPBase
+  id: PaperPrintedUSSPEngineering
+  suffix: USSP, Engineering
+  components:
+  - type: PaperVisuals
+    headerImagePath: "/Textures/_RedStar/Interface/Paper/paper_heading_ussp_engineering.svg.96dpi.png"
+
+- type: entity
+  parent: PaperPrintedUSSPBase
+  id: PaperPrintedUSSPLaw
+  suffix: USSP, Law
+  components:
+  - type: PaperVisuals
+    headerImagePath: "/Textures/_RedStar/Interface/Paper/paper_heading_ussp_law.svg.96dpi.png"
+
+- type: entity
+  parent: PaperPrintedUSSPBase
+  id: PaperPrintedUSSPMedical
+  suffix: USSP, Medical
+  components:
+  - type: PaperVisuals
+    headerImagePath: "/Textures/_RedStar/Interface/Paper/paper_heading_ussp_medical.svg.96dpi.png"
+
+- type: entity
+  parent: PaperPrintedUSSPBase
+  id: PaperPrintedUSSPScience
+  suffix: USSP, Science
+  components:
+  - type: PaperVisuals
+    headerImagePath: "/Textures/_RedStar/Interface/Paper/paper_heading_ussp_science.svg.96dpi.png"
+
+- type: entity
+  parent: PaperPrintedUSSPBase
+  id: PaperPrintedUSSPSecurity
+  suffix: USSP, Security
+  components:
+  - type: PaperVisuals
+    headerImagePath: "/Textures/_RedStar/Interface/Paper/paper_heading_ussp_security.svg.96dpi.png"
+
+- type: entity
+  parent: PaperPrintedUSSPBase
+  id: PaperPrintedUSSPCentcomm
+  suffix: USSP, Centcomm
+
+# Syndicate
+- type: entity
+  parent: PaperPrintedSyndicateBase
+  id: PaperPrintedSyndicate
+  suffix: Syndicate
+
+- type: entity
+  parent: PaperPrintedSyndicateBase
+  id: PaperPrintedNukeopsSyndicateToNT
+  suffix: Syndicate-NanoTrasen, Nuclear Operatives
+  components:
+  - type: PaperVisuals
+    headerImagePath: "/Textures/_RedStar/Interface/Paper/paper_heading_syndicate_nt.svg.96dpi.png"
+
+- type: entity
+  parent: PaperPrintedSyndicateBase
+  id: PaperPrintedNukeopsSyndicateToUSSP
+  suffix: Syndicate-USSP, Nuclear Operatives
+  components:
+  - type: PaperVisuals
+    headerImagePath: "/Textures/_RedStar/Interface/Paper/paper_heading_syndicate_ussp.svg.96dpi.png"
