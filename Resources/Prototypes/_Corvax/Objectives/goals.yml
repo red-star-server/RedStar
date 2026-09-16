@@ -111,7 +111,8 @@
   id: VirusologyAmbusol
   text: station-goal-delta-ambusol
   paperwork: StationGoal
-  startingEquipment: StationGoalRomerol
+  startingEquipment:
+  - product: StationGoalRomerol
 
 - type: stationGoal
   id: SectorSecurity
