@@ -1,5 +1,5 @@
 ﻿# NanoTrasen
-- type: paperworkForm
+- type: paperwork
   id: NTScience0
   category: NTScience
   name: paperwork-form-title-science-0
@@ -7,7 +7,7 @@
   paperPrototype: PaperPrintedNTScience
 
 # USSP
-- type: paperworkForm
+- type: paperwork
   id: USSPScience0
   category: USSPScience
   name: paperwork-form-title-science-0

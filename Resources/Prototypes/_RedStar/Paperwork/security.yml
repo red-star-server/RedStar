@@ -1,5 +1,5 @@
 ﻿# NanoTrasen
-- type: paperworkForm
+- type: paperwork
   id: NTSecurity0
   category: NTSecurity
   name: paperwork-form-title-security-0
@@ -7,7 +7,7 @@
   paperPrototype: PaperPrintedNTSecurity
 
 # USSP
-- type: paperworkForm
+- type: paperwork
   id: USSPSecurity0
   category: USSPSecurity
   name: paperwork-form-title-security-0

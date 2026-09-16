@@ -1,5 +1,5 @@
 ﻿# NanoTrasen
-- type: paperworkForm
+- type: paperwork
   id: NTLaw0
   category: NTLaw
   name: paperwork-form-title-law-0
@@ -7,7 +7,7 @@
   paperPrototype: PaperPrintedNTLaw
 
 # USSP
-- type: paperworkForm
+- type: paperwork
   id: USSPLaw0
   category: USSPLaw
   name: paperwork-form-title-law-0

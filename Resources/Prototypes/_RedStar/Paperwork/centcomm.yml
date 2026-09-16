@@ -1,5 +1,5 @@
 ﻿# NanoTrasen
-- type: paperworkForm
+- type: paperwork
   id: NTCentcomm0
   category: NTCentcomm
   name: paperwork-form-title-centcomm-0
@@ -7,7 +7,7 @@
   paperPrototype: PaperPrintedNTCentcomm
 
 # USSP
-- type: paperworkForm
+- type: paperwork
   id: USSPCentcomm0
   category: USSPCentcomm
   name: paperwork-form-title-centcomm-0

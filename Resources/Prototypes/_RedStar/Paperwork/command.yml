@@ -1,5 +1,5 @@
 ﻿# NanoTrasen
-- type: paperworkForm
+- type: paperwork
   id: NTCommand0
   category: NTCommand
   name: paperwork-form-title-command-0
@@ -7,7 +7,7 @@
   paperPrototype: PaperPrintedNTCommand
 
 # USSP
-- type: paperworkForm
+- type: paperwork
   id: USSPCommand0
   category: USSPCommand
   name: paperwork-form-title-command-0

@@ -1,5 +1,5 @@
 ﻿# NanoTrasen
-- type: paperworkForm
+- type: paperwork
   id: NTCargo0
   category: NTCargo
   name: paperwork-form-title-cargo-0
@@ -7,7 +7,7 @@
   paperPrototype: PaperPrintedNTCargo
 
 # USSP
-- type: paperworkForm
+- type: paperwork
   id: USSPCargo0
   category: USSPCargo
   name: paperwork-form-title-cargo-0

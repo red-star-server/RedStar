@@ -1,5 +1,5 @@
 ﻿# NanoTrasen
-- type: paperworkForm
+- type: paperwork
   id: NTCivilian0
   category: NTCivilian
   name: paperwork-form-title-civilian-0
@@ -7,7 +7,7 @@
   paperPrototype: PaperPrintedNTCivilian
 
 # USSP
-- type: paperworkForm
+- type: paperwork
   id: USSPCivilian0
   category: USSPCivilian
   name: paperwork-form-title-civilian-0

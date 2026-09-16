@@ -1,5 +1,5 @@
 ﻿# NanoTrasen
-- type: paperworkForm
+- type: paperwork
   id: NTMedical0
   category: NTMedical
   name: paperwork-form-title-medical-0
@@ -7,7 +7,7 @@
   paperPrototype: PaperPrintedNTMedical
 
 # USSP
-- type: paperworkForm
+- type: paperwork
   id: USSPMedical0
   category: USSPMedical
   name: paperwork-form-title-medical-0

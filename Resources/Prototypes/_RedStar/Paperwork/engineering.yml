@@ -1,5 +1,5 @@
 ﻿# NanoTrasen
-- type: paperworkForm
+- type: paperwork
   id: NTEngineering0
   category: NTEngineering
   name: paperwork-form-title-engineering-0
@@ -7,7 +7,7 @@
   paperPrototype: PaperPrintedNTEngineering
 
 # USSP
-- type: paperworkForm
+- type: paperwork
   id: USSPEngineering0
   category: USSPEngineering
   name: paperwork-form-title-engineering-0

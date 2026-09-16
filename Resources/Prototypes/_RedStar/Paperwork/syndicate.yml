@@ -1,33 +1,33 @@
 ﻿# Syndicate
-- type: paperworkForm
+- type: paperwork
   id: Syndicate1
   category: Syndicate
   name: paperwork-form-title-syndicate-1
   text: "/Paperwork/Syndicate/1.xml"
   paperPrototype: PaperPrintedSyndicate
 
-- type: paperworkForm
+- type: paperwork
   id: Syndicate2
   category: Syndicate
   name: paperwork-form-title-syndicate-2
   text: "/Paperwork/Syndicate/2.xml"
   paperPrototype: PaperPrintedSyndicate
 
-- type: paperworkForm
+- type: paperwork
   id: Syndicate3
   category: Syndicate
   name: paperwork-form-title-syndicate-3
   text: "/Paperwork/Syndicate/3.xml"
   paperPrototype: PaperPrintedSyndicate
 
-- type: paperworkForm
+- type: paperwork
   id: Syndicate4
   category: Syndicate
   name: paperwork-form-title-syndicate-4
   text: "/Paperwork/Syndicate/4.xml"
   paperPrototype: PaperPrintedSyndicate
 
-- type: paperworkForm
+- type: paperwork
   id: Syndicate5
   category: Syndicate
   name: paperwork-form-title-syndicate-5
@@ -35,35 +35,35 @@
   paperPrototype: PaperPrintedSyndicate
 
 # Nuclear Operatives -> NanoTrasen
-- type: paperworkForm
+- type: paperwork
   id: NukeopsNT1
   category: Syndicate
   name: paperwork-form-title-syndicate-1
   text: "/Paperwork/Syndicate/1.xml"
   paperPrototype: PaperPrintedNukeopsSyndicateToNT
 
-- type: paperworkForm
+- type: paperwork
   id: NukeopsNT2
   category: Syndicate
   name: paperwork-form-title-syndicate-2
   text: "/Paperwork/Syndicate/2.xml"
   paperPrototype: PaperPrintedNukeopsSyndicateToNT
 
-- type: paperworkForm
+- type: paperwork
   id: NukeopsNT3
   category: Syndicate
   name: paperwork-form-title-syndicate-3
   text: "/Paperwork/Syndicate/3.xml"
   paperPrototype: PaperPrintedNukeopsSyndicateToNT
 
-- type: paperworkForm
+- type: paperwork
   id: NukeopsNT4
   category: Syndicate
   name: paperwork-form-title-syndicate-4
   text: "/Paperwork/Syndicate/4.xml"
   paperPrototype: PaperPrintedNukeopsSyndicateToNT
 
-- type: paperworkForm
+- type: paperwork
   id: NukeopsNT5
   category: Syndicate
   name: paperwork-form-title-syndicate-5
@@ -71,35 +71,35 @@
   paperPrototype: PaperPrintedNukeopsSyndicateToNT
 
 # Nuclear Operatives -> USSP
-- type: paperworkForm
+- type: paperwork
   id: NukeopsUSSP1
   category: Syndicate
   name: paperwork-form-title-syndicate-1
   text: "/Paperwork/Syndicate/1.xml"
   paperPrototype: PaperPrintedNukeopsSyndicateToUSSP
 
-- type: paperworkForm
+- type: paperwork
   id: NukeopsUSSP2
   category: Syndicate
   name: paperwork-form-title-syndicate-2
   text: "/Paperwork/Syndicate/2.xml"
   paperPrototype: PaperPrintedNukeopsSyndicateToUSSP
 
-- type: paperworkForm
+- type: paperwork
   id: NukeopsUSSP3
   category: Syndicate
   name: paperwork-form-title-syndicate-3
   text: "/Paperwork/Syndicate/3.xml"
   paperPrototype: PaperPrintedNukeopsSyndicateToUSSP
 
-- type: paperworkForm
+- type: paperwork
   id: NukeopsUSSP4
   category: Syndicate
   name: paperwork-form-title-syndicate-4
   text: "/Paperwork/Syndicate/4.xml"
   paperPrototype: PaperPrintedNukeopsSyndicateToUSSP
 
-- type: paperworkForm
+- type: paperwork
   id: NukeopsUSSP5
   category: Syndicate
   name: paperwork-form-title-syndicate-5
