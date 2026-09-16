@@ -35,13 +35,13 @@ ent-PaperPrintedUSSPMedical = { ent-PaperPrintedBase }
 ent-PaperPrintedUSSPScience = { ent-PaperPrintedBase }
     .suffix = СССП, Научный
 ent-PaperPrintedUSSPSecurity = { ent-PaperPrintedBase }
-    .suffix = СССП, Служба безопасности
+    .suffix = СССП, Милиция
 ent-PaperPrintedUSSPCentcomm = { ent-PaperPrintedBase }
     .suffix = СССП, Генеральный штаб
 
 ent-PaperPrintedSyndicate = { ent-PaperPrintedBase }
     .suffix = Синдикат
 ent-PaperPrintedNukeopsSyndicateToNT = { ent-PaperPrintedBase }
-    .suffix = Синдикат-NanoTrasen, Ядерные оперативники
+    .suffix = Синдикат-НТ, Ядерные оперативники
 ent-PaperPrintedNukeopsSyndicateToUSSP = { ent-PaperPrintedBase }
     .suffix = Синдикат-СССП, Ядерные оперативники
