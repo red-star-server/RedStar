@@ -3,7 +3,7 @@
   id: NTScience0
   category: NTScience
   name: paperwork-form-title-science-0
-  text: "/Paperwork/default.xml"
+  template: "/Paperwork/default.xml"
   paperPrototype: PaperPrintedNTScience
 
 # USSP
@@ -11,5 +11,5 @@
   id: USSPScience0
   category: USSPScience
   name: paperwork-form-title-science-0
-  text: "/Paperwork/default.xml"
+  template: "/Paperwork/default.xml"
   paperPrototype: PaperPrintedUSSPScience

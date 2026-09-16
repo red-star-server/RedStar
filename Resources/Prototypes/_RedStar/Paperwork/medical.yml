@@ -3,7 +3,7 @@
   id: NTMedical0
   category: NTMedical
   name: paperwork-form-title-medical-0
-  text: "/Paperwork/default.xml"
+  template: "/Paperwork/default.xml"
   paperPrototype: PaperPrintedNTMedical
 
 # USSP
@@ -11,5 +11,5 @@
   id: USSPMedical0
   category: USSPMedical
   name: paperwork-form-title-medical-0
-  text: "/Paperwork/default.xml"
+  template: "/Paperwork/default.xml"
   paperPrototype: PaperPrintedUSSPMedical

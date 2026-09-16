@@ -3,7 +3,7 @@
   id: NTSecurity0
   category: NTSecurity
   name: paperwork-form-title-security-0
-  text: "/Paperwork/default.xml"
+  template: "/Paperwork/default.xml"
   paperPrototype: PaperPrintedNTSecurity
 
 # USSP
@@ -11,5 +11,5 @@
   id: USSPSecurity0
   category: USSPSecurity
   name: paperwork-form-title-security-0
-  text: "/Paperwork/default.xml"
+  template: "/Paperwork/default.xml"
   paperPrototype: PaperPrintedUSSPSecurity

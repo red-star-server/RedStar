@@ -3,7 +3,7 @@
   id: NTLaw0
   category: NTLaw
   name: paperwork-form-title-law-0
-  text: "/Paperwork/default.xml"
+  template: "/Paperwork/default.xml"
   paperPrototype: PaperPrintedNTLaw
 
 # USSP
@@ -11,5 +11,5 @@
   id: USSPLaw0
   category: USSPLaw
   name: paperwork-form-title-law-0
-  text: "/Paperwork/default.xml"
+  template: "/Paperwork/default.xml"
   paperPrototype: PaperPrintedUSSPLaw

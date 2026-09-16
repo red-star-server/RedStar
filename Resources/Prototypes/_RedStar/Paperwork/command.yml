@@ -3,7 +3,7 @@
   id: NTCommand0
   category: NTCommand
   name: paperwork-form-title-command-0
-  text: "/Paperwork/default.xml"
+  template: "/Paperwork/default.xml"
   paperPrototype: PaperPrintedNTCommand
 
 # USSP
@@ -11,5 +11,5 @@
   id: USSPCommand0
   category: USSPCommand
   name: paperwork-form-title-command-0
-  text: "/Paperwork/default.xml"
+  template: "/Paperwork/default.xml"
   paperPrototype: PaperPrintedUSSPCommand

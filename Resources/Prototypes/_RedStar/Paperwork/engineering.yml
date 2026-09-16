@@ -3,7 +3,7 @@
   id: NTEngineering0
   category: NTEngineering
   name: paperwork-form-title-engineering-0
-  text: "/Paperwork/default.xml"
+  template: "/Paperwork/default.xml"
   paperPrototype: PaperPrintedNTEngineering
 
 # USSP
@@ -11,5 +11,5 @@
   id: USSPEngineering0
   category: USSPEngineering
   name: paperwork-form-title-engineering-0
-  text: "/Paperwork/default.xml"
+  template: "/Paperwork/default.xml"
   paperPrototype: PaperPrintedUSSPEngineering

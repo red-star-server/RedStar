@@ -3,7 +3,7 @@
   id: NTCentcomm0
   category: NTCentcomm
   name: paperwork-form-title-centcomm-0
-  text: "/Paperwork/default.xml"
+  template: "/Paperwork/default.xml"
   paperPrototype: PaperPrintedNTCentcomm
 
 # USSP
@@ -11,5 +11,5 @@
   id: USSPCentcomm0
   category: USSPCentcomm
   name: paperwork-form-title-centcomm-0
-  text: "/Paperwork/default.xml"
+  template: "/Paperwork/default.xml"
   paperPrototype: PaperPrintedUSSPCentcomm

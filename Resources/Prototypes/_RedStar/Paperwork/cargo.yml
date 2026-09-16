@@ -3,7 +3,7 @@
   id: NTCargo0
   category: NTCargo
   name: paperwork-form-title-cargo-0
-  text: "/Paperwork/default.xml"
+  template: "/Paperwork/default.xml"
   paperPrototype: PaperPrintedNTCargo
 
 # USSP
@@ -11,5 +11,5 @@
   id: USSPCargo0
   category: USSPCargo
   name: paperwork-form-title-cargo-0
-  text: "/Paperwork/default.xml"
+  template: "/Paperwork/default.xml"
   paperPrototype: PaperPrintedUSSPCargo
