@@ -1,0 +1,107 @@
+﻿# Syndicate
+- type: paperworkForm
+  id: Syndicate1
+  category: Syndicate
+  name: paperwork-form-title-syndicate-1
+  text: "/Paperwork/Syndicate/1.xml"
+  paperPrototype: PaperPrintedSyndicate
+
+- type: paperworkForm
+  id: Syndicate2
+  category: Syndicate
+  name: paperwork-form-title-syndicate-2
+  text: "/Paperwork/Syndicate/2.xml"
+  paperPrototype: PaperPrintedSyndicate
+
+- type: paperworkForm
+  id: Syndicate3
+  category: Syndicate
+  name: paperwork-form-title-syndicate-3
+  text: "/Paperwork/Syndicate/3.xml"
+  paperPrototype: PaperPrintedSyndicate
+
+- type: paperworkForm
+  id: Syndicate4
+  category: Syndicate
+  name: paperwork-form-title-syndicate-4
+  text: "/Paperwork/Syndicate/4.xml"
+  paperPrototype: PaperPrintedSyndicate
+
+- type: paperworkForm
+  id: Syndicate5
+  category: Syndicate
+  name: paperwork-form-title-syndicate-5
+  text: "/Paperwork/Syndicate/5.xml"
+  paperPrototype: PaperPrintedSyndicate
+
+# Nuclear Operatives -> NanoTrasen
+- type: paperworkForm
+  id: NukeopsNT1
+  category: Syndicate
+  name: paperwork-form-title-syndicate-1
+  text: "/Paperwork/Syndicate/1.xml"
+  paperPrototype: PaperPrintedNukeopsSyndicateToNT
+
+- type: paperworkForm
+  id: NukeopsNT2
+  category: Syndicate
+  name: paperwork-form-title-syndicate-2
+  text: "/Paperwork/Syndicate/2.xml"
+  paperPrototype: PaperPrintedNukeopsSyndicateToNT
+
+- type: paperworkForm
+  id: NukeopsNT3
+  category: Syndicate
+  name: paperwork-form-title-syndicate-3
+  text: "/Paperwork/Syndicate/3.xml"
+  paperPrototype: PaperPrintedNukeopsSyndicateToNT
+
+- type: paperworkForm
+  id: NukeopsNT4
+  category: Syndicate
+  name: paperwork-form-title-syndicate-4
+  text: "/Paperwork/Syndicate/4.xml"
+  paperPrototype: PaperPrintedNukeopsSyndicateToNT
+
+- type: paperworkForm
+  id: NukeopsNT5
+  category: Syndicate
+  name: paperwork-form-title-syndicate-5
+  text: "/Paperwork/Syndicate/5.xml"
+  paperPrototype: PaperPrintedNukeopsSyndicateToNT
+
+# Nuclear Operatives -> USSP
+- type: paperworkForm
+  id: NukeopsUSSP1
+  category: Syndicate
+  name: paperwork-form-title-syndicate-1
+  text: "/Paperwork/Syndicate/1.xml"
+  paperPrototype: PaperPrintedNukeopsSyndicateToUSSP
+
+- type: paperworkForm
+  id: NukeopsUSSP2
+  category: Syndicate
+  name: paperwork-form-title-syndicate-2
+  text: "/Paperwork/Syndicate/2.xml"
+  paperPrototype: PaperPrintedNukeopsSyndicateToUSSP
+
+- type: paperworkForm
+  id: NukeopsUSSP3
+  category: Syndicate
+  name: paperwork-form-title-syndicate-3
+  text: "/Paperwork/Syndicate/3.xml"
+  paperPrototype: PaperPrintedNukeopsSyndicateToUSSP
+
+- type: paperworkForm
+  id: NukeopsUSSP4
+  category: Syndicate
+  name: paperwork-form-title-syndicate-4
+  text: "/Paperwork/Syndicate/4.xml"
+  paperPrototype: PaperPrintedNukeopsSyndicateToUSSP
+
+- type: paperworkForm
+  id: NukeopsUSSP5
+  category: Syndicate
+  name: paperwork-form-title-syndicate-5
+  text: "/Paperwork/Syndicate/5.xml"
+  paperPrototype: PaperPrintedNukeopsSyndicateToUSSP

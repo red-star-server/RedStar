@@ -1,0 +1,15 @@
+﻿# NanoTrasen
+- type: paperworkForm
+  id: NTEngineering0
+  category: NTEngineering
+  name: paperwork-form-title-engineering-0
+  text: "/Paperwork/default.xml"
+  paperPrototype: PaperPrintedNTEngineering
+
+# USSP
+- type: paperworkForm
+  id: USSPEngineering0
+  category: USSPEngineering
+  name: paperwork-form-title-engineering-0
+  text: "/Paperwork/default.xml"
+  paperPrototype: PaperPrintedUSSPEngineering

@@ -1,0 +1,15 @@
+﻿# NanoTrasen
+- type: paperworkForm
+  id: NTCommand0
+  category: NTCommand
+  name: paperwork-form-title-command-0
+  text: "/Paperwork/default.xml"
+  paperPrototype: PaperPrintedNTCommand
+
+# USSP
+- type: paperworkForm
+  id: USSPCommand0
+  category: USSPCommand
+  name: paperwork-form-title-command-0
+  text: "/Paperwork/default.xml"
+  paperPrototype: PaperPrintedUSSPCommand

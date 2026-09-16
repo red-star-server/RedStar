@@ -1,0 +1,15 @@
+﻿# NanoTrasen
+- type: paperworkForm
+  id: NTScience0
+  category: NTScience
+  name: paperwork-form-title-science-0
+  text: "/Paperwork/default.xml"
+  paperPrototype: PaperPrintedNTScience
+
+# USSP
+- type: paperworkForm
+  id: USSPScience0
+  category: USSPScience
+  name: paperwork-form-title-science-0
+  text: "/Paperwork/default.xml"
+  paperPrototype: PaperPrintedUSSPScience

@@ -1,0 +1,15 @@
+﻿# NanoTrasen
+- type: paperworkForm
+  id: NTLaw0
+  category: NTLaw
+  name: paperwork-form-title-law-0
+  text: "/Paperwork/default.xml"
+  paperPrototype: PaperPrintedNTLaw
+
+# USSP
+- type: paperworkForm
+  id: USSPLaw0
+  category: USSPLaw
+  name: paperwork-form-title-law-0
+  text: "/Paperwork/default.xml"
+  paperPrototype: PaperPrintedUSSPLaw
