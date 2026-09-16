@@ -1,11 +1,14 @@
 using Content.Server._RedStar.Paperwork;
+using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
 using Content.Server.Fax;
 using Content.Server.MassMedia.Systems;
 using Content.Server.Station.Systems;
 using Content.Shared._Corvax.CCCVars;
+using Content.Shared.Cargo.Components;
 using Content.Shared.Fax.Components;
 using Content.Shared.GameTicking;
+using Content.Shared.Station.Components;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
@@ -14,7 +17,7 @@ using Robust.Shared.Random;
 namespace Content.Server._Corvax.StationGoal;
 
 /// <summary>
-/// System to spawn paper with station goal.
+/// Handles station goals and their associated paperwork and supplies.
 /// </summary>
 public sealed partial class StationGoalSystem : EntitySystem
 {
@@ -40,44 +43,44 @@ public sealed partial class StationGoalSystem : EntitySystem
         while (query.MoveNext(out var uid, out var station))
         {
             var tempGoals = new List<ProtoId<StationGoalPrototype>>(station.Goals);
-            StationGoalPrototype? selGoal = null;
+            StationGoalPrototype? selectedGoal = null;
 
             while (tempGoals.Count > 0)
             {
                 var goalId = _random.Pick(tempGoals);
-                var goalProto = _proto.Index(goalId);
+                var goal = _proto.Index(goalId);
 
-                if (playerCount > goalProto.MaxPlayers ||
-                    playerCount < goalProto.MinPlayers)
+                if (playerCount > goal.MaxPlayers ||
+                    playerCount < goal.MinPlayers)
                 {
                     tempGoals.Remove(goalId);
                     continue;
                 }
 
-                selGoal = goalProto;
+                selectedGoal = goal;
                 break;
             }
 
-            if (selGoal is null)
+            if (selectedGoal is null)
                 return;
 
-            if (SendStationGoal(uid, selGoal))
-                Log.Info($"Goal {selGoal.ID} has been sent to station {MetaData(uid).EntityName}");
+            if (SendStationGoal(uid, selectedGoal))
+                Log.Info($"Goal {selectedGoal.ID} has been sent to station {MetaData(uid).EntityName}");
         }
     }
 
-    public bool SendStationGoal(EntityUid ent, ProtoId<StationGoalPrototype> goal)
+    public bool SendStationGoal(EntityUid station, ProtoId<StationGoalPrototype> goal)
     {
-        return SendStationGoal(ent, _proto.Index(goal));
+        return SendStationGoal(station, _proto.Index(goal));
     }
 
     /// <summary>
-    /// Send a station goal on selected station to all faxes which are authorized to receive it.
+    /// Sends a station goal to all faxes authorized to receive it.
     /// </summary>
-    /// <returns>True if at least one fax received paper.</returns>
-    private bool SendStationGoal(EntityUid ent, StationGoalPrototype goal)
+    /// <returns>True if at least one station fax received the goal.</returns>
+    private bool SendStationGoal(EntityUid station, StationGoalPrototype goal)
     {
-        var stationName = MetaData(ent).EntityName;
+        var stationName = MetaData(station).EntityName;
 
         var goalText = Loc.GetString(
             goal.Text,
@@ -87,7 +90,7 @@ public sealed partial class StationGoalSystem : EntitySystem
         var paperPrototype = _proto.Index(paperwork.PaperPrototype);
 
         var printout = new FaxPrintout(
-            _paperwork.Render(ent, paperwork, goalText),
+            _paperwork.Render(station, paperwork, goalText),
             paperPrototype.Name,
             null,
             paperwork.PaperPrototype,
@@ -101,7 +104,7 @@ public sealed partial class StationGoalSystem : EntitySystem
         while (query.MoveNext(out var faxUid, out var fax))
         {
             if (!fax.ReceiveAllStationGoals &&
-                !(fax.ReceiveStationGoal && _station.GetOwningStation(faxUid) == ent))
+                !(fax.ReceiveStationGoal && _station.GetOwningStation(faxUid) == station))
                 continue;
 
             _fax.Receive(faxUid, printout, null, fax);
@@ -109,46 +112,59 @@ public sealed partial class StationGoalSystem : EntitySystem
             wasSent |= fax.ReceiveStationGoal;
         }
 
-        // Publish news if at least one fax received the goal.
         if (!wasSent)
             return false;
 
-        PublishStationGoalNews(ent, goalText);
-        TryDeliverGoalCargo(ent, goal);
+        PublishStationGoalNews(station, goalText);
+        TryDeliverStartingEquipment(station, goal);
 
         return true;
     }
 
     /// <summary>
-    /// Delivers the items required by a station goal to a free incoming cargo pallet.
+    /// Delivers equipment associated with the station goal through the cargo system.
     /// </summary>
-    private void TryDeliverGoalCargo(EntityUid station, StationGoalPrototype goal)
+    private void TryDeliverStartingEquipment(EntityUid station, StationGoalPrototype goal)
     {
-        if (goal.Spawns.Count == 0 ||
-            !_cargo.TryGetCargoDeliveryCoordinates(station, 1, out _, out var coordinates))
+        if (goal.StartingEquipment.Count == 0 ||
+            !TryComp<StationCargoOrderDatabaseComponent>(station, out var cargoDb) ||
+            !TryComp<StationDataComponent>(station, out var stationData) ||
+            !TryComp<StationBankAccountComponent>(station, out var bank))
             return;
 
-        var deliveryCoordinates = coordinates[0];
-
-        foreach (var spawnEnt in goal.Spawns)
+        foreach (var entry in goal.StartingEquipment)
         {
-            SpawnAtPosition(spawnEnt, deliveryCoordinates);
+            if (entry.Amount <= 0)
+                continue;
+
+            var product = _proto.Index(entry.Product);
+
+            _cargo.AddAndApproveOrder(
+                station,
+                product,
+                entry.Amount,
+                Loc.GetString("station-goal-cargo-sender"),
+                Loc.GetString("station-goal-cargo-description"),
+                Loc.GetString("station-goal-cargo-destination"),
+                cargoDb,
+                bank.PrimaryAccount,
+                (station, stationData));
         }
     }
 
     /// <summary>
-    /// Publishes a news article about the station goal in the mass media.
+    /// Publishes a news article about the station goal.
     /// </summary>
-    private void PublishStationGoalNews(EntityUid ent, string content)
+    private void PublishStationGoalNews(EntityUid station, string content)
     {
-        var stationName = MetaData(ent).EntityName;
+        var stationName = MetaData(station).EntityName;
 
         var title = Loc.GetString(
             "station-goal-news-title",
             ("station", stationName));
 
         _news.TryAddNews(
-            ent,
+            station,
             title,
             content,
             out _,

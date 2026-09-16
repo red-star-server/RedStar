@@ -1,0 +1,9 @@
+﻿- type: cargoProduct
+  id: StationGoalRomerol
+  icon:
+    sprite: Structures/Storage/Crates/chemcrate_secure.rsi
+    state: icon
+  product: CrateGoalRomerol
+  cost: 0
+  category: cargoproduct-category-name-medical
+  group: StationGoal

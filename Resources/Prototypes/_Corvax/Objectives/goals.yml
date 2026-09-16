@@ -111,8 +111,7 @@
   id: VirusologyAmbusol
   text: station-goal-delta-ambusol
   paperwork: StationGoal
-  spawns:
-  - CrateGoalRomerol
+  startingEquipment: StationGoalRomerol
 
 - type: stationGoal
   id: SectorSecurity
