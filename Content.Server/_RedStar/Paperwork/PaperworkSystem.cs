@@ -8,7 +8,7 @@ using Robust.Shared.Utility;
 namespace Content.Server._RedStar.Paperwork;
 
 /// <summary>
-/// Handles rendering paperwork form templates into printable document content.
+/// Handles rendering paperwork templates into printable document content.
 /// </summary>
 public sealed partial class PaperworkSystem : EntitySystem
 {
@@ -24,11 +24,11 @@ public sealed partial class PaperworkSystem : EntitySystem
     [Dependency] private StationSystem _station = default!;
 
     /// <summary>
-    /// Renders a paperwork form template using the context of the provided entity.
+    /// Renders a paperwork document using the context of the provided entity.
     /// </summary>
-    public string RenderForm(EntityUid source, PaperworkFormPrototype form)
+    public string Render(EntityUid source, PaperworkPrototype paperwork)
     {
-        using var reader = _resourceManager.ContentFileReadText(form.Template);
+        using var reader = _resourceManager.ContentFileReadText(paperwork.Template);
         var text = reader.ReadToEnd();
 
         var stationName = _station.GetOwningStation(source) is { } station
@@ -37,7 +37,7 @@ public sealed partial class PaperworkSystem : EntitySystem
 
         return ApplyBaseSubstitutions(
             text,
-            FormattedMessage.EscapeText(Loc.GetString(form.Name)),
+            FormattedMessage.EscapeText(Loc.GetString(paperwork.Name)),
             FormattedMessage.EscapeText(stationName),
             _gameTicker.RoundDuration(),
             DateTime.UtcNow);
@@ -57,7 +57,10 @@ public sealed partial class PaperworkSystem : EntitySystem
                 ShiftTimePlaceholder,
                 roundDuration.ToString(@"hh\:mm\:ss", CultureInfo.InvariantCulture),
                 StringComparison.Ordinal)
-            .Replace(ShiftDatePlaceholder, FormatLoreDate(utcNow), StringComparison.Ordinal);
+            .Replace(
+                ShiftDatePlaceholder,
+                FormatLoreDate(utcNow),
+                StringComparison.Ordinal);
     }
 
     private static string FormatLoreDate(DateTime date)
