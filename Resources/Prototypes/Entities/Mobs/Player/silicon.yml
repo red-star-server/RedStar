@@ -70,6 +70,7 @@
     canShuttle: false
     title: comms-console-announcement-title-station-ai
     color: "#5ed7aa"
+    sound: /Audio/_Corvax/Announcements/aiannounce.ogg # RS14
   - type: ShowJobIcons
   - type: ShowCrewIcons
   - type: DamagedSiliconAccent
