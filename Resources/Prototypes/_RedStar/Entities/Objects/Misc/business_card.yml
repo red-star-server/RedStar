@@ -1,4 +1,4 @@
-﻿# Valentine
+# Valentine
 - type: entity
   id: ValentineCard
   parent: Paper
