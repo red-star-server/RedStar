@@ -1,4 +1,4 @@
-﻿station-goal-fax-paper-name = бумага
+﻿station-goal-title = ЦЕЛЬ СТАНЦИИ
 station-goal-news-title = Цель { $station }
 station-goal-news-author = Генеральный штаб
 

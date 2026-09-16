@@ -189,7 +189,7 @@
   - type: Paper
     stampState: paper_stamp-centcom
     stampedBy:
-    - stampedName: Генеральный Штаб
+    - stampedName: stamp-component-stamped-name-centcom
       stampedColor: "#cc0000"
     editingDisabled: true
 

@@ -84,10 +84,11 @@ public sealed partial class StationGoalSystem : EntitySystem
             ("station", stationName));
 
         var paperwork = _proto.Index(goal.Paperwork);
+        var paperPrototype = _proto.Index(paperwork.PaperPrototype);
 
         var printout = new FaxPrintout(
             _paperwork.Render(ent, paperwork, goalText),
-            Loc.GetString(paperwork.Name),
+            paperPrototype.Name,
             null,
             paperwork.PaperPrototype,
             null,
@@ -130,7 +131,9 @@ public sealed partial class StationGoalSystem : EntitySystem
         var deliveryCoordinates = coordinates[0];
 
         foreach (var spawnEnt in goal.Spawns)
+        {
             SpawnAtPosition(spawnEnt, deliveryCoordinates);
+        }
     }
 
     /// <summary>

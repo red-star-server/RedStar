@@ -77,7 +77,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-centcom
-    stampedColor: "#006600"
+    stampedColor: "#cc0000" # RS14
     stampState: "paper_stamp-centcom"
   - type: Sprite
     state: stamp-centcom
@@ -86,11 +86,11 @@
       left:
       - state: stamp-inhand-left
       - state: handle-inhand-left
-        color: "#006600"
+        color: "#cc0000"
       right:
       - state: stamp-inhand-right
       - state: handle-inhand-right
-        color: "#006600"
+        color: "#cc0000"
 
 - type: entity
   name: chaplain's rubber stamp
