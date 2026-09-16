@@ -1,0 +1,78 @@
+﻿# NanoTrasen
+- type: paperworkCategory
+  id: NTCargo
+  name: paperwork-category-nt-cargo
+
+- type: paperworkCategory
+  id: NTCivilian
+  name: paperwork-category-nt-civilian
+
+- type: paperworkCategory
+  id: NTCommand
+  name: paperwork-category-nt-command
+
+- type: paperworkCategory
+  id: NTEngineering
+  name: paperwork-category-nt-engineering
+
+- type: paperworkCategory
+  id: NTLaw
+  name: paperwork-category-nt-law
+
+- type: paperworkCategory
+  id: NTMedical
+  name: paperwork-category-nt-medical
+
+- type: paperworkCategory
+  id: NTScience
+  name: paperwork-category-nt-science
+
+- type: paperworkCategory
+  id: NTSecurity
+  name: paperwork-category-nt-security
+
+- type: paperworkCategory
+  id: NTCentcomm
+  name: paperwork-category-nt-centcomm
+
+# USSP
+- type: paperworkCategory
+  id: USSPCargo
+  name: paperwork-category-ussp-cargo
+
+- type: paperworkCategory
+  id: USSPCivilian
+  name: paperwork-category-ussp-civilian
+
+- type: paperworkCategory
+  id: USSPCommand
+  name: paperwork-category-ussp-command
+
+- type: paperworkCategory
+  id: USSPEngineering
+  name: paperwork-category-ussp-engineering
+
+- type: paperworkCategory
+  id: USSPLaw
+  name: paperwork-category-ussp-law
+
+- type: paperworkCategory
+  id: USSPMedical
+  name: paperwork-category-ussp-medical
+
+- type: paperworkCategory
+  id: USSPScience
+  name: paperwork-category-ussp-science
+
+- type: paperworkCategory
+  id: USSPSecurity
+  name: paperwork-category-ussp-security
+
+- type: paperworkCategory
+  id: USSPCentcomm
+  name: paperwork-category-ussp-centcomm
+
+# Syndicate
+- type: paperworkCategory
+  id: Syndicate
+  name: paperwork-category-syndicate
