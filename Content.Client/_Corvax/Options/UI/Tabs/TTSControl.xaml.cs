@@ -80,7 +80,7 @@ public sealed partial class TTSControl : Control
         var preset = (TTSVoiceEffectPreset)args.Id;
         VoiceEffectOption.SelectId(args.Id);
 
-        _cfg.SetCVar(CCCVars.TTSVoiceEffect, (ushort)preset);
+        _cfg.SetCVar(CCCVars.TTSVoiceEffect, (int)preset);
         _cfg.SaveToFile();
     }
 

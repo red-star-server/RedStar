@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Text.RegularExpressions;
 using Content.Client.Stylesheets;
 using Content.Shared._Corvax.TTS;
 using Content.Shared.Humanoid;
@@ -22,61 +21,56 @@ public sealed partial class TTSTab : Control
     public event Action<ProtoId<TTSVoicePrototype>>? OnPreviewRequested;
 
     private List<TTSVoicePrototype> _allVoices = new();
-    private List<TTSVoicePrototype> _filteredVoices = new();
-    private Dictionary<string, List<TTSVoicePrototype>> _categorizedVoices = new();
     private ProtoId<TTSVoicePrototype>? _selectedVoiceId;
-
-    private static readonly Regex CategoryRegex = new(@"^(.*?)\s*\(([^)]+)\)\s*$", RegexOptions.Compiled);
+    private LocId? _selectedCategory;
 
     public TTSTab()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        LoadVoices();
         SearchEdit.OnTextChanged += OnSearchChanged;
     }
 
-    private void LoadVoices()
+    private void LoadCategories()
     {
-        foreach (var voice in _allVoices)
-        {
-            var name = Loc.GetString(voice.Name);
-            var category = Loc.GetString("humanoid-profile-editor-voice-other");
-
-            var match = CategoryRegex.Match(name);
-            if (match.Success)
-            {
-                category = match.Groups[2].Value.Trim();
-            }
-
-            if (!_categorizedVoices.ContainsKey(category))
-                _categorizedVoices[category] = new List<TTSVoicePrototype>();
-
-            _categorizedVoices[category].Add(voice);
-        }
-
         CategoriesContainer.RemoveAllChildren();
 
-        foreach (var category in _categorizedVoices.Keys.OrderBy(k => k))
+        AddCategoryButton(
+            Loc.GetString("humanoid-profile-editor-voice-all"),
+            null);
+
+        var categories = _allVoices
+            .Select(voice => voice.Category)
+            .Distinct()
+            .OrderBy(category => Loc.GetString(category));
+
+        foreach (var category in categories)
         {
-            var button = new Button
-            {
-                Text = category,
-                ToolTip = Loc.GetString("humanoid-profile-editor-voice-category-tooltip", ("category", category)),
-                HorizontalExpand = true,
-            };
-
-            button.OnPressed += _ =>
-            {
-                SearchEdit.Text = category;
-                UpdateResults();
-            };
-
-            CategoriesContainer.AddChild(button);
+            AddCategoryButton(Loc.GetString(category), category);
         }
 
         UpdateResults();
+    }
+
+    private void AddCategoryButton(string name, LocId? category)
+    {
+        var button = new Button
+        {
+            Text = name,
+            ToolTip = category != null
+                ? Loc.GetString("humanoid-profile-editor-voice-category-tooltip", ("category", name))
+                : null,
+            HorizontalExpand = true,
+        };
+
+        button.OnPressed += _ =>
+        {
+            _selectedCategory = category;
+            UpdateResults();
+        };
+
+        CategoriesContainer.AddChild(button);
     }
 
     private void OnSearchChanged(LineEdit.LineEditEventArgs args)
@@ -87,23 +81,26 @@ public sealed partial class TTSTab : Control
     private void UpdateResults()
     {
         VoicesGrid.RemoveAllChildren();
-        _filteredVoices.Clear();
 
         var searchText = SearchEdit.Text.ToLowerInvariant();
 
-        foreach (var voice in _allVoices)
+        var voices = _allVoices.Where(voice =>
         {
+            if (_selectedCategory != null && voice.Category != _selectedCategory)
+                return false;
+
+            if (string.IsNullOrEmpty(searchText))
+                return true;
+
             var name = Loc.GetString(voice.Name).ToLowerInvariant();
+            var category = Loc.GetString(voice.Category).ToLowerInvariant();
 
-            if (string.IsNullOrEmpty(searchText) ||
-                name.Contains(searchText) ||
-                voice.ID.Contains(searchText, StringComparison.InvariantCultureIgnoreCase))
-            {
-                _filteredVoices.Add(voice);
-            }
-        }
+            return name.Contains(searchText) ||
+                   category.Contains(searchText) ||
+                   voice.ID.Contains(searchText, StringComparison.InvariantCultureIgnoreCase);
+        }).ToList();
 
-        foreach (var voice in _filteredVoices)
+        foreach (var voice in voices)
         {
             var displayName = Loc.GetString(voice.Name);
 
@@ -122,7 +119,7 @@ public sealed partial class TTSTab : Control
                 StyleClasses = { StyleClass.ButtonOpenRight }
             };
 
-            selectButton.OnPressed += _ => { OnVoiceSelected?.Invoke(voice.ID); };
+            selectButton.OnPressed += _ => OnVoiceSelected?.Invoke(voice.ID);
 
             var previewButton = new Button
             {
@@ -132,7 +129,7 @@ public sealed partial class TTSTab : Control
                 StyleClasses = { StyleClass.ButtonOpenLeft }
             };
 
-            previewButton.OnPressed += _ => { OnPreviewRequested?.Invoke(voice.ID); };
+            previewButton.OnPressed += _ => OnPreviewRequested?.Invoke(voice.ID);
 
             if (voice.ID == _selectedVoiceId)
             {
@@ -147,7 +144,7 @@ public sealed partial class TTSTab : Control
         }
 
         ResultsLabel.Text = Loc.GetString("humanoid-profile-editor-voice-match",
-            ("filtered", _filteredVoices.Count), ("all", _allVoices.Count));
+            ("filtered", voices.Count), ("all", _allVoices.Count));
     }
 
     public void UpdateControls(HumanoidCharacterProfile? profile, Sex sex, ProtoId<SpeciesPrototype> species)
@@ -162,8 +159,7 @@ public sealed partial class TTSTab : Control
             .OrderBy(voice => Loc.GetString(voice.Name))
             .ToList();
 
-        _categorizedVoices.Clear();
-        LoadVoices();
+        LoadCategories();
     }
 
     public void SetSelectedVoice(ProtoId<TTSVoicePrototype> voiceId)

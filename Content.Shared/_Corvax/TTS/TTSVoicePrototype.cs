@@ -24,6 +24,12 @@ public sealed partial class TTSVoicePrototype : IPrototype
     public string Description { get; private set; } = string.Empty;
 
     /// <summary>
+    /// Category shown in the voice selector.
+    /// </summary>
+    [DataField]
+    public LocId Category { get; private set; } = "humanoid-profile-editor-voice-other";
+
+    /// <summary>
     /// Sex this voice is intended for.
     /// </summary>
     [DataField(required: true)]

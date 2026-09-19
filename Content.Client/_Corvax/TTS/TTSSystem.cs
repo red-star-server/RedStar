@@ -31,7 +31,7 @@ public sealed partial class TTSSystem : EntitySystem
     [Dependency] private AudioSystem _audio = default!;
 
     private ISawmill _sawmill = default!;
-    private static MemoryContentRoot _contentRoot = new();
+    private static readonly MemoryContentRoot _contentRoot = new();
     private static readonly ResPath Prefix = ResPath.Root / "TTS";
     private static bool _contentRootAdded;
 
@@ -45,6 +45,7 @@ public sealed partial class TTSSystem : EntitySystem
     private const float RadioRolloffMin = 1.5f;
     private const float RadioRolloffMax = 2.5f;
     private const float PlaybackDelay = 0.8f;
+    private const int MaxEntityQueue = 6;
 
     private float _lastRadioPitch = 0.98f;
     private float _radioVolume = 1.2f;
@@ -86,11 +87,7 @@ public sealed partial class TTSSystem : EntitySystem
         _cfg.UnsubValueChanged(CCCVars.TTSRadioChannelVolumes, OnChannelVolumesChanged);
         _cfg.UnsubValueChanged(CCCVars.TTSVolume, OnVolumeChanged);
 
-        _entityQueues.Clear();
-        _playingEntities.Clear();
-
-        StopPreview();
-        ShutdownEffects();
+        ResetPlaybackState();
     }
 
     private void OnTtsEnabledChanged(bool value)
@@ -98,10 +95,7 @@ public sealed partial class TTSSystem : EntitySystem
         _ttsEnabled = value;
 
         if (!value)
-        {
-            StopPreview();
-            ShutdownEffects();
-        }
+            ResetPlaybackState();
     }
 
     private void OnVoiceEffectChanged(int newValue)
@@ -127,6 +121,11 @@ public sealed partial class TTSSystem : EntitySystem
 
     [SubscribeLocalEvent]
     private void OnRoundRestartCleanup(RoundRestartCleanupEvent ev)
+    {
+        ResetPlaybackState();
+    }
+
+    private void ResetPlaybackState()
     {
         _entityQueues.Clear();
         _playingEntities.Clear();
@@ -174,7 +173,7 @@ public sealed partial class TTSSystem : EntitySystem
                 _entityQueues[sourceUid] = queue;
             }
 
-            if (queue.Count >= 6)
+            if (queue.Count >= MaxEntityQueue)
             {
                 _sawmill.Verbose($"TTS queue for {sourceUid} is full, dropping old message");
                 queue.Dequeue();
@@ -276,7 +275,7 @@ public sealed partial class TTSSystem : EntitySystem
 
                 audioResult = _audio.PlayEntity(audioResource.AudioStream, sourceUid, soundSpecifier, audioParams);
 
-                if (audioResult != null && _voiceEffectPreset != 0)
+                if (audioResult != null && _voiceEffectPreset != TTSVoiceEffectPreset.None)
                     ApplyVoiceEffect(audioResult.Value, _voiceEffectPreset);
             }
             else
@@ -289,7 +288,7 @@ public sealed partial class TTSSystem : EntitySystem
                 if (ev.Kind == TTSKind.Preview)
                     _previewStream = audioResult?.Entity;
 
-                if (audioResult != null && _voiceEffectPreset != 0)
+                if (audioResult != null && _voiceEffectPreset != TTSVoiceEffectPreset.None)
                     ApplyVoiceEffect(audioResult.Value, _voiceEffectPreset);
             }
         }

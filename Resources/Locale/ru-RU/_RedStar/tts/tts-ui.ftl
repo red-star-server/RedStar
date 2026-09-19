@@ -21,6 +21,7 @@ credits-window-tts-title = Функция TTS (Text-To-Speech)
 humanoid-profile-editor-voice-tab = Голос
 humanoid-profile-editor-voice-placeholder = Поиск по голосам...
 humanoid-profile-editor-voice-categories = Категории
+humanoid-profile-editor-voice-all = Все
 humanoid-profile-editor-voice-other = Прочие
 humanoid-profile-editor-voice-play = ▶
 humanoid-profile-editor-voice-tooltip-play = Прослушать
