@@ -1,7 +1,7 @@
-﻿using System.Globalization;
-using Content.Server.GameTicking;
-using Content.Server.Station.Systems;
+using System.Globalization;
 using Content.Shared._RedStar.Paperwork;
+using Content.Shared.GameTicking;
+using Content.Shared.Station.Systems;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Utility;
 

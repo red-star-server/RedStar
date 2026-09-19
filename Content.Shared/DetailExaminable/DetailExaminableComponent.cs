@@ -1,4 +1,4 @@
-﻿using Content.Shared._Sirena.Humanoid;
+using Content.Shared._Sirena.Humanoid;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.DetailExaminable;

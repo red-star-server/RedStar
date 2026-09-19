@@ -21,7 +21,7 @@ namespace Content.IntegrationTests.Tests
     [TestOf(typeof(EntityUid))]
     public sealed class EntityTest : GameTest
     {
-        private static readonly HashSet<ProtoId<EntityCategoryPrototype>> IgnoredCategories = ["Spawner", "Debug"];
+        private static readonly HashSet<ProtoId<EntityCategoryPrototype>> IgnoredCategories = ["Spawner", "Debug", "GameRules"];
 
         public override PoolSettings PoolSettings => new()
         {
@@ -73,23 +73,7 @@ namespace Content.IntegrationTests.Tests
 
             await server.WaitPost(() =>
             {
-                static IEnumerable<(EntityUid, TComp)> Query<TComp>(IEntityManager entityMan)
-                    where TComp : Component
-                {
-                    var query = entityMan.AllEntityQueryEnumerator<TComp>();
-                    while (query.MoveNext(out var uid, out var meta))
-                    {
-                        yield return (uid, meta);
-                    }
-                }
-
-                var entityMetas = Query<MetaDataComponent>(entityMan).ToList();
-                foreach (var (uid, meta) in entityMetas)
-                {
-                    if (!meta.EntityDeleted)
-                        entityMan.DeleteEntity(uid);
-                }
-
+                DeleteAllEntities(entityMan);
                 Assert.That(entityMan.EntityCount, Is.Zero);
             });
         }
@@ -125,23 +109,7 @@ namespace Content.IntegrationTests.Tests
             await server.WaitRunTicks(450); // 15 seconds, enough to trigger most update loops
             await server.WaitPost(() =>
             {
-                static IEnumerable<(EntityUid, TComp)> Query<TComp>(IEntityManager entityMan)
-                    where TComp : Component
-                {
-                    var query = entityMan.AllEntityQueryEnumerator<TComp>();
-                    while (query.MoveNext(out var uid, out var meta))
-                    {
-                        yield return (uid, meta);
-                    }
-                }
-
-                var entityMetas = Query<MetaDataComponent>(entityMan).ToList();
-                foreach (var (uid, meta) in entityMetas)
-                {
-                    if (!meta.EntityDeleted)
-                        entityMan.DeleteEntity(uid);
-                }
-
+                DeleteAllEntities(entityMan);
                 Assert.That(entityMan.EntityCount, Is.Zero);
             });
         }
@@ -194,25 +162,38 @@ namespace Content.IntegrationTests.Tests
 
             await server.WaitPost(() =>
             {
-                static IEnumerable<(EntityUid, TComp)> Query<TComp>(IEntityManager entityMan)
-                    where TComp : Component
-                {
-                    var query = entityMan.AllEntityQueryEnumerator<TComp>();
-                    while (query.MoveNext(out var uid, out var meta))
-                    {
-                        yield return (uid, meta);
-                    }
-                }
-
-                var entityMetas = Query<MetaDataComponent>(sEntMan).ToList();
-                foreach (var (uid, meta) in entityMetas)
-                {
-                    if (!meta.EntityDeleted)
-                        sEntMan.DeleteEntity(uid);
-                }
-
+                DeleteAllEntities(sEntMan);
                 Assert.That(sEntMan.EntityCount, Is.Zero);
             });
+        }
+
+        /// <summary>
+        /// Deletes all entities in two passes. Deleting entities may itself create transient entities,
+        /// such as audio entities, which are not present in the initial snapshot.
+        /// </summary>
+        private static void DeleteAllEntities(IEntityManager entityMan)
+        {
+            DeleteEntitySnapshot(entityMan);
+            DeleteEntitySnapshot(entityMan);
+        }
+
+        private static void DeleteEntitySnapshot(IEntityManager entityMan)
+        {
+            static IEnumerable<(EntityUid, MetaDataComponent)> Query(IEntityManager entityMan)
+            {
+                var query = entityMan.AllEntityQueryEnumerator<MetaDataComponent>();
+                while (query.MoveNext(out var uid, out var meta))
+                {
+                    yield return (uid, meta);
+                }
+            }
+
+            var entities = Query(entityMan).ToList();
+            foreach (var (uid, meta) in entities)
+            {
+                if (!meta.EntityDeleted)
+                    entityMan.DeleteEntity(uid);
+            }
         }
 
         /// <summary>
@@ -413,6 +394,7 @@ namespace Content.IntegrationTests.Tests
                 "Broadphase",
                 "StationData", // errors when removed mid-round
                 "StationJobs",
+                "ActiveGameRule", // Requires GameRule :P
                 "Actor", // We aren't testing actor components, those need their player session set.
                 "BiomeSelection", // Whaddya know, requires config.
                 "ActivatableUI", // Requires enum key
