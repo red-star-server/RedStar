@@ -10475,6 +10475,17 @@ entities:
     - type: Transform
       parent: 2
       pos: 3.3420296,-7.4052997
+- proto: BoxFolderCentCom
+  entities:
+  - uid: 1035
+    components:
+    - type: MetaData
+      name: папка
+    - type: Transform
+      parent: 1023
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: BoxFolderClipboard
   entities:
   - uid: 1036
@@ -48870,6 +48881,15 @@ entities:
     - type: Transform
       parent: 2
       pos: 21.489666,19.753956
+- proto: ClothingHeadHatCatEars
+  entities:
+  - uid: 6080
+    components:
+    - type: Transform
+      parent: 2
+      pos: -35.5,-37.3
+    missingComponents:
+    - Clothing
 - proto: ClothingHeadHatHardhatYellowDark
   entities:
   - uid: 16568
