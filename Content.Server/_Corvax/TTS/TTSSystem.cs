@@ -98,8 +98,11 @@ public sealed partial class TTSSystem : EntitySystem
 
     public override void Initialize()
     {
+        base.Initialize();
+
         _cfg.OnValueChanged(CCCVars.TTSEnabled, v => _isEnabled = v, true);
 
+        InitializeSanitize();
         RegisterRateLimits();
     }
 
@@ -281,7 +284,8 @@ public sealed partial class TTSSystem : EntitySystem
         }
     }
 
-    private void SendTTSToRadio(byte[] soundData, EntityUid sourceUid, RadioChannelPrototype channel, bool isWhisper = true)
+    private void SendTTSToRadio(byte[] soundData, EntityUid sourceUid, RadioChannelPrototype channel,
+        bool isWhisper = true)
     {
         var channelFlag = GetChannelFlag(channel.ID);
         if (channelFlag == RadioChannelFlag.None)
@@ -360,10 +364,10 @@ public sealed partial class TTSSystem : EntitySystem
         var servers = EntityQuery<TelecomServerComponent, EncryptionKeyHolderComponent, ApcPowerReceiverComponent, TransformComponent>();
         foreach (var (_, keys, power, transform) in servers)
         {
-            if (transform.MapID == mapId && power.Powered
-                && keys.Channels.Contains(channelId))
+            if (transform.MapID == mapId && power.Powered && keys.Channels.Contains(channelId))
                 return true;
         }
+
         return false;
     }
 
