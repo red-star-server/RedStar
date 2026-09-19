@@ -1,6 +1,8 @@
 using Content.Client._Corvax.TTS;
 using Content.Shared._Corvax.CCCVars;
+using Content.Shared._Corvax.TTS;
 using Robust.Client.UserInterface;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Lobby.UI;
 
@@ -54,7 +56,7 @@ public sealed partial class HumanoidProfileEditor
         _ttsTab.SetSelectedVoice(Profile.TTSVoice);
     }
 
-    private void SetVoice(string newVoice)
+    private void SetVoice(ProtoId<TTSVoicePrototype> newVoice)
     {
         Profile = Profile?.WithVoice(newVoice);
         IsDirty = true;

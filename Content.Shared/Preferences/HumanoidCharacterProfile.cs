@@ -92,7 +92,7 @@ namespace Content.Shared.Preferences
         public ProtoId<SpeciesPrototype> Species { get; set; } = DefaultSpecies;
 
         [DataField] //Corvax-TTS
-        public string TTSVoice { get; set; } = HumanoidProfileSystem.DefaultVoice;
+        public ProtoId<TTSVoicePrototype> TTSVoice { get; set; } = HumanoidProfileSystem.DefaultVoice;
 
         [DataField]
         public int Age { get; set; } = 18;
@@ -144,7 +144,7 @@ namespace Content.Shared.Preferences
             string name,
             string flavortext,
             string species,
-            string TTS_voice, // Corvax-TTS
+            ProtoId<TTSVoicePrototype> TTS_voice, // Corvax-TTS
             int age,
             Sex sex,
             ProtoId<EmoteSoundsPrototype> voice,
@@ -317,7 +317,7 @@ namespace Content.Shared.Preferences
         }
 
         // Corvax-TTS-Start
-        public static string RandomTTS(Sex sex, ProtoId<SpeciesPrototype> species)
+        public static ProtoId<TTSVoicePrototype> RandomTTS(Sex sex, ProtoId<SpeciesPrototype> species)
         {
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var random = IoCManager.Resolve<IRobustRandom>();
@@ -462,7 +462,7 @@ namespace Content.Shared.Preferences
         }
 
         // Corvax-TTS-Start
-        public HumanoidCharacterProfile WithVoice(string voice)
+        public HumanoidCharacterProfile WithVoice(ProtoId<TTSVoicePrototype> voice)
         {
             return new(this) { TTSVoice = voice };
         }

@@ -1,3 +1,4 @@
+using Content.Shared._Corvax.TTS;
 using Content.Shared.Examine;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.IdentityManagement;
@@ -12,12 +13,12 @@ public sealed partial class HumanoidProfileSystem : EntitySystem
     [Dependency] private GrammarSystem _grammar = default!;
 
     // Corvax-TTS-Start
-    public const string DefaultVoice = "Garithos";
-    public static readonly Dictionary<Sex, string> DefaultSexVoice = new()
+    public static readonly ProtoId<TTSVoicePrototype> DefaultVoice = "Garithos";
+    public static readonly Dictionary<Sex, ProtoId<TTSVoicePrototype>> DefaultSexVoice = new()
     {
         {Sex.Male, "Garithos"},
         {Sex.Female, "Maiev"},
-        {Sex.Unsexed, "Myron"},
+        {Sex.Unsexed, "Myron"}
     };
     // Corvax-TTS-End
 

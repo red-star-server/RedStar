@@ -114,7 +114,7 @@ public sealed partial class TTSSystem : EntitySystem
     [SubscribeNetworkEvent]
     private async void OnRequestPreviewTTS(RequestPreviewTTSEvent ev, EntitySessionEventArgs args)
     {
-        if (!_isEnabled || !ProtoMan.TryIndex<TTSVoicePrototype>(ev.VoiceId, out var protoVoice))
+        if (!_isEnabled || !ProtoMan.TryIndex(ev.VoiceId, out var protoVoice))
             return;
 
         if (HandleRateLimit(args.SenderSession) != RateLimitStatus.Allowed)
@@ -212,11 +212,10 @@ public sealed partial class TTSSystem : EntitySystem
         if (args.Message.Length > MaxMessageChars)
             return;
 
-        var voiceEv = new TransformSpeakerVoiceEvent(uid, voiceId);
+        var voiceEv = new TransformSpeakerVoiceEvent(uid, voiceId.Value);
         RaiseLocalEvent(uid, voiceEv);
-        voiceId = voiceEv.VoiceId;
 
-        if (!ProtoMan.TryIndex(voiceId, out var protoVoice))
+        if (!ProtoMan.TryIndex(voiceEv.VoiceId, out var protoVoice))
             return;
 
         if (args.ObfuscatedMessage != null)

@@ -110,8 +110,8 @@ namespace Content.Server.Preferences.Managers
 
             // Corvax-TTS-Start
             var TTSVoice = profile.TTSVoice;
-            if (TTSVoice == String.Empty)
-                TTSVoice = HumanoidProfileSystem.DefaultSexVoice[sex];
+            if (TTSVoice == string.Empty)
+                TTSVoice = HumanoidProfileSystem.DefaultSexVoice[sex].Id;
             // Corvax-TTS-End
 
             var markings =

@@ -18,13 +18,13 @@ public sealed partial class TTSTab : Control
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;
 
-    public event Action<string>? OnVoiceSelected;
-    public event Action<string>? OnPreviewRequested;
+    public event Action<ProtoId<TTSVoicePrototype>>? OnVoiceSelected;
+    public event Action<ProtoId<TTSVoicePrototype>>? OnPreviewRequested;
 
     private List<TTSVoicePrototype> _allVoices = new();
     private List<TTSVoicePrototype> _filteredVoices = new();
     private Dictionary<string, List<TTSVoicePrototype>> _categorizedVoices = new();
-    private string? _selectedVoiceId;
+    private ProtoId<TTSVoicePrototype>? _selectedVoiceId;
 
     private static readonly Regex CategoryRegex = new(@"^(.*?)\s*\(([^)]+)\)\s*$", RegexOptions.Compiled);
 
@@ -167,7 +167,7 @@ public sealed partial class TTSTab : Control
         LoadVoices();
     }
 
-    public void SetSelectedVoice(string voiceId)
+    public void SetSelectedVoice(ProtoId<TTSVoicePrototype> voiceId)
     {
         _selectedVoiceId = voiceId;
         UpdateResults();
