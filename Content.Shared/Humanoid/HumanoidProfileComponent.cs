@@ -1,3 +1,4 @@
+using Content.Shared._Corvax.TTS;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
@@ -34,4 +35,9 @@ public sealed partial class HumanoidProfileComponent : Component
 
     [DataField, AutoNetworkedField]
     public ProtoId<SpeciesPrototype> Species = HumanoidCharacterProfile.DefaultSpecies;
+
+    // Corvax-TTS-Start
+    [DataField, AutoNetworkedField]
+    public ProtoId<TTSVoicePrototype> TTSVoice { get; set; } = HumanoidProfileSystem.DefaultVoice;
+    // Corvax-TTS-End
 }

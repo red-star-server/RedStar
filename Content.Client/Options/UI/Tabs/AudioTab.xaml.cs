@@ -69,6 +69,8 @@ public sealed partial class AudioTab : Control
         Control.AddOptionCheckBox(CCVars.AudioHrtf, AudioHrtfCheckBox);
         Control.AddOptionCheckBox(CVars.AudioMuteUnfocused, MuteUnfocusedCheckBox);
 
+        BuildTtsBlock(); // Corvax-TTS
+
         Control.Initialize();
     }
 

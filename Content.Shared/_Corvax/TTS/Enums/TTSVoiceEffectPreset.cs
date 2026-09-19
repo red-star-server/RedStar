@@ -3,7 +3,7 @@ namespace Content.Shared._Corvax.TTS.Enums;
 /// <summary>
 /// Available voice effect presets for TTS.
 /// </summary>
-public enum TTSVoiceEffectPreset : int
+public enum TTSVoiceEffectPreset
 {
     None = 0, // No effect - classic voice.
     Room = 1,
@@ -11,5 +11,5 @@ public enum TTSVoiceEffectPreset : int
     Void = 3,
     Airlock = 4,
     Warm = 5,
-    Subspace = 6,
+    Subspace = 6
 }

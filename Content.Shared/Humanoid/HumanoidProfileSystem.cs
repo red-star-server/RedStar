@@ -1,3 +1,4 @@
+using Content.Shared._Corvax.TTS.Components;
 using Content.Shared.Examine;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.IdentityManagement;
@@ -10,6 +11,16 @@ namespace Content.Shared.Humanoid;
 public sealed partial class HumanoidProfileSystem : EntitySystem
 {
     [Dependency] private GrammarSystem _grammar = default!;
+
+    // Corvax-TTS-Start
+    public const string DefaultVoice = "Garithos";
+    public static readonly Dictionary<Sex, string> DefaultSexVoice = new()
+    {
+        {Sex.Male, "Garithos"},
+        {Sex.Female, "Maiev"},
+        {Sex.Unsexed, "Myron"},
+    };
+    // Corvax-TTS-End
 
     public override void Initialize()
     {
@@ -28,6 +39,13 @@ public sealed partial class HumanoidProfileSystem : EntitySystem
         ent.Comp.Species = profile.Species;
         ent.Comp.Voice = profile.Voice;
         ent.Comp.Sex = profile.Sex;
+        // Corvax-TTS-start
+        ent.Comp.TTSVoice = profile.TTSVoice;
+        if (TryComp<TTSComponent>(ent, out var _TTSComponent) && _TTSComponent.VoicePrototypeId == "Taskmaster")
+        {
+            _TTSComponent.VoicePrototypeId = profile.TTSVoice;
+        }
+        // Corvax-TTS-end
         Dirty(ent);
 
         var voiceChanged = new VoiceChangedEvent(ent.Comp.Voice, profile.Voice);

@@ -220,6 +220,7 @@ public sealed partial class HumanoidProfileEditor
         RefreshLoadouts();
         UpdateSexControls(); // update sex for new species
         UpdateVoiceControls();
+        UpdateTTSVoicesControls(); // Corvax-TTS
         UpdateSpeciesGuidebookIcon();
         ReloadPreview();
     }
@@ -253,6 +254,7 @@ public sealed partial class HumanoidProfileEditor
 
         UpdateGenderControls();
         UpdateVoiceControls();
+        UpdateTTSVoicesControls(); // Corvax-TTS
         _markingsModel.SetOrganSexes(newSex);
         ReloadPreview();
     }
@@ -260,6 +262,7 @@ public sealed partial class HumanoidProfileEditor
     private void SetVoice(ProtoId<EmoteSoundsPrototype> newVoice)
     {
         Profile = Profile?.WithVoice(newVoice);
+        UpdateTTSVoicesControls(); // Corvax-TTS
         SetDirty();
     }
 

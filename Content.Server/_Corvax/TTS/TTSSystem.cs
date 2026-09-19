@@ -4,6 +4,11 @@ using Content.Server.Communications;
 using Content.Server.Power.Components;
 using Content.Server.Radio.EntitySystems;
 using Content.Server.Station.Systems;
+using Content.Shared._Corvax.CCCVars;
+using Content.Shared._Corvax.TTS;
+using Content.Shared._Corvax.TTS.Components;
+using Content.Shared._Corvax.TTS.Enums;
+using Content.Shared._Corvax.TTS.Events;
 using Content.Shared.Chat;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost.Components;
@@ -82,33 +87,27 @@ public sealed partial class TTSSystem : EntitySystem
 
         // Calm / Reassuring
         "Не волнуйтесь, я контролирую ситуацию, всё будет хорошо.",
-        "Сохраняйте спокойствие, мы уже на подходе к решению.",
+        "Сохраняйте спокойствие, мы уже на подходе к решению."
         // Да я подписал все на английском и чо? Вчіть мову
     };
 
     private static readonly ProtoId<TTSVoicePrototype> AnnouncementSpeaker = "Glados";
     private const int MaxMessageChars = 100 * 2; // same as SingleBubbleCharLimit * 2
     private const float AnnouncementDelay = 2.25f;
-    private bool _isEnabled = false;
+    private bool _isEnabled;
 
     public override void Initialize()
     {
         _cfg.OnValueChanged(CCCVars.TTSEnabled, v => _isEnabled = v, true);
 
-        SubscribeLocalEvent<TransformSpeechEvent>(OnTransformSpeech);
-        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestartCleanup);
-        SubscribeLocalEvent<CommunicationConsoleAnnouncementEvent>(OnConsoleAnnouncement);
-        SubscribeLocalEvent<TTSComponent, EntitySpokeEvent>(OnEntitySpoke,
-            before: [typeof(RadioSystem), typeof(HeadsetSystem)]); // Before the channel is cleared
-
-        SubscribeNetworkEvent<RequestPreviewTTSEvent>(OnRequestPreviewTTS);
-
         RegisterRateLimits();
     }
 
+    [SubscribeLocalEvent]
     private void OnRoundRestartCleanup(RoundRestartCleanupEvent ev)
         => _ttsManager.ResetCache();
 
+    [SubscribeNetworkEvent]
     private async void OnRequestPreviewTTS(RequestPreviewTTSEvent ev, EntitySessionEventArgs args)
     {
         if (!_isEnabled || !ProtoMan.TryIndex<TTSVoicePrototype>(ev.VoiceId, out var protoVoice))
@@ -126,6 +125,7 @@ public sealed partial class TTSSystem : EntitySystem
             recordReplay: false);
     }
 
+    [SubscribeLocalEvent]
     private void OnConsoleAnnouncement(ref CommunicationConsoleAnnouncementEvent ev)
     {
         if (!_isEnabled || string.IsNullOrEmpty(ev.Text))
@@ -194,6 +194,7 @@ public sealed partial class TTSSystem : EntitySystem
         return _stationSystem.GetInStation(station.Comp);
     }
 
+    [SubscribeLocalEvent(before: [typeof(RadioSystem), typeof(HeadsetSystem)])]
     private async void OnEntitySpoke(EntityUid uid, TTSComponent component, EntitySpokeEvent args)
     {
         var voiceId = component.VoicePrototypeId;

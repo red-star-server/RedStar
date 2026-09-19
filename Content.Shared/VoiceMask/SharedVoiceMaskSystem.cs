@@ -17,14 +17,16 @@ public sealed class VoiceMaskBuiState : BoundUserInterfaceState
     public readonly bool Active;
     public readonly bool AccentHide;
     public readonly LocId TitleText;
+    public readonly string TTSVoice; // Corvax-TTS
 
-    public VoiceMaskBuiState(string name, string? verb, bool active, bool accentHide, LocId titleText)
+    public VoiceMaskBuiState(string name, string? verb, bool active, bool accentHide, LocId titleText, string voice) // Corvax-TTS
     {
         Name = name;
         Verb = verb;
         Active = active;
         AccentHide = accentHide;
         TitleText = titleText;
+        TTSVoice = voice;  // Corvax-TTS
     }
 }
 

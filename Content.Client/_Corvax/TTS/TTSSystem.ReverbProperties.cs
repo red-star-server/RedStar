@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared._Corvax.TTS.Enums;
 using Robust.Shared.Audio.Effects;
 
 namespace Content.Client._Corvax.TTS;

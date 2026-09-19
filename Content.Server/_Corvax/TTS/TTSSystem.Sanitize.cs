@@ -7,12 +7,13 @@ namespace Content.Server._Corvax.TTS;
 // ReSharper disable once InconsistentNaming
 public sealed partial class TTSSystem
 {
-    private static readonly Regex RegexInvalidChars = new Regex(@"[^a-zA-Zа-яА-ЯёЁ0-9,\-+?!. ]");
-    private static readonly Regex RegexLatToCyr = new Regex(@"[a-zA-Z]", RegexOptions.Multiline | RegexOptions.IgnoreCase);
-    private static readonly Regex RegexWordBoundary = new Regex(@"(?<![a-zA-Zа-яёА-ЯЁ])[a-zA-Zа-яёА-ЯЁ]+?(?![a-zA-Zа-яёА-ЯЁ])", RegexOptions.Multiline | RegexOptions.IgnoreCase);
-    private static readonly Regex RegexDecimal = new Regex(@"(?<=[1-90])(\.|,)(?=[1-90])");
-    private static readonly Regex RegexDigits = new Regex(@"\d+");
+    private static readonly Regex RegexInvalidChars = new(@"[^a-zA-Zа-яА-ЯёЁ0-9,\-+?!. ]");
+    private static readonly Regex RegexLatToCyr = new(@"[a-zA-Z]", RegexOptions.Multiline | RegexOptions.IgnoreCase);
+    private static readonly Regex RegexWordBoundary = new(@"(?<![a-zA-Zа-яёА-ЯЁ])[a-zA-Zа-яёА-ЯЁ]+?(?![a-zA-Zа-яёА-ЯЁ])", RegexOptions.Multiline | RegexOptions.IgnoreCase);
+    private static readonly Regex RegexDecimal = new(@"(?<=[1-90])(\.|,)(?=[1-90])");
+    private static readonly Regex RegexDigits = new(@"\d+");
 
+    [SubscribeLocalEvent]
     private void OnTransformSpeech(TransformSpeechEvent args)
     {
         if (!_isEnabled) return;
@@ -290,12 +291,9 @@ public static class NumberConverter
         bool male)
     {
         var thousands = (int)(value / power);
-        if (thousands > 0)
-        {
-            AppendWithSpace(str, NumberToText(thousands, male, declension1, declension2, declension5));
-            return value % power;
-        }
-        return value;
+        if (thousands <= 0) return value;
+        AppendWithSpace(str, NumberToText(thousands, male, declension1, declension2, declension5));
+        return value % power;
     }
 
     private static string NumberToText(
@@ -315,16 +313,11 @@ public static class NumberConverter
     {
         var t = (val % 100 > 20) ? val % 10 : val % 20;
 
-        switch (t)
+        return t switch
         {
-            case 1:
-                return one;
-            case 2:
-            case 3:
-            case 4:
-                return two;
-            default:
-                return five;
-        }
+            1 => one,
+            2 or 3 or 4 => two,
+            _ => five
+        };
     }
 }

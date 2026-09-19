@@ -33,6 +33,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Server._Corvax.TTS;
 
 namespace Content.Server.Entry
 {
@@ -77,6 +78,7 @@ namespace Content.Server.Entry
         [Dependency] private ServerInfoManager _serverInfo = default!;
         [Dependency] private ServerUpdateManager _updateManager = default!;
         [Dependency] private ServerFeedbackManager _feedbackManager = null!;
+        [Dependency] private TTSManager _tts = default!; // Corvax-TTS
 
         public override void PreInit()
         {
@@ -133,6 +135,7 @@ namespace Content.Server.Entry
             _watchlistWebhookManager.Initialize();
             _job.Initialize();
             _rateLimit.Initialize();
+            _tts.Initialize(); // Corvax-TTS
         }
 
         public override void PostInit()

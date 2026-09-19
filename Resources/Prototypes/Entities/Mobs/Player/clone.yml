@@ -72,6 +72,8 @@
   - SouthernAccent
   - SpanishAccent
   - StutteringAccent
+  - GrowlingAccent # Corvax
+  - TTS # Corvax-TTS
   eventComponents:
   - Damageable # Sprites and damage modifier
   - Flammable # Displacements

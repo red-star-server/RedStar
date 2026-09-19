@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Content.Server._Corvax.TTS;
@@ -255,6 +255,6 @@ public sealed partial class TTSSystem
         VolumeSoft = 1 << 11,
         VolumeMedium = 1 << 12,
         VolumeLoud = 1 << 13,
-        VolumeXLoud = 1 << 14,
+        VolumeXLoud = 1 << 14
     }
 }

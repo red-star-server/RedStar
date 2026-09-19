@@ -1,3 +1,4 @@
+using Content.Shared._Corvax.TTS.Components;
 using Content.Shared.Actions;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
@@ -119,6 +120,13 @@ public abstract partial class SharedBorgSwitchableTypeSystem : EntitySystem
         {
             footstepModifier.FootstepSoundCollection = prototype.FootstepCollection;
         }
+
+        // Corvax-TTS-start
+        if (TryComp(entity, out TTSComponent? tts))
+        {
+            tts.VoicePrototypeId = prototype.VoicePrototypeId;
+        }
+        // Corvax-TTS-end
 
         if (prototype.SpriteBodyMovementState is { } movementState)
         {

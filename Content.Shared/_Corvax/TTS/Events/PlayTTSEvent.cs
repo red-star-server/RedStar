@@ -1,22 +1,18 @@
-﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared._Corvax.TTS.Events;
 
 [Serializable, NetSerializable]
 // ReSharper disable once InconsistentNaming
-public sealed class PlayTTSEvent : EntityEventArgs
+public sealed class PlayTTSEvent(
+    byte[] data,
+    NetEntity? sourceUid = null,
+    bool isWhisper = false,
+    bool isRadio = false)
+    : EntityEventArgs
 {
-    public byte[] Data { get; }
-    public NetEntity? SourceUid { get; }
-    public bool IsWhisper { get; }
-    public bool IsRadio { get; }
-
-    public PlayTTSEvent(byte[] data, NetEntity? sourceUid = null,
-        bool isWhisper = false, bool isRadio = false)
-    {
-        Data = data;
-        SourceUid = sourceUid;
-        IsWhisper = isWhisper;
-        IsRadio = isRadio;
-    }
+    public byte[] Data { get; } = data;
+    public NetEntity? SourceUid { get; } = sourceUid;
+    public bool IsWhisper { get; } = isWhisper;
+    public bool IsRadio { get; } = isRadio;
 }

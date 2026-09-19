@@ -1,9 +1,10 @@
+using Content.Shared._Corvax.TTS;
 using Content.Shared._Corvax.TTS.Events;
 using Content.Shared.Implants;
 using Content.Shared.Inventory;
 using Content.Shared.VoiceMask;
 
-namespace Content.Server._Corvax.TTS;
+namespace Content.Server.VoiceMask;
 
 public partial class VoiceMaskSystem
 {

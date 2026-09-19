@@ -1,3 +1,4 @@
+using Content.Shared._Corvax.TTS.Enums;
 using Robust.Shared.Audio.Components;
 
 namespace Content.Client._Corvax.TTS;

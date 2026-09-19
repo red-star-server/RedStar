@@ -213,6 +213,7 @@ namespace Content.Server.Database
             profile.FlavorText = humanoid.FlavorText;
             profile.ErpStatus = (int) humanoid.ErpStatus; // RS14
             profile.Species = humanoid.Species;
+            profile.TTSVoice = humanoid.TTSVoice; // Corvax-TTS
             profile.Age = humanoid.Age;
             profile.Sex = humanoid.Sex.ToString();
             profile.Voice = humanoid.Voice.ToString();

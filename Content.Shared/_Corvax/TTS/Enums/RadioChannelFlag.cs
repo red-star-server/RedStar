@@ -1,7 +1,7 @@
 namespace Content.Shared._Corvax.TTS.Enums;
 
 [Flags]
-public enum RadioChannelFlag : int
+public enum RadioChannelFlag
 {
     None = 0,
     Common = 1 << 0,
@@ -29,5 +29,5 @@ public enum RadioChannelFlag : int
     /// <summary>
     /// All channels including Common.
     /// </summary>
-    All = Common | AllExceptCommon,
+    All = Common | AllExceptCommon
 }

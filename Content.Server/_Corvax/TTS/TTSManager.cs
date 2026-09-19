@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Shared._Corvax.CCCVars;
 using Prometheus;
 using Robust.Shared.Configuration;
 
@@ -17,10 +18,10 @@ public sealed partial class TTSManager
     private static readonly Histogram RequestTimings = Metrics.CreateHistogram(
         "tts_req_timings",
         "Timings of TTS API requests",
-        new HistogramConfiguration()
+        new HistogramConfiguration
         {
             LabelNames = new[] { "type" },
-            Buckets = Histogram.ExponentialBuckets(.1, 1.5, 10),
+            Buckets = Histogram.ExponentialBuckets(.1, 1.5, 10)
         });
 
     private static readonly Counter WantedCount = Metrics.CreateCounter(
@@ -77,7 +78,7 @@ public sealed partial class TTSManager
         {
             ApiToken = _apiToken,
             Text = text,
-            Speaker = speaker,
+            Speaker = speaker
         };
 
         var reqTime = DateTime.UtcNow;
@@ -99,7 +100,7 @@ public sealed partial class TTSManager
             }
 
             var json = await response.Content.ReadFromJsonAsync<GenerateVoiceResponse>(cancellationToken: cts.Token);
-            if (json.Results == null || json.Results.Count == 0)
+            if (json.Results.Count == 0)
             {
                 var rawJson = await response.Content.ReadAsStringAsync(cancellationToken: cts.Token);
                 _sawmill.Error($"TTS API returned empty results for '{text}'. Response: {rawJson}");

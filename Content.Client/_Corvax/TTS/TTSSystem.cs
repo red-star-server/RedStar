@@ -1,3 +1,6 @@
+using Content.Shared._Corvax.CCCVars;
+using Content.Shared._Corvax.TTS.Enums;
+using Content.Shared._Corvax.TTS.Events;
 using Content.Shared.Chat;
 using Content.Shared.GameTicking;
 using Robust.Client.Audio;
@@ -47,7 +50,7 @@ public sealed partial class TTSSystem : EntitySystem
     private readonly HashSet<NetEntity> _playingEntities = new();
     private readonly Dictionary<NetEntity, Queue<PlayTTSEvent>> _entityQueues = new();
     private TTSVoiceEffectPreset _voiceEffectPreset = TTSVoiceEffectPreset.None;
-    private int _fileIdx = 0;
+    private int _fileIdx;
 
     public override void Initialize()
     {
@@ -62,9 +65,6 @@ public sealed partial class TTSSystem : EntitySystem
         _cfg.OnValueChanged(CCCVars.TTSVoiceEffect, OnVoiceEffectChanged, true);
         _cfg.OnValueChanged(CCCVars.TTSRadioVolume, OnRadioVolumeChanged, true);
         _cfg.OnValueChanged(CCCVars.TTSVolume, OnVolumeChanged, true);
-
-        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestartCleanup);
-        SubscribeNetworkEvent<PlayTTSEvent>(OnPlayTTS);
     }
 
     public override void Shutdown()
@@ -107,6 +107,7 @@ public sealed partial class TTSSystem : EntitySystem
         _radioVolume = value;
     }
 
+    [SubscribeLocalEvent]
     private void OnRoundRestartCleanup(RoundRestartCleanupEvent ev)
     {
         _entityQueues.Clear();
@@ -120,6 +121,7 @@ public sealed partial class TTSSystem : EntitySystem
         RaiseNetworkEvent(new RequestPreviewTTSEvent(voiceId));
     }
 
+    [SubscribeNetworkEvent]
     private void OnPlayTTS(PlayTTSEvent ev)
     {
         // It will stop clogging up your memory if you turn off one of the sliders to 0
@@ -128,7 +130,8 @@ public sealed partial class TTSSystem : EntitySystem
             _sawmill.Verbose("Radio TTS volume zero, skipping playback");
             return;
         }
-        else if (_volume <= 0)
+
+        if (_volume <= 0)
         {
             _sawmill.Verbose("TTS volume zero, skipping playback");
             return;
@@ -170,7 +173,7 @@ public sealed partial class TTSSystem : EntitySystem
 
     private void ProcessNextInQueueForEntity(NetEntity entityUid)
     {
-        PlayTTSEvent? ev = null;
+        PlayTTSEvent? ev;
 
         lock (_entityQueues)
         {
@@ -187,12 +190,6 @@ public sealed partial class TTSSystem : EntitySystem
 
                 return;
             }
-        }
-
-        if (ev == null)
-        {
-            _playingEntities.Remove(entityUid);
-            return;
         }
 
         try
@@ -226,7 +223,7 @@ public sealed partial class TTSSystem : EntitySystem
 
         var soundSpecifier = new ResolvedPathSpecifier(Prefix / filePath);
 
-        (EntityUid Entity, AudioComponent Component)? audioResult = null;
+        (EntityUid Entity, AudioComponent Component)? audioResult;
 
         try
         {
