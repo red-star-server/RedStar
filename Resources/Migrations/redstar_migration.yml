@@ -81,6 +81,7 @@ ClothingOuterCoatSecurityOvercoat: null
 ClothingEyesBinoclardLenses: null
 ClothingEyesSalesman: null
 ClothingHeadHelmetSecurityMedic: null
+ClothingHeadHatERTLeaderBeret: null
 ClothingOuterCoatDetectiveDark: null
 ClothingUniformJumpskirtHoSBlack: null
 ClothingUniformJumpsuitCapTurtleneck: null
@@ -91,6 +92,7 @@ ClothingUniformJumpskirtSchool: null
 ClothingShoesSchoolBlack: null
 ClothingShoesSchoolWhite: null
 ClothingNeckHorrific: null
+PilotPDA: null
 
 # 2026-09-16
 StationGoalPaper: null
