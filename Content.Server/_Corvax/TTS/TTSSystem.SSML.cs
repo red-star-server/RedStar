@@ -1,4 +1,4 @@
-using System.Text;
+﻿using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Content.Server._Corvax.TTS;
@@ -32,7 +32,7 @@ public sealed partial class TTSSystem
     /// <summary>
     /// Converts text into valid SSML with pauses and emphasis.
     /// </summary>
-    private string ToSsmlText(string text, SoundTraits traits = SoundTraits.None)
+    private static string ToSsmlText(string text, SoundTraits traits = SoundTraits.None)
     {
         text = XmlEscape(text);
         text = InsertPauses(text);
@@ -45,7 +45,7 @@ public sealed partial class TTSSystem
             : $"<speak>{text}</speak>";
     }
 
-    private string XmlEscape(string text)
+    private static string XmlEscape(string text)
     {
         return text.Replace("&", "&amp;")
                    .Replace("<", "&lt;")
@@ -54,64 +54,24 @@ public sealed partial class TTSSystem
                    .Replace("'", "&apos;");
     }
 
-    private string InsertPauses(string text)
+    private static string InsertPauses(string text)
     {
         var sb = new StringBuilder();
-        int i = 0;
+        var i = 0;
 
         while (i < text.Length)
         {
-            char c = text[i];
+            var c = text[i];
 
-            if (c == '!')
+            if (c is '!' or '?')
             {
-                int count = 0;
-                while (i < text.Length && text[i] == '!')
+                while (i < text.Length && text[i] is '!' or '?')
                 {
-                    count++;
+                    sb.Append(text[i]);
                     i++;
                 }
-                sb.Append(new string('!', count));
 
-                if (i < text.Length && text[i] == ' ' && i + 1 < text.Length && !char.IsWhiteSpace(text[i + 1]))
-                    sb.Append(" <break time=\"400ms\"/> ");
-
-                continue;
-            }
-
-            if (c == '?')
-            {
-                int count = 0;
-                while (i < text.Length && text[i] == '?')
-                {
-                    count++;
-                    i++;
-                }
-                sb.Append(new string('?', count));
-
-                if (i < text.Length && text[i] == ' ' && i + 1 < text.Length && !char.IsWhiteSpace(text[i + 1]))
-                    sb.Append(" <break time=\"400ms\"/> ");
-
-                continue;
-            }
-
-            if (c == '?' && i + 1 < text.Length && text[i + 1] == '!')
-            {
-                sb.Append("?!");
-                i += 2;
-
-                if (i < text.Length && text[i] == ' ' && i + 1 < text.Length && !char.IsWhiteSpace(text[i + 1]))
-                    sb.Append(" <break time=\"400ms\"/> ");
-
-                continue;
-            }
-
-            if (c == '!' && i + 1 < text.Length && text[i + 1] == '?')
-            {
-                sb.Append("!?");
-                i += 2;
-
-                if (i < text.Length && text[i] == ' ' && i + 1 < text.Length && !char.IsWhiteSpace(text[i + 1]))
+                if (HasFollowingText(text, i))
                     sb.Append(" <break time=\"400ms\"/> ");
 
                 continue;
@@ -122,7 +82,7 @@ public sealed partial class TTSSystem
                 sb.Append("...");
                 i += 3;
 
-                if (i < text.Length && text[i] == ' ' && i + 1 < text.Length && !char.IsWhiteSpace(text[i + 1]))
+                if (HasFollowingText(text, i))
                     sb.Append(" <break time=\"500ms\"/> ");
 
                 continue;
@@ -136,36 +96,40 @@ public sealed partial class TTSSystem
                 {
                     // Nothing
                 }
-                else if (i + 1 < text.Length && text[i + 1] == ' ' && i + 2 < text.Length && !char.IsWhiteSpace(text[i + 2]))
+                else if (HasFollowingText(text, i + 1))
                 {
                     sb.Append(" <break time=\"300ms\"/> ");
                 }
             }
-            else if (c == ',')
+            else if (c == ',' && i + 1 < text.Length && text[i + 1] == ' ')
             {
-                if (i + 1 < text.Length && text[i + 1] == ' ')
-                    sb.Append(" <break time=\"80ms\"/> ");
+                sb.Append(" <break time=\"80ms\"/> ");
             }
-            else if (c == ';')
+            else if (c == ';' && i + 1 < text.Length && text[i + 1] == ' ')
             {
-                if (i + 1 < text.Length && text[i + 1] == ' ')
-                    sb.Append(" <break time=\"120ms\"/> ");
+                sb.Append(" <break time=\"120ms\"/> ");
             }
-            else if (c == ':')
+            else if (c == ':' && i + 1 < text.Length && text[i + 1] == ' ')
             {
-                if (i + 1 < text.Length && text[i + 1] == ' ')
-                    sb.Append(" <break time=\"100ms\"/> ");
+                sb.Append(" <break time=\"100ms\"/> ");
             }
 
             i++;
         }
 
-        var result = sb.ToString();
-        result = WhitespaceRegex.Replace(result, " ");
+        var result = WhitespaceRegex.Replace(sb.ToString(), " ");
         return result.Trim();
     }
 
-    private string InsertEmphasis(string text)
+    private static bool HasFollowingText(string text, int index)
+    {
+        return index < text.Length &&
+               text[index] == ' ' &&
+               index + 1 < text.Length &&
+               !char.IsWhiteSpace(text[index + 1]);
+    }
+
+    private static string InsertEmphasis(string text)
     {
         text = UpperCaseWordRegex.Replace(text, m =>
         {
@@ -194,7 +158,7 @@ public sealed partial class TTSSystem
         return text;
     }
 
-    private string BuildProsodyAttributes(SoundTraits traits)
+    private static string BuildProsodyAttributes(SoundTraits traits)
     {
         var attrs = new List<string>();
 

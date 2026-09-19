@@ -91,6 +91,10 @@ public sealed partial class TTSSystem : EntitySystem
     };
 
     private static readonly ProtoId<TTSVoicePrototype> AnnouncementSpeaker = "Glados";
+
+    private const SoundTraits NormalTraits = SoundTraits.RateFast | SoundTraits.PitchMedium;
+    private const SoundTraits WhisperTraits = SoundTraits.RateSlow | SoundTraits.PitchVerylow | SoundTraits.VolumeXSoft;
+
     private const int MaxMessageChars = 100 * 2; // same as SingleBubbleCharLimit * 2
     private const float AnnouncementDelay = 2.25f;
     private bool _isEnabled;
@@ -99,10 +103,22 @@ public sealed partial class TTSSystem : EntitySystem
     {
         base.Initialize();
 
-        _cfg.OnValueChanged(CCCVars.TTSEnabled, v => _isEnabled = v, true);
+        _cfg.OnValueChanged(CCCVars.TTSEnabled, OnTTSEnabledChanged, true);
 
         InitializeSanitize();
         RegisterRateLimits();
+    }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+
+        _cfg.UnsubValueChanged(CCCVars.TTSEnabled, OnTTSEnabledChanged);
+    }
+
+    private void OnTTSEnabledChanged(bool value)
+    {
+        _isEnabled = value;
     }
 
     [SubscribeLocalEvent]
@@ -119,8 +135,8 @@ public sealed partial class TTSSystem : EntitySystem
             return;
 
         var previewText = _rng.Pick(_sampleText);
-        var soundData = await GenerateTTS(previewText, protoVoice.Speaker);
-        if (soundData is null)
+        var soundData = await GenerateTTS(previewText, protoVoice.Speaker, NormalTraits);
+        if (soundData is null || !_isEnabled)
             return;
 
         RaiseNetworkEvent(new PlayTTSEvent(soundData, kind: TTSKind.Preview),
@@ -162,17 +178,7 @@ public sealed partial class TTSSystem : EntitySystem
     private async void HandleConsoleAnnouncement(string text, string speaker,
         SoundSpecifier sound, EntityUid station)
     {
-        var textSanitized = Sanitize(text);
-        if (string.IsNullOrEmpty(textSanitized))
-            return;
-
-        if (char.IsLetter(textSanitized[^1]))
-            textSanitized += ".";
-
-        var ssmlTraits = SoundTraits.RateFast | SoundTraits.PitchMedium;
-        var textSsml = ToSsmlText(textSanitized, ssmlTraits);
-
-        var soundData = await _ttsManager.ConvertTextToSpeech(speaker, textSsml);
+        var soundData = await GenerateTTS(text, speaker, NormalTraits);
         if (soundData is null)
             return;
 
@@ -180,6 +186,9 @@ public sealed partial class TTSSystem : EntitySystem
 
         Timer.Spawn(TimeSpan.FromSeconds(timeDelay), () =>
         {
+            if (!_isEnabled || TerminatingOrDeleted(station))
+                return;
+
             var filter = GetStationFilter(station);
             if (filter == null)
                 return;
@@ -240,8 +249,9 @@ public sealed partial class TTSSystem : EntitySystem
 
     private async void HandleSay(EntityUid uid, string message, string speaker, RadioChannelPrototype? channel)
     {
-        var soundData = await GenerateTTS(message, speaker);
-        if (soundData is null) return;
+        var soundData = await GenerateTTS(message, speaker, NormalTraits);
+        if (soundData is null || TerminatingOrDeleted(uid))
+            return;
 
         RaiseNetworkEvent(new PlayTTSEvent(soundData, GetNetEntity(uid)), Filter.Pvs(uid),
             recordReplay: false);
@@ -253,8 +263,9 @@ public sealed partial class TTSSystem : EntitySystem
     private async void HandleWhisper(EntityUid uid, string message, string speaker,
         RadioChannelPrototype? channel)
     {
-        var fullSoundData = await GenerateTTS(message, speaker, true);
-        if (fullSoundData is null) return;
+        var fullSoundData = await GenerateTTS(message, speaker, WhisperTraits);
+        if (fullSoundData is null || TerminatingOrDeleted(uid))
+            return;
 
         // I never saw the point of voicing just four or five letters in a long message, only to get a jumbled mess in response.
         // Response "~ ~~~~ ~~~ пыр-~ы~-~~~" this is the most useless waste of money I've ever seen.
@@ -370,7 +381,7 @@ public sealed partial class TTSSystem : EntitySystem
     }
 
     // ReSharper disable once InconsistentNaming
-    private async Task<byte[]?> GenerateTTS(string text, string speaker, bool isWhisper = false)
+    private async Task<byte[]?> GenerateTTS(string text, string speaker, SoundTraits traits)
     {
         var textSanitized = Sanitize(text);
         if (textSanitized == "")
@@ -379,18 +390,7 @@ public sealed partial class TTSSystem : EntitySystem
         if (char.IsLetter(textSanitized[^1]))
             textSanitized += ".";
 
-        SoundTraits ssmlTraits;
-
-        if (isWhisper)
-        {
-            ssmlTraits = SoundTraits.RateSlow | SoundTraits.PitchVerylow | SoundTraits.VolumeXSoft;
-        }
-        else
-        {
-            ssmlTraits = SoundTraits.RateFast | SoundTraits.PitchMedium;
-        }
-
-        var textSsml = ToSsmlText(textSanitized, ssmlTraits);
+        var textSsml = ToSsmlText(textSanitized, traits);
         return await _ttsManager.ConvertTextToSpeech(speaker, textSsml);
     }
 }

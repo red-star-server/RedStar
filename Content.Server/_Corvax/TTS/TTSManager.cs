@@ -20,7 +20,7 @@ public sealed partial class TTSManager
         "Timings of TTS API requests",
         new HistogramConfiguration
         {
-            LabelNames = new[] { "type" },
+            LabelNames = ["type"],
             Buckets = Histogram.ExponentialBuckets(.1, 1.5, 10)
         });
 
@@ -88,24 +88,49 @@ public sealed partial class TTSManager
 
         _cfg.OnValueChanged(CCCVars.TTSMaxCache, val =>
         {
-            _maxCachedCount = val;
+            lock (_lock)
+            {
+                _maxCachedCount = Math.Max(0, val);
+                TrimCacheLocked();
+            }
+        }, true);
+
+        _cfg.OnValueChanged(CCCVars.TTSApiUrl, v =>
+        {
+            if (_apiUrl == v)
+                return;
+
+            _apiUrl = v;
             ResetCache();
         }, true);
 
-        _cfg.OnValueChanged(CCCVars.TTSApiUrl, v => _apiUrl = v, true);
         _cfg.OnValueChanged(CCCVars.TTSApiToken, v => _apiToken = v, true);
         _cfg.OnValueChanged(CCCVars.TTSMaxConcurrentRequests, v => _maxConcurrent = Math.Max(1, v), true);
         _cfg.OnValueChanged(CCCVars.TTSMaxQueuedRequests, v => _maxQueued = Math.Max(0, v), true);
-        _cfg.OnValueChanged(CCCVars.TTSCircuitBreakerFailures, v => _breakerFailures = v, true);
-        _cfg.OnValueChanged(CCCVars.TTSCircuitBreakerCooldown, v => _breakerCooldown = v, true);
+        _cfg.OnValueChanged(CCCVars.TTSCircuitBreakerFailures, v =>
+        {
+            lock (_lock)
+            {
+                _breakerFailures = Math.Max(0, v);
+
+                if (_breakerFailures == 0)
+                {
+                    _consecutiveFailures = 0;
+                    _circuit = CircuitState.Closed;
+                }
+            }
+        }, true);
+        _cfg.OnValueChanged(CCCVars.TTSCircuitBreakerCooldown,
+            v => _breakerCooldown = Math.Max(0f, v),
+            true);
     }
 
     /// <summary>
-    /// Generates audio with passed text by API
+    /// Generates audio with passed text by API.
     /// </summary>
-    /// <param name="speaker">Identifier of speaker</param>
-    /// <param name="text">SSML formatted text</param>
-    /// <returns>OGG audio bytes or null if failed</returns>
+    /// <param name="speaker">Identifier of speaker.</param>
+    /// <param name="text">SSML formatted text.</param>
+    /// <returns>OGG audio bytes or null if failed.</returns>
     public Task<byte[]?> ConvertTextToSpeech(string speaker, string text)
     {
         WantedCount.Inc();
@@ -206,6 +231,7 @@ public sealed partial class TTSManager
         };
 
         var reqTime = DateTime.UtcNow;
+
         try
         {
             using var response = await _httpClient.PostAsJsonAsync(_apiUrl, body, ct);
@@ -243,33 +269,45 @@ public sealed partial class TTSManager
 
             lock (_lock)
             {
-                if (_cache.TryAdd(cacheKey, soundData))
+                if (_maxCachedCount > 0 && _cache.TryAdd(cacheKey, soundData))
                 {
                     _cacheOrder.Enqueue(cacheKey);
-                    while (_cache.Count > _maxCachedCount && _cacheOrder.TryDequeue(out var oldest))
-                    {
-                        _cache.Remove(oldest);
-                    }
+                    TrimCacheLocked();
                 }
             }
 
-            _sawmill.Debug($"Generated new audio for '{text}' speech by '{speaker}' speaker ({soundData.Length} bytes)");
-            RequestTimings.WithLabels("Success").Observe((DateTime.UtcNow - reqTime).TotalSeconds);
+            _sawmill.Debug(
+                $"Generated new audio for '{text}' speech by '{speaker}' speaker ({soundData.Length} bytes)");
+
+            RequestTimings
+                .WithLabels("Success")
+                .Observe((DateTime.UtcNow - reqTime).TotalSeconds);
+
             ReportSuccess();
 
             return soundData;
         }
         catch (OperationCanceledException)
         {
-            RequestTimings.WithLabels("Timeout").Observe((DateTime.UtcNow - reqTime).TotalSeconds);
-            _sawmill.Error($"Timeout of request generation new audio for '{text}' speech by '{speaker}' speaker");
+            RequestTimings
+                .WithLabels("Timeout")
+                .Observe((DateTime.UtcNow - reqTime).TotalSeconds);
+
+            _sawmill.Error(
+                $"Timeout of request generation new audio for '{text}' speech by '{speaker}' speaker");
+
             ReportFailure();
             return null;
         }
         catch (Exception e)
         {
-            RequestTimings.WithLabels("Error").Observe((DateTime.UtcNow - reqTime).TotalSeconds);
-            _sawmill.Error($"Failed of request generation new sound for '{text}' speech by '{speaker}' speaker\n{e}");
+            RequestTimings
+                .WithLabels("Error")
+                .Observe((DateTime.UtcNow - reqTime).TotalSeconds);
+
+            _sawmill.Error(
+                $"Failed of request generation new sound for '{text}' speech by '{speaker}' speaker\n{e}");
+
             ReportFailure();
             return null;
         }
@@ -284,9 +322,17 @@ public sealed partial class TTSManager
         }
     }
 
+    private void TrimCacheLocked()
+    {
+        while (_cache.Count > _maxCachedCount && _cacheOrder.TryDequeue(out var oldest))
+        {
+            _cache.Remove(oldest);
+        }
+    }
+
     private async Task<bool> TryEnterAsync(CancellationToken ct)
     {
-        TaskCompletionSource<bool>? waiter = null;
+        TaskCompletionSource<bool>? waiter;
 
         lock (_lock)
         {
@@ -330,68 +376,93 @@ public sealed partial class TTSManager
 
     private bool IsCircuitBlocking()
     {
-        if (_breakerFailures <= 0)
-            return false;
-
-        return _circuit switch
+        lock (_lock)
         {
-            CircuitState.Open => DateTime.UtcNow - _circuitOpenedAt < TimeSpan.FromSeconds(_breakerCooldown),
-            CircuitState.HalfOpen => true,
-            _ => false
-        };
+            if (_breakerFailures <= 0)
+                return false;
+
+            return _circuit switch
+            {
+                CircuitState.Open =>
+                    DateTime.UtcNow - _circuitOpenedAt < TimeSpan.FromSeconds(_breakerCooldown),
+                CircuitState.HalfOpen => true,
+                _ => false
+            };
+        }
     }
 
     private bool TryPassCircuitBreaker()
     {
-        if (_breakerFailures <= 0)
-            return true;
-
-        switch (_circuit)
+        lock (_lock)
         {
-            case CircuitState.Closed:
+            if (_breakerFailures <= 0)
                 return true;
 
-            case CircuitState.Open:
-                if (DateTime.UtcNow - _circuitOpenedAt < TimeSpan.FromSeconds(_breakerCooldown))
+            switch (_circuit)
+            {
+                case CircuitState.Closed:
+                    return true;
+
+                case CircuitState.Open:
+                    if (DateTime.UtcNow - _circuitOpenedAt < TimeSpan.FromSeconds(_breakerCooldown))
+                        return false;
+
+                    _circuit = CircuitState.HalfOpen;
+                    _sawmill.Info("TTS circuit breaker is probing the service");
+                    return true;
+
+                case CircuitState.HalfOpen:
                     return false;
 
-                _circuit = CircuitState.HalfOpen;
-                _sawmill.Info("TTS circuit breaker is probing the service");
-                return true;
-
-            case CircuitState.HalfOpen:
-                return false;
-
-            default:
-                return true;
+                default:
+                    return true;
+            }
         }
     }
 
     private void ReportSuccess()
     {
-        _consecutiveFailures = 0;
+        var recovered = false;
 
-        if (_circuit == CircuitState.Closed)
-            return;
+        lock (_lock)
+        {
+            _consecutiveFailures = 0;
 
-        _circuit = CircuitState.Closed;
-        _sawmill.Info("TTS circuit breaker is closed, service responds again");
+            if (_circuit != CircuitState.Closed)
+            {
+                _circuit = CircuitState.Closed;
+                recovered = true;
+            }
+        }
+
+        if (recovered)
+            _sawmill.Info("TTS circuit breaker is closed, service responds again");
     }
 
     private void ReportFailure()
     {
-        if (_breakerFailures <= 0)
-            return;
+        float cooldown;
 
-        _consecutiveFailures++;
+        lock (_lock)
+        {
+            if (_breakerFailures <= 0)
+                return;
 
-        if (_circuit != CircuitState.HalfOpen && _consecutiveFailures < _breakerFailures)
-            return;
+            _consecutiveFailures++;
 
-        _circuit = CircuitState.Open;
-        _circuitOpenedAt = DateTime.UtcNow;
+            if (_circuit != CircuitState.HalfOpen &&
+                _consecutiveFailures < _breakerFailures)
+            {
+                return;
+            }
+
+            _circuit = CircuitState.Open;
+            _circuitOpenedAt = DateTime.UtcNow;
+            cooldown = _breakerCooldown;
+        }
+
         CircuitOpenCount.Inc();
-        _sawmill.Warning($"TTS service is unavailable, dropping requests for {_breakerCooldown} seconds");
+        _sawmill.Warning($"TTS service is unavailable, dropping requests for {cooldown} seconds");
     }
 
     private static string GenerateCacheKey(string speaker, string text)
