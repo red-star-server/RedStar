@@ -1,3 +1,4 @@
+using Content.Shared._Corvax.TTS.Events;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
@@ -48,6 +49,13 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         SubscribeLocalEvent<VoiceMaskComponent, ImplantRelayEvent<TransformSpeakerNameEvent>>(OnTransformSpeakerNameImplant);
         SubscribeLocalEvent<VoiceMaskComponent, TransformSpeakerNameEvent>(OnInnateTransformSpeakerName);
 
+        // RS14-start
+        // Transform TTS voice events
+        SubscribeLocalEvent<VoiceMaskComponent, InventoryRelayedEvent<TransformSpeakerVoiceEvent>>(OnTransformSpeakerVoiceInventory);
+        SubscribeLocalEvent<VoiceMaskComponent, ImplantRelayEvent<TransformSpeakerVoiceEvent>>(OnTransformSpeakerVoiceImplant);
+        SubscribeLocalEvent<VoiceMaskComponent, TransformSpeakerVoiceEvent>(OnInnateTransformSpeakerVoice);
+        // RS14-end
+
         // See identity attempt events
         SubscribeLocalEvent<VoiceMaskComponent, ImplantRelayEvent<SeeIdentityAttemptEvent>>(OnSeeIdentityAttemptEvent);
         SubscribeLocalEvent<VoiceMaskComponent, SeeIdentityAttemptEvent>(OnInnateSeeIdentityAttemptEvent);
@@ -68,6 +76,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         SubscribeLocalEvent<VoiceMaskComponent, LockToggledEvent>(OnLockToggled);
         SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskChangeNameMessage>(OnChangeName);
         SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskChangeVerbMessage>(OnChangeVerb);
+        SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskChangeVoiceMessage>(OnChangeVoice); // RS14
         SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskToggleMessage>(OnToggle);
         SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskAccentToggleMessage>(OnAccentToggle);
         SubscribeLocalEvent<VoiceMaskComponent, ClothingGotEquippedEvent>(OnEquip);
@@ -150,6 +159,23 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         TransformVoice(entity, args.Args);
     }
 
+    // RS14-start
+    private void OnInnateTransformSpeakerVoice(EntityUid uid, VoiceMaskComponent component, TransformSpeakerVoiceEvent args)
+    {
+        TransformTTSVoice(component, args);
+    }
+
+    private void OnTransformSpeakerVoiceInventory(EntityUid uid, VoiceMaskComponent component, InventoryRelayedEvent<TransformSpeakerVoiceEvent> args)
+    {
+        TransformTTSVoice(component, args.Args);
+    }
+
+    private void OnTransformSpeakerVoiceImplant(EntityUid uid, VoiceMaskComponent component, ImplantRelayEvent<TransformSpeakerVoiceEvent> args)
+    {
+        TransformTTSVoice(component, args.Args);
+    }
+    // RS14-end
+
     private void OnInnateSeeIdentityAttemptEvent(Entity<VoiceMaskComponent> entity, ref SeeIdentityAttemptEvent args)
     {
         if (!entity.Comp.OverrideIdentity || !entity.Comp.Active || !entity.Comp.IsInnate)
@@ -198,6 +224,20 @@ public sealed partial class VoiceMaskSystem : EntitySystem
 
         UpdateUI(entity);
     }
+
+    // RS14-start
+    private void OnChangeVoice(Entity<VoiceMaskComponent> entity, ref VoiceMaskChangeVoiceMessage msg)
+    {
+        if (!ProtoMan.HasIndex(msg.Voice))
+            return;
+
+        entity.Comp.VoiceId = msg.Voice;
+
+        _popupSystem.PopupEntity(Loc.GetString("voice-mask-voice-popup-success"), entity);
+
+        UpdateUI(entity);
+    }
+    // RS14-end
 
     private void OnChangeName(Entity<VoiceMaskComponent> entity, ref VoiceMaskChangeNameMessage message)
     {
@@ -270,7 +310,11 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     private void UpdateUI(Entity<VoiceMaskComponent> entity)
     {
         if (_uiSystem.HasUi(entity, VoiceMaskUIKey.Key))
-            _uiSystem.SetUiState(entity.Owner, VoiceMaskUIKey.Key, new VoiceMaskBuiState(GetCurrentVoiceName(entity), entity.Comp.VoiceMaskSpeechVerb, entity.Comp.Active, entity.Comp.AccentHide, entity.Comp.TitleText, entity.Comp.VoiceId)); //entity.Comp.VoiceId Corvax-TTS
+        {
+            // RS14-start
+            _uiSystem.SetUiState(entity.Owner, VoiceMaskUIKey.Key, new VoiceMaskBuiState(GetCurrentVoiceName(entity), entity.Comp.VoiceMaskSpeechVerb, entity.Comp.Active, entity.Comp.AccentHide, entity.Comp.TitleText, entity.Comp.VoiceId));
+            // RS14-end
+        }
     }
     #endregion
 
@@ -288,6 +332,16 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         args.VoiceName = GetCurrentVoiceName(entity);
         args.SpeechVerb = entity.Comp.VoiceMaskSpeechVerb ?? args.SpeechVerb;
     }
+
+    // RS14-start
+    private static void TransformTTSVoice(VoiceMaskComponent component, TransformSpeakerVoiceEvent args)
+    {
+        if (!component.Active)
+            return;
+
+        args.VoiceId = component.VoiceId;
+    }
+    // RS14-end
     #endregion
 }
 

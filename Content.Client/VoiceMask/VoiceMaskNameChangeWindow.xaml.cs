@@ -41,7 +41,9 @@ public sealed partial class VoiceMaskNameChangeWindow : FancyWindow
         ToggleAccentButton.OnPressed += args => OnAccentToggle?.Invoke();
 
         // Corvax-TTS-Start
-        if (!IoCManager.Resolve<IConfigurationManager>().GetCVar(CCCVars.TTSEnabled)) return;
+        if (!IoCManager.Resolve<IConfigurationManager>().GetCVar(CCCVars.TTSEnabled))
+            return;
+
         TTSContainer.Visible = true;
         ReloadVoices(IoCManager.Resolve<IPrototypeManager>());
         // Corvax-TTS-End
@@ -84,19 +86,24 @@ public sealed partial class VoiceMaskNameChangeWindow : FancyWindow
         VoiceSelector.OnItemSelected += args =>
         {
             VoiceSelector.SelectId(args.Id);
-            if (VoiceSelector.SelectedMetadata is string voice)
-                OnVoiceChange!(voice);
+
+            if (VoiceSelector.SelectedMetadata is ProtoId<TTSVoicePrototype> voice)
+                OnVoiceChange?.Invoke(voice);
         };
+
         _voices = proto
             .EnumeratePrototypes<TTSVoicePrototype>()
-            .Where(o => o.RoundStart)
-            .OrderBy(o => Loc.GetString(o.Name))
+            .Where(voice => voice.RoundStart)
+            .OrderBy(voice => Loc.GetString(voice.Name))
             .ToList();
+
         for (var i = 0; i < _voices.Count; i++)
         {
-            var name = Loc.GetString(_voices[i].Name);
+            var voice = _voices[i];
+            var name = Loc.GetString(voice.Name);
+
             VoiceSelector.AddItem(name);
-            VoiceSelector.SetItemMetadata(i, _voices[i].ID);
+            VoiceSelector.SetItemMetadata(i, new ProtoId<TTSVoicePrototype>(voice.ID));
         }
     }
     // Corvax-TTS-End
@@ -108,7 +115,7 @@ public sealed partial class VoiceMaskNameChangeWindow : FancyWindow
         ToggleButton.Pressed = active;
         ToggleAccentButton.Pressed = accentHide;
         Title = Loc.GetString(titleText);
-        for (int id = 0; id < SpeechVerbSelector.ItemCount; id++)
+        for (var id = 0; id < SpeechVerbSelector.ItemCount; id++)
         {
             if (string.Equals(verb, SpeechVerbSelector.GetItemMetadata(id)))
             {

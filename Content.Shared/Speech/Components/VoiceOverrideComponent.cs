@@ -1,3 +1,4 @@
+using Content.Shared._Corvax.TTS;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -26,6 +27,14 @@ public sealed partial class VoiceOverrideComponent : Component
     /// </summary>
     [DataField]
     public ProtoId<SpeechVerbPrototype>? SpeechVerbOverride;
+
+    // Corax-TTS-start
+    /// <summary>
+    ///     TTS voice that will be used instead of the entity's default one.
+    /// </summary>
+    [DataField]
+    public ProtoId<TTSVoicePrototype>? TTSVoiceOverride;
+    // Corax-TTS-end
 
     /// <summary>
     ///     If true, the override values (if they are not null) will be applied.

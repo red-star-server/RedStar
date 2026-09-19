@@ -21,14 +21,14 @@ public sealed class VoiceMaskBuiState : BoundUserInterfaceState
     public readonly LocId TitleText;
     public readonly ProtoId<TTSVoicePrototype> TTSVoice; // Corvax-TTS
 
-    public VoiceMaskBuiState(string name, string? verb, bool active, bool accentHide, LocId titleText, string voice) // Corvax-TTS
+    public VoiceMaskBuiState(string name, string? verb, bool active, bool accentHide, LocId titleText, ProtoId<TTSVoicePrototype> ttsVoice) // Corvax-TTS
     {
         Name = name;
         Verb = verb;
         Active = active;
         AccentHide = accentHide;
         TitleText = titleText;
-        TTSVoice = voice;  // Corvax-TTS
+        TTSVoice = ttsVoice; // Corvax-TTS
     }
 }
 
