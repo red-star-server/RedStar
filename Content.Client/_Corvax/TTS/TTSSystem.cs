@@ -54,12 +54,14 @@ public sealed partial class TTSSystem : EntitySystem
     private readonly Dictionary<NetEntity, Queue<PlayTTSEvent>> _entityQueues = new();
     private Dictionary<string, float> _channelVolumes = new();
     private TTSVoiceEffectPreset _voiceEffectPreset = TTSVoiceEffectPreset.None;
+    private EntityUid? _previewStream;
     private bool _ttsEnabled;
     private int _fileIdx;
 
     public override void Initialize()
     {
         base.Initialize();
+
         if (!_contentRootAdded)
         {
             _contentRootAdded = true;
@@ -87,6 +89,7 @@ public sealed partial class TTSSystem : EntitySystem
         _entityQueues.Clear();
         _playingEntities.Clear();
 
+        StopPreview();
         ShutdownEffects();
     }
 
@@ -95,7 +98,10 @@ public sealed partial class TTSSystem : EntitySystem
         _ttsEnabled = value;
 
         if (!value)
+        {
+            StopPreview();
             ShutdownEffects();
+        }
     }
 
     private void OnVoiceEffectChanged(int newValue)
@@ -125,6 +131,7 @@ public sealed partial class TTSSystem : EntitySystem
         _entityQueues.Clear();
         _playingEntities.Clear();
 
+        StopPreview();
         ShutdownEffects();
     }
 
@@ -180,9 +187,7 @@ public sealed partial class TTSSystem : EntitySystem
         }
 
         if (!_playingEntities.Contains(sourceUid))
-        {
             ProcessNextInQueueForEntity(sourceUid);
-        }
     }
 
     private void ProcessNextInQueueForEntity(NetEntity entityUid)
@@ -199,6 +204,7 @@ public sealed partial class TTSSystem : EntitySystem
             else
             {
                 _playingEntities.Remove(entityUid);
+
                 if (queue != null && queue.Count == 0)
                     _entityQueues.Remove(entityUid);
 
@@ -261,6 +267,7 @@ public sealed partial class TTSSystem : EntitySystem
             else if (ev.SourceUid != null)
             {
                 var sourceUid = GetEntity(ev.SourceUid.Value);
+
                 if (TerminatingOrDeleted(sourceUid))
                 {
                     onComplete?.Invoke();
@@ -268,18 +275,22 @@ public sealed partial class TTSSystem : EntitySystem
                 }
 
                 audioResult = _audio.PlayEntity(audioResource.AudioStream, sourceUid, soundSpecifier, audioParams);
+
                 if (audioResult != null && _voiceEffectPreset != 0)
-                {
                     ApplyVoiceEffect(audioResult.Value, _voiceEffectPreset);
-                }
             }
             else
             {
+                if (ev.Kind == TTSKind.Preview)
+                    StopPreview();
+
                 audioResult = _audio.PlayGlobal(audioResource.AudioStream, soundSpecifier, audioParams);
+
+                if (ev.Kind == TTSKind.Preview)
+                    _previewStream = audioResult?.Entity;
+
                 if (audioResult != null && _voiceEffectPreset != 0)
-                {
                     ApplyVoiceEffect(audioResult.Value, _voiceEffectPreset);
-                }
             }
         }
         finally
@@ -311,6 +322,15 @@ public sealed partial class TTSSystem : EntitySystem
             .WithVariation(0.04f);
 
         _audio.PlayGlobal(audioResource.AudioStream, soundSpecifier, secondParams);
+    }
+
+    private void StopPreview()
+    {
+        if (_previewStream == null)
+            return;
+
+        _audio.Stop(_previewStream);
+        _previewStream = null;
     }
 
     #region Utility Methods
