@@ -11,6 +11,7 @@ using Content.Shared._Corvax.TTS.Events;
 using Content.Shared.Chat;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost.Components;
+using Content.Shared.Humanoid;
 using Content.Shared.Players.RateLimiting;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
@@ -201,7 +202,11 @@ public sealed partial class TTSSystem : EntitySystem
     private void OnEntitySpoke(EntityUid uid, TTSComponent component, EntitySpokeEvent args)
     {
         var voiceId = component.VoicePrototypeId;
-        if (!_isEnabled || string.IsNullOrEmpty(voiceId))
+
+        if (voiceId == null && TryComp<HumanoidProfileComponent>(uid, out var humanoid))
+            voiceId = humanoid.TTSVoice;
+
+        if (!_isEnabled || voiceId == null)
             return;
 
         if (args.Message.Length > MaxMessageChars)

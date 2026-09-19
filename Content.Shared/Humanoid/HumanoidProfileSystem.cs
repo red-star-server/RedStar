@@ -1,4 +1,3 @@
-using Content.Shared._Corvax.TTS.Components;
 using Content.Shared.Examine;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.IdentityManagement;
@@ -39,13 +38,7 @@ public sealed partial class HumanoidProfileSystem : EntitySystem
         ent.Comp.Species = profile.Species;
         ent.Comp.Voice = profile.Voice;
         ent.Comp.Sex = profile.Sex;
-        // Corvax-TTS-start
-        ent.Comp.TTSVoice = profile.TTSVoice;
-        if (TryComp<TTSComponent>(ent, out var _TTSComponent) && _TTSComponent.VoicePrototypeId == "Taskmaster")
-        {
-            _TTSComponent.VoicePrototypeId = profile.TTSVoice;
-        }
-        // Corvax-TTS-end
+        ent.Comp.TTSVoice = profile.TTSVoice; // Corvax-TTS
         Dirty(ent);
 
         var voiceChanged = new VoiceChangedEvent(ent.Comp.Voice, profile.Voice);

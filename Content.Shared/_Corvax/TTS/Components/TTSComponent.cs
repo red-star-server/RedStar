@@ -12,7 +12,8 @@ public sealed partial class TTSComponent : Component
 {
     /// <summary>
     /// Prototype of used voice for TTS.
+    /// If null, the humanoid profile voice is used.
     /// </summary>
     [DataField("voice")]
-    public ProtoId<TTSVoicePrototype>? VoicePrototypeId { get; set; } = "Taskmaster";
+    public ProtoId<TTSVoicePrototype>? VoicePrototypeId { get; set; }
 }
