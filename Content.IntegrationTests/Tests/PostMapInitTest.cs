@@ -69,6 +69,12 @@ namespace Content.IntegrationTests.Tests
             {"/Maps/Shuttles/ShuttleEvent/syndie_evacpod.yml", ["RubberStampSyndicate"]},
             {"/Maps/Shuttles/ShuttleEvent/cruiser.yml", ["ShuttleGunPerforator"]},
             {"/Maps/Shuttles/ShuttleEvent/instigator.yml", ["ShuttleGunFriendship"]},
+            // RS14-start
+            {"/Maps/_RedStar/awesome.yml", ["ClothingHeadHatCatEars"]},
+            {"/Maps/_RedStar/cluster.yml", ["RubberStampMime"]},
+            // {"/Maps/_RedStar/omega.yml", ["RubberStampSyndicate", "RubberStampMime"]},
+            {"/Maps/_RedStar/silly.yml", ["RubberStampSyndicate"]}
+            // RS14-end
         };
 
         /// <summary>
