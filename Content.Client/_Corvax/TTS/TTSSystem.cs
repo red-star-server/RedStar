@@ -4,6 +4,7 @@ using Content.Shared._Corvax.TTS.Enums;
 using Content.Shared._Corvax.TTS.Events;
 using Content.Shared.Chat;
 using Content.Shared.GameTicking;
+using Content.Shared.Radio;
 using Robust.Client.Audio;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Audio;
@@ -51,6 +52,7 @@ public sealed partial class TTSSystem : EntitySystem
 
     private readonly HashSet<NetEntity> _playingEntities = new();
     private readonly Dictionary<NetEntity, Queue<PlayTTSEvent>> _entityQueues = new();
+    private Dictionary<string, float> _channelVolumes = new();
     private TTSVoiceEffectPreset _voiceEffectPreset = TTSVoiceEffectPreset.None;
     private int _fileIdx;
 
@@ -66,6 +68,7 @@ public sealed partial class TTSSystem : EntitySystem
         _sawmill = Logger.GetSawmill("tts");
         _cfg.OnValueChanged(CCCVars.TTSVoiceEffect, OnVoiceEffectChanged, true);
         _cfg.OnValueChanged(CCCVars.TTSRadioVolume, OnRadioVolumeChanged, true);
+        _cfg.OnValueChanged(CCCVars.TTSRadioChannelVolumes, OnChannelVolumesChanged, true);
         _cfg.OnValueChanged(CCCVars.TTSVolume, OnVolumeChanged, true);
     }
 
@@ -75,6 +78,7 @@ public sealed partial class TTSSystem : EntitySystem
 
         _cfg.UnsubValueChanged(CCCVars.TTSVoiceEffect, OnVoiceEffectChanged);
         _cfg.UnsubValueChanged(CCCVars.TTSRadioVolume, OnRadioVolumeChanged);
+        _cfg.UnsubValueChanged(CCCVars.TTSRadioChannelVolumes, OnChannelVolumesChanged);
         _cfg.UnsubValueChanged(CCCVars.TTSVolume, OnVolumeChanged);
 
         _entityQueues.Clear();
@@ -109,6 +113,11 @@ public sealed partial class TTSSystem : EntitySystem
         _radioVolume = value;
     }
 
+    private void OnChannelVolumesChanged(string raw)
+    {
+        _channelVolumes = TTSRadioVolumes.Parse(raw);
+    }
+
     [SubscribeLocalEvent]
     private void OnRoundRestartCleanup(RoundRestartCleanupEvent ev)
     {
@@ -126,14 +135,13 @@ public sealed partial class TTSSystem : EntitySystem
     [SubscribeNetworkEvent]
     private void OnPlayTTS(PlayTTSEvent ev)
     {
-        // It will stop clogging up your memory if you turn off one of the sliders to 0
-        if (ev.IsRadio && _radioVolume <= 0)
+        if (ev.Kind == TTSKind.Radio && GetRadioGain(ev.Channel) <= 0)
         {
             _sawmill.Verbose("Radio TTS volume zero, skipping playback");
             return;
         }
 
-        if (_volume <= 0)
+        if (ev.Kind != TTSKind.Radio && _volume <= 0)
         {
             _sawmill.Verbose("TTS volume zero, skipping playback");
             return;
@@ -219,8 +227,12 @@ public sealed partial class TTSSystem : EntitySystem
         using var audioResource = new AudioResource();
         audioResource.Load(IoCManager.Instance!, Prefix / filePath);
 
+        var gain = ev.Kind == TTSKind.Radio
+            ? GetRadioGain(ev.Channel)
+            : _volume;
+
         var audioParams = AudioParams.Default
-            .WithVolume(AdjustVolume(ev.SourceUid == null, ev.IsWhisper, ev.IsRadio))
+            .WithVolume(AdjustVolume(ev.SourceUid == null, ev.IsWhisper, ev.Kind, gain))
             .WithMaxDistance(AdjustDistance(ev.IsWhisper));
 
         var soundSpecifier = new ResolvedPathSpecifier(Prefix / filePath);
@@ -229,7 +241,7 @@ public sealed partial class TTSSystem : EntitySystem
 
         try
         {
-            if (ev.IsRadio)
+            if (ev.Kind == TTSKind.Radio)
             {
                 var pitch = GetRadioPitch();
                 var variation = GetRadioVariation();
@@ -299,17 +311,26 @@ public sealed partial class TTSSystem : EntitySystem
 
     #region Utility Methods
 
-    private float AdjustVolume(bool isGlobal, bool isWhisper, bool isRadio)
+    private float GetRadioGain(ProtoId<RadioChannelPrototype>? channel)
     {
-        var volume = isRadio
-            ? MinimalVolume + SharedAudioSystem.GainToVolume(_radioVolume)
-            : MinimalVolume + SharedAudioSystem.GainToVolume(_volume);
+        if (channel is not { } id)
+            return _radioVolume;
 
-        if (isGlobal) return volume + SharedAudioSystem.GainToVolume(GlobalVolumeBonus);
+        return _channelVolumes.TryGetValue(id, out var channelVolume)
+            ? _radioVolume * channelVolume
+            : _radioVolume;
+    }
+
+    private float AdjustVolume(bool isGlobal, bool isWhisper, TTSKind kind, float gain)
+    {
+        var volume = MinimalVolume + SharedAudioSystem.GainToVolume(gain);
+
+        if (isGlobal)
+            return volume + SharedAudioSystem.GainToVolume(GlobalVolumeBonus);
 
         if (isWhisper)
         {
-            var fade = isRadio ? WhisperFade * 0.15f : WhisperFade;
+            var fade = kind == TTSKind.Radio ? WhisperFade * 0.15f : WhisperFade;
             volume -= SharedAudioSystem.GainToVolume(fade);
         }
 

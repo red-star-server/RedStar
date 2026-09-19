@@ -16,19 +16,11 @@
             <OptionButton Name="VoiceEffectOption" MinWidth="360" HorizontalAlignment="Right" />
         </BoxContainer>
 
-        <!-- Radio Filter Section -->
+        <!-- Radio Channel Volume Section -->
         <BoxContainer Orientation="Vertical">
             <Label Text="{Loc 'ui-options-tts-radio-filter-description'}" StyleClasses="LabelDefaultText" Margin="0 8" />
 
-            <BoxContainer Orientation="Horizontal" Margin="0 0 0 8">
-                <Button Name="AllRadioButton" Text="{Loc 'ui-options-tts-radio-filter-all'}" StyleClasses="OpenRight" HorizontalExpand="True" />
-                <Button Name="NoneRadioButton" Text="{Loc 'ui-options-tts-radio-filter-none'}" StyleClasses="OpenBoth" HorizontalExpand="True" />
-                <Button Name="ResetRadioButton" Text="{Loc 'ui-options-tts-radio-filter-reset'}" StyleClasses="OpenLeft" HorizontalExpand="True" />
-            </BoxContainer>
-
-            <ScrollContainer VerticalExpand="True" MinHeight="100">
-                <GridContainer Name="RadioFilterGrid" Columns="4" Margin="1" />
-            </ScrollContainer>
+            <BoxContainer Name="RadioChannelsContainer" Orientation="Vertical" />
         </BoxContainer>
     </BoxContainer>
 </Control>

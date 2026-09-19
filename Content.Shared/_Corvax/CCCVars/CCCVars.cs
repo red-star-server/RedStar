@@ -1,4 +1,3 @@
-using Content.Shared._Corvax.TTS.Enums;
 using Robust.Shared.Configuration;
 
 namespace Content.Shared._Corvax.CCCVars;
@@ -62,11 +61,10 @@ public sealed class CCCVars
         CVarDef.Create("tts.voice_effect", 0, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
-    /// Bitmask of enabled radio channels for TTS. <see cref="RadioChannelFlag"/>
+    /// Volume settings for individual TTS radio channels.
     /// </summary>
-    public static readonly CVarDef<int> TTSRadioFilter =
-        CVarDef.Create("tts.radio_filter", (int)RadioChannelFlag.AllExceptCommon,
-            CVar.CLIENT | CVar.REPLICATED | CVar.ARCHIVE);
+    public static readonly CVarDef<string> TTSRadioChannelVolumes =
+        CVarDef.Create("tts.radio.channel_volumes", "", CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
     /// Count of in-memory cached tts voice lines.

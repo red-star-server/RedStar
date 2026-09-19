@@ -6,7 +6,6 @@ using Content.Server.Radio.EntitySystems;
 using Content.Shared._Corvax.CCCVars;
 using Content.Shared._Corvax.TTS;
 using Content.Shared._Corvax.TTS.Components;
-using Content.Shared._Corvax.TTS.Enums;
 using Content.Shared._Corvax.TTS.Events;
 using Content.Shared.Chat;
 using Content.Shared.GameTicking;
@@ -33,7 +32,6 @@ namespace Content.Server._Corvax.TTS;
 public sealed partial class TTSSystem : EntitySystem
 {
     [Dependency] private IConfigurationManager _cfg = default!;
-    [Dependency] private INetConfigurationManager _netCfg = default!;
     [Dependency] private AudioSystem _audio = default!;
     [Dependency] private TTSManager _ttsManager = default!;
     [Dependency] private StationSystem _stationSystem = default!;
@@ -125,7 +123,8 @@ public sealed partial class TTSSystem : EntitySystem
         if (soundData is null)
             return;
 
-        RaiseNetworkEvent(new PlayTTSEvent(soundData), Filter.SinglePlayer(args.SenderSession),
+        RaiseNetworkEvent(new PlayTTSEvent(soundData, kind: TTSKind.Preview),
+            Filter.SinglePlayer(args.SenderSession),
             recordReplay: false);
     }
 
@@ -291,12 +290,8 @@ public sealed partial class TTSSystem : EntitySystem
     private void SendTTSToRadio(byte[] soundData, EntityUid sourceUid, RadioChannelPrototype channel,
         bool isWhisper = true)
     {
-        var channelFlag = GetChannelFlag(channel.ID);
-        if (channelFlag == RadioChannelFlag.None)
-            return; // Unknown - Skip
-
         var netSource = GetNetEntity(sourceUid);
-        var ttsEvent = new PlayTTSEvent(soundData, netSource, isWhisper, true);
+        var ttsEvent = new PlayTTSEvent(soundData, netSource, isWhisper, TTSKind.Radio, channel.ID);
         var filter = Filter.Empty();
 
         var sourceMapId = Transform(sourceUid).MapID;
@@ -348,11 +343,6 @@ public sealed partial class TTSSystem : EntitySystem
             if (session.AttachedEntity == sourceUid)
                 continue;
 
-            var playerFilter = _netCfg.GetClientCVar(session.Channel, CCCVars.TTSRadioFilter);
-            var playerFlag = (RadioChannelFlag)playerFilter;
-            if (!playerFlag.HasFlag(channelFlag))
-                continue;
-
             filter.AddPlayer(session);
         }
 
@@ -373,33 +363,6 @@ public sealed partial class TTSSystem : EntitySystem
         }
 
         return false;
-    }
-
-    /// <summary>
-    /// Maps channel prototype ID to RadioChannelFlag.
-    /// </summary>
-    private RadioChannelFlag GetChannelFlag(string channelId)
-    {
-        return channelId switch
-        {
-            "Common" => RadioChannelFlag.Common,
-            "Command" => RadioChannelFlag.Command,
-            "Engineering" => RadioChannelFlag.Engineering,
-            "Medical" => RadioChannelFlag.Medical,
-            "Science" => RadioChannelFlag.Science,
-            "Security" => RadioChannelFlag.Security,
-            "Service" => RadioChannelFlag.Service,
-            "Supply" => RadioChannelFlag.Supply,
-            "Legal" => RadioChannelFlag.Legal,
-            "Syndicate" => RadioChannelFlag.Syndicate,
-            "Binary" => RadioChannelFlag.Binary,
-            "Handheld" => RadioChannelFlag.Handheld,
-            "Freelance" => RadioChannelFlag.Freelance,
-            "CentCom" => RadioChannelFlag.CentCom,
-            "Xenoborg" => RadioChannelFlag.Xenoborg,
-            "Mothership" => RadioChannelFlag.Mothership,
-            _ => RadioChannelFlag.None
-        };
     }
 
     // ReSharper disable once InconsistentNaming
