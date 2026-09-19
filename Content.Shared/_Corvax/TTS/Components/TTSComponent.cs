@@ -1,4 +1,3 @@
-using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Corvax.TTS.Components;
@@ -6,7 +5,7 @@ namespace Content.Shared._Corvax.TTS.Components;
 /// <summary>
 /// Apply TTS for entity chat say messages
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent]
 // ReSharper disable once InconsistentNaming
 public sealed partial class TTSComponent : Component
 {
