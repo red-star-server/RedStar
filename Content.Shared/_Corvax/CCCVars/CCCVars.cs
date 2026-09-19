@@ -19,7 +19,6 @@ public sealed class CCCVars
     /**
      * TTS (Text-To-Speech)
      */
-
     /// <summary>
     /// URL of the TTS server API.
     /// </summary>
@@ -66,13 +65,39 @@ public sealed class CCCVars
     /// Bitmask of enabled radio channels for TTS. <see cref="RadioChannelFlag"/>
     /// </summary>
     public static readonly CVarDef<int> TTSRadioFilter =
-        CVarDef.Create("tts.radio_filter", (int)RadioChannelFlag.AllExceptCommon, CVar.CLIENT | CVar.REPLICATED | CVar.ARCHIVE);
+        CVarDef.Create("tts.radio_filter", (int)RadioChannelFlag.AllExceptCommon,
+            CVar.CLIENT | CVar.REPLICATED | CVar.ARCHIVE);
 
     /// <summary>
     /// Count of in-memory cached tts voice lines.
     /// </summary>
     public static readonly CVarDef<int> TTSMaxCache =
         CVarDef.Create("tts.max_cache", 250, CVar.SERVERONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    /// Maximum number of concurrent requests to the TTS service.
+    /// </summary>
+    public static readonly CVarDef<int> TTSMaxConcurrentRequests =
+        CVarDef.Create("tts.max_concurrent_requests", 32, CVar.SERVERONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    /// Maximum number of TTS requests waiting for an available request slot.
+    /// </summary>
+    public static readonly CVarDef<int> TTSMaxQueuedRequests =
+        CVarDef.Create("tts.max_queued_requests", 256, CVar.SERVERONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    /// Number of consecutive failures required to open the TTS circuit breaker.
+    /// Zero disables the circuit breaker.
+    /// </summary>
+    public static readonly CVarDef<int> TTSCircuitBreakerFailures =
+        CVarDef.Create("tts.circuit_breaker_failures", 20, CVar.SERVERONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    /// TTS circuit breaker cooldown in seconds before allowing a test request.
+    /// </summary>
+    public static readonly CVarDef<float> TTSCircuitBreakerCooldown =
+        CVarDef.Create("tts.circuit_breaker_cooldown", 15f, CVar.SERVERONLY | CVar.ARCHIVE);
 
     /// <summary>
     /// Tts rate limit values are accounted in periods of this size (seconds).
