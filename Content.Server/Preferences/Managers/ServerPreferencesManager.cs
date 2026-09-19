@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Afk;
 using Content.Server.Database;
+using Content.Shared._Corvax.TTS;
 using Content.Shared._Sirena.Humanoid;
 using Content.Shared.Body;
 using Content.Shared.CCVar;
@@ -108,12 +109,6 @@ namespace Content.Server.Preferences.Managers
             if (Enum.TryParse<Gender>(profile.Gender, true, out var genderVal))
                 gender = genderVal;
 
-            // Corvax-TTS-Start
-            var TTSVoice = profile.TTSVoice;
-            if (TTSVoice == string.Empty)
-                TTSVoice = HumanoidProfileSystem.DefaultSexVoice[sex].Id;
-            // Corvax-TTS-End
-
             var markings =
                 new Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>>();
 
@@ -123,6 +118,12 @@ namespace Content.Server.Preferences.Managers
                 species = HumanoidCharacterProfile.DefaultSpecies;
                 speciesPrototype = _prototypeManager.Index<SpeciesPrototype>(species);
             }
+
+            // Corvax-TTS-start
+            var ttsVoice = string.IsNullOrEmpty(profile.TTSVoice)
+                ? TTSVoiceHelper.GetFallbackVoice(_prototypeManager, sex, species)
+                : new ProtoId<TTSVoicePrototype>(profile.TTSVoice);
+            // Corvax-TTS-end
 
             var voice = profile.Voice ?? speciesPrototype.DefaultSoundsBySex[(int)sex];
             if (!_prototypeManager.HasIndex(voice))
@@ -186,7 +187,7 @@ namespace Content.Server.Preferences.Managers
                 profile.CharacterName,
                 profile.FlavorText,
                 species,
-                TTSVoice, // Corvax-TTS
+                ttsVoice, // Corvax-TTS
                 profile.Age,
                 sex,
                 voice,

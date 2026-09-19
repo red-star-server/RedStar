@@ -92,7 +92,7 @@ namespace Content.Shared.Preferences
         public ProtoId<SpeciesPrototype> Species { get; set; } = DefaultSpecies;
 
         [DataField] //Corvax-TTS
-        public ProtoId<TTSVoicePrototype> TTSVoice { get; set; } = HumanoidProfileSystem.DefaultVoice;
+        public ProtoId<TTSVoicePrototype> TTSVoice { get; set; } = TTSVoiceHelper.DefaultVoice;
 
         [DataField]
         public int Age { get; set; } = 18;
@@ -316,20 +316,15 @@ namespace Content.Shared.Preferences
             return sex;
         }
 
-        // Corvax-TTS-Start
+        // Corvax-TTS-start
         public static ProtoId<TTSVoicePrototype> RandomTTS(Sex sex, ProtoId<SpeciesPrototype> species)
         {
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var random = IoCManager.Resolve<IRobustRandom>();
 
-            var voices = prototypeManager
-                .EnumeratePrototypes<TTSVoicePrototype>()
-                .Where(voice => CanHaveVoice(voice, sex, species))
-                .ToArray();
-
-            return random.Pick(voices).ID;
+            return TTSVoiceHelper.GetRandomVoice(prototypeManager, random, sex, species);
         }
-        // Corvax-TTS-End
+        // Corvax-TTS-end
 
         /// <summary>
         /// Picks a random gender using species sex;
@@ -397,7 +392,14 @@ namespace Content.Shared.Preferences
             profile.Gender = (randomizeCfg & RandomizeCfg.Gender) != 0 ? RandomGender(profile.Sex) : baseProfile.Gender;
             profile.Name = (randomizeCfg & RandomizeCfg.Name) != 0 ? RandomName(speciesProto, profile.Gender) : baseProfile.Name;
             profile.Age = (randomizeCfg & RandomizeCfg.Age) != 0 ? RandomAge(speciesProto) : baseProfile.Age;
-            profile.TTSVoice = (randomizeCfg & RandomizeCfg.Age) != 0 ? RandomTTS(profile.Sex, profile.Species) : baseProfile.TTSVoice; // Corvax-TTS
+            // Corvax-TTS-start
+            profile.TTSVoice = baseProfile.TTSVoice;
+            if (!prototypeManager.TryIndex(profile.TTSVoice, out var ttsVoice) ||
+            !TTSVoiceHelper.CanUseVoice(ttsVoice, profile.Sex, profile.Species))
+            {
+                profile.TTSVoice = RandomTTS(profile.Sex, profile.Species);
+            }
+            // Corvax-TTS-end
 
             profile.Appearance = HumanoidCharacterAppearance.Random(speciesProto, profile.Sex, randomizeCfg, baseProfile.Appearance);
 
@@ -830,11 +832,13 @@ namespace Content.Shared.Preferences
             _traitPreferences.Clear();
             _traitPreferences.UnionWith(GetValidTraits(traits, prototypeManager));
 
-            // Corvax-TTS-Start
-            prototypeManager.TryIndex<TTSVoicePrototype>(TTSVoice, out var ttsVoice);
-            if (ttsVoice is null || !CanHaveVoice(ttsVoice, Sex, Species))
-                TTSVoice = HumanoidProfileSystem.DefaultSexVoice[Sex];
-            // Corvax-TTS-End
+            // Corvax-TTS-start
+            if (!prototypeManager.TryIndex(TTSVoice, out var ttsVoice) ||
+                !TTSVoiceHelper.CanUseVoice(ttsVoice, Sex, Species))
+            {
+                TTSVoice = TTSVoiceHelper.GetFallbackVoice(prototypeManager, Sex, Species);
+            }
+            // Corvax-TTS-end
 
             // Checks prototypes exist for all loadouts and dump / set to default if not.
             var toRemove = new ValueList<string>();
@@ -897,28 +901,6 @@ namespace Content.Shared.Preferences
 
             return result;
         }
-
-        // Corvax-TTS-Start
-        public static bool CanHaveVoice(TTSVoicePrototype voice, Sex sex, ProtoId<SpeciesPrototype> species)
-        {
-            if (!voice.RoundStart)
-                return false;
-
-            if (voice.SpeciesBlacklist.Contains(species))
-                return false;
-
-            if (voice.SpeciesWhitelist.Count > 0 &&
-                !voice.SpeciesWhitelist.Contains(species))
-            {
-                return false;
-            }
-
-            if (sex == Sex.Unsexed)
-                return true;
-
-            return voice.Sex == Sex.Unsexed || voice.Sex == sex;
-        }
-        // Corvax-TTS-End
 
         public HumanoidCharacterProfile Validated(ICommonSession session, IDependencyCollection collection)
         {

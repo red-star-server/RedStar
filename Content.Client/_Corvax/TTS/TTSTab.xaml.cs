@@ -157,9 +157,8 @@ public sealed partial class TTSTab : Control
 
         _selectedVoiceId = profile.TTSVoice;
 
-        _allVoices = _prototypeManager
-            .EnumeratePrototypes<TTSVoicePrototype>()
-            .Where(voice => HumanoidCharacterProfile.CanHaveVoice(voice, sex, species))
+        _allVoices = TTSVoiceHelper
+            .GetValidVoices(_prototypeManager, sex, species)
             .OrderBy(voice => Loc.GetString(voice.Name))
             .ToList();
 

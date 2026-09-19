@@ -1,4 +1,4 @@
-using System.Numerics;
+using Content.Shared._Corvax.TTS;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
@@ -63,7 +63,7 @@ public sealed partial class HumanoidCharacterProfileV1
     public ProtoId<SpeciesPrototype> Species;
 
     [DataField] //Corvax-TTS
-    public string TTSVoice = HumanoidProfileSystem.DefaultVoice;
+    public string TTSVoice = TTSVoiceHelper.DefaultVoice.Id;
 
     [DataField]
     public int Age;
