@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Content.Server.Communications;
 using Content.Server.Power.Components;
 using Content.Server.Radio.EntitySystems;
-using Content.Server.Station.Systems;
 using Content.Shared._Corvax.CCCVars;
 using Content.Shared._Corvax.TTS;
 using Content.Shared._Corvax.TTS.Components;
@@ -17,6 +16,7 @@ using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
 using Content.Shared.Speech.Muting;
 using Content.Shared.Station.Components;
+using Content.Shared.Station.Systems;
 using Robust.Server.Audio;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
@@ -198,7 +198,7 @@ public sealed partial class TTSSystem : EntitySystem
     }
 
     [SubscribeLocalEvent(before: [typeof(RadioSystem), typeof(HeadsetSystem)])]
-    private async void OnEntitySpoke(EntityUid uid, TTSComponent component, EntitySpokeEvent args)
+    private void OnEntitySpoke(EntityUid uid, TTSComponent component, EntitySpokeEvent args)
     {
         var voiceId = component.VoicePrototypeId;
         if (!_isEnabled || string.IsNullOrEmpty(voiceId))
@@ -216,11 +216,11 @@ public sealed partial class TTSSystem : EntitySystem
 
         if (args.ObfuscatedMessage != null)
         {
-            HandleWhisper(uid, args.Message, args.ObfuscatedMessage, protoVoice.Speaker, args.Channel);
+            HandleWhisper(uid, args.TTSMessage, args.ObfuscatedMessage, protoVoice.Speaker, args.Channel);
             return;
         }
 
-        HandleSay(uid, args.Message, protoVoice.Speaker, args.Channel);
+        HandleSay(uid, args.TTSMessage, protoVoice.Speaker, args.Channel);
     }
 
     private async void HandleSay(EntityUid uid, string message, string speaker, RadioChannelPrototype? channel)

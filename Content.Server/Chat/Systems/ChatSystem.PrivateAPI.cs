@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared._Corvax.TTS;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
@@ -23,9 +24,10 @@ public sealed partial class ChatSystem
     {
         if (!_actionBlocker.CanSpeak(source) && !ignoreActionBlocker)
             return;
-
-        var message = TransformSpeech(source, originalMessage);
-
+        // Corvax-TTS-start
+        var ttsMessage = TransformSpeech(source, originalMessage);
+        var message = TTSSpeechStress.Strip(ttsMessage);
+         // Corvax-TTS-end
         if (message.Length == 0)
             return;
 
@@ -58,7 +60,7 @@ public sealed partial class ChatSystem
 
         SendInVoiceRange(ChatChannel.Local, message, wrappedMessage, source, range);
 
-        var ev = new EntitySpokeEvent(source, message, originalMessage, null, null); // Corvax-TTS
+        var ev = new EntitySpokeEvent(source, message, ttsMessage, null, null); // Corvax-TTS
         RaiseLocalEvent(source, ev, true);
 
         // To avoid logging any messages sent by entities that are not players, like vendors, cloning, etc.
@@ -96,11 +98,12 @@ public sealed partial class ChatSystem
     {
         if (!_actionBlocker.CanSpeak(source) && !ignoreActionBlocker)
             return;
-
-        var message = TransformSpeech(source, FormattedMessage.RemoveMarkupOrThrow(originalMessage));
+        // Corvax-TTS-start
+        var ttsMessage = TransformSpeech(source, FormattedMessage.RemoveMarkupOrThrow(originalMessage));
+        var message = TTSSpeechStress.Strip(ttsMessage);
         if (message.Length == 0)
             return;
-
+        // Corvax-TTS-end
         var obfuscatedMessage = ObfuscateMessageReadability(message, 0.2f);
 
         // get the entity's name by visual identity (if no override provided).
@@ -152,7 +155,7 @@ public sealed partial class ChatSystem
 
         _replay.RecordServerMessage(new ChatMessage(ChatChannel.Whisper, message, wrappedMessage, GetNetEntity(source), null, MessageRangeHideChatForReplay(range)));
 
-        var ev = new EntitySpokeEvent(source, message, originalMessage, channel, obfuscatedMessage); // Corvax-TTS
+        var ev = new EntitySpokeEvent(source, message, ttsMessage, channel, obfuscatedMessage); // Corvax-TTS
         RaiseLocalEvent(source, ev, true);
         if (!hideLog)
             if (originalMessage == message)
@@ -213,7 +216,7 @@ public sealed partial class ChatSystem
     private void SendLOOC(EntityUid source, ICommonSession player, string message, bool hideChat)
     {
         var name = FormattedMessage.EscapeText(Identity.Name(source, EntityManager));
-        name = ChatNameLinks ? $"[textlink=\"{FormattedMessage.EscapeStringParameter(name)}\" entity=\"{GetNetEntity(source)}\" color=\"{ChatChannel.LOOC.TextColor().ToHex()}\"]": FormattedMessage.EscapeText(name);
+        name = ChatNameLinks ? $"[textlink=\"{FormattedMessage.EscapeStringParameter(player.Channel.UserName)}\" entity=\"{GetNetEntity(source)}\" color=\"{ChatChannel.LOOC.TextColor().ToHex()}\"]": FormattedMessage.EscapeText(name); // Corvax-TTS
         if (_adminManager.IsAdmin(player))
         {
             if (!_adminLoocEnabled) return;
