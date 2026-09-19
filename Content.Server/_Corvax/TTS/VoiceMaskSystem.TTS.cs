@@ -1,4 +1,3 @@
-using Content.Shared._Corvax.TTS;
 using Content.Shared._Corvax.TTS.Events;
 using Content.Shared.Implants;
 using Content.Shared.Inventory;
@@ -11,7 +10,7 @@ public partial class VoiceMaskSystem
     [SubscribeLocalEvent]
     private void OnChangeVoice(Entity<VoiceMaskComponent> entity, ref VoiceMaskChangeVoiceMessage msg)
     {
-        if (msg.Voice is { } id && !ProtoMan.HasIndex<TTSVoicePrototype>(id))
+        if (!ProtoMan.HasIndex(msg.Voice))
             return;
 
         entity.Comp.VoiceId = msg.Voice;

@@ -1,4 +1,5 @@
 using Content.Shared._Corvax.CCCVars;
+using Content.Shared._Corvax.TTS;
 using Content.Shared._Corvax.TTS.Enums;
 using Content.Shared._Corvax.TTS.Events;
 using Content.Shared.Chat;
@@ -10,6 +11,7 @@ using Robust.Shared.Audio.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -116,7 +118,7 @@ public sealed partial class TTSSystem : EntitySystem
         ShutdownEffects();
     }
 
-    public void RequestPreviewTTS(string voiceId)
+    public void RequestPreviewTTS(ProtoId<TTSVoicePrototype> voiceId)
     {
         RaiseNetworkEvent(new RequestPreviewTTSEvent(voiceId));
     }

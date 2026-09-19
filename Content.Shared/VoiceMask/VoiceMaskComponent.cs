@@ -1,3 +1,4 @@
+using Content.Shared._Corvax.TTS;
 using Content.Shared.Speech;
 using Robust.Shared.Prototypes;
 using Content.Shared.Humanoid;
@@ -42,7 +43,7 @@ public sealed partial class VoiceMaskComponent : Component
 
     // Corvax-TTS-Start
     [DataField]
-    public string VoiceId = HumanoidProfileSystem.DefaultVoice;
+    public ProtoId<TTSVoicePrototype> VoiceId = HumanoidProfileSystem.DefaultVoice;
     // Corvax-TTS-End
 
     /// <summary>

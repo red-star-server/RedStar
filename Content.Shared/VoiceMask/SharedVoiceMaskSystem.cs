@@ -1,4 +1,6 @@
+using Content.Shared._Corvax.TTS;
 using Content.Shared.Inventory;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.VoiceMask;
@@ -17,7 +19,7 @@ public sealed class VoiceMaskBuiState : BoundUserInterfaceState
     public readonly bool Active;
     public readonly bool AccentHide;
     public readonly LocId TitleText;
-    public readonly string TTSVoice; // Corvax-TTS
+    public readonly ProtoId<TTSVoicePrototype> TTSVoice; // Corvax-TTS
 
     public VoiceMaskBuiState(string name, string? verb, bool active, bool accentHide, LocId titleText, string voice) // Corvax-TTS
     {

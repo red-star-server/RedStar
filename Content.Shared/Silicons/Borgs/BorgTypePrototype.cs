@@ -1,3 +1,4 @@
+using Content.Shared._Corvax.TTS;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Radio;
@@ -157,6 +158,6 @@ public sealed partial class BorgTypePrototype : IPrototype
     /// TTS voice.
     /// </summary>
     [DataField]
-    public string? VoicePrototypeId { get; set; } = "TrainingRobot";
+    public ProtoId<TTSVoicePrototype>? VoicePrototypeId { get; set; } = "TrainingRobot";
     // Corvax-TTS-end
 }
