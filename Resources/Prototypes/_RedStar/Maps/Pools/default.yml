@@ -1,0 +1,17 @@
+- type: gameMapPool
+  id: RedStarMapPool
+  maps:
+  - Awesome
+  - Cluster
+  - Omega
+  - Silly
+  #- Bagel
+  #- Box
+  #- Elkridge
+  #- Marathon
+  #- Packed
+  #- Plasma
+  #- Exo
+  #- Snowball
+  #- Sushi
+  #- Tram2
