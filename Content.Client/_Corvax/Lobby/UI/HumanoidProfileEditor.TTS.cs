@@ -58,7 +58,7 @@ public sealed partial class HumanoidProfileEditor
 
     private void SetVoice(ProtoId<TTSVoicePrototype> newVoice)
     {
-        Profile = Profile?.WithVoice(newVoice);
+        Profile = Profile?.WithTTSVoice(newVoice);
         IsDirty = true;
     }
 }

@@ -153,6 +153,7 @@ public sealed partial class TTSTab : Control
             return;
 
         _selectedVoiceId = profile.TTSVoice;
+        _selectedCategory = null;
 
         _allVoices = TTSVoiceHelper
             .GetValidVoices(_prototypeManager, sex, species)

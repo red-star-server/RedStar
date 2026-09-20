@@ -103,7 +103,7 @@ public sealed partial class VoiceMaskNameChangeWindow : FancyWindow
             var name = Loc.GetString(voice.Name);
 
             VoiceSelector.AddItem(name);
-            VoiceSelector.SetItemMetadata(i, new ProtoId<TTSVoicePrototype>(voice.ID));
+            VoiceSelector.SetItemMetadata(i, (ProtoId<TTSVoicePrototype>) voice.ID);
         }
     }
     // Corvax-TTS-End
