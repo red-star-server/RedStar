@@ -52,7 +52,7 @@
   - type: NoSlip
   - type: Insulated
   - type: TTS # Corvax-TTS
-    voice: Taskmaster
+    voice: Xenia
 
 # Used for bots
 - type: entity
