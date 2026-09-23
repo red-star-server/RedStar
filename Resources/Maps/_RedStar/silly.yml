@@ -41570,7 +41570,7 @@ entities:
       rot: 6.283185307179586 rad
       pos: 3.5472865,18.87167
     - type: Paper
-      stampState: paper_stamp-approve
+      stampState: paper_stamp-ok
       stampedBy:
       - stampedName: stamp-component-stamped-name-approved
         stampedColor: '#00BE00FF'
@@ -41730,7 +41730,7 @@ entities:
       parent: 2
       pos: 10.290568,22.278557
     - type: Paper
-      stampState: paper_stamp-approve
+      stampState: paper_stamp-ok
       stampedBy:
       - stampedName: stamp-component-stamped-name-approved
         stampedColor: '#00BE00FF'
