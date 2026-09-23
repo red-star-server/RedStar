@@ -74,7 +74,8 @@
   - type: TypingIndicator
     proto: robot
   - type: TTS # Corvax-TTS
-    voice: TrainingRobot
+    #voice: TrainingRobot
+    voice: Xenia
   - type: Speech
     speechVerb: Robotic
     speechSounds: Pai

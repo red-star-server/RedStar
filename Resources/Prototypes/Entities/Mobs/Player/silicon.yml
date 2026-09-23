@@ -418,7 +418,8 @@
   categories: [ HideSpawnMenu, DoNotMap ]
   components:
   - type: TTS
-    voice: Machine_spirit_4 # Corvax-TTS
+    #voice: Machine_spirit_4 # Corvax-TTS
+    voice: Xenia
   - type: Sprite
     # Once it's in a core it's pretty much an abstract entity at that point.
     visible: false

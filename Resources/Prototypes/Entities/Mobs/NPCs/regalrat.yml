@@ -123,7 +123,8 @@
   - type: Tool
     qualities: [ Slicing ]
   - type: TTS # Corvax-TTS
-    voice: Rat
+    #voice: Rat
+    voice: Eugene
 
 - type: entity
   id: MobRatKingBuff

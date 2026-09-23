@@ -3977,7 +3977,8 @@
     popupText: diona-reform-attempt
     reformPrototype: MobDionaReformed
   - type: TTS # Corvax-TTS
-    voice: Omu
+    #voice: Omu
+    voice: Baya
 
 - type: entity
   parent: MobDionaNymph

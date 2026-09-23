@@ -158,6 +158,6 @@ public sealed partial class BorgTypePrototype : IPrototype
     /// TTS voice.
     /// </summary>
     [DataField]
-    public ProtoId<TTSVoicePrototype>? VoicePrototypeId { get; set; } = "TrainingRobot";
+    public ProtoId<TTSVoicePrototype>? VoicePrototypeId { get; set; } = "Xenia";
     // Corvax-TTS-end
 }

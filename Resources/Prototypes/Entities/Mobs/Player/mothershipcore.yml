@@ -231,7 +231,8 @@
   - type: PowerMonitoringCableNetworks
   - type: RadarConsole
   - type: TTS # Corvax-TTS
-    voice: Taskmaster
+    #voice: Taskmaster
+    voice: Xenia
 
 - type: entity
   parent: BaseAGhostAction

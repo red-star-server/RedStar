@@ -90,7 +90,7 @@ public sealed partial class TTSSystem : EntitySystem
         // Да я подписал все на английском и чо? Вчіть мову
     };
 
-    private static readonly ProtoId<TTSVoicePrototype> AnnouncementSpeaker = "Glados";
+    private static readonly ProtoId<TTSVoicePrototype> AnnouncementSpeaker = "Xenia";
 
     private const SoundTraits NormalTraits = SoundTraits.RateFast | SoundTraits.PitchMedium;
     private const SoundTraits WhisperTraits = SoundTraits.RateSlow | SoundTraits.PitchVerylow | SoundTraits.VolumeXSoft;

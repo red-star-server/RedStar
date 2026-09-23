@@ -11,14 +11,14 @@ namespace Content.Shared._Corvax.TTS;
 /// </summary>
 public static class TTSVoiceHelper
 {
-    public static readonly ProtoId<TTSVoicePrototype> DefaultVoice = "Garithos";
+    public static readonly ProtoId<TTSVoicePrototype> DefaultVoice = "Eugene";
 
     public static readonly IReadOnlyDictionary<Sex, ProtoId<TTSVoicePrototype>> DefaultSexVoices =
         new Dictionary<Sex, ProtoId<TTSVoicePrototype>>
         {
-            { Sex.Male, "Garithos" },
-            { Sex.Female, "Maiev" },
-            { Sex.Unsexed, "Myron" }
+            { Sex.Male, "Eugene" },
+            { Sex.Female, "Kseniya" },
+            { Sex.Unsexed, "Baya" }
         };
 
     public static bool CanUseVoice(
