@@ -233,6 +233,18 @@ public sealed partial class PlantSystem : EntitySystem
         DirtyField(ent, nameof(ent.Comp.Yield));
     }
 
+    // RS14-start: inherited instability is distinct from temporary mutation dose.
+    [PublicAPI]
+    public void AdjustGeneticInstability(Entity<PlantComponent?> ent, float amount)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
+            return;
+
+        ent.Comp.GeneticInstability = MathHelper.Clamp(ent.Comp.GeneticInstability + amount, 0f, 100f);
+        DirtyField(ent, nameof(ent.Comp.GeneticInstability));
+    }
+    // RS14-end
+
     /// <summary>
     /// Adjusts the maturation time of a plant component.
     /// Must be at least 1 to prevent divide-by-zero in growth stage calculations.
