@@ -2,6 +2,7 @@ using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Events;
 using Content.Shared.Botany.Items.Components;
 using Content.Shared.Botany.Systems;
+using Content.Shared._RedStar.Botany; // RS14
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -44,6 +45,9 @@ public sealed partial class BotanySwabSystem : EntitySystem
         if (args.Target == null || !args.CanReach || !_plantQuery.HasComp(args.Target))
             return;
 
+        if (HasComp<RedStarPreventSwabbingComponent>(args.Target)) // RS14
+            return;
+
         _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, ent.Comp.SwabDelay, new BotanySwabDoAfterEvent(), ent.Owner, target: args.Target, used: ent.Owner)
         {
             Broadcast = true,
@@ -59,6 +63,9 @@ public sealed partial class BotanySwabSystem : EntitySystem
     private void OnDoAfter(Entity<BotanySwabComponent> ent, ref BotanySwabDoAfterEvent args)
     {
         if (args.Cancelled || args.Handled || !_plantQuery.HasComp(args.Args.Target))
+            return;
+
+        if (HasComp<RedStarPreventSwabbingComponent>(args.Args.Target)) // RS14
             return;
 
         var targetPlant = args.Args.Target.Value;

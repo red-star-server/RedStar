@@ -520,11 +520,12 @@
   - BotanistApron
   - BotanistWintercoat
 
-#- type: loadoutGroup
-#  id: BotanistJobTrinkets
-#  name: loadout-group-jobtrinkets
-#  minLimit: 0
-#  loadouts:
+- type: loadoutGroup # RS14
+  id: BotanistJobTrinkets
+  name: loadout-group-botanist-equipment # RS14
+  minLimit: 0
+  loadouts:
+  - BotanistPlantAnalyzer
 
 - type: loadoutGroup
   id: ClownHead

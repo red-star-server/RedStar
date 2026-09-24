@@ -195,6 +195,7 @@
     runningState: building
     unlitIdleState: unlit
     unlitRunningState: unlit-building
+    staticPacks: [RedStarBotanyProtolatheStatic] # RS14
     # RS14-start - Department recipes are handled by techfabs.
     # staticPacks:
     # - ChemistryStatic

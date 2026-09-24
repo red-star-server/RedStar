@@ -74,6 +74,8 @@ loadout-group-janitor-plunger = Уборщик, вантуз
 loadout-group-botanist-head = Ботаник, голова
 loadout-group-botanist-jumpsuit = Ботаник, комбинезон
 loadout-group-botanist-backpack = Ботаник, рюкзак
+# RS14
+loadout-group-botanist-equipment = Ботаник, оборудование
 loadout-group-botanist-outerclothing = Ботаник, верхняя одежда
 
 loadout-group-clown-head = Клоун, голова

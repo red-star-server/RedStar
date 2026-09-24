@@ -74,6 +74,8 @@ loadout-group-janitor-plunger = Janitor plunger
 loadout-group-botanist-head = Botanist head
 loadout-group-botanist-jumpsuit = Botanist jumpsuit
 loadout-group-botanist-backpack = Botanist backpack
+# RS14
+loadout-group-botanist-equipment = Botanist equipment
 loadout-group-botanist-outerclothing = Botanist outer clothing
 
 loadout-group-clown-head = Clown head
