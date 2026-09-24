@@ -188,7 +188,7 @@
   - AssistiveItems
   - Survival
   - Trinkets
-  #- BotanistJobTrinkets
+  - BotanistJobTrinkets # RS14
   - GroupSpeciesBreathTool
 
 - type: roleLoadout

@@ -51,3 +51,7 @@
   id: BotanistWintercoat
   equipment:
     outerClothing: ClothingOuterWinterHydro
+- type: loadout # RS14
+  id: BotanistPlantAnalyzer
+  equipment:
+    pocket1: RedStarPlantAnalyzer
