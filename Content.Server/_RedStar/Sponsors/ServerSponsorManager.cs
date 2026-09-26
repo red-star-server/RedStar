@@ -16,6 +16,12 @@ public sealed partial class ServerSponsorManager : ISponsorManager
 
     public async Task<SponsorData?> RefreshAsync(NetUserId userId)
     {
+        var record = await RefreshRecordAsync(userId);
+        return record == null ? null : ToShared(record);
+    }
+
+    public async Task<SponsorRecord?> RefreshRecordAsync(NetUserId userId)
+    {
         var record = await _db.GetSponsorAsync(userId);
         if (record == null)
         {
@@ -23,9 +29,8 @@ public sealed partial class ServerSponsorManager : ISponsorManager
             return null;
         }
 
-        var data = ToShared(record);
-        _sponsors[userId] = data;
-        return data;
+        _sponsors[userId] = ToShared(record);
+        return record;
     }
 
     public void RemoveCached(NetUserId userId)
@@ -50,12 +55,12 @@ public sealed partial class ServerSponsorManager : ISponsorManager
         return SponsorTierHelpers.HasPriorityJoin(_prototypes, data);
     }
 
-    public async Task<bool> SetTierAsync(NetUserId userId, string tier)
+    public async Task<bool> SetTierAsync(NetUserId userId, string tier, bool discordManaged = false)
     {
         if (!_prototypes.HasIndex<SponsorTierPrototype>(tier))
             return false;
 
-        await _db.SetSponsorTierAsync(userId, tier);
+        await _db.SetSponsorTierAsync(userId, tier, discordManaged);
 
         if (_sponsors.TryGetValue(userId, out var data))
             _sponsors[userId] = data with { Tier = tier };

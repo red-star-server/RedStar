@@ -308,11 +308,12 @@ namespace Content.Server.Database
                     x.PlayerId,
                     x.Tier,
                     x.OocColor,
-                    x.GhostColor))
+                    x.GhostColor,
+                    x.DiscordManaged))
                 .SingleOrDefaultAsync();
         }
 
-        public async Task SetSponsorTierAsync(NetUserId userId, string tier)
+        public async Task SetSponsorTierAsync(NetUserId userId, string tier, bool discordManaged = false)
         {
             await using var db = await GetDb();
 
@@ -325,6 +326,7 @@ namespace Content.Server.Database
                 {
                     PlayerId = userId.UserId,
                     Tier = tier,
+                    DiscordManaged = discordManaged,
                 };
 
                 db.DbContext.Sponsor.Add(sponsor);
@@ -332,6 +334,7 @@ namespace Content.Server.Database
             else
             {
                 sponsor.Tier = tier;
+                sponsor.DiscordManaged = discordManaged;
             }
 
             await db.DbContext.SaveChangesAsync();

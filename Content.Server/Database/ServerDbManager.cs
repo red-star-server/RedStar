@@ -57,7 +57,7 @@ namespace Content.Server.Database
         // RS14-start
         #region Sponsors
         Task<SponsorRecord?> GetSponsorAsync(NetUserId userId);
-        Task SetSponsorTierAsync(NetUserId userId, string tier);
+        Task SetSponsorTierAsync(NetUserId userId, string tier, bool discordManaged = false);
         Task RemoveSponsorAsync(NetUserId userId);
         Task SetSponsorOocColorAsync(NetUserId userId, Color? color);
         Task SetSponsorGhostColorAsync(NetUserId userId, Color? color);
@@ -533,10 +533,10 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.GetSponsorAsync(userId));
         }
 
-        public Task SetSponsorTierAsync(NetUserId userId, string tier)
+        public Task SetSponsorTierAsync(NetUserId userId, string tier, bool discordManaged = false)
         {
             DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.SetSponsorTierAsync(userId, tier));
+            return RunDbCommand(() => _db.SetSponsorTierAsync(userId, tier, discordManaged));
         }
 
         public Task RemoveSponsorAsync(NetUserId userId)

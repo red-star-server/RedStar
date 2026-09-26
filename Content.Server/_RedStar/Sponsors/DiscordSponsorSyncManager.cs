@@ -1,10 +1,13 @@
 ﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Content.Server._RedStar.DiscordAuth;
+using Content.Server.Database;
 using Content.Server.Discord.DiscordLink;
 using Content.Shared._RedStar.Sponsors;
 using NetCord;
 using Robust.Server.Player;
+using Robust.Shared.Asynchronous;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -20,9 +23,17 @@ public sealed partial class DiscordSponsorSyncManager : IPostInjectInit
     [Dependency] private IPlayerManager _players = default!;
     [Dependency] private IPrototypeManager _prototypes = default!;
     [Dependency] private IEntityManager _entities = default!;
+    [Dependency] private ITaskManager _taskManager = default!;
     [Dependency] private ILogManager _log = default!;
 
     private ISawmill _sawmill = default!;
+    private readonly Dictionary<NetUserId, SyncGate> _syncGates = new();
+
+    private sealed class SyncGate
+    {
+        public readonly SemaphoreSlim Semaphore = new(1, 1);
+        public int Users;
+    }
 
     public void PostInject()
     {
@@ -51,11 +62,49 @@ public sealed partial class DiscordSponsorSyncManager : IPostInjectInit
 
     public async Task SyncPlayerAsync(NetUserId userId)
     {
+        SyncGate gate;
+        lock (_syncGates)
+        {
+            if (!_syncGates.TryGetValue(userId, out var existing))
+                _syncGates[userId] = existing = new SyncGate();
+
+            gate = existing;
+            gate.Users++;
+        }
+
+        try
+        {
+            await gate.Semaphore.WaitAsync();
+            try
+            {
+                await SyncPlayerCoreAsync(userId);
+            }
+            finally
+            {
+                gate.Semaphore.Release();
+            }
+        }
+        finally
+        {
+            lock (_syncGates)
+            {
+                if (--gate.Users == 0)
+                {
+                    _syncGates.Remove(userId);
+                    gate.Semaphore.Dispose();
+                }
+            }
+        }
+    }
+
+    private async Task SyncPlayerCoreAsync(NetUserId userId)
+    {
         var discord = await _auth.GetDiscordIdAsync(userId);
 
         switch (discord.Status)
         {
             case DiscordAuthLookupStatus.NotFound:
+                await RemoveDiscordTierAsync(userId);
                 return;
 
             case DiscordAuthLookupStatus.Failed:
@@ -104,24 +153,21 @@ public sealed partial class DiscordSponsorSyncManager : IPostInjectInit
             selectedDepth = depth;
         }
 
-        var current = await _sponsors.RefreshAsync(userId);
+        var current = await _sponsors.RefreshRecordAsync(userId);
+
+        if (current is { DiscordManaged: false })
+            return;
 
         if (selected == null)
         {
-            if (current == null)
-                return;
-
-            await _sponsors.RemoveAsync(userId);
-            await SyncConnectedPlayerAsync(userId);
-
-            _sawmill.Info($"Removed sponsor tier from {userId}.");
+            await RemoveDiscordTierAsync(userId, current);
             return;
         }
 
         if (current?.Tier == selected.ID)
             return;
 
-        if (!await _sponsors.SetTierAsync(userId, selected.ID))
+        if (!await _sponsors.SetTierAsync(userId, selected.ID, discordManaged: true))
         {
             _sawmill.Warning(
                 $"Failed to set sponsor tier '{selected.ID}' for {userId}.");
@@ -132,6 +178,17 @@ public sealed partial class DiscordSponsorSyncManager : IPostInjectInit
 
         _sawmill.Info(
             $"Set sponsor tier '{selected.ID}' for {userId}.");
+    }
+
+    private async Task RemoveDiscordTierAsync(NetUserId userId, SponsorRecord? current = null)
+    {
+        current ??= await _sponsors.RefreshRecordAsync(userId);
+        if (current is not { DiscordManaged: true })
+            return;
+
+        await _sponsors.RemoveAsync(userId);
+        await SyncConnectedPlayerAsync(userId);
+        _sawmill.Info($"Removed Discord sponsor tier from {userId}.");
     }
 
     private int GetTierDepth(SponsorTierPrototype tier)
@@ -175,26 +232,31 @@ public sealed partial class DiscordSponsorSyncManager : IPostInjectInit
         await SyncPlayerAsync(userId);
     }
 
-    private async void OnGuildUserUpdated(GuildUser user)
+    private void OnGuildUserUpdated(GuildUser user)
     {
-        var linked = await _auth.GetUserIdAsync(user.Id);
+        var discordId = user.Id;
+        _taskManager.RunOnMainThread(async void () =>
+        {
+            var linked = await _auth.GetUserIdAsync(discordId);
 
-        if (linked.Status != DiscordAuthLookupStatus.Found)
-            return;
+            if (linked.Status != DiscordAuthLookupStatus.Found)
+                return;
 
-        await ApplyRolesAsync(
-            linked.UserId,
-            user.RoleIds.ToArray());
+            await SyncPlayerAsync(linked.UserId);
+        });
     }
 
-    private async void OnDiscordReady()
+    private void OnDiscordReady()
     {
-        foreach (var session in _players.Sessions)
+        _taskManager.RunOnMainThread(async void () =>
         {
-            if (session.Status == SessionStatus.Disconnected)
-                continue;
+            foreach (var session in _players.Sessions)
+            {
+                if (session.Status == SessionStatus.Disconnected)
+                    continue;
 
-            await SyncPlayerAsync(session.UserId);
-        }
+                await SyncPlayerAsync(session.UserId);
+            }
+        });
     }
 }

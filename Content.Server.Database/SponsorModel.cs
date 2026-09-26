@@ -13,6 +13,8 @@ public sealed class Sponsor
     [MaxLength(64)]
     public string Tier { get; set; } = default!;
 
+    public bool DiscordManaged { get; set; }
+
     [MaxLength(9)]
     public string? OocColor { get; set; }
 
