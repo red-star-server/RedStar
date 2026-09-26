@@ -496,7 +496,11 @@
     table: !type:GroupSelector
       rolls: 4, 8
       children:
-      - id: MobGiantSpiderAngry
+      - id: MobGiantSpiderTarantulaAngry
+      - id: MobGiantSpiderHunterAngry
+      - id: MobGiantSpiderGuardAngry
+      - id: MobGiantSpiderMidwifeAngry
+      - id: MobGiantSpiderNurseAngry
 
 - type: entity
   id: SpiderClownSpawnHorde
@@ -515,7 +519,7 @@
     table: !type:GroupSelector
       rolls: 4, 8
       children:
-      - id: MobClownSpider
+      - id: MobGiantSpiderClownAngry
 
 - type: entity
   id: ZombieOutbreak
@@ -639,7 +643,6 @@
   - type: StationEvent
     earliestStart: 0
     duration: 1
-    minimumPlayers: 1
     maxOccurrences: 2
     weight: 10
   - type: RandomSpawnRule
