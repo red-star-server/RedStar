@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading;
@@ -9,16 +8,23 @@ using QRCoder;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
-using Robust.Shared.Player;
 
 namespace Content.Server._RedStar.DiscordAuth;
 
+public enum DiscordAuthOpenResult
+{
+    Opened,
+    AlreadyLinked,
+    Disabled,
+    Failed
+}
+
 public sealed partial class DiscordAuthManager : IPostInjectInit
 {
-    [Dependency] private IConfigurationManager _cfg = default!;
-    [Dependency] private IServerNetManager _net = default!;
-    [Dependency] private IPlayerManager _players = default!;
-    [Dependency] private ILogManager _log = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly IServerNetManager _net = default!;
+    [Dependency] private readonly IPlayerManager _players = default!;
+    [Dependency] private readonly ILogManager _log = default!;
 
     private readonly HttpClient _http = new();
 
@@ -26,6 +32,13 @@ public sealed partial class DiscordAuthManager : IPostInjectInit
 
     private bool _enabled;
     private string _apiUrl = string.Empty;
+
+    private enum DiscordLinkStatus
+    {
+        Linked,
+        NotLinked,
+        Failed
+    }
 
     public void PostInject()
     {
@@ -59,24 +72,32 @@ public sealed partial class DiscordAuthManager : IPostInjectInit
         _http.Dispose();
     }
 
-    public async Task OpenLinkAsync(
+    public async Task<DiscordAuthOpenResult> OpenLinkAsync(
         ICommonSession session,
         CancellationToken cancel = default)
     {
         if (!_enabled)
-            return;
+            return DiscordAuthOpenResult.Disabled;
 
-        if (await IsLinkedAsync(session.UserId, cancel))
+        var status = await GetLinkStatusAsync(session.UserId, cancel);
+
+        switch (status)
         {
-            _net.ServerSendMessage(new MsgDiscordAuthLinked(), session.Channel);
-            return;
+            case DiscordLinkStatus.Linked:
+                return DiscordAuthOpenResult.AlreadyLinked;
+
+            case DiscordLinkStatus.Failed:
+                return DiscordAuthOpenResult.Failed;
+
+            case DiscordLinkStatus.NotLinked:
+                break;
         }
 
         var link = await GetLinkAsync(session.UserId, cancel);
         if (link == null)
         {
             _sawmill.Warning($"Failed to get Discord auth link for {session.UserId}.");
-            return;
+            return DiscordAuthOpenResult.Failed;
         }
 
         _net.ServerSendMessage(
@@ -86,14 +107,19 @@ public sealed partial class DiscordAuthManager : IPostInjectInit
                 QrCodeBytes = GenerateQrCode(link)
             },
             session.Channel);
+
+        return DiscordAuthOpenResult.Opened;
     }
 
-    public async Task<bool> IsLinkedAsync(
+    private async Task<DiscordLinkStatus> GetLinkStatusAsync(
         NetUserId userId,
         CancellationToken cancel = default)
     {
-        if (!_enabled || string.IsNullOrWhiteSpace(_apiUrl))
-            return false;
+        if (string.IsNullOrWhiteSpace(_apiUrl))
+        {
+            _sawmill.Warning("Discord auth is enabled, but API URL is not configured.");
+            return DiscordLinkStatus.Failed;
+        }
 
         try
         {
@@ -103,23 +129,28 @@ public sealed partial class DiscordAuthManager : IPostInjectInit
 
             using var response = await _http.SendAsync(request, cancel);
 
-            return response.StatusCode switch
-            {
-                HttpStatusCode.OK => true,
-                HttpStatusCode.NotFound => false,
-                _ => false
-            };
+            if (response.StatusCode == HttpStatusCode.OK)
+                return DiscordLinkStatus.Linked;
+
+            if (response.StatusCode == HttpStatusCode.NotFound)
+                return DiscordLinkStatus.NotLinked;
+
+            _sawmill.Warning(
+                $"Unexpected Discord auth response while checking {userId}: " +
+                $"{(int) response.StatusCode} {response.StatusCode}");
+
+            return DiscordLinkStatus.Failed;
         }
         catch (HttpRequestException e)
         {
             _sawmill.Error($"Discord auth service is unavailable: {e.Message}");
-            return false;
+            return DiscordLinkStatus.Failed;
         }
     }
 
     private async Task<string?> GetLinkAsync(
         NetUserId userId,
-        CancellationToken cancel)
+        CancellationToken cancel = default)
     {
         try
         {
@@ -128,7 +159,13 @@ public sealed partial class DiscordAuthManager : IPostInjectInit
                 cancel);
 
             if (!response.IsSuccessStatusCode)
+            {
+                _sawmill.Warning(
+                    $"Discord auth service returned {(int) response.StatusCode} " +
+                    $"{response.StatusCode} while generating a link for {userId}.");
+
                 return null;
+            }
 
             var data = await response.Content.ReadFromJsonAsync<DiscordLinkResponse>(
                 cancellationToken: cancel);
@@ -144,13 +181,17 @@ public sealed partial class DiscordAuthManager : IPostInjectInit
 
     private async void OnAuthCheck(MsgDiscordAuthCheck msg)
     {
-        if (!await IsLinkedAsync(msg.MsgChannel.UserId))
+        var status = await GetLinkStatusAsync(msg.MsgChannel.UserId);
+
+        if (status != DiscordLinkStatus.Linked)
             return;
 
         if (!_players.TryGetSessionById(msg.MsgChannel.UserId, out var session))
             return;
 
-        _net.ServerSendMessage(new MsgDiscordAuthLinked(), session.Channel);
+        _net.ServerSendMessage(
+            new MsgDiscordAuthLinked(),
+            session.Channel);
     }
 
     private void OnApiKeyChanged(string value)
@@ -161,7 +202,7 @@ public sealed partial class DiscordAuthManager : IPostInjectInit
                 : new AuthenticationHeaderValue("Bearer", value);
     }
 
-    private static byte[]? GenerateQrCode(string link)
+    private byte[]? GenerateQrCode(string link)
     {
         try
         {
@@ -174,8 +215,9 @@ public sealed partial class DiscordAuthManager : IPostInjectInit
 
             return qr.GetGraphic(8);
         }
-        catch
+        catch (Exception e)
         {
+            _sawmill.Error($"Failed to generate Discord auth QR code: {e.Message}");
             return null;
         }
     }
