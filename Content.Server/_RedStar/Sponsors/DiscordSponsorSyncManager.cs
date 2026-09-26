@@ -6,6 +6,7 @@ using Content.Server.Database;
 using Content.Server.Discord.DiscordLink;
 using Content.Shared._RedStar.Sponsors;
 using NetCord;
+using NetCord.Gateway;
 using Robust.Server.Player;
 using Robust.Shared.Asynchronous;
 using Robust.Shared.Enums;
@@ -45,6 +46,7 @@ public sealed partial class DiscordSponsorSyncManager : IPostInjectInit
         _players.PlayerStatusChanged += OnPlayerStatusChanged;
         _auth.Linked += OnDiscordLinked;
         _discord.OnGuildUserUpdated += OnGuildUserUpdated;
+        _discord.OnGuildUserRemoved += OnGuildUserRemoved;
         _discord.OnDiscordReady += OnDiscordReady;
 
         _discord.InitializeSponsorTracking();
@@ -55,12 +57,18 @@ public sealed partial class DiscordSponsorSyncManager : IPostInjectInit
         _players.PlayerStatusChanged -= OnPlayerStatusChanged;
         _auth.Linked -= OnDiscordLinked;
         _discord.OnGuildUserUpdated -= OnGuildUserUpdated;
+        _discord.OnGuildUserRemoved -= OnGuildUserRemoved;
         _discord.OnDiscordReady -= OnDiscordReady;
 
         _discord.ShutdownSponsorTracking();
     }
 
     public async Task SyncPlayerAsync(NetUserId userId)
+    {
+        await RunForPlayerAsync(userId, () => SyncPlayerCoreAsync(userId));
+    }
+
+    private async Task RunForPlayerAsync(NetUserId userId, Func<Task> action)
     {
         SyncGate gate;
         lock (_syncGates)
@@ -77,7 +85,7 @@ public sealed partial class DiscordSponsorSyncManager : IPostInjectInit
             await gate.Semaphore.WaitAsync();
             try
             {
-                await SyncPlayerCoreAsync(userId);
+                await action();
             }
             finally
             {
@@ -243,6 +251,20 @@ public sealed partial class DiscordSponsorSyncManager : IPostInjectInit
                 return;
 
             await SyncPlayerAsync(linked.UserId);
+        });
+    }
+
+    private void OnGuildUserRemoved(GuildUserRemoveEventArgs args)
+    {
+        var discordId = args.User.Id;
+        _taskManager.RunOnMainThread(async void () =>
+        {
+            var linked = await _auth.GetUserIdAsync(discordId);
+
+            if (linked.Status != DiscordAuthLookupStatus.Found)
+                return;
+
+            await RunForPlayerAsync(linked.UserId, () => RemoveDiscordTierAsync(linked.UserId));
         });
     }
 

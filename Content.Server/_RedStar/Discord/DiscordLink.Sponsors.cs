@@ -22,6 +22,7 @@ public readonly record struct DiscordMemberRolesResult(
 public sealed partial class DiscordLink
 {
     public event Action<GuildUser>? OnGuildUserUpdated;
+    public event Action<GuildUserRemoveEventArgs>? OnGuildUserRemoved;
     public event Action? OnDiscordReady;
 
     public void InitializeSponsorTracking()
@@ -30,6 +31,7 @@ public sealed partial class DiscordLink
             return;
 
         _client.GuildUserUpdate += OnGuildUserUpdateInternal;
+        _client.GuildUserRemove += OnGuildUserRemoveInternal;
         _client.Ready += OnDiscordReadyInternal;
     }
 
@@ -39,6 +41,7 @@ public sealed partial class DiscordLink
             return;
 
         _client.GuildUserUpdate -= OnGuildUserUpdateInternal;
+        _client.GuildUserRemove -= OnGuildUserRemoveInternal;
         _client.Ready -= OnDiscordReadyInternal;
     }
 
@@ -79,6 +82,14 @@ public sealed partial class DiscordLink
     {
         if (user.GuildId == _guildId)
             OnGuildUserUpdated?.Invoke(user);
+
+        return ValueTask.CompletedTask;
+    }
+
+    private ValueTask OnGuildUserRemoveInternal(GuildUserRemoveEventArgs args)
+    {
+        if (args.GuildId == _guildId)
+            OnGuildUserRemoved?.Invoke(args);
 
         return ValueTask.CompletedTask;
     }
