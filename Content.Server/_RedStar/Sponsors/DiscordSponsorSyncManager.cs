@@ -56,7 +56,6 @@ public sealed partial class DiscordSponsorSyncManager : IPostInjectInit
         switch (discord.Status)
         {
             case DiscordAuthLookupStatus.NotFound:
-                await ApplyRolesAsync(userId, []);
                 return;
 
             case DiscordAuthLookupStatus.Failed:
