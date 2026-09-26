@@ -65,6 +65,7 @@ namespace Content.Server.Connection
         [Dependency] private IAdminManager _adminManager = default!;
         [Dependency] private IEntityManager _entityManager = default!;
         [Dependency] private ServerSponsorManager _sponsorManager = default!; // RS14
+        [Dependency] private DiscordSponsorSyncManager _discordSponsorSync = default!; // RS14
 
         private ServerGameTicker? _ticker;
 
@@ -308,10 +309,12 @@ namespace Content.Server.Connection
             // RS14-start
             if (softPlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) &&
                 !adminBypass &&
-                !wasInGame &&
-                !await _sponsorManager.HasPriorityJoinAsync(userId))
+                !wasInGame)
             {
-                return (ConnectionDenyReason.Full, Loc.GetString("soft-player-cap-full"), null);
+                await _discordSponsorSync.SyncPlayerAsync(userId);
+
+                if (!await _sponsorManager.HasPriorityJoinAsync(userId))
+                    return (ConnectionDenyReason.Full, Loc.GetString("soft-player-cap-full"), null);
             }
             // RS14-end
 
