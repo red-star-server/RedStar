@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Shared.Atmos;
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Traits.Components;
+using Content.Shared.Chemistry.EntitySystems; // RS14
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects;
 using JetBrains.Annotations;
@@ -25,9 +26,19 @@ public sealed partial class PlantMutationSystem : EntitySystem
     [Dependency] private PlantSystem _plant = default!;
     [Dependency] private PlantTraySystem _plantTray = default!;
     [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutions = default!; // RS14
 
     [Dependency] private EntityQuery<PlantChemicalsComponent> _chemicalsQuery;
     [Dependency] private EntityQuery<PlantComponent> _plantQuery;
+
+    // RS14-start: validate directed species mutations once the prototypes are loaded.
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnMutationPrototypesReloaded);
+        ValidateSpeciesMutationGraph();
+    }
+    // RS14-end
 
     /// <summary>
     /// For each mutation table, go through each mutation.
@@ -64,22 +75,18 @@ public sealed partial class PlantMutationSystem : EntitySystem
     /// Replaces the current plant species with a new one from prototype,
     /// preserving lifecycle state.
     /// </summary>
-    [PublicAPI]
-    public void SpeciesChange(Entity<PlantDataComponent?> oldPlant, EntProtoId newPlantProto)
+    public bool SpeciesChange(Entity<PlantDataComponent?> oldPlant, EntProtoId newPlantProto) // RS14
     {
         if (!Resolve(oldPlant, ref oldPlant.Comp, false))
-            return;
-
-        if (oldPlant.Comp.MutationPrototypes.Count == 0)
-            return;
+            return false;
 
         if (!_net.IsServer)
-            return;
+            return false;
 
         // Clone state via snapshot and apply to new plant.
         var snapshot = _botany.ClonePlantSnapshotData(oldPlant.Owner, cloneLifecycle: true);
         if (snapshot == null)
-            return;
+            return false;
 
         var newPlantUid = SpawnAtPosition(newPlantProto, Transform(oldPlant.Owner).Coordinates);
         _botany.ApplyPlantSnapshotData(snapshot, newPlantUid, cloneLifecycle: true);
@@ -94,6 +101,7 @@ public sealed partial class PlantMutationSystem : EntitySystem
 
         _plant.ForceUpdate(newPlantUid);
         QueueDel(oldPlant);
+        return true; // RS14
     }
 
     private void ChemicalsSpeciesChange(EntityUid plantUid, EntProtoId plantProto)
@@ -112,7 +120,7 @@ public sealed partial class PlantMutationSystem : EntitySystem
         }
 
         // Removing the inherent chemicals from the old species. Leaving mutated/crossbred ones intact.
-        foreach (var originalChem in oldPlant)
+        foreach (var originalChem in oldPlant.ToArray()) // RS14: removal must not invalidate enumeration.
         {
             if (!newPlant.ContainsKey(originalChem.Key) && originalChem.Value.Inherent)
                 oldPlant.Remove(originalChem.Key);
@@ -173,7 +181,7 @@ public sealed partial class PlantMutationSystem : EntitySystem
         }
 
         // if the target plant has chemical that the pollen in swab does not, 50% chance to remove it.
-        foreach (var thisChem in val)
+        foreach (var thisChem in val.ToArray()) // RS14: crossbreeding may remove entries.
         {
             if (!other.ContainsKey(thisChem.Key))
             {
@@ -212,7 +220,7 @@ public sealed partial class PlantMutationSystem : EntitySystem
             }
         }
         // if the target plant has gas that the pollen in swab does not, 50% chance to remove it.
-        foreach (var thisGas in val)
+        foreach (var thisGas in val.ToArray()) // RS14: crossbreeding may remove entries.
         {
             if (!other.ContainsKey(thisGas.Key))
             {
