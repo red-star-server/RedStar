@@ -24,6 +24,21 @@ public enum DiscordAuthOpenResult
     Failed
 }
 
+public enum DiscordAuthLookupStatus
+{
+    Found,
+    NotFound,
+    Failed
+}
+
+public readonly record struct DiscordIdLookupResult(
+    DiscordAuthLookupStatus Status,
+    ulong DiscordId = 0);
+
+public readonly record struct DiscordUserLookupResult(
+    DiscordAuthLookupStatus Status,
+    NetUserId UserId = default);
+
 public sealed partial class DiscordAuthManager : IPostInjectInit
 {
     [Dependency] private IConfigurationManager _cfg = default!;
@@ -37,6 +52,8 @@ public sealed partial class DiscordAuthManager : IPostInjectInit
 
     private bool _enabled;
     private string _apiUrl = string.Empty;
+
+    public event Action<NetUserId>? Linked;
 
     private enum DiscordLinkStatus
     {
@@ -122,16 +139,162 @@ public sealed partial class DiscordAuthManager : IPostInjectInit
         return DiscordAuthOpenResult.Opened;
     }
 
+    public async Task<DiscordIdLookupResult> GetDiscordIdAsync(
+        NetUserId userId,
+        CancellationToken cancel = default)
+    {
+        if (!_enabled)
+            return new DiscordIdLookupResult(DiscordAuthLookupStatus.Failed);
+
+        if (!IsApiUrlValid())
+            return new DiscordIdLookupResult(DiscordAuthLookupStatus.Failed);
+
+        try
+        {
+            using var request = new HttpRequestMessage(
+                HttpMethod.Get,
+                $"{_apiUrl}/identify?method=uid&id={userId}");
+
+            using var response = await _http.SendAsync(request, cancel);
+
+            if (response.StatusCode == HttpStatusCode.NotFound)
+                return new DiscordIdLookupResult(DiscordAuthLookupStatus.NotFound);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                _sawmill.Warning(
+                    $"Unexpected Discord auth response while resolving Discord ID for {userId}: " +
+                    $"{(int) response.StatusCode} {response.StatusCode}");
+
+                return new DiscordIdLookupResult(DiscordAuthLookupStatus.Failed);
+            }
+
+            var data = await response.Content.ReadFromJsonAsync<DiscordIdentifyResponse>(
+                cancellationToken: cancel);
+
+            if (data?.Id != null && ulong.TryParse(data.Id, out var discordId))
+            {
+                return new DiscordIdLookupResult(
+                    DiscordAuthLookupStatus.Found,
+                    discordId);
+            }
+
+            _sawmill.Warning(
+                $"Discord auth service returned an invalid Discord ID for {userId}.");
+
+            return new DiscordIdLookupResult(DiscordAuthLookupStatus.Failed);
+        }
+        catch (HttpRequestException e)
+        {
+            _sawmill.Error(
+                $"Failed to resolve Discord ID for {userId}: {e.Message}");
+
+            return new DiscordIdLookupResult(DiscordAuthLookupStatus.Failed);
+        }
+        catch (JsonException e)
+        {
+            _sawmill.Error(
+                $"Discord auth service returned invalid JSON while resolving Discord ID for {userId}: {e.Message}");
+
+            return new DiscordIdLookupResult(DiscordAuthLookupStatus.Failed);
+        }
+        catch (NotSupportedException e)
+        {
+            _sawmill.Error(
+                $"Discord auth service returned an unsupported response while resolving Discord ID for {userId}: {e.Message}");
+
+            return new DiscordIdLookupResult(DiscordAuthLookupStatus.Failed);
+        }
+        catch (OperationCanceledException e)
+        {
+            _sawmill.Warning(
+                $"Discord ID lookup was cancelled or timed out for {userId}: {e.Message}");
+
+            return new DiscordIdLookupResult(DiscordAuthLookupStatus.Failed);
+        }
+    }
+
+    public async Task<DiscordUserLookupResult> GetUserIdAsync(
+        ulong discordId,
+        CancellationToken cancel = default)
+    {
+        if (!_enabled)
+            return new DiscordUserLookupResult(DiscordAuthLookupStatus.Failed);
+
+        if (!IsApiUrlValid())
+            return new DiscordUserLookupResult(DiscordAuthLookupStatus.Failed);
+
+        try
+        {
+            using var request = new HttpRequestMessage(
+                HttpMethod.Get,
+                $"{_apiUrl}/uuid?method=discord&id={discordId}");
+
+            using var response = await _http.SendAsync(request, cancel);
+
+            if (response.StatusCode == HttpStatusCode.NotFound)
+                return new DiscordUserLookupResult(DiscordAuthLookupStatus.NotFound);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                _sawmill.Warning(
+                    $"Unexpected Discord auth response while resolving SS14 account for Discord user {discordId}: " +
+                    $"{(int) response.StatusCode} {response.StatusCode}");
+
+                return new DiscordUserLookupResult(DiscordAuthLookupStatus.Failed);
+            }
+
+            var data = await response.Content.ReadFromJsonAsync<DiscordUuidResponse>(
+                cancellationToken: cancel);
+
+            if (data?.Uuid != null && Guid.TryParse(data.Uuid, out var guid))
+            {
+                return new DiscordUserLookupResult(
+                    DiscordAuthLookupStatus.Found,
+                    new NetUserId(guid));
+            }
+
+            _sawmill.Warning(
+                $"Discord auth service returned an invalid SS14 UUID for Discord user {discordId}.");
+
+            return new DiscordUserLookupResult(DiscordAuthLookupStatus.Failed);
+        }
+        catch (HttpRequestException e)
+        {
+            _sawmill.Error(
+                $"Failed to resolve SS14 account for Discord user {discordId}: {e.Message}");
+
+            return new DiscordUserLookupResult(DiscordAuthLookupStatus.Failed);
+        }
+        catch (JsonException e)
+        {
+            _sawmill.Error(
+                $"Discord auth service returned invalid JSON while resolving SS14 account for Discord user {discordId}: {e.Message}");
+
+            return new DiscordUserLookupResult(DiscordAuthLookupStatus.Failed);
+        }
+        catch (NotSupportedException e)
+        {
+            _sawmill.Error(
+                $"Discord auth service returned an unsupported response while resolving SS14 account for Discord user {discordId}: {e.Message}");
+
+            return new DiscordUserLookupResult(DiscordAuthLookupStatus.Failed);
+        }
+        catch (OperationCanceledException e)
+        {
+            _sawmill.Warning(
+                $"SS14 account lookup was cancelled or timed out for Discord user {discordId}: {e.Message}");
+
+            return new DiscordUserLookupResult(DiscordAuthLookupStatus.Failed);
+        }
+    }
+
     private async Task<DiscordLinkStatus> GetLinkStatusAsync(
         NetUserId userId,
         CancellationToken cancel = default)
     {
-        if (!Uri.TryCreate(_apiUrl, UriKind.Absolute, out var apiUri) ||
-            apiUri.Scheme is not ("http" or "https"))
-        {
-            _sawmill.Warning("Discord auth is enabled, but API URL is not a valid HTTP(S) URL.");
+        if (!IsApiUrlValid())
             return DiscordLinkStatus.Failed;
-        }
 
         try
         {
@@ -256,6 +419,20 @@ public sealed partial class DiscordAuthManager : IPostInjectInit
         _net.ServerSendMessage(
             new MsgDiscordAuthLinked(),
             msg.MsgChannel);
+
+        Linked?.Invoke(msg.MsgChannel.UserId);
+    }
+
+    private bool IsApiUrlValid()
+    {
+        if (Uri.TryCreate(_apiUrl, UriKind.Absolute, out var apiUri) &&
+            apiUri.Scheme is "http" or "https")
+            return true;
+
+        _sawmill.Warning(
+            "Discord auth is enabled, but API URL is not a valid HTTP(S) URL.");
+
+        return false;
     }
 
     private void OnApiKeyChanged(string value)
@@ -289,4 +466,6 @@ public sealed partial class DiscordAuthManager : IPostInjectInit
     }
 
     private sealed record DiscordLinkResponse(string Link);
+    private sealed record DiscordIdentifyResponse(string Id);
+    private sealed record DiscordUuidResponse(string Uuid);
 }
