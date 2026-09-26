@@ -38,6 +38,9 @@ internal sealed partial class DiscordLinkCommand : LocalizedCommands
                 shell.WriteError(Loc.GetString("discord-auth-disabled"));
                 break;
 
+            case DiscordAuthOpenResult.Disconnected:
+                break;
+
             case DiscordAuthOpenResult.Failed:
                 shell.WriteError(Loc.GetString("discord-auth-failed"));
                 break;

@@ -7,7 +7,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Shared._RedStar.DiscordAuth;
 using QRCoder;
+using Robust.Server.Player;
 using Robust.Shared.Configuration;
+using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 
@@ -18,6 +20,7 @@ public enum DiscordAuthOpenResult
     Opened,
     AlreadyLinked,
     Disabled,
+    Disconnected,
     Failed
 }
 
@@ -25,6 +28,7 @@ public sealed partial class DiscordAuthManager : IPostInjectInit
 {
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IServerNetManager _net = default!;
+    [Dependency] private IPlayerManager _players = default!;
     [Dependency] private ILogManager _log = default!;
 
     private readonly HttpClient _http = new();
@@ -66,10 +70,13 @@ public sealed partial class DiscordAuthManager : IPostInjectInit
         _net.RegisterNetMessage<MsgDiscordAuthLink>();
         _net.RegisterNetMessage<MsgDiscordAuthLinked>();
         _net.RegisterNetMessage<MsgDiscordAuthCheck>(OnAuthCheck);
+
+        _players.PlayerStatusChanged += OnPlayerStatusChanged;
     }
 
     public void Shutdown()
     {
+        _players.PlayerStatusChanged -= OnPlayerStatusChanged;
         _http.Dispose();
     }
 
@@ -100,6 +107,9 @@ public sealed partial class DiscordAuthManager : IPostInjectInit
             _sawmill.Warning($"Failed to get Discord auth link for {session.UserId}.");
             return DiscordAuthOpenResult.Failed;
         }
+
+        if (!session.Channel.IsConnected)
+            return DiscordAuthOpenResult.Disconnected;
 
         _net.ServerSendMessage(
             new MsgDiscordAuthLink
@@ -150,7 +160,9 @@ public sealed partial class DiscordAuthManager : IPostInjectInit
         }
         catch (OperationCanceledException e)
         {
-            _sawmill.Warning($"Discord auth status request was cancelled or timed out: {e.Message}");
+            _sawmill.Warning(
+                $"Discord auth status request was cancelled or timed out: {e.Message}");
+
             return DiscordLinkStatus.Failed;
         }
     }
@@ -182,28 +194,55 @@ public sealed partial class DiscordAuthManager : IPostInjectInit
                 linkUri.Scheme is "http" or "https")
                 return link;
 
-            _sawmill.Warning($"Discord auth service returned an invalid link for {userId}.");
+            _sawmill.Warning(
+                $"Discord auth service returned an invalid link for {userId}.");
+
             return null;
         }
         catch (HttpRequestException e)
         {
-            _sawmill.Error($"Failed to request Discord auth link for {userId}: {e.Message}");
+            _sawmill.Error(
+                $"Failed to request Discord auth link for {userId}: {e.Message}");
+
             return null;
         }
         catch (JsonException e)
         {
-            _sawmill.Error($"Discord auth service returned invalid JSON for {userId}: {e.Message}");
+            _sawmill.Error(
+                $"Discord auth service returned invalid JSON for {userId}: {e.Message}");
+
             return null;
         }
         catch (NotSupportedException e)
         {
-            _sawmill.Error($"Discord auth service returned an unsupported response for {userId}: {e.Message}");
+            _sawmill.Error(
+                $"Discord auth service returned an unsupported response for {userId}: {e.Message}");
+
             return null;
         }
         catch (OperationCanceledException e)
         {
-            _sawmill.Warning($"Discord auth link request was cancelled or timed out for {userId}: {e.Message}");
+            _sawmill.Warning(
+                $"Discord auth link request was cancelled or timed out for {userId}: {e.Message}");
+
             return null;
+        }
+    }
+
+    private async void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs args)
+    {
+        if (args.NewStatus != SessionStatus.Connected)
+            return;
+
+        if (!_enabled)
+            return;
+
+        var result = await OpenLinkAsync(args.Session);
+
+        if (result == DiscordAuthOpenResult.Failed)
+        {
+            _sawmill.Warning(
+                $"Failed to automatically open Discord auth for {args.Session.UserId}.");
         }
     }
 
@@ -242,7 +281,9 @@ public sealed partial class DiscordAuthManager : IPostInjectInit
         }
         catch (Exception e)
         {
-            _sawmill.Error($"Failed to generate Discord auth QR code: {e.Message}");
+            _sawmill.Error(
+                $"Failed to generate Discord auth QR code: {e.Message}");
+
             return null;
         }
     }
