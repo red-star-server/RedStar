@@ -34,6 +34,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Server._Corvax.TTS;
+using Content.Server._RedStar.DiscordAuth;
 
 namespace Content.Server.Entry
 {
@@ -79,6 +80,7 @@ namespace Content.Server.Entry
         [Dependency] private ServerUpdateManager _updateManager = default!;
         [Dependency] private ServerFeedbackManager _feedbackManager = null!;
         [Dependency] private TTSManager _tts = default!; // Corvax-TTS
+        [Dependency] private DiscordAuthManager _discordAuth = default!; // RS14
 
         public override void PreInit()
         {
@@ -163,6 +165,7 @@ namespace Content.Server.Entry
             _rules.Initialize();
             _discordLink.Initialize();
             _discordChatLink.Initialize();
+            _discordAuth.Initialize(); // RS14
             _euiManager.Initialize();
             _gameMap.Initialize();
             _entSys.GetEntitySystem<ServerGameTicker>().PostInitialize();
@@ -209,6 +212,7 @@ namespace Content.Server.Entry
             // We don't care when or how this finishes, just spin the task off into the void.
             _ = _discordLink.Shutdown();
             _discordChatLink.Shutdown();
+            _discordAuth.Shutdown(); // RS14
         }
 
         private static void LoadConfigPresets(IConfigurationManager cfg, IResourceManager res, ISawmill sawmill)

@@ -1,3 +1,4 @@
+using Content.Client._RedStar.DiscordAuth;
 using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
@@ -78,6 +79,7 @@ namespace Content.Client.Entry
         [Dependency] private IEntitySystemManager _entitySystemManager = default!;
         [Dependency] private ClientsidePlaytimeTrackingManager _clientsidePlaytimeManager = default!;
         [Dependency] private ClientFeedbackManager _feedbackManager = null!;
+        [Dependency] private DiscordAuthManager _discordAuthManager = default!; // RS14
 
         public override void PreInit()
         {
@@ -139,6 +141,7 @@ namespace Content.Client.Entry
             _jobRequirements.Initialize();
             _playbackMan.Initialize();
             _clientsidePlaytimeManager.Initialize();
+            _discordAuthManager.Initialize(); // RS14
 
             //AUTOSCALING default Setup!
             _configManager.SetCVar("interface.resolutionAutoScaleUpperCutoffX", 1080);
