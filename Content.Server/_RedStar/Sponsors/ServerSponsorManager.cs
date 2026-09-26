@@ -69,17 +69,6 @@ public sealed partial class ServerSponsorManager : ISponsorManager
         _sponsors.Remove(userId);
     }
 
-    public async Task<bool> SetOocColorAsync(NetUserId userId, Color? color)
-    {
-        var data = await EnsureLoaded(userId);
-        if (data == null || !SponsorTierHelpers.HasOocColor(_prototypes, data))
-            return false;
-
-        await _db.SetSponsorOocColorAsync(userId, color);
-        _sponsors[userId] = data with { OocColor = color };
-        return true;
-    }
-
     public async Task<bool> SetGhostColorAsync(NetUserId userId, Color? color)
     {
         var data = await EnsureLoaded(userId);
@@ -97,13 +86,8 @@ public sealed partial class ServerSponsorManager : ISponsorManager
 
     public bool TryGetOocColor(NetUserId userId, out Color color)
     {
-        if (_sponsors.TryGetValue(userId, out var data) &&
-            data.OocColor is { } value &&
-            SponsorTierHelpers.HasOocColor(_prototypes, data))
-        {
-            color = value;
-            return true;
-        }
+        if (_sponsors.TryGetValue(userId, out var data))
+            return SponsorTierHelpers.TryGetOocColor(_prototypes, data, out color);
 
         color = default;
         return false;
