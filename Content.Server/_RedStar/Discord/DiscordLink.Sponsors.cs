@@ -3,6 +3,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using NetCord;
+using NetCord.Gateway;
 using NetCord.Rest;
 
 namespace Content.Server.Discord.DiscordLink;
@@ -21,17 +22,24 @@ public readonly record struct DiscordMemberRolesResult(
 public sealed partial class DiscordLink
 {
     public event Action<GuildUser>? OnGuildUserUpdated;
+    public event Action? OnDiscordReady;
 
     public void InitializeSponsorTracking()
     {
-        if (_client != null)
-            _client.GuildUserUpdate += OnGuildUserUpdateInternal;
+        if (_client == null)
+            return;
+
+        _client.GuildUserUpdate += OnGuildUserUpdateInternal;
+        _client.Ready += OnDiscordReadyInternal;
     }
 
     public void ShutdownSponsorTracking()
     {
-        if (_client != null)
-            _client.GuildUserUpdate -= OnGuildUserUpdateInternal;
+        if (_client == null)
+            return;
+
+        _client.GuildUserUpdate -= OnGuildUserUpdateInternal;
+        _client.Ready -= OnDiscordReadyInternal;
     }
 
     public async Task<DiscordMemberRolesResult> GetMemberRolesAsync(
@@ -72,6 +80,12 @@ public sealed partial class DiscordLink
         if (user.GuildId == _guildId)
             OnGuildUserUpdated?.Invoke(user);
 
+        return ValueTask.CompletedTask;
+    }
+
+    private ValueTask OnDiscordReadyInternal(ReadyEventArgs args)
+    {
+        OnDiscordReady?.Invoke();
         return ValueTask.CompletedTask;
     }
 }

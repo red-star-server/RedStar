@@ -91,5 +91,6 @@ internal static class ServerContentIoC
         deps.Register<ServerSponsorManager>(); // RS14
         deps.Register<ISponsorManager, ServerSponsorManager>(); // RS14
         deps.Register<DiscordAuthManager>(); // RS14
+        deps.Register<DiscordSponsorSyncManager>(); // RS14
     }
 }
