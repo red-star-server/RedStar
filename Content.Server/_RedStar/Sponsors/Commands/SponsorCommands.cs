@@ -79,53 +79,6 @@ internal sealed partial class SponsorRemoveCommand : LocalizedCommands
 }
 
 [AnyCommand]
-internal sealed partial class SponsorOocColorCommand : LocalizedCommands
-{
-    [Dependency] private ServerSponsorManager _sponsors = default!;
-    [Dependency] private IEntityManager _entities = default!;
-
-    public override string Command => "sponsor:ooc";
-    public override string Description => "Sets your sponsor OOC name color.";
-    public override string Help => "sponsor:ooc <#RRGGBB|reset>";
-
-    public override async void Execute(IConsoleShell shell, string argStr, string[] args)
-    {
-        if (shell.Player is not { } player)
-        {
-            shell.WriteError(Loc.GetString("shell-cannot-run-command-from-server"));
-            return;
-        }
-
-        if (args.Length != 1)
-        {
-            shell.WriteError(Help);
-            return;
-        }
-
-        Color? color = null;
-        if (!args[0].Equals("reset", StringComparison.OrdinalIgnoreCase))
-        {
-            if (!Color.TryFromHex(args[0], out var parsed))
-            {
-                shell.WriteError(Loc.GetString("shell-invalid-color-hex"));
-                return;
-            }
-
-            color = parsed;
-        }
-
-        if (!await _sponsors.SetOocColorAsync(player.UserId, color))
-        {
-            shell.WriteError(Loc.GetString("sponsor-color-not-available"));
-            return;
-        }
-
-        await _entities.System<SponsorSystem>().SyncPlayerAsync(player.UserId);
-        shell.WriteLine(Loc.GetString(color == null ? "sponsor-color-reset" : "sponsor-color-updated"));
-    }
-}
-
-[AnyCommand]
 internal sealed partial class SponsorGhostColorCommand : LocalizedCommands
 {
     [Dependency] private ServerSponsorManager _sponsors = default!;

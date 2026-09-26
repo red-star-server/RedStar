@@ -1,12 +1,37 @@
+# Сочувствующий
 - type: sponsorTier
   id: Sympathizer
-  name: Сочувствующий
-  oocColor: true
-  ghostColor: true
+  discordRoleId: 1552947003661754378
+  oocColor: "#b34a3b"
 
+# Ударник
 - type: sponsorTier
-  id: Comrade
-  name: Товарищ
+  id: ShockWorker
   parent: Sympathizer
+  discordRoleId: 1552947847572234310
   priorityJoin: true
-  loadouts: []
+  oocColor: "#e09f3e"
+
+# Передовик
+- type: sponsorTier
+  id: FrontRunner
+  parent: ShockWorker
+  discordRoleId: 1552947972268892220
+  priorityJoin: true
+  oocColor: "#2b6b56"
+
+# Меценат
+- type: sponsorTier
+  id: Patron
+  parent: FrontRunner
+  discordRoleId: 1552948097733107722
+  priorityJoin: true
+  oocColor: "#3a6b88"
+
+# Буржуазия
+- type: sponsorTier
+  id: Bourgeoisie
+  parent: Patron
+  discordRoleId: 1552952993291305031
+  priorityJoin: true
+  oocColor: "#6a1b29"

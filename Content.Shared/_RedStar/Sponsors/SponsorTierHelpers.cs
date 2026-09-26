@@ -30,14 +30,18 @@ public static class SponsorTierHelpers
         return false;
     }
 
-    public static bool HasOocColor(IPrototypeManager prototypes, SponsorData? data)
+    public static bool TryGetOocColor(IPrototypeManager prototypes, SponsorData? data, out Color color)
     {
         foreach (var tier in EnumerateTiers(prototypes, data))
         {
-            if (tier.OocColor)
-                return true;
+            if (tier.OocColor is not { } tierColor)
+                continue;
+
+            color = tierColor;
+            return true;
         }
 
+        color = default;
         return false;
     }
 
