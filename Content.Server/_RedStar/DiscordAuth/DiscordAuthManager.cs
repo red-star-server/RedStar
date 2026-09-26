@@ -7,7 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Shared._RedStar.DiscordAuth;
 using QRCoder;
-using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -26,7 +25,6 @@ public sealed partial class DiscordAuthManager : IPostInjectInit
 {
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IServerNetManager _net = default!;
-    [Dependency] private IPlayerManager _players = default!;
     [Dependency] private ILogManager _log = default!;
 
     private readonly HttpClient _http = new();
@@ -182,7 +180,7 @@ public sealed partial class DiscordAuthManager : IPostInjectInit
             if (data?.Link is { } link &&
                 Uri.TryCreate(link, UriKind.Absolute, out var linkUri) &&
                 linkUri.Scheme is "http" or "https")
-                return data.Link;
+                return link;
 
             _sawmill.Warning($"Discord auth service returned an invalid link for {userId}.");
             return null;
@@ -216,12 +214,9 @@ public sealed partial class DiscordAuthManager : IPostInjectInit
         if (status != DiscordLinkStatus.Linked)
             return;
 
-        if (!_players.TryGetSessionById(msg.MsgChannel.UserId, out var session))
-            return;
-
         _net.ServerSendMessage(
             new MsgDiscordAuthLinked(),
-            session.Channel);
+            msg.MsgChannel);
     }
 
     private void OnApiKeyChanged(string value)
