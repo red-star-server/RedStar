@@ -1,3 +1,4 @@
+using Content.Client._RedStar.DiscordAuth;
 using Content.Client._RedStar.Sponsors;
 using Content.Client.Administration.Managers;
 using Content.Client.Audio.Midi;
@@ -72,6 +73,7 @@ namespace Content.Client.IoC
             collection.Register<MidiFileCollectionManager>();
             collection.Register<ClientSponsorManager>(); // RS14
             collection.Register<ISponsorManager, ClientSponsorManager>(); // RS14
+            collection.Register<DiscordAuthManager>(); // RS14
         }
     }
 }

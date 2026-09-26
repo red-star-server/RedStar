@@ -1,4 +1,5 @@
 using Content.Server._Corvax.TTS;
+using Content.Server._RedStar.DiscordAuth;
 using Content.Server._RedStar.Sponsors;
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
@@ -89,5 +90,6 @@ internal static class ServerContentIoC
         deps.Register<TTSManager>(); // Corvax-TTS
         deps.Register<ServerSponsorManager>(); // RS14
         deps.Register<ISponsorManager, ServerSponsorManager>(); // RS14
+        deps.Register<DiscordAuthManager>(); // RS14
     }
 }
