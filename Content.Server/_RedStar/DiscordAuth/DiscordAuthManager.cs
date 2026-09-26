@@ -1,6 +1,8 @@
 ﻿using System.Net;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Shared._RedStar.DiscordAuth;
@@ -8,6 +10,7 @@ using QRCoder;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 
 namespace Content.Server._RedStar.DiscordAuth;
 
@@ -21,10 +24,10 @@ public enum DiscordAuthOpenResult
 
 public sealed partial class DiscordAuthManager : IPostInjectInit
 {
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IServerNetManager _net = default!;
-    [Dependency] private readonly IPlayerManager _players = default!;
-    [Dependency] private readonly ILogManager _log = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IServerNetManager _net = default!;
+    [Dependency] private IPlayerManager _players = default!;
+    [Dependency] private ILogManager _log = default!;
 
     private readonly HttpClient _http = new();
 
@@ -115,9 +118,10 @@ public sealed partial class DiscordAuthManager : IPostInjectInit
         NetUserId userId,
         CancellationToken cancel = default)
     {
-        if (string.IsNullOrWhiteSpace(_apiUrl))
+        if (!Uri.TryCreate(_apiUrl, UriKind.Absolute, out var apiUri) ||
+            apiUri.Scheme is not ("http" or "https"))
         {
-            _sawmill.Warning("Discord auth is enabled, but API URL is not configured.");
+            _sawmill.Warning("Discord auth is enabled, but API URL is not a valid HTTP(S) URL.");
             return DiscordLinkStatus.Failed;
         }
 
@@ -146,6 +150,11 @@ public sealed partial class DiscordAuthManager : IPostInjectInit
             _sawmill.Error($"Discord auth service is unavailable: {e.Message}");
             return DiscordLinkStatus.Failed;
         }
+        catch (OperationCanceledException e)
+        {
+            _sawmill.Warning($"Discord auth status request was cancelled or timed out: {e.Message}");
+            return DiscordLinkStatus.Failed;
+        }
     }
 
     private async Task<string?> GetLinkAsync(
@@ -170,11 +179,32 @@ public sealed partial class DiscordAuthManager : IPostInjectInit
             var data = await response.Content.ReadFromJsonAsync<DiscordLinkResponse>(
                 cancellationToken: cancel);
 
-            return data?.Link;
+            if (data?.Link is { } link &&
+                Uri.TryCreate(link, UriKind.Absolute, out var linkUri) &&
+                linkUri.Scheme is "http" or "https")
+                return data.Link;
+
+            _sawmill.Warning($"Discord auth service returned an invalid link for {userId}.");
+            return null;
         }
         catch (HttpRequestException e)
         {
-            _sawmill.Error($"Failed to request Discord auth link: {e.Message}");
+            _sawmill.Error($"Failed to request Discord auth link for {userId}: {e.Message}");
+            return null;
+        }
+        catch (JsonException e)
+        {
+            _sawmill.Error($"Discord auth service returned invalid JSON for {userId}: {e.Message}");
+            return null;
+        }
+        catch (NotSupportedException e)
+        {
+            _sawmill.Error($"Discord auth service returned an unsupported response for {userId}: {e.Message}");
+            return null;
+        }
+        catch (OperationCanceledException e)
+        {
+            _sawmill.Warning($"Discord auth link request was cancelled or timed out for {userId}: {e.Message}");
             return null;
         }
     }

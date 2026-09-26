@@ -80,7 +80,7 @@ namespace Content.Server.Entry
         [Dependency] private ServerUpdateManager _updateManager = default!;
         [Dependency] private ServerFeedbackManager _feedbackManager = null!;
         [Dependency] private TTSManager _tts = default!; // Corvax-TTS
-        [Dependency] private DiscordAuthManager _discordAuth = default!; // Corvax-TTS
+        [Dependency] private DiscordAuthManager _discordAuth = default!; // RS14
 
         public override void PreInit()
         {
@@ -165,8 +165,6 @@ namespace Content.Server.Entry
             _rules.Initialize();
             _discordLink.Initialize();
             _discordChatLink.Initialize();
-            _discordLink.Initialize(); // RS14
-            _discordChatLink.Initialize(); // RS14
             _discordAuth.Initialize(); // RS14
             _euiManager.Initialize();
             _gameMap.Initialize();

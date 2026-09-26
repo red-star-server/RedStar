@@ -5,15 +5,11 @@ using Robust.Shared.Network;
 
 namespace Content.Client._RedStar.DiscordAuth;
 
-public sealed partial class DiscordAuthManager : IPostInjectInit
+public sealed partial class DiscordAuthManager
 {
     [Dependency] private IClientNetManager _net = default!;
 
     private DiscordAuthWindow? _window;
-
-    public void PostInject()
-    {
-    }
 
     public void Initialize()
     {
