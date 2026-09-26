@@ -1337,6 +1337,10 @@ namespace Content.Server.Database.Migrations.Sqlite
 
             modelBuilder.Entity("Content.Server.Database.Sponsor", b =>
                 {
+                    b.Property<bool>("DiscordManaged")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("discord_managed");
+
                     b.Property<Guid>("PlayerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT")

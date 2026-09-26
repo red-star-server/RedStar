@@ -1414,6 +1414,10 @@ namespace Content.Server.Database.Migrations.Postgres
 
             modelBuilder.Entity("Content.Server.Database.Sponsor", b =>
                 {
+                    b.Property<bool>("DiscordManaged")
+                        .HasColumnType("boolean")
+                        .HasColumnName("discord_managed");
+
                     b.Property<Guid>("PlayerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
