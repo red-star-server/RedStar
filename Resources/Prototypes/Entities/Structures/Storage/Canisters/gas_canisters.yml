@@ -145,18 +145,20 @@
     - type: Sprite
       layers:
       - state: yellow
-      - state: paper
-        visible: false
-        map: [ "enum.PaperLabelVisuals.Layer" ]
-      - state: integrity-unshaded-0
-        map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
-        shader: unshaded
-        visible: false
-      - state: mask-yellow
-        map: [ "enum.MaxPressureVisualLayers.Base" ]
-        visible: false
-    - type: MaxPressureVisuals
-      integrityMask: mask-yellow
+    #RS14-start
+    #   - state: paper
+    #     visible: false
+    #     map: [ "enum.PaperLabelVisuals.Layer" ]
+    #   - state: integrity-unshaded-0
+    #     map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
+    #     shader: unshaded
+    #     visible: false
+    #   - state: mask-yellow
+    #     map: [ "enum.MaxPressureVisualLayers.Base" ]
+    #     visible: false
+    # - type: MaxPressureVisuals
+    #   integrityMask: mask-yellow
+    #RS14-end
     - type: GasCanister
       air:
         volume: 1500
@@ -183,18 +185,20 @@
     sprite: Structures/Storage/canister.rsi
     layers:
     - state: grey
-    - state: paper
-      visible: false
-      map: [ "enum.PaperLabelVisuals.Layer" ]
-    - state: integrity-unshaded-0
-      map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
-      shader: unshaded
-      visible: false
-    - state: mask-grey
-      map: [ "enum.MaxPressureVisualLayers.Base" ]
-      visible: false
-  - type: MaxPressureVisuals
-    integrityMask: mask-grey
+  #RS14-start
+  #   - state: paper
+  #     visible: false
+  #     map: [ "enum.PaperLabelVisuals.Layer" ]
+  #   - state: integrity-unshaded-0
+  #     map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
+  #     shader: unshaded
+  #     visible: false
+  #   - state: mask-grey
+  #     map: [ "enum.MaxPressureVisualLayers.Base" ]
+  #     visible: false
+  # - type: MaxPressureVisuals
+  #   integrityMask: mask-grey
+  #RS14-end
   - type: GasCanister
     air:
       volume: 1500
@@ -221,18 +225,20 @@
   - type: Sprite
     layers:
     - state: blue
-    - state: paper
-      visible: false
-      map: [ "enum.PaperLabelVisuals.Layer" ]
-    - state: integrity-unshaded-0
-      map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
-      shader: unshaded
-      visible: false
-    - state: mask-blue
-      map: [ "enum.MaxPressureVisualLayers.Base" ]
-      visible: false
-  - type: MaxPressureVisuals
-    integrityMask: mask-blue
+  #RS14-start
+  #   - state: paper
+  #     visible: false
+  #     map: [ "enum.PaperLabelVisuals.Layer" ]
+  #   - state: integrity-unshaded-0
+  #     map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
+  #     shader: unshaded
+  #     visible: false
+  #   - state: mask-blue
+  #     map: [ "enum.MaxPressureVisualLayers.Base" ]
+  #     visible: false
+  # - type: MaxPressureVisuals
+  #   integrityMask: mask-blue
+  #RS14-end
   - type: GasCanister
     air:
       volume: 1500
@@ -273,18 +279,20 @@
     - type: Sprite
       layers:
       - state: red
-      - state: paper
-        visible: false
-        map: [ "enum.PaperLabelVisuals.Layer" ]
-      - state: integrity-unshaded-0
-        map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
-        shader: unshaded
-        visible: false
-      - state: mask-red
-        map: [ "enum.MaxPressureVisualLayers.Base" ]
-        visible: false
-    - type: MaxPressureVisuals
-      integrityMask: mask-red
+    #RS14-start
+    #   - state: paper
+    #     visible: false
+    #     map: [ "enum.PaperLabelVisuals.Layer" ]
+    #   - state: integrity-unshaded-0
+    #     map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
+    #     shader: unshaded
+    #     visible: false
+    #   - state: mask-red
+    #     map: [ "enum.MaxPressureVisualLayers.Base" ]
+    #     visible: false
+    # - type: MaxPressureVisuals
+    #   integrityMask: mask-red
+    #RS14-end
     - type: GasCanister
       air:
         volume: 1500
@@ -325,18 +333,20 @@
     - type: Sprite
       layers:
       - state: black
-      - state: paper
-        visible: false
-        map: [ "enum.PaperLabelVisuals.Layer" ]
-      - state: integrity-unshaded-0
-        map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
-        shader: unshaded
-        visible: false
-      - state: mask-black
-        map: [ "enum.MaxPressureVisualLayers.Base" ]
-        visible: false
-    - type: MaxPressureVisuals
-      integrityMask: mask-black
+    #RS14-start
+    #   - state: paper
+    #     visible: false
+    #     map: [ "enum.PaperLabelVisuals.Layer" ]
+    #   - state: integrity-unshaded-0
+    #     map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
+    #     shader: unshaded
+    #     visible: false
+    #   - state: mask-black
+    #     map: [ "enum.MaxPressureVisualLayers.Base" ]
+    #     visible: false
+    # - type: MaxPressureVisuals
+    #   integrityMask: mask-black
+    #RS14-end
     - type: GasCanister
       air:
         volume: 1500
@@ -379,18 +389,20 @@
     - type: Sprite
       layers:
       - state: orange
-      - state: paper
-        visible: false
-        map: [ "enum.PaperLabelVisuals.Layer" ]
-      - state: integrity-unshaded-0
-        map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
-        shader: unshaded
-        visible: false
-      - state: mask-orange
-        map: [ "enum.MaxPressureVisualLayers.Base" ]
-        visible: false
-    - type: MaxPressureVisuals
-      integrityMask: mask-orange
+    #RS14-start
+    #   - state: paper
+    #     visible: false
+    #     map: [ "enum.PaperLabelVisuals.Layer" ]
+    #   - state: integrity-unshaded-0
+    #     map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
+    #     shader: unshaded
+    #     visible: false
+    #   - state: mask-orange
+    #     map: [ "enum.MaxPressureVisualLayers.Base" ]
+    #     visible: false
+    # - type: MaxPressureVisuals
+    #   integrityMask: mask-orange
+    #RS14-end
     - type: GasCanister
       air:
         volume: 1500
@@ -418,18 +430,20 @@
     - type: Sprite
       layers:
       - state: green
-      - state: paper
-        visible: false
-        map: [ "enum.PaperLabelVisuals.Layer" ]
-      - state: integrity-unshaded-0
-        map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
-        shader: unshaded
-        visible: false
-      - state: mask-green
-        map: [ "enum.MaxPressureVisualLayers.Base" ]
-        visible: false
-    - type: MaxPressureVisuals
-      integrityMask: mask-green
+    #RS14-start
+    #   - state: paper
+    #     visible: false
+    #     map: [ "enum.PaperLabelVisuals.Layer" ]
+    #   - state: integrity-unshaded-0
+    #     map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
+    #     shader: unshaded
+    #     visible: false
+    #   - state: mask-green
+    #     map: [ "enum.MaxPressureVisualLayers.Base" ]
+    #     visible: false
+    # - type: MaxPressureVisuals
+    #   integrityMask: mask-green
+    #RS14-end
     - type: GasCanister
       air:
         volume: 1500
@@ -457,18 +471,20 @@
     - type: Sprite
       layers:
       - state: water_vapor
-      - state: paper
-        visible: false
-        map: [ "enum.PaperLabelVisuals.Layer" ]
-      - state: integrity-unshaded-0
-        map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
-        shader: unshaded
-        visible: false
-      - state: mask-water_vapor
-        map: [ "enum.MaxPressureVisualLayers.Base" ]
-        visible: false
-    - type: MaxPressureVisuals
-      integrityMask: mask-water_vapor
+    #RS14-start
+    #   - state: paper
+    #     visible: false
+    #     map: [ "enum.PaperLabelVisuals.Layer" ]
+    #   - state: integrity-unshaded-0
+    #     map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
+    #     shader: unshaded
+    #     visible: false
+    #   - state: mask-water_vapor
+    #     map: [ "enum.MaxPressureVisualLayers.Base" ]
+    #     visible: false
+    # - type: MaxPressureVisuals
+    #   integrityMask: mask-water_vapor
+    #RS14-end
     - type: GasCanister
       air:
         volume: 1500
@@ -494,18 +510,20 @@
     - type: Sprite
       layers:
       - state: greenys
-      - state: paper
-        visible: false
-        map: [ "enum.PaperLabelVisuals.Layer" ]
-      - state: integrity-unshaded-0
-        map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
-        shader: unshaded
-        visible: false
-      - state: mask-greenys
-        map: [ "enum.MaxPressureVisualLayers.Base" ]
-        visible: false
-    - type: MaxPressureVisuals
-      integrityMask: mask-greenys
+    #RS14-start
+    #   - state: paper
+    #     visible: false
+    #     map: [ "enum.PaperLabelVisuals.Layer" ]
+    #   - state: integrity-unshaded-0
+    #     map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
+    #     shader: unshaded
+    #     visible: false
+    #   - state: mask-greenys
+    #     map: [ "enum.MaxPressureVisualLayers.Base" ]
+    #     visible: false
+    # - type: MaxPressureVisuals
+    #   integrityMask: mask-greenys
+    #RS14-end
     - type: GasCanister
       air:
         volume: 1500
@@ -533,18 +551,20 @@
     - type: Sprite
       layers:
       - state: redws
-      - state: paper
-        visible: false
-        map: [ "enum.PaperLabelVisuals.Layer" ]
-      - state: integrity-unshaded-0
-        map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
-        shader: unshaded
-        visible: false
-      - state: mask-redws
-        map: [ "enum.MaxPressureVisualLayers.Base" ]
-        visible: false
-    - type: MaxPressureVisuals
-      integrityMask: mask-redws
+    #RS14-start
+    #   - state: paper
+    #     visible: false
+    #     map: [ "enum.PaperLabelVisuals.Layer" ]
+    #   - state: integrity-unshaded-0
+    #     map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
+    #     shader: unshaded
+    #     visible: false
+    #   - state: mask-redws
+    #     map: [ "enum.MaxPressureVisualLayers.Base" ]
+    #     visible: false
+    # - type: MaxPressureVisuals
+    #   integrityMask: mask-redws
+    #RS14-end
     - type: GasCanister
       air:
         volume: 1500
@@ -572,18 +592,20 @@
   - type: Sprite
     layers:
     - state: frezon
-    - state: paper
-      visible: false
-      map: [ "enum.PaperLabelVisuals.Layer" ]
-    - state: integrity-unshaded-0
-      map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
-      shader: unshaded
-      visible: false
-    - state: mask-frezon
-      map: [ "enum.MaxPressureVisualLayers.Base" ]
-      visible: false
-  - type: MaxPressureVisuals
-    integrityMask: mask-frezon
+  #RS14-start
+  #   - state: paper
+  #     visible: false
+  #     map: [ "enum.PaperLabelVisuals.Layer" ]
+  #   - state: integrity-unshaded-0
+  #     map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
+  #     shader: unshaded
+  #     visible: false
+  #   - state: mask-frezon
+  #     map: [ "enum.MaxPressureVisualLayers.Base" ]
+  #     visible: false
+  # - type: MaxPressureVisuals
+  #   integrityMask: mask-frezon
+  #RS14-end
   - type: GasCanister
     air:
       volume: 1500
