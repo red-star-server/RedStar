@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using Content.Shared._RedStar.DiscordAuth;
 using Robust.Client.Graphics;
 using Robust.Shared.Network;
