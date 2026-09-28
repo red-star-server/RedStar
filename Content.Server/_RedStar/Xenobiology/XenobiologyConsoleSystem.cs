@@ -65,26 +65,26 @@ public sealed partial class XenobiologyConsoleSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnPowerChanged(EntityUid uid, XenobiologyConsoleComponent console, ref PowerChangedEvent args)
+    private void OnPowerChanged(Entity<XenobiologyConsoleComponent> ent, ref PowerChangedEvent args)
     {
         if (!args.Powered)
-            ClearSelection(console);
-        UpdateState(uid, console);
+            ClearSelection(ent.Comp);
+        UpdateState(ent.Owner, ent.Comp);
     }
 
     [SubscribeLocalEvent]
-    private void OnNewLink(EntityUid uid, XenobiologyConsoleComponent console, NewLinkEvent args)
+    private void OnNewLink(Entity<XenobiologyConsoleComponent> ent, ref NewLinkEvent args)
     {
         if (args.SourcePort == ScannerPort)
-            console.NextUpdate = TimeSpan.Zero;
+            ent.Comp.NextUpdate = TimeSpan.Zero;
     }
 
     [SubscribeLocalEvent]
-    private void OnDisconnected(EntityUid uid, XenobiologyConsoleComponent console, PortDisconnectedEvent args)
+    private void OnDisconnected(Entity<XenobiologyConsoleComponent> ent, ref PortDisconnectedEvent args)
     {
         // DeviceLink raises this before removing its link. Refresh on the next update.
         if (args.Port == ScannerPort)
-            console.NextUpdate = TimeSpan.Zero;
+            ent.Comp.NextUpdate = TimeSpan.Zero;
     }
 
     private bool CanControl(EntityUid uid, EntityUid actor)
@@ -160,7 +160,9 @@ public sealed partial class XenobiologyConsoleSystem : EntitySystem
 
         if (console.SelectedScanner is { } scanner && _scannerQuery.TryComp(scanner, out var scannerComp))
         {
-            interval = TimeSpan.FromSeconds(Math.Max(scannerComp.UpdateInterval, 0.1f));
+            interval = scannerComp.UpdateInterval < TimeSpan.FromSeconds(0.1)
+                ? TimeSpan.FromSeconds(0.1)
+                : scannerComp.UpdateInterval;
             var detected = _scanner.DetectSlimes((scanner, scannerComp));
             if (console.SelectedSlime is { } selected && !detected.Contains(selected))
                 console.SelectedSlime = null;

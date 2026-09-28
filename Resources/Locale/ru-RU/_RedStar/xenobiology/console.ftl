@@ -1,8 +1,3 @@
-ent-XenobiologyConsole = консоль ксенобиологии
-    .desc = Анализирует живых слаймов, обнаруженных связанными сканерами клеток.
-ent-XenobiologyCellScanner = сканер клетки ксенобиологии
-    .desc = Обнаруживает живых слаймов поблизости для связанной консоли ксенобиологии.
-
 xenobiology-console-title = Консоль ксенобиологии
 xenobiology-console-scanners = Связанные клетки
 xenobiology-console-slimes = Содержимое клетки

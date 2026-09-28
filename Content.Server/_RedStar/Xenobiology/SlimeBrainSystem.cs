@@ -12,6 +12,18 @@ public sealed partial class SlimeBrainSystem : EntitySystem
 {
     [Dependency] private MobStateSystem _mobState = default!;
 
+    [Dependency] private EntityQuery<SlimeComponent> _slimeQuery;
+    [Dependency] private EntityQuery<DamageableComponent> _damageableQuery;
+    [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery;
+    [Dependency] private EntityQuery<InjurableComponent> _injurableQuery;
+
+    private readonly Predicate<EntityUid> _invalidFoodPredicate;
+
+    public SlimeBrainSystem()
+    {
+        _invalidFoodPredicate = entity => !IsEdibleBySlimeTest(entity);
+    }
+
     /// <summary>
     /// The set of food targets slimes can safely eat.
     /// </summary>
@@ -37,18 +49,16 @@ public sealed partial class SlimeBrainSystem : EntitySystem
 
     public bool IsEdibleBySlimeTest(EntityUid entity)
     {
-        if (HasComp<SlimeComponent>(entity)) return false;
-
-        if (!HasComp<DamageableComponent>(entity)) return false;
-
-        if (!HasComp<MobStateComponent>(entity)) return false;
-
-        if (!OnlyTarget.HasValue) return _mobState.IsAlive(entity);
-        if (!TryComp<InjurableComponent>(entity, out var injurable) ||
-            injurable.DamageContainer != OnlyTarget.Value)
+        if (TerminatingOrDeleted(entity) || EntityManager.IsQueuedForDeletion(entity) ||
+            _slimeQuery.HasComp(entity) || !_damageableQuery.HasComp(entity) ||
+            !_mobStateQuery.TryComp(entity, out var mobState))
             return false;
 
-        return _mobState.IsAlive(entity);
+        if (OnlyTarget is { } damageContainer &&
+            (!_injurableQuery.TryComp(entity, out var injurable) || injurable.DamageContainer != damageContainer))
+            return false;
+
+        return _mobState.IsAlive(entity, mobState);
     }
 
     /// <summary>
@@ -69,27 +79,11 @@ public sealed partial class SlimeBrainSystem : EntitySystem
     /// <summary>
     /// Grabs the set of valid food targets that are known to the brain
     /// </summary>
-    /// <returns>The set of valid food targets. May be empty.</returns>
-    public HashSet<EntityUid> AcquireTargetFoods()
+    /// <returns>A live read-only view of valid food targets. May be empty; not a snapshot.</returns>
+    public IReadOnlySet<EntityUid> AcquireTargetFoods()
     {
-        HashSet<EntityUid> targetsToReturn = new();
-        HashSet<EntityUid> targetsToDelete = new();
-        foreach (var possibleTarget in _targetFood)
-        {
-            if (IsEdibleBySlimeTest(possibleTarget))
-            {
-                targetsToReturn.Add(possibleTarget);
-            }
-            else
-            {
-                targetsToDelete.Add(possibleTarget);
-            }
-        }
-        foreach (var delete in targetsToDelete)
-        {
-            _targetFood.Remove(delete);
-        }
-        return targetsToReturn;
+        _targetFood.RemoveWhere(_invalidFoodPredicate);
+        return _targetFood;
     }
 
     /// <summary>

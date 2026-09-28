@@ -20,9 +20,9 @@ public sealed partial class XenobiologyResearchSystem : EntitySystem
         FillTargets(ent.Comp);
     }
 
-    public bool HasActiveSample(EntityUid server, EntProtoId<SlimeExtractComponent> sample)
+    public bool HasActiveSample(Entity<XenobiologyResearchDatabaseComponent?> server, EntProtoId<SlimeExtractComponent> sample)
     {
-        if (!TryComp<XenobiologyResearchDatabaseComponent>(server, out var database))
+        if (!Resolve(server, ref server.Comp, false) || server.Comp is not { } database)
             return false;
 
         foreach (var id in database.ActiveTargets)
@@ -36,10 +36,10 @@ public sealed partial class XenobiologyResearchSystem : EntitySystem
         return false;
     }
 
-    public bool TryCompleteSample(EntityUid server, EntProtoId<SlimeExtractComponent> sample, out int reward)
+    public bool TryCompleteSample(Entity<XenobiologyResearchDatabaseComponent?> server, EntProtoId<SlimeExtractComponent> sample, out int reward)
     {
         reward = 0;
-        if (!TryComp<XenobiologyResearchDatabaseComponent>(server, out var database))
+        if (!Resolve(server, ref server.Comp, false) || server.Comp is not { } database)
             return false;
 
         for (var i = 0; i < database.ActiveTargets.Count; i++)
@@ -54,7 +54,7 @@ public sealed partial class XenobiologyResearchSystem : EntitySystem
             database.CompletedTargets.Add(id);
             database.ActiveTargets.RemoveAt(i);
             FillTargets(database);
-            _research.ModifyServerPoints(server, reward);
+            _research.ModifyServerPoints(server.Owner, reward);
             return true;
         }
 

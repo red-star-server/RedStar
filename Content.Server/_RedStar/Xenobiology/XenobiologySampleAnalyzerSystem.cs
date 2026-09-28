@@ -39,7 +39,7 @@ public sealed partial class XenobiologySampleAnalyzerSystem : EntitySystem
             return;
 
         if (!_research.TryGetClientServer(ent.Owner, out var server, out _) ||
-            !HasComp<XenobiologyResearchDatabaseComponent>(server.Value))
+            !TryComp<XenobiologyResearchDatabaseComponent>(server.Value, out var database))
         {
             _popup.PopupEntity(Loc.GetString("xenobiology-analyzer-no-server"), ent, user);
             return;
@@ -47,13 +47,13 @@ public sealed partial class XenobiologySampleAnalyzerSystem : EntitySystem
 
         if (!HasComp<SlimeExtractComponent>(sample) ||
             MetaData(sample).EntityPrototype is not { } prototype ||
-            !_xenobiology.HasActiveSample(server.Value, new EntProtoId<SlimeExtractComponent>(prototype.ID)))
+            !_xenobiology.HasActiveSample((server.Value, database), new EntProtoId<SlimeExtractComponent>(prototype.ID)))
         {
             _popup.PopupEntity(Loc.GetString("xenobiology-analyzer-no-target"), ent, user);
             return;
         }
 
-        var doAfter = new DoAfterArgs(EntityManager, user, TimeSpan.FromSeconds(ent.Comp.AnalysisTime),
+        var doAfter = new DoAfterArgs(EntityManager, user, ent.Comp.AnalysisTime,
             new XenobiologyAnalysisDoAfterEvent(), ent.Owner, target: sample)
         {
             BreakOnMove = true

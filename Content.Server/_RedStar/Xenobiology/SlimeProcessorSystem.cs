@@ -1,11 +1,10 @@
+using Content.Server.Power.EntitySystems;
 using Content.Shared._RedStar.Xenobiology;
 using Content.Shared.Coordinates;
 using Content.Shared.Interaction;
-using Content.Shared.Jittering;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Power;
 using Content.Shared.Verbs;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
@@ -14,183 +13,176 @@ namespace Content.Server._RedStar.Xenobiology;
 
 public sealed partial class SlimeProcessorSystem : EntitySystem
 {
-    [Dependency] private EntityManager _entityManager = default!;
-    [Dependency] private SharedJitteringSystem _jitteringSystem = default!;
-    [Dependency] private IGameTiming _gameTiming = default!;
-    [Dependency] private SharedAudioSystem _audioSystem = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+
+    [Dependency] private EntityQuery<ActiveSlimeProcessorComponent> _activeQuery;
+    [Dependency] private EntityQuery<SlimeProcessorComponent> _processorQuery;
+    [Dependency] private EntityQuery<SlimeComponent> _slimeQuery;
 
     [SubscribeLocalEvent]
-    private void OnComponentInit(Entity<SlimeProcessorComponent> ent, ref ComponentInit args)
+    private void OnInit(Entity<SlimeProcessorComponent> ent, ref ComponentInit args)
     {
         ent.Comp.SlimeContainer = _container.EnsureContainer<Container>(ent, SlimeProcessorComponent.SlimeContainerName);
+        ent.Comp.NextSlimeAcquireTime = _timing.CurTime + ent.Comp.SlimeAcquireCooldown;
     }
 
     [SubscribeLocalEvent]
     private void OnAfterActivate(Entity<SlimeProcessorComponent> ent, ref ActivateInWorldEvent args)
     {
-        if (CanActivate(ent))
-            EnableProcessingWrapper(ent);
+        if (args.Handled)
+            return;
+
+        args.Handled = TryStartProcessing(ent);
     }
 
     [SubscribeLocalEvent]
     private void OnGetVerb(Entity<SlimeProcessorComponent> ent, ref GetVerbsEvent<InteractionVerb> args)
     {
-        if (!args.CanInteract || !args.CanAccess)
+        if (!args.CanInteract || !args.CanAccess || !this.IsPowered(ent, EntityManager))
             return;
 
-        var itemVerb = new InteractionVerb
+        var canActivate = CanActivate(ent);
+        args.Verbs.Add(new InteractionVerb
         {
-            Text = Loc.GetString("comp-slime-processor-verb-activate")
-        };
-        if (CanActivate(ent))
-        {
-            itemVerb.Message = Loc.GetString("comp-slime-processor-verb-activate-message-success");
-        }
-        else
-        {
-            itemVerb.Disabled = true;
-            itemVerb.Message = Loc.GetString("comp-slime-processor-verb-activate-message-no-slimes");
-        }
-        itemVerb.Act = () => EnableProcessingWrapper(ent);
-        args.Verbs.Add(itemVerb);
-    }
-
-    private void EnableProcessingWrapper(Entity<SlimeProcessorComponent> ent)
-    {
-        EnableProcessing(ent, _entityManager, _gameTiming);
-        _jitteringSystem.AddJitter(ent.Owner, -10, 100);
-        _audioSystem.PlayPvs(new SoundPathSpecifier("/Audio/Machines/blender.ogg"), ent.Owner);
+            Text = Loc.GetString("comp-slime-processor-verb-activate"),
+            Disabled = !canActivate,
+            Message = Loc.GetString(canActivate
+                ? "comp-slime-processor-verb-activate-message-success"
+                : "comp-slime-processor-verb-activate-message-no-slimes"),
+            Act = () => TryStartProcessing(ent)
+        });
     }
 
     private bool CanActivate(Entity<SlimeProcessorComponent> ent) =>
-        ent.Comp.SlimeContainer.ContainedEntities.Count > 0 && !HasComp<ActiveSlimeProcessorComponent>(ent);
+        this.IsPowered(ent, EntityManager) &&
+        ent.Comp.SlimeContainer.ContainedEntities.Count > 0 && !_activeQuery.HasComp(ent);
+
+    private bool TryStartProcessing(Entity<SlimeProcessorComponent> ent)
+    {
+        if (!CanActivate(ent))
+            return false;
+
+        var active = AddComp<ActiveSlimeProcessorComponent>(ent);
+        active.ProcessingEndTime = _timing.CurTime + ent.Comp.ProcessingTime;
+        return true;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnProcessingStarted(Entity<ActiveSlimeProcessorComponent> ent, ref ComponentStartup args)
+    {
+        if (!_processorQuery.TryComp(ent, out var processor))
+            return;
+
+        if (!this.IsPowered(ent, EntityManager))
+            ent.Comp.PowerLossTime ??= _timing.CurTime;
+
+        if (ent.Comp.PowerLossTime == null)
+            StartRunningEffects((ent.Owner, processor));
+    }
+
+    [SubscribeLocalEvent]
+    private void OnProcessingStopped(Entity<ActiveSlimeProcessorComponent> ent, ref ComponentShutdown args)
+    {
+        if (_processorQuery.TryComp(ent, out var processor))
+            StopRunningEffects((ent.Owner, processor));
+    }
 
     [SubscribeLocalEvent]
     private void OnPowerChanged(Entity<SlimeProcessorComponent> ent, ref PowerChangedEvent args)
     {
+        if (!_activeQuery.TryComp(ent, out var active))
+            return;
+
         if (!args.Powered)
         {
-            if (HasComp<ActiveSlimeProcessorComponent>(ent.Owner))
-                RemCompDeferred<ActiveSlimeProcessorComponent>(ent.Owner);
-            if (HasComp<CollectingSlimeProcessorComponent>(ent.Owner))
-                RemCompDeferred<CollectingSlimeProcessorComponent>(ent.Owner);
-            if (HasComp<JitteringComponent>(ent.Owner))
-                RemCompDeferred<JitteringComponent>(ent.Owner);
+            active.PowerLossTime ??= _timing.CurTime;
+            StopRunningEffects(ent);
         }
-        else
+        else if (active.PowerLossTime is { } powerLossTime)
         {
-            EnableCollecting(ent, _entityManager, _gameTiming);
+            active.ProcessingEndTime += _timing.CurTime - powerLossTime;
+            active.PowerLossTime = null;
+            StartRunningEffects(ent);
         }
     }
 
-    public static void EnableCollecting(Entity<SlimeProcessorComponent> ent, EntityManager entityManager, IGameTiming gameTiming)
+    private void StartRunningEffects(Entity<SlimeProcessorComponent> ent)
     {
-        if (entityManager.HasComponent<CollectingSlimeProcessorComponent>(ent.Owner))
-            return;
-
-        if (entityManager.HasComponent<ActiveSlimeProcessorComponent>(ent))
-            entityManager.RemoveComponentDeferred<ActiveSlimeProcessorComponent>(ent);
-
-        var collectingSlimeProcessorComponent = entityManager.AddComponent<CollectingSlimeProcessorComponent>(ent.Owner);
-        collectingSlimeProcessorComponent.SlimeAcquireMoment = gameTiming.CurTime + ent.Comp.SlimeAcquireCooldown;
+        _appearance.SetData(ent.Owner, SlimeProcessorVisuals.Processing, true);
+        ent.Comp.AudioStream = _audio.PlayPvs(ent.Comp.ProcessingSound, ent)?.Entity;
     }
 
-    public static void EnableProcessing(Entity<SlimeProcessorComponent> ent, EntityManager entityManager, IGameTiming gameTiming)
+    private void StopRunningEffects(Entity<SlimeProcessorComponent> ent)
     {
-        if (entityManager.HasComponent<ActiveSlimeProcessorComponent>(ent.Owner))
-            return;
-
-        if (entityManager.HasComponent<CollectingSlimeProcessorComponent>(ent))
-            entityManager.RemoveComponentDeferred<CollectingSlimeProcessorComponent>(ent);
-
-        var activeSlimeProcessorComponent = entityManager.AddComponent<ActiveSlimeProcessorComponent>(ent);
-        activeSlimeProcessorComponent.ProcessingFinishedMoment = gameTiming.CurTime + ent.Comp.ProcessingTime;
+        _appearance.SetData(ent.Owner, SlimeProcessorVisuals.Processing, false);
+        ent.Comp.AudioStream = _audio.Stop(ent.Comp.AudioStream);
     }
-}
-
-public sealed partial class ActiveSlimeProcessorSystem : EntitySystem
-{
-    [Dependency] private EntityManager _entityManager = default!;
-    [Dependency] private IGameTiming _gameTiming = default!;
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<ActiveSlimeProcessorComponent, SlimeProcessorComponent>();
-        while (query.MoveNext(out var uid, out var activeSlimeProcessorComponent, out var slimeProcessorComponent))
+        var query = EntityQueryEnumerator<SlimeProcessorComponent>();
+        while (query.MoveNext(out var uid, out var processor))
         {
-            if (!activeSlimeProcessorComponent.ProcessingFinishedMoment.HasValue)
+            if (!this.IsPowered(uid, EntityManager))
+                continue;
+
+            if (_activeQuery.TryComp(uid, out var active))
             {
-                activeSlimeProcessorComponent.ProcessingFinishedMoment = _gameTiming.CurTime + slimeProcessorComponent.ProcessingTime;
+                if (active.PowerLossTime == null && _timing.CurTime >= active.ProcessingEndTime)
+                    FinishProcessing((uid, processor));
                 continue;
             }
 
-            if (activeSlimeProcessorComponent.ProcessingFinishedMoment.Value > _gameTiming.CurTime)
+            if (_timing.CurTime < processor.NextSlimeAcquireTime)
                 continue;
 
-            foreach (var entity in slimeProcessorComponent.SlimeContainer.ContainedEntities)
-            {
-                if (!_entityManager.TryGetComponent(entity, out SlimeComponent? slimeComponent))
-                    continue;
-
-                if (TryComp<SlimeLifecycleComponent>(entity, out var lifecycle) &&
-                    lifecycle.Stage != SlimeStage.Adult)
-                {
-                    QueueDel(entity);
-                    continue;
-                }
-
-                Spawn(slimeComponent.Extract, uid.ToCoordinates());
-                if (HasComp<SlimeExtractYieldEnhancedComponent>(entity))
-                    Spawn(slimeComponent.Extract, uid.ToCoordinates());
-                QueueDel(entity);
-            }
-
-            RemCompDeferred<JitteringComponent>(uid);
-            RemCompDeferred<ActiveSlimeProcessorComponent>(uid);
-            SlimeProcessorSystem.EnableCollecting((uid, slimeProcessorComponent), _entityManager, _gameTiming);
+            processor.NextSlimeAcquireTime = _timing.CurTime + processor.SlimeAcquireCooldown;
+            CollectSlime((uid, processor));
         }
     }
-}
 
-public sealed partial class CollectingSlimeProcessorSystem : EntitySystem
-{
-    [Dependency] private MobStateSystem _mobState = default!;
-    [Dependency] private EntityLookupSystem _entityLookupSystem = default!;
-    [Dependency] private IGameTiming _gameTiming = default!;
-    [Dependency] private SharedContainerSystem _container = default!;
-
-    public override void Update(float frameTime)
+    private void CollectSlime(Entity<SlimeProcessorComponent> ent)
     {
-        base.Update(frameTime);
-
-        var query = EntityQueryEnumerator<CollectingSlimeProcessorComponent, SlimeProcessorComponent>();
-        while (query.MoveNext(out var uid, out var collectingSlimeProcessorComponent, out var slimeProcessorComponent))
+        foreach (var slime in _lookup.GetEntitiesInRange<SlimeComponent>(Transform(ent).Coordinates, 1f))
         {
-            slimeProcessorComponent.SlimeContainer = _container.EnsureContainer<Container>(uid, SlimeProcessorComponent.SlimeContainerName);
-            if (!collectingSlimeProcessorComponent.SlimeAcquireMoment.HasValue)
-            {
-                collectingSlimeProcessorComponent.SlimeAcquireMoment = _gameTiming.CurTime + slimeProcessorComponent.SlimeAcquireCooldown;
-                continue;
-            }
-
-            if (collectingSlimeProcessorComponent.SlimeAcquireMoment.Value > _gameTiming.CurTime)
+            if (TerminatingOrDeleted(slime.Owner) || EntityManager.IsQueuedForDeletion(slime.Owner) ||
+                _container.IsEntityOrParentInContainer(slime.Owner) || !_mobState.IsDead(slime.Owner))
                 continue;
 
-            foreach (var entity in _entityLookupSystem.GetEntitiesInRange<SlimeComponent>(Transform(uid).Coordinates, 1F))
-            {
-                if (_container.IsEntityOrParentInContainer(entity.Owner))
-                    continue;
-
-                if (!_mobState.IsDead(entity.Owner))
-                    continue;
-
-                _container.Insert(entity.Owner, slimeProcessorComponent.SlimeContainer);
-                collectingSlimeProcessorComponent.SlimeAcquireMoment = _gameTiming.CurTime + slimeProcessorComponent.SlimeAcquireCooldown;
+            if (_container.Insert(slime.Owner, ent.Comp.SlimeContainer))
                 break;
-            }
         }
+    }
+
+    private void FinishProcessing(Entity<SlimeProcessorComponent> ent)
+    {
+        foreach (var uid in ent.Comp.SlimeContainer.ContainedEntities)
+        {
+            if (TerminatingOrDeleted(uid) || EntityManager.IsQueuedForDeletion(uid) ||
+                !_slimeQuery.TryComp(uid, out var slime))
+                continue;
+
+            if (TryComp<SlimeLifecycleComponent>(uid, out var lifecycle) && lifecycle.Stage != SlimeStage.Adult)
+            {
+                QueueDel(uid);
+                continue;
+            }
+
+            Spawn(slime.Extract, ent.Owner.ToCoordinates());
+            if (HasComp<SlimeExtractYieldEnhancedComponent>(uid))
+                Spawn(slime.Extract, ent.Owner.ToCoordinates());
+            QueueDel(uid);
+        }
+
+        StopRunningEffects(ent);
+        RemCompDeferred<ActiveSlimeProcessorComponent>(ent);
+        ent.Comp.NextSlimeAcquireTime = _timing.CurTime + ent.Comp.SlimeAcquireCooldown;
     }
 }

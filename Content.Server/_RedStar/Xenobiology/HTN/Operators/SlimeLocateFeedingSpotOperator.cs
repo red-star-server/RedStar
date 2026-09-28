@@ -1,6 +1,5 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server._RedStar.Xenobiology;
 using Content.Server.NPC;
 using Content.Server.NPC.HTN.PrimitiveTasks;
 using Content.Server.NPC.Pathfinding;
@@ -15,6 +14,8 @@ public sealed partial class SlimeLocateFeedingSpotOperator : HTNOperator
 
     private SlimeBrainSystem _slimeBrainSystem = default!;
     private PathfindingSystem _pathfinding = default!;
+    private EntityQuery<SlimeComponent> _slimeQuery;
+    private EntityQuery<TransformComponent> _transformQuery;
 
     /// <summary>
     /// Target entitycoordinates to move to.
@@ -27,6 +28,8 @@ public sealed partial class SlimeLocateFeedingSpotOperator : HTNOperator
         base.Initialize(sysManager);
         _slimeBrainSystem = sysManager.GetEntitySystem<SlimeBrainSystem>();
         _pathfinding = sysManager.GetEntitySystem<PathfindingSystem>();
+        _slimeQuery = _entManager.GetEntityQuery<SlimeComponent>();
+        _transformQuery = _entManager.GetEntityQuery<TransformComponent>();
     }
 
     public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard,
@@ -34,8 +37,7 @@ public sealed partial class SlimeLocateFeedingSpotOperator : HTNOperator
     {
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
-        if (!_entManager.TryGetComponent<SlimeComponent>(owner, out var slime)
-            || !_entManager.TryGetComponent<TransformComponent>(owner, out var slimeTransform))
+        if (!_slimeQuery.HasComp(owner) || !_transformQuery.TryComp(owner, out var slimeTransform))
             return (false, null);
 
         foreach (var spot in _slimeBrainSystem.AcquireFeedingSpots())

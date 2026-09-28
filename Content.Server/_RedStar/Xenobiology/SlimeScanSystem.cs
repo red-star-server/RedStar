@@ -14,10 +14,12 @@ public sealed partial class SlimeScanSystem : EntitySystem
     [Dependency] private EntityQuery<SatiationComponent> _satiationQuery;
     [Dependency] private EntityQuery<SlimeHusbandryComponent> _husbandryQuery;
 
-    public SlimeScanData? TryBuildSlimeScanData(EntityUid uid)
+    public SlimeScanData? TryBuildSlimeScanData(Entity<SlimeLifecycleComponent?> ent)
     {
-        if (!_lifecycleQuery.TryComp(uid, out var lifecycle))
+        if (!_lifecycleQuery.Resolve(ent, ref ent.Comp, false) || ent.Comp is not { } lifecycle)
             return null;
+
+        var uid = ent.Owner;
 
         float? hunger = null;
         if (_satiationQuery.TryComp(uid, out var satiation))

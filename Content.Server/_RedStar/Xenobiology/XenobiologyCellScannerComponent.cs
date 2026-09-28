@@ -11,5 +11,5 @@ public sealed partial class XenobiologyCellScannerComponent : Component
     public float DetectionRadius = 4f;
 
     [DataField]
-    public float UpdateInterval = 0.75f;
+    public TimeSpan UpdateInterval = TimeSpan.FromSeconds(0.75);
 }

@@ -1,4 +1,3 @@
-using Content.Server._RedStar.Xenobiology;
 using Content.Server.NPC;
 using Content.Server.NPC.HTN;
 using Content.Server.NPC.HTN.PrimitiveTasks;
@@ -11,6 +10,7 @@ public sealed partial class SlimeEatOperator : HTNOperator
     [Dependency] private IEntityManager _entMan = default!;
     private SlimeSystem _slimeSystem = default!;
     private SlimeBrainSystem _slimeBrainSystem = default!;
+    private EntityQuery<SlimeComponent> _slimeQuery;
 
     /// <summary>
     /// Target entity to eat.
@@ -23,6 +23,7 @@ public sealed partial class SlimeEatOperator : HTNOperator
         base.Initialize(sysManager);
         _slimeSystem = sysManager.GetEntitySystem<SlimeSystem>();
         _slimeBrainSystem = sysManager.GetEntitySystem<SlimeBrainSystem>();
+        _slimeQuery = _entMan.GetEntityQuery<SlimeComponent>();
     }
 
     public override void TaskShutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
@@ -35,7 +36,7 @@ public sealed partial class SlimeEatOperator : HTNOperator
     {
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
-        if (!_entMan.TryGetComponent<SlimeComponent>(owner, out var slime)
+        if (!_slimeQuery.TryComp(owner, out var slime)
             || !blackboard.TryGetValue<EntityUid>(TargetKey, out var target, _entMan)
             || _entMan.Deleted(target) || !_slimeBrainSystem.IsEdibleBySlimeTest(target)
             || !_slimeSystem.TryEat((owner, slime), target))

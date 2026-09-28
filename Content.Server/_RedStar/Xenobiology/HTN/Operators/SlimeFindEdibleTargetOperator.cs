@@ -1,6 +1,5 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server._RedStar.Xenobiology;
 using Content.Server.NPC;
 using Content.Server.NPC.HTN.PrimitiveTasks;
 using Content.Shared._RedStar.Xenobiology;
@@ -22,6 +21,7 @@ public sealed partial class SlimeFindEdibleTargetOperator : HTNOperator
     private SlimeBrainSystem _slimeBrainSystem = default!;
     private EntityLookupSystem _lookup = default!;
     private TagSystem _tagSystem = default!;
+    private EntityQuery<SlimeComponent> _slimeQuery;
 
     /// <summary>
     /// The tag an entity must have in order to be considered safe to eat (not desperate).
@@ -35,6 +35,7 @@ public sealed partial class SlimeFindEdibleTargetOperator : HTNOperator
         _slimeBrainSystem = sysManager.GetEntitySystem<SlimeBrainSystem>();
         _lookup = sysManager.GetEntitySystem<EntityLookupSystem>();
         _tagSystem = sysManager.GetEntitySystem<TagSystem>();
+        _slimeQuery = _entManager.GetEntityQuery<SlimeComponent>();
     }
 
     public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard,
@@ -42,7 +43,7 @@ public sealed partial class SlimeFindEdibleTargetOperator : HTNOperator
     {
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
-        if (!_entManager.TryGetComponent<SlimeComponent>(owner, out var slime))
+        if (!_slimeQuery.HasComp(owner))
             return (false, null);
 
         foreach (var entity in _lookup.GetEntitiesInRange(owner, _slimeBrainSystem.FoodSearchRange))

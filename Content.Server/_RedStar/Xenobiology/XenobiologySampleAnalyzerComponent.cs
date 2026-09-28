@@ -7,5 +7,5 @@ public sealed partial class XenobiologySampleAnalyzerComponent : Component
     public string SampleSlot = "sample";
 
     [DataField]
-    public float AnalysisTime = 2f;
+    public TimeSpan AnalysisTime = TimeSpan.FromSeconds(2);
 }

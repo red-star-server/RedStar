@@ -20,10 +20,3 @@ public sealed class SlimeScannerScannedMessage(SlimeScanData data) : BoundUserIn
 {
     public SlimeScanData Data { get; } = data;
 }
-
-[Serializable, NetSerializable]
-public sealed class SlimeScannerSoundMessage : EntityEventArgs
-{
-    public NetEntity Owner;
-    public NetEntity User;
-}

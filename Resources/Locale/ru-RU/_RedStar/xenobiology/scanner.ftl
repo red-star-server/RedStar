@@ -1,5 +1,5 @@
 slime-scanner-none = Нет
-slime-scanner-title = Сканер слизней
+slime-scanner-title = Сканер слаймов
 slime-scanner-target = Цель: {$name}
 slime-scanner-growth = Рост: {$value}
 slime-scanner-hunger = Голод: {$value}
@@ -13,4 +13,4 @@ slime-scanner-crowding-crowded = Высокая
 slime-scanner-crowding-severe = Критическая
 slime-scanner-mutation-chance = Шанс мутации: {$value}
 slime-scanner-potential-mutations = Возможные мутации: {$value}
-slime-scanner-extract-yield-enhanced = Выход экстракта усилен
+slime-scanner-extract-yield-enhanced = Количество получаемых экстрактов увеличено

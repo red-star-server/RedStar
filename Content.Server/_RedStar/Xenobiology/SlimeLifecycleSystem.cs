@@ -3,6 +3,7 @@ using Content.Shared.Coordinates;
 using Content.Shared.EntityConditions;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mind;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.Prototypes;
@@ -18,6 +19,7 @@ public sealed partial class SlimeLifecycleSystem : EntitySystem
     [Dependency] private SlimeMutationSystem _mutation = default!;
     [Dependency] private SlimeHusbandrySystem _husbandry = default!;
     [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private IRobustRandom _random = default!;
 
     [Dependency] private EntityQuery<SatiationComponent> _satiationQuery;
@@ -39,6 +41,9 @@ public sealed partial class SlimeLifecycleSystem : EntitySystem
         var query = EntityQueryEnumerator<SlimeLifecycleComponent, SatiationComponent>();
         while (query.MoveNext(out var uid, out var lifecycle, out var satiation))
         {
+            if (_mobState.IsDead(uid))
+                continue;
+
             if (lifecycle.Stage == SlimeStage.Adult)
                 UpdateMutations(uid, lifecycle, elapsed);
             if (lifecycle.GrowthRate <= 0 || lifecycle.GrowthThreshold <= 0 ||

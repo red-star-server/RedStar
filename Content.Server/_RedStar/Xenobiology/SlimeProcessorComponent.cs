@@ -1,11 +1,13 @@
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server._RedStar.Xenobiology;
 
 /// <summary>
 /// The base component all slime processors possess.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class SlimeProcessorComponent : Component
 {
     /// <summary>
@@ -19,6 +21,18 @@ public sealed partial class SlimeProcessorComponent : Component
     /// </summary>
     [DataField(required: true)]
     public TimeSpan SlimeAcquireCooldown;
+
+    /// <summary>
+    /// When the processor can next attempt to collect a corpse.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    public TimeSpan NextSlimeAcquireTime;
+
+    [DataField]
+    public SoundSpecifier? ProcessingSound = new SoundPathSpecifier("/Audio/Machines/blender.ogg");
+
+    [ViewVariables]
+    public EntityUid? AudioStream;
 
     /// <summary>
     /// The name of the container the slime corpses are stored in.
@@ -41,19 +55,12 @@ public sealed partial class ActiveSlimeProcessorComponent : Component
     /// <summary>
     /// The moment in time when processing will be done.
     /// </summary>
-    [ViewVariables, AutoPausedField]
-    public TimeSpan? ProcessingFinishedMoment;
-}
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    public TimeSpan ProcessingEndTime;
 
-/// <summary>
-/// The component for slime processors which are collecting slimes.
-/// </summary>
-[RegisterComponent, AutoGenerateComponentPause]
-public sealed partial class CollectingSlimeProcessorComponent : Component
-{
     /// <summary>
-    /// The moment in time when another slime will be acquired.
+    /// When power was lost. Null while processing is running.
     /// </summary>
-    [ViewVariables, AutoPausedField]
-    public TimeSpan? SlimeAcquireMoment;
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    public TimeSpan? PowerLossTime;
 }

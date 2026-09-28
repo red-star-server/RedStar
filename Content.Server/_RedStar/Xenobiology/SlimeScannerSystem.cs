@@ -2,6 +2,8 @@ using Content.Shared._RedStar.Xenobiology;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server._RedStar.Xenobiology;
 
@@ -10,6 +12,9 @@ public sealed partial class SlimeScannerSystem : EntitySystem
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
     [Dependency] private SlimeScanSystem _scan = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+
+    private static readonly SoundPathSpecifier ScannerSound = new("/Audio/Items/Medical/healthscanner.ogg");
 
     [SubscribeLocalEvent]
     private void OnSlimeAfterInteractUsing(Entity<SlimeLifecycleComponent> entity, ref AfterInteractUsingEvent args)
@@ -39,11 +44,7 @@ public sealed partial class SlimeScannerSystem : EntitySystem
         if (!SendScan(scanner.Owner, args.User, target))
             return;
 
-        RaiseNetworkEvent(new SlimeScannerSoundMessage
-        {
-            Owner = GetNetEntity(scanner.Owner),
-            User = GetNetEntity(args.User)
-        });
+        _audio.PlayPvs(ScannerSound, scanner.Owner);
         args.Handled = true;
     }
 

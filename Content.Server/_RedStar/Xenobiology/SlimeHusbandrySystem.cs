@@ -71,9 +71,9 @@ public sealed partial class SlimeHusbandrySystem : EntitySystem
         return count;
     }
 
-    public float GetGrowthMultiplier(EntityUid uid)
+    public float GetGrowthMultiplier(Entity<SlimeHusbandryComponent?> ent)
     {
-        if (!_husbandryQuery.TryComp(uid, out var husbandry))
+        if (!_husbandryQuery.Resolve(ent, ref ent.Comp, false) || ent.Comp is not { } husbandry)
             return 1f;
 
         return husbandry.Temperament switch
