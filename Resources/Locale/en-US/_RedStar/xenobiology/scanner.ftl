@@ -14,3 +14,15 @@ slime-scanner-crowding-severe = Severe
 slime-scanner-mutation-chance = Mutation chance: {$value}
 slime-scanner-potential-mutations = Potential mutations: {$value}
 slime-scanner-extract-yield-enhanced = Extract yield enhanced
+
+slime-scan-card-specimen = Specimen analysis
+slime-scan-card-development = Development
+slime-scan-card-growth = Growth
+slime-scan-card-hunger = Hunger
+slime-scan-card-condition = Condition
+slime-scan-card-temperament = Temperament
+slime-scan-card-crowding = Crowding
+slime-scan-card-genetics = Genetics
+slime-scan-card-mutation-chance = Mutation chance
+slime-scan-card-potential-mutations = Potential mutations
+slime-scan-card-awaiting-scan = Scan a slime to view its analysis.

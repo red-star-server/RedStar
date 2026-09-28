@@ -1,0 +1,51 @@
+<ui:SlimeScanDetailsControl xmlns="https://spacestation14.io"
+                            xmlns:ui="clr-namespace:Content.Client._RedStar.Xenobiology.UI"
+                            xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                            Orientation="Vertical" HorizontalExpand="True">
+    <RichTextLabel Name="Placeholder" StyleClasses="LabelSubText" Margin="4 12" />
+    <BoxContainer Name="Card" Orientation="Vertical" SeparationOverride="10" Visible="False">
+        <BoxContainer SeparationOverride="12">
+            <PanelContainer Name="PortraitPanel" StyleClasses="PanelDeep" Visible="False">
+                <SpriteView Name="Portrait" SetSize="72 72" Margin="8" Stretch="Fill" />
+            </PanelContainer>
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalAlignment="Center" SeparationOverride="4">
+                <Label Text="{Loc 'slime-scan-card-specimen'}" StyleClasses="LabelSubText" />
+                <Label Name="SpecimenName" StyleClasses="LabelHeadingBigger" ClipText="True" HorizontalExpand="True" />
+            </BoxContainer>
+        </BoxContainer>
+        <controls:Separator StyleClasses="LowDivider" />
+        <Label Text="{Loc 'slime-scan-card-development'}" StyleClasses="LabelHeading" />
+        <BoxContainer>
+            <Label Text="{Loc 'slime-scan-card-growth'}" HorizontalExpand="True" />
+            <Label Name="GrowthValue" StyleClasses="LabelHeading" />
+        </BoxContainer>
+        <ProgressBar Name="GrowthBar" MinValue="0" MaxValue="1" MinHeight="16" HorizontalExpand="True" />
+        <BoxContainer>
+            <Label Text="{Loc 'slime-scan-card-hunger'}" HorizontalExpand="True" />
+            <Label Name="HungerValue" />
+        </BoxContainer>
+        <controls:Separator StyleClasses="LowDivider" Margin="0 2" />
+        <Label Text="{Loc 'slime-scan-card-condition'}" StyleClasses="LabelHeading" />
+        <BoxContainer SeparationOverride="24">
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="4">
+                <Label Text="{Loc 'slime-scan-card-temperament'}" StyleClasses="LabelSubText" />
+                <Label Name="TemperamentValue" StyleClasses="LabelHeading" />
+            </BoxContainer>
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="4">
+                <Label Text="{Loc 'slime-scan-card-crowding'}" StyleClasses="LabelSubText" />
+                <Label Name="CrowdingValue" StyleClasses="LabelHeading" />
+            </BoxContainer>
+        </BoxContainer>
+        <controls:Separator StyleClasses="LowDivider" Margin="0 2" />
+        <Label Text="{Loc 'slime-scan-card-genetics'}" StyleClasses="LabelHeading" />
+        <BoxContainer>
+            <Label Text="{Loc 'slime-scan-card-mutation-chance'}" HorizontalExpand="True" />
+            <Label Name="MutationChanceValue" StyleClasses="LabelHeading" />
+        </BoxContainer>
+        <Label Text="{Loc 'slime-scan-card-potential-mutations'}" StyleClasses="LabelSubText" />
+        <BoxContainer Name="MutationList" Orientation="Vertical" SeparationOverride="4" />
+        <PanelContainer Name="EnhancedBanner" StyleClasses="PanelDeep" Visible="False" Margin="0 4 0 0">
+            <RichTextLabel Name="EnhancedText" Margin="10 8" />
+        </PanelContainer>
+    </BoxContainer>
+</ui:SlimeScanDetailsControl>

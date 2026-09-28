@@ -12,6 +12,7 @@ public sealed partial class SlimeScannerWindow : FancyWindow
     {
         RobustXamlLoader.Load(this);
         Title = Loc.GetString("slime-scanner-title");
+        Details.Populate(null, Loc.GetString("slime-scan-card-awaiting-scan"));
     }
 
     public void Populate(SlimeScannerScannedMessage message)

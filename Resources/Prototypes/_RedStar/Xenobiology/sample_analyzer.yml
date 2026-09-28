@@ -13,10 +13,12 @@
   - type: ExtensionCableReceiver
   - type: ResearchClient
   - type: ActivatableUI
-    key: enum.ResearchClientUiKey.Key
+    key: enum.XenobiologySampleAnalyzerUiKey.Key
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
+      enum.XenobiologySampleAnalyzerUiKey.Key:
+        type: XenobiologySampleAnalyzerBoundUserInterface
       enum.ResearchClientUiKey.Key:
         type: ResearchClientBoundUserInterface
   - type: XenobiologySampleAnalyzer

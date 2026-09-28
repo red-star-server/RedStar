@@ -4,4 +4,10 @@ using Robust.Shared.Serialization;
 namespace Content.Shared._RedStar.Xenobiology;
 
 [Serializable, NetSerializable]
-public sealed partial class XenobiologyAnalysisDoAfterEvent : SimpleDoAfterEvent;
+public sealed partial class XenobiologyAnalysisDoAfterEvent : DoAfterEvent
+{
+    [DataField]
+    public int Generation;
+
+    public override DoAfterEvent Clone() => this;
+}

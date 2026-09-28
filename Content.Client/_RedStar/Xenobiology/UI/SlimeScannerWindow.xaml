@@ -1,7 +1,9 @@
 <ui:SlimeScannerWindow xmlns="https://spacestation14.io"
                        xmlns:ui="clr-namespace:Content.Client._RedStar.Xenobiology.UI"
-                       SetWidth="420" SetHeight="320">
-    <ScrollContainer Margin="12">
-        <ui:SlimeScanDetailsControl Name="Details" />
-    </ScrollContainer>
+                       MinSize="360 420" SetSize="420 540">
+    <PanelContainer StyleClasses="PanelDeep" Margin="12">
+        <ScrollContainer HScrollEnabled="False" Margin="14">
+            <ui:SlimeScanDetailsControl Name="Details" HorizontalExpand="True" />
+        </ScrollContainer>
+    </PanelContainer>
 </ui:SlimeScannerWindow>

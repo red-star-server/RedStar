@@ -14,3 +14,15 @@ slime-scanner-crowding-severe = Критическая
 slime-scanner-mutation-chance = Шанс мутации: {$value}
 slime-scanner-potential-mutations = Возможные мутации: {$value}
 slime-scanner-extract-yield-enhanced = Количество получаемых экстрактов увеличено
+
+slime-scan-card-specimen = Анализ образца
+slime-scan-card-development = Развитие
+slime-scan-card-growth = Рост
+slime-scan-card-hunger = Голод
+slime-scan-card-condition = Состояние
+slime-scan-card-temperament = Темперамент
+slime-scan-card-crowding = Скученность
+slime-scan-card-genetics = Генетика
+slime-scan-card-mutation-chance = Шанс мутации
+slime-scan-card-potential-mutations = Возможные мутации
+slime-scan-card-awaiting-scan = Просканируйте слайма, чтобы увидеть результаты анализа.

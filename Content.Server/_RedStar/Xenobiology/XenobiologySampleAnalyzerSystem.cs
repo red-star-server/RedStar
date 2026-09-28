@@ -1,11 +1,13 @@
-using Content.Server.Popups;
+using System.Linq;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Research.Systems;
 using Content.Shared._RedStar.Xenobiology;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.DoAfter;
-using Content.Shared.Verbs;
+using Content.Shared.Power;
+using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Server._RedStar.Xenobiology;
 
@@ -15,69 +17,179 @@ public sealed partial class XenobiologySampleAnalyzerSystem : EntitySystem
     [Dependency] private ItemSlotsSystem _slots = default!;
     [Dependency] private ResearchSystem _research = default!;
     [Dependency] private XenobiologyResearchSystem _xenobiology = default!;
-    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
-    [SubscribeLocalEvent]
-    private void OnGetVerbs(Entity<XenobiologySampleAnalyzerComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
+    private TimeSpan _nextUpdate;
+
+    public override void Update(float frameTime)
     {
-        if (!args.CanAccess || !args.CanInteract || !this.IsPowered(ent, EntityManager) ||
-            _slots.GetItemOrNull(ent.Owner, ent.Comp.SampleSlot) == null)
+        base.Update(frameTime);
+        if (_timing.CurTime < _nextUpdate)
             return;
 
-        var user = args.User;
-        args.Verbs.Add(new AlternativeVerb
+        _nextUpdate = _timing.CurTime + TimeSpan.FromSeconds(0.25);
+        var query = EntityQueryEnumerator<XenobiologySampleAnalyzerComponent>();
+        while (query.MoveNext(out var uid, out var analyzer))
         {
-            Text = Loc.GetString("xenobiology-analyzer-analyze-verb"),
-            Act = () => StartAnalysis(ent, user)
-        });
+            var ent = new Entity<XenobiologySampleAnalyzerComponent>(uid, analyzer);
+            if (analyzer.AnalysisDoAfter != null &&
+                (!_doAfter.IsRunning(analyzer.AnalysisDoAfter) || !IsAnalysisValid(ent)))
+                CancelAnalysis(ent);
+
+            if (_ui.IsUiOpen(uid, XenobiologySampleAnalyzerUiKey.Key))
+                UpdateState(ent);
+        }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnOpened(Entity<XenobiologySampleAnalyzerComponent> ent, ref BoundUIOpenedEvent args)
+    {
+        if (!args.UiKey.Equals(XenobiologySampleAnalyzerUiKey.Key))
+            return;
+
+        ent.Comp.LastState = null;
+        UpdateState(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnAnalyze(Entity<XenobiologySampleAnalyzerComponent> ent, ref XenobiologyAnalyzeSampleMessage args)
+    {
+        if (!args.UiKey.Equals(XenobiologySampleAnalyzerUiKey.Key) ||
+            !_ui.IsUiOpen(ent.Owner, XenobiologySampleAnalyzerUiKey.Key, args.Actor))
+            return;
+
+        StartAnalysis(ent, args.Actor);
     }
 
     private void StartAnalysis(Entity<XenobiologySampleAnalyzerComponent> ent, EntityUid user)
     {
-        if (!this.IsPowered(ent, EntityManager) ||
-            _slots.GetItemOrNull(ent.Owner, ent.Comp.SampleSlot) is not { } sample)
+        if (ent.Comp.AnalysisDoAfter != null || !this.IsPowered(ent, EntityManager) ||
+            _slots.GetItemOrNull(ent.Owner, ent.Comp.SampleSlot) is not { } sample ||
+            TerminatingOrDeleted(sample) || EntityManager.IsQueuedForDeletion(sample) ||
+            !HasComp<SlimeExtractComponent>(sample) || MetaData(sample).EntityPrototype is not { } prototype ||
+            !_research.TryGetClientServer(ent.Owner, out var server, out _) ||
+            !_xenobiology.HasActiveSample(server.Value, new EntProtoId<SlimeExtractComponent>(prototype.ID)))
             return;
 
-        if (!_research.TryGetClientServer(ent.Owner, out var server, out _) ||
-            !TryComp<XenobiologyResearchDatabaseComponent>(server.Value, out var database))
-        {
-            _popup.PopupEntity(Loc.GetString("xenobiology-analyzer-no-server"), ent, user);
-            return;
-        }
-
-        if (!HasComp<SlimeExtractComponent>(sample) ||
-            MetaData(sample).EntityPrototype is not { } prototype ||
-            !_xenobiology.HasActiveSample((server.Value, database), new EntProtoId<SlimeExtractComponent>(prototype.ID)))
-        {
-            _popup.PopupEntity(Loc.GetString("xenobiology-analyzer-no-target"), ent, user);
-            return;
-        }
-
+        ent.Comp.AnalysisServer = server;
+        ent.Comp.AnalysisSample = sample;
+        ent.Comp.AnalysisStart = _timing.CurTime;
+        ent.Comp.AnalysisEnd = _timing.CurTime + ent.Comp.AnalysisTime;
+        var generation = ++ent.Comp.AnalysisGeneration;
         var doAfter = new DoAfterArgs(EntityManager, user, ent.Comp.AnalysisTime,
-            new XenobiologyAnalysisDoAfterEvent(), ent.Owner, target: sample)
+            new XenobiologyAnalysisDoAfterEvent { Generation = generation }, ent.Owner, target: sample)
         {
             BreakOnMove = true
         };
-        _doAfter.TryStartDoAfter(doAfter);
+        if (!_doAfter.TryStartDoAfter(doAfter, out var id))
+        {
+            ClearAnalysis(ent.Comp);
+            return;
+        }
+
+        // Instant do-afters may have already completed and cleared the analysis.
+        if (ent.Comp.AnalysisSample != null)
+            ent.Comp.AnalysisDoAfter = id;
+        UpdateState(ent);
+    }
+
+    private bool IsAnalysisValid(Entity<XenobiologySampleAnalyzerComponent> ent)
+    {
+        return this.IsPowered(ent, EntityManager) &&
+               ent.Comp.AnalysisSample is { } sample &&
+               !TerminatingOrDeleted(sample) && !EntityManager.IsQueuedForDeletion(sample) &&
+               _slots.GetItemOrNull(ent.Owner, ent.Comp.SampleSlot) == sample &&
+               HasComp<SlimeExtractComponent>(sample) &&
+               MetaData(sample).EntityPrototype is { } prototype &&
+               _research.TryGetClientServer(ent.Owner, out var server, out _) &&
+               server == ent.Comp.AnalysisServer &&
+               _xenobiology.HasActiveSample(server.Value, new EntProtoId<SlimeExtractComponent>(prototype.ID));
     }
 
     [SubscribeLocalEvent]
     private void OnAnalysisComplete(Entity<XenobiologySampleAnalyzerComponent> ent,
         ref XenobiologyAnalysisDoAfterEvent args)
     {
-        if (args.Handled || args.Cancelled || args.Target is not { } sample ||
-            !this.IsPowered(ent, EntityManager) ||
-            _slots.GetItemOrNull(ent.Owner, ent.Comp.SampleSlot) != sample ||
-            !HasComp<SlimeExtractComponent>(sample) ||
-            !_research.TryGetClientServer(ent.Owner, out var server, out _))
+        if (args.Handled || ent.Comp.AnalysisSample == null || args.Generation != ent.Comp.AnalysisGeneration)
             return;
 
-        if (MetaData(sample).EntityPrototype is not { } prototype ||
-            !_xenobiology.TryCompleteSample(server.Value, new EntProtoId<SlimeExtractComponent>(prototype.ID), out var reward))
-            return;
-
-        QueueDel(sample);
-        _popup.PopupEntity(Loc.GetString("xenobiology-analyzer-complete", ("points", reward)), ent, args.User);
+        var valid = !args.Cancelled && IsAnalysisValid(ent);
+        var server = ent.Comp.AnalysisServer;
+        ClearAnalysis(ent.Comp);
         args.Handled = true;
+
+        if (valid && server is { } researchServer && args.Target is { } sample &&
+            MetaData(sample).EntityPrototype is { } prototype &&
+            _xenobiology.TryCompleteSample(researchServer, new EntProtoId<SlimeExtractComponent>(prototype.ID), out _))
+            QueueDel(sample);
+
+        UpdateState(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnPowerChanged(Entity<XenobiologySampleAnalyzerComponent> ent, ref PowerChangedEvent args)
+    {
+        if (!args.Powered)
+            CancelAnalysis(ent);
+        UpdateState(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnShutdown(Entity<XenobiologySampleAnalyzerComponent> ent, ref ComponentShutdown args)
+    {
+        CancelAnalysis(ent);
+    }
+
+    private void CancelAnalysis(Entity<XenobiologySampleAnalyzerComponent> ent)
+    {
+        var id = ent.Comp.AnalysisDoAfter;
+        ClearAnalysis(ent.Comp);
+        _doAfter.Cancel(id);
+    }
+
+    private static void ClearAnalysis(XenobiologySampleAnalyzerComponent analyzer)
+    {
+        analyzer.AnalysisDoAfter = null;
+        analyzer.AnalysisServer = null;
+        analyzer.AnalysisSample = null;
+        analyzer.AnalysisStart = null;
+        analyzer.AnalysisEnd = null;
+    }
+
+    private void UpdateState(Entity<XenobiologySampleAnalyzerComponent> ent)
+    {
+        if (!_ui.IsUiOpen(ent.Owner, XenobiologySampleAnalyzerUiKey.Key))
+            return;
+
+        var hasServer = _research.TryGetClientServer(ent.Owner, out var server, out _) &&
+                        HasComp<XenobiologyResearchDatabaseComponent>(server.Value);
+        var targets = hasServer && server is { } researchServer ? _xenobiology.GetActiveTargets(researchServer) : [];
+        var sample = _slots.GetItemOrNull(ent.Owner, ent.Comp.SampleSlot);
+        if (sample is { } uid && (TerminatingOrDeleted(uid) || EntityManager.IsQueuedForDeletion(uid)))
+            sample = null;
+
+        EntProtoId<SlimeExtractComponent>? prototype = null;
+        if (sample is { } sampleUid && HasComp<SlimeExtractComponent>(sampleUid) &&
+            MetaData(sampleUid).EntityPrototype is { } samplePrototype)
+            prototype = new EntProtoId<SlimeExtractComponent>(samplePrototype.ID);
+
+        var status = !this.IsPowered(ent, EntityManager) ? XenobiologySampleStatus.Unpowered
+            : !hasServer ? XenobiologySampleStatus.NoServer
+            : sample == null ? XenobiologySampleStatus.Empty
+            : ent.Comp.AnalysisDoAfter != null ? XenobiologySampleStatus.Analyzing
+            : targets.Any(target => target.Sample == prototype) ? XenobiologySampleStatus.Ready
+            : XenobiologySampleStatus.Unmatched;
+        var state = new XenobiologySampleAnalyzerUiState(targets,
+            server is { } serverUid ? MetaData(serverUid).EntityName : null,
+            GetNetEntity(sample), prototype, status, ent.Comp.AnalysisStart, ent.Comp.AnalysisEnd);
+        if (ent.Comp.LastState is { } previous && previous.ServerName == state.ServerName &&
+            previous.Sample == state.Sample && previous.SamplePrototype == state.SamplePrototype &&
+            previous.Status == state.Status && previous.AnalysisStart == state.AnalysisStart &&
+            previous.AnalysisEnd == state.AnalysisEnd && previous.Targets.SequenceEqual(state.Targets))
+            return;
+
+        ent.Comp.LastState = state;
+        _ui.SetUiState(ent.Owner, XenobiologySampleAnalyzerUiKey.Key, state);
     }
 }

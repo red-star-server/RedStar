@@ -36,6 +36,21 @@ public sealed partial class XenobiologyResearchSystem : EntitySystem
         return false;
     }
 
+    public XenobiologyResearchEntry[] GetActiveTargets(Entity<XenobiologyResearchDatabaseComponent?> server)
+    {
+        if (!Resolve(server, ref server.Comp, false) || server.Comp is not { } database)
+            return [];
+
+        var targets = new List<XenobiologyResearchEntry>();
+        foreach (var id in database.ActiveTargets)
+        {
+            if (!database.CompletedTargets.Contains(id) && ProtoMan.TryIndex(id, out var target))
+                targets.Add(new XenobiologyResearchEntry(target.Sample, target.Reward));
+        }
+
+        return targets.ToArray();
+    }
+
     public bool TryCompleteSample(Entity<XenobiologyResearchDatabaseComponent?> server, EntProtoId<SlimeExtractComponent> sample, out int reward)
     {
         reward = 0;
