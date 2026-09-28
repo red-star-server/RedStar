@@ -60,7 +60,7 @@ job-description-centcommoff = Выступите в роли официальн�
 
 # Task Force
 job-description-cburn = Очистите станцию от любых биологических угроз.
-job-description-deathsquad = Устраните абсолютно все угрозы для активов ГенШтаба.
+job=description-deathsquad = Устраните абсолютно все угрозы для активов ГенШтаба.
 job-description-ertchaplain = Проследите за тем, чтобы последнее право экипажа станции было соблюдено.
 job-description-ertengineer = Убедитесь, что на станции имеется электропитание и чистый воздух.
 job-description-ertjanitor = Убедитесь, что станция убрана должным образом — для поддержания морального духа.
