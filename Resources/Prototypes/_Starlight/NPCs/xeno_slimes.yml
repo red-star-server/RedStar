@@ -1,0 +1,108 @@
+- type: htnCompound
+  id: SlimeMainCompound
+  branches:
+  - tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:RandomOperator
+        targetKey: IdleTime
+        minKey: MinimumIdleTime
+        maxKey: MaximumIdleTime
+      preconditions:
+      - !type:SatiationPrecondition
+        satiationType: Hunger
+        above: Okay
+
+    - !type:HTNPrimitiveTask
+      operator: !type:WaitOperator
+        key: IdleTime
+      preconditions:
+      - !type:KeyExistsPrecondition
+        key: IdleTime
+
+    # RS14: Growth and splitting are driven by satiation over time in SlimeLifecycleSystem.
+
+  - tasks:
+    - !type:HTNCompoundTask
+      task: SlimeEatCompound
+
+  - tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:SlimeFindEdibleTargetOperator
+        targetFoodTag: Monkey
+  
+  # DO NOT UNCOMMENT UNTIL SlimeGoToFeedingSpotCompound IS FIXED
+  #    - tasks:
+  #        - !type:HTNCompoundTask
+  #          task: SlimeGoToFeedingSpotCompound
+
+  - tasks:
+    - !type:HTNCompoundTask
+      task: IdleCompound
+
+- type: htnCompound
+  id: SlimeEatCompound
+  branches:
+  - tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:SlimeTargetKnownEdibleTargetOperator
+        targetKey: EatTarget
+        targetMoveKey: TargetCoordinates
+      preconditions:
+      - !type:SatiationPrecondition
+        satiationType: Hunger
+        below: Okay
+
+    - !type:HTNPrimitiveTask
+      operator: !type:SetFloatOperator
+        targetKey: MovementRange
+        amount: 0.5
+
+    - !type:HTNPrimitiveTask
+      operator: !type:MoveToOperator
+        pathfindInPlanning: false
+
+    - !type:HTNPrimitiveTask
+      operator: !type:SlimeEatOperator
+        targetKey: EatTarget
+
+    - !type:HTNPrimitiveTask
+      operator: !type:SetFloatOperator
+        targetKey: IdleTime
+        amount: 1
+
+    - !type:HTNPrimitiveTask
+      operator: !type:WaitOperator
+        key: IdleTime
+      preconditions:
+      - !type:KeyExistsPrecondition
+        key: IdleTime
+
+# Feeding spot travel remains disabled above, as in Starlight's source tree.
+- type: htnCompound
+  id: SlimeGoToFeedingSpotCompound
+  branches:
+  - tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:SlimeLocateFeedingSpotOperator
+        targetMoveKey: TargetCoordinates
+
+    - !type:HTNPrimitiveTask
+      operator: !type:SetFloatOperator
+        targetKey: MovementRange
+        amount: 0.5
+
+    - !type:HTNPrimitiveTask
+      operator: !type:MoveToOperator
+        pathfindInPlanning: false
+
+    - !type:HTNPrimitiveTask
+      operator: !type:SetFloatOperator
+        targetKey: IdleTime
+        amount: 1
+
+    - !type:HTNPrimitiveTask
+      operator: !type:WaitOperator
+        key: IdleTime
+      preconditions:
+      - !type:KeyExistsPrecondition
+        key: IdleTime

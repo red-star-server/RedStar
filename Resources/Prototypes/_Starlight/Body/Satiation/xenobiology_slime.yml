@@ -1,0 +1,5 @@
+# Adapted from Starlight xenobiology slime hunger to current Satiation.
+- type: satiation
+  id: XenobiologySlimeHunger
+  parent: NormalSatiationHunger
+  baseChangeRate: -1

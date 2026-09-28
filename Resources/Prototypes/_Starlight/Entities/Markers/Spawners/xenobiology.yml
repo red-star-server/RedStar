@@ -1,0 +1,16 @@
+- type: entity
+  name: Gray Xenobiology Slime Spawner
+  id: SpawnGrayXenobiologySlime
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    # RS14-start
+    - sprite: _RedStar/Mobs/XenoSlimes/gray.rsi
+      state: adult
+    # RS14-end
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - XenobiologySlimeGray
