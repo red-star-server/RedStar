@@ -1,0 +1,240 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseSlimeExtract
+  components:
+  - type: Item
+    size: Tiny
+  - type: SlimeExtract
+
+- type: entity
+  parent: BaseSlimeExtract
+  id: GraySlimeExtract
+  name: gray slime extract
+  components:
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/gray.rsi
+    state: extract
+
+- type: entity
+  parent: BaseSlimeExtract
+  id: OrangeSlimeExtract
+  name: orange slime extract
+  components:
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/orange.rsi
+    state: extract
+  - type: Solution
+    id: extract
+    solution:
+      maxVol: 10
+      reagents:
+      - ReagentId: WeldingFuel
+        Quantity: 10
+  - type: Extractable
+    grindableSolutionName: extract
+
+- type: entity
+  parent: BaseSlimeExtract
+  id: PurpleSlimeExtract
+  name: purple slime extract
+  components:
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/purple.rsi
+    state: extract
+  - type: Solution
+    id: extract
+    solution:
+      maxVol: 10
+      reagents:
+      - ReagentId: RegenerativeJelly
+        Quantity: 10
+  - type: Extractable
+    grindableSolutionName: extract
+
+- type: entity
+  parent: BaseSlimeExtract
+  id: BlueSlimeExtract
+  name: blue slime extract
+  components:
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/blue.rsi
+    state: extract
+  - type: Solution
+    id: extract
+    solution:
+      maxVol: 10
+      reagents:
+      - ReagentId: FrostOil
+        Quantity: 10
+  - type: Extractable
+    grindableSolutionName: extract
+
+- type: entity
+  parent: BaseSlimeExtract
+  id: MetalSlimeExtract
+  name: metal slime extract
+  components:
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/metal.rsi
+    state: extract
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
+
+- type: entity
+  parent: BaseSlimeExtract
+  id: YellowSlimeExtract
+  name: yellow slime extract
+  components:
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/yellow.rsi
+    state: extract
+
+- type: entity
+  parent: BaseSlimeExtract
+  id: DarkPurpleSlimeExtract
+  name: dark purple slime extract
+  components:
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/dark_purple.rsi
+    state: extract
+
+- type: entity
+  parent: BaseSlimeExtract
+  id: DarkBlueSlimeExtract
+  name: dark blue slime extract
+  components:
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/dark_blue.rsi
+    state: extract
+
+- type: entity
+  parent: BaseSlimeExtract
+  id: SilverSlimeExtract
+  name: silver slime extract
+  components:
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/silver.rsi
+    state: extract
+
+- type: entity
+  parent: BaseSlimeExtract
+  id: BluespaceSlimeExtract
+  name: bluespace slime extract
+  components:
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/bluespace.rsi
+    state: extract
+
+- type: entity
+  parent: BaseSlimeExtract
+  id: SepiaSlimeExtract
+  name: sepia slime extract
+  components:
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/sepia.rsi
+    state: extract
+
+- type: entity
+  parent: BaseSlimeExtract
+  id: CeruleanSlimeExtract
+  name: cerulean slime extract
+  components:
+  - type: CeruleanExtract
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/cerulean.rsi
+    state: extract
+
+- type: entity
+  parent: BaseSlimeExtract
+  id: PyriteSlimeExtract
+  name: pyrite slime extract
+  components:
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/pyrite.rsi
+    state: extract
+
+- type: entity
+  parent: BaseSlimeExtract
+  id: RedSlimeExtract
+  name: red slime extract
+  components:
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/red.rsi
+    state: extract
+
+- type: entity
+  parent: BaseSlimeExtract
+  id: GreenSlimeExtract
+  name: green slime extract
+  components:
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/green.rsi
+    state: extract
+
+- type: entity
+  parent: BaseSlimeExtract
+  id: PinkSlimeExtract
+  name: pink slime extract
+  components:
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/pink.rsi
+    state: extract
+
+- type: entity
+  parent: BaseSlimeExtract
+  id: GoldSlimeExtract
+  name: gold slime extract
+  components:
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/gold.rsi
+    state: extract
+
+- type: entity
+  parent: BaseSlimeExtract
+  id: OilSlimeExtract
+  name: oil slime extract
+  components:
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/oil.rsi
+    state: extract
+
+- type: entity
+  parent: BaseSlimeExtract
+  id: BlackSlimeExtract
+  name: black slime extract
+  components:
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/black.rsi
+    state: extract
+
+- type: entity
+  parent: BaseSlimeExtract
+  id: LightPinkSlimeExtract
+  name: light pink slime extract
+  components:
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/light_pink.rsi
+    state: extract
+
+- type: entity
+  parent: BaseSlimeExtract
+  id: AdamantineSlimeExtract
+  name: adamantine slime extract
+  components:
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/adamantine.rsi
+    state: extract
+
+- type: entity
+  parent: BaseSlimeExtract
+  id: RainbowSlimeExtract
+  name: rainbow slime extract
+  components:
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/rainbow.rsi
+    state: extract
+  - type: PointLight
+    radius: 1
+    energy: 1
