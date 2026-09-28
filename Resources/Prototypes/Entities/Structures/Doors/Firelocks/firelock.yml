@@ -91,10 +91,12 @@
         - AirlockLayer
   - type: Door
     openDrawDepth: WallTops
-    closeTimeOne: 0.1
-    closeTimeTwo: 0.6
-    openTimeOne: 0.1
-    openTimeTwo: 0.6
+    # RS14-start
+    closeTimeOne: 0.15
+    closeTimeTwo: 0.75
+    openTimeOne: 0.15
+    openTimeTwo: 0.75
+    # RS14-end
     state: Open
     bumpOpen: false
     clickOpen: true
@@ -107,8 +109,10 @@
       path: /Audio/Machines/airlock_close.ogg
     denySound:
       path: /Audio/Machines/airlock_deny.ogg
-    openingAnimationTime: 0.6
-    closingAnimationTime: 0.6
+    # RS14-start
+    openingAnimationTime: 0.9
+    closingAnimationTime: 0.9
+    # RS14-end
   - type: Weldable
     fuel: 5
     time: 3
