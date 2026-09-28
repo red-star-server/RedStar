@@ -1,0 +1,39 @@
+using Content.Shared._RedStar.Xenobiology;
+using Content.Shared.Nutrition.Prototypes;
+
+namespace Content.Server._RedStar.Xenobiology;
+
+/// <summary>
+/// Prototype settings and current husbandry state for a slime. Runtime state is recalculated periodically.
+/// </summary>
+[RegisterComponent]
+public sealed partial class SlimeHusbandryComponent : Component
+{
+    [DataField]
+    public float OvercrowdingRadius = 2.5f;
+
+    [DataField]
+    public int RestlessThreshold = 3;
+
+    [DataField]
+    public int AggressiveThreshold = 5;
+
+    [DataField]
+    public SatiationValue RestlessBelow = "Okay";
+
+    [DataField]
+    public SatiationValue AggressiveBelow = "Starving";
+
+    [DataField]
+    public float CalmGrowthMultiplier = 1f;
+
+    [DataField]
+    public float RestlessGrowthMultiplier = 0.5f;
+
+    [DataField]
+    public float AggressiveGrowthMultiplier;
+
+    public int NearbySlimes;
+
+    public SlimeTemperament Temperament;
+}

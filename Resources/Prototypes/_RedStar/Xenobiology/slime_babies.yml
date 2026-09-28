@@ -1,0 +1,265 @@
+# Baby forms inherit their lineage appearance and behavior from adult prototypes.
+
+- type: entity
+  id: XenobiologySlimeGrayBaby
+  name: baby gray xenobiology slime
+  parent: XenobiologySlimeGray
+  components:
+  - type: SlimeLifecycle
+    stage: Baby
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/gray.rsi
+    layers:
+    - state: baby
+
+- type: entity
+  id: XenobiologySlimeOrangeBaby
+  name: baby orange xenobiology slime
+  parent: XenobiologySlimeOrange
+  components:
+  - type: SlimeLifecycle
+    stage: Baby
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/orange.rsi
+    layers:
+    - state: baby
+
+- type: entity
+  id: XenobiologySlimePurpleBaby
+  name: baby purple xenobiology slime
+  parent: XenobiologySlimePurple
+  components:
+  - type: SlimeLifecycle
+    stage: Baby
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/purple.rsi
+    layers:
+    - state: baby
+
+- type: entity
+  id: XenobiologySlimeBlueBaby
+  name: baby blue xenobiology slime
+  parent: XenobiologySlimeBlue
+  components:
+  - type: SlimeLifecycle
+    stage: Baby
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/blue.rsi
+    layers:
+    - state: baby
+
+- type: entity
+  id: XenobiologySlimeMetalBaby
+  name: baby metal xenobiology slime
+  parent: XenobiologySlimeMetal
+  components:
+  - type: SlimeLifecycle
+    stage: Baby
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/metal.rsi
+    layers:
+    - state: baby
+
+- type: entity
+  id: XenobiologySlimeYellowBaby
+  name: baby yellow xenobiology slime
+  parent: XenobiologySlimeYellow
+  components:
+  - type: SlimeLifecycle
+    stage: Baby
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/yellow.rsi
+    layers:
+    - state: baby
+
+- type: entity
+  id: XenobiologySlimeDarkPurpleBaby
+  name: baby darkpurple xenobiology slime
+  parent: XenobiologySlimeDarkPurple
+  components:
+  - type: SlimeLifecycle
+    stage: Baby
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/dark_purple.rsi
+    layers:
+    - state: baby
+
+- type: entity
+  id: XenobiologySlimeDarkBlueBaby
+  name: baby darkblue xenobiology slime
+  parent: XenobiologySlimeDarkBlue
+  components:
+  - type: SlimeLifecycle
+    stage: Baby
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/dark_blue.rsi
+    layers:
+    - state: baby
+
+- type: entity
+  id: XenobiologySlimeSilverBaby
+  name: baby silver xenobiology slime
+  parent: XenobiologySlimeSilver
+  components:
+  - type: SlimeLifecycle
+    stage: Baby
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/silver.rsi
+    layers:
+    - state: baby
+
+- type: entity
+  id: XenobiologySlimeBluespaceBaby
+  name: baby bluespace xenobiology slime
+  parent: XenobiologySlimeBluespace
+  components:
+  - type: SlimeLifecycle
+    stage: Baby
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/bluespace.rsi
+    layers:
+    - state: baby
+
+- type: entity
+  id: XenobiologySlimeSepiaBaby
+  name: baby sepia xenobiology slime
+  parent: XenobiologySlimeSepia
+  components:
+  - type: SlimeLifecycle
+    stage: Baby
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/sepia.rsi
+    layers:
+    - state: baby
+
+- type: entity
+  id: XenobiologySlimeCeruleanBaby
+  name: baby cerulean xenobiology slime
+  parent: XenobiologySlimeCerulean
+  components:
+  - type: SlimeLifecycle
+    stage: Baby
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/cerulean.rsi
+    layers:
+    - state: baby
+
+- type: entity
+  id: XenobiologySlimePyriteBaby
+  name: baby pyrite xenobiology slime
+  parent: XenobiologySlimePyrite
+  components:
+  - type: SlimeLifecycle
+    stage: Baby
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/pyrite.rsi
+    layers:
+    - state: baby
+
+- type: entity
+  id: XenobiologySlimeRedBaby
+  name: baby red xenobiology slime
+  parent: XenobiologySlimeRed
+  components:
+  - type: SlimeLifecycle
+    stage: Baby
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/red.rsi
+    layers:
+    - state: baby
+
+- type: entity
+  id: XenobiologySlimeGreenBaby
+  name: baby green xenobiology slime
+  parent: XenobiologySlimeGreen
+  components:
+  - type: SlimeLifecycle
+    stage: Baby
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/green.rsi
+    layers:
+    - state: baby
+
+- type: entity
+  id: XenobiologySlimePinkBaby
+  name: baby pink xenobiology slime
+  parent: XenobiologySlimePink
+  components:
+  - type: SlimeLifecycle
+    stage: Baby
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/pink.rsi
+    layers:
+    - state: baby
+
+- type: entity
+  id: XenobiologySlimeGoldBaby
+  name: baby gold xenobiology slime
+  parent: XenobiologySlimeGold
+  components:
+  - type: SlimeLifecycle
+    stage: Baby
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/gold.rsi
+    layers:
+    - state: baby
+
+- type: entity
+  id: XenobiologySlimeOilBaby
+  name: baby oil xenobiology slime
+  parent: XenobiologySlimeOil
+  components:
+  - type: SlimeLifecycle
+    stage: Baby
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/oil.rsi
+    layers:
+    - state: baby
+
+- type: entity
+  id: XenobiologySlimeBlackBaby
+  name: baby black xenobiology slime
+  parent: XenobiologySlimeBlack
+  components:
+  - type: SlimeLifecycle
+    stage: Baby
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/black.rsi
+    layers:
+    - state: baby
+
+- type: entity
+  id: XenobiologySlimeLightPinkBaby
+  name: baby lightpink xenobiology slime
+  parent: XenobiologySlimeLightPink
+  components:
+  - type: SlimeLifecycle
+    stage: Baby
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/light_pink.rsi
+    layers:
+    - state: baby
+
+- type: entity
+  id: XenobiologySlimeAdamantineBaby
+  name: baby adamantine xenobiology slime
+  parent: XenobiologySlimeAdamantine
+  components:
+  - type: SlimeLifecycle
+    stage: Baby
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/adamantine.rsi
+    layers:
+    - state: baby
+
+- type: entity
+  id: XenobiologySlimeRainbowBaby
+  name: baby rainbow xenobiology slime
+  parent: XenobiologySlimeRainbow
+  components:
+  - type: SlimeLifecycle
+    stage: Baby
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/rainbow.rsi
+    layers:
+    - state: baby
