@@ -574,17 +574,17 @@ entity-effect-guidebook-plant-seeds-remove =
 entity-effect-guidebook-plant-change-trait =
     { $chance ->
         [1] { $change ->
-            [Add] Добавляет растению признак «{ $trait }»
-            [Remove] Удаляет у растения признак «{ $trait }»
-            [Toggle] Переключает у растения признак «{ $trait }»
-            *[other] Изменяет у растения признак «{ $trait }»
-        }
+                [Add] Добавляет растению признак «{ $trait }»
+                [Remove] Удаляет у растения признак «{ $trait }»
+                [Toggle] Переключает у растения признак «{ $trait }»
+                *[other] Изменяет у растения признак «{ $trait }»
+            }
         *[other] { $change ->
-            [Add] Добавляют растению признак «{ $trait }»
-            [Remove] Удаляют у растения признак «{ $trait }»
-            [Toggle] Переключают у растения признак «{ $trait }»
-            *[other] Изменяют у растения признак «{ $trait }»
-        }
+                [Add] Добавляют растению признак «{ $trait }»
+                [Remove] Удаляют у растения признак «{ $trait }»
+                [Toggle] Переключают у растения признак «{ $trait }»
+                *[other] Изменяют у растения признак «{ $trait }»
+            }
     }
 
 entity-effect-guidebook-plant-mutate-exude-gasses =
@@ -616,3 +616,9 @@ entity-effect-disarm =
         [1] Обезоруживает
         *[other] обезоружить
     } цель
+
+entity-effect-guidebook-make-trap-in-container =
+    { $chance ->
+        [1] Заманивает в ловушку
+       *[other] заманить в ловушку
+    } метаболизатор внутри { $entityname }

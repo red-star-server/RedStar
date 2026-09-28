@@ -404,6 +404,7 @@ cmd-restart-help = Использование: { $command }
 
 cmd-shutdown-desc = Корректно выключает сервер.
 cmd-shutdown-help = Использование: { $command }
+cmd-shutdown-hint-1 = Причина
 
 cmd-saveconfig-desc = Сохраняет конфигурацию клиента в файл конфигурации.
 cmd-saveconfig-help = Использование: { $command }

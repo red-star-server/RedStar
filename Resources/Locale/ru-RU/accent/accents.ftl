@@ -5,7 +5,6 @@ accent-words-cat-3 = Мурррр!
 accent-words-cat-4 = Ххссс!
 accent-words-cat-5 = Мррау.
 accent-words-cat-6 = Мяу?
-accent-words-cat-7 = Mяф.
 
 # Dog accent
 accent-words-dog-1 = Гав!
@@ -64,25 +63,21 @@ accent-words-zombie-moth-6 = Шааарфы...
 accent-words-generic-aggressive-1 = Грр!
 accent-words-generic-aggressive-2 = Рррр!
 accent-words-generic-aggressive-3 = Грр...
-accent-words-generic-aggressive-4 = Гррав!!
 
 # Duck
 accent-words-duck-1 = Ква!
 accent-words-duck-2 = Ква.
 accent-words-duck-3 = Ква?
-accent-words-duck-4 = Ква-ква!
 
 # Chicken
 accent-words-chicken-1 = Кудах!
 accent-words-chicken-2 = Кудах.
 accent-words-chicken-3 = Кудах?
-accent-words-chicken-4 = Кудах тах-тах!
 
 # Pig
 accent-words-pig-1 = Хрю.
 accent-words-pig-2 = Хрю?
 accent-words-pig-3 = Хрю!
-accent-words-pig-4 = Хрю-хрю!
 
 # Kangaroo
 accent-words-kangaroo-1 = Грр!
@@ -117,7 +112,6 @@ accent-words-kobold-5 = Скрит?
 accent-words-kobold-6 = Гронк!
 accent-words-kobold-7 = Хисс!
 accent-words-kobold-8 = Йии!
-accent-words-kobold-9 = Йип.
 
 # Nymph
 accent-words-nymph-1 = Чирик!
@@ -138,18 +132,3 @@ accent-words-scurret-2 = Ва?
 accent-words-scurret-3 = Ва.
 accent-words-scurret-4 = Ва...
 accent-words-scurret-5 = Вава!
-accent-words-scurret-6 = Вава?
-accent-words-scurret-7 = Вава.
-accent-words-scurret-8 = Вава...
-accent-words-scurret-9 = Ва вава!
-accent-words-scurret-10 = Ва вава?
-accent-words-scurret-11 = Ва вава.
-accent-words-scurret-12 = Ва вава...
-accent-words-scurret-13 = Вава ва!
-accent-words-scurret-14 = Вава ва?
-accent-words-scurret-15 = Вава ва.
-accent-words-scurret-16 = Вава ва...
-accent-words-scurret-17 = Ваааааа.
-accent-words-scurret-18 = Ваааааа!
-accent-words-scurret-19 = Ваааааа?
-accent-words-scurret-20 = Ваааааа...

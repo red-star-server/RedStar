@@ -8,6 +8,7 @@ department-Science = Научный отдел
 department-Security = Милиция
 department-Service = Сервисный отдел
 department-Silicon = Синтетики
+department-Task-Force = Оперативная группа
 department-Specific = На определённых станциях
 
 department-Unknown = Неизвестный

@@ -1,3 +1,6 @@
+ent-DrinkKvassGlass = { ent-DrinkGlass }
+    .desc = { ent-DrinkGlass.desc }
+    .suffix = Квас
 ent-DrinkAlexanderGlass = { ent-DrinkGlass }
     .desc = { ent-DrinkGlass.desc }
     .suffix = Александр
@@ -10,9 +13,6 @@ ent-DrinkBoyarskyGlass = { ent-DrinkGlass }
 ent-DrinkBrambleGlass = { ent-DrinkGlass }
     .desc = { ent-DrinkGlass.desc }
     .suffix = Брамбл
-ent-DrinkKvassGlass = { ent-DrinkGlass }
-    .desc = { ent-DrinkGlass.desc }
-    .suffix = Квас
 ent-DrinkMaiTaiGlass = { ent-DrinkGlass }
     .desc = { ent-DrinkGlass.desc }
     .suffix = Май Тай

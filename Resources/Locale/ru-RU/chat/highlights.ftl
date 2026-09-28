@@ -29,8 +29,8 @@ highlights-medicalintern = интерн, "док", медблок, медбей,
 highlights-paramedic = парамед, медблок, медбей, "мед"
 
 # Science
-highlights-scientist = учёный, наука, "рнд", "нио"
 highlights-researchassistant = научный ассистент, наука, "рнд", "нио", "асист"
+highlights-scientist = учёный, наука, "рнд", "нио"
 
 # Service
 highlights-bartender = бармен, "бар"
@@ -46,8 +46,9 @@ highlights-musician = музыкант, театрал, артист, серви
 highlights-serviceworker = сервисный работник, сервисник
 
 # Station-specific
-highlights-reporter = репортёр, репортер, журналист
 highlights-psychologist = психолог
+highlights-reporter = репортёр, репортер, журналист
+highlights-tramdriver = водитель трамвая, водитель, трамвай, "вод"
 
 # Silicon
 highlights-borg = киборг, борг
@@ -55,3 +56,15 @@ highlights-stationai = станционный ии, "ии", "сии"
 
 # Civilian
 highlights-passenger = пассажир, грейтайдер, "тайдер"
+highlights-visitor = посетитель, гражданский, "гражданский", "посетитель"
+
+# Central Command
+highlights-centralcommandofficial = представитель центрального командования, представитель цк, "представитель", "центральное командование", пцк, "пцк"
+highlights-cburn = рхбз, рхбзз
+highlights-deathsquad = эскадрон смерти, эскадрон
+highlights-ertleader = лидер, "обр", "отряд быстрого реагирования"
+highlights-ertchaplain = священник, "обр", "отряд быстрого реагирования"
+highlights-ertengineer = инженер, "инж", "обр", "отряд быстрого реагирования"
+highlights-ertsecurity = офицер, безопасность, "обр", "отряд быстрого реагирования"
+highlights-ertmedical = медик, "обр", "отряд быстрого реагирования"
+highlights-ertjanitor = уборщик, "уборщик", "обр", "отряд быстрого реагирования"

@@ -92,3 +92,6 @@ entity-condition-guidebook-internals =
         [true] использует балон
         *[false] дышит атмосферой
     }
+
+entity-condition-guidebook-mouth-uncovered-condition =
+    рот существа открыт
