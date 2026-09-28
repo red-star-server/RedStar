@@ -1,4 +1,4 @@
-using Content.Shared._RedStar.Xenobiology;
+using Content.Shared._RedStar.Xenobiology.UI;
 using Robust.Client.UserInterface;
 
 namespace Content.Client._RedStar.Xenobiology.UI;

@@ -1,4 +1,4 @@
-using Content.Shared._RedStar.Xenobiology;
+using Content.Shared._RedStar.Xenobiology.UI;
 using Content.Shared.Research.Components;
 using Robust.Client.UserInterface;
 

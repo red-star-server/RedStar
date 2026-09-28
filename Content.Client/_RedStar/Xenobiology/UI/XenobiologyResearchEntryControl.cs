@@ -1,5 +1,5 @@
 using System.Numerics;
-using Content.Shared._RedStar.Xenobiology;
+using Content.Shared._RedStar.Xenobiology.UI;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 
