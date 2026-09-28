@@ -1,0 +1,33 @@
+- type: xenobiologyResearch
+  id: XenobiologyResearchGray
+  sample: GraySlimeExtract
+  reward: 500
+
+- type: xenobiologyResearch
+  id: XenobiologyResearchOrange
+  sample: OrangeSlimeExtract
+  reward: 750
+  prerequisites:
+  - XenobiologyResearchGray
+
+- type: xenobiologyResearch
+  id: XenobiologyResearchPurple
+  sample: PurpleSlimeExtract
+  reward: 750
+  prerequisites:
+  - XenobiologyResearchGray
+
+- type: xenobiologyResearch
+  id: XenobiologyResearchBlue
+  sample: BlueSlimeExtract
+  reward: 750
+  prerequisites:
+  - XenobiologyResearchGray
+  weight: 2
+
+- type: xenobiologyResearch
+  id: XenobiologyResearchMetal
+  sample: MetalSlimeExtract
+  reward: 1000
+  prerequisites:
+  - XenobiologyResearchGray
