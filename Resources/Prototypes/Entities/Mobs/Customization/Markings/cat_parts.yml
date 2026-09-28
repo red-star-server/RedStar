@@ -1,6 +1,6 @@
 - type: marking
   id: CatEars
-  bodyPart: Special
+  bodyPart: HeadTop # RS14
   groupWhitelist: [Human]
   coloring:
     default:
@@ -35,4 +35,4 @@
         - !type:SkinColoring
   sprites:
   - sprite: Mobs/Customization/cat_parts.rsi
-    state: tail_cat
+    state: tail_cat_wag # RS14
