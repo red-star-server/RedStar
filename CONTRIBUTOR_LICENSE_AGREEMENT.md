@@ -1,4 +1,4 @@
-﻿# RedStar Contributor License Agreement
+# RedStar Contributor License Agreement
 
 By intentionally submitting a source code contribution to RedStar, you agree to the terms below.
 

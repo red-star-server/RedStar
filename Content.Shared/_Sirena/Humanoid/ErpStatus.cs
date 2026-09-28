@@ -1,4 +1,4 @@
-﻿namespace Content.Shared._Sirena.Humanoid;
+namespace Content.Shared._Sirena.Humanoid;
 
 /// <summary>
 /// Character preference regarding participation in ERP.
