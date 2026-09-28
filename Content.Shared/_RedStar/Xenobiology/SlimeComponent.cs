@@ -3,7 +3,7 @@ using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared._Starlight.Xenobiology;
+namespace Content.Shared._RedStar.Xenobiology;
 
 /// <summary>
 /// This component describes the current state of the slime.

@@ -1,9 +1,9 @@
 using System.Numerics;
-using Content.Shared._Starlight.Xenobiology;
+using Content.Shared._RedStar.Xenobiology;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 
-namespace Content.Client._Starlight.Xenobiology;
+namespace Content.Client._RedStar.Xenobiology;
 
 public sealed partial class SlimeAnimationSystem : EntitySystem
 {

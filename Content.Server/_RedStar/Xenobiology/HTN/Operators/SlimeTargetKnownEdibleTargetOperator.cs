@@ -1,25 +1,27 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server._Starlight.Xenobiology;
+using Content.Server._RedStar.Xenobiology;
 using Content.Server.NPC;
 using Content.Server.NPC.HTN.PrimitiveTasks;
 using Content.Server.NPC.Pathfinding;
-using Content.Shared._Starlight.Xenobiology;
+using Content.Shared._RedStar.Xenobiology;
 using Content.Shared.Interaction;
 
-namespace Content.Server._Starlight.NPC.HTN.PrimitiveTasks.Operators.Xenobiology;
+namespace Content.Server._RedStar.Xenobiology.HTN.Operators;
 
-public sealed partial class SlimeLocateFeedingSpotOperator : HTNOperator
+public sealed partial class SlimeTargetKnownEdibleTargetOperator : HTNOperator
 {
-    /*
-     * This locates a feeding spot for the slime to go to and directs them there.
-     * Should be used when there are no nearby food sources.
-     */
-
     [Dependency] private IEntityManager _entManager = default!;
 
     private SlimeBrainSystem _slimeBrainSystem = default!;
+    private EntityLookupSystem _lookup = default!;
     private PathfindingSystem _pathfinding = default!;
+
+    /// <summary>
+    /// Target entity to eat.
+    /// </summary>
+    [DataField(required: true)]
+    public string TargetKey = string.Empty;
 
     /// <summary>
     /// Target entitycoordinates to move to.
@@ -31,6 +33,7 @@ public sealed partial class SlimeLocateFeedingSpotOperator : HTNOperator
     {
         base.Initialize(sysManager);
         _slimeBrainSystem = sysManager.GetEntitySystem<SlimeBrainSystem>();
+        _lookup = sysManager.GetEntitySystem<EntityLookupSystem>();
         _pathfinding = sysManager.GetEntitySystem<PathfindingSystem>();
     }
 
@@ -39,22 +42,24 @@ public sealed partial class SlimeLocateFeedingSpotOperator : HTNOperator
     {
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
-        if (!_entManager.TryGetComponent<SlimeComponent>(owner, out var slime)
-            || !_entManager.TryGetComponent<TransformComponent>(owner, out var slimeTransform))
+        if (!_entManager.TryGetComponent<SlimeComponent>(owner, out _))
             return (false, null);
 
-        foreach (var spot in _slimeBrainSystem.AcquireFeedingSpots())
+        foreach (var entity in _lookup.GetEntitiesInRange(owner, _slimeBrainSystem.FoodSearchRange))
         {
+            if (!_slimeBrainSystem.AcquireTargetFoods().Contains(entity)) continue;
+
             const float pathRange = SharedInteractionSystem.InteractionRange - 1f;
-            var path = await _pathfinding.GetPath(owner, slimeTransform.Coordinates, spot, pathRange, cancelToken);
+            var path = await _pathfinding.GetPath(owner, entity, pathRange, cancelToken);
 
             if (path.Result == PathResult.NoPath)
                 continue;
 
             return (true, new Dictionary<string, object>()
             {
-                { TargetMoveKey, spot },
-                { NPCBlackboard.PathfindKey, path },
+                {TargetKey, entity},
+                {TargetMoveKey, _entManager.GetComponent<TransformComponent>(entity).Coordinates},
+                {NPCBlackboard.PathfindKey, path},
             });
         }
 

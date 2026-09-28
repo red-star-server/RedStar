@@ -1,10 +1,10 @@
-using Content.Server._Starlight.Xenobiology;
+using Content.Server._RedStar.Xenobiology;
 using Content.Server.NPC;
 using Content.Server.NPC.HTN;
 using Content.Server.NPC.HTN.PrimitiveTasks;
-using Content.Shared._Starlight.Xenobiology;
+using Content.Shared._RedStar.Xenobiology;
 
-namespace Content.Server._Starlight.NPC.HTN.PrimitiveTasks.Operators.Xenobiology;
+namespace Content.Server._RedStar.Xenobiology.HTN.Operators;
 
 public sealed partial class SlimeEatOperator : HTNOperator
 {

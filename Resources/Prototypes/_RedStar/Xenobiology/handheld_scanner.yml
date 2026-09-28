@@ -5,7 +5,7 @@
   description: A hand-held scanner for collecting information on slimes.
   components:
   - type: Sprite
-    sprite: _Starlight/Objects/Specific/Xenobiology/test_slime_analyzer.rsi
+    sprite: _RedStar/Objects/Specific/Xenobiology/slime_scanner.rsi
     state: icon
   - type: SlimeScanner
   - type: UserInterface

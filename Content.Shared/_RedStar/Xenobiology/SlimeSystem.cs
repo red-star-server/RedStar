@@ -8,7 +8,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared._Starlight.Xenobiology;
+namespace Content.Shared._RedStar.Xenobiology;
 
 /// <summary>
 /// Handles the general behavior of slimes.

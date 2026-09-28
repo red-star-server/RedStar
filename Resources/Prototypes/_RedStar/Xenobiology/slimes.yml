@@ -7,18 +7,15 @@
   abstract: true
   description: I don't think you should be seeing this.
   components:
-  # RS14-start
   - type: Sprite
     drawdepth: Mobs
     sprite: _RedStar/Mobs/XenoSlimes/gray.rsi
     layers:
     - state: adult
-  # RS14-end
   - type: Satiation
     satiations:
       Hunger:
         prototype: XenobiologySlimeHunger
-  # RS14-start
   - type: SlimeHusbandry
     overcrowdingRadius: 2.5
     restlessThreshold: 3
@@ -28,7 +25,6 @@
     calmGrowthMultiplier: 1
     restlessGrowthMultiplier: 0.5
     aggressiveGrowthMultiplier: 0
-  # RS14-end
   - type: Slime
     damageOnEat:
       types:
@@ -49,7 +45,6 @@
   components:
   - type: Slime
     extract: GraySlimeExtract
-  # RS14-start
   - type: SlimeLifecycle
     adultPrototype: XenobiologySlimeGray
     babyPrototype: XenobiologySlimeGrayBaby
@@ -81,7 +76,6 @@
     sprite: _RedStar/Mobs/XenoSlimes/gray.rsi
     layers:
     - state: adult
-  # RS14-end
 
 - type: entity
   name: orange xenobiology slime
@@ -90,7 +84,6 @@
   components:
   - type: Slime
     extract: OrangeSlimeExtract
-  # RS14-start
   - type: SlimeLifecycle
     adultPrototype: XenobiologySlimeOrange
     babyPrototype: XenobiologySlimeOrangeBaby
@@ -105,7 +98,6 @@
     sprite: _RedStar/Mobs/XenoSlimes/orange.rsi
     layers:
     - state: adult
-  # RS14-end
 
 - type: entity
   name: purple xenobiology slime
@@ -114,7 +106,6 @@
   components:
   - type: Slime
     extract: PurpleSlimeExtract
-  # RS14-start
   - type: SlimeLifecycle
     adultPrototype: XenobiologySlimePurple
     babyPrototype: XenobiologySlimePurpleBaby
@@ -129,7 +120,6 @@
     sprite: _RedStar/Mobs/XenoSlimes/purple.rsi
     layers:
     - state: adult
-  # RS14-end
 
 - type: entity
   name: blue xenobiology slime
@@ -138,7 +128,6 @@
   components:
   - type: Slime
     extract: BlueSlimeExtract
-  # RS14-start
   - type: SlimeLifecycle
     adultPrototype: XenobiologySlimeBlue
     babyPrototype: XenobiologySlimeBlueBaby
@@ -153,7 +142,6 @@
     sprite: _RedStar/Mobs/XenoSlimes/blue.rsi
     layers:
     - state: adult
-  # RS14-end
 
 - type: entity
   name: metal xenobiology slime
@@ -162,7 +150,6 @@
   components:
   - type: Slime
     extract: MetalSlimeExtract
-  # RS14-start
   - type: SlimeLifecycle
     adultPrototype: XenobiologySlimeMetal
     babyPrototype: XenobiologySlimeMetalBaby
@@ -177,7 +164,6 @@
     sprite: _RedStar/Mobs/XenoSlimes/metal.rsi
     layers:
     - state: adult
-  # RS14-end
 
 - type: entity
   name: yellow xenobiology slime
@@ -186,7 +172,6 @@
   components:
   - type: Slime
     extract: YellowSlimeExtract
-  # RS14-start
   - type: SlimeLifecycle
     adultPrototype: XenobiologySlimeYellow
     babyPrototype: XenobiologySlimeYellowBaby
@@ -201,7 +186,6 @@
     sprite: _RedStar/Mobs/XenoSlimes/yellow.rsi
     layers:
     - state: adult
-  # RS14-end
 
 - type: entity
   name: dark purple xenobiology slime
@@ -210,7 +194,6 @@
   components:
   - type: Slime
     extract: DarkPurpleSlimeExtract
-  # RS14-start
   - type: SlimeLifecycle
     adultPrototype: XenobiologySlimeDarkPurple
     babyPrototype: XenobiologySlimeDarkPurpleBaby
@@ -225,7 +208,6 @@
     sprite: _RedStar/Mobs/XenoSlimes/dark_purple.rsi
     layers:
     - state: adult
-  # RS14-end
 
 - type: entity
   name: dark blue xenobiology slime
@@ -234,7 +216,6 @@
   components:
   - type: Slime
     extract: DarkBlueSlimeExtract
-  # RS14-start
   - type: SlimeLifecycle
     adultPrototype: XenobiologySlimeDarkBlue
     babyPrototype: XenobiologySlimeDarkBlueBaby
@@ -249,7 +230,6 @@
     sprite: _RedStar/Mobs/XenoSlimes/dark_blue.rsi
     layers:
     - state: adult
-  # RS14-end
 
 - type: entity
   name: silver xenobiology slime
@@ -258,7 +238,6 @@
   components:
   - type: Slime
     extract: SilverSlimeExtract
-  # RS14-start
   - type: SlimeLifecycle
     adultPrototype: XenobiologySlimeSilver
     babyPrototype: XenobiologySlimeSilverBaby
@@ -273,7 +252,6 @@
     sprite: _RedStar/Mobs/XenoSlimes/silver.rsi
     layers:
     - state: adult
-  # RS14-end
 
 - type: entity
   name: bluespace xenobiology slime
@@ -282,7 +260,6 @@
   components:
   - type: Slime
     extract: BluespaceSlimeExtract
-  # RS14-start
   - type: SlimeLifecycle
     adultPrototype: XenobiologySlimeBluespace
     babyPrototype: XenobiologySlimeBluespaceBaby
@@ -290,7 +267,6 @@
     sprite: _RedStar/Mobs/XenoSlimes/bluespace.rsi
     layers:
     - state: adult
-  # RS14-end
 
 - type: entity
   name: sepia xenobiology slime
@@ -299,7 +275,6 @@
   components:
   - type: Slime
     extract: SepiaSlimeExtract
-  # RS14-start
   - type: SlimeLifecycle
     adultPrototype: XenobiologySlimeSepia
     babyPrototype: XenobiologySlimeSepiaBaby
@@ -307,7 +282,6 @@
     sprite: _RedStar/Mobs/XenoSlimes/sepia.rsi
     layers:
     - state: adult
-  # RS14-end
 
 - type: entity
   name: cerulean xenobiology slime
@@ -316,7 +290,6 @@
   components:
   - type: Slime
     extract: CeruleanSlimeExtract
-  # RS14-start
   - type: SlimeLifecycle
     adultPrototype: XenobiologySlimeCerulean
     babyPrototype: XenobiologySlimeCeruleanBaby
@@ -324,7 +297,6 @@
     sprite: _RedStar/Mobs/XenoSlimes/cerulean.rsi
     layers:
     - state: adult
-  # RS14-end
 
 - type: entity
   name: pyrite xenobiology slime
@@ -333,7 +305,6 @@
   components:
   - type: Slime
     extract: PyriteSlimeExtract
-  # RS14-start
   - type: SlimeLifecycle
     adultPrototype: XenobiologySlimePyrite
     babyPrototype: XenobiologySlimePyriteBaby
@@ -341,7 +312,6 @@
     sprite: _RedStar/Mobs/XenoSlimes/pyrite.rsi
     layers:
     - state: adult
-  # RS14-end
 
 - type: entity
   name: red xenobiology slime
@@ -350,7 +320,6 @@
   components:
   - type: Slime
     extract: RedSlimeExtract
-  # RS14-start
   - type: SlimeLifecycle
     adultPrototype: XenobiologySlimeRed
     babyPrototype: XenobiologySlimeRedBaby
@@ -361,7 +330,6 @@
     sprite: _RedStar/Mobs/XenoSlimes/red.rsi
     layers:
     - state: adult
-  # RS14-end
 
 - type: entity
   name: green xenobiology slime
@@ -370,7 +338,6 @@
   components:
   - type: Slime
     extract: GreenSlimeExtract
-  # RS14-start
   - type: SlimeLifecycle
     adultPrototype: XenobiologySlimeGreen
     babyPrototype: XenobiologySlimeGreenBaby
@@ -381,7 +348,6 @@
     sprite: _RedStar/Mobs/XenoSlimes/green.rsi
     layers:
     - state: adult
-  # RS14-end
 
 - type: entity
   name: pink xenobiology slime
@@ -390,7 +356,6 @@
   components:
   - type: Slime
     extract: PinkSlimeExtract
-  # RS14-start
   - type: SlimeLifecycle
     adultPrototype: XenobiologySlimePink
     babyPrototype: XenobiologySlimePinkBaby
@@ -401,7 +366,6 @@
     sprite: _RedStar/Mobs/XenoSlimes/pink.rsi
     layers:
     - state: adult
-  # RS14-end
 
 - type: entity
   name: gold xenobiology slime
@@ -410,7 +374,6 @@
   components:
   - type: Slime
     extract: GoldSlimeExtract
-  # RS14-start
   - type: SlimeLifecycle
     adultPrototype: XenobiologySlimeGold
     babyPrototype: XenobiologySlimeGoldBaby
@@ -421,7 +384,6 @@
     sprite: _RedStar/Mobs/XenoSlimes/gold.rsi
     layers:
     - state: adult
-  # RS14-end
 
 - type: entity
   name: oil xenobiology slime
@@ -430,7 +392,6 @@
   components:
   - type: Slime
     extract: OilSlimeExtract
-  # RS14-start
   - type: SlimeLifecycle
     adultPrototype: XenobiologySlimeOil
     babyPrototype: XenobiologySlimeOilBaby
@@ -438,7 +399,6 @@
     sprite: _RedStar/Mobs/XenoSlimes/oil.rsi
     layers:
     - state: adult
-  # RS14-end
 
 - type: entity
   name: black xenobiology slime
@@ -447,7 +407,6 @@
   components:
   - type: Slime
     extract: BlackSlimeExtract
-  # RS14-start
   - type: SlimeLifecycle
     adultPrototype: XenobiologySlimeBlack
     babyPrototype: XenobiologySlimeBlackBaby
@@ -455,7 +414,6 @@
     sprite: _RedStar/Mobs/XenoSlimes/black.rsi
     layers:
     - state: adult
-  # RS14-end
 
 - type: entity
   name: light pink xenobiology slime
@@ -464,7 +422,6 @@
   components:
   - type: Slime
     extract: LightPinkSlimeExtract
-  # RS14-start
   - type: SlimeLifecycle
     adultPrototype: XenobiologySlimeLightPink
     babyPrototype: XenobiologySlimeLightPinkBaby
@@ -472,7 +429,6 @@
     sprite: _RedStar/Mobs/XenoSlimes/light_pink.rsi
     layers:
     - state: adult
-  # RS14-end
 
 - type: entity
   name: adamantine xenobiology slime
@@ -481,7 +437,6 @@
   components:
   - type: Slime
     extract: AdamantineSlimeExtract
-  # RS14-start
   - type: SlimeLifecycle
     adultPrototype: XenobiologySlimeAdamantine
     babyPrototype: XenobiologySlimeAdamantineBaby
@@ -489,7 +444,6 @@
     sprite: _RedStar/Mobs/XenoSlimes/adamantine.rsi
     layers:
     - state: adult
-  # RS14-end
 
 - type: entity
   name: rainbow xenobiology slime
@@ -498,18 +452,13 @@
   components:
   - type: Slime
     extract: RainbowSlimeExtract
-  # RS14-start
   - type: SlimeLifecycle
     adultPrototype: XenobiologySlimeRainbow
     babyPrototype: XenobiologySlimeRainbowBaby
-  # RS14-end
-  # RS14: The new rainbow animation supplies its own colors.
   - type: PointLight
     radius: 1
     energy: 1
-  # RS14-start
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/rainbow.rsi
     layers:
     - state: adult
-  # RS14-end

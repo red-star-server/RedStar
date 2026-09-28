@@ -19,7 +19,7 @@
       - !type:KeyExistsPrecondition
         key: IdleTime
 
-    # RS14: Growth and splitting are driven by satiation over time in SlimeLifecycleSystem.
+    # Growth and splitting are driven by satiation over time in SlimeLifecycleSystem.
 
   - tasks:
     - !type:HTNCompoundTask
@@ -77,7 +77,7 @@
       - !type:KeyExistsPrecondition
         key: IdleTime
 
-# Feeding spot travel remains disabled above, as in Starlight's source tree.
+# Feeding spot travel is disabled in SlimeMainCompound until this branch is fixed.
 - type: htnCompound
   id: SlimeGoToFeedingSpotCompound
   branches:

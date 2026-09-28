@@ -1,5 +1,4 @@
 using Content.Shared._RedStar.Xenobiology;
-using Content.Shared._Starlight.Xenobiology;
 using Content.Shared.Coordinates;
 using Content.Shared.EntityConditions;
 using Content.Shared.FixedPoint;

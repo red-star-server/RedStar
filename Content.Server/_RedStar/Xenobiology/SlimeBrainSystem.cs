@@ -1,4 +1,4 @@
-using Content.Shared._Starlight.Xenobiology;
+using Content.Shared._RedStar.Xenobiology;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Mobs.Components;
@@ -6,7 +6,7 @@ using Content.Shared.Mobs.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server._Starlight.Xenobiology;
+namespace Content.Server._RedStar.Xenobiology;
 
 public sealed partial class SlimeBrainSystem : EntitySystem
 {
@@ -37,21 +37,17 @@ public sealed partial class SlimeBrainSystem : EntitySystem
 
     public bool IsEdibleBySlimeTest(EntityUid entity)
     {
-        // Don't cannibalize other slimes
         if (HasComp<SlimeComponent>(entity)) return false;
 
         if (!HasComp<DamageableComponent>(entity)) return false;
 
-        // Don't target entities that aren't mobs
         if (!HasComp<MobStateComponent>(entity)) return false;
 
-        // Don't target entities in the wrong damage group
         if (!OnlyTarget.HasValue) return _mobState.IsAlive(entity);
         if (!TryComp<InjurableComponent>(entity, out var injurable) ||
             injurable.DamageContainer != OnlyTarget.Value)
             return false;
 
-        // Only target living entities.
         return _mobState.IsAlive(entity);
     }
 
