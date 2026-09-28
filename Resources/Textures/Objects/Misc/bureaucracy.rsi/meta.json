@@ -8,9 +8,6 @@
     },
     "states": [
         {
-            "name": "paper_stamp-approve"
-        },
-        {
             "name": "acquisition_form"
         },
         {
@@ -231,6 +228,9 @@
         {
             "name": "paper-inhand-left",
             "directions": 4
+        },
+        {
+            "name": "valentine_card"
         }
     ]
 }
