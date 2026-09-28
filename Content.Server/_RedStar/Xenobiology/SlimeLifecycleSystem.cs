@@ -44,8 +44,9 @@ public sealed partial class SlimeLifecycleSystem : EntitySystem
             if (_mobState.IsDead(uid))
                 continue;
 
+            var ent = new Entity<SlimeLifecycleComponent>(uid, lifecycle);
             if (lifecycle.Stage == SlimeStage.Adult)
-                UpdateMutations(uid, lifecycle, elapsed);
+                UpdateMutations(ent, elapsed);
             if (lifecycle.GrowthRate <= 0 || lifecycle.GrowthThreshold <= 0 ||
                 !_satiation.IsValueInRange((uid, satiation), SatiationSystem.Hunger, above: lifecycle.RequiredSatiation))
                 continue;
@@ -58,7 +59,6 @@ public sealed partial class SlimeLifecycleSystem : EntitySystem
             if (lifecycle.Growth < lifecycle.GrowthThreshold)
                 continue;
 
-            var ent = new Entity<SlimeLifecycleComponent>(uid, lifecycle);
             if (lifecycle.Stage == SlimeStage.Baby)
                 BecomeAdult(ent, (uid, satiation));
             else
@@ -66,8 +66,9 @@ public sealed partial class SlimeLifecycleSystem : EntitySystem
         }
     }
 
-    private void UpdateMutations(EntityUid uid, SlimeLifecycleComponent lifecycle, float elapsed)
+    private void UpdateMutations(Entity<SlimeLifecycleComponent> ent, float elapsed)
     {
+        var lifecycle = ent.Comp;
         if (lifecycle.Mutations.Count == 0)
             return;
 
@@ -79,7 +80,7 @@ public sealed partial class SlimeLifecycleSystem : EntitySystem
             var mutation = lifecycle.Mutations[i];
             if (mutation.ProgressRate <= 0 || mutation.RequiredProgress <= 0 ||
                 lifecycle.MutationProgress[i] >= mutation.RequiredProgress ||
-                !_conditions.TryConditions(uid, mutation.Conditions))
+                !_conditions.TryConditions(ent.Owner, mutation.Conditions))
                 continue;
 
             lifecycle.MutationProgress[i] = Math.Min(mutation.RequiredProgress,
@@ -120,7 +121,7 @@ public sealed partial class SlimeLifecycleSystem : EntitySystem
             var chance = _mutation.ClampMutationChance(ent,
                 FixedPoint2.New(ent.Comp.MutationChance.Float() +
                     _random.NextFloat(-ent.Comp.MutationVariance, ent.Comp.MutationVariance)));
-            var babyPrototype = SelectBabyPrototype(ent.Comp, chance);
+            var babyPrototype = SelectBabyPrototype(ent, chance);
             var child = Spawn(babyPrototype, ent.Owner.ToCoordinates());
             if (!_slimeQuery.TryComp(child, out _) || !TryComp<SlimeLifecycleComponent>(child, out var childLifecycle))
             {
@@ -129,7 +130,7 @@ public sealed partial class SlimeLifecycleSystem : EntitySystem
             }
 
             firstChild ??= child;
-            _mutation.SetMutationChanceClamped((child, childLifecycle), chance);
+            _mutation.SetMutationChanceUnchecked((child, childLifecycle), chance);
         }
 
         if (firstChild == null)
@@ -141,8 +142,9 @@ public sealed partial class SlimeLifecycleSystem : EntitySystem
         QueueDel(ent.Owner);
     }
 
-    private EntProtoId SelectBabyPrototype(SlimeLifecycleComponent lifecycle, FixedPoint2 childMutationChance)
+    private EntProtoId SelectBabyPrototype(Entity<SlimeLifecycleComponent> ent, FixedPoint2 childMutationChance)
     {
+        var lifecycle = ent.Comp;
         if (!_random.Prob(childMutationChance.Float()))
             return lifecycle.BabyPrototype;
 

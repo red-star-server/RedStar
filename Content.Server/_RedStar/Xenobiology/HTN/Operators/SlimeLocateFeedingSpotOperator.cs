@@ -18,7 +18,7 @@ public sealed partial class SlimeLocateFeedingSpotOperator : HTNOperator
     private EntityQuery<TransformComponent> _transformQuery;
 
     /// <summary>
-    /// Target entitycoordinates to move to.
+    /// Target coordinates to move to.
     /// </summary>
     [DataField(required: true)]
     public string TargetMoveKey = string.Empty;

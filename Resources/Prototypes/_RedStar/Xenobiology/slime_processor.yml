@@ -6,7 +6,6 @@
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Machines/slime_processor.rsi
-    snapCardinals: true
     layers:
     - state: processor
       map: ["enum.SlimeProcessorVisualLayers.Main"]

@@ -25,7 +25,7 @@ public sealed partial class SlimeTargetKnownEdibleTargetOperator : HTNOperator
     public string TargetKey = string.Empty;
 
     /// <summary>
-    /// Target entitycoordinates to move to.
+    /// Target coordinates to move to.
     /// </summary>
     [DataField(required: true)]
     public string TargetMoveKey = string.Empty;
@@ -49,7 +49,7 @@ public sealed partial class SlimeTargetKnownEdibleTargetOperator : HTNOperator
             return (false, null);
 
         var targets = _slimeBrainSystem.AcquireTargetFoods();
-        foreach (var entity in _lookup.GetEntitiesInRange(owner, _slimeBrainSystem.FoodSearchRange))
+        foreach (var entity in _lookup.GetEntitiesInRange(owner, SlimeBrainSystem.FoodSearchRange))
         {
             if (!targets.Contains(entity) || !_slimeBrainSystem.IsEdibleBySlimeTest(entity))
                 continue;

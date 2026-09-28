@@ -10,12 +10,13 @@ public sealed partial class SlimeMutationSystem : EntitySystem
             FixedPoint2.New(slime.Comp.MaximumMutationChance));
 
     public bool SetMutationChance(Entity<SlimeLifecycleComponent> slime, FixedPoint2 chance)
-        => SetMutationChanceClamped(slime, ClampMutationChance(slime, chance));
+        => SetMutationChanceUnchecked(slime, ClampMutationChance(slime, chance));
 
     /// <summary>
-    /// Stores a chance already clamped against its source lifecycle bounds, such as inherited offspring chance.
+    /// Stores a chance without clamping it against the destination lifecycle bounds.
+    /// The caller must clamp it against the appropriate source bounds, such as the parent's bounds for offspring.
     /// </summary>
-    public bool SetMutationChanceClamped(Entity<SlimeLifecycleComponent> slime, FixedPoint2 chance)
+    public bool SetMutationChanceUnchecked(Entity<SlimeLifecycleComponent> slime, FixedPoint2 chance)
     {
         if (chance == slime.Comp.MutationChance)
             return false;

@@ -8,14 +8,12 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server._RedStar.Xenobiology.HTN.Operators;
 
+/// <summary>
+/// Adds nearby edible targets to the shared slime brain so slimes converge on known food.
+/// Discovery does not require a path, allowing slimes to detect food through walls.
+/// </summary>
 public sealed partial class SlimeFindEdibleTargetOperator : HTNOperator
 {
-    /*
-     * This class collects known edible targets for the hive mind.
-     * With this, slimes should bunch up around nearby edible targets, and not aimlessly and separately search for targets.
-     * This doesn't require pathfinding, so slimes can theoretically smell targets through walls.
-     */
-
     [Dependency] private IEntityManager _entManager = default!;
 
     private SlimeBrainSystem _slimeBrainSystem = default!;
@@ -46,7 +44,7 @@ public sealed partial class SlimeFindEdibleTargetOperator : HTNOperator
         if (!_slimeQuery.HasComp(owner))
             return (false, null);
 
-        foreach (var entity in _lookup.GetEntitiesInRange(owner, _slimeBrainSystem.FoodSearchRange))
+        foreach (var entity in _lookup.GetEntitiesInRange(owner, SlimeBrainSystem.FoodSearchRange))
         {
             if (!_tagSystem.HasTag(entity, TargetFoodTag))
                 continue;

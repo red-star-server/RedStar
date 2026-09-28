@@ -31,9 +31,18 @@ public sealed partial class SlimeScanDetailsControl : BoxContainer
         AddChild(new Separator { Margin = new Thickness(0, 2) });
 
         var none = Loc.GetString("slime-scanner-none");
+        AddText(Loc.GetString("slime-scanner-growth", ("value", data.Growth.ToString("P0"))));
+        AddChild(new ProgressBar
+        {
+            MinValue = 0f,
+            MaxValue = 1f,
+            Value = Math.Clamp(data.Growth, 0f, 1f),
+            HorizontalExpand = true,
+            MinHeight = 16
+        });
+
         var fields = new[]
         {
-            Loc.GetString("slime-scanner-growth", ("value", data.Growth.ToString("P0"))),
             Loc.GetString("slime-scanner-hunger", ("value", data.Hunger?.ToString() ?? none)),
             Loc.GetString("slime-scanner-temperament", ("value", TemperamentName(data.Temperament))),
             Loc.GetString("slime-scanner-crowding", ("value", CrowdingName(data.Crowding))),

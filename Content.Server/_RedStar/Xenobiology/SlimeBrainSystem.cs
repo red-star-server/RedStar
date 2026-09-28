@@ -39,13 +39,12 @@ public sealed partial class SlimeBrainSystem : EntitySystem
     /// <summary>
     /// How far to look for food at each slime.
     /// </summary>
-    public readonly float FoodSearchRange = 5F;
+    public const float FoodSearchRange = 5f;
 
     /// <summary>
-    /// If not null, will only allow slimes to eat entities with the specified damage container.
-    /// If null, will make slimes try to eat everything.
+    /// Only entities with this damage container can be eaten by slimes.
     /// </summary>
-    public readonly ProtoId<DamageContainerPrototype>? OnlyTarget = "Biological";
+    private static readonly ProtoId<DamageContainerPrototype> OnlyTarget = "Biological";
 
     public bool IsEdibleBySlimeTest(EntityUid entity)
     {
@@ -54,8 +53,7 @@ public sealed partial class SlimeBrainSystem : EntitySystem
             !_mobStateQuery.TryComp(entity, out var mobState))
             return false;
 
-        if (OnlyTarget is { } damageContainer &&
-            (!_injurableQuery.TryComp(entity, out var injurable) || injurable.DamageContainer != damageContainer))
+        if (!_injurableQuery.TryComp(entity, out var injurable) || injurable.DamageContainer != OnlyTarget)
             return false;
 
         return _mobState.IsAlive(entity, mobState);
@@ -95,8 +93,8 @@ public sealed partial class SlimeBrainSystem : EntitySystem
     /// <summary>
     /// Retrieves the set of feeding spots known to the slime brain.
     /// </summary>
-    /// <returns>The set of feeding spots.</returns>
-    public HashSet<EntityCoordinates> AcquireFeedingSpots()
+    /// <returns>A read-only snapshot, safe to enumerate across asynchronous pathfinding.</returns>
+    public IReadOnlySet<EntityCoordinates> AcquireFeedingSpots()
     {
         HashSet<EntityCoordinates> coordsToReturn = [.. _knownFoodLocations];
 

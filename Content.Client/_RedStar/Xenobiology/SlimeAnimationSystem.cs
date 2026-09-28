@@ -24,7 +24,7 @@ public sealed partial class SlimeAnimationSystem : EntitySystem
     {
         const float Distance = 0.15f;
         const float Length = 0.15f;
-        var startOffset = rot.RotateVec(new Vector2(0f, 0f));
+        var startOffset = Vector2.Zero;
         var endOffset = rot.RotateVec(new Vector2(0f, -Distance));
 
         return new Animation
