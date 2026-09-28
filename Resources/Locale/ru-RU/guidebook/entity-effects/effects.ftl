@@ -620,5 +620,5 @@ entity-effect-disarm =
 entity-effect-guidebook-make-trap-in-container =
     { $chance ->
         [1] Заманивает в ловушку
-       *[other] заманить в ловушку
+        *[other] заманить в ловушку
     } метаболизатор внутри { $entityname }
