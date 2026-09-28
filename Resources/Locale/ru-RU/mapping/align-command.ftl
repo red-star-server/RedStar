@@ -1,24 +1,24 @@
 cmd-align-desc =
-    Automatically snap the alignment of all anchored airlocks, doors, firelocks etc.
-    to line up with adjacent structures.
+    Автоматически выравнивает все закреплённые шлюзы, двери, пожарные шлюзы и т. д.
+    относительно соседних конструкций.
 
-    Use the [dry run] parameter to perform a check without rotating anything.
-cmd-align-help = Usage: { $command } [MapID] [dry run?]
-cmd-align-no-release = You can't use this command if the game is running in RELEASE configuration.
+    Используйте параметр [dry run], чтобы выполнить проверку без поворота сущностей.
+cmd-align-help = Использование: { $command } [MapID] [dry run?]
+cmd-align-no-release = Эта команда недоступна в сборке RELEASE.
 cmd-align-hint-id = MapID
 cmd-align-hint-dry = dry run?
 cmd-align-feedback-none = {$dry ->
-    [true] DRY RUN: No
-    *[false] No
-} entities compatible with AlignerSystem were found!
+    [true] ПРОВЕРКА: Не
+    *[false] Не
+} найдены сущности, совместимые с AlignerSystem!
 cmd-align-feedback-good = {$dry ->
-    [true] DRY RUN: No
-    *[false] No
-} misaligned entities were found.
+    [true] ПРОВЕРКА: Не
+    *[false] Не
+} найдены неверно выровненные сущности.
 cmd-align-feedback = {$dry ->
-    [true] DRY RUN: Found
-    *[false] Found and fixed
+    [true] ПРОВЕРКА: Найдено
+    *[false] Найдено и исправлено
 } {$fixed ->
-    [one] a single misaligned entity.
-    *[else] { $fixed } misaligned entities.
+    [one] неверно выровненных сущностей: 1.
+    *[else] неверно выровненных сущностей: { $fixed }.
 }

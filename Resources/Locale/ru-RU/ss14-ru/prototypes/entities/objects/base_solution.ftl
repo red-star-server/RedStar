@@ -1,6 +1,6 @@
-ent-Solution = solution
+ent-Solution = раствор
     .desc = { "" }
-ent-SolutionCryo = solution
+ent-SolutionCryo = раствор
     .desc = { "" }
 ent-SolutionBeaker = { ent-Solution }
     .desc = { ent-Solution.desc }

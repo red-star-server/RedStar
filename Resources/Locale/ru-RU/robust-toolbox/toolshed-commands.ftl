@@ -91,344 +91,344 @@ command-description-loc-tryloc =
 command-description-loc-loc =
     Получает строку локализации и возвращает нелокализованную строку при неудаче.
 command-description-physics-angular_velocity =
-    Returns the angular velocity of the given entities.
+    Возвращает угловую скорость указанных сущностей.
 command-description-vars =
-    Provides a list of all variables set in this session.
+    Возвращает список всех переменных, заданных в этой сессии.
 command-description-any =
-    Returns true if there's any values in the input, otherwise false.
+    Возвращает true, если входные данные содержат хотя бы одно значение, иначе false.
 command-description-contains =
-    Returns whether the input enumerable contains the specified value.
+    Проверяет, содержит ли входная последовательность указанное значение.
 command-description-ArrowCommand =
-    Assigns the input to a variable.
+    Присваивает входные данные переменной.
 command-description-isempty =
-    Returns true if the input is empty, otherwise false.
+    Возвращает true, если входные данные пусты, иначе false.
 command-description-isnull =
-    Returns true if the input is null, otherwise false.
+    Возвращает true, если входное значение равно null, иначе false.
 command-description-unique =
-    Filters the input sequence for uniqueness, removing duplicate values.
+    Удаляет повторяющиеся значения из входной последовательности.
 command-description-where =
-    Given some input sequence IEnumerable<T>, takes a block of signature T -> bool that decides if each input value should be included in the output sequence.
+    Принимает входную последовательность IEnumerable<T> и блок с сигнатурой T -> bool, определяющий, следует ли включать каждое значение в выходную последовательность.
 command-description-do =
-    Backwards compatibility with BQL, applies the given old commands over the input sequence.
+    Для обратной совместимости с BQL применяет указанные старые команды к входной последовательности.
 command-description-named =
-    Filters the input entities by their name, with the regex ^selector$.
+    Фильтрует входные сущности по имени с помощью регулярного выражения ^selector$.
 command-description-prototyped =
-    Filters the input entities by their prototype.
+    Фильтрует входные сущности по прототипу.
 command-description-nearby =
-    Creates a new list of all entities nearby the inputs within the given range.
+    Создаёт список всех сущностей в указанном радиусе от входных сущностей.
 command-description-first =
-    Returns the first entry of the given enumerable.
+    Возвращает первый элемент указанной последовательности.
 command-description-splat =
-    "Splats" a block, value, or variable, creating N copies of it in a list.
+    Создаёт список из N копий блока, значения или переменной.
 command-description-val =
-    Casts the given value, block, or variable to the given type. This is mostly a workaround for current limitations of variables.
+    Приводит указанное значение, блок или переменную к указанному типу. В основном служит для обхода текущих ограничений переменных.
 command-description-var =
-    Returns the contents of the given variable. This will attempt to automatically infer a variables type. Compound commands that modify a variable may need to use the 'val' command instead.
+    Возвращает содержимое указанной переменной, пытаясь автоматически определить её тип. В составных командах, изменяющих переменную, может потребоваться команда «val».
 command-description-actor-controlled =
-    Filters entities by whether or not they're actively controlled.
+    Фильтрует сущности по наличию активного управления.
 command-description-actor-session =
-    Returns the sessions associated with the input entities.
+    Возвращает сессии, связанные с входными сущностями.
 command-description-physics-parent =
-    Returns the parent(s) of the input entities.
+    Возвращает родительские сущности входных сущностей.
 command-description-emplace =
-    Runs the given block over it's inputs, with the input value placed into the variable $value within the block.
-    Additionally breaks out $wx, $wy, $proto, $desc, $name, and $paused for entities.
-    Can also have breakout values for other types, consult the documentation for that type for further info.
+    Выполняет указанный блок для входных данных, помещая входное значение в переменную $value внутри блока.
+    Для сущностей дополнительно создаёт переменные $wx, $wy, $proto, $desc, $name и $paused.
+    Для других типов также могут создаваться дополнительные переменные; подробности приведены в документации соответствующего типа.
 command-description-AddCommand =
-    Performs numeric addition.
+    Выполняет числовое сложение.
 command-description-SubtractCommand =
-    Performs numeric subtraction.
+    Выполняет числовое вычитание.
 command-description-MultiplyCommand =
-    Performs numeric multiplication.
+    Выполняет числовое умножение.
 command-description-DivideCommand =
-    Performs numeric division.
+    Выполняет числовое деление.
 command-description-min =
-    Returns the minimum of two values.
+    Возвращает меньшее из двух значений.
 command-description-max =
-    Returns the maximum of two values.
+    Возвращает большее из двух значений.
 command-description-BitAndCommand =
-    Performs bitwise AND.
+    Выполняет побитовое И (AND).
 command-description-bitor =
-    Performs bitwise OR.
+    Выполняет побитовое ИЛИ (OR).
 command-description-BitXorCommand =
-    Performs bitwise XOR.
+    Выполняет побитовое исключающее ИЛИ (XOR).
 command-description-neg =
-    Negates the input.
+    Меняет знак входного значения.
 command-description-GreaterThanCommand =
-    Performs a greater-than comparison, x > y.
+    Проверяет, больше ли первое значение второго: x > y.
 command-description-LessThanCommand =
-    Performs a less-than comparison, x < y.
+    Проверяет, меньше ли первое значение второго: x < y.
 command-description-GreaterThanOrEqualCommand =
-    Performs a greater-than-or-equal comparison, x >= y.
+    Проверяет, больше ли первое значение второго или равно ему: x >= y.
 command-description-LessThanOrEqualCommand =
-    Performs a less-than-or-equal comparison, x <= y.
+    Проверяет, меньше ли первое значение второго или равно ему: x <= y.
 command-description-EqualCommand =
-    Performs an equality comparison, returning true if the inputs are equal.
+    Сравнивает значения на равенство и возвращает true, если они равны.
 command-description-NotEqualCommand =
-    Performs an equality comparison, returning true if the inputs are not equal.
+    Сравнивает значения на неравенство и возвращает true, если они не равны.
 command-description-append =
-    Appends a value to the input enumerable.
+    Добавляет значение в конец входной последовательности.
 command-description-DefaultIfNullCommand =
-    Replaces the input with the type's default value if it is null, albeit only for value types (not objects).
+    Если входное значение равно null, заменяет его значением типа по умолчанию. Работает только с типами значений, а не с объектами.
 command-description-OrValueCommand =
-    If the input is null, uses the provided alternate value.
+    Если входное значение равно null, использует указанное запасное значение.
 command-description-DebugPrintCommand =
-    Prints the given value transparently, for debug prints in a command run.
+    Выводит указанное значение для отладки во время выполнения команды, передавая его дальше без изменений.
 command-description-i =
-    Integer constant.
+    Целочисленная константа.
 command-description-f =
-    Float constant.
+    Константа типа float.
 command-description-s =
-    String constant.
+    Строковая константа.
 command-description-b =
-    Bool constant.
+    Логическая константа.
 command-description-join =
-    Joins two sequences together into one sequence.
+    Объединяет две последовательности в одну.
 command-description-reduce =
-    Given a block to use as a reducer, turns a sequence into a single value.
-    The left hand side of the block is implied, and the right hand is stored in $value.
+    Сворачивает последовательность в одно значение с помощью указанного блока.
+    Левая часть блока передаётся неявно, а правая хранится в $value.
 command-description-rep =
-    Repeats the input value N times to form a sequence.
+    Повторяет входное значение N раз, создавая последовательность.
 command-description-take =
-    Takes N values from the input sequence
+    Берёт N значений из входной последовательности.
 command-description-spawn-at =
-    Spawns an entity at the given coordinates.
+    Создаёт сущность в указанных координатах.
 command-description-spawn-on =
-    Spawns an entity on the given entity, at it's coordinates.
+    Создаёт сущность в координатах указанной сущности.
 command-description-spawn-in =
-    Spawns an entity in the given container on the given entity, dropping it at its coordinates if it doesn't fit
+    Создаёт сущность в указанном контейнере указанной сущности; если она не помещается, оставляет её в координатах этой сущности.
 command-description-spawn-attached =
-    Spawns an entity attached to the given entity, at (0 0) relative to it.
+    Создаёт сущность, присоединённую к указанной сущности, в относительных координатах (0 0).
 command-description-mappos =
-    Returns an entity's coordinates relative to it's current map.
+    Возвращает координаты сущности относительно текущей карты.
 command-description-pos =
-    Returns an entity's coordinates.
+    Возвращает координаты сущности.
 command-description-tp-coords =
-    Teleports the given entities to the target coordinates.
+    Телепортирует указанные сущности в целевые координаты.
 command-description-tp-to =
-    Teleports the given entities to the target entity.
+    Телепортирует указанные сущности к целевой сущности.
 command-description-tp-into =
-    Teleports the given entities "into" the target entity, attaching it at (0 0) relative to it.
+    Телепортирует указанные сущности внутрь целевой сущности, присоединяя их в относительных координатах (0 0).
 command-description-comp-get =
-    Gets the given component from the given entity.
+    Возвращает указанный компонент указанной сущности.
 command-description-comp-add =
-    Adds the given component to the given entity.
+    Добавляет указанный компонент указанной сущности.
 command-description-comp-ensure =
-    Ensures the given entity has the given component.
+    Обеспечивает наличие указанного компонента у указанной сущности.
 command-description-comp-has =
-    Check if the given entity has the given component.
+    Проверяет наличие указанного компонента у указанной сущности.
 command-description-AddVecCommand =
-    Adds a scalar (single value) to every element in the input.
+    Добавляет скаляр (одно значение) к каждому входному элементу.
 command-description-SubVecCommand =
-    Subtracts a scalar (single value) from every element in the input.
+    Вычитает скаляр (одно значение) из каждого входного элемента.
 command-description-MulVecCommand =
-    Multiplies a scalar (single value) by every element in the input.
+    Умножает каждый входной элемент на скаляр (одно значение).
 command-description-DivVecCommand =
-    Divides every element in the input by a scalar (single value).
+    Делит каждый входной элемент на скаляр (одно значение).
 command-description-rng-to =
-    Returns a number between the input (inclusive) and the argument (exclusive).
+    Возвращает число между входным значением (включительно) и аргументом (не включительно).
 command-description-rng-from =
-    Returns a number between the argument (inclusive) and the input (exclusive))
+    Возвращает число между аргументом (включительно) и входным значением (не включительно).
 command-description-rng-prob =
-    Returns a boolean based on the input probability/chance (from 0 to 1)
+    Возвращает логическое значение на основе входной вероятности (от 0 до 1).
 command-description-sum =
-    Computes the sum of the input.
+    Вычисляет сумму входных значений.
 command-description-bin =
-    "Bins" the input, counting up how many times each unique element occurs.
+    Группирует входные значения и подсчитывает число вхождений каждого уникального элемента.
 command-description-extremes =
-    Returns the two extreme ends of a list, interwoven.
+    Возвращает элементы с двух концов списка, чередуя их.
 command-description-sortby =
-    Sorts the input least to greatest by the computed key.
+    Сортирует входные данные по возрастанию вычисленного ключа.
 command-description-sortmapby =
-    Sorts the input least to greatest by the computed key, replacing the value with it's computed key afterward.
+    Сортирует входные данные по возрастанию вычисленного ключа, затем заменяет каждое значение его ключом.
 command-description-sort =
-    Sorts the input least to greatest.
+    Сортирует входные данные по возрастанию.
 command-description-sortdownby =
-    Sorts the input greatest to least by the computed key.
+    Сортирует входные данные по убыванию вычисленного ключа.
 command-description-sortmapdownby =
-    Sorts the input greatest to least by the computed key, replacing the value with it's computed key afterward.
+    Сортирует входные данные по убыванию вычисленного ключа, затем заменяет каждое значение его ключом.
 command-description-sortdown =
-    Sorts the input greatest to least.
+    Сортирует входные данные по убыванию.
 command-description-iota =
-    Returns a list of numbers 1 to N.
+    Возвращает список чисел от 1 до N.
 command-description-to =
-    Returns a list of numbers N to M.
+    Возвращает список чисел от N до M.
 command-description-curtick =
-    The current game tick.
+    Текущий игровой тик.
 command-description-curtime =
-    The current game time (a TimeSpan)
+    Текущее игровое время (TimeSpan).
 command-description-realtime =
-    The current realtime since startup (a TimeSpan)
+    Реальное время с момента запуска (TimeSpan).
 command-description-servertime =
-    The current server game time, or zero if we are the server (a TimeSpan)
+    Текущее игровое время сервера или ноль при выполнении на сервере (TimeSpan).
 command-description-replace =
-    Replaces the input entities with the given prototype, preserving position and rotation (but nothing else)
+    Заменяет входные сущности указанным прототипом, сохраняя только положение и поворот.
 command-description-allcomps =
-    Returns all components on the given entity.
+    Возвращает все компоненты указанной сущности.
 command-description-entitysystemupdateorder-tick =
-    Lists the tick update order of entity systems.
+    Перечисляет порядок обновления систем сущностей на каждом тике.
 command-description-entitysystemupdateorder-frame =
-    Lists the frame update order of entity systems.
+    Перечисляет порядок обновления систем сущностей на каждом кадре.
 command-description-more =
-    Prints the contents of $more, i.e. any extras that Toolshed didn't print from the last command.
+    Выводит содержимое $more — дополнительные данные последней команды, которые Toolshed не вывел.
 command-description-ModulusCommand =
-    Computes the modulus of two values.
-    This is usually remainder, check C#'s documentation for the type.
+    Вычисляет остаток от деления двух значений.
+    Поведение зависит от типа; подробности приведены в документации C#.
 command-description-ModVecCommand =
-    Performs the modulus operation over the input with the given constant right-hand value.
+    Вычисляет остаток от деления каждого входного значения на указанную константу.
 command-description-BitAndNotCommand =
-    Performs bitwise AND-NOT over the input.
+    Выполняет побитовую операцию И-НЕ (AND-NOT) над входными данными.
 command-description-bitornot =
-    Performs bitwise OR-NOT over the input.
+    Выполняет побитовую операцию ИЛИ-НЕ (OR-NOT) над входными данными.
 command-description-BitXnorCommand =
-    Performs bitwise XNOR over the input.
+    Выполняет побитовую эквивалентность (XNOR) над входными данными.
 command-description-BitNotCommand =
-    Performs bitwise NOT on the input.
+    Выполняет побитовую инверсию (NOT) входных данных.
 command-description-abs =
-    Computes the absolute value of the input (removing the sign)
+    Вычисляет абсолютное значение входных данных (убирает знак).
 command-description-average =
-    Computes the average (arithmetic mean) of the input.
+    Вычисляет среднее арифметическое входных значений.
 command-description-bibytecount =
-    Returns the size of the input in bytes, given that the input implements IBinaryInteger.
-    This is NOT sizeof.
+    Возвращает размер входного значения в байтах, если его тип реализует IBinaryInteger.
+    Это НЕ sizeof.
 command-description-shortestbitlength =
-    Returns the minimum number of bits needed to represent the input value.
+    Возвращает минимальное число битов, необходимое для представления входного значения.
 command-description-countleadzeros =
-    Counts the number of leading binary zeros in the input value.
+    Подсчитывает число ведущих нулей в двоичном представлении входного значения.
 command-description-counttrailingzeros =
-    Counts the number of trailing binary zeros in the input value.
+    Подсчитывает число завершающих нулей в двоичном представлении входного значения.
 command-description-fpi =
-    pi (3.14159...) as a float.
+    Число пи (3.14159...) типа float.
 command-description-fe =
-    e (2.71828...) as a float.
+    Число e (2.71828...) типа float.
 command-description-ftau =
-    tau (6.28318...) as a float.
+    Число тау (6.28318...) типа float.
 command-description-fepsilon =
-    The epsilon value for a float, exactly 1.4e-45.
+    Значение эпсилон для float: ровно 1.4e-45.
 command-description-dpi =
-    pi (3.14159...) as a double.
+    Число пи (3.14159...) типа double.
 command-description-de =
-    e (2.71828...) as a double.
+    Число e (2.71828...) типа double.
 command-description-dtau =
-    tau (6.28318...) as a double.
+    Число тау (6.28318...) типа double.
 command-description-depsilon =
-    The epsilon value for a double, exactly 4.9406564584124654E-324.
+    Значение эпсилон для double: ровно 4.9406564584124654E-324.
 command-description-hpi =
-    pi (3.14...) as a half.
+    Число пи (3.14...) типа half.
 command-description-he =
-    e (2.71...) as a half.
+    Число e (2.71...) типа half.
 command-description-htau =
-    tau (6.28...) as a half.
+    Число тау (6.28...) типа half.
 command-description-hepsilon =
-    The epsilon value for a half, exactly 5.9604645E-08.
+    Значение эпсилон для half: ровно 5.9604645E-08.
 command-description-floor =
-    Returns the floor of the input value (rounding toward zero).
+    Округляет входное значение вниз, к отрицательной бесконечности.
 command-description-ceil =
-    Returns the ceil of the input value (rounding away from zero).
+    Округляет входное значение вверх, к положительной бесконечности.
 command-description-round =
-    Rounds the input value.
+    Округляет входное значение.
 command-description-trunc =
-    Truncates the input value.
+    Отбрасывает дробную часть входного значения.
 command-description-round2frac =
-    Rounds the input value to the specified number of fractional digits.
+    Округляет входное значение до указанного числа знаков после запятой.
 command-description-exponentbytecount =
-    Returns the number of bytes required to store the exponent.
+    Возвращает число байтов, необходимых для хранения показателя степени.
 command-description-significandbytecount =
-    Returns the number of bytes required to store the significand.
+    Возвращает число байтов, необходимых для хранения мантиссы.
 command-description-significandbitcount =
-    Returns the exact bit length of the significand.
+    Возвращает точную длину мантиссы в битах.
 command-description-exponentshortestbitcount =
-    Returns the minimum number of bits to store the exponent.
+    Возвращает минимальное число битов для хранения показателя степени.
 command-description-stepnext =
-    Steps to the next float value, adding one to the significand with carry.
+    Переходит к следующему представимому значению с плавающей точкой, увеличивая мантиссу на единицу с переносом.
 command-description-stepprev =
-    Steps to the previous float value, subtracting one from the significand with carry.
+    Переходит к предыдущему представимому значению с плавающей точкой, уменьшая мантиссу на единицу с заёмом.
 command-description-checkedto =
-    Converts from the input numeric type to the target, erroring if not possible.
+    Преобразует входной числовой тип в целевой и выдаёт ошибку, если преобразование невозможно.
 command-description-saturateto =
-    Converts from the input numeric type to the target, saturating if the value is out of range.
-    For example, converting 382 to a byte would saturate to 255 (the maximum value of a byte).
+    Преобразует входной числовой тип в целевой, ограничивая значение границами допустимого диапазона.
+    Например, при преобразовании 382 в byte результатом будет 255 — максимальное значение byte.
 command-description-truncto =
-    Converts from the input numeric type to the target, with truncation.
-    In the case of integers, this is a bit cast with sign extension.
+    Преобразует входной числовой тип в целевой с усечением.
+    Для целых чисел это побитовое приведение с расширением знака.
 command-description-iscanonical =
-    Returns whether the input is in canonical form.
+    Проверяет, находится ли входное значение в канонической форме.
 command-description-iscomplex =
-    Returns whether the input is a complex number (by value, not by type)
+    Проверяет, является ли входное значение комплексным числом (по значению, а не по типу).
 command-description-iseven =
-    Returns whether the input is even.
-    Not a javascript package.
+    Проверяет, является ли входное значение чётным.
+    Это не пакет JavaScript.
 command-description-isodd =
-    Returns whether the input is odd.
+    Проверяет, является ли входное значение нечётным.
 command-description-isfinite =
-    Returns whether the input is finite.
+    Проверяет, является ли входное значение конечным.
 command-description-isimaginary =
-    Returns whether the input is purely imaginary (no real part).
+    Проверяет, является ли входное значение чисто мнимым (без действительной части).
 command-description-isinfinite =
-    Returns whether the input is infinite.
+    Проверяет, является ли входное значение бесконечным.
 command-description-isinteger =
-    Returns whether the input is an integer (by value, not by type)
+    Проверяет, является ли входное значение целым числом (по значению, а не по типу).
 command-description-isnan =
-    Returns whether the input is Not a Number (NaN).
-    This is a special floating point value, so this is by value, not by type.
+    Проверяет, является ли входное значение NaN («не число»).
+    Это специальное значение с плавающей точкой; проверяется значение, а не тип.
 command-description-isnegative =
-    Returns whether the input is negative.
+    Проверяет, является ли входное значение отрицательным.
 command-description-ispositive =
-    Returns whether the input is positive.
+    Проверяет, является ли входное значение положительным.
 command-description-isreal =
-    Returns whether the input is purely real (no imaginary part).
+    Проверяет, является ли входное значение чисто действительным (без мнимой части).
 command-description-issubnormal =
-    Returns whether the input is in sub-normal form.
+    Проверяет, является ли входное значение субнормальным.
 command-description-iszero =
-    Returns whether the input is zero.
+    Проверяет, равно ли входное значение нулю.
 command-description-pow =
-    Computes the power of its lefthand to its righthand. x^y.
+    Возводит левый аргумент в степень правого: x^y.
 command-description-sqrt =
-    Computes the square root of its input.
+    Вычисляет квадратный корень входного значения.
 command-description-cbrt =
-    Computes the cube root of its input.
+    Вычисляет кубический корень входного значения.
 command-description-root =
-    Computes the Nth root of its input.
+    Вычисляет корень N-й степени входного значения.
 command-description-hypot =
-    Computes the hypotenuse of a triangle with the given sides A and B.
+    Вычисляет гипотенузу прямоугольного треугольника с катетами A и B.
 command-description-sin =
-    Computes the sine of the input.
+    Вычисляет синус входного значения.
 command-description-sinpi =
-    Computes the sine of the input multiplied by pi.
+    Вычисляет синус входного значения, умноженного на пи.
 command-description-asin =
-    Computes the arcsine of the input.
+    Вычисляет арксинус входного значения.
 command-description-asinpi =
-    Computes the arcsine of the input multiplied by pi.
+    Вычисляет арксинус входного значения, делённый на пи.
 command-description-cos =
-    Computes the cosine of the input.
+    Вычисляет косинус входного значения.
 command-description-cospi =
-    Computes the cosine of the input multiplied by pi.
+    Вычисляет косинус входного значения, умноженного на пи.
 command-description-acos =
-    Computes the arcosine of the input.
+    Вычисляет арккосинус входного значения.
 command-description-acospi =
-    Computes the arcosine of the input multiplied by pi.
+    Вычисляет арккосинус входного значения, делённый на пи.
 command-description-tan =
-    Computes the tangent of the input.
+    Вычисляет тангенс входного значения.
 command-description-tanpi =
-    Computes the tangent of the input multiplied by pi.
+    Вычисляет тангенс входного значения, умноженного на пи.
 command-description-atan =
-    Computes the arctangent of the input.
+    Вычисляет арктангенс входного значения.
 command-description-atanpi =
-    Computes the arctangent of the input multiplied by pi.
+    Вычисляет арктангенс входного значения, делённый на пи.
 command-description-iterate =
-    Iterates the given function over the input N times, returning a list of results.
-    Think of this like successively applying the function to a value, tracking all the intermediate values.
+    Применяет указанную функцию к входным данным N раз и возвращает список результатов.
+    Функция последовательно применяется к значению, а все промежуточные значения сохраняются.
 command-description-pick =
-    Picks a random value from the input.
+    Выбирает случайное значение из входных данных.
 command-description-tee =
-    Tees the input into the given block, ignoring the block's result.
-    This essentially lets you have a branch in your code to do multiple operations on one value.
+    Передаёт входные данные указанному блоку, игнорируя его результат.
+    Позволяет создать ответвление кода и выполнить несколько операций над одним значением.
 command-description-cmd-info =
-    Returns a CommandSpec for the given command.
-    On its own, this means it'll print the command's help message.
+    Возвращает CommandSpec указанной команды.
+    При самостоятельном вызове выводит справку команды.
 command-description-comp-rm =
-    Removes the given component from the entity.
+    Удаляет указанный компонент из сущности.
 
-command-description-overlay-toggle = Toggle an overlay on or off
-command-description-overlay-add = Add an overlay (if it does not already exist)
-command-description-overlay-remove = Remove an overlay
+command-description-overlay-toggle = Включает или выключает наложение
+command-description-overlay-add = Добавляет наложение, если его ещё нет
+command-description-overlay-remove = Удаляет наложение

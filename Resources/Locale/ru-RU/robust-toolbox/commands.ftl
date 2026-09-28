@@ -46,7 +46,7 @@ cmd-cvar-not-registered = CVar '{ $cvar }' не зарегистрирован. 
 cmd-cvar-parse-error = Введённое значение имеет неправильный формат для типа { $type }
 cmd-cvar-compl-list = Список доступных CVar-ов
 cmd-cvar-arg-name = <имя | ?>
-cmd-cvar-value-hidden = <value hidden>
+cmd-cvar-value-hidden = <значение скрыто>
 
 ## 'cvar_subs' command
 cmd-cvar_subs-desc = Выводит список OnValueChanged на которые подписал CVar.
@@ -60,7 +60,7 @@ cmd-list-desc = Выводит список доступных команд с �
 cmd-list-help = Использование: { $command } [фильтр]
     Выводит список всех доступных команд. Если был предоставлен аргумент, он будет использоваться для фильтрации команд по имени.
 
-cmd-list-heading = SIDE NAME            DESC{ "\u000A" }-------------------------{ "\u000A" }
+cmd-list-heading = СТОРОНА ИМЯ          ОПИСАНИЕ{ "\u000A" }-------------------------{ "\u000A" }
 
 cmd-list-arg-filter = [фильтр]
 
@@ -165,7 +165,7 @@ cmd-hint-savemap-id = <MapID>
 cmd-hint-savemap-path = <Путь>
 cmd-hint-savemap-force = [bool]
 
-cmd-loadmap-desc = Loads a map from disk into the game.
+cmd-loadmap-desc = Загружает карту с диска в игру.
 cmd-loadmap-help = Использование: { $command } <MapID> <Путь> [x] [y] [вращение] [consistentUids]
 cmd-loadmap-nullspace = Вы не можеге загрузить в карту 0.
 cmd-loadmap-exists = Карта { $mapId } уже существует.
@@ -236,16 +236,16 @@ cmd-togglelightbuf-help = Использование: { $command }
 cmd-chunkinfo-desc = Получает информацию о чанке под курсором мыши.
 cmd-chunkinfo-help = Использование: { $command }
 
-cmd-chunkentities-desc = Lists chunk entities in the client viewport OR in the specified range.
-cmd-chunkentities-help = Usage: { $command } [<root entity> <x> <y> <range>]
-cmd-chunkentities-error-invalid-root = Invalid root entity: { $root }
-cmd-chunkentities-error-parse = x, y, and range must be numbers.
-cmd-chunkentities-error-nullspace = Current eye is in nullspace.
-cmd-chunkentities-error-no-map = No map entity for current eye map { $map }.
-cmd-chunkentities-range-header = Chunk entities for { $root } around ({ $x }, { $y }) range { $range }:
-cmd-chunkentities-viewport-header = Chunk entities in client viewport on map { $map } ({ $viewport }):
-cmd-chunkentities-total = Total: { $count }
-cmd-chunkentities-root-count = Root { $root }: { $count }
+cmd-chunkentities-desc = Перечисляет сущности чанков в области просмотра клиента или в указанном радиусе.
+cmd-chunkentities-help = Использование: { $command } [<корневая сущность> <x> <y> <радиус>]
+cmd-chunkentities-error-invalid-root = Недопустимая корневая сущность: { $root }
+cmd-chunkentities-error-parse = Координаты x, y и радиус должны быть числами.
+cmd-chunkentities-error-nullspace = Текущая камера находится вне карты.
+cmd-chunkentities-error-no-map = Нет сущности карты для текущей карты камеры { $map }.
+cmd-chunkentities-range-header = Сущности чанков для { $root } вокруг ({ $x }, { $y }) в радиусе { $range }:
+cmd-chunkentities-viewport-header = Сущности чанков в области просмотра клиента на карте { $map } ({ $viewport }):
+cmd-chunkentities-total = Всего: { $count }
+cmd-chunkentities-root-count = Корень { $root }: { $count }
 cmd-chunkentities-entry = { $netEntity } uid={ $uid } root={ $root } chunk={ $chunk } comps={ $componentCount } { $name }
 cmd-chunkentities-arg-root = <root entity>
 cmd-chunkentities-arg-x = <x>
@@ -323,14 +323,14 @@ cmd-addmap-help = Использование: { $command } <mapID> [pre-init]
 cmd-rmmap-desc = Удаляет карту из мира. Вы не можете удалить nullspace.
 cmd-rmmap-help = Использование: { $command } <mapId>
 
-cmd-pausemap-desc = Pauses a map, pausing all simulation processing on it.
-cmd-pausemap-help = Usage: pausemap <map ID>
+cmd-pausemap-desc = Приостанавливает карту и всю симуляцию на ней.
+cmd-pausemap-help = Использование: pausemap <map ID>
 
-cmd-unpausemap-desc = Unpauses a map, resuming all simulation processing on it.
-cmd-unpausemap-help = Usage: unpausemap <map ID>
+cmd-unpausemap-desc = Снимает карту с паузы и возобновляет всю симуляцию на ней.
+cmd-unpausemap-help = Использование: unpausemap <map ID>
 
-cmd-querymappaused-desc = Check whether a map is paused or not.
-cmd-querymappaused-help = Usage: querymappaused <map ID>
+cmd-querymappaused-desc = Проверяет, приостановлена ли карта.
+cmd-querymappaused-help = Использование: querymappaused <map ID>
 
 cmd-savegrid-desc = Сохраняет грид на диск.
 cmd-savegrid-help = Использование: { $command } <gridID> <Path>

@@ -1,16 +1,16 @@
-cmd-atvrange-desc = Sets the atmos debug range (as two floats, start [red] and end [blue])
-cmd-atvrange-help = Usage: { $command } <start> <end>
-cmd-atvrange-error-start = Bad float START
-cmd-atvrange-error-end = Bad float END
-cmd-atvrange-error-zero = Scale cannot be zero, as this would cause a division by zero in AtmosDebugOverlay.
+cmd-atvrange-desc = Задаёт диапазон отладки атмосферы (два числа с плавающей точкой: начало [красный] и конец [синий])
+cmd-atvrange-help = Использование: { $command } <start> <end>
+cmd-atvrange-error-start = Недопустимое число для начала диапазона
+cmd-atvrange-error-end = Недопустимое число для конца диапазона
+cmd-atvrange-error-zero = Масштаб не может быть нулевым: это приведёт к делению на ноль в AtmosDebugOverlay.
 
-cmd-atvmode-desc = Sets the atmos debug mode. This will automatically reset the scale.
-cmd-atvmode-help = Usage: { $command } <TotalMoles/GasMoles/Temperature> [<gas ID (for GasMoles)>]
-cmd-atvmode-error-invalid = Invalid mode
-cmd-atvmode-error-target-gas = A target gas must be provided for this mode.
-cmd-atvmode-error-out-of-range = Gas ID not parsable or out of range.
-cmd-atvmode-error-info = No further information is required for this mode.
+cmd-atvmode-desc = Задаёт режим отладки атмосферы. Масштаб автоматически сбрасывается.
+cmd-atvmode-help = Использование: { $command } <TotalMoles/GasMoles/Temperature> [<gas ID (for GasMoles)>]
+cmd-atvmode-error-invalid = Недопустимый режим
+cmd-atvmode-error-target-gas = Для этого режима необходимо указать целевой газ.
+cmd-atvmode-error-out-of-range = Не удалось разобрать идентификатор газа, либо он вне допустимого диапазона.
+cmd-atvmode-error-info = Для этого режима не нужны дополнительные данные.
 
-cmd-atvcbm-desc = Changes from red/green/blue to greyscale
-cmd-atvcbm-help = Usage: { $command } <true/false>
-cmd-atvcbm-error = Invalid flag
+cmd-atvcbm-desc = Переключает красно-зелёно-синюю палитру на оттенки серого
+cmd-atvcbm-help = Использование: { $command } <true/false>
+cmd-atvcbm-error = Недопустимый флаг

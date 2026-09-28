@@ -248,23 +248,23 @@ entity-effect-guidebook-knockdown =
 
 entity-effect-guidebook-set-solution-temperature-effect =
     { $chance ->
-        [1] Sets
-        *[other] set
-    } the solution temperature to exactly { NATURALFIXED($temperature, 2) }k
+        [1] Устанавливает
+        *[other] установить
+    } температуру раствора ровно в { NATURALFIXED($temperature, 2) } К
 
 entity-effect-guidebook-adjust-solution-temperature-effect =
     { $chance ->
         [1] { $deltasign ->
-                [1] Adds
-                *[-1] Removes
+                [1] Нагревает
+                *[-1] Охлаждает
             }
         *[other] { $deltasign ->
-                [1] add
-                *[-1] remove
+                [1] нагреть
+                *[-1] охладить
             }
-    } heat from the solution until it reaches { $deltasign ->
-        [1] at most { NATURALFIXED($maxtemp, 2) }k
-        *[-1] at least { NATURALFIXED($mintemp, 2) }k
+    } раствор до температуры { $deltasign ->
+        [1] не выше { NATURALFIXED($maxtemp, 2) } К
+        *[-1] не ниже { NATURALFIXED($mintemp, 2) } К
     }
 
 entity-effect-guidebook-adjust-reagent-reagent =
@@ -407,7 +407,7 @@ entity-effect-guidebook-ignite =
     { $chance ->
         [1] Поджигает
         *[other] поджечь
-    } the metabolizer
+    } организм
 
 entity-effect-guidebook-make-sentient =
     { $chance ->
