@@ -1,0 +1,17 @@
+- type: entity
+  parent: [ BaseMachine, BaseMachineDestructible ]
+  id: XenobiologyCellScanner
+  name: xenobiology cell scanner
+  description: Detects nearby living slimes for a linked xenobiology console.
+  components:
+  - type: XenobiologyCellScanner
+    detectionRadius: 4
+    updateInterval: 0.75
+  - type: DeviceLinkSink
+    ports: [ XenobiologyCellScanner ]
+  - type: Physics
+    canCollide: false
+  - type: Sprite
+    drawdepth: FloorObjects
+    sprite: Structures/Specific/Atmospherics/sensor.rsi
+    state: gsensor1
