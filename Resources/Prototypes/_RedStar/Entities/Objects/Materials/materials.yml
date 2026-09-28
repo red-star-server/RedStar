@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: MaterialBase
   id: MaterialBlueSpaceCrystal
   name: bluespace crystal

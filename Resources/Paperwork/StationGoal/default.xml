@@ -1,4 +1,4 @@
-﻿[head=3]{{STATION.NAME}}[/head]
+[head=3]{{STATION.NAME}}[/head]
 ═════════════════════════════════════
 [bold]{{DOCUMENT.NAME}}[/bold]
 ═════════════════════════════════════

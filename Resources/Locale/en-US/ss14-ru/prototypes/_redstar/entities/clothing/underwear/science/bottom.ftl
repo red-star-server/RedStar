@@ -1,4 +1,4 @@
-﻿ent-ClothingUnderwearBottomBoxersResearchAssistant = research assistant's boxers
+ent-ClothingUnderwearBottomBoxersResearchAssistant = research assistant's boxers
     .desc = Standard research assistant's underwear.
 ent-ClothingUnderwearBottomBoxersResearchDirector = research director's boxers
     .desc = Standard research director's underwear.

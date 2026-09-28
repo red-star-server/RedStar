@@ -1,4 +1,4 @@
-﻿- type: latheRecipe
+- type: latheRecipe
   parent: BaseCommandHatRecipe
   id: ClothingHeadHatCapHoS
   result: ClothingHeadHatCapHoS

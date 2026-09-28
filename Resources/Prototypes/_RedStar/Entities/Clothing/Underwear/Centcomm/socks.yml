@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: ClothingUnderwearSocksBase
   id: ClothingUnderwearSocksBlueShieldOfficer
   name: blueshield officer's socks

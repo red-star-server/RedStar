@@ -1,4 +1,4 @@
-﻿ent-ClothingUnderwearTopBraCaptain = captain's bra
+ent-ClothingUnderwearTopBraCaptain = captain's bra
     .desc = Standard captain's underwear.
 ent-ClothingUnderwearTopBraCBURN = CBURN bra
     .desc = Standard CBURN's underwear.

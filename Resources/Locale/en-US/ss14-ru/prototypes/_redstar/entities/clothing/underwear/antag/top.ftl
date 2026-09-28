@@ -1,4 +1,4 @@
-﻿ent-ClothingUnderwearTopBraNuclearOperative = nuclear operative's bra
+ent-ClothingUnderwearTopBraNuclearOperative = nuclear operative's bra
     .desc = Standard nuclear operative's underwear.
 ent-ClothingUnderwearTopBraPirate = pirate's bra
     .desc = Standard pirate's underwear.

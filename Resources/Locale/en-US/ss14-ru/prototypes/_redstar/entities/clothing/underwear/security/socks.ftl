@@ -1,4 +1,4 @@
-﻿ent-ClothingUnderwearSocksHeadOfSecurity = head of security's socks
+ent-ClothingUnderwearSocksHeadOfSecurity = head of security's socks
     .desc = Standard head of security's socks.
 ent-ClothingUnderwearSocksBrigmedic = brigmedic's socks
     .desc = Standard brigmedic's socks.

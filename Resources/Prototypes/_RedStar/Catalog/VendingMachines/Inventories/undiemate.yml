@@ -1,4 +1,4 @@
-﻿- type: vendingMachineInventory
+- type: vendingMachineInventory
   id: UndieMateInventory
   categories:
   - name: vending-machine-category-top

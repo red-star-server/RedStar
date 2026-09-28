@@ -1,4 +1,4 @@
-﻿- type: gameMap
+- type: gameMap
   id: Awesome
   mapName: 'Awesome Station'
   mapPath: /Maps/_RedStar/awesome.yml

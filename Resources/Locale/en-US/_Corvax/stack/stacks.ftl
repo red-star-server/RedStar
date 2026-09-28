@@ -1,4 +1,4 @@
-﻿black-wood-floor = black wood floor
+black-wood-floor = black wood floor
 dark-wood-floor = dark wood floor
 light-wood-floor = light wood floor
 red-wood-floor = red wood floor

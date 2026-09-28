@@ -1,4 +1,4 @@
-﻿# General goals
+# General goals
 - type: stationGoal
   id: Singularity
   text: station-goal-singularity

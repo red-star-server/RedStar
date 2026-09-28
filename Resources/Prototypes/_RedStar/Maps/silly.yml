@@ -1,4 +1,4 @@
-﻿- type: gameMap
+- type: gameMap
   id: Silly
   mapName: 'Silly Island'
   mapPath: /Maps/_RedStar/silly.yml

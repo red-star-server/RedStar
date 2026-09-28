@@ -1,4 +1,4 @@
-﻿- type: material
+- type: material
   id: RawBlueSpaceCrystal
   stackEntity: RawBlueSpaceCrystalOre1
   name: materials-raw-bluespace-crystal

@@ -1,4 +1,4 @@
-﻿ent-PoweredStrobeLight = { ent-PoweredStrobeLightEmpty }
+ent-PoweredStrobeLight = { ent-PoweredStrobeLightEmpty }
     .suffix = Filled, Enabled
     .desc = { ent-PoweredStrobeLightEmpty.desc }
 ent-PoweredStrobeLightPoliceEnabled = { ent-PoweredStrobeLightPolice }

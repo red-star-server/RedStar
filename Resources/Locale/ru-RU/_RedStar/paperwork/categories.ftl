@@ -1,4 +1,4 @@
-﻿paperwork-category-nt-cargo = NanoTrasen — снабжение
+paperwork-category-nt-cargo = NanoTrasen — снабжение
 paperwork-category-nt-civilian = NanoTrasen — сервис
 paperwork-category-nt-command = NanoTrasen — командование
 paperwork-category-nt-engineering = NanoTrasen — инженерный отдел

@@ -1,4 +1,4 @@
-﻿ent-ClothingUnderwearSocksHeadOfPersonnel = head of personnel's socks
+ent-ClothingUnderwearSocksHeadOfPersonnel = head of personnel's socks
     .desc = Standard head of personnel's socks.
 ent-ClothingUnderwearSocksService = service worker's socks
     .desc = Standard service worker's socks.

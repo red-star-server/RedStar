@@ -1,4 +1,4 @@
-﻿ent-ClothingUnderwearSocksChiefEngineer = chief engineer's socks
+ent-ClothingUnderwearSocksChiefEngineer = chief engineer's socks
     .desc = Standard chief engineer's socks.
 ent-ClothingUnderwearSocksEngineer = engineer's socks
     .desc = Standard engineer's socks.

@@ -1,4 +1,4 @@
-﻿station-goal-title = ЦЕЛЬ СТАНЦИИ
+station-goal-title = ЦЕЛЬ СТАНЦИИ
 
 station-goal-news-title = Цель { $station }
 station-goal-news-author = Генеральный штаб

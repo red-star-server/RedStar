@@ -1,4 +1,4 @@
-﻿- type: stack
+- type: stack
   parent: BaseTileStack
   id: FloorTileItemWoodBlack
   name: black-wood-floor
