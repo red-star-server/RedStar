@@ -28,7 +28,7 @@
     stackType: LeavesCannabisDried
     count: 1
   - type: Sprite
-    sprite: Objects/Specific/Hydroponics/tobacco.rsi
+    sprite: Objects/Specific/Hydroponics/cannabis.rsi # RS14
     state: dried
 
 - type: entity

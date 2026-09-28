@@ -1,4 +1,4 @@
-﻿- type: gameMap
+- type: gameMap
   id: Omega
   mapName: 'Omega Station'
   mapPath: /Maps/_RedStar/omega.yml

@@ -1,4 +1,4 @@
-﻿- type: tile
+- type: tile
   id: FloorWoodParquet
   parent: FloorWood
   name: tiles-wood-parquet

@@ -1,10 +1,10 @@
 command-description-bank-accounts =
-    Returns all accounts on a station.
+    Возвращает все счета на станции.
 command-description-bank-account =
-    Returns a given bank account from a station.
+    Возвращает указанный банковский счёт на станции.
 command-description-bank-adjust =
-    Adjusts the money for the given bank account.
+    Изменяет сумму на указанном банковском счёте.
 command-description-bank-set =
-    Sets the money for the given bank account.
+    Устанавливает сумму на указанном банковском счёте.
 command-description-bank-amount =
-    Returns the money for the given bank account.
+    Возвращает сумму на указанном банковском счёте.

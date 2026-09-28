@@ -1,4 +1,4 @@
-﻿ent-ClothingUnderwearBottomBoxersBartender = bartender's boxers
+ent-ClothingUnderwearBottomBoxersBartender = bartender's boxers
     .desc = Standard bartender's underwear.
 ent-ClothingUnderwearBottomBoxersBotanist = botanist's boxers
     .desc = Standard botanist's underwear.

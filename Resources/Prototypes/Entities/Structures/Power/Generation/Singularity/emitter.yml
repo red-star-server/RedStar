@@ -26,15 +26,16 @@
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/emitter.rsi
     layers:
-    - state: emitter2
+    - state: emitter # RS14
     - state: beam
       shader: unshaded
       visible: false
       map: ["enum.EmitterVisualLayers.Lights"]
-    - state: locked
+    # RS14-start
+    - state: unlocked
       shader: unshaded
-      visible: false
       map: ["enum.LockVisualLayers.Lock"]
+    # RS14-end
   - type: Emitter
   - type: PowerState
     idlePowerDraw: 5

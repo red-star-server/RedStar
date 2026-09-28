@@ -1,4 +1,4 @@
-﻿ent-ClothingUnderwearTopBraChemist = chemist's bra
+ent-ClothingUnderwearTopBraChemist = chemist's bra
     .desc = Standard chemist's underwear.
 ent-ClothingUnderwearTopBraChiefMedicalOfficer = chief medical officer's bra
     .desc = Standard chief medical officer's underwear.

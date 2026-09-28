@@ -1,4 +1,4 @@
-﻿- type: cargoProduct
+- type: cargoProduct
   id: FoodCrateKvassTank
   icon:
     sprite: _Corvax/Structures/Storage/yellow_tank.rsi

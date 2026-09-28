@@ -1,4 +1,4 @@
-﻿ent-ClothingUnderwearBottomBase = based underwearb
+ent-ClothingUnderwearBottomBase = based underwearb
     .desc = You should not see this.
 ent-ClothingUnderwearBottomBoxersWhite = boxers
     .desc = Standard underwear for Nanotrasen staff.

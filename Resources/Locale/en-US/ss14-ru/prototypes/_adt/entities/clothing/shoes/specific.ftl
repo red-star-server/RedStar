@@ -1,4 +1,4 @@
-﻿ent-ClothingFootWrapsWhite = white footwraps
+ent-ClothingFootWrapsWhite = white footwraps
     .desc = Pair of pieces of clothing for those who are uncomfortable with ordinary shoes.
 ent-ClothingFootWrapsBlack = black footwraps
     .desc = Pair of pieces of clothing for those who are uncomfortable with ordinary shoes.

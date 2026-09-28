@@ -248,23 +248,23 @@ entity-effect-guidebook-knockdown =
 
 entity-effect-guidebook-set-solution-temperature-effect =
     { $chance ->
-        [1] Sets
-        *[other] set
-    } the solution temperature to exactly { NATURALFIXED($temperature, 2) }k
+        [1] Устанавливает
+        *[other] установить
+    } температуру раствора ровно в { NATURALFIXED($temperature, 2) } К
 
 entity-effect-guidebook-adjust-solution-temperature-effect =
     { $chance ->
         [1] { $deltasign ->
-                [1] Adds
-                *[-1] Removes
+                [1] Нагревает
+                *[-1] Охлаждает
             }
         *[other] { $deltasign ->
-                [1] add
-                *[-1] remove
+                [1] нагреть
+                *[-1] охладить
             }
-    } heat from the solution until it reaches { $deltasign ->
-        [1] at most { NATURALFIXED($maxtemp, 2) }k
-        *[-1] at least { NATURALFIXED($mintemp, 2) }k
+    } раствор до температуры { $deltasign ->
+        [1] не выше { NATURALFIXED($maxtemp, 2) } К
+        *[-1] не ниже { NATURALFIXED($mintemp, 2) } К
     }
 
 entity-effect-guidebook-adjust-reagent-reagent =
@@ -407,7 +407,7 @@ entity-effect-guidebook-ignite =
     { $chance ->
         [1] Поджигает
         *[other] поджечь
-    } the metabolizer
+    } организм
 
 entity-effect-guidebook-make-sentient =
     { $chance ->
@@ -574,17 +574,17 @@ entity-effect-guidebook-plant-seeds-remove =
 entity-effect-guidebook-plant-change-trait =
     { $chance ->
         [1] { $change ->
-            [Add] Добавляет растению признак «{ $trait }»
-            [Remove] Удаляет у растения признак «{ $trait }»
-            [Toggle] Переключает у растения признак «{ $trait }»
-            *[other] Изменяет у растения признак «{ $trait }»
-        }
+                [Add] Добавляет растению признак «{ $trait }»
+                [Remove] Удаляет у растения признак «{ $trait }»
+                [Toggle] Переключает у растения признак «{ $trait }»
+                *[other] Изменяет у растения признак «{ $trait }»
+            }
         *[other] { $change ->
-            [Add] Добавляют растению признак «{ $trait }»
-            [Remove] Удаляют у растения признак «{ $trait }»
-            [Toggle] Переключают у растения признак «{ $trait }»
-            *[other] Изменяют у растения признак «{ $trait }»
-        }
+                [Add] Добавляют растению признак «{ $trait }»
+                [Remove] Удаляют у растения признак «{ $trait }»
+                [Toggle] Переключают у растения признак «{ $trait }»
+                *[other] Изменяют у растения признак «{ $trait }»
+            }
     }
 
 entity-effect-guidebook-plant-mutate-exude-gasses =
@@ -616,3 +616,9 @@ entity-effect-disarm =
         [1] Обезоруживает
         *[other] обезоружить
     } цель
+
+entity-effect-guidebook-make-trap-in-container =
+    { $chance ->
+        [1] Заманивает в ловушку
+        *[other] заманить в ловушку
+    } метаболизатор внутри { $entityname }

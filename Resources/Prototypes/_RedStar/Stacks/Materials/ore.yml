@@ -1,4 +1,4 @@
-﻿- type: stack
+- type: stack
   parent: BaseMediumStack
   id: RawBlueSpaceCrystalOre
   name: stack-bluespace-crystal-ore

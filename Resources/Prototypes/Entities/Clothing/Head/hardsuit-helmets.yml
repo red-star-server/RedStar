@@ -186,7 +186,7 @@
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/security-warden.rsi
   - type: PointLight
-    color: "#ffeead"
+    color: cyan # RS14
   - type: PressureProtection
     highPressureMultiplier: 0.525
     lowPressureMultiplier: 1000
@@ -207,6 +207,10 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/capspace.rsi
+  # RS14-start
+  - type: PointLight
+    color: "#AF89D5FF"
+  # RS14-end
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
@@ -456,7 +460,7 @@
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/wizard.rsi
   - type: PointLight
-    color: "#ffadfb"
+    color: "#a4fef4" # RS14
   - type: PressureProtection
     highPressureMultiplier: 0.27
     lowPressureMultiplier: 1000
@@ -565,7 +569,7 @@
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertengineer.rsi
   - type: PointLight
-    color: "#f4ffad"
+    color: cyan # RS14
   - type: FireProtection
     reduction: 0.2
   - type: Armor
@@ -598,7 +602,7 @@
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertsecurity.rsi
   - type: PointLight
-    color: "#ffadc6"
+    color: cyan # RS14
   - type: Armor
     modifiers:
       coefficients:
@@ -645,7 +649,7 @@
 
 #Deathsquad Hardsuit
 - type: entity
-  parent: [ BaseDeathSquadContraband, ClothingHeadHardsuitBase ]
+  parent: [ BaseDeathSquadContraband, ClothingHeadHelmetHardsuitSyndie ] # RS14
   id: ClothingHeadHelmetHardsuitDeathsquad
   name: deathsquad hardsuit helmet
   description: A robust helmet for special operations.
@@ -682,6 +686,10 @@
   - type: Clothing
     equipSound: /Audio/Mecha/mechmove03.ogg
     unequipSound: /Audio/Effects/Emotes/parp1.ogg
+  # RS14-start
+  - type: PointLight
+    color: "#ff3399"
+  # RS14-end
 
 #Mime Hardsuit
 - type: entity

@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: PottedPlantAlt0
   parent: PottedPlantBase
   components:

@@ -1,3 +1,3 @@
-cmd-readmin-desc = Re-admins you if you previously de-adminned.
-cmd-readmin-help = Usage: readmin
-cmd-readmin-not-an-admin = You're not an admin.
+cmd-readmin-desc = Возвращает права администратора, если вы ранее временно отключили их.
+cmd-readmin-help = Использование: readmin
+cmd-readmin-not-an-admin = Вы не администратор.

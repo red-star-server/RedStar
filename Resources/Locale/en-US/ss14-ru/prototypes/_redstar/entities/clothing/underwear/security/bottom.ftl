@@ -1,4 +1,4 @@
-﻿ent-ClothingUnderwearBottomBoxersBrigmedic = brigmedic's boxers
+ent-ClothingUnderwearBottomBoxersBrigmedic = brigmedic's boxers
     .desc = Standard brigmedic's underwear.
 ent-ClothingUnderwearBottomBoxersSecurityCadet = security cadet's boxers
     .desc = Standard security cadet's underwear.

@@ -1,4 +1,4 @@
-﻿- type: cargoProduct
+- type: cargoProduct
   id: StationGoalRomerol
   icon:
     sprite: Structures/Storage/Crates/chemcrate_secure.rsi

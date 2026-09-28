@@ -1,8 +1,8 @@
 command-description-stationevent-simulate =
-    Simulates N number of rounds in which events will occur and prints the occurrences of every event after.
+    Симулирует указанное количество раундов с событиями и после этого выводит количество срабатываний каждого события.
 command-description-stationevent-lsprob =
-    Lists the probability of different station events occuring out of the entire pool.
+    Выводит вероятность различных событий станции во всём пуле.
 command-description-stationevent-lsprobtheoretical =
-    Given a BasicStationEventScheduler prototype, player count, and round time, lists the probability of different station events occuring based on the specified number of players and round time.
+    По прототипу BasicStationEventScheduler, числу игроков и времени раунда выводит вероятность различных событий станции.
 command-description-stationevent-prob =
-    Returns the probability of a single station event occuring out of the entire pool.
+    Возвращает вероятность срабатывания одного события станции во всём пуле.

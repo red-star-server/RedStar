@@ -1,4 +1,4 @@
-﻿paperwork-form-title-cargo-0 = Бланк отдела снабжения
+paperwork-form-title-cargo-0 = Бланк отдела снабжения
 paperwork-form-title-civilian-0 = Бланк сервисного отдела
 paperwork-form-title-command-0 = Бланк командования
 paperwork-form-title-engineering-0 = Бланк инженерного отдела

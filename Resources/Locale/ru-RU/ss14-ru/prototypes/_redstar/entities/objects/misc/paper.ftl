@@ -1,6 +1,5 @@
 ent-PaperPrintedBase = распечатанный документ
     .desc = Лист бумаги с оформленным заголовком.
-
 ent-PaperPrintedNTCargo = { ent-PaperPrintedBase }
     .desc = { ent-PaperPrintedBase.desc }
     .suffix = NanoTrasen, Снабжение
@@ -28,7 +27,6 @@ ent-PaperPrintedNTSecurity = { ent-PaperPrintedBase }
 ent-PaperPrintedNTCentcomm = { ent-PaperPrintedBase }
     .desc = { ent-PaperPrintedBase.desc }
     .suffix = NanoTrasen, Центральное командование
-
 ent-PaperPrintedUSSPCargo = { ent-PaperPrintedBase }
     .desc = { ent-PaperPrintedBase.desc }
     .suffix = СССП, Снабжение
@@ -56,13 +54,15 @@ ent-PaperPrintedUSSPSecurity = { ent-PaperPrintedBase }
 ent-PaperPrintedUSSPCentcomm = { ent-PaperPrintedBase }
     .desc = { ent-PaperPrintedBase.desc }
     .suffix = СССП, Генеральный штаб
-
+ent-PaperPrintedStationGoal = { ent-PaperPrintedUSSPCentcomm }
+    .desc = { ent-PaperPrintedUSSPCentcomm.desc }
+    .suffix = СССП, Генеральный штаб, Цель станции
 ent-PaperPrintedSyndicate = { ent-PaperPrintedBase }
     .desc = { ent-PaperPrintedBase.desc }
     .suffix = Синдикат
-ent-PaperPrintedNukeopsSyndicateToNT = { ent-PaperPrintedBase }
-    .desc = { ent-PaperPrintedBase.desc }
+ent-PaperPrintedNukeopsSyndicateToNT = { ent-PaperPrintedSyndicate }
+    .desc = { ent-PaperPrintedSyndicate.desc }
     .suffix = Синдикат-НТ, Ядерные оперативники
-ent-PaperPrintedNukeopsSyndicateToUSSP = { ent-PaperPrintedBase }
-    .desc = { ent-PaperPrintedBase.desc }
+ent-PaperPrintedNukeopsSyndicateToUSSP = { ent-PaperPrintedSyndicate }
+    .desc = { ent-PaperPrintedSyndicate.desc }
     .suffix = Синдикат-СССП, Ядерные оперативники

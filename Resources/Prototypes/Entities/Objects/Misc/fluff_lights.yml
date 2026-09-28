@@ -82,6 +82,7 @@
           festive: { state: christmaslamp }
         light:
           festive: { state: christmaslamp-on }
+  - type: Rotatable # RS14
 
 - type: entity
   name: banana lamp
@@ -122,13 +123,14 @@
     visuals:
       enum.HolidayVisuals.Holiday:
         base:
-          festive:
-            sprite: Objects/Misc/Lights/lamp.rsi
-            state: christmaslamp
+          festive: { state: christmaslamp } # RS14
         light:
-          festive:
-            sprite: Objects/Misc/Lights/lamp.rsi
-            state: christmaslamp-on
+          festive: { state: christmaslamp-on } # RS14
+  # RS14-start
+  - type: Rotatable
+  - type: PointLight
+    color: "#F0FFA0FF"
+  # RS14-end
 
 - type: entity
   name: interrogator lamp
@@ -186,6 +188,7 @@
         enum.FlashVisualLayers.LightLayer:
           True: {visible: true}
           False: {visible: false}
+  - type: Rotatable # RS14
 
 - type: entity
   name: floodlight

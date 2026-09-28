@@ -73,6 +73,11 @@ public abstract partial class StationEventSystem<T> : GameRuleSystem<T> where T 
     {
         base.Ended(rule, ref args);
 
+        // RS14-start
+        if (TerminatingOrDeleted(rule))
+            return;
+        // RS14-end
+
         if (!TryComp<StationEventComponent>(rule, out var stationEvent))
             return;
 

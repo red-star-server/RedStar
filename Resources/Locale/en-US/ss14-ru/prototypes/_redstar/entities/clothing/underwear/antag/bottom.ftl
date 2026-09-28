@@ -1,4 +1,4 @@
-﻿ent-ClothingUnderwearBottomBoxersNuclearOperative = nuclear operative's boxers
+ent-ClothingUnderwearBottomBoxersNuclearOperative = nuclear operative's boxers
     .desc = Standard nuclear operative's underwear.
 ent-ClothingUnderwearBottomBoxersPirate = pirate's boxers
     .desc = Standard pirate's underwear.

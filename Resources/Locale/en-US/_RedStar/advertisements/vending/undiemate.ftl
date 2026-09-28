@@ -1,4 +1,4 @@
-﻿advertisement-undies-1 = Comfort starts with what no one else can see.
+advertisement-undies-1 = Comfort starts with what no one else can see.
 advertisement-undies-2 = Classics, lace, and something a little bolder!
 advertisement-undies-3 = Modest, daring, or barely there—the choice is yours!
 advertisement-undies-4 = Put on something special. Or almost nothing at all.

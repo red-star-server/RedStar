@@ -1,4 +1,4 @@
-﻿ent-ClothingUnderwearTopBraCargoTechnician = cargo technician's bra
+ent-ClothingUnderwearTopBraCargoTechnician = cargo technician's bra
     .desc = Standard cargo technician's underwear.
 ent-ClothingUnderwearTopBraQuartermaster = quartermaster's bra
     .desc = Standard quartermaster's underwear.

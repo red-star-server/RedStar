@@ -1,4 +1,4 @@
-﻿ent-ClothingUnderwearBottomBoxersChemist = chemist's boxers
+ent-ClothingUnderwearBottomBoxersChemist = chemist's boxers
     .desc = Standard chemist's underwear.
 ent-ClothingUnderwearBottomBoxersChiefMedicalOfficer = chief medical officer's boxers
     .desc = Standard chief medical officer's underwear.

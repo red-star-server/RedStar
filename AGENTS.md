@@ -1,4 +1,4 @@
-﻿# AGENTS.md
+# AGENTS.md
 
 This file contains repository-specific instructions for coding agents working on RedStar.
 

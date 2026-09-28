@@ -1,4 +1,4 @@
-﻿- type: biomeMarkerLayer
+- type: biomeMarkerLayer
   id: OreBlueSpaceCrystalLow
   entityMask:
     AsteroidRock: AsteroidRockBlueSpaceCrystal

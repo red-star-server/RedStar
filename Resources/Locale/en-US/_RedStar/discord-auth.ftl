@@ -1,4 +1,4 @@
-﻿discord-auth-title = Discord linking
+discord-auth-title = Discord linking
 
 discord-auth-description =
     Link Discord to your game account.

@@ -1,4 +1,4 @@
-﻿discord-auth-title = Привязка Discord
+discord-auth-title = Привязка Discord
 
 discord-auth-description =
     Привяжите Discord к своему игровому аккаунту.

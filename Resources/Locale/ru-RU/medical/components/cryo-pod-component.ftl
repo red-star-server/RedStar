@@ -7,7 +7,7 @@ cryo-pod-empty-beaker = Тут пусто!
 cryo-pod-locked = Механизм извлечения не реагирует!
 
 cryo-pod-window-product-name = USSP CRPX-229
-cryo-pod-window-product-subtitle = Cryogenic Restoration Pod
+cryo-pod-window-product-subtitle = Криогенная восстановительная капсула
 cryo-pod-window-loading = Инициализация
 cryo-pod-window-atmos-pressure = Давление
 cryo-pod-window-atmos-temperature = Температура

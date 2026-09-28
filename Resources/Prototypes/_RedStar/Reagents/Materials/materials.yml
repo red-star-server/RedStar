@@ -1,4 +1,4 @@
-﻿- type: material
+- type: material
   id: BlueSpaceCrystal
   stackEntity: MaterialBlueSpaceCrystal1
   name: materials-bluespace-crystal

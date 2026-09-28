@@ -1,5 +1,6 @@
-﻿ent-DrinkCampariBottle = бутылка кампари
+ent-DrinkCampariBottle = бутылка кампари
     .desc = Настойка на основе ароматических трав и цитрусовых. Без ГМО!
+    .suffix = { ent-DrinkBottleGlassBase.suffix }
 ent-DrinkCampariBottleFull = { ent-DrinkCampariBottle }
     .desc = { ent-DrinkCampariBottle.desc }
     .suffix = Полная

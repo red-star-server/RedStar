@@ -1,4 +1,4 @@
-﻿ent-ClothingUnderwearSocksQuartermaster = quartermaster's socks
+ent-ClothingUnderwearSocksQuartermaster = quartermaster's socks
     .desc = Standard quartermaster's socks.
 ent-ClothingUnderwearSocksCargoTech = cargo technician's socks
     .desc = Standard cargo technician's socks.

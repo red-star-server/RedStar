@@ -50,7 +50,7 @@
       stripTime: 3
       uiWindowPos: 2,0
       strippingWindowPos: 1,3
-      dependsOn: outerClothing
+      dependsOn: jumpsuit #RS14
       dependsOnComponents:
       - type: AllowSuitStorage
       displayName: Suit Storage

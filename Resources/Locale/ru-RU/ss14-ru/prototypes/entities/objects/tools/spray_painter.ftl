@@ -1,8 +1,8 @@
-ent-SprayPainter = краскопульт
-    .desc = Краскопульт для окрашивания шлюзов, труб и других предметов.
-ent-SprayPainterRecharging = { ent-SprayPainter }
-    .desc = { ent-SprayPainter.desc }
+ent-SprayPainterRecharging = краскопульт
+    .desc = Краскопульт для покраски шлюзов, труб и других предметов.
     .suffix = Адмемы
+ent-SprayPainter = { ent-SprayPainterRecharging }
+    .desc = { ent-SprayPainterRecharging.desc }
 ent-SprayPainterBorg = экспериментальный краскопульт
     .desc = Экспериментальный самозаряжающийся краскопульт, который может бесконечно воспроизводить сжатую краску.
     .suffix = Борг

@@ -1,4 +1,4 @@
-﻿- type: gameMap
+- type: gameMap
   id: Cluster
   mapName: 'Cluster Station'
   mapPath: /Maps/_RedStar/cluster.yml

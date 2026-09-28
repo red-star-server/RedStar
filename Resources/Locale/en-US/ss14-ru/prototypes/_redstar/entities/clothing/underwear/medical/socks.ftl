@@ -1,4 +1,4 @@
-﻿ent-ClothingUnderwearSocksChiefMedicalOfficer = chief medical officer's socks
+ent-ClothingUnderwearSocksChiefMedicalOfficer = chief medical officer's socks
     .desc = Standard chief medical officer's socks.
 ent-ClothingUnderwearSocksChemist = chemist's socks
     .desc = Standard chemist's socks.

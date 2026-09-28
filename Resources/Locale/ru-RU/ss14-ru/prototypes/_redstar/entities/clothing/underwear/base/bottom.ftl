@@ -1,4 +1,4 @@
-ent-ClothingUnderwearBottomBase = based underwearb
+ent-ClothingUnderwearBottomBase = базовый низ нижнего белья
     .desc = Вы не должны его видеть.
 ent-ClothingUnderwearBottomBoxersWhite = боксеры
     .desc = Стандартное нижнее белье для персонала СССП.

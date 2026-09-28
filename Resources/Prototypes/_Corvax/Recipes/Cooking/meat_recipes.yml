@@ -1,4 +1,4 @@
-﻿- type: microwaveMealRecipe
+- type: microwaveMealRecipe
   id: RecipePelmeni
   name: pelmeni recipe
   result: FoodPelmeniBowl

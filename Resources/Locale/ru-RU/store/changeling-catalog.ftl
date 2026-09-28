@@ -22,9 +22,6 @@ changeling-catalog-cryogenic-sting-desc = Вызывает замедление 
 changeling-catalog-lethal-sting-name = Отравляющее жало
 changeling-catalog-lethal-sting-desc = Со временем наносит урон цели. Бесполезен в бою, но гарантирует, что им потребуется медицинская помощь. Может быть использовано на себе.
 
-changeling-catalog-hallucinogenic-sting-name = Галлюциногенное жало
-changeling-catalog-hallucinogenic-sting-desc = Вызывает у жертвы состояние эйфории и затруднения в речи. Вызывает растерянность среди экипажа. Может быть использовано на себе.
-
 changeling-catalog-mute-sting-name = Жало немоты
 changeling-catalog-mute-sting-desc = Лишает способности говорить. Эффект незаметен, пока цель не попытается заговорить. Можно использовать на себе.
 
@@ -44,3 +41,6 @@ changeling-catalog-voice-mindshield-desc = Модифицируйте собст
 
 changeling-catalog-night-vision-name = Ночное зрение
 changeling-catalog-night-vision-desc = Вы модифицируете свои фоторецепторы и обостряете свои чувства, чтобы обрести способность видеть в полной темноте.
+
+changeling-catalog-fleshtomb-name = Гробница из плоти [ЭКСПЕРИМЕНТАЛЬНО]
+changeling-catalog-fleshtomb-desc = Сохраняйте труп в плотяной тюрьме, медленно извлекая его генетический код для собственного использования. Она постепенно вырабатывает ДНК, но очень хрупка и должна находиться в подходящей атмосфере, чтобы не развалиться.

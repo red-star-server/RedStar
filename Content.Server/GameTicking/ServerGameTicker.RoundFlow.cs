@@ -408,6 +408,7 @@ public sealed partial class ServerGameTicker
         AnnounceRound();
         UpdateInfoText();
         SendRoundStartedDiscordMessage();
+        RaiseLocalEvent(new RoundStartedEvent(RoundId)); // RS14
 
 #if EXCEPTION_TOLERANCE
             }

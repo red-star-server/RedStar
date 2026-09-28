@@ -1,4 +1,4 @@
-﻿ent-ClothingUnderwearTopBase = based underweart
+ent-ClothingUnderwearTopBase = based underweart
     .desc = You should not see this.
 ent-ClothingUnderwearTopBraWhite = bra
     .desc = Standard underwear for female SSSP personnel.

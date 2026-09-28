@@ -215,9 +215,6 @@
         {
             "name": "syndicate_card"
         },
-		{
-			"name": "valentine_card"
-		},
         {
             "name": "paper_stamp-psychologist"
         },
@@ -231,6 +228,9 @@
         {
             "name": "paper-inhand-left",
             "directions": 4
+        },
+        {
+            "name": "valentine_card"
         }
     ]
 }

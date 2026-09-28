@@ -1,4 +1,4 @@
-﻿ent-ClothingUnderwearBottomBoxersAtmosphericTechnician = atmospheric technician's boxers
+ent-ClothingUnderwearBottomBoxersAtmosphericTechnician = atmospheric technician's boxers
     .desc = Standard atmospheric technician's underwear.
 ent-ClothingUnderwearBottomBoxersChiefEngineer = chief engineer's boxers
     .desc = Standard chief engineer's underwear.

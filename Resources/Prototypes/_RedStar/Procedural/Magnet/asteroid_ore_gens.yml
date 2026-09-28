@@ -1,4 +1,4 @@
-﻿- type: oreDunGen
+- type: oreDunGen
   id: OreDiamond
   replacement: AsteroidRock
   entity: AsteroidRockDiamond

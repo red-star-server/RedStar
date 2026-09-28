@@ -63,7 +63,6 @@ ui-options-show-ooc-patron-color = Цветной ник в OOC для патр�
 ui-options-show-looc-on-head = Показывать LOOC-чат над головами персонажей
 ui-options-fancy-speech = Показывать имена в облачках с текстом
 ui-options-fancy-name-background = Добавить фон облачкам с текстом
-ui-options-chat-follow-button = Будучи призраком, показывать кнопку наблюдения рядом с сообщениями чата
 ui-options-vsync = Вертикальная синхронизация
 ui-options-max-fps = Максимум FPS:
 ui-options-max-fps-display-rate = Частота экрана
@@ -171,7 +170,7 @@ ui-options-function-alt-activate-item-in-world = Альтернативно ис
 ui-options-function-drop = Положить предмет
 ui-options-function-examine-entity = Осмотреть
 ui-options-function-swap-hands = Поменять руки
-ui-options-function-swap-hands-reverse = Swap hands (other direction)
+ui-options-function-swap-hands-reverse = Сменить руки (в обратном направлении)
 ui-options-function-move-stored-item = Переместить хранящийся объект
 ui-options-function-rotate-stored-item = Повернуть хранящийся объект
 ui-options-function-save-item-location = Сохранить расположение объекта
@@ -325,11 +324,11 @@ ui-options-function-text-cut = Вырезать
 ui-options-function-text-paste = Вставить
 ui-options-function-text-history-prev = Предыдущее с истории
 ui-options-function-text-history-next = Следующее с истории
-ui-options-function-text-release-focus = Release focus
+ui-options-function-text-release-focus = Снять фокус
 ui-options-function-text-scroll-to-bottom = Пролистать вниз
-ui-options-function-text-tab-complete = Tab completion
-ui-options-function-text-complete-next = Complete next
-ui-options-function-text-complete-prev = Complete previous
+ui-options-function-text-tab-complete = Автодополнение клавишей Tab
+ui-options-function-text-complete-next = Следующий вариант автодополнения
+ui-options-function-text-complete-prev = Предыдущий вариант автодополнения
 
 ## Network menu
 

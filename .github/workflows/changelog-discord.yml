@@ -1,4 +1,4 @@
-﻿name: "Changelog: Send discord webhook"
+name: "Changelog: Send discord webhook"
 
 on:
   pull_request_target:

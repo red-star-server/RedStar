@@ -1,4 +1,4 @@
-﻿ent-ClothingUnderwearBottomBoxersCaptain = captain's boxers
+ent-ClothingUnderwearBottomBoxersCaptain = captain's boxers
     .desc = Standard captain's underwear.
 ent-ClothingUnderwearBottomBoxersCBURN = CBURN boxers
     .desc = Standard CBURN's underwear.

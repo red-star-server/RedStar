@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.GameTicking;
+namespace Content.Shared.GameTicking;
 
 public sealed class RoundStartedEvent : EntityEventArgs
 {
