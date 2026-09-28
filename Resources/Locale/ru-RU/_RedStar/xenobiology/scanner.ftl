@@ -1,0 +1,16 @@
+slime-scanner-none = Нет
+slime-scanner-title = Сканер слизней
+slime-scanner-target = Цель: {$name}
+slime-scanner-growth = Рост: {$value}
+slime-scanner-hunger = Голод: {$value}
+slime-scanner-temperament = Темперамент: {$value}
+slime-scanner-temperament-calm = Спокойный
+slime-scanner-temperament-restless = Беспокойный
+slime-scanner-temperament-aggressive = Агрессивный
+slime-scanner-crowding = Скученность: {$value}
+slime-scanner-crowding-low = Низкая
+slime-scanner-crowding-crowded = Высокая
+slime-scanner-crowding-severe = Критическая
+slime-scanner-mutation-chance = Шанс мутации: {$value}
+slime-scanner-potential-mutations = Возможные мутации: {$value}
+slime-scanner-extract-yield-enhanced = Выход экстракта усилен

@@ -1,0 +1,16 @@
+slime-scanner-none = None
+slime-scanner-title = Slime scanner
+slime-scanner-target = Target: {$name}
+slime-scanner-growth = Growth: {$value}
+slime-scanner-hunger = Hunger: {$value}
+slime-scanner-temperament = Temperament: {$value}
+slime-scanner-temperament-calm = Calm
+slime-scanner-temperament-restless = Restless
+slime-scanner-temperament-aggressive = Aggressive
+slime-scanner-crowding = Crowding: {$value}
+slime-scanner-crowding-low = Low
+slime-scanner-crowding-crowded = Crowded
+slime-scanner-crowding-severe = Severe
+slime-scanner-mutation-chance = Mutation chance: {$value}
+slime-scanner-potential-mutations = Potential mutations: {$value}
+slime-scanner-extract-yield-enhanced = Extract yield enhanced

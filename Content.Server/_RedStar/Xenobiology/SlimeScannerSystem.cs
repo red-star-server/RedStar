@@ -1,0 +1,62 @@
+using Content.Shared._RedStar.Xenobiology;
+using Content.Shared.DoAfter;
+using Content.Shared.Interaction;
+using Robust.Server.GameObjects;
+
+namespace Content.Server._RedStar.Xenobiology;
+
+public sealed partial class SlimeScannerSystem : EntitySystem
+{
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private SlimeScanSystem _scan = default!;
+
+    [SubscribeLocalEvent]
+    private void OnSlimeAfterInteractUsing(Entity<SlimeLifecycleComponent> entity, ref AfterInteractUsingEvent args)
+        => TryStartScan(args);
+
+    private void TryStartScan(AfterInteractUsingEvent args)
+    {
+        if (args.Handled || !args.CanReach || !HasComp<SlimeScannerComponent>(args.Used))
+            return;
+
+        var doAfter = new DoAfterArgs(EntityManager, args.User, TimeSpan.FromSeconds(1),
+            new SlimeScannerDoAfterEvent(), args.Used, target: args.Target, used: args.Used)
+        {
+            NeedHand = true,
+            BreakOnMove = true
+        };
+
+        args.Handled = _doAfter.TryStartDoAfter(doAfter);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnDoAfter(Entity<SlimeScannerComponent> scanner, ref SlimeScannerDoAfterEvent args)
+    {
+        if (args.Handled || args.Cancelled || args.Target is not { } target)
+            return;
+
+        if (!SendScan(scanner.Owner, args.User, target))
+            return;
+
+        RaiseNetworkEvent(new SlimeScannerSoundMessage
+        {
+            Owner = GetNetEntity(scanner.Owner),
+            User = GetNetEntity(args.User)
+        });
+        args.Handled = true;
+    }
+
+    private bool SendScan(EntityUid uiOwner, EntityUid user, EntityUid target)
+    {
+        if (_scan.TryBuildSlimeScanData(target) is not { } scan)
+            return false;
+
+        if (!_ui.HasUi(uiOwner, SlimeScannerUiKey.Key))
+            return false;
+
+        _ui.OpenUi(uiOwner, SlimeScannerUiKey.Key, user);
+        _ui.ServerSendUiMessage(uiOwner, SlimeScannerUiKey.Key, new SlimeScannerScannedMessage(scan), user);
+        return true;
+    }
+}
