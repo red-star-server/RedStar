@@ -1,95 +1,95 @@
 command-help-usage =
-    Usage:
+    Использование:
 command-help-invertible =
-    The behaviour of this command can be inverted using the "not" prefix.
+    Поведение этой команды можно инвертировать с помощью префикса «not».
 command-description-tpto =
-    Teleport the given entities to some target entity.
+    Телепортирует указанные сущности к целевой сущности.
 command-description-player-list =
-    Returns a list of all player sessions.
+    Возвращает список всех сессий игроков.
 command-description-player-self =
-    Returns the current player session.
+    Возвращает текущую сессию игрока.
 command-description-player-imm =
-    Returns the session associated with the player given as argument.
+    Возвращает сессию игрока, указанного в аргументе.
 command-description-player-entity =
-    Returns the entities of the input sessions.
+    Возвращает сущности входных сессий.
 command-description-self =
-    Returns the current attached entity.
+    Возвращает текущую присоединённую сущность.
 command-description-physics-velocity =
-    Returns the velocity of the input entities.
+    Возвращает скорость входных сущностей.
 command-description-physics-angular-velocity =
-    Returns the angular velocity of the input entities.
+    Возвращает угловую скорость входных сущностей.
 command-description-buildinfo =
-    Provides information about the build of the game.
+    Возвращает информацию о сборке игры.
 command-description-cmd-list =
-    Returns a list of all commands, for this side.
+    Возвращает список всех команд для этой стороны.
 command-description-explain =
-    Explains the given expression, providing command descriptions and signatures. This only works for valid expressions, it can't explain commands that it fails to parse.
+    Объясняет указанное выражение, показывая описания и сигнатуры команд. Работает только с корректными выражениями и не может объяснить команды, которые не удалось разобрать.
 command-description-search =
-    Searches through the input for the provided value.
+    Ищет указанное значение во входных данных.
 command-description-stopwatch =
-    Measures the execution time of the given expression.
+    Измеряет время выполнения указанного выражения.
 command-description-types-consumers =
-    Provides all commands that can consume the given type.
+    Возвращает все команды, принимающие указанный тип.
 command-description-types-tree =
-    Debug tool to return all types the command interpreter can downcast the input to.
+    Отладочный инструмент, возвращающий все типы, к которым интерпретатор команд может привести входные данные.
 command-description-types-gettype =
-    Returns the type of the input.
+    Возвращает тип входных данных.
 command-description-types-fullname =
-    Returns the full name of the input type according to CoreCLR.
+    Возвращает полное имя входного типа согласно CoreCLR.
 command-description-as =
-    Casts the input to the given type.
-    Effectively a type hint if you know the type but the interpreter does not.
+    Приводит входные данные к указанному типу.
+    Фактически это подсказка типа, если тип известен вам, но неизвестен интерпретатору.
 command-description-count =
-    Counts the amount of entries in it's input, returning an integer.
+    Подсчитывает количество элементов во входных данных и возвращает целое число.
 command-description-map =
-    Maps the input over the given block.
+    Применяет указанный блок к входным данным.
 command-description-select =
-    Selects N objects or N% of objects from the input.
-    One can additionally invert this command with not to make it select everything except N objects instead.
+    Выбирает из входных данных N объектов или N% объектов.
+    Команду можно инвертировать с помощью not, чтобы выбрать всё, кроме N объектов.
 command-description-comp =
-    Returns the given component from the input entities, discarding entities without that component.
+    Возвращает указанный компонент входных сущностей, отбрасывая сущности без этого компонента.
 command-description-delete =
-    Deletes the input entities.
+    Удаляет входные сущности.
 command-description-ent =
-    Returns the provided entity ID.
+    Возвращает указанный идентификатор сущности.
 command-description-entities =
-    Returns all entities on the server.
+    Возвращает все сущности на сервере.
 command-description-paused =
-    Filters the input entities by whether or not they are paused.
+    Фильтрует входные сущности по признаку приостановки.
 command-description-with =
-    Filters the input entities by whether or not they have the given component.
+    Фильтрует входные сущности по наличию указанного компонента.
 command-description-fuck =
-    Throws an exception.
+    Выбрасывает исключение.
 command-description-ecscomp-listty =
-    Lists every type of component registered.
+    Перечисляет все зарегистрированные типы компонентов.
 command-description-cd =
-    Changes the session's current directory to the given relative or absolute path.
+    Изменяет текущий каталог сессии на указанный относительный или абсолютный путь.
 command-description-ls-here =
-    Lists the contents of the current directory.
+    Перечисляет содержимое текущего каталога.
 command-description-ls-in =
-    Lists the contents of the given relative or absolute path.
+    Перечисляет содержимое указанного относительного или абсолютного пути.
 command-description-methods-get =
-    Returns all methods associated with the input type.
+    Возвращает все методы, связанные с входным типом.
 command-description-methods-overrides =
-    Returns all methods overridden on the input type.
+    Возвращает все методы, переопределённые во входном типе.
 command-description-methods-overridesfrom =
-    Returns all methods overridden from the given type on the input type.
+    Возвращает все методы указанного типа, переопределённые во входном типе.
 command-description-cmd-moo =
-    Asks the important questions.
+    Задаёт важные вопросы.
 command-description-cmd-descloc =
-    Returns the localization string for a command's description.
+    Возвращает строку локализации описания команды.
 command-description-cmd-getshim =
-    Returns a command's execution shim.
+    Возвращает прослойку выполнения команды.
 command-description-help =
-    Provides a quick rundown of how to use toolshed.
+    Кратко объясняет использование toolshed.
 command-description-ioc-registered =
-    Returns all the types registered with IoCManager on the current thread (usually the game thread)
+    Возвращает все типы, зарегистрированные в IoCManager текущего потока (обычно игрового потока).
 command-description-ioc-get =
-    Gets an instance of an IoC registration.
+    Возвращает экземпляр регистрации IoC.
 command-description-loc-tryloc =
-    Tries to get a localization string, returning null if unable.
+    Пытается получить строку локализации и возвращает null при неудаче.
 command-description-loc-loc =
-    Gets a localization string, returning the unlocalized string if unable.
+    Получает строку локализации и возвращает нелокализованную строку при неудаче.
 command-description-physics-angular_velocity =
     Returns the angular velocity of the given entities.
 command-description-vars =
