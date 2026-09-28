@@ -1,14 +1,14 @@
 command-description-container-contents =
-    Gets all entities inside a container on an entity via the container's ID.
+    Возвращает все сущности внутри контейнера по его идентификатору.
 command-description-container-get =
-    Gets a container on an entity via the container's ID.
+    Возвращает контейнер сущности по его идентификатору.
 command-description-container-insert =
-    Puts an entity inside the piped container.
+    Помещает сущность в переданный контейнер.
 command-description-container-insertmultiple =
-    Put multiple entities inside the piped container.
+    Помещает несколько сущностей в переданный контейнер.
 command-description-container-list =
-    Gets the IDs of all containers in an entity.
+    Возвращает идентификаторы всех контейнеров сущности.
 command-description-container-getall =
-    Gets all containers in an entity.
+    Возвращает все контейнеры сущности.
 command-description-container-id =
-    Gets the string id of the piped in containers.
+    Возвращает строковый идентификатор переданных контейнеров.
