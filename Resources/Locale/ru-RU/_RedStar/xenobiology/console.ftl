@@ -1,5 +1,7 @@
 xenobiology-console-title = Консоль ксенобиологии
 xenobiology-console-scanners = Связанные клетки
+xenobiology-console-scanner-short = Сканер клетки
+xenobiology-console-scanner-numbered = Сканер клетки { $number }
 xenobiology-console-slimes = Содержимое клетки
 xenobiology-console-scan = Выбранный образец
 xenobiology-console-link-hint = Подключите сканеры клеток мультитулом в режиме связывания.

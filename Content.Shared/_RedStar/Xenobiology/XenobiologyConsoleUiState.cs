@@ -1,4 +1,5 @@
 using Robust.Shared.Serialization;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._RedStar.Xenobiology;
 
@@ -9,10 +10,10 @@ public enum XenobiologyConsoleUiKey : byte
 }
 
 [Serializable, NetSerializable]
-public readonly record struct XenobiologyScannerEntry(NetEntity Entity, string DisplayName);
+public readonly record struct XenobiologyScannerEntry(NetEntity Entity, string DisplayName, bool IsDefaultName);
 
 [Serializable, NetSerializable]
-public readonly record struct XenobiologySlimeEntry(NetEntity Entity, string DisplayName);
+public readonly record struct XenobiologySlimeEntry(NetEntity Entity, string DisplayName, EntProtoId? Prototype, SlimeStage? Stage);
 
 [Serializable, NetSerializable]
 public sealed class XenobiologyConsoleUiState(

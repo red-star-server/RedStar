@@ -2,9 +2,11 @@ using Content.Shared.EntityConditions;
 using Content.Shared.FixedPoint;
 using Content.Shared.Nutrition.Prototypes;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared._RedStar.Xenobiology;
 
+[Serializable, NetSerializable]
 public enum SlimeStage : byte
 {
     Baby,

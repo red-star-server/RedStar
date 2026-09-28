@@ -17,6 +17,7 @@ xenobiology-analyzer-sample-matched = This extract matches active research.
 xenobiology-analyzer-analysis-hint = Keep the sample inserted until analysis is complete.
 xenobiology-analyzer-no-targets = No research targets are currently available.
 xenobiology-analyzer-analyzing = Analyzing…
+xenobiology-analyzer-analysis-completed = Analysis complete
 xenobiology-analyzer-reward = +{ $points } RP
 xenobiology-analyzer-card-matched = Sample matched
 xenobiology-analyzer-card-available = Awaiting sample

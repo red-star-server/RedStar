@@ -12,4 +12,6 @@ public readonly record struct SlimeScanData(
     EntProtoId[] PotentialMutations,
     bool ExtractYieldEnhanced,
     SlimeTemperament Temperament,
-    SlimeCrowding Crowding);
+    SlimeCrowding Crowding,
+    EntProtoId? Prototype,
+    SlimeStage Stage);

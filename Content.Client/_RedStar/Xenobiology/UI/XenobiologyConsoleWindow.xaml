@@ -5,7 +5,10 @@
                             MinSize="660 500" SetSize="760 620">
     <BoxContainer Margin="12" SeparationOverride="14">
         <BoxContainer Orientation="Vertical" SetWidth="230" SeparationOverride="8">
-            <Label Text="{Loc 'xenobiology-console-scanners'}" StyleClasses="LabelHeading" />
+            <BoxContainer>
+                <Label Text="{Loc 'xenobiology-console-scanners'}" StyleClasses="LabelHeading" HorizontalExpand="True" />
+                <Label Name="ScannerCount" StyleClasses="LabelSubText" />
+            </BoxContainer>
             <PanelContainer StyleClasses="PanelDeep" MinHeight="100" MaxHeight="160">
                 <ScrollContainer HScrollEnabled="False" Margin="6">
                     <BoxContainer Name="ScannerEntries" Orientation="Vertical" SeparationOverride="4" />
@@ -13,7 +16,10 @@
             </PanelContainer>
             <RichTextLabel Name="LinkHint" Text="{Loc 'xenobiology-console-link-hint'}" StyleClasses="LabelSubText" Margin="4 0 4 6" />
             <controls:Separator StyleClasses="LowDivider" Margin="0 4" />
-            <Label Text="{Loc 'xenobiology-console-slimes'}" StyleClasses="LabelHeading" />
+            <BoxContainer>
+                <Label Text="{Loc 'xenobiology-console-slimes'}" StyleClasses="LabelHeading" HorizontalExpand="True" />
+                <Label Name="SlimeCount" StyleClasses="LabelSubText" />
+            </BoxContainer>
             <PanelContainer StyleClasses="PanelDeep" VerticalExpand="True">
                 <ScrollContainer HScrollEnabled="False" Margin="6" VerticalExpand="True">
                     <BoxContainer Name="SlimeEntries" Orientation="Vertical" SeparationOverride="4" />

@@ -17,6 +17,7 @@ xenobiology-analyzer-sample-matched = Экстракт соответствуе�
 xenobiology-analyzer-analysis-hint = Оставьте образец в отсеке до завершения анализа.
 xenobiology-analyzer-no-targets = Сейчас нет доступных целей исследования.
 xenobiology-analyzer-analyzing = Анализ…
+xenobiology-analyzer-analysis-completed = Анализ завершён
 xenobiology-analyzer-reward = +{ $points } очков
 xenobiology-analyzer-card-matched = Образец подходит
 xenobiology-analyzer-card-available = Ожидает образец

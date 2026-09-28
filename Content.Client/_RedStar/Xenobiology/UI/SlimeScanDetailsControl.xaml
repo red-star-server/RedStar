@@ -6,11 +6,15 @@
     <BoxContainer Name="Card" Orientation="Vertical" SeparationOverride="10" Visible="False">
         <BoxContainer SeparationOverride="12">
             <PanelContainer Name="PortraitPanel" StyleClasses="PanelDeep" Visible="False">
-                <SpriteView Name="Portrait" SetSize="72 72" Margin="8" Stretch="Fill" />
+                <Control SetSize="88 88">
+                    <SpriteView Name="Portrait" SetSize="72 72" Margin="8" Stretch="Fill" />
+                    <TextureRect Name="PortraitIcon" SetSize="72 72" Margin="8" Stretch="KeepAspectCentered" Visible="False" />
+                </Control>
             </PanelContainer>
             <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalAlignment="Center" SeparationOverride="4">
                 <Label Text="{Loc 'slime-scan-card-specimen'}" StyleClasses="LabelSubText" />
-                <Label Name="SpecimenName" StyleClasses="LabelHeadingBigger" ClipText="True" HorizontalExpand="True" />
+                <ui:XenobiologyNameLabel Name="SpecimenName" StyleClasses="LabelHeading" />
+                <Label Name="StageValue" StyleClasses="LabelSubText" />
             </BoxContainer>
         </BoxContainer>
         <controls:Separator StyleClasses="LowDivider" />
@@ -26,14 +30,18 @@
         </BoxContainer>
         <controls:Separator StyleClasses="LowDivider" Margin="0 2" />
         <Label Text="{Loc 'slime-scan-card-condition'}" StyleClasses="LabelHeading" />
-        <BoxContainer SeparationOverride="24">
+        <BoxContainer SeparationOverride="12">
             <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="4">
                 <Label Text="{Loc 'slime-scan-card-temperament'}" StyleClasses="LabelSubText" />
-                <Label Name="TemperamentValue" StyleClasses="LabelHeading" />
+                <PanelContainer Name="TemperamentBadge">
+                    <ui:XenobiologyNameLabel Name="TemperamentValue" StyleClasses="LabelHeading" Margin="8 6" />
+                </PanelContainer>
             </BoxContainer>
             <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="4">
                 <Label Text="{Loc 'slime-scan-card-crowding'}" StyleClasses="LabelSubText" />
-                <Label Name="CrowdingValue" StyleClasses="LabelHeading" />
+                <PanelContainer Name="CrowdingBadge">
+                    <ui:XenobiologyNameLabel Name="CrowdingValue" StyleClasses="LabelHeading" Margin="8 6" />
+                </PanelContainer>
             </BoxContainer>
         </BoxContainer>
         <controls:Separator StyleClasses="LowDivider" Margin="0 2" />

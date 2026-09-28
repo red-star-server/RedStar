@@ -20,6 +20,7 @@ public sealed partial class XenobiologyConsoleSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
 
     [Dependency] private EntityQuery<XenobiologyCellScannerComponent> _scannerQuery;
+    [Dependency] private EntityQuery<SlimeLifecycleComponent> _lifecycleQuery;
 
     private static readonly ProtoId<SourcePortPrototype> ScannerPort = "XenobiologyConsole";
     private static readonly ProtoId<SinkPortPrototype> CellPort = "XenobiologyCellScanner";
@@ -152,7 +153,8 @@ public sealed partial class XenobiologyConsoleSystem : EntitySystem
             ClearSelection(console);
 
         var scanners = linked.Select(linkedScanner =>
-            new XenobiologyScannerEntry(GetNetEntity(linkedScanner), MetaData(linkedScanner).EntityName))
+            new XenobiologyScannerEntry(GetNetEntity(linkedScanner), MetaData(linkedScanner).EntityName,
+                MetaData(linkedScanner).EntityName == MetaData(linkedScanner).EntityPrototype?.Name))
             .OrderBy(entry => entry.Entity).ToArray();
         var slimes = new List<XenobiologySlimeEntry>();
         SlimeScanData? scan = null;
@@ -169,7 +171,9 @@ public sealed partial class XenobiologyConsoleSystem : EntitySystem
 
             foreach (var slime in detected)
             {
-                slimes.Add(new XenobiologySlimeEntry(GetNetEntity(slime), MetaData(slime).EntityName));
+                slimes.Add(new XenobiologySlimeEntry(GetNetEntity(slime), MetaData(slime).EntityName,
+                    MetaData(slime).EntityPrototype?.ID,
+                    _lifecycleQuery.TryComp(slime, out var lifecycle) ? lifecycle.Stage : null));
             }
             if (console.SelectedSlime is { } specimen)
                 scan = _scan.TryBuildSlimeScanData(specimen);
@@ -205,6 +209,8 @@ public sealed partial class XenobiologyConsoleSystem : EntitySystem
             return current.Scan == null;
         return current.Scan is { } newScan &&
                oldScan.TargetName == newScan.TargetName &&
+               oldScan.Prototype == newScan.Prototype &&
+               oldScan.Stage == newScan.Stage &&
                oldScan.Growth.Equals(newScan.Growth) &&
                Nullable.Equals(oldScan.Hunger, newScan.Hunger) &&
                oldScan.MutationChance.Equals(newScan.MutationChance) &&

@@ -6,6 +6,7 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.DoAfter;
 using Content.Shared.Power;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -19,6 +20,7 @@ public sealed partial class XenobiologySampleAnalyzerSystem : EntitySystem
     [Dependency] private XenobiologyResearchSystem _xenobiology = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
 
     private TimeSpan _nextUpdate;
 
@@ -73,6 +75,7 @@ public sealed partial class XenobiologySampleAnalyzerSystem : EntitySystem
             return;
 
         ent.Comp.AnalysisServer = server;
+        ent.Comp.Result = null;
         ent.Comp.AnalysisSample = sample;
         ent.Comp.AnalysisStart = _timing.CurTime;
         ent.Comp.AnalysisEnd = _timing.CurTime + ent.Comp.AnalysisTime;
@@ -121,8 +124,12 @@ public sealed partial class XenobiologySampleAnalyzerSystem : EntitySystem
 
         if (valid && server is { } researchServer && args.Target is { } sample &&
             MetaData(sample).EntityPrototype is { } prototype &&
-            _xenobiology.TryCompleteSample(researchServer, new EntProtoId<SlimeExtractComponent>(prototype.ID), out _))
+            _xenobiology.TryCompleteSample(researchServer, new EntProtoId<SlimeExtractComponent>(prototype.ID), out var reward))
+        {
+            ent.Comp.Result = new XenobiologyAnalysisResult(prototype.ID, reward);
+            _audio.PlayPvs(ent.Comp.CompletionSound, ent.Owner);
             QueueDel(sample);
+        }
 
         UpdateState(ent);
     }
@@ -169,6 +176,10 @@ public sealed partial class XenobiologySampleAnalyzerSystem : EntitySystem
         if (sample is { } uid && (TerminatingOrDeleted(uid) || EntityManager.IsQueuedForDeletion(uid)))
             sample = null;
 
+        // Keep the receipt visible until a new sample is inserted.
+        if (sample != null)
+            ent.Comp.Result = null;
+
         EntProtoId<SlimeExtractComponent>? prototype = null;
         if (sample is { } sampleUid && HasComp<SlimeExtractComponent>(sampleUid) &&
             MetaData(sampleUid).EntityPrototype is { } samplePrototype)
@@ -182,11 +193,12 @@ public sealed partial class XenobiologySampleAnalyzerSystem : EntitySystem
             : XenobiologySampleStatus.Unmatched;
         var state = new XenobiologySampleAnalyzerUiState(targets,
             server is { } serverUid ? MetaData(serverUid).EntityName : null,
-            GetNetEntity(sample), prototype, status, ent.Comp.AnalysisStart, ent.Comp.AnalysisEnd);
+            GetNetEntity(sample), prototype, status, ent.Comp.AnalysisStart, ent.Comp.AnalysisEnd, ent.Comp.Result);
         if (ent.Comp.LastState is { } previous && previous.ServerName == state.ServerName &&
             previous.Sample == state.Sample && previous.SamplePrototype == state.SamplePrototype &&
             previous.Status == state.Status && previous.AnalysisStart == state.AnalysisStart &&
-            previous.AnalysisEnd == state.AnalysisEnd && previous.Targets.SequenceEqual(state.Targets))
+            previous.AnalysisEnd == state.AnalysisEnd && previous.Result == state.Result &&
+            previous.Targets.SequenceEqual(state.Targets))
             return;
 
         ent.Comp.LastState = state;

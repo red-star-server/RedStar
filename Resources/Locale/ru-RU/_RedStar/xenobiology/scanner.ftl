@@ -16,6 +16,8 @@ slime-scanner-potential-mutations = Возможные мутации: {$value}
 slime-scanner-extract-yield-enhanced = Количество получаемых экстрактов увеличено
 
 slime-scan-card-specimen = Анализ образца
+slime-scan-stage-baby = Малыш
+slime-scan-stage-adult = Взрослый
 slime-scan-card-development = Развитие
 slime-scan-card-growth = Рост
 slime-scan-card-hunger = Голод

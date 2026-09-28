@@ -5,6 +5,8 @@ ent-XenobiologyCellScanner = xenobiology cell scanner
 
 xenobiology-console-title = Xenobiology console
 xenobiology-console-scanners = Linked cells
+xenobiology-console-scanner-short = Cell scanner
+xenobiology-console-scanner-numbered = Cell scanner { $number }
 xenobiology-console-slimes = Cell contents
 xenobiology-console-scan = Selected specimen
 xenobiology-console-link-hint = Connect cell scanners using a multitool in linking mode.

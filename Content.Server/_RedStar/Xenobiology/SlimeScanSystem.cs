@@ -37,14 +37,20 @@ public sealed partial class SlimeScanSystem : EntitySystem
 
         var temperament = SlimeTemperament.Calm;
         var crowding = SlimeCrowding.Low;
-        if (_husbandryQuery.TryComp(uid, out var husbandry))
+        if (!_husbandryQuery.TryComp(uid, out var husbandry))
         {
-            temperament = husbandry.Temperament;
-            crowding = _husbandry.GetCrowding((uid, husbandry));
+            return new SlimeScanData(MetaData(uid).EntityName, growth, hunger,
+                lifecycle.MutationChance.Float(), mutations,
+                HasComp<SlimeExtractYieldEnhancedComponent>(uid), temperament, crowding,
+                MetaData(uid).EntityPrototype?.ID, lifecycle.Stage);
         }
+
+        temperament = husbandry.Temperament;
+        crowding = _husbandry.GetCrowding((uid, husbandry));
 
         return new SlimeScanData(MetaData(uid).EntityName, growth, hunger,
             lifecycle.MutationChance.Float(), mutations,
-            HasComp<SlimeExtractYieldEnhancedComponent>(uid), temperament, crowding);
+            HasComp<SlimeExtractYieldEnhancedComponent>(uid), temperament, crowding,
+            MetaData(uid).EntityPrototype?.ID, lifecycle.Stage);
     }
 }
