@@ -1,60 +1,25 @@
 using Content.Server._RedStar.Emoting.Components;
-using Content.Shared._RedStar.Emoting.Components;
+using Content.Shared._RedStar.Emoting;
 using Content.Shared._RedStar.Emoting.Events;
 using Content.Shared._RedStar.Emoting.Prototypes;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs;
-using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
-using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Server._RedStar.Emoting;
 
-public sealed partial class PairedEmoteSystem : EntitySystem
+public sealed partial class PairedEmoteSystem : SharedPairedEmoteSystem
 {
-    [Dependency] private ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedInteractionSystem _interaction = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private RotateToFaceSystem _rotate = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
-
-    [SubscribeLocalEvent]
-    private void OnGetVerbs(Entity<EmoteAnimationComponent> ent, ref GetVerbsEvent<InteractionVerb> args)
-    {
-        if (!args.CanAccess ||
-            !args.CanInteract ||
-            ent.Owner == args.User ||
-            !CanPerformPairedEmote(ent.Owner) ||
-            !CanPerformPairedEmote(args.User))
-        {
-            return;
-        }
-
-        if (HasComp<PairedEmoteOfferComponent>(args.User))
-            return;
-
-        var user = args.User;
-
-        foreach (var prototype in ProtoMan.EnumeratePrototypes<PairedEmotePrototype>())
-        {
-            var pairedEmote = prototype;
-
-            args.Verbs.Add(new InteractionVerb
-            {
-                Text = Loc.GetString(pairedEmote.Name),
-                Icon = pairedEmote.Icon,
-                Act = () => TryOffer(user, ent.Owner, pairedEmote),
-                Priority = -20
-            });
-        }
-    }
 
     [SubscribeLocalEvent]
     private void OnInteractHand(Entity<PairedEmoteOfferComponent> ent, ref InteractHandEvent args)
@@ -100,7 +65,7 @@ public sealed partial class PairedEmoteSystem : EntitySystem
         CancelOffer(ent);
     }
 
-    private void TryOffer(
+    protected override void TryOffer(
         EntityUid initiator,
         EntityUid target,
         PairedEmotePrototype prototype)
@@ -181,19 +146,12 @@ public sealed partial class PairedEmoteSystem : EntitySystem
                 GetNetEntity(initiator),
                 GetNetEntity(target),
                 prototype.InitiatorAnimation,
-                prototype.TargetAnimation),
+                prototype.TargetAnimation,
+                prototype.ApproachOffset),
             filter);
     }
 
-    private bool CanPerformPairedEmote(EntityUid uid)
-    {
-        if (!HasComp<EmoteAnimationComponent>(uid))
-            return false;
-
-        return (!TryComp<MobStateComponent>(uid, out var mobState) ||
-                mobState.CurrentState == MobState.Alive) &&
-               _actionBlocker.CanInteract(uid, null);
-    }
+    protected override bool HasActiveOffer(EntityUid uid) => HasComp<PairedEmoteOfferComponent>(uid);
 
     private void CancelOffer(Entity<PairedEmoteOfferComponent> ent)
     {

@@ -7,6 +7,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Shared.Animations;
 using Robust.Shared.Prototypes;
 
@@ -14,7 +15,9 @@ namespace Content.Client._RedStar.Emoting;
 
 public sealed partial class EmoteAnimationSystem : EntitySystem
 {
+    [Dependency] private IEyeManager _eye = default!;
     [Dependency] private AnimationPlayerSystem _animationPlayer = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SpriteSystem _spriteSystem = default!;
 
     private const string AnimationKey = "emote-animation";
@@ -30,13 +33,27 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
     [SubscribeNetworkEvent]
     private void OnPairedAnimation(PairedEmoteAnimationEvent args)
     {
-        TryPlayAnimation(
-            GetEntity(args.Initiator),
-            args.InitiatorAnimation);
+        var hasInitiator = TryGetEntity(args.Initiator, out var initiator) && !Deleted(initiator);
+        var hasTarget = TryGetEntity(args.Target, out var target) && !Deleted(target);
+        var approach = Vector2.Zero;
 
-        TryPlayAnimation(
-            GetEntity(args.Target),
-            args.TargetAnimation);
+        if (hasInitiator && hasTarget && initiator is { } fromEntity && target is { } toEntity &&
+            TryComp(fromEntity, out TransformComponent? initiatorTransform) &&
+            TryComp(toEntity, out TransformComponent? targetTransform))
+        {
+            var from = _transform.GetMapCoordinates(fromEntity, initiatorTransform);
+            var to = _transform.GetMapCoordinates(toEntity, targetTransform);
+            var delta = to.Position - from.Position;
+            var distance = delta.Length();
+            if (from.MapId == to.MapId && float.IsFinite(distance) && distance > 0.001f)
+                approach = delta / distance * Math.Clamp(args.ApproachOffset, 0f, distance * 0.45f);
+        }
+
+        if (hasInitiator && initiator is { } initiatorUid)
+            TryPlayAnimation(initiatorUid, args.InitiatorAnimation, approach);
+
+        if (hasTarget && target is { } targetUid)
+            TryPlayAnimation(targetUid, args.TargetAnimation, -approach);
     }
 
     [SubscribeLocalEvent]
@@ -63,7 +80,8 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
 
     private void TryPlayAnimation(
         EntityUid uid,
-        ProtoId<EmoteAnimationPrototype> animation)
+        ProtoId<EmoteAnimationPrototype> animation,
+        Vector2 approach = default)
     {
         if (!HasComp<EmoteAnimationComponent>(uid))
             return;
@@ -77,10 +95,10 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
         if (!ProtoMan.TryIndex(animation, out var prototype))
             return;
 
-        PlayAnimation(uid, prototype);
+        PlayAnimation(uid, prototype, approach);
     }
 
-    private void PlayAnimation(EntityUid uid, EmoteAnimationPrototype prototype)
+    private void PlayAnimation(EntityUid uid, EmoteAnimationPrototype prototype, Vector2 approach)
     {
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
@@ -92,11 +110,19 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
 
         StopAnimation(uid);
 
+        // Sprite offsets are in screen space for noRot sprites, otherwise in entity-local space.
+        if (approach != Vector2.Zero)
+        {
+            approach = sprite.NoRotation
+                ? _eye.CurrentEye.Rotation.RotateVec(approach)
+                : (-_transform.GetWorldRotation(uid)).RotateVec(approach);
+        }
+
         var baseOffset = sprite.Offset;
         var baseRotation = sprite.Rotation;
 
         _savedStates[uid] = new SpriteVisualState(
-            prototype.Offset.Count > 0 ? baseOffset : null,
+            prototype.Offset.Count > 0 || approach != Vector2.Zero ? baseOffset : null,
             prototype.Rotation.Count > 0 ? baseRotation : null,
             prototype.Direction.Count > 0
                 ? new DirectionOverrideState(
@@ -109,8 +135,8 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
             Length = length
         };
 
-        if (prototype.Offset.Count > 0)
-            animation.AnimationTracks.Add(CreateOffsetTrack(prototype, baseOffset));
+        if (prototype.Offset.Count > 0 || approach != Vector2.Zero)
+            animation.AnimationTracks.Add(CreateOffsetTrack(prototype, baseOffset, approach, length));
 
         if (prototype.Rotation.Count > 0)
             animation.AnimationTracks.Add(CreateRotationTrack(prototype, baseRotation));
@@ -132,7 +158,9 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
 
     private static AnimationTrackComponentProperty CreateOffsetTrack(
         EmoteAnimationPrototype prototype,
-        Vector2 baseOffset)
+        Vector2 baseOffset,
+        Vector2 approach,
+        TimeSpan length)
     {
         var track = new AnimationTrackComponentProperty
         {
@@ -149,13 +177,28 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
 
             track.KeyFrames.Add(
                 new AnimationTrackProperty.KeyFrame(
-                    baseOffset + frame.Offset,
-                    (float) duration.TotalSeconds));
+                    baseOffset + frame.Offset + approach * ApproachAmount(frame.Time, length),
+                    (float)duration.TotalSeconds));
 
             previousTime = frame.Time;
         }
 
+        if (prototype.Offset.Count == 0)
+        {
+            track.KeyFrames.Add(new AnimationTrackProperty.KeyFrame(baseOffset, 0f));
+            track.KeyFrames.Add(new AnimationTrackProperty.KeyFrame(baseOffset + approach, (float)length.TotalSeconds * 0.2f));
+            track.KeyFrames.Add(new AnimationTrackProperty.KeyFrame(baseOffset + approach, (float)length.TotalSeconds * 0.55f));
+            track.KeyFrames.Add(new AnimationTrackProperty.KeyFrame(baseOffset, (float)length.TotalSeconds * 0.25f));
+        }
+
         return track;
+    }
+
+    // Paired gestures approach for 20% of their duration, hold until 75%, then return.
+    private static float ApproachAmount(TimeSpan time, TimeSpan length)
+    {
+        var progress = (float)(time / length);
+        return Math.Clamp(Math.Min(progress / 0.2f, (1f - progress) / 0.25f), 0f, 1f);
     }
 
     private static AnimationTrackComponentProperty CreateRotationTrack(
@@ -178,7 +221,7 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
             track.KeyFrames.Add(
                 new AnimationTrackProperty.KeyFrame(
                     baseRotation + frame.Rotation,
-                    (float) duration.TotalSeconds));
+                    (float)duration.TotalSeconds));
 
             previousTime = frame.Time;
         }
@@ -202,7 +245,7 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
             track.KeyFrames.Add(
                 new AnimationTrackProperty.KeyFrame(
                     frame.Direction,
-                    (float) (frame.Time - previousTime).TotalSeconds));
+                    (float)(frame.Time - previousTime).TotalSeconds));
 
             previousTime = frame.Time;
         }
@@ -266,7 +309,7 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
                 return;
 
             sprite.EnableDirectionOverride = true;
-            sprite.DirectionOverride = (Direction) value;
+            sprite.DirectionOverride = (Direction)value;
         }
     }
 }

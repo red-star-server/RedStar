@@ -1,4 +1,6 @@
-﻿paired-emote-high-five-name = Дать пять
+﻿paired-emote-category-gestures = Жесты
+
+paired-emote-high-five-name = Дать пять
 paired-emote-high-five-attempt-self = Вы поднимаете руку, предлагая {$target} дать пять.
 paired-emote-high-five-attempt-target = {$initiator} предлагает вам дать пять. Взаимодействуйте с ним, чтобы ответить.
 paired-emote-high-five-success = {$initiator} и {$target} дают друг другу пять!

@@ -1,4 +1,6 @@
-﻿paired-emote-high-five-name = High five
+﻿paired-emote-category-gestures = Gestures
+
+paired-emote-high-five-name = High five
 paired-emote-high-five-attempt-self = You raise your hand, offering {$target} a high five.
 paired-emote-high-five-attempt-target = {$initiator} offers you a high five. Interact with them to respond.
 paired-emote-high-five-success = {$initiator} and {$target} high five!

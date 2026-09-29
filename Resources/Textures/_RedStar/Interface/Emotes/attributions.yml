@@ -8,5 +8,5 @@
 
 - files: ["fistbump.png", "handshake.png", "highfive.png", "hug.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "emote_handshake.png made by CatAndHats (github) based on emote_hug.png"
+  copyright: "High five, fist bump and hug sprites originate from CMSS13. Handshake made by CatAndHats (github), based on the CMSS13 hug sprite; ported via RMC-14"
   source: "https://github.com/cmss13-devs/cmss13/blob/0525b5ada7da1afcd9b260e76d5fea01500d9c8d/icons/mob/do_afters.dmi"

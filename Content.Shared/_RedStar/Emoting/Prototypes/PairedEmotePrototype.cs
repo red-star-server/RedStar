@@ -23,6 +23,12 @@ public sealed partial class PairedEmotePrototype : IPrototype
     [DataField]
     public SoundSpecifier? Sound;
 
+    /// <summary>
+    /// Maximum visual displacement toward the partner, in world units. Does not move the entity.
+    /// </summary>
+    [DataField]
+    public float ApproachOffset;
+
     [DataField(required: true)]
     public ProtoId<EmoteAnimationPrototype> InitiatorAnimation;
 

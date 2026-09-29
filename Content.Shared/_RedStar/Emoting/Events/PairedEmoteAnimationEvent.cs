@@ -12,8 +12,11 @@ public sealed class PairedEmoteAnimationEvent(
     NetEntity initiator,
     NetEntity target,
     ProtoId<EmoteAnimationPrototype> initiatorAnimation,
-    ProtoId<EmoteAnimationPrototype> targetAnimation) : EntityEventArgs
+    ProtoId<EmoteAnimationPrototype> targetAnimation,
+    float approachOffset) : EntityEventArgs
 {
+    public readonly float ApproachOffset = approachOffset;
+
     public readonly NetEntity Initiator = initiator;
     public readonly NetEntity Target = target;
 

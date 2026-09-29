@@ -4,17 +4,21 @@
   offset:
   - time: 0
     offset: 0,0
-  - time: 0.12
-    offset: 0,0.08
-  - time: 0.25
+  - time: 0.06
+    offset: 0,0.06
+  - time: 0.225
+    offset: 0,0.06
+  - time: 0.3
     offset: 0,0
   rotationInterpolation: Linear
   rotation:
   - time: 0
     rotation: 0
-  - time: 0.12
+  - time: 0.06
     rotation: 5
-  - time: 0.25
+  - time: 0.225
+    rotation: 2
+  - time: 0.3
     rotation: 0
 
 - type: emoteAnimation
@@ -23,17 +27,21 @@
   offset:
   - time: 0
     offset: 0,0
-  - time: 0.12
-    offset: 0,0.08
-  - time: 0.25
+  - time: 0.06
+    offset: 0,0.06
+  - time: 0.225
+    offset: 0,0.06
+  - time: 0.3
     offset: 0,0
   rotationInterpolation: Linear
   rotation:
   - time: 0
     rotation: 0
-  - time: 0.12
+  - time: 0.06
     rotation: -5
-  - time: 0.25
+  - time: 0.225
+    rotation: -2
+  - time: 0.3
     rotation: 0
 
 - type: emoteAnimation
@@ -42,10 +50,22 @@
   offset:
   - time: 0
     offset: 0,0
-  - time: 0.15
-    offset: 0,0.04
+  - time: 0.08
+    offset: 0,0.015
   - time: 0.3
+    offset: 0,0.015
+  - time: 0.4
     offset: 0,0
+  rotationInterpolation: Linear
+  rotation:
+  - time: 0
+    rotation: 0
+  - time: 0.08
+    rotation: 1
+  - time: 0.3
+    rotation: -1
+  - time: 0.4
+    rotation: 0
 
 - type: emoteAnimation
   id: PairedFistBumpTarget
@@ -53,43 +73,75 @@
   offset:
   - time: 0
     offset: 0,0
-  - time: 0.15
-    offset: 0,0.04
+  - time: 0.08
+    offset: 0,0.015
   - time: 0.3
+    offset: 0,0.015
+  - time: 0.4
     offset: 0,0
-
-- type: emoteAnimation
-  id: PairedHandshakeInitiator
   rotationInterpolation: Linear
   rotation:
   - time: 0
     rotation: 0
-  - time: 0.12
-    rotation: 3
-  - time: 0.24
-    rotation: -3
-  - time: 0.36
-    rotation: 3
-  - time: 0.48
-    rotation: -3
+  - time: 0.08
+    rotation: -1
+  - time: 0.3
+    rotation: 1
+  - time: 0.4
+    rotation: 0
+
+- type: emoteAnimation
+  id: PairedHandshakeInitiator
+  offsetInterpolation: Linear
+  offset:
+  - time: 0
+    offset: 0,0
+  - time: 0.16
+    offset: 0,0.01
   - time: 0.6
+    offset: 0,0.01
+  - time: 0.8
+    offset: 0,0
+  rotationInterpolation: Linear
+  rotation:
+  - time: 0
+    rotation: 0
+  - time: 0.16
+    rotation: 2
+  - time: 0.3
+    rotation: -2
+  - time: 0.45
+    rotation: 2
+  - time: 0.6
+    rotation: -2
+  - time: 0.8
     rotation: 0
 
 - type: emoteAnimation
   id: PairedHandshakeTarget
+  offsetInterpolation: Linear
+  offset:
+  - time: 0
+    offset: 0,0
+  - time: 0.16
+    offset: 0,0.01
+  - time: 0.6
+    offset: 0,0.01
+  - time: 0.8
+    offset: 0,0
   rotationInterpolation: Linear
   rotation:
   - time: 0
     rotation: 0
-  - time: 0.12
-    rotation: -3
-  - time: 0.24
-    rotation: 3
-  - time: 0.36
-    rotation: -3
-  - time: 0.48
-    rotation: 3
+  - time: 0.16
+    rotation: -2
+  - time: 0.3
+    rotation: 2
+  - time: 0.45
+    rotation: -2
   - time: 0.6
+    rotation: 2
+  - time: 0.8
     rotation: 0
 
 - type: emoteAnimation
@@ -98,21 +150,21 @@
   offset:
   - time: 0
     offset: 0,0
-  - time: 0.2
-    offset: 0,0.04
-  - time: 0.75
-    offset: 0,0.04
-  - time: 1
+  - time: 0.22
+    offset: 0,0.015
+  - time: 0.825
+    offset: 0,0.015
+  - time: 1.1
     offset: 0,0
   rotationInterpolation: Linear
   rotation:
   - time: 0
     rotation: 0
-  - time: 0.2
-    rotation: 4
-  - time: 0.75
-    rotation: 4
-  - time: 1
+  - time: 0.22
+    rotation: 5
+  - time: 0.825
+    rotation: 5
+  - time: 1.1
     rotation: 0
 
 - type: emoteAnimation
@@ -121,19 +173,19 @@
   offset:
   - time: 0
     offset: 0,0
-  - time: 0.2
-    offset: 0,0.04
-  - time: 0.75
-    offset: 0,0.04
-  - time: 1
+  - time: 0.22
+    offset: 0,0.015
+  - time: 0.825
+    offset: 0,0.015
+  - time: 1.1
     offset: 0,0
   rotationInterpolation: Linear
   rotation:
   - time: 0
     rotation: 0
-  - time: 0.2
-    rotation: -4
-  - time: 0.75
-    rotation: -4
-  - time: 1
+  - time: 0.22
+    rotation: -5
+  - time: 0.825
+    rotation: -5
+  - time: 1.1
     rotation: 0
