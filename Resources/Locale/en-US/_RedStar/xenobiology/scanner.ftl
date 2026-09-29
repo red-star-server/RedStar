@@ -13,7 +13,6 @@ slime-scanner-crowding-crowded = Crowded
 slime-scanner-crowding-severe = Severe
 slime-scanner-mutation-chance = Mutation chance: {$value}
 slime-scanner-potential-mutations = Potential mutations: {$value}
-slime-scanner-extract-yield-enhanced = Extract yield enhanced
 
 slime-scan-card-specimen = Specimen analysis
 slime-scan-stage-baby = Baby

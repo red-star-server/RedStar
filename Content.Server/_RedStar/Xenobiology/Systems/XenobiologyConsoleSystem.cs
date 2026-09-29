@@ -216,7 +216,6 @@ public sealed partial class XenobiologyConsoleSystem : EntitySystem
                oldScan.Growth.Equals(newScan.Growth) &&
                Nullable.Equals(oldScan.Hunger, newScan.Hunger) &&
                oldScan.MutationChance.Equals(newScan.MutationChance) &&
-               oldScan.ExtractYieldEnhanced == newScan.ExtractYieldEnhanced &&
                oldScan.Temperament == newScan.Temperament &&
                oldScan.Crowding == newScan.Crowding &&
                oldScan.PotentialMutations.SequenceEqual(newScan.PotentialMutations);

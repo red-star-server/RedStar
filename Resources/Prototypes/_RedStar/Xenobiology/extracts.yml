@@ -141,7 +141,6 @@
   id: CeruleanSlimeExtract
   name: cerulean slime extract
   components:
-  - type: CeruleanExtract
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/cerulean.rsi
     state: extract

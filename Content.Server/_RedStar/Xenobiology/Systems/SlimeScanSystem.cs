@@ -44,7 +44,7 @@ public sealed partial class SlimeScanSystem : EntitySystem
         {
             return new SlimeScanData(MetaData(uid).EntityName, growth, hunger,
                 lifecycle.MutationChance.Float(), mutations,
-                HasComp<SlimeExtractYieldEnhancedComponent>(uid), temperament, crowding,
+                temperament, crowding,
                 MetaData(uid).EntityPrototype?.ID, lifecycle.Stage);
         }
 
@@ -53,7 +53,7 @@ public sealed partial class SlimeScanSystem : EntitySystem
 
         return new SlimeScanData(MetaData(uid).EntityName, growth, hunger,
             lifecycle.MutationChance.Float(), mutations,
-            HasComp<SlimeExtractYieldEnhancedComponent>(uid), temperament, crowding,
+            temperament, crowding,
             MetaData(uid).EntityPrototype?.ID, lifecycle.Stage);
     }
 }

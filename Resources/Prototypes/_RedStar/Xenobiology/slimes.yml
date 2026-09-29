@@ -28,7 +28,7 @@
   - type: Slime
     damageOnEat:
       types:
-        Cellular: 5
+        Piercing: 5
     nutritionOnHit: 10
   - type: HTN
     rootTask:

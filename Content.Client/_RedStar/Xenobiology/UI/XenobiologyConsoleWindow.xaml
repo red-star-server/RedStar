@@ -2,24 +2,21 @@
                             xmlns:ui="clr-namespace:Content.Client._RedStar.Xenobiology.UI"
                             xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                             Title="{Loc 'xenobiology-console-title'}"
-                            MinSize="660 500" SetSize="760 620">
+                            MinSize="760 720" SetSize="840 820">
     <BoxContainer Margin="12" SeparationOverride="14">
         <BoxContainer Orientation="Vertical" SetWidth="230" SeparationOverride="8">
-            <BoxContainer>
-                <Label Text="{Loc 'xenobiology-console-scanners'}" StyleClasses="LabelHeading" HorizontalExpand="True" />
-                <Label Name="ScannerCount" StyleClasses="LabelSubText" />
-            </BoxContainer>
+            <controls:StripeBack>
+                <Label Text="{Loc 'xenobiology-console-scanners'}" StyleClasses="LabelHeading" Align="Center" />
+            </controls:StripeBack>
             <PanelContainer StyleClasses="PanelDeep" MinHeight="100" MaxHeight="160">
                 <ScrollContainer HScrollEnabled="False" Margin="6">
                     <BoxContainer Name="ScannerEntries" Orientation="Vertical" SeparationOverride="4" />
                 </ScrollContainer>
             </PanelContainer>
             <RichTextLabel Name="LinkHint" Text="{Loc 'xenobiology-console-link-hint'}" StyleClasses="LabelSubText" Margin="4 0 4 6" />
-            <controls:Separator StyleClasses="LowDivider" Margin="0 4" />
-            <BoxContainer>
-                <Label Text="{Loc 'xenobiology-console-slimes'}" StyleClasses="LabelHeading" HorizontalExpand="True" />
-                <Label Name="SlimeCount" StyleClasses="LabelSubText" />
-            </BoxContainer>
+            <controls:StripeBack>
+                <Label Text="{Loc 'xenobiology-console-slimes'}" StyleClasses="LabelHeading" Align="Center" />
+            </controls:StripeBack>
             <PanelContainer StyleClasses="PanelDeep" VerticalExpand="True">
                 <ScrollContainer HScrollEnabled="False" Margin="6" VerticalExpand="True">
                     <BoxContainer Name="SlimeEntries" Orientation="Vertical" SeparationOverride="4" />
@@ -27,11 +24,11 @@
             </PanelContainer>
         </BoxContainer>
         <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" SeparationOverride="8">
-            <Label Text="{Loc 'xenobiology-console-scan'}" StyleClasses="LabelHeading" />
+            <controls:StripeBack>
+                <Label Text="{Loc 'xenobiology-console-scan'}" StyleClasses="LabelHeading" Align="Center" />
+            </controls:StripeBack>
             <PanelContainer StyleClasses="PanelDeep" VerticalExpand="True" HorizontalExpand="True">
-                <ScrollContainer HScrollEnabled="False" Margin="14" VerticalExpand="True" HorizontalExpand="True">
-                    <ui:SlimeScanDetailsControl Name="ScanDetails" HorizontalExpand="True" />
-                </ScrollContainer>
+                <ui:SlimeScanDetailsControl Name="ScanDetails" Margin="14" HorizontalExpand="True" />
             </PanelContainer>
         </BoxContainer>
     </BoxContainer>

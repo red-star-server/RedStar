@@ -27,7 +27,6 @@ public sealed partial class SlimeProcessorSystem : EntitySystem
     [Dependency] private EntityQuery<SlimeProcessorComponent> _processorQuery;
     [Dependency] private EntityQuery<SlimeComponent> _slimeQuery;
     [Dependency] private EntityQuery<SlimeLifecycleComponent> _lifecycleQuery;
-    [Dependency] private EntityQuery<SlimeExtractYieldEnhancedComponent> _yieldEnhancedQuery;
 
     [SubscribeLocalEvent]
     private void OnInit(Entity<SlimeProcessorComponent> ent, ref ComponentInit args)
@@ -181,8 +180,6 @@ public sealed partial class SlimeProcessorSystem : EntitySystem
             }
 
             Spawn(slime.Extract, ent.Owner.ToCoordinates());
-            if (_yieldEnhancedQuery.HasComp(uid))
-                Spawn(slime.Extract, ent.Owner.ToCoordinates());
             QueueDel(uid);
         }
 

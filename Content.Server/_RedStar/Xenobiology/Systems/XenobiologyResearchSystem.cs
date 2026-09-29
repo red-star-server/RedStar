@@ -54,6 +54,37 @@ public sealed partial class XenobiologyResearchSystem : EntitySystem
         return targets.ToArray();
     }
 
+    public XenobiologyResearchEntry[] GetCompletedTargets(Entity<XenobiologyResearchDatabaseComponent?> server)
+    {
+        if (!Resolve(server, ref server.Comp, false) || server.Comp is not { } database)
+            return [];
+
+        var targets = new List<XenobiologyResearchEntry>();
+        foreach (var id in database.CompletedTargets)
+        {
+            if (ProtoMan.TryIndex(id, out var target))
+                targets.Add(new XenobiologyResearchEntry(target.Sample, target.Reward));
+        }
+
+        targets.Sort((left, right) => string.CompareOrdinal(left.Sample.Id, right.Sample.Id));
+        return targets.ToArray();
+    }
+
+    public int GetRemainingSampleCount(Entity<XenobiologyResearchDatabaseComponent?> server)
+    {
+        if (!Resolve(server, ref server.Comp, false) || server.Comp is not { } database)
+            return 0;
+
+        var count = 0;
+        foreach (var target in ProtoMan.EnumeratePrototypes<XenobiologyResearchPrototype>())
+        {
+            if (!database.CompletedTargets.Contains(target.ID) && ValidReferences(target))
+                count++;
+        }
+
+        return count;
+    }
+
     public bool TryCompleteSample(Entity<XenobiologyResearchDatabaseComponent?> server, EntProtoId<SlimeExtractComponent> sample, out int reward)
     {
         reward = 0;

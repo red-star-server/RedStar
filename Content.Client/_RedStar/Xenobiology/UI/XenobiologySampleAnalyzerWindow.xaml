@@ -1,53 +1,62 @@
 <ui:XenobiologySampleAnalyzerWindow xmlns="https://spacestation14.io"
                                     xmlns:ui="clr-namespace:Content.Client._RedStar.Xenobiology.UI"
                                     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                                    Title="{Loc 'xenobiology-analyzer-title'}" MinSize="620 600" SetSize="680 660">
+                                    Title="{Loc 'xenobiology-analyzer-title'}" MinSize="940 600" SetSize="1000 660">
     <BoxContainer Orientation="Vertical" Margin="14" SeparationOverride="12">
         <BoxContainer SeparationOverride="12">
             <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="4">
-                <Label Text="{Loc 'xenobiology-analyzer-server-heading'}" StyleClasses="LabelSubText" />
-                <ui:XenobiologyNameLabel Name="ServerName" StyleClasses="LabelHeading" />
+                <Label Name="RemainingSamples" StyleClasses="LabelHeading" />
+                <ui:XenobiologyNameLabel Name="ServerName" StyleClasses="LabelSubText" />
             </BoxContainer>
-            <Button Name="ServerButton" Text="{Loc 'xenobiology-analyzer-change-server'}" VerticalAlignment="Center" MinHeight="32" />
+            <Button Name="ServerButton" Text="{Loc 'research-console-menu-server-selection-button'}" MinHeight="40" VerticalAlignment="Top" />
         </BoxContainer>
-        <controls:Separator StyleClasses="LowDivider" />
-        <BoxContainer>
-            <Label Text="{Loc 'xenobiology-analyzer-targets-heading'}" StyleClasses="LabelHeading" HorizontalExpand="True" />
-            <Label Name="TargetCount" StyleClasses="LabelSubText" />
-        </BoxContainer>
-        <PanelContainer StyleClasses="PanelDeep" VerticalExpand="True" MinHeight="100">
-            <ScrollContainer HScrollEnabled="False" VerticalExpand="True" Margin="10">
-                <BoxContainer Orientation="Vertical" SeparationOverride="8" HorizontalExpand="True">
-                    <RichTextLabel Name="TargetsHint" StyleClasses="LabelSubText" Margin="4 8" />
-                    <WrapContainer Name="TargetCards" SeparationOverride="10" CrossSeparationOverride="10" HorizontalExpand="True" />
-                </BoxContainer>
-            </ScrollContainer>
-        </PanelContainer>
-        <controls:Separator StyleClasses="LowDivider" />
-        <Label Text="{Loc 'xenobiology-analyzer-sample-heading'}" StyleClasses="LabelHeading" />
-        <PanelContainer StyleClasses="PanelDeep">
-            <BoxContainer Orientation="Vertical" Margin="12" SeparationOverride="8">
-                <BoxContainer SeparationOverride="12">
-                    <PanelContainer Name="SampleFrame" SetSize="64 64">
-                        <Control>
-                            <TextureRect Name="SampleIcon" Margin="8" Stretch="KeepAspectCentered" Visible="False" />
-                            <Label Name="SampleEmpty" Text="—" HorizontalAlignment="Center" VerticalAlignment="Center" StyleClasses="LabelHeadingBigger" />
-                        </Control>
-                    </PanelContainer>
-                    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalAlignment="Center" SeparationOverride="4">
-                        <ui:XenobiologyNameLabel Name="SampleName" StyleClasses="LabelHeading" />
-                        <RichTextLabel Name="SampleStatus" StyleClasses="LabelSubText" />
+        <BoxContainer HorizontalExpand="True" VerticalExpand="True" SeparationOverride="14">
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" SetWidth="620" SeparationOverride="8">
+                <controls:StripeBack>
+                    <Label Text="{Loc 'xenobiology-analyzer-targets-heading'}" StyleClasses="LabelHeading" Align="Center" />
+                </controls:StripeBack>
+                <PanelContainer StyleClasses="PanelDeep">
+                    <ScrollContainer HScrollEnabled="False" MaxHeight="420" Margin="10">
+                        <BoxContainer Orientation="Vertical" SeparationOverride="8" HorizontalExpand="True">
+                            <RichTextLabel Name="TargetsHint" StyleClasses="LabelSubText" Margin="4 8" />
+                            <WrapContainer Name="TargetCards" SeparationOverride="10" CrossSeparationOverride="10" HorizontalExpand="True" />
+                        </BoxContainer>
+                    </ScrollContainer>
+                </PanelContainer>
+                <controls:StripeBack>
+                    <Label Text="{Loc 'xenobiology-analyzer-sample-heading'}" StyleClasses="LabelHeading" Align="Center" />
+                </controls:StripeBack>
+                <PanelContainer StyleClasses="PanelDeep">
+                    <BoxContainer Orientation="Vertical" Margin="12" SeparationOverride="8">
+                        <BoxContainer SeparationOverride="12">
+                            <PanelContainer Name="SampleFrame" SetSize="64 64">
+                                <Control>
+                                    <TextureRect Name="SampleIcon" Margin="8" Stretch="KeepAspectCentered" Visible="False" />
+                                    <Label Name="SampleEmpty" Text="—" HorizontalAlignment="Center" VerticalAlignment="Center" StyleClasses="LabelHeadingBigger" />
+                                </Control>
+                            </PanelContainer>
+                            <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalAlignment="Center" SeparationOverride="4">
+                                <ui:XenobiologyNameLabel Name="SampleName" StyleClasses="LabelHeading" />
+                                <RichTextLabel Name="SampleStatus" StyleClasses="LabelSubText" />
+                            </BoxContainer>
+                        </BoxContainer>
+                        <Button Name="AnalyzeButton" Text="{Loc 'xenobiology-analyzer-analyze-verb'}" MinHeight="36" Disabled="True" HorizontalExpand="True" />
                     </BoxContainer>
-                </BoxContainer>
-                <BoxContainer Name="AnalysisProgress" Orientation="Vertical" SeparationOverride="4" Visible="False">
-                    <BoxContainer>
-                        <Label Name="ProgressLabel" Text="{Loc 'xenobiology-analyzer-analyzing'}" HorizontalExpand="True" />
-                        <Label Name="ProgressValue" />
-                    </BoxContainer>
-                    <ProgressBar Name="Progress" MinValue="0" MaxValue="1" MinHeight="14" HorizontalExpand="True" />
-                </BoxContainer>
-                <Button Name="AnalyzeButton" Text="{Loc 'xenobiology-analyzer-analyze-verb'}" MinHeight="36" Disabled="True" HorizontalExpand="True" />
+                </PanelContainer>
             </BoxContainer>
-        </PanelContainer>
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" MinWidth="250" SeparationOverride="8">
+                <controls:StripeBack>
+                    <Label Text="{Loc 'xenobiology-analyzer-completed-heading'}" StyleClasses="LabelHeading" Align="Center" />
+                </controls:StripeBack>
+                <PanelContainer StyleClasses="PanelDeep" VerticalExpand="True">
+                    <ScrollContainer HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True" Margin="6">
+                        <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="4">
+                            <RichTextLabel Name="CompletedHint" Text="{Loc 'xenobiology-analyzer-no-completed'}" StyleClasses="LabelSubText" Margin="4 8" />
+                            <BoxContainer Name="CompletedEntries" Orientation="Vertical" HorizontalExpand="True" SeparationOverride="4" />
+                        </BoxContainer>
+                    </ScrollContainer>
+                </PanelContainer>
+            </BoxContainer>
+        </BoxContainer>
     </BoxContainer>
 </ui:XenobiologySampleAnalyzerWindow>

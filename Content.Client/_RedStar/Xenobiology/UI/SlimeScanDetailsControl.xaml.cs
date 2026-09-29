@@ -28,8 +28,6 @@ public sealed partial class SlimeScanDetailsControl : BoxContainer
     {
         IoCManager.InjectDependencies(this);
         RobustXamlLoader.Load(this);
-        EnhancedText.SetMessage(Loc.GetString("slime-scanner-extract-yield-enhanced"));
-        EnhancedText.Modulate = Positive;
         TemperamentBadge.PanelOverride = _temperamentBadge;
         CrowdingBadge.PanelOverride = _crowdingBadge;
         GrowthBar.ForegroundStyleBoxOverride = new StyleBoxFlat { BackgroundColor = Positive.WithAlpha(0.7f) };
@@ -76,7 +74,6 @@ public sealed partial class SlimeScanDetailsControl : BoxContainer
         };
         SetBadge(_crowdingBadge, CrowdingValue, crowdingColor);
         MutationChanceValue.Text = data.MutationChance.ToString("P0");
-        EnhancedBanner.Visible = data.ExtractYieldEnhanced;
 
         // Keep controls stable during periodic scans; rebuild only when the mutation list changes.
         if (_displayedMutations != null && _displayedMutations.SequenceEqual(data.PotentialMutations))

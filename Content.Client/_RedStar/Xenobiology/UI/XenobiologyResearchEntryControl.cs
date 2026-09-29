@@ -57,14 +57,12 @@ public sealed class XenobiologyResearchEntryControl : PanelContainer
     public void UpdateState(XenobiologySampleAnalyzerUiState state)
     {
         var matched = _target.Sample == state.SamplePrototype &&
-                      state.Status is XenobiologySampleStatus.Ready or XenobiologySampleStatus.Analyzing;
+                      state.Status == XenobiologySampleStatus.Ready;
         _panel.BorderColor = matched ? Accent : Color.FromHex("#414854");
         // Reserve the same border width so highlighting never shifts the contents.
         _panel.BorderThickness = new Thickness(2);
         _status.FullText = Loc.GetString(matched
-            ? state.Status == XenobiologySampleStatus.Analyzing
-                ? "xenobiology-analyzer-analyzing"
-                : "xenobiology-analyzer-card-matched"
+            ? "xenobiology-analyzer-card-matched"
             : "xenobiology-analyzer-card-available");
         _status.FontColorOverride = matched ? Accent : Color.FromHex("#AAB2BC");
     }

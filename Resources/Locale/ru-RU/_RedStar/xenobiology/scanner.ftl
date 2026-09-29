@@ -13,7 +13,6 @@ slime-scanner-crowding-crowded = Высокая
 slime-scanner-crowding-severe = Критическая
 slime-scanner-mutation-chance = Шанс мутации: {$value}
 slime-scanner-potential-mutations = Возможные мутации: {$value}
-slime-scanner-extract-yield-enhanced = Количество получаемых экстрактов увеличено
 
 slime-scan-card-specimen = Анализ образца
 slime-scan-stage-baby = Малыш

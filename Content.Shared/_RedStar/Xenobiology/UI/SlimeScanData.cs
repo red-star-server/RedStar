@@ -11,7 +11,6 @@ public readonly record struct SlimeScanData(
     float? Hunger,
     float MutationChance,
     EntProtoId[] PotentialMutations,
-    bool ExtractYieldEnhanced,
     SlimeTemperament Temperament,
     SlimeCrowding Crowding,
     EntProtoId? Prototype,

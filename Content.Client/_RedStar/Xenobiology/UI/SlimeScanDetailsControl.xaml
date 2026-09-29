@@ -17,8 +17,9 @@
                 <Label Name="StageValue" StyleClasses="LabelSubText" />
             </BoxContainer>
         </BoxContainer>
-        <controls:Separator StyleClasses="LowDivider" />
-        <Label Text="{Loc 'slime-scan-card-development'}" StyleClasses="LabelHeading" />
+        <controls:StripeBack>
+            <Label Text="{Loc 'slime-scan-card-development'}" StyleClasses="LabelHeading" Align="Center" />
+        </controls:StripeBack>
         <BoxContainer>
             <Label Text="{Loc 'slime-scan-card-growth'}" HorizontalExpand="True" />
             <Label Name="GrowthValue" StyleClasses="LabelHeading" />
@@ -28,8 +29,9 @@
             <Label Text="{Loc 'slime-scan-card-hunger'}" HorizontalExpand="True" />
             <Label Name="HungerValue" />
         </BoxContainer>
-        <controls:Separator StyleClasses="LowDivider" Margin="0 2" />
-        <Label Text="{Loc 'slime-scan-card-condition'}" StyleClasses="LabelHeading" />
+        <controls:StripeBack>
+            <Label Text="{Loc 'slime-scan-card-condition'}" StyleClasses="LabelHeading" Align="Center" />
+        </controls:StripeBack>
         <BoxContainer SeparationOverride="12">
             <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="4">
                 <Label Text="{Loc 'slime-scan-card-temperament'}" StyleClasses="LabelSubText" />
@@ -44,16 +46,14 @@
                 </PanelContainer>
             </BoxContainer>
         </BoxContainer>
-        <controls:Separator StyleClasses="LowDivider" Margin="0 2" />
-        <Label Text="{Loc 'slime-scan-card-genetics'}" StyleClasses="LabelHeading" />
+        <controls:StripeBack>
+            <Label Text="{Loc 'slime-scan-card-genetics'}" StyleClasses="LabelHeading" Align="Center" />
+        </controls:StripeBack>
         <BoxContainer>
             <Label Text="{Loc 'slime-scan-card-mutation-chance'}" HorizontalExpand="True" />
             <Label Name="MutationChanceValue" StyleClasses="LabelHeading" />
         </BoxContainer>
         <Label Text="{Loc 'slime-scan-card-potential-mutations'}" StyleClasses="LabelSubText" />
         <BoxContainer Name="MutationList" Orientation="Vertical" SeparationOverride="4" />
-        <PanelContainer Name="EnhancedBanner" StyleClasses="PanelDeep" Visible="False" Margin="0 4 0 0">
-            <RichTextLabel Name="EnhancedText" Margin="10 8" />
-        </PanelContainer>
     </BoxContainer>
 </ui:SlimeScanDetailsControl>

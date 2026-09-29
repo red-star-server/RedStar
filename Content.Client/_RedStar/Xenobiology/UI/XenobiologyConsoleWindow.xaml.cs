@@ -31,8 +31,6 @@ public sealed partial class XenobiologyConsoleWindow : FancyWindow
     public void UpdateState(XenobiologyConsoleUiState state)
     {
         LinkHint.Visible = state.LinkedScanners.Length == 0;
-        ScannerCount.Text = state.LinkedScanners.Length.ToString();
-        SlimeCount.Text = state.SelectedScanner != null ? state.DetectedSlimes.Length.ToString() : string.Empty;
         // Preserve scroll positions while only the analysis data changes.
         if (_state == null || _state.SelectedScanner != state.SelectedScanner ||
             !_state.LinkedScanners.SequenceEqual(state.LinkedScanners))
