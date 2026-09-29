@@ -1,6 +1,5 @@
 ﻿- type: emoteAnimation
   id: Flip
-  length: 0.5
   rotationInterpolation: Linear
   rotation:
   - time: 0
@@ -12,7 +11,6 @@
 
 - type: emoteAnimation
   id: Jump
-  length: 0.5
   offsetInterpolation: Cubic
   offset:
   - time: 0
@@ -28,7 +26,6 @@
 
 - type: emoteAnimation
   id: Spin
-  length: 0.6
   rotationInterpolation: Linear
   rotation:
   - time: 0
@@ -40,7 +37,6 @@
 
 - type: emoteAnimation
   id: Dance
-  length: 0.9
   rotationInterpolation: Linear
   rotation:
   - time: 0
@@ -66,7 +62,6 @@
 
 - type: emoteAnimation
   id: Tremble
-  length: 0.4
   offsetInterpolation: Linear
   offset:
   - time: 0
@@ -88,7 +83,6 @@
 
 - type: emoteAnimation
   id: DanceFromTheFloor
-  length: 3
   rotationInterpolation: Linear
   rotation:
   - time: 0
@@ -146,95 +140,12 @@
 
 - type: emoteAnimation
   id: SpinningOnHead
-  length: 5.5
   rotationInterpolation: Linear
   rotation:
   - time: 0
     rotation: 180
   - time: 0.4
     rotation: 180
-  - time: 0.5
-    rotation: 270
-  - time: 0.6
-    rotation: 360
-  - time: 0.7
-    rotation: 450
-  - time: 0.8
-    rotation: 540
-  - time: 0.9
-    rotation: 630
-  - time: 1
-    rotation: 720
-  - time: 1.1
-    rotation: 810
-  - time: 1.2
-    rotation: 900
-  - time: 1.3
-    rotation: 990
-  - time: 1.4
-    rotation: 1080
-  - time: 1.5
-    rotation: 1170
-  - time: 1.6
-    rotation: 1260
-  - time: 1.7
-    rotation: 1350
-  - time: 1.8
-    rotation: 1440
-  - time: 1.9
-    rotation: 1530
-  - time: 2
-    rotation: 1620
-  - time: 2.1
-    rotation: 1710
-  - time: 2.2
-    rotation: 1800
-  - time: 2.3
-    rotation: 1890
-  - time: 2.4
-    rotation: 1980
-  - time: 2.5
-    rotation: 2070
-  - time: 2.6
-    rotation: 2160
-  - time: 2.7
-    rotation: 2250
-  - time: 2.8
-    rotation: 2340
-  - time: 2.9
-    rotation: 2430
-  - time: 3
-    rotation: 2520
-  - time: 3.1
-    rotation: 2610
-  - time: 3.2
-    rotation: 2700
-  - time: 3.3
-    rotation: 2790
-  - time: 3.4
-    rotation: 2880
-  - time: 3.5
-    rotation: 2970
-  - time: 3.6
-    rotation: 3060
-  - time: 3.7
-    rotation: 3150
-  - time: 3.8
-    rotation: 3240
-  - time: 3.9
-    rotation: 3330
-  - time: 4
-    rotation: 3420
-  - time: 4.1
-    rotation: 3510
-  - time: 4.2
-    rotation: 3600
-  - time: 4.3
-    rotation: 3690
-  - time: 4.4
-    rotation: 3780
-  - time: 4.5
-    rotation: 3870
   - time: 4.6
     rotation: 3960
   - time: 4.8

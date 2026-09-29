@@ -2,6 +2,7 @@
   id: Flip
   name: chat-emote-name-flip
   category: Animations
+  animation: Flip
   icon: _RedStar/Interface/Emotes/flip.png
   whitelist:
     components:
@@ -21,6 +22,7 @@
   id: Jump
   name: chat-emote-name-jump
   category: Animations
+  animation: Jump
   icon: _RedStar/Interface/Emotes/jump.png
   whitelist:
     components:
@@ -39,6 +41,7 @@
   id: Spin
   name: chat-emote-name-spin
   category: Animations
+  animation: Spin
   icon: _RedStar/Interface/Emotes/spin.png
   whitelist:
     components:
@@ -57,7 +60,8 @@
   id: Dance
   name: chat-emote-name-dance
   category: Animations
-  icon: _RedStar/Interface/Emotes/dance.png
+  animation: Dance
+  icon: _RedStar/Interface/Emotes/spin.png
   whitelist:
     components:
     - EmoteAnimation
@@ -76,6 +80,7 @@
   id: Tremble
   name: chat-emote-name-tremble
   category: Animations
+  animation: Tremble
   icon: _RedStar/Interface/Emotes/shiver.png
   whitelist:
     components:
@@ -94,6 +99,7 @@
   id: Shiver
   name: chat-emote-name-shiver
   category: Animations
+  animation: Tremble
   icon: _RedStar/Interface/Emotes/shiver.png
   whitelist:
     components:
@@ -113,6 +119,7 @@
   id: Shudder
   name: chat-emote-name-shudder
   category: Animations
+  animation: Tremble
   icon: _RedStar/Interface/Emotes/shiver.png
   whitelist:
     components:
@@ -126,3 +133,37 @@
   - shudder
   - shudders
   - shuddering
+
+- type: emote
+  id: DanceFromTheFloor
+  name: chat-emote-name-dance-from-the-floor
+  category: Animations
+  animation: DanceFromTheFloor
+  icon: _RedStar/Interface/Emotes/flip.png
+  whitelist:
+    components:
+    - EmoteAnimation
+  chatMessages:
+  - chat-emote-msg-dance-from-the-floor
+  chatTriggers:
+  - танцует на полу
+  - танцевать на полу
+  - dance on the floor
+  - dances on the floor
+
+- type: emote
+  id: SpinningOnHead
+  name: chat-emote-name-spinning-on-head
+  category: Animations
+  animation: SpinningOnHead
+  icon: _RedStar/Interface/Emotes/spin.png
+  whitelist:
+    components:
+    - EmoteAnimation
+  chatMessages:
+  - chat-emote-msg-spinning-on-head
+  chatTriggers:
+  - крутится на голове
+  - вращается на голове
+  - spin on head
+  - spins on head

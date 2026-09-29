@@ -1,5 +1,7 @@
-﻿using System.Numerics;
+﻿using System.Linq;
+using System.Numerics;
 using Content.Shared._RedStar.Emoting.Components;
+using Content.Shared._RedStar.Emoting.Events;
 using Content.Shared._RedStar.Emoting.Prototypes;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -17,27 +19,26 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
 
     private const string AnimationKey = "emote-animation";
 
-    private readonly Dictionary<EntityUid, SpriteVisualState> _savedStates = new();
+    private readonly Dictionary<EntityUid, SpriteVisualState> _savedStates = [];
 
-    [SubscribeLocalEvent]
-    private void OnHandleState(Entity<EmoteAnimationComponent> ent, ref AfterAutoHandleStateEvent args)
+    [SubscribeNetworkEvent]
+    private void OnAnimation(EmoteAnimationEvent args)
     {
-        if (ent.Comp.AnimationSequence == ent.Comp.LastClientAnimationSequence)
+        var uid = GetEntity(args.Entity);
+
+        if (!HasComp<EmoteAnimationComponent>(uid))
             return;
 
-        ent.Comp.LastClientAnimationSequence = ent.Comp.AnimationSequence;
-
-        if (ent.Comp.Animation is not { } animationId)
-            return;
-
-        if (TryComp<MobStateComponent>(ent, out var mobState) &&
+        if (TryComp<MobStateComponent>(uid, out var mobState) &&
             mobState.CurrentState != MobState.Alive)
+        {
+            return;
+        }
+
+        if (!_prototypeManager.TryIndex(args.Animation, out var prototype))
             return;
 
-        if (!_prototypeManager.TryIndex(animationId, out var animation))
-            return;
-
-        PlayAnimation(ent, animation);
+        PlayAnimation(uid, prototype);
     }
 
     [SubscribeLocalEvent]
@@ -74,60 +75,90 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
         var baseOffset = sprite.Offset;
         var baseRotation = sprite.Rotation;
 
-        _savedStates[uid] = new SpriteVisualState(baseOffset, baseRotation);
-
         var animation = new Animation
         {
-            Length = prototype.Length
+            Length = GetAnimationLength(prototype)
         };
 
         if (prototype.Offset.Count > 0)
-        {
-            var track = new AnimationTrackComponentProperty
-            {
-                ComponentType = typeof(SpriteComponent),
-                Property = nameof(SpriteComponent.Offset),
-                InterpolationMode = prototype.OffsetInterpolation
-            };
-
-            foreach (var frame in prototype.Offset)
-            {
-                track.KeyFrames.Add(
-                    new AnimationTrackProperty.KeyFrame(
-                        baseOffset + frame.Offset,
-                        (float)frame.Time.TotalSeconds));
-            }
-
-            animation.AnimationTracks.Add(track);
-        }
+            animation.AnimationTracks.Add(CreateOffsetTrack(prototype, baseOffset));
 
         if (prototype.Rotation.Count > 0)
-        {
-            var track = new AnimationTrackComponentProperty
-            {
-                ComponentType = typeof(SpriteComponent),
-                Property = nameof(SpriteComponent.Rotation),
-                InterpolationMode = prototype.RotationInterpolation
-            };
+            animation.AnimationTracks.Add(CreateRotationTrack(prototype, baseRotation));
 
-            foreach (var frame in prototype.Rotation)
-            {
-                track.KeyFrames.Add(
-                    new AnimationTrackProperty.KeyFrame(
-                        baseRotation + frame.Rotation,
-                        (float)frame.Time.TotalSeconds));
-            }
-
-            animation.AnimationTracks.Add(track);
-        }
-
-        if (animation.AnimationTracks.Count == 0)
-        {
-            _savedStates.Remove(uid);
+        if (animation.AnimationTracks.Count == 0 || animation.Length <= TimeSpan.Zero)
             return;
-        }
+
+        _savedStates[uid] = new SpriteVisualState(baseOffset, baseRotation);
 
         _animationPlayer.Play(uid, animation, AnimationKey);
+    }
+
+    private static AnimationTrackComponentProperty CreateOffsetTrack(EmoteAnimationPrototype prototype, Vector2 baseOffset)
+    {
+        var track = new AnimationTrackComponentProperty
+        {
+            ComponentType = typeof(SpriteComponent),
+            Property = nameof(SpriteComponent.Offset),
+            InterpolationMode = prototype.OffsetInterpolation
+        };
+
+        var previousTime = TimeSpan.Zero;
+
+        foreach (var frame in prototype.Offset.OrderBy(frame => frame.Time))
+        {
+            var duration = frame.Time - previousTime;
+
+            track.KeyFrames.Add(
+                new AnimationTrackProperty.KeyFrame(
+                    baseOffset + frame.Offset,
+                    (float) duration.TotalSeconds));
+
+            previousTime = frame.Time;
+        }
+
+        return track;
+    }
+
+    private static AnimationTrackComponentProperty CreateRotationTrack(EmoteAnimationPrototype prototype, Angle baseRotation)
+    {
+        var track = new AnimationTrackComponentProperty
+        {
+            ComponentType = typeof(SpriteComponent),
+            Property = nameof(SpriteComponent.Rotation),
+            InterpolationMode = prototype.RotationInterpolation
+        };
+
+        var previousTime = TimeSpan.Zero;
+
+        foreach (var frame in prototype.Rotation.OrderBy(frame => frame.Time))
+        {
+            var duration = frame.Time - previousTime;
+
+            track.KeyFrames.Add(
+                new AnimationTrackProperty.KeyFrame(
+                    baseRotation + frame.Rotation,
+                    (float) duration.TotalSeconds));
+
+            previousTime = frame.Time;
+        }
+
+        return track;
+    }
+
+    private static TimeSpan GetAnimationLength(EmoteAnimationPrototype prototype)
+    {
+        var offsetLength = prototype.Offset.Count > 0
+            ? prototype.Offset.Max(frame => frame.Time)
+            : TimeSpan.Zero;
+
+        var rotationLength = prototype.Rotation.Count > 0
+            ? prototype.Rotation.Max(frame => frame.Time)
+            : TimeSpan.Zero;
+
+        return offsetLength > rotationLength
+            ? offsetLength
+            : rotationLength;
     }
 
     private void StopAnimation(EntityUid uid)

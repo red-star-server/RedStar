@@ -4,14 +4,16 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared._RedStar.Emoting.Prototypes;
 
+/// <summary>
+/// Defines a cosmetic sprite animation used by an emote.
+/// All frame times are absolute times from the beginning of the animation.
+/// Offsets and rotations are relative to the sprite's state when the animation starts.
+/// </summary>
 [Prototype]
 public sealed partial class EmoteAnimationPrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = default!;
-
-    [DataField(required: true)]
-    public TimeSpan Length;
 
     [DataField]
     public AnimationInterpolationMode OffsetInterpolation = AnimationInterpolationMode.Linear;
@@ -29,11 +31,14 @@ public sealed partial class EmoteAnimationPrototype : IPrototype
 [DataDefinition]
 public sealed partial class EmoteAnimationOffsetFrame
 {
+    /// <summary>
+    /// Absolute time from the beginning of the animation.
+    /// </summary>
     [DataField(required: true)]
     public TimeSpan Time;
 
     /// <summary>
-    /// Relative offset from the sprite's original offset.
+    /// Offset relative to the sprite's original offset.
     /// </summary>
     [DataField(required: true)]
     public Vector2 Offset;
@@ -42,11 +47,14 @@ public sealed partial class EmoteAnimationOffsetFrame
 [DataDefinition]
 public sealed partial class EmoteAnimationRotationFrame
 {
+    /// <summary>
+    /// Absolute time from the beginning of the animation.
+    /// </summary>
     [DataField(required: true)]
     public TimeSpan Time;
 
     /// <summary>
-    /// Relative rotation from the sprite's original rotation.
+    /// Rotation relative to the sprite's original rotation.
     /// </summary>
     [DataField(required: true)]
     public Angle Rotation;
