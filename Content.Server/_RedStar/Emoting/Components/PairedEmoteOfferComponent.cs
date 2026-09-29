@@ -7,7 +7,7 @@ namespace Content.Server._RedStar.Emoting.Components;
 /// Runtime state for an entity currently offering a paired emote.
 /// This component is server-authoritative and only exists while the offer is active.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, AutoGenerateComponentPause]
 [Access(typeof(PairedEmoteSystem))]
 public sealed partial class PairedEmoteOfferComponent : Component
 {
@@ -15,5 +15,6 @@ public sealed partial class PairedEmoteOfferComponent : Component
 
     public ProtoId<PairedEmotePrototype> Emote;
 
+    [AutoPausedField]
     public TimeSpan ExpiresAt;
 }

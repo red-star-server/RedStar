@@ -5,3 +5,8 @@
   license: "CC-BY-SA-3.0"
   copyright: "Made by Rouge2t7"
   source: "https://github.com/Sarahon"
+
+- files: ["fistbump.png", "handshake.png", "highfive.png", "hug.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "emote_handshake.png made by CatAndHats (github) based on emote_hug.png"
+  source: "https://github.com/cmss13-devs/cmss13/blob/0525b5ada7da1afcd9b260e76d5fea01500d9c8d/icons/mob/do_afters.dmi"

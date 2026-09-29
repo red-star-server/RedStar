@@ -8,6 +8,10 @@
   attemptSelf: paired-emote-high-five-attempt-self
   attemptTarget: paired-emote-high-five-attempt-target
   success: paired-emote-high-five-success
+  sound: !type:SoundPathSpecifier
+    path: /Audio/Items/snap.ogg
+    params:
+      variation: 0.1
 
 - type: pairedEmote
   id: FistBump
@@ -19,6 +23,10 @@
   attemptSelf: paired-emote-fist-bump-attempt-self
   attemptTarget: paired-emote-fist-bump-attempt-target
   success: paired-emote-fist-bump-success
+  sound: !type:SoundPathSpecifier
+    path: /Audio/_RedStar/Emotes/thud.ogg
+    params:
+      variation: 0.5
 
 - type: pairedEmote
   id: Handshake
@@ -30,3 +38,7 @@
   attemptSelf: paired-emote-handshake-attempt-self
   attemptTarget: paired-emote-handshake-attempt-target
   success: paired-emote-handshake-success
+  sound: !type:SoundPathSpecifier
+    path: /Audio/Effects/thudswoosh.ogg
+    params:
+      variation: 0.4
