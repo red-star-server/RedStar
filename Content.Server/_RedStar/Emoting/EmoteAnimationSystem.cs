@@ -10,7 +10,7 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnEmote(Entity<EmoteAnimationComponent> ent, ref EmoteEvent args)
     {
-        if (args.Handled || args.Emote.Animation is not { } animation)
+        if (args.Emote.Animation is not { } animation)
             return;
 
         RaiseNetworkEvent(

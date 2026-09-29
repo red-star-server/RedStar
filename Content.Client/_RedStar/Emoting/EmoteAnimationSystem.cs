@@ -8,14 +8,12 @@ using Content.Shared.Mobs.Components;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client._RedStar.Emoting;
 
 public sealed partial class EmoteAnimationSystem : EntitySystem
 {
     [Dependency] private AnimationPlayerSystem _animationPlayer = default!;
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private SpriteSystem _spriteSystem = default!;
 
     private const string AnimationKey = "emote-animation";
@@ -36,7 +34,7 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
             return;
         }
 
-        if (!_prototypeManager.TryIndex(args.Animation, out var prototype))
+        if (!ProtoMan.TryIndex(args.Animation, out var prototype))
             return;
 
         PlayAnimation(uid, prototype);
@@ -100,6 +98,16 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
         if (prototype.Direction.Count > 0)
             animation.AnimationTracks.Add(CreateDirectionTrack(prototype, sprite));
 
+        // Apply all initial direction frames in order, including instantaneous transitions.
+        foreach (var frame in prototype.Direction)
+        {
+            if (frame.Time != TimeSpan.Zero)
+                break;
+
+            sprite.EnableDirectionOverride = true;
+            sprite.DirectionOverride = frame.Direction;
+        }
+
         // A new emote replaces only the previous emote; other animation keys are left alone.
         _animationPlayer.Play(uid, animation, AnimationKey);
     }
@@ -117,7 +125,7 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
 
         var previousTime = TimeSpan.Zero;
 
-        foreach (var frame in prototype.Offset.OrderBy(frame => frame.Time))
+        foreach (var frame in prototype.Offset)
         {
             var duration = frame.Time - previousTime;
 
@@ -145,7 +153,7 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
 
         var previousTime = TimeSpan.Zero;
 
-        foreach (var frame in prototype.Rotation.OrderBy(frame => frame.Time))
+        foreach (var frame in prototype.Rotation)
         {
             var duration = frame.Time - previousTime;
 
@@ -171,18 +179,12 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
 
         var previousTime = TimeSpan.Zero;
 
-        foreach (var frame in prototype.Direction.OrderBy(frame => frame.Time))
+        foreach (var frame in prototype.Direction)
         {
             track.KeyFrames.Add(new AnimationTrackProperty.KeyFrame(
                 frame.Direction,
                 (float) (frame.Time - previousTime).TotalSeconds));
             previousTime = frame.Time;
-
-            if (frame.Time == TimeSpan.Zero)
-            {
-                sprite.EnableDirectionOverride = true;
-                sprite.DirectionOverride = frame.Direction;
-            }
         }
 
         return track;

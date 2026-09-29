@@ -1,13 +1,13 @@
 ﻿using System.Numerics;
 using Robust.Shared.Animations;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared._RedStar.Emoting.Prototypes;
 
 /// <summary>
 /// Defines a cosmetic sprite animation used by an emote.
-/// All frame times are absolute times from the beginning of the animation.
+/// All frame times are non-negative absolute times from the beginning of the animation,
+/// in non-decreasing order. Equal times define instantaneous transitions.
 /// Offsets and rotations are relative to the sprite's state when the animation starts.
 /// </summary>
 [Prototype]
@@ -19,6 +19,10 @@ public sealed partial class EmoteAnimationPrototype : IPrototype
     [DataField]
     public AnimationInterpolationMode OffsetInterpolation = AnimationInterpolationMode.Linear;
 
+    /// <summary>
+    /// Linear rotation interpolates angles along the shortest path, not by total revolutions.
+    /// Cubic interpolation is not supported for angles.
+    /// </summary>
     [DataField]
     public AnimationInterpolationMode RotationInterpolation = AnimationInterpolationMode.Linear;
 
