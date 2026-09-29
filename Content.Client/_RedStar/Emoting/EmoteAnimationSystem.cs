@@ -21,6 +21,8 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
     [Dependency] private SpriteSystem _spriteSystem = default!;
 
     private const string AnimationKey = "emote-animation";
+    private const float ApproachDurationFraction = 0.2f;
+    private const float ReturnStartFraction = 0.75f;
 
     private readonly Dictionary<EntityUid, SpriteVisualState> _savedStates = [];
 
@@ -136,7 +138,7 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
         };
 
         if (prototype.Offset.Count > 0 || approach != Vector2.Zero)
-            animation.AnimationTracks.Add(CreateOffsetTrack(prototype, baseOffset, approach, length));
+            animation.AnimationTracks.Add(CreateOffsetTrack(prototype, sprite, baseOffset, approach, length));
 
         if (prototype.Rotation.Count > 0)
             animation.AnimationTracks.Add(CreateRotationTrack(prototype, baseRotation));
@@ -156,18 +158,21 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
         _animationPlayer.Play(uid, animation, AnimationKey);
     }
 
-    private static AnimationTrackComponentProperty CreateOffsetTrack(
+    private static AnimationTrackProperty CreateOffsetTrack(
         EmoteAnimationPrototype prototype,
+        SpriteComponent sprite,
         Vector2 baseOffset,
         Vector2 approach,
         TimeSpan length)
     {
-        var track = new AnimationTrackComponentProperty
-        {
-            ComponentType = typeof(SpriteComponent),
-            Property = nameof(SpriteComponent.Offset),
-            InterpolationMode = prototype.OffsetInterpolation
-        };
+        AnimationTrackProperty track = approach == Vector2.Zero
+            ? new AnimationTrackComponentProperty
+            {
+                ComponentType = typeof(SpriteComponent),
+                Property = nameof(SpriteComponent.Offset)
+            }
+            : new PairedOffsetAnimationTrack(sprite, baseOffset, approach, (float)length.TotalSeconds);
+        track.InterpolationMode = prototype.OffsetInterpolation;
 
         var previousTime = TimeSpan.Zero;
 
@@ -177,28 +182,24 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
 
             track.KeyFrames.Add(
                 new AnimationTrackProperty.KeyFrame(
-                    baseOffset + frame.Offset + approach * ApproachAmount(frame.Time, length),
+                    baseOffset + frame.Offset,
                     (float)duration.TotalSeconds));
 
             previousTime = frame.Time;
         }
 
         if (prototype.Offset.Count == 0)
-        {
             track.KeyFrames.Add(new AnimationTrackProperty.KeyFrame(baseOffset, 0f));
-            track.KeyFrames.Add(new AnimationTrackProperty.KeyFrame(baseOffset + approach, (float)length.TotalSeconds * 0.2f));
-            track.KeyFrames.Add(new AnimationTrackProperty.KeyFrame(baseOffset + approach, (float)length.TotalSeconds * 0.55f));
-            track.KeyFrames.Add(new AnimationTrackProperty.KeyFrame(baseOffset, (float)length.TotalSeconds * 0.25f));
-        }
 
         return track;
     }
 
-    // Paired gestures approach for 20% of their duration, hold until 75%, then return.
-    private static float ApproachAmount(TimeSpan time, TimeSpan length)
+    private static float ApproachAmount(float progress)
     {
-        var progress = (float)(time / length);
-        return Math.Clamp(Math.Min(progress / 0.2f, (1f - progress) / 0.25f), 0f, 1f);
+        return Math.Clamp(
+            Math.Min(progress / ApproachDurationFraction, (1f - progress) / (1f - ReturnStartFraction)),
+            0f,
+            1f);
     }
 
     private static AnimationTrackComponentProperty CreateRotationTrack(
@@ -300,6 +301,43 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
     private readonly record struct SpriteVisualState(Vector2? Offset, Angle? Rotation, DirectionOverrideState? Direction);
 
     private readonly record struct DirectionOverrideState(bool Enabled, Direction Direction);
+
+    // Let Robust interpolate the original offset; add the paired approach independently each frame.
+    private sealed class PairedOffsetAnimationTrack(
+        SpriteComponent sprite,
+        Vector2 baseOffset,
+        Vector2 approach,
+        float duration) : AnimationTrackProperty
+    {
+        private Vector2 _offset;
+        private float _elapsed;
+
+        public override (int KeyFrameIndex, float FramePlayingTime) InitPlayback()
+        {
+            _offset = baseOffset;
+            _elapsed = 0f;
+            return base.InitPlayback();
+        }
+
+        public override (int KeyFrameIndex, float FramePlayingTime) AdvancePlayback(
+            object context, int prevKeyFrameIndex, float prevPlayingTime, float frameTime)
+        {
+            _elapsed += frameTime;
+            var playback = base.AdvancePlayback(context, prevKeyFrameIndex, prevPlayingTime, frameTime);
+            if (!sprite.Deleted)
+            {
+                ((IAnimationProperties)sprite).SetAnimatableProperty(
+                    nameof(SpriteComponent.Offset), _offset + approach * ApproachAmount(_elapsed / duration));
+            }
+
+            return playback;
+        }
+
+        protected override void ApplyProperty(object context, object value)
+        {
+            _offset = (Vector2)value;
+        }
+    }
 
     private sealed class DirectionAnimationTrack(SpriteComponent sprite) : AnimationTrackProperty
     {

@@ -123,6 +123,9 @@ public sealed partial class PairedEmoteSystem : SharedPairedEmoteSystem
         _rotate.TryFaceCoordinates(initiator, targetPosition);
         _rotate.TryFaceCoordinates(target, initiatorPosition);
 
+        var filter = Filter.Pvs(initiator, entityManager: EntityManager)
+            .Merge(Filter.Pvs(target, entityManager: EntityManager));
+
         var message = Loc.GetString(
             prototype.Success,
             ("initiator", initiator),
@@ -131,15 +134,12 @@ public sealed partial class PairedEmoteSystem : SharedPairedEmoteSystem
         _popup.PopupEntity(
             message,
             initiator,
-            Filter.Pvs(initiator, entityManager: EntityManager),
+            filter,
             true,
             PopupType.Medium);
 
         if (prototype.Sound is { } sound)
             _audio.PlayPvs(sound, initiator);
-
-        var filter = Filter.Pvs(initiator, entityManager: EntityManager)
-            .Merge(Filter.Pvs(target, entityManager: EntityManager));
 
         RaiseNetworkEvent(
             new PairedEmoteAnimationEvent(
