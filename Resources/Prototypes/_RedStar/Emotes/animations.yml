@@ -15,12 +15,8 @@
   offset:
   - time: 0
     offset: 0,0
-  - time: 0.125
-    offset: 0,0.3
   - time: 0.25
-    offset: 0,0.7
-  - time: 0.375
-    offset: 0,0.3
+    offset: 0,0.5
   - time: 0.5
     offset: 0,0
 
@@ -29,88 +25,146 @@
   direction:
   - time: 0
     direction: South
+  - time: 0.075
+    direction: East
   - time: 0.15
+    direction: North
+  - time: 0.225
     direction: West
   - time: 0.3
-    direction: North
-  - time: 0.45
+    direction: South
+  - time: 0.375
     direction: East
+  - time: 0.45
+    direction: North
+  - time: 0.525
+    direction: West
   - time: 0.6
     direction: South
 
 - type: emoteAnimation
   id: Dance
-  offsetInterpolation: Cubic
+  offsetInterpolation: Linear
   offset:
   - time: 0
     offset: 0,0
-  - time: 0.2
-    offset: -0.08,0.06
-  - time: 0.4
-    offset: 0,0
-  - time: 0.6
-    offset: 0.08,0.06
-  - time: 0.8
-    offset: 0,0
   - time: 1
-    offset: 0,0.08
-  - time: 1.2
-    offset: -0.08,0.04
-  - time: 1.4
+    offset: -0.1,0.1
+  - time: 2
+    offset: 0.1,0.1
+  - time: 3
+    offset: 0.1,-0.05
+  - time: 4
     offset: 0,0
-  - time: 1.6
-    offset: 0.08,0.04
-  - time: 1.8
+  - time: 5
     offset: 0,0
   direction:
   - time: 0
     direction: South
+  - time: 0.1
+    direction: East
   - time: 0.2
+    direction: North
+  - time: 0.3
     direction: West
   - time: 0.4
     direction: South
-  - time: 0.6
+  - time: 0.5
     direction: East
+  - time: 0.6
+    direction: North
+  - time: 0.7
+    direction: West
   - time: 0.8
     direction: South
+  - time: 0.9
+    direction: East
   - time: 1
     direction: North
+  - time: 1.1
+    direction: West
   - time: 1.2
+    direction: South
+  - time: 1.3
     direction: East
   - time: 1.4
-    direction: South
-  - time: 1.6
+    direction: North
+  - time: 1.5
     direction: West
+  - time: 1.6
+    direction: South
+  - time: 1.7
+    direction: East
   - time: 1.8
+    direction: North
+  - time: 1.9
+    direction: West
+  - time: 2
+    direction: South
+  - time: 2.1
+    direction: East
+  - time: 2.2
+    direction: North
+  - time: 2.3
+    direction: West
+  - time: 2.4
+    direction: South
+  - time: 2.5
+    direction: East
+  - time: 2.6
+    direction: North
+  - time: 2.7
+    direction: West
+  - time: 2.8
+    direction: South
+  - time: 2.9
+    direction: East
+  - time: 3
+    direction: North
+  - time: 3.1
+    direction: West
+  - time: 3.2
+    direction: South
+  - time: 3.3
+    direction: East
+  - time: 3.4
+    direction: North
+  - time: 3.5
+    direction: West
+  - time: 3.6
+    direction: South
+  - time: 3.7
+    direction: East
+  - time: 3.8
+    direction: North
+  - time: 3.9
+    direction: West
+  - time: 4
+    direction: South
+  - time: 5
     direction: South
 
-# Small, rapid involuntary trembling.
 - type: emoteAnimation
   id: Tremble
   offsetInterpolation: Linear
   offset:
   - time: 0
     offset: 0,0
-  - time: 0.06
-    offset: -0.025,0
-  - time: 0.12
-    offset: 0.025,0
-  - time: 0.18
-    offset: -0.025,0
-  - time: 0.24
-    offset: 0.025,0
+  - time: 0.05
+    offset: -0.06,0
+  - time: 0.1
+    offset: 0.06,0
+  - time: 0.15
+    offset: -0.05,0
+  - time: 0.2
+    offset: 0.05,0
+  - time: 0.25
+    offset: -0.03,0
   - time: 0.3
-    offset: -0.02,0
-  - time: 0.36
-    offset: 0.02,0
-  - time: 0.42
-    offset: -0.015,0
-  - time: 0.48
-    offset: 0.015,0
-  - time: 0.55
+    offset: 0.03,0
+  - time: 0.4
     offset: 0,0
 
-# Stronger and longer whole-body shaking.
 - type: emoteAnimation
   id: Shiver
   offsetInterpolation: Linear
@@ -140,7 +194,6 @@
   - time: 0.9
     offset: 0,0
 
-# A short, sharp full-body shudder.
 - type: emoteAnimation
   id: Shudder
   offsetInterpolation: Cubic
@@ -184,21 +237,21 @@
     rotation: 0
   - time: 0.7
     rotation: -70
-  - time: 0.9
+  - time: 1
     rotation: 0
-  - time: 1.1
+  - time: 1.2
     rotation: 70
-  - time: 1.4
+  - time: 1.5
     rotation: 0
-  - time: 1.6
+  - time: 1.7
     rotation: -70
-  - time: 1.8
-    rotation: 0
   - time: 2
-    rotation: 70
-  - time: 2.3
     rotation: 0
+  - time: 2.2
+    rotation: 70
   - time: 2.5
+    rotation: 0
+  - time: 2.7
     rotation: -70
   - time: 3
     rotation: 0
@@ -226,27 +279,56 @@
     offset: 0,-0.2
   - time: 2.5
     offset: 0,0
+  - time: 2.9
+    offset: 0,-0.2
   - time: 3
     offset: 0,0
+  direction:
+  - time: 0
+    direction: South
+  - time: 0.2
+    direction: East
+  - time: 0.5
+    direction: South
+  - time: 0.7
+    direction: West
+  - time: 0.9
+    direction: South
+  - time: 1.1
+    direction: East
+  - time: 1.4
+    direction: South
+  - time: 1.6
+    direction: West
+  - time: 1.8
+    direction: South
+  - time: 2
+    direction: East
+  - time: 2.3
+    direction: South
+  - time: 2.5
+    direction: West
+  - time: 2.7
+    direction: South
+  - time: 2.9
+    direction: East
+  - time: 3
+    direction: South
 
 - type: emoteAnimation
   id: SpinningOnHead
   rotationInterpolation: Linear
   rotation:
   - time: 0
+    rotation: 0
+  - time: 0.2
+    rotation: 0
+  - time: 0.2
     rotation: 180
-  - time: 0.4
-    rotation: 180
-  - time: 4.6
-    rotation: 3960
   - time: 4.8
-    rotation: 3600
-  - time: 5
-    rotation: 2880
-  - time: 5.2
-    rotation: 1800
-  - time: 5.4
-    rotation: 720
+    rotation: 180
+  - time: 4.8
+    rotation: 0
   - time: 5.5
     rotation: 0
   offsetInterpolation: Linear
@@ -271,5 +353,94 @@
     offset: 0,-0.1
   - time: 4.8
     offset: 0,0.2
+  - time: 5
+    offset: 0,0
   - time: 5.5
     offset: 0,0
+  direction:
+  - time: 0
+    direction: South
+  - time: 0.4
+    direction: South
+  - time: 0.5
+    direction: East
+  - time: 0.6
+    direction: North
+  - time: 0.7
+    direction: West
+  - time: 0.8
+    direction: South
+  - time: 0.9
+    direction: East
+  - time: 1
+    direction: North
+  - time: 1.1
+    direction: West
+  - time: 1.2
+    direction: South
+  - time: 1.3
+    direction: East
+  - time: 1.4
+    direction: North
+  - time: 1.5
+    direction: West
+  - time: 1.6
+    direction: South
+  - time: 1.7
+    direction: East
+  - time: 1.8
+    direction: North
+  - time: 1.9
+    direction: West
+  - time: 2
+    direction: South
+  - time: 2.1
+    direction: East
+  - time: 2.2
+    direction: North
+  - time: 2.3
+    direction: West
+  - time: 2.4
+    direction: South
+  - time: 2.5
+    direction: East
+  - time: 2.6
+    direction: North
+  - time: 2.7
+    direction: West
+  - time: 2.8
+    direction: South
+  - time: 2.9
+    direction: East
+  - time: 3
+    direction: North
+  - time: 3.1
+    direction: West
+  - time: 3.2
+    direction: South
+  - time: 3.3
+    direction: East
+  - time: 3.4
+    direction: North
+  - time: 3.5
+    direction: West
+  - time: 3.6
+    direction: South
+  - time: 3.7
+    direction: East
+  - time: 3.8
+    direction: North
+  - time: 3.9
+    direction: West
+  - time: 4
+    direction: South
+  - time: 4.1
+    direction: East
+  - time: 4.2
+    direction: North
+  - time: 4.3
+    direction: West
+  - time: 4.4
+    direction: South
+  - time: 5.5
+    direction: South
