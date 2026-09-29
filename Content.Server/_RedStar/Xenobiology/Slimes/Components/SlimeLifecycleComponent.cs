@@ -4,7 +4,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Nutrition.Prototypes;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared._RedStar.Xenobiology.Slimes.Components;
+namespace Content.Server._RedStar.Xenobiology.Slimes.Components;
 
 /// <summary>
 /// Per-slime growth state and lineage configuration. Growth accumulates over time while fed.

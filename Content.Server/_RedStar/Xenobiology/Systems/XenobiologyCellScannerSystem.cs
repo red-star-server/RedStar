@@ -1,5 +1,5 @@
 using Content.Server._RedStar.Xenobiology.Components;
-using Content.Shared._RedStar.Xenobiology.Slimes.Components;
+using Content.Server._RedStar.Xenobiology.Slimes.Components;
 using Content.Shared.Mobs.Systems;
 
 namespace Content.Server._RedStar.Xenobiology.Systems;

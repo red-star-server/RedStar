@@ -1,10 +1,10 @@
+using Content.Server._RedStar.Xenobiology.Slimes.Components;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server._RedStar.Xenobiology.Slimes.Systems;
 using Content.Server.NPC;
 using Content.Server.NPC.HTN.PrimitiveTasks;
 using Content.Server.NPC.Pathfinding;
-using Content.Shared._RedStar.Xenobiology.Slimes.Components;
 using Content.Shared.Interaction;
 
 namespace Content.Server._RedStar.Xenobiology.Slimes.HTN.Operators;

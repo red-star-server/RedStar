@@ -1,6 +1,5 @@
+using Content.Server._RedStar.Xenobiology.Slimes.Components;
 using Content.Shared._RedStar.Xenobiology.Slimes;
-using Content.Shared._RedStar.Xenobiology.Slimes.Components;
-using Content.Shared._RedStar.Xenobiology.Slimes.Systems;
 using Content.Shared.Coordinates;
 using Content.Shared.EntityConditions;
 using Content.Shared.FixedPoint;
@@ -26,6 +25,7 @@ public sealed partial class SlimeLifecycleSystem : EntitySystem
 
     [Dependency] private EntityQuery<SatiationComponent> _satiationQuery;
     [Dependency] private EntityQuery<SlimeComponent> _slimeQuery;
+    [Dependency] private EntityQuery<SlimeLifecycleComponent> _lifecycleQuery;
 
     private const float UpdateInterval = 1f;
     private float _updateAccumulator;
@@ -46,7 +46,7 @@ public sealed partial class SlimeLifecycleSystem : EntitySystem
             if (_mobState.IsDead(uid))
                 continue;
 
-            var ent = new Entity<SlimeLifecycleComponent>(uid, lifecycle);
+            Entity<SlimeLifecycleComponent> ent = (uid, lifecycle);
             if (lifecycle.Stage == SlimeStage.Adult)
                 UpdateMutations(ent, elapsed);
             if (lifecycle.GrowthRate <= 0 || lifecycle.GrowthThreshold <= 0 ||
@@ -94,7 +94,7 @@ public sealed partial class SlimeLifecycleSystem : EntitySystem
     {
         var hunger = _satiation.GetValueOrNull(babySatiation, SatiationSystem.Hunger);
         var adult = Spawn(ent.Comp.AdultPrototype, ent.Owner.ToCoordinates());
-        if (!_slimeQuery.TryComp(adult, out _) || !TryComp<SlimeLifecycleComponent>(adult, out var adultLifecycle))
+        if (!_slimeQuery.TryComp(adult, out _) || !_lifecycleQuery.TryComp(adult, out var adultLifecycle))
         {
             QueueDel(adult);
             return;
@@ -125,7 +125,7 @@ public sealed partial class SlimeLifecycleSystem : EntitySystem
                     _random.NextFloat(-ent.Comp.MutationVariance, ent.Comp.MutationVariance)));
             var babyPrototype = SelectBabyPrototype(ent, chance);
             var child = Spawn(babyPrototype, ent.Owner.ToCoordinates());
-            if (!_slimeQuery.TryComp(child, out _) || !TryComp<SlimeLifecycleComponent>(child, out var childLifecycle))
+            if (!_slimeQuery.TryComp(child, out _) || !_lifecycleQuery.TryComp(child, out var childLifecycle))
             {
                 QueueDel(child);
                 continue;

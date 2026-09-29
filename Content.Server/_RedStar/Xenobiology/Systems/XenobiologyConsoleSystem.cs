@@ -1,8 +1,8 @@
+using Content.Server._RedStar.Xenobiology.Slimes.Components;
 using System.Linq;
 using Content.Server._RedStar.Xenobiology.Components;
 using Content.Server.DeviceLinking.Systems;
 using Content.Server.Power.EntitySystems;
-using Content.Shared._RedStar.Xenobiology.Slimes.Components;
 using Content.Shared._RedStar.Xenobiology.UI;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;

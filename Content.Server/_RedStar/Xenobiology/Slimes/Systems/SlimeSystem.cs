@@ -1,4 +1,4 @@
-using Content.Shared._RedStar.Xenobiology.Slimes.Components;
+using Content.Server._RedStar.Xenobiology.Slimes.Components;
 using Content.Shared._RedStar.Xenobiology.Slimes.Events;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
@@ -9,7 +9,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 
-namespace Content.Shared._RedStar.Xenobiology.Slimes.Systems;
+namespace Content.Server._RedStar.Xenobiology.Slimes.Systems;
 
 /// <summary>
 /// Handles the general behavior of slimes.
@@ -35,7 +35,7 @@ public sealed partial class SlimeSystem : EntitySystem
         if (!TryComp<DamageableComponent>(target, out _)) return false;
 
         if (!_damageableSystem.TryChangeDamage(target, slime.Comp.DamageOnEat, out var returnDamage, ignoreResistances: true)) return false;
-        _audioSystem.PlayPredicted(new SoundPathSpecifier("/Audio/Effects/bite.ogg"), slime.Owner, null, AudioParams.Default.WithVariation(0.05F));
+        _audioSystem.PlayPvs(new SoundPathSpecifier("/Audio/Effects/bite.ogg"), slime.Owner, AudioParams.Default.WithVariation(0.05F));
 
         var vector = (Transform(target).LocalPosition - Transform(slime.Owner).LocalPosition).Normalized();
         RaiseNetworkEvent(new SlimeBiteAnimationMessage()

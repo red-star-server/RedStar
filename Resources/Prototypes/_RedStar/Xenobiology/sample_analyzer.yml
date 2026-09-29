@@ -1,6 +1,6 @@
 - type: entity
   id: XenobiologySampleAnalyzer
-  parent: [BaseMachinePowered, StructureHealthMachineStrong]
+  parent: [BaseMachinePowered, ConstructibleMachine, StructureHealthMachineStrong]
   name: xenobiology sample analyzer
   description: Analyzes slime extracts for the connected R&D server.
   components:
@@ -22,6 +22,8 @@
       enum.ResearchClientUiKey.Key:
         type: ResearchClientBoundUserInterface
   - type: XenobiologySampleAnalyzer
+  - type: Machine
+    board: XenobiologySampleAnalyzerMachineCircuitboard
   - type: ItemSlots
     slots:
       sample:
@@ -31,4 +33,6 @@
           - SlimeExtract
   - type: ContainerContainer
     containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
       sample: !type:ContainerSlot

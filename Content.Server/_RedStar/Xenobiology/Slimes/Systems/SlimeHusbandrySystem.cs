@@ -1,6 +1,5 @@
 using Content.Server._RedStar.Xenobiology.Slimes.Components;
 using Content.Shared._RedStar.Xenobiology.Slimes;
-using Content.Shared._RedStar.Xenobiology.Slimes.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
@@ -39,7 +38,7 @@ public sealed partial class SlimeHusbandrySystem : EntitySystem
                 continue;
             }
 
-            husbandry.NearbySlimes = CountNearbySlimes(uid, husbandry.OvercrowdingRadius, transform);
+            husbandry.NearbySlimes = CountNearbySlimes((uid, transform), husbandry.OvercrowdingRadius);
 
             var severeHunger = _satiation.IsValueInRange((uid, satiation), SatiationSystem.Hunger,
                 below: husbandry.AggressiveBelow);
@@ -55,18 +54,18 @@ public sealed partial class SlimeHusbandrySystem : EntitySystem
         }
     }
 
-    private int CountNearbySlimes(EntityUid uid, float radius, TransformComponent transform)
+    private int CountNearbySlimes(Entity<TransformComponent> ent, float radius)
     {
-        if (radius <= 0f || _containers.IsEntityOrParentInContainer(uid))
+        if (radius <= 0f || _containers.IsEntityOrParentInContainer(ent.Owner))
             return 0;
 
         _nearby.Clear();
-        _lookup.GetEntitiesInRange(transform.Coordinates, radius, _nearby, LookupFlags.Uncontained);
+        _lookup.GetEntitiesInRange(ent.Comp.Coordinates, radius, _nearby, LookupFlags.Uncontained);
 
         var count = 0;
         foreach (var candidate in _nearby)
         {
-            if (candidate.Owner != uid && _mobState.IsAlive(candidate.Owner))
+            if (candidate.Owner != ent.Owner && _mobState.IsAlive(candidate.Owner))
                 count++;
         }
 

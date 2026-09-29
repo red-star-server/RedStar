@@ -1,7 +1,6 @@
 using Content.Server._RedStar.Xenobiology.Slimes.Components;
 using Content.Server._RedStar.Xenobiology.Slimes.Systems;
 using Content.Shared._RedStar.Xenobiology.Slimes;
-using Content.Shared._RedStar.Xenobiology.Slimes.Components;
 using Content.Shared._RedStar.Xenobiology.UI;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;

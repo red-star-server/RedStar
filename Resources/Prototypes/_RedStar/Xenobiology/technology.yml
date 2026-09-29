@@ -1,0 +1,13 @@
+- type: technology
+  id: Xenobiology
+  name: research-technology-xenobiology
+  icon:
+    sprite: _RedStar/Structures/Machines/slime_processor.rsi
+    state: processor
+  discipline: Experimental
+  tier: 1
+  cost: 5000
+  recipeUnlocks:
+  - XenobiologyConsoleCircuitboard
+  - XenobiologySampleAnalyzerMachineCircuitboard
+  - XenobiologySlimeProcessorMachineCircuitboard

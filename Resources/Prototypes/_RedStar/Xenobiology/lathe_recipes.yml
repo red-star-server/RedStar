@@ -2,3 +2,13 @@
   parent: [ BaseCircuitboardRecipe, BaseResearchMachineRecipeCategory ]
   id: XenobiologyConsoleCircuitboard
   result: XenobiologyConsoleCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseResearchMachineRecipeCategory ]
+  id: XenobiologySampleAnalyzerMachineCircuitboard
+  result: XenobiologySampleAnalyzerMachineCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseResearchMachineRecipeCategory ]
+  id: XenobiologySlimeProcessorMachineCircuitboard
+  result: XenobiologySlimeProcessorMachineCircuitboard

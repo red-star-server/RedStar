@@ -2,7 +2,7 @@ using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared._RedStar.Xenobiology.Slimes.Components;
+namespace Content.Server._RedStar.Xenobiology.Slimes.Components;
 
 /// <summary>
 /// This component describes the current state of the slime.

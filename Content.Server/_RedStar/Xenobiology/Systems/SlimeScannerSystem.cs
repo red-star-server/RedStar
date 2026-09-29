@@ -1,6 +1,6 @@
+using Content.Server._RedStar.Xenobiology.Slimes.Components;
 using Content.Shared._RedStar.Xenobiology.Components;
 using Content.Shared._RedStar.Xenobiology.Events;
-using Content.Shared._RedStar.Xenobiology.Slimes.Components;
 using Content.Shared._RedStar.Xenobiology.UI;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;

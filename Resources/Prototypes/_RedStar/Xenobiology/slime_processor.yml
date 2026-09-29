@@ -1,6 +1,6 @@
 - type: entity
   id: XenobiologySlimeProcessor
-  parent: BaseMachinePowered
+  parent: [BaseMachinePowered, ConstructibleMachine]
   name: slime processor
   description: Processes dead slimes into physical extracts.
   components:
@@ -23,6 +23,10 @@
   - type: SlimeProcessor
     processingTime: 5
     slimeAcquireCooldown: 1
+  - type: Machine
+    board: XenobiologySlimeProcessorMachineCircuitboard
   - type: ContainerContainer
     containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
       slimes: !type:Container

@@ -1,7 +1,7 @@
-using Content.Shared._RedStar.Xenobiology.Slimes.Components;
+using Content.Server._RedStar.Xenobiology.Slimes.Components;
 using Content.Shared.FixedPoint;
 
-namespace Content.Shared._RedStar.Xenobiology.Slimes.Systems;
+namespace Content.Server._RedStar.Xenobiology.Slimes.Systems;
 
 public sealed partial class SlimeMutationSystem : EntitySystem
 {

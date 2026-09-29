@@ -2,7 +2,6 @@ using Content.Server._RedStar.Xenobiology.Components;
 using Content.Server._RedStar.Xenobiology.Slimes.Components;
 using Content.Server.Popups;
 using Content.Shared._RedStar.Xenobiology.Slimes;
-using Content.Shared._RedStar.Xenobiology.Slimes.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.Prototypes;

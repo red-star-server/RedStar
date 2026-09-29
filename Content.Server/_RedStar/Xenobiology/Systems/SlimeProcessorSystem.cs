@@ -3,7 +3,6 @@ using Content.Server._RedStar.Xenobiology.Slimes.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared._RedStar.Xenobiology;
 using Content.Shared._RedStar.Xenobiology.Slimes;
-using Content.Shared._RedStar.Xenobiology.Slimes.Components;
 using Content.Shared.Coordinates;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs.Systems;

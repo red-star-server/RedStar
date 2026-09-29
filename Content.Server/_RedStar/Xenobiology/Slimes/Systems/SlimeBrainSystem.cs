@@ -1,4 +1,4 @@
-using Content.Shared._RedStar.Xenobiology.Slimes.Components;
+using Content.Server._RedStar.Xenobiology.Slimes.Components;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Mobs.Components;
