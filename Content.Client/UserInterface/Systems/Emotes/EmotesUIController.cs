@@ -33,6 +33,8 @@ public sealed partial class EmotesUIController : UIController, IOnStateChanged<G
                 new SpriteSpecifier.Rsi(new ResPath("/Textures/Clothing/Hands/Gloves/latex.rsi"), "icon")),
             [EmoteCategory.Vocal] = ("emote-menu-category-vocal",
                 new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Emotes/vocal.png"))),
+            [EmoteCategory.Animations] = ("emote-menu-category-animations",
+                new SpriteSpecifier.Texture(new ResPath("/Textures/_RedStar/Interface/Emotes/animations.png"))), // RS14
         };
 
     public void OnStateEntered(GameplayState state)

@@ -1,0 +1,120 @@
+﻿- type: entity
+  abstract: true
+  id: BaseEmoteAnimations
+  components:
+  - type: EmoteAnimation
+    animations:
+      Flip: Flip
+      Jump: Jump
+      Spin: Spin
+      Tremble: Tremble
+      Shiver: Tremble
+      Shudder: Tremble
+
+- type: emote
+  id: Flip
+  name: chat-emote-name-flip
+  category: Animations
+  icon: Interface/Emotes/somersaults.png
+  whitelist:
+    components:
+    - EmoteAnimation
+  chatMessages:
+  - chat-emote-msg-flip
+  chatTriggers:
+  - сальто
+  - делает сальто
+  - сделал сальто
+  - сделала сальто
+  - flip
+  - flips
+  - does a flip
+
+- type: emote
+  id: Jump
+  name: chat-emote-name-jump
+  category: Animations
+  icon: Interface/Emotes/jump.png
+  whitelist:
+    components:
+    - EmoteAnimation
+  chatMessages:
+  - chat-emote-msg-jump
+  chatTriggers:
+  - подпрыгивает
+  - подпрыгнул
+  - подпрыгнула
+  - прыгает
+  - jump
+  - jumps
+
+- type: emote
+  id: Spin
+  name: chat-emote-name-spin
+  category: Animations
+  icon: Interface/Emotes/turn.png
+  whitelist:
+    components:
+    - EmoteAnimation
+  chatMessages:
+  - chat-emote-msg-spin
+  chatTriggers:
+  - кружится
+  - покружился
+  - покружилась
+  - вертится
+  - spin
+  - spins
+
+- type: emote
+  id: Tremble
+  name: chat-emote-name-tremble
+  category: Animations
+  icon: Interface/Emotes/shiver.png
+  whitelist:
+    components:
+    - EmoteAnimation
+  chatMessages:
+  - chat-emote-msg-tremble
+  chatTriggers:
+  - дрожит
+  - задрожал
+  - задрожала
+  - tremble
+  - trembles
+  - trembling
+
+- type: emote
+  id: Shiver
+  name: chat-emote-name-shiver
+  category: Animations
+  icon: Interface/Emotes/shiver.png
+  whitelist:
+    components:
+    - EmoteAnimation
+  chatMessages:
+  - chat-emote-msg-shiver
+  chatTriggers:
+  - трясётся
+  - затрясся
+  - затряслась
+  - shiver
+  - shivers
+  - shivering
+
+- type: emote
+  id: Shudder
+  name: chat-emote-name-shudder
+  category: Animations
+  icon: Interface/Emotes/shiver.png
+  whitelist:
+    components:
+    - EmoteAnimation
+  chatMessages:
+  - chat-emote-msg-shudder
+  chatTriggers:
+  - содрогается
+  - содрогнулся
+  - содрогнулась
+  - shudder
+  - shudders

@@ -8,6 +8,7 @@
   - StripableInventoryBase
   - BaseSpeciesAppearance
   - TTS_speaker # Corvax-TTS
+  - BaseEmoteAnimations # RS14
   id: BaseSpeciesMob
   save: false
   components:
