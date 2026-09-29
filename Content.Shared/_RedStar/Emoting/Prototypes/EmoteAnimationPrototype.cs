@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using Robust.Shared.Animations;
+using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared._RedStar.Emoting.Prototypes;
@@ -26,6 +27,9 @@ public sealed partial class EmoteAnimationPrototype : IPrototype
 
     [DataField]
     public List<EmoteAnimationRotationFrame> Rotation = [];
+
+    [DataField]
+    public List<EmoteAnimationDirectionFrame> Direction = [];
 }
 
 [DataDefinition]
@@ -58,4 +62,20 @@ public sealed partial class EmoteAnimationRotationFrame
     /// </summary>
     [DataField(required: true)]
     public Angle Rotation;
+}
+
+[DataDefinition]
+public sealed partial class EmoteAnimationDirectionFrame
+{
+    /// <summary>
+    /// Absolute time from the beginning of the animation.
+    /// </summary>
+    [DataField(required: true)]
+    public TimeSpan Time;
+
+    /// <summary>
+    /// Direction displayed by directional sprite layers.
+    /// </summary>
+    [DataField(required: true)]
+    public Direction Direction;
 }

@@ -26,60 +26,151 @@
 
 - type: emoteAnimation
   id: Spin
-  rotationInterpolation: Linear
-  rotation:
+  direction:
   - time: 0
-    rotation: 0
+    direction: South
+  - time: 0.15
+    direction: West
   - time: 0.3
-    rotation: 180
+    direction: North
+  - time: 0.45
+    direction: East
   - time: 0.6
-    rotation: 360
+    direction: South
 
 - type: emoteAnimation
   id: Dance
-  rotationInterpolation: Linear
-  rotation:
+  offsetInterpolation: Cubic
+  offset:
   - time: 0
-    rotation: 0
-  - time: 0.075
-    rotation: 90
-  - time: 0.15
-    rotation: 180
-  - time: 0.225
-    rotation: 270
-  - time: 0.3
-    rotation: 360
-  - time: 0.375
-    rotation: 450
-  - time: 0.45
-    rotation: 540
-  - time: 0.525
-    rotation: 630
+    offset: 0,0
+  - time: 0.2
+    offset: -0.08,0.06
+  - time: 0.4
+    offset: 0,0
   - time: 0.6
-    rotation: 720
-  - time: 0.9
-    rotation: 720
+    offset: 0.08,0.06
+  - time: 0.8
+    offset: 0,0
+  - time: 1
+    offset: 0,0.08
+  - time: 1.2
+    offset: -0.08,0.04
+  - time: 1.4
+    offset: 0,0
+  - time: 1.6
+    offset: 0.08,0.04
+  - time: 1.8
+    offset: 0,0
+  direction:
+  - time: 0
+    direction: South
+  - time: 0.2
+    direction: West
+  - time: 0.4
+    direction: South
+  - time: 0.6
+    direction: East
+  - time: 0.8
+    direction: South
+  - time: 1
+    direction: North
+  - time: 1.2
+    direction: East
+  - time: 1.4
+    direction: South
+  - time: 1.6
+    direction: West
+  - time: 1.8
+    direction: South
 
+# Small, rapid involuntary trembling.
 - type: emoteAnimation
   id: Tremble
   offsetInterpolation: Linear
   offset:
   - time: 0
     offset: 0,0
-  - time: 0.05
-    offset: -0.06,0
-  - time: 0.1
-    offset: 0.06,0
-  - time: 0.15
-    offset: -0.05,0
-  - time: 0.2
-    offset: 0.05,0
-  - time: 0.25
-    offset: -0.03,0
+  - time: 0.06
+    offset: -0.025,0
+  - time: 0.12
+    offset: 0.025,0
+  - time: 0.18
+    offset: -0.025,0
+  - time: 0.24
+    offset: 0.025,0
   - time: 0.3
-    offset: 0.03,0
-  - time: 0.4
+    offset: -0.02,0
+  - time: 0.36
+    offset: 0.02,0
+  - time: 0.42
+    offset: -0.015,0
+  - time: 0.48
+    offset: 0.015,0
+  - time: 0.55
     offset: 0,0
+
+# Stronger and longer whole-body shaking.
+- type: emoteAnimation
+  id: Shiver
+  offsetInterpolation: Linear
+  offset:
+  - time: 0
+    offset: 0,0
+  - time: 0.08
+    offset: -0.055,0.025
+  - time: 0.16
+    offset: 0.055,-0.01
+  - time: 0.24
+    offset: -0.06,0.02
+  - time: 0.32
+    offset: 0.06,0
+  - time: 0.4
+    offset: -0.05,0.025
+  - time: 0.48
+    offset: 0.05,-0.01
+  - time: 0.56
+    offset: -0.045,0.02
+  - time: 0.64
+    offset: 0.045,0
+  - time: 0.72
+    offset: -0.035,0.015
+  - time: 0.8
+    offset: 0.035,0
+  - time: 0.9
+    offset: 0,0
+
+# A short, sharp full-body shudder.
+- type: emoteAnimation
+  id: Shudder
+  offsetInterpolation: Cubic
+  offset:
+  - time: 0
+    offset: 0,0
+  - time: 0.08
+    offset: -0.09,0.025
+  - time: 0.16
+    offset: 0.1,-0.015
+  - time: 0.24
+    offset: -0.065,0.015
+  - time: 0.32
+    offset: 0.045,0
+  - time: 0.45
+    offset: 0,0
+  rotationInterpolation: Cubic
+  rotation:
+  - time: 0
+    rotation: 0
+  - time: 0.08
+    rotation: -3
+  - time: 0.16
+    rotation: 3
+  - time: 0.24
+    rotation: -2
+  - time: 0.32
+    rotation: 1
+  - time: 0.45
+    rotation: 0
 
 - type: emoteAnimation
   id: DanceFromTheFloor

@@ -99,7 +99,7 @@
   id: Shiver
   name: chat-emote-name-shiver
   category: Animations
-  animation: Tremble
+  animation: Shiver
   icon: _RedStar/Interface/Emotes/shiver.png
   whitelist:
     components:
@@ -119,7 +119,7 @@
   id: Shudder
   name: chat-emote-name-shudder
   category: Animations
-  animation: Tremble
+  animation: Shudder
   icon: _RedStar/Interface/Emotes/shiver.png
   whitelist:
     components:
