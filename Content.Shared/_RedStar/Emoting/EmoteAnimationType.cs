@@ -6,5 +6,6 @@ public enum EmoteAnimationType : byte
     Flip,
     Jump,
     Spin,
+    Dance,
     Tremble
 }

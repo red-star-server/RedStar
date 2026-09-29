@@ -7,6 +7,7 @@
       Flip: Flip
       Jump: Jump
       Spin: Spin
+      Dance: Dance
       Tremble: Tremble
       Shiver: Tremble
       Shudder: Tremble
@@ -15,7 +16,7 @@
   id: Flip
   name: chat-emote-name-flip
   category: Animations
-  icon: Interface/Emotes/somersaults.png
+  icon: _RedStar/Interface/Emotes/flip.png
   whitelist:
     components:
     - EmoteAnimation
@@ -34,7 +35,7 @@
   id: Jump
   name: chat-emote-name-jump
   category: Animations
-  icon: Interface/Emotes/jump.png
+  icon: _RedStar/Interface/Emotes/jump.png
   whitelist:
     components:
     - EmoteAnimation
@@ -52,7 +53,7 @@
   id: Spin
   name: chat-emote-name-spin
   category: Animations
-  icon: Interface/Emotes/turn.png
+  icon: _RedStar/Interface/Emotes/spin.png
   whitelist:
     components:
     - EmoteAnimation
@@ -62,15 +63,34 @@
   - кружится
   - покружился
   - покружилась
-  - вертится
+  - крутится
   - spin
   - spins
+
+- type: emote
+  id: Dance
+  name: chat-emote-name-dance
+  category: Animations
+  icon: _RedStar/Interface/Emotes/dance.png
+  whitelist:
+    components:
+    - EmoteAnimation
+  chatMessages:
+  - chat-emote-msg-dance
+  chatTriggers:
+  - танцует
+  - танцевать
+  - танцевал
+  - танцевала
+  - dance
+  - dances
+  - dancing
 
 - type: emote
   id: Tremble
   name: chat-emote-name-tremble
   category: Animations
-  icon: Interface/Emotes/shiver.png
+  icon: _RedStar/Interface/Emotes/tremble.png
   whitelist:
     components:
     - EmoteAnimation
@@ -88,7 +108,7 @@
   id: Shiver
   name: chat-emote-name-shiver
   category: Animations
-  icon: Interface/Emotes/shiver.png
+  icon: _RedStar/Interface/Emotes/tremble.png
   whitelist:
     components:
     - EmoteAnimation
@@ -96,6 +116,7 @@
   - chat-emote-msg-shiver
   chatTriggers:
   - трясётся
+  - трясется
   - затрясся
   - затряслась
   - shiver
@@ -106,7 +127,7 @@
   id: Shudder
   name: chat-emote-name-shudder
   category: Animations
-  icon: Interface/Emotes/shiver.png
+  icon: _RedStar/Interface/Emotes/tremble.png
   whitelist:
     components:
     - EmoteAnimation
@@ -118,3 +139,4 @@
   - содрогнулась
   - shudder
   - shudders
+  - shuddering
