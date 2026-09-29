@@ -7,8 +7,8 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
+using Robust.Shared.Animations;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.Client._RedStar.Emoting;
 
@@ -17,13 +17,10 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
     [Dependency] private AnimationPlayerSystem _animationPlayer = default!;
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private SpriteSystem _spriteSystem = default!;
-    [Dependency] private IGameTiming _timing = default!;
 
     private const string AnimationKey = "emote-animation";
 
     private readonly Dictionary<EntityUid, SpriteVisualState> _savedStates = [];
-    private readonly Dictionary<EntityUid, ActiveEmoteAnimation> _activeAnimations = [];
-    private readonly List<EntityUid> _finishedAnimations = [];
 
     [SubscribeNetworkEvent]
     private void OnAnimation(EmoteAnimationEvent args)
@@ -60,35 +57,11 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
         StopAnimation(ent);
     }
 
-    public override void Update(float frameTime)
+    [SubscribeLocalEvent]
+    private void OnAnimationCompleted(Entity<EmoteAnimationComponent> ent, ref AnimationCompletedEvent args)
     {
-        base.Update(frameTime);
-
-        if (_activeAnimations.Count == 0)
-            return;
-
-        _finishedAnimations.Clear();
-
-        foreach (var (uid, active) in _activeAnimations)
-        {
-            if (!TryComp<SpriteComponent>(uid, out var sprite))
-            {
-                _finishedAnimations.Add(uid);
-                continue;
-            }
-
-            var elapsed = _timing.CurTime - active.StartTime;
-
-            ApplyDirectionFrames(sprite, active, elapsed);
-
-            if (elapsed >= active.Length)
-                _finishedAnimations.Add(uid);
-        }
-
-        foreach (var uid in _finishedAnimations)
-        {
-            FinishAnimation(uid);
-        }
+        if (args.Key == AnimationKey)
+            RestoreVisualState(ent);
     }
 
     private void PlayAnimation(EntityUid uid, EmoteAnimationPrototype prototype)
@@ -107,10 +80,11 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
         var baseRotation = sprite.Rotation;
 
         _savedStates[uid] = new SpriteVisualState(
-            baseOffset,
-            baseRotation,
-            sprite.EnableDirectionOverride,
-            sprite.DirectionOverride);
+            prototype.Offset.Count > 0 ? baseOffset : null,
+            prototype.Rotation.Count > 0 ? baseRotation : null,
+            prototype.Direction.Count > 0
+                ? new DirectionOverrideState(sprite.EnableDirectionOverride, sprite.DirectionOverride)
+                : null);
 
         var animation = new Animation
         {
@@ -123,17 +97,11 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
         if (prototype.Rotation.Count > 0)
             animation.AnimationTracks.Add(CreateRotationTrack(prototype, baseRotation));
 
-        if (animation.AnimationTracks.Count > 0)
-            _animationPlayer.Play(uid, animation, AnimationKey);
+        if (prototype.Direction.Count > 0)
+            animation.AnimationTracks.Add(CreateDirectionTrack(prototype, sprite));
 
-        var active = new ActiveEmoteAnimation(
-            _timing.CurTime,
-            length,
-            prototype.Direction.OrderBy(frame => frame.Time).ToArray());
-
-        _activeAnimations[uid] = active;
-
-        ApplyDirectionFrames(sprite, active, TimeSpan.Zero);
+        // A new emote replaces only the previous emote; other animation keys are left alone.
+        _animationPlayer.Play(uid, animation, AnimationKey);
     }
 
     private static AnimationTrackComponentProperty CreateOffsetTrack(
@@ -192,19 +160,32 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
         return track;
     }
 
-    private static void ApplyDirectionFrames(SpriteComponent sprite, ActiveEmoteAnimation active, TimeSpan elapsed)
+    private static DirectionAnimationTrack CreateDirectionTrack(
+        EmoteAnimationPrototype prototype,
+        SpriteComponent sprite)
     {
-        while (active.NextDirectionFrame < active.DirectionFrames.Length)
+        var track = new DirectionAnimationTrack(sprite)
         {
-            var frame = active.DirectionFrames[active.NextDirectionFrame];
+            InterpolationMode = AnimationInterpolationMode.Previous
+        };
 
-            if (frame.Time > elapsed)
-                break;
+        var previousTime = TimeSpan.Zero;
 
-            sprite.EnableDirectionOverride = true;
-            sprite.DirectionOverride = frame.Direction;
-            active.NextDirectionFrame++;
+        foreach (var frame in prototype.Direction.OrderBy(frame => frame.Time))
+        {
+            track.KeyFrames.Add(new AnimationTrackProperty.KeyFrame(
+                frame.Direction,
+                (float) (frame.Time - previousTime).TotalSeconds));
+            previousTime = frame.Time;
+
+            if (frame.Time == TimeSpan.Zero)
+            {
+                sprite.EnableDirectionOverride = true;
+                sprite.DirectionOverride = frame.Direction;
+            }
         }
+
+        return track;
     }
 
     private static TimeSpan GetAnimationLength(EmoteAnimationPrototype prototype)
@@ -226,21 +207,8 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
 
     private void StopAnimation(EntityUid uid)
     {
-        _activeAnimations.Remove(uid);
-
-        if (_animationPlayer.HasRunningAnimation(uid, AnimationKey))
-            _animationPlayer.Stop(uid, AnimationKey);
-
-        RestoreVisualState(uid);
-    }
-
-    private void FinishAnimation(EntityUid uid)
-    {
-        _activeAnimations.Remove(uid);
-
-        if (_animationPlayer.HasRunningAnimation(uid, AnimationKey))
-            _animationPlayer.Stop(uid, AnimationKey);
-
+        _animationPlayer.Stop(uid, AnimationKey);
+        // Also restore during component shutdown, when the completion handler may not run.
         RestoreVisualState(uid);
     }
 
@@ -252,28 +220,37 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
-        _spriteSystem.SetOffset((uid, sprite), state.Offset);
-        _spriteSystem.SetRotation((uid, sprite), state.Rotation);
+        if (state.Offset is { } offset)
+            _spriteSystem.SetOffset((uid, sprite), offset);
 
-        sprite.EnableDirectionOverride = state.EnableDirectionOverride;
-        sprite.DirectionOverride = state.DirectionOverride;
+        if (state.Rotation is { } rotation)
+            _spriteSystem.SetRotation((uid, sprite), rotation);
+
+        if (state.Direction is { } direction)
+        {
+            sprite.EnableDirectionOverride = direction.Enabled;
+            sprite.DirectionOverride = direction.Direction;
+        }
     }
 
     private readonly record struct SpriteVisualState(
-        Vector2 Offset,
-        Angle Rotation,
-        bool EnableDirectionOverride,
-        Direction DirectionOverride);
+        Vector2? Offset,
+        Angle? Rotation,
+        DirectionOverrideState? Direction);
 
-    private sealed class ActiveEmoteAnimation(
-        TimeSpan startTime,
-        TimeSpan length,
-        EmoteAnimationDirectionFrame[] directionFrames)
+    private readonly record struct DirectionOverrideState(bool Enabled, Direction Direction);
+
+    // DirectionOverride is a field without animatable-property support in SpriteComponent.
+    // Use the standard property track's timing while applying the direction directly.
+    private sealed class DirectionAnimationTrack(SpriteComponent sprite) : AnimationTrackProperty
     {
-        public readonly TimeSpan StartTime = startTime;
-        public readonly TimeSpan Length = length;
-        public readonly EmoteAnimationDirectionFrame[] DirectionFrames = directionFrames;
+        protected override void ApplyProperty(object context, object value)
+        {
+            if (sprite.Deleted)
+                return;
 
-        public int NextDirectionFrame;
+            sprite.EnableDirectionOverride = true;
+            sprite.DirectionOverride = (Direction) value;
+        }
     }
 }

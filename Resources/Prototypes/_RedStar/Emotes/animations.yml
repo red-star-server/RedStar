@@ -157,7 +157,7 @@
     offset: 0.045,0
   - time: 0.45
     offset: 0,0
-  rotationInterpolation: Cubic
+  rotationInterpolation: Linear
   rotation:
   - time: 0
     rotation: 0
