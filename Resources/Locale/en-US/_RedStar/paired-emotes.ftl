@@ -13,4 +13,9 @@ paired-emote-handshake-attempt-self = You extend your hand toward {$target}.
 paired-emote-handshake-attempt-target = {$initiator} extends a hand toward you. Interact with them to respond.
 paired-emote-handshake-success = {$initiator} and {$target} shake hands!
 
+paired-emote-hug-name = Hug
+paired-emote-hug-attempt-self = You open your arms toward {$target}.
+paired-emote-hug-attempt-target = {$initiator} offers you a hug. Interact with them to respond.
+paired-emote-hug-success = {$initiator} and {$target} hug!
+
 paired-emote-left-hanging = Your gesture was left hanging.

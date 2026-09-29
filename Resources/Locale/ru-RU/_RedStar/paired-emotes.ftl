@@ -13,4 +13,9 @@ paired-emote-handshake-attempt-self = Вы протягиваете руку {$t
 paired-emote-handshake-attempt-target = {$initiator} протягивает вам руку. Взаимодействуйте с ним, чтобы ответить.
 paired-emote-handshake-success = {$initiator} и {$target} пожимают друг другу руки!
 
+paired-emote-hug-name = Обнять
+paired-emote-hug-attempt-self = Вы раскрываете объятия перед {$target}.
+paired-emote-hug-attempt-target = {$initiator} предлагает вам обняться. Взаимодействуйте с ним, чтобы ответить.
+paired-emote-hug-success = {$initiator} и {$target} обнимаются!
+
 paired-emote-left-hanging = Никто не ответил на ваш жест.

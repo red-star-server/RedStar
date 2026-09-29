@@ -91,3 +91,49 @@
     rotation: 3
   - time: 0.6
     rotation: 0
+
+- type: emoteAnimation
+  id: PairedHugInitiator
+  offsetInterpolation: Linear
+  offset:
+  - time: 0
+    offset: 0,0
+  - time: 0.2
+    offset: 0,0.04
+  - time: 0.75
+    offset: 0,0.04
+  - time: 1
+    offset: 0,0
+  rotationInterpolation: Linear
+  rotation:
+  - time: 0
+    rotation: 0
+  - time: 0.2
+    rotation: 4
+  - time: 0.75
+    rotation: 4
+  - time: 1
+    rotation: 0
+
+- type: emoteAnimation
+  id: PairedHugTarget
+  offsetInterpolation: Linear
+  offset:
+  - time: 0
+    offset: 0,0
+  - time: 0.2
+    offset: 0,0.04
+  - time: 0.75
+    offset: 0,0.04
+  - time: 1
+    offset: 0,0
+  rotationInterpolation: Linear
+  rotation:
+  - time: 0
+    rotation: 0
+  - time: 0.2
+    rotation: -4
+  - time: 0.75
+    rotation: -4
+  - time: 1
+    rotation: 0
