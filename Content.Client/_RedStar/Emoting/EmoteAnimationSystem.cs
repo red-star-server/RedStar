@@ -1,23 +1,23 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Numerics;
-using Content.Shared._RedStar.Emoting;
+﻿using System.Numerics;
 using Content.Shared._RedStar.Emoting.Components;
+using Content.Shared._RedStar.Emoting.Prototypes;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Shared.Animations;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client._RedStar.Emoting;
 
 public sealed partial class EmoteAnimationSystem : EntitySystem
 {
     [Dependency] private AnimationPlayerSystem _animationPlayer = default!;
-    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private SpriteSystem _spriteSystem = default!;
 
     private const string AnimationKey = "emote-animation";
 
-    private readonly Dictionary<EntityUid, (Vector2 Offset, Angle Rotation)> _savedTransforms = new();
+    private readonly Dictionary<EntityUid, SpriteVisualState> _savedStates = new();
 
     [SubscribeLocalEvent]
     private void OnHandleState(Entity<EmoteAnimationComponent> ent, ref AfterAutoHandleStateEvent args)
@@ -27,14 +27,17 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
 
         ent.Comp.LastClientAnimationSequence = ent.Comp.AnimationSequence;
 
-        if (ent.Comp.Animation == EmoteAnimationType.None)
+        if (ent.Comp.Animation is not { } animationId)
             return;
 
         if (TryComp<MobStateComponent>(ent, out var mobState) &&
             mobState.CurrentState != MobState.Alive)
             return;
 
-        PlayAnimation(ent, ent.Comp.Animation);
+        if (!_prototypeManager.TryIndex(animationId, out var animation))
+            return;
+
+        PlayAnimation(ent, animation);
     }
 
     [SubscribeLocalEvent]
@@ -53,53 +56,78 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnAnimationCompleted(
-        Entity<EmoteAnimationComponent> ent,
-        ref AnimationCompletedEvent args)
+    private void OnAnimationCompleted(Entity<EmoteAnimationComponent> ent, ref AnimationCompletedEvent args)
     {
         if (args.Key != AnimationKey)
             return;
 
-        RestoreTransform(ent);
+        RestoreVisualState(ent);
     }
 
-    private void PlayAnimation(EntityUid uid, EmoteAnimationType animation)
+    private void PlayAnimation(EntityUid uid, EmoteAnimationPrototype prototype)
     {
+        if (!TryComp<SpriteComponent>(uid, out var sprite))
+            return;
+
         StopAnimation(uid);
 
-        switch (animation)
+        var baseOffset = sprite.Offset;
+        var baseRotation = sprite.Rotation;
+
+        _savedStates[uid] = new SpriteVisualState(baseOffset, baseRotation);
+
+        var animation = new Animation
         {
-            case EmoteAnimationType.Flip:
-                PlayFlip(uid);
-                break;
+            Length = prototype.Length
+        };
 
-            case EmoteAnimationType.Jump:
-                PlayJump(uid);
-                break;
+        if (prototype.Offset.Count > 0)
+        {
+            var track = new AnimationTrackComponentProperty
+            {
+                ComponentType = typeof(SpriteComponent),
+                Property = nameof(SpriteComponent.Offset),
+                InterpolationMode = prototype.OffsetInterpolation
+            };
 
-            case EmoteAnimationType.Spin:
-                PlaySpin(uid);
-                break;
+            foreach (var frame in prototype.Offset)
+            {
+                track.KeyFrames.Add(
+                    new AnimationTrackProperty.KeyFrame(
+                        baseOffset + frame.Offset,
+                        (float)frame.Time.TotalSeconds));
+            }
 
-            case EmoteAnimationType.Dance:
-                PlayDance(uid);
-                break;
-
-            case EmoteAnimationType.Tremble:
-                PlayTremble(uid);
-                break;
+            animation.AnimationTracks.Add(track);
         }
-    }
 
-    private bool TryStartAnimation(
-        EntityUid uid,
-        [NotNullWhen(true)] out SpriteComponent? sprite)
-    {
-        if (!TryComp(uid, out sprite))
-            return false;
+        if (prototype.Rotation.Count > 0)
+        {
+            var track = new AnimationTrackComponentProperty
+            {
+                ComponentType = typeof(SpriteComponent),
+                Property = nameof(SpriteComponent.Rotation),
+                InterpolationMode = prototype.RotationInterpolation
+            };
 
-        _savedTransforms[uid] = (sprite.Offset, sprite.Rotation);
-        return true;
+            foreach (var frame in prototype.Rotation)
+            {
+                track.KeyFrames.Add(
+                    new AnimationTrackProperty.KeyFrame(
+                        baseRotation + frame.Rotation,
+                        (float)frame.Time.TotalSeconds));
+            }
+
+            animation.AnimationTracks.Add(track);
+        }
+
+        if (animation.AnimationTracks.Count == 0)
+        {
+            _savedStates.Remove(uid);
+            return;
+        }
+
+        _animationPlayer.Play(uid, animation, AnimationKey);
     }
 
     private void StopAnimation(EntityUid uid)
@@ -107,230 +135,20 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
         if (_animationPlayer.HasRunningAnimation(uid, AnimationKey))
             _animationPlayer.Stop(uid, AnimationKey);
 
-        RestoreTransform(uid);
+        RestoreVisualState(uid);
     }
 
-    private void RestoreTransform(EntityUid uid)
+    private void RestoreVisualState(EntityUid uid)
     {
-        if (!_savedTransforms.Remove(uid, out var saved))
+        if (!_savedStates.Remove(uid, out var state))
             return;
 
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
-        _sprite.SetOffset((uid, sprite), saved.Offset);
-        _sprite.SetRotation((uid, sprite), saved.Rotation);
+        _spriteSystem.SetOffset((uid, sprite), state.Offset);
+        _spriteSystem.SetRotation((uid, sprite), state.Rotation);
     }
 
-    private void PlayFlip(EntityUid uid)
-    {
-        if (!TryStartAnimation(uid, out var sprite))
-            return;
-
-        var baseAngle = sprite.Rotation;
-
-        var animation = new Animation
-        {
-            Length = TimeSpan.FromMilliseconds(500),
-            AnimationTracks =
-            {
-                new AnimationTrackComponentProperty
-                {
-                    ComponentType = typeof(SpriteComponent),
-                    Property = nameof(SpriteComponent.Rotation),
-                    InterpolationMode = AnimationInterpolationMode.Linear,
-                    KeyFrames =
-                    {
-                        new AnimationTrackProperty.KeyFrame(baseAngle, 0f),
-                        new AnimationTrackProperty.KeyFrame(
-                            Angle.FromDegrees(baseAngle.Degrees + 180),
-                            0.25f),
-                        new AnimationTrackProperty.KeyFrame(
-                            Angle.FromDegrees(baseAngle.Degrees + 360),
-                            0.5f)
-                    }
-                }
-            }
-        };
-
-        _animationPlayer.Play(uid, animation, AnimationKey);
-    }
-
-    private void PlayJump(EntityUid uid)
-    {
-        if (!TryStartAnimation(uid, out var sprite))
-            return;
-
-        var baseOffset = sprite.Offset;
-
-        var animation = new Animation
-        {
-            Length = TimeSpan.FromMilliseconds(500),
-            AnimationTracks =
-            {
-                new AnimationTrackComponentProperty
-                {
-                    ComponentType = typeof(SpriteComponent),
-                    Property = nameof(SpriteComponent.Offset),
-                    InterpolationMode = AnimationInterpolationMode.Cubic,
-                    KeyFrames =
-                    {
-                        new AnimationTrackProperty.KeyFrame(baseOffset, 0f),
-                        new AnimationTrackProperty.KeyFrame(
-                            baseOffset + new Vector2(0f, 0.3f),
-                            0.125f),
-                        new AnimationTrackProperty.KeyFrame(
-                            baseOffset + new Vector2(0f, 0.7f),
-                            0.25f),
-                        new AnimationTrackProperty.KeyFrame(
-                            baseOffset + new Vector2(0f, 0.3f),
-                            0.375f),
-                        new AnimationTrackProperty.KeyFrame(
-                            baseOffset,
-                            0.5f)
-                    }
-                }
-            }
-        };
-
-        _animationPlayer.Play(uid, animation, AnimationKey);
-    }
-
-    private void PlaySpin(EntityUid uid)
-    {
-        if (!TryStartAnimation(uid, out var sprite))
-            return;
-
-        var baseAngle = sprite.Rotation;
-
-        var animation = new Animation
-        {
-            Length = TimeSpan.FromMilliseconds(600),
-            AnimationTracks =
-            {
-                new AnimationTrackComponentProperty
-                {
-                    ComponentType = typeof(SpriteComponent),
-                    Property = nameof(SpriteComponent.Rotation),
-                    InterpolationMode = AnimationInterpolationMode.Linear,
-                    KeyFrames =
-                    {
-                        new AnimationTrackProperty.KeyFrame(baseAngle, 0f),
-                        new AnimationTrackProperty.KeyFrame(
-                            Angle.FromDegrees(baseAngle.Degrees + 180),
-                            0.3f),
-                        new AnimationTrackProperty.KeyFrame(
-                            Angle.FromDegrees(baseAngle.Degrees + 360),
-                            0.6f)
-                    }
-                }
-            }
-        };
-
-        _animationPlayer.Play(uid, animation, AnimationKey);
-    }
-
-    private void PlayDance(EntityUid uid)
-    {
-        if (!TryStartAnimation(uid, out var sprite))
-            return;
-
-        var baseAngle = sprite.Rotation;
-
-        var animation = new Animation
-        {
-            Length = TimeSpan.FromMilliseconds(900),
-            AnimationTracks =
-            {
-                new AnimationTrackComponentProperty
-                {
-                    ComponentType = typeof(SpriteComponent),
-                    Property = nameof(SpriteComponent.Rotation),
-                    InterpolationMode = AnimationInterpolationMode.Linear,
-                    KeyFrames =
-                    {
-                        new AnimationTrackProperty.KeyFrame(baseAngle, 0f),
-                        new AnimationTrackProperty.KeyFrame(
-                            Angle.FromDegrees(baseAngle.Degrees + 90),
-                            0.075f),
-                        new AnimationTrackProperty.KeyFrame(
-                            Angle.FromDegrees(baseAngle.Degrees + 180),
-                            0.15f),
-                        new AnimationTrackProperty.KeyFrame(
-                            Angle.FromDegrees(baseAngle.Degrees + 270),
-                            0.225f),
-                        new AnimationTrackProperty.KeyFrame(
-                            Angle.FromDegrees(baseAngle.Degrees + 360),
-                            0.3f),
-                        new AnimationTrackProperty.KeyFrame(
-                            Angle.FromDegrees(baseAngle.Degrees + 450),
-                            0.375f),
-                        new AnimationTrackProperty.KeyFrame(
-                            Angle.FromDegrees(baseAngle.Degrees + 540),
-                            0.45f),
-                        new AnimationTrackProperty.KeyFrame(
-                            Angle.FromDegrees(baseAngle.Degrees + 630),
-                            0.525f),
-                        new AnimationTrackProperty.KeyFrame(
-                            Angle.FromDegrees(baseAngle.Degrees + 720),
-                            0.6f),
-                        new AnimationTrackProperty.KeyFrame(
-                            baseAngle,
-                            0.9f)
-                    }
-                }
-            }
-        };
-
-        _animationPlayer.Play(uid, animation, AnimationKey);
-    }
-
-    private void PlayTremble(EntityUid uid)
-    {
-        if (!TryStartAnimation(uid, out var sprite))
-            return;
-
-        var baseOffset = sprite.Offset;
-
-        var animation = new Animation
-        {
-            Length = TimeSpan.FromMilliseconds(400),
-            AnimationTracks =
-            {
-                new AnimationTrackComponentProperty
-                {
-                    ComponentType = typeof(SpriteComponent),
-                    Property = nameof(SpriteComponent.Offset),
-                    InterpolationMode = AnimationInterpolationMode.Linear,
-                    KeyFrames =
-                    {
-                        new AnimationTrackProperty.KeyFrame(baseOffset, 0f),
-                        new AnimationTrackProperty.KeyFrame(
-                            baseOffset + new Vector2(-0.06f, 0f),
-                            0.05f),
-                        new AnimationTrackProperty.KeyFrame(
-                            baseOffset + new Vector2(0.06f, 0f),
-                            0.10f),
-                        new AnimationTrackProperty.KeyFrame(
-                            baseOffset + new Vector2(-0.05f, 0f),
-                            0.15f),
-                        new AnimationTrackProperty.KeyFrame(
-                            baseOffset + new Vector2(0.05f, 0f),
-                            0.20f),
-                        new AnimationTrackProperty.KeyFrame(
-                            baseOffset + new Vector2(-0.03f, 0f),
-                            0.25f),
-                        new AnimationTrackProperty.KeyFrame(
-                            baseOffset + new Vector2(0.03f, 0f),
-                            0.30f),
-                        new AnimationTrackProperty.KeyFrame(
-                            baseOffset,
-                            0.40f)
-                    }
-                }
-            }
-        };
-
-        _animationPlayer.Play(uid, animation, AnimationKey);
-    }
+    private readonly record struct SpriteVisualState(Vector2 Offset, Angle Rotation);
 }

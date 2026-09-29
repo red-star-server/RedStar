@@ -1,18 +1,4 @@
-﻿- type: entity
-  abstract: true
-  id: BaseEmoteAnimations
-  components:
-  - type: EmoteAnimation
-    animations:
-      Flip: Flip
-      Jump: Jump
-      Spin: Spin
-      Dance: Dance
-      Tremble: Tremble
-      Shiver: Tremble
-      Shudder: Tremble
-
-- type: emote
+﻿- type: emote
   id: Flip
   name: chat-emote-name-flip
   category: Animations

@@ -8,13 +8,10 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnEmote(Entity<EmoteAnimationComponent> ent, ref EmoteEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || args.Emote.Animation == null)
             return;
 
-        if (!ent.Comp.Animations.TryGetValue(args.Emote.ID, out var animation))
-            return;
-
-        ent.Comp.Animation = animation;
+        ent.Comp.Animation = args.Emote.Animation;
         ent.Comp.AnimationSequence++;
 
         Dirty(ent);

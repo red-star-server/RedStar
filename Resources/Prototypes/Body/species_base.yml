@@ -8,7 +8,6 @@
   - StripableInventoryBase
   - BaseSpeciesAppearance
   - TTS_speaker # Corvax-TTS
-  - BaseEmoteAnimations # RS14
   id: BaseSpeciesMob
   save: false
   components:
@@ -139,6 +138,7 @@
   - type: Emoting
   - type: BodyEmotes
     soundsId: GeneralBodyEmotes
+  - type: EmoteAnimation # RS14
   - type: Grammar
     attributes:
       proper: true

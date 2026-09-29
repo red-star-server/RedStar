@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chat.Prototypes;
+﻿using Content.Shared._RedStar.Emoting.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -8,26 +8,19 @@ namespace Content.Shared._RedStar.Emoting.Components;
 public sealed partial class EmoteAnimationComponent : Component
 {
     /// <summary>
-    /// Maps emote prototypes to their visual animations.
+    /// Animation most recently requested by the server.
     /// </summary>
-    [DataField]
-    public Dictionary<ProtoId<EmotePrototype>, EmoteAnimationType> Animations = new();
+    [AutoNetworkedField]
+    public ProtoId<EmoteAnimationPrototype>? Animation;
 
     /// <summary>
-    /// Animation currently requested by the server.
+    /// Incremented for every animation request so the same animation can be replayed consecutively.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public EmoteAnimationType Animation;
-
-    /// <summary>
-    /// Incremented whenever an animation is requested.
-    /// Allows the same animation to be played repeatedly.
-    /// </summary>
-    [DataField, AutoNetworkedField]
+    [AutoNetworkedField]
     public uint AnimationSequence;
 
     /// <summary>
-    /// Last sequence processed by this client.
+    /// Last sequence handled by this client.
     /// </summary>
     [ViewVariables]
     public uint LastClientAnimationSequence;
