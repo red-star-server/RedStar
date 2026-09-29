@@ -8,6 +8,7 @@ using Content.Shared.Mobs.Components;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client._RedStar.Emoting;
 
@@ -23,21 +24,19 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
     [SubscribeNetworkEvent]
     private void OnAnimation(EmoteAnimationEvent args)
     {
-        var uid = GetEntity(args.Entity);
+        TryPlayAnimation(GetEntity(args.Entity), args.Animation);
+    }
 
-        if (!HasComp<EmoteAnimationComponent>(uid))
-            return;
+    [SubscribeNetworkEvent]
+    private void OnPairedAnimation(PairedEmoteAnimationEvent args)
+    {
+        TryPlayAnimation(
+            GetEntity(args.Initiator),
+            args.InitiatorAnimation);
 
-        if (TryComp<MobStateComponent>(uid, out var mobState) &&
-            mobState.CurrentState != MobState.Alive)
-        {
-            return;
-        }
-
-        if (!ProtoMan.TryIndex(args.Animation, out var prototype))
-            return;
-
-        PlayAnimation(uid, prototype);
+        TryPlayAnimation(
+            GetEntity(args.Target),
+            args.TargetAnimation);
     }
 
     [SubscribeLocalEvent]
@@ -62,6 +61,25 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
             RestoreVisualState(ent);
     }
 
+    private void TryPlayAnimation(
+        EntityUid uid,
+        ProtoId<EmoteAnimationPrototype> animation)
+    {
+        if (!HasComp<EmoteAnimationComponent>(uid))
+            return;
+
+        if (TryComp<MobStateComponent>(uid, out var mobState) &&
+            mobState.CurrentState != MobState.Alive)
+        {
+            return;
+        }
+
+        if (!ProtoMan.TryIndex(animation, out var prototype))
+            return;
+
+        PlayAnimation(uid, prototype);
+    }
+
     private void PlayAnimation(EntityUid uid, EmoteAnimationPrototype prototype)
     {
         if (!TryComp<SpriteComponent>(uid, out var sprite))
@@ -81,7 +99,9 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
             prototype.Offset.Count > 0 ? baseOffset : null,
             prototype.Rotation.Count > 0 ? baseRotation : null,
             prototype.Direction.Count > 0
-                ? new DirectionOverrideState(sprite.EnableDirectionOverride, sprite.DirectionOverride)
+                ? new DirectionOverrideState(
+                    sprite.EnableDirectionOverride,
+                    sprite.DirectionOverride)
                 : null);
 
         var animation = new Animation
@@ -98,7 +118,6 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
         if (prototype.Direction.Count > 0)
             animation.AnimationTracks.Add(CreateDirectionTrack(prototype, sprite));
 
-        // Apply all initial direction frames in order, including instantaneous transitions.
         foreach (var frame in prototype.Direction)
         {
             if (frame.Time != TimeSpan.Zero)
@@ -108,7 +127,6 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
             sprite.DirectionOverride = frame.Direction;
         }
 
-        // A new emote replaces only the previous emote; other animation keys are left alone.
         _animationPlayer.Play(uid, animation, AnimationKey);
     }
 
@@ -181,9 +199,11 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
 
         foreach (var frame in prototype.Direction)
         {
-            track.KeyFrames.Add(new AnimationTrackProperty.KeyFrame(
-                frame.Direction,
-                (float) (frame.Time - previousTime).TotalSeconds));
+            track.KeyFrames.Add(
+                new AnimationTrackProperty.KeyFrame(
+                    frame.Direction,
+                    (float) (frame.Time - previousTime).TotalSeconds));
+
             previousTime = frame.Time;
         }
 
@@ -210,7 +230,6 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
     private void StopAnimation(EntityUid uid)
     {
         _animationPlayer.Stop(uid, AnimationKey);
-        // Also restore during component shutdown, when the completion handler may not run.
         RestoreVisualState(uid);
     }
 
@@ -228,22 +247,17 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
         if (state.Rotation is { } rotation)
             _spriteSystem.SetRotation((uid, sprite), rotation);
 
-        if (state.Direction is { } direction)
-        {
-            sprite.EnableDirectionOverride = direction.Enabled;
-            sprite.DirectionOverride = direction.Direction;
-        }
+        if (state.Direction is not { } direction)
+            return;
+
+        sprite.EnableDirectionOverride = direction.Enabled;
+        sprite.DirectionOverride = direction.Direction;
     }
 
-    private readonly record struct SpriteVisualState(
-        Vector2? Offset,
-        Angle? Rotation,
-        DirectionOverrideState? Direction);
+    private readonly record struct SpriteVisualState(Vector2? Offset, Angle? Rotation, DirectionOverrideState? Direction);
 
     private readonly record struct DirectionOverrideState(bool Enabled, Direction Direction);
 
-    // DirectionOverride is a field without animatable-property support in SpriteComponent.
-    // Use the standard property track's timing while applying the direction directly.
     private sealed class DirectionAnimationTrack(SpriteComponent sprite) : AnimationTrackProperty
     {
         protected override void ApplyProperty(object context, object value)

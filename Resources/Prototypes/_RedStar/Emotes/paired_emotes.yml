@@ -1,0 +1,32 @@
+﻿- type: pairedEmote
+  id: HighFive
+  name: paired-emote-high-five-name
+  initiatorAnimation: PairedHighFiveInitiator
+  targetAnimation: PairedHighFiveTarget
+  range: 1.5
+  offerDuration: 5
+  attemptSelf: paired-emote-high-five-attempt-self
+  attemptTarget: paired-emote-high-five-attempt-target
+  success: paired-emote-high-five-success
+
+- type: pairedEmote
+  id: FistBump
+  name: paired-emote-fist-bump-name
+  initiatorAnimation: PairedFistBumpInitiator
+  targetAnimation: PairedFistBumpTarget
+  range: 1.5
+  offerDuration: 5
+  attemptSelf: paired-emote-fist-bump-attempt-self
+  attemptTarget: paired-emote-fist-bump-attempt-target
+  success: paired-emote-fist-bump-success
+
+- type: pairedEmote
+  id: Handshake
+  name: paired-emote-handshake-name
+  initiatorAnimation: PairedHandshakeInitiator
+  targetAnimation: PairedHandshakeTarget
+  range: 1.5
+  offerDuration: 5
+  attemptSelf: paired-emote-handshake-attempt-self
+  attemptTarget: paired-emote-handshake-attempt-target
+  success: paired-emote-handshake-success
