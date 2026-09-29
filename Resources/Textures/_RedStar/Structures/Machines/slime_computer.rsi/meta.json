@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "State based copyright",
+  "copyright": "Conflee, inspired by Paradise Station",
   "size": {
     "x": 32,
     "y": 32
@@ -9,8 +9,7 @@
   "states": [
     {
       "name": "slime_key",
-      "directions": 4,
-      "copyright": "Conflee, inspired by Paradise Station"
+      "directions": 4
     },
     {
       "name": "slime",
@@ -32,8 +31,7 @@
           0.2,
           0.2
         ]
-      ],
-      "copyright": "Conflee, inspired by Paradise Station"
+      ]
     }
   ]
 }
