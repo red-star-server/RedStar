@@ -32,7 +32,7 @@
   description: A massive beast that uses long tentacles to ensnare its prey, threatening them is not advised under any conditions.
   components:
   - type: Sprite
-    sprite: Mobs/Aliens/Asteroid/goliath.rsi
+    sprite: _RedStar/Mobs/Aliens/Asteroid/goliath.rsi # RS14
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: goliath
