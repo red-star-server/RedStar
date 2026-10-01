@@ -237,7 +237,7 @@
     - state: zippo_open
       map: ["open"]
       visible: false
-    - state: lighter_flame
+    - state: zippo_flame # RS14
       map: ["flame"]
       visible: false
       shader: unshaded
@@ -270,7 +270,7 @@
     - state: zippo_engraved_open
       map: ["open"]
       visible: false
-    - state: lighter_flame
+    - state: zippo_flame # RS14
       map: ["flame"]
       visible: false
       shader: unshaded

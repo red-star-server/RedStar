@@ -23,6 +23,15 @@
       ]
     },
     {
+      "name": "zippo_flame",
+      "delays": [
+        [
+          0.2,
+          0.1
+        ]
+      ]
+    },
+    {
       "name": "basic_icon_base-1"
     },
     {
