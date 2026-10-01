@@ -8,17 +8,7 @@
   },
   "states": [
     {
-      "name": "broken",
-      "delays": [
-        [
-          1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
+      "name": "broken"
     },
     {
       "name": "panel",
