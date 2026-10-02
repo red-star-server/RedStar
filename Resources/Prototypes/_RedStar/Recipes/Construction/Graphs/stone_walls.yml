@@ -1,0 +1,26 @@
+- type: constructionGraph
+  id: StoneWalls
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: marbleWall
+      completed:
+      - !type:SnapToGrid
+        southRotation: true
+      steps:
+      - material: Marble
+        amount: 4
+        doAfter: 2
+  - node: marbleWall
+    entity: WallMarble
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialMarble1
+        amount: 4
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Prying
+        doAfter: 10

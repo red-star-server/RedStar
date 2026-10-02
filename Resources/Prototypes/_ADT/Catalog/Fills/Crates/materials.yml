@@ -1,0 +1,12 @@
+﻿- type: entity
+  id: CrateMaterialMarble
+  parent: CrateGenericSteel
+  name: marble crate
+  description: 30 blocks of marble.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: ADTmarble
+          amount: 3

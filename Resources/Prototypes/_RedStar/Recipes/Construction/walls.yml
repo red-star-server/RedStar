@@ -1,0 +1,5 @@
+- type: construction
+  parent: BaseStructureFullTile
+  id: MarbleWall
+  graph: StoneWalls
+  targetNode: marbleWall

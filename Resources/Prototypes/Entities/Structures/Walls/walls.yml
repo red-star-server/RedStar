@@ -491,6 +491,11 @@
     sprite: Structures/Walls/marble.rsi
   - type: Icon
     sprite: Structures/Walls/marble.rsi
+  # RS14-start
+  - type: Construction
+    graph: StoneWalls
+    node: marbleWall
+  # RS14-end
   - type: Damageable
     damageModifierSet: RockMod
   - type: Destructible
@@ -498,8 +503,11 @@
     - trigger: *DamageWallStrong
       behaviors:
       - *SoundMetalSlam
-      - *SpawnGirder
-      - *SpawnPlasteel
+      # RS14-start
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialMarble1: *BaseWallSpawn
+      # RS14-end
   - type: IconSmooth
     key: walls
     base: wall
