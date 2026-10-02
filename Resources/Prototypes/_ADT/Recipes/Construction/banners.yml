@@ -3,8 +3,8 @@
   id: BannerRedRecipe
   name: construction-name-banner-red
   description: construction-desc-banner-red
-  graph: BannerRed
-  targetNode: banner
+  graph: BannerGraph
+  targetNode: bannerRed
   conditions:
   - !type:TileNotBlocked
 
@@ -13,8 +13,8 @@
   id: BannerBlueRecipe
   name: construction-name-banner-blue
   description: construction-desc-banner-blue
-  graph: BannerBlue
-  targetNode: banner
+  graph: BannerGraph
+  targetNode: bannerBlue
   conditions:
   - !type:TileNotBlocked
 
@@ -23,8 +23,8 @@
   id: BannerGreenRecipe
   name: construction-name-banner-green
   description: construction-desc-banner-green
-  graph: BannerGreen
-  targetNode: banner
+  graph: BannerGraph
+  targetNode: bannerGreen
   conditions:
   - !type:TileNotBlocked
 
@@ -33,8 +33,8 @@
   id: BannerYellowRecipe
   name: construction-name-banner-yellow
   description: construction-desc-banner-yellow
-  graph: BannerYellow
-  targetNode: banner
+  graph: BannerGraph
+  targetNode: bannerYellow
   conditions:
   - !type:TileNotBlocked
 
@@ -43,8 +43,8 @@
   id: BannerNanotrasenRecipe
   name: construction-name-banner-nanotrasen
   description: construction-desc-banner-nanotrasen
-  graph: BannerNanotrasen
-  targetNode: banner
+  graph: BannerGraph
+  targetNode: bannerNanotrasen
   conditions:
   - !type:TileNotBlocked
 
@@ -53,8 +53,8 @@
   id: BannerCargoRecipe
   name: construction-name-banner-cargo
   description: construction-desc-banner-cargo
-  graph: BannerCargo
-  targetNode: banner
+  graph: BannerGraph
+  targetNode: bannerCargo
   conditions:
   - !type:TileNotBlocked
 
@@ -63,8 +63,8 @@
   id: BannerEngineeringRecipe
   name: construction-name-banner-engineering
   description: construction-desc-banner-engineering
-  graph: BannerEngineering
-  targetNode: banner
+  graph: BannerGraph
+  targetNode: bannerEngineering
   conditions:
   - !type:TileNotBlocked
 
@@ -73,8 +73,8 @@
   id: BannerMedicalRecipe
   name: construction-name-banner-medical
   description: construction-desc-banner-medical
-  graph: BannerMedical
-  targetNode: banner
+  graph: BannerGraph
+  targetNode: bannerMedical
   conditions:
   - !type:TileNotBlocked
 
@@ -83,8 +83,8 @@
   id: BannerScienceRecipe
   name: construction-name-banner-science
   description: construction-desc-banner-science
-  graph: BannerScience
-  targetNode: banner
+  graph: BannerGraph
+  targetNode: bannerScience
   conditions:
   - !type:TileNotBlocked
 
@@ -93,7 +93,7 @@
   id: BannerSecurityRecipe
   name: construction-name-banner-security
   description: construction-desc-banner-security
-  graph: BannerSecurity
-  targetNode: banner
+  graph: BannerGraph
+  targetNode: bannerSecurity
   conditions:
   - !type:TileNotBlocked

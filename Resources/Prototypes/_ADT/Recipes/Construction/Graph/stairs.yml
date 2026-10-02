@@ -1,5 +1,5 @@
 - type: constructionGraph
-  id: SteelDarkSingleStairs
+  id: StairsGraph
   start: start
   graph:
   - node: start
@@ -11,125 +11,62 @@
       - material: Steel
         amount: 2
         doAfter: 1
-  - node: steelDarkSingleStairs
-    entity: SteelDarkSingleStairs
-    edges: []
-
-- type: constructionGraph
-  id: SteelSingleStairs
-  start: start
-  graph:
-  - node: start
-    actions:
-    - !type:DestroyEntity {}
-    edges:
     - to: steelSingleStairs
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-  - node: steelSingleStairs
-    entity: SteelSingleStairs
-    edges: []
-
-- type: constructionGraph
-  id: SteelWhiteSingleStairs
-  start: start
-  graph:
-  - node: start
-    actions:
-    - !type:DestroyEntity {}
-    edges:
     - to: steelWhiteSingleStairs
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-  - node: steelWhiteSingleStairs
-    entity: SteelWhiteSingleStairs
-    edges: []
-
-- type: constructionGraph
-  id: WoodBlackSingleStairs
-  start: start
-  graph:
-  - node: start
-    actions:
-    - !type:DestroyEntity {}
-    edges:
     - to: woodBlackSingleStairs
       steps:
       - material: WoodPlank
         amount: 2
         doAfter: 1
-  - node: woodBlackSingleStairs
-    entity: WoodBlackSingleStairs
-    edges: []
-
-- type: constructionGraph
-  id: WoodDarkSingleStairs
-  start: start
-  graph:
-  - node: start
-    actions:
-    - !type:DestroyEntity {}
-    edges:
     - to: woodDarkSingleStairs
       steps:
       - material: WoodPlank
         amount: 2
         doAfter: 1
-  - node: woodDarkSingleStairs
-    entity: WoodDarkSingleStairs
-    edges: []
-
-- type: constructionGraph
-  id: WoodSingleStairs
-  start: start
-  graph:
-  - node: start
-    actions:
-    - !type:DestroyEntity {}
-    edges:
     - to: woodSingleStairs
       steps:
       - material: WoodPlank
         amount: 2
         doAfter: 1
-  - node: woodSingleStairs
-    entity: WoodSingleStairs
-    edges: []
-
-- type: constructionGraph
-  id: WoodLightSingleStairs
-  start: start
-  graph:
-  - node: start
-    actions:
-    - !type:DestroyEntity {}
-    edges:
     - to: woodLightSingleStairs
       steps:
       - material: WoodPlank
         amount: 2
         doAfter: 1
-  - node: woodLightSingleStairs
-    entity: WoodLightSingleStairs
-    edges: []
-
-- type: constructionGraph
-  id: WoodRedSingleStairs
-  start: start
-  graph:
-  - node: start
-    actions:
-    - !type:DestroyEntity {}
-    edges:
     - to: woodRedSingleStairs
       steps:
       - material: WoodPlank
         amount: 2
         doAfter: 1
+  - node: steelDarkSingleStairs
+    entity: SteelDarkSingleStairs
+    edges: []
+  - node: steelSingleStairs
+    entity: SteelSingleStairs
+    edges: []
+  - node: steelWhiteSingleStairs
+    entity: SteelWhiteSingleStairs
+    edges: []
+  - node: woodBlackSingleStairs
+    entity: WoodBlackSingleStairs
+    edges: []
+  - node: woodDarkSingleStairs
+    entity: WoodDarkSingleStairs
+    edges: []
+  - node: woodSingleStairs
+    entity: WoodSingleStairs
+    edges: []
+  - node: woodLightSingleStairs
+    entity: WoodLightSingleStairs
+    edges: []
   - node: woodRedSingleStairs
     entity: WoodRedSingleStairs
     edges: []

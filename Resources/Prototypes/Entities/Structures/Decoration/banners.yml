@@ -46,8 +46,8 @@
   components:
   # RS14-start
   - type: Construction
-    graph: BannerNanotrasen
-    node: banner
+    graph: BannerGraph
+    node: bannerNanotrasen
   # RS14-end
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
@@ -61,8 +61,8 @@
   components:
   # RS14-start
   - type: Construction
-    graph: BannerCargo
-    node: banner
+    graph: BannerGraph
+    node: bannerCargo
   # RS14-end
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
@@ -76,8 +76,8 @@
   components:
   # RS14-start
   - type: Construction
-    graph: BannerEngineering
-    node: banner
+    graph: BannerGraph
+    node: bannerEngineering
   # RS14-end
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
@@ -91,8 +91,8 @@
   components:
   # RS14-start
   - type: Construction
-    graph: BannerMedical
-    node: banner
+    graph: BannerGraph
+    node: bannerMedical
   # RS14-end
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
@@ -126,8 +126,8 @@
   components:
   # RS14-start
   - type: Construction
-    graph: BannerScience
-    node: banner
+    graph: BannerGraph
+    node: bannerScience
   # RS14-end
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
@@ -141,8 +141,8 @@
   components:
   # RS14-start
   - type: Construction
-    graph: BannerSecurity
-    node: banner
+    graph: BannerGraph
+    node: bannerSecurity
   # RS14-end
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
@@ -156,8 +156,8 @@
   components:
   # RS14-start
   - type: Construction
-    graph: BannerBlue
-    node: banner
+    graph: BannerGraph
+    node: bannerBlue
   # RS14-end
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
@@ -171,8 +171,8 @@
   components:
   # RS14-start
   - type: Construction
-    graph: BannerRed
-    node: banner
+    graph: BannerGraph
+    node: bannerRed
   # RS14-end
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
@@ -186,8 +186,8 @@
   components:
   # RS14-start
   - type: Construction
-    graph: BannerYellow
-    node: banner
+    graph: BannerGraph
+    node: bannerYellow
   # RS14-end
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
@@ -201,8 +201,8 @@
   components:
   # RS14-start
   - type: Construction
-    graph: BannerGreen
-    node: banner
+    graph: BannerGraph
+    node: bannerGreen
   # RS14-end
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi

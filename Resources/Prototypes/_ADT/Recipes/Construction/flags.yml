@@ -3,8 +3,8 @@
   id: BlankFlagVerticalRecipe
   name: construction-name-flag-blank
   description: construction-desc-flag-blank
-  graph: BlankFlagVerticalGraph
-  targetNode: flag
+  graph: DecorativeFlagGraph
+  targetNode: blankFlagVertical
   canBuildInImpassable: true
   conditions:
   - !type:TileNotBlocked
@@ -14,8 +14,8 @@
   id: NTFlagVerticalRecipe
   name: construction-name-flag-nanotrasen
   description: construction-desc-flag-nanotrasen
-  graph: NTFlagVerticalGraph
-  targetNode: flag
+  graph: DecorativeFlagGraph
+  targetNode: nTFlagVertical
   canBuildInImpassable: true
   conditions:
   - !type:TileNotBlocked
@@ -25,8 +25,8 @@
   id: KMTFlagRecipe
   name: construction-name-flag-kmt
   description: construction-desc-flag-kmt
-  graph: KMTFlagGraph
-  targetNode: flag
+  graph: DecorativeFlagGraph
+  targetNode: kMTFlag
   canBuildInImpassable: true
   conditions:
   - !type:TileNotBlocked
@@ -36,8 +36,8 @@
   id: KMTFlagVerticalRecipe
   name: construction-name-flag-kmt-vertical
   description: construction-desc-flag-kmt
-  graph: KMTFlagVerticalGraph
-  targetNode: flag
+  graph: DecorativeFlagGraph
+  targetNode: kMTFlagVertical
   canBuildInImpassable: true
   conditions:
   - !type:TileNotBlocked
@@ -47,8 +47,8 @@
   id: ElysiumFlagRecipe
   name: construction-name-flag-elysium
   description: construction-desc-flag-elysium
-  graph: ElysiumFlagGraph
-  targetNode: flag
+  graph: DecorativeFlagGraph
+  targetNode: elysiumFlag
   canBuildInImpassable: true
   conditions:
   - !type:TileNotBlocked
@@ -58,8 +58,8 @@
   id: ElysiumFlagVerticalRecipe
   name: construction-name-flag-elysium-vertical
   description: construction-desc-flag-elysium
-  graph: ElysiumFlagVerticalGraph
-  targetNode: flag
+  graph: DecorativeFlagGraph
+  targetNode: elysiumFlagVertical
   canBuildInImpassable: true
   conditions:
   - !type:TileNotBlocked
@@ -69,8 +69,8 @@
   id: TSFFlagRecipe
   name: construction-name-flag-tsf
   description: construction-desc-flag-tsf
-  graph: TSFFlagGraph
-  targetNode: flag
+  graph: DecorativeFlagGraph
+  targetNode: tSFFlag
   canBuildInImpassable: true
   conditions:
   - !type:TileNotBlocked
@@ -80,8 +80,8 @@
   id: TSFFlagVerticalRecipe
   name: construction-name-flag-tsf-vertical
   description: construction-desc-flag-tsf
-  graph: TSFFlagVerticalGraph
-  targetNode: flag
+  graph: DecorativeFlagGraph
+  targetNode: tSFFlagVertical
   canBuildInImpassable: true
   conditions:
   - !type:TileNotBlocked
@@ -91,8 +91,8 @@
   id: USSPFlagRecipe
   name: construction-name-flag-ussp
   description: construction-desc-flag-ussp
-  graph: USSPFlagGraph
-  targetNode: flag
+  graph: DecorativeFlagGraph
+  targetNode: uSSPFlag
   canBuildInImpassable: true
   conditions:
   - !type:TileNotBlocked
@@ -102,8 +102,8 @@
   id: USSPFlagVerticalRecipe
   name: construction-name-flag-ussp-vertical
   description: construction-desc-flag-ussp
-  graph: USSPFlagVerticalGraph
-  targetNode: flag
+  graph: DecorativeFlagGraph
+  targetNode: uSSPFlagVertical
   canBuildInImpassable: true
   conditions:
   - !type:TileNotBlocked
@@ -113,8 +113,8 @@
   id: USSPFlagVertical2Recipe
   name: construction-name-flag-ussp-vertical-2
   description: construction-desc-flag-ussp
-  graph: USSPFlagVertical2Graph
-  targetNode: flag
+  graph: DecorativeFlagGraph
+  targetNode: uSSPFlagVertical2
   canBuildInImpassable: true
   conditions:
   - !type:TileNotBlocked
@@ -124,8 +124,8 @@
   id: RastamanFlagRecipe
   name: construction-name-flag-rastaman
   description: construction-desc-flag-rastaman
-  graph: RastamanFlagGraph
-  targetNode: flag
+  graph: DecorativeFlagGraph
+  targetNode: rastamanFlag
   canBuildInImpassable: true
   conditions:
   - !type:TileNotBlocked
@@ -135,8 +135,8 @@
   id: RomanFlagRecipe
   name: construction-name-flag-roman
   description: construction-desc-flag-roman
-  graph: RomanFlagGraph
-  targetNode: flag
+  graph: DecorativeFlagGraph
+  targetNode: romanFlag
   canBuildInImpassable: true
   conditions:
   - !type:TileNotBlocked

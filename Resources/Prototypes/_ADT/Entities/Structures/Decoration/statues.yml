@@ -9,8 +9,8 @@
     sprite: _ADT/Structures/Decoration/Statues/angel.rsi
     state: angel
   - type: Construction
-    graph: StatueAngel
-    node: statue
+    graph: DecorativeStatueGraph
+    node: statueAngel
 
 - type: entity
   id: StatueLion
@@ -22,8 +22,8 @@
     sprite: _ADT/Structures/Decoration/Statues/lion.rsi
     state: lion
   - type: Construction
-    graph: StatueLion
-    node: statue
+    graph: DecorativeStatueGraph
+    node: statueLion
 
 - type: entity
   id: StatueLenin
@@ -35,8 +35,8 @@
     sprite: _ADT/Structures/Decoration/Statues/lenin.rsi
     state: lenin
   - type: Construction
-    graph: StatueLenin
-    node: statue
+    graph: DecorativeStatueGraph
+    node: statueLenin
 
 - type: entity
   id: StatueHadii
@@ -48,8 +48,8 @@
     sprite: _ADT/Structures/Decoration/Statues/hadii.rsi
     state: hadii
   - type: Construction
-    graph: StatueHadii
-    node: statue
+    graph: DecorativeStatueGraph
+    node: statueHadii
 
 - type: entity
   id: BustHelios
@@ -60,8 +60,8 @@
   - type: Sprite
     state: helios
   - type: Construction
-    graph: BustHelios
-    node: bust
+    graph: DecorativeStatueGraph
+    node: bustHelios
 
 - type: entity
   id: BustLenin
@@ -72,8 +72,8 @@
   - type: Sprite
     state: lenin
   - type: Construction
-    graph: BustLenin
-    node: bust
+    graph: DecorativeStatueGraph
+    node: bustLenin
 
 - type: entity
   id: BustDarwin
@@ -84,8 +84,8 @@
   - type: Sprite
     state: darwin
   - type: Construction
-    graph: BustDarwin
-    node: bust
+    graph: DecorativeStatueGraph
+    node: bustDarwin
 
 - type: entity
   id: BustPompeii
@@ -96,8 +96,8 @@
   - type: Sprite
     state: pompeii
   - type: Construction
-    graph: BustPompeii
-    node: bust
+    graph: DecorativeStatueGraph
+    node: bustPompeii
 
 - type: entity
   abstract: true
@@ -165,8 +165,8 @@
     sprite: _ADT/Structures/Decoration/Statues/marble_lady.rsi
     state: marlady
   - type: Construction
-    graph: MarbleStatueLady
-    node: marblestatueLady
+    graph: DecorativeStatueGraph
+    node: marbleLady
 
 - type: entity
   parent: MarbleLady
@@ -178,8 +178,8 @@
     sprite: _ADT/Structures/Decoration/Statues/marblelady_flower.rsi
     state: marlady_flowers
   - type: Construction
-    graph: MarbleStatueLadyFlower
-    node: marblestatueLadyFlower
+    graph: DecorativeStatueGraph
+    node: marbleLadyFlower
 
 - type: entity
   parent: BaseMarbleStatue
@@ -223,8 +223,8 @@
           params:
             volume: -2
   - type: Construction
-    graph: MarbleStand
-    node: marblestand
+    graph: DecorativeStatueGraph
+    node: marbleStand
 
 - type: entity
   parent: BaseMarbleStatue
@@ -237,7 +237,7 @@
     offset: 0.0,0.0
     state: marman
   - type: Construction
-    graph: MarbleMan
+    graph: DecorativeStatueGraph
     node: marbleMan
 
 - type: entity
@@ -251,8 +251,8 @@
     offset: 0.0,0.0
     state: marmandmg
   - type: Construction
-    graph: MarbleManDamaged
-    node: marbleManDamage
+    graph: DecorativeStatueGraph
+    node: marbleManDamaged
 
 - type: entity
   parent: BaseMarbleStatue
@@ -264,7 +264,7 @@
     sprite: _ADT/Structures/Decoration/Statues/peacemaker.rsi
     state: peacemaker
   - type: Construction
-    graph: MarblePeacemaker
+    graph: DecorativeStatueGraph
     node: marblePeacemaker
 
 - type: entity
@@ -277,8 +277,8 @@
     sprite: _ADT/Structures/Decoration/Statues/marble_knight.rsi
     state: marble_knight
   - type: Construction
-    graph: MarbleKnight
-    node: marbleKnight
+    graph: DecorativeStatueGraph
+    node: knightMarble
 
 - type: entity
   parent: BaseMarbleStatue
@@ -290,8 +290,8 @@
     sprite: _ADT/Structures/Decoration/Statues/marble_hunter.rsi
     state: marble_hunter
   - type: Construction
-    graph: MarbleHunter
-    node: marbleHunter
+    graph: DecorativeStatueGraph
+    node: hunterMarble
 
 - type: entity
   parent: BaseMarbleStatue
@@ -303,8 +303,8 @@
     sprite: _ADT/Structures/Decoration/Statues/marble_machine.rsi
     state: marble_machine
   - type: Construction
-    graph: MarbleMachine
-    node: marbleMachine
+    graph: DecorativeStatueGraph
+    node: machineMarble
 
 - type: entity
   parent: BaseMarbleStatue
@@ -316,8 +316,8 @@
     sprite: _ADT/Structures/Decoration/Statues/marble_legionary.rsi
     state: marble_legionary
   - type: Construction
-    graph: MarbleLegionary
-    node: marbleLegionary
+    graph: DecorativeStatueGraph
+    node: legionaryMarble
 
 - type: entity
   parent: BaseMarbleStatue
@@ -347,8 +347,8 @@
           params:
             volume: -2
   - type: Construction
-    graph: MarbleBird
-    node: marbleBird
+    graph: DecorativeStatueGraph
+    node: birdMarble
 
 - type: entity
   parent: BaseMarbleStatue
@@ -360,8 +360,8 @@
     sprite: _ADT/Structures/Decoration/Statues/marble_cunning.rsi
     state: marble_cunning
   - type: Construction
-    graph: MarbleCunning
-    node: marbleCunning
+    graph: DecorativeStatueGraph
+    node: cunningMarble
 
 - type: entity
   parent: BaseMarbleStatue
@@ -391,8 +391,8 @@
           params:
             volume: -2
   - type: Construction
-    graph: MarbleScientist
-    node: marbleScientist
+    graph: DecorativeStatueGraph
+    node: scientistMarble
 
 - type: entity
   parent: BaseMarbleStatue
@@ -422,8 +422,8 @@
           params:
             volume: -2
   - type: Construction
-    graph: MarbleEye
-    node: marbleEye
+    graph: DecorativeStatueGraph
+    node: eyeMarble
 
 - type: entity
   parent: BaseMarbleStatue
@@ -463,8 +463,8 @@
           params:
             volume: -2
   - type: Construction
-    graph: MarbleAncestor
-    node: marbleAncestor
+    graph: DecorativeStatueGraph
+    node: ancestorMarble
 
 - type: entity
   parent: BaseMarbleStatue
@@ -476,8 +476,8 @@
     sprite: _ADT/Structures/Decoration/Statues/marble_plafeim.rsi
     state: marble_plafeim
   - type: Construction
-    graph: MarblePlafeim
-    node: marblePlafeim
+    graph: DecorativeStatueGraph
+    node: plafeimMarble
 
 - type: entity
   parent: BaseMarbleStatue

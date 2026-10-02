@@ -70,9 +70,7 @@
     sprite: _ADT/Structures/Furniture/deckchair.rsi
     state: deckchair
   - type: Construction
-    graph: deckchair
-    node: deckchair
+    graph: DeckChairGraph
+    node: deckChair
   - type: Strap
-    position: Down
-    rotation: -90
     buckleOffset: "0,-0.15"

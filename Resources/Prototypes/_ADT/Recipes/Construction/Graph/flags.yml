@@ -1,194 +1,110 @@
 - type: constructionGraph
-  id: BlankFlagVerticalGraph
+  id: DecorativeFlagGraph
   start: start
   graph:
   - node: start
     edges:
-    - to: flag
+    - to: blankFlagVertical
       steps:
       - material: Cloth
         amount: 5
         doAfter: 3
-  - node: flag
+    - to: nTFlagVertical
+      steps:
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+    - to: kMTFlag
+      steps:
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+    - to: kMTFlagVertical
+      steps:
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+    - to: elysiumFlag
+      steps:
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+    - to: elysiumFlagVertical
+      steps:
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+    - to: tSFFlag
+      steps:
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+    - to: tSFFlagVertical
+      steps:
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+    - to: uSSPFlag
+      steps:
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+    - to: uSSPFlagVertical
+      steps:
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+    - to: uSSPFlagVertical2
+      steps:
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+    - to: rastamanFlag
+      steps:
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+    - to: romanFlag
+      steps:
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+  - node: blankFlagVertical
     entity: BlankFlagVertical
     edges: []
-
-- type: constructionGraph
-  id: NTFlagVerticalGraph
-  start: start
-  graph:
-  - node: start
-    edges:
-    - to: flag
-      steps:
-      - material: Cloth
-        amount: 5
-        doAfter: 3
-  - node: flag
+  - node: nTFlagVertical
     entity: NTFlagVertical
     edges: []
-
-- type: constructionGraph
-  id: KMTFlagGraph
-  start: start
-  graph:
-  - node: start
-    edges:
-    - to: flag
-      steps:
-      - material: Cloth
-        amount: 5
-        doAfter: 3
-  - node: flag
+  - node: kMTFlag
     entity: KMTFlag
     edges: []
-
-- type: constructionGraph
-  id: KMTFlagVerticalGraph
-  start: start
-  graph:
-  - node: start
-    edges:
-    - to: flag
-      steps:
-      - material: Cloth
-        amount: 5
-        doAfter: 3
-  - node: flag
+  - node: kMTFlagVertical
     entity: KMTFlagVertical
     edges: []
-
-- type: constructionGraph
-  id: ElysiumFlagGraph
-  start: start
-  graph:
-  - node: start
-    edges:
-    - to: flag
-      steps:
-      - material: Cloth
-        amount: 5
-        doAfter: 3
-  - node: flag
+  - node: elysiumFlag
     entity: ElysiumFlag
     edges: []
-
-- type: constructionGraph
-  id: ElysiumFlagVerticalGraph
-  start: start
-  graph:
-  - node: start
-    edges:
-    - to: flag
-      steps:
-      - material: Cloth
-        amount: 5
-        doAfter: 3
-  - node: flag
+  - node: elysiumFlagVertical
     entity: ElysiumFlagVertical
     edges: []
-
-- type: constructionGraph
-  id: TSFFlagGraph
-  start: start
-  graph:
-  - node: start
-    edges:
-    - to: flag
-      steps:
-      - material: Cloth
-        amount: 5
-        doAfter: 3
-  - node: flag
+  - node: tSFFlag
     entity: TSFFlag
     edges: []
-
-- type: constructionGraph
-  id: TSFFlagVerticalGraph
-  start: start
-  graph:
-  - node: start
-    edges:
-    - to: flag
-      steps:
-      - material: Cloth
-        amount: 5
-        doAfter: 3
-  - node: flag
+  - node: tSFFlagVertical
     entity: TSFFlagVertical
     edges: []
-
-- type: constructionGraph
-  id: USSPFlagGraph
-  start: start
-  graph:
-  - node: start
-    edges:
-    - to: flag
-      steps:
-      - material: Cloth
-        amount: 5
-        doAfter: 3
-  - node: flag
+  - node: uSSPFlag
     entity: USSPFlag
     edges: []
-
-- type: constructionGraph
-  id: USSPFlagVerticalGraph
-  start: start
-  graph:
-  - node: start
-    edges:
-    - to: flag
-      steps:
-      - material: Cloth
-        amount: 5
-        doAfter: 3
-  - node: flag
+  - node: uSSPFlagVertical
     entity: USSPFlagVertical
     edges: []
-
-- type: constructionGraph
-  id: USSPFlagVertical2Graph
-  start: start
-  graph:
-  - node: start
-    edges:
-    - to: flag
-      steps:
-      - material: Cloth
-        amount: 5
-        doAfter: 3
-  - node: flag
+  - node: uSSPFlagVertical2
     entity: USSPFlagVertical2
     edges: []
-
-- type: constructionGraph
-  id: RastamanFlagGraph
-  start: start
-  graph:
-  - node: start
-    edges:
-    - to: flag
-      steps:
-      - material: Cloth
-        amount: 5
-        doAfter: 3
-  - node: flag
+  - node: rastamanFlag
     entity: RastamanFlag
     edges: []
-
-- type: constructionGraph
-  id: RomanFlagGraph
-  start: start
-  graph:
-  - node: start
-    edges:
-    - to: flag
-      steps:
-      - material: Cloth
-        amount: 5
-        doAfter: 3
-  - node: flag
+  - node: romanFlag
     entity: RomanFlag
     edges: []

@@ -15,8 +15,8 @@
   - type: Sprite
     state: blank2_flag
   - type: Construction
-    graph: BlankFlagVerticalGraph
-    node: flag
+    graph: DecorativeFlagGraph
+    node: blankFlagVertical
 
 - type: entity
   parent: BaseDecorativeFlag
@@ -27,8 +27,8 @@
   - type: Sprite
     state: NT2_flag
   - type: Construction
-    graph: NTFlagVerticalGraph
-    node: flag
+    graph: DecorativeFlagGraph
+    node: nTFlagVertical
 
 - type: entity
   parent: BaseDecorativeFlag
@@ -57,8 +57,8 @@
   - type: Sprite
     state: rastaman_flag
   - type: Construction
-    graph: RastamanFlagGraph
-    node: flag
+    graph: DecorativeFlagGraph
+    node: rastamanFlag
 
 - type: entity
   parent: BaseDecorativeFlag
@@ -69,8 +69,8 @@
   - type: Sprite
     state: roman_flag
   - type: Construction
-    graph: RomanFlagGraph
-    node: flag
+    graph: DecorativeFlagGraph
+    node: romanFlag
 
 - type: entity
   parent: BaseDecorativeFlag
@@ -81,8 +81,8 @@
   - type: Sprite
     state: ussp_flag
   - type: Construction
-    graph: USSPFlagGraph
-    node: flag
+    graph: DecorativeFlagGraph
+    node: uSSPFlag
 
 - type: entity
   parent: BaseDecorativeFlag
@@ -93,8 +93,8 @@
   - type: Sprite
     state: ussp2_flag
   - type: Construction
-    graph: USSPFlagVerticalGraph
-    node: flag
+    graph: DecorativeFlagGraph
+    node: uSSPFlagVertical
 
 - type: entity
   parent: BaseDecorativeFlag
@@ -105,8 +105,8 @@
   - type: Sprite
     state: ussp3_flag
   - type: Construction
-    graph: USSPFlagVertical2Graph
-    node: flag
+    graph: DecorativeFlagGraph
+    node: uSSPFlagVertical2
 
 - type: entity
   parent: BaseDecorativeFlag
@@ -117,8 +117,8 @@
   - type: Sprite
     state: kmt_flag
   - type: Construction
-    graph: KMTFlagGraph
-    node: flag
+    graph: DecorativeFlagGraph
+    node: kMTFlag
 
 - type: entity
   parent: BaseDecorativeFlag
@@ -129,8 +129,8 @@
   - type: Sprite
     state: kmt2_flag
   - type: Construction
-    graph: KMTFlagVerticalGraph
-    node: flag
+    graph: DecorativeFlagGraph
+    node: kMTFlagVertical
 
 - type: entity
   parent: BaseDecorativeFlag
@@ -141,8 +141,8 @@
   - type: Sprite
     state: tsf_flag
   - type: Construction
-    graph: TSFFlagGraph
-    node: flag
+    graph: DecorativeFlagGraph
+    node: tSFFlag
 
 - type: entity
   parent: BaseDecorativeFlag
@@ -153,8 +153,8 @@
   - type: Sprite
     state: tsf2_flag
   - type: Construction
-    graph: TSFFlagVerticalGraph
-    node: flag
+    graph: DecorativeFlagGraph
+    node: tSFFlagVertical
 
 - type: entity
   parent: BaseDecorativeFlag
@@ -165,8 +165,8 @@
   - type: Sprite
     state: elysium_flag
   - type: Construction
-    graph: ElysiumFlagGraph
-    node: flag
+    graph: DecorativeFlagGraph
+    node: elysiumFlag
 
 - type: entity
   parent: BaseDecorativeFlag
@@ -177,5 +177,5 @@
   - type: Sprite
     state: elysium2_flag
   - type: Construction
-    graph: ElysiumFlagVerticalGraph
-    node: flag
+    graph: DecorativeFlagGraph
+    node: elysiumFlagVertical

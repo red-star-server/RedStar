@@ -78,7 +78,7 @@
   - type: Sprite
     state: steel_dark_single_stairs
   - type: Construction
-    graph: SteelDarkSingleStairs
+    graph: StairsGraph
     node: steelDarkSingleStairs
 
 - type: entity
@@ -129,7 +129,7 @@
   - type: Sprite
     state: steel_single_stairs
   - type: Construction
-    graph: SteelSingleStairs
+    graph: StairsGraph
     node: steelSingleStairs
 
 - type: entity
@@ -180,7 +180,7 @@
   - type: Sprite
     state: steel_white_single_stairs
   - type: Construction
-    graph: SteelWhiteSingleStairs
+    graph: StairsGraph
     node: steelWhiteSingleStairs
 
 - type: entity
@@ -231,7 +231,7 @@
   - type: Sprite
     state: wood_black_single_stairs
   - type: Construction
-    graph: WoodBlackSingleStairs
+    graph: StairsGraph
     node: woodBlackSingleStairs
 
 - type: entity
@@ -266,7 +266,7 @@
   - type: Sprite
     state: wood_dark_single_stairs
   - type: Construction
-    graph: WoodDarkSingleStairs
+    graph: StairsGraph
     node: woodDarkSingleStairs
 
 - type: entity
@@ -293,7 +293,7 @@
   - type: Sprite
     state: wood_single_stairs
   - type: Construction
-    graph: WoodSingleStairs
+    graph: StairsGraph
     node: woodSingleStairs
 
 - type: entity
@@ -328,7 +328,7 @@
   - type: Sprite
     state: wood_light_single_stairs
   - type: Construction
-    graph: WoodLightSingleStairs
+    graph: StairsGraph
     node: woodLightSingleStairs
 
 - type: entity
@@ -363,5 +363,5 @@
   - type: Sprite
     state: wood_red_single_stairs
   - type: Construction
-    graph: WoodRedSingleStairs
+    graph: StairsGraph
     node: woodRedSingleStairs

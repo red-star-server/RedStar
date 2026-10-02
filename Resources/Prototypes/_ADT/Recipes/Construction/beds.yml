@@ -7,3 +7,13 @@
   targetNode: double_bed_complete
   conditions:
   - !type:TileNotBlocked
+
+- type: construction
+  parent: BaseFurniture
+  id: DeckChairRecipe
+  name: construction-name-deckchair
+  description: construction-desc-deckchair
+  graph: DeckChairGraph
+  targetNode: deckChair
+  conditions:
+  - !type:TileNotBlocked

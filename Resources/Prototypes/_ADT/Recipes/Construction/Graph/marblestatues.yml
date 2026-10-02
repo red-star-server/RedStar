@@ -1,17 +1,137 @@
 - type: constructionGraph
-  id: MarbleStatueLady
+  id: DecorativeStatueGraph
   start: start
   graph:
   - node: start
     actions:
     - !type:DestroyEntity {}
     edges:
-    - to: marblestatueLady
+    - to: marbleLady
       steps:
       - material: Marble
         amount: 10
         doAfter: 15
-  - node: marblestatueLady
+    - to: marbleLadyFlower
+      steps:
+      - material: Marble
+        amount: 10
+        doAfter: 15
+      - tag: Flower
+        name: construction-graph-tag-flower
+        icon:
+          sprite: Objects/Specific/Hydroponics/poppy.rsi
+          state: produce
+    - to: marbleStand
+      steps:
+      - material: Marble
+        amount: 7
+        doAfter: 15
+    - to: marbleMan
+      steps:
+      - material: Marble
+        amount: 8
+        doAfter: 15
+    - to: marbleManDamaged
+      steps:
+      - material: Marble
+        amount: 8
+        doAfter: 15
+    - to: marblePeacemaker
+      steps:
+      - material: Marble
+        amount: 10
+        doAfter: 15
+    - to: knightMarble
+      steps:
+      - material: Marble
+        amount: 9
+        doAfter: 15
+    - to: hunterMarble
+      steps:
+      - material: Marble
+        amount: 9
+        doAfter: 15
+    - to: machineMarble
+      steps:
+      - material: Marble
+        amount: 9
+        doAfter: 15
+    - to: legionaryMarble
+      steps:
+      - material: Marble
+        amount: 9
+        doAfter: 15
+    - to: birdMarble
+      steps:
+      - material: Marble
+        amount: 6
+        doAfter: 15
+    - to: cunningMarble
+      steps:
+      - material: Marble
+        amount: 8
+        doAfter: 15
+    - to: scientistMarble
+      steps:
+      - material: Marble
+        amount: 7
+        doAfter: 15
+    - to: eyeMarble
+      steps:
+      - material: Marble
+        amount: 7
+        doAfter: 15
+    - to: ancestorMarble
+      steps:
+      - material: Marble
+        amount: 6
+        doAfter: 15
+    - to: plafeimMarble
+      steps:
+      - material: Marble
+        amount: 9
+        doAfter: 15
+    - to: statueLenin
+      steps:
+      - material: Marble
+        amount: 8
+        doAfter: 15
+    - to: statueAngel
+      steps:
+      - material: Marble
+        amount: 8
+        doAfter: 15
+    - to: statueHadii
+      steps:
+      - material: Marble
+        amount: 8
+        doAfter: 15
+    - to: statueLion
+      steps:
+      - material: Marble
+        amount: 8
+        doAfter: 15
+    - to: bustHelios
+      steps:
+      - material: Marble
+        amount: 8
+        doAfter: 15
+    - to: bustLenin
+      steps:
+      - material: Marble
+        amount: 8
+        doAfter: 15
+    - to: bustDarwin
+      steps:
+      - material: Marble
+        amount: 8
+        doAfter: 15
+    - to: bustPompeii
+      steps:
+      - material: Marble
+        amount: 8
+        doAfter: 15
+  - node: marbleLady
     entity: MarbleLady
     edges:
     - to: start
@@ -22,26 +142,7 @@
       steps:
       - tool: Prying
         doAfter: 10
-
-- type: constructionGraph
-  id: MarbleStatueLadyFlower
-  start: start
-  graph:
-  - node: start
-    actions:
-    - !type:DestroyEntity {}
-    edges:
-    - to: marblestatueLadyFlower
-      steps:
-      - material: Marble
-        amount: 10
-        doAfter: 15
-      - tag: Flower
-        name: construction-graph-tag-flower
-        icon:
-          sprite: Objects/Specific/Hydroponics/poppy.rsi
-          state: produce
-  - node: marblestatueLadyFlower
+  - node: marbleLadyFlower
     entity: MarbleLadyFlower
     edges:
     - to: start
@@ -55,21 +156,7 @@
       steps:
       - tool: Prying
         doAfter: 10
-
-- type: constructionGraph
-  id: MarbleStand
-  start: start
-  graph:
-  - node: start
-    actions:
-    - !type:DestroyEntity {}
-    edges:
-    - to: marblestand
-      steps:
-      - material: Marble
-        amount: 7
-        doAfter: 15
-  - node: marblestand
+  - node: marbleStand
     entity: MarbleStand
     edges:
     - to: start
@@ -80,20 +167,6 @@
       steps:
       - tool: Prying
         doAfter: 10
-
-- type: constructionGraph
-  id: MarbleMan
-  start: start
-  graph:
-  - node: start
-    actions:
-    - !type:DestroyEntity {}
-    edges:
-    - to: marbleMan
-      steps:
-      - material: Marble
-        amount: 8
-        doAfter: 15
   - node: marbleMan
     entity: MarbleMan
     edges:
@@ -105,21 +178,7 @@
       steps:
       - tool: Prying
         doAfter: 10
-
-- type: constructionGraph
-  id: MarbleManDamaged
-  start: start
-  graph:
-  - node: start
-    actions:
-    - !type:DestroyEntity {}
-    edges:
-    - to: marbleManDamage
-      steps:
-      - material: Marble
-        amount: 8
-        doAfter: 15
-  - node: marbleManDamage
+  - node: marbleManDamaged
     entity: MarbleManDamaged
     edges:
     - to: start
@@ -130,20 +189,6 @@
       steps:
       - tool: Prying
         doAfter: 10
-
-- type: constructionGraph
-  id: MarblePeacemaker
-  start: start
-  graph:
-  - node: start
-    actions:
-    - !type:DestroyEntity {}
-    edges:
-    - to: marblePeacemaker
-      steps:
-      - material: Marble
-        amount: 10
-        doAfter: 15
   - node: marblePeacemaker
     entity: MarblePeacemaker
     edges:
@@ -155,21 +200,7 @@
       steps:
       - tool: Prying
         doAfter: 10
-
-- type: constructionGraph
-  id: MarbleKnight
-  start: start
-  graph:
-  - node: start
-    actions:
-    - !type:DestroyEntity {}
-    edges:
-    - to: marbleKnight
-      steps:
-      - material: Marble
-        amount: 9
-        doAfter: 15
-  - node: marbleKnight
+  - node: knightMarble
     entity: KnightMarble
     edges:
     - to: start
@@ -180,21 +211,7 @@
       steps:
       - tool: Prying
         doAfter: 10
-
-- type: constructionGraph
-  id: MarbleHunter
-  start: start
-  graph:
-  - node: start
-    actions:
-    - !type:DestroyEntity {}
-    edges:
-    - to: marbleHunter
-      steps:
-      - material: Marble
-        amount: 9
-        doAfter: 15
-  - node: marbleHunter
+  - node: hunterMarble
     entity: HunterMarble
     edges:
     - to: start
@@ -205,21 +222,7 @@
       steps:
       - tool: Prying
         doAfter: 10
-
-- type: constructionGraph
-  id: MarbleMachine
-  start: start
-  graph:
-  - node: start
-    actions:
-    - !type:DestroyEntity {}
-    edges:
-    - to: marbleMachine
-      steps:
-      - material: Marble
-        amount: 9
-        doAfter: 15
-  - node: marbleMachine
+  - node: machineMarble
     entity: MachineMarble
     edges:
     - to: start
@@ -230,21 +233,7 @@
       steps:
       - tool: Prying
         doAfter: 10
-
-- type: constructionGraph
-  id: MarbleLegionary
-  start: start
-  graph:
-  - node: start
-    actions:
-    - !type:DestroyEntity {}
-    edges:
-    - to: marbleLegionary
-      steps:
-      - material: Marble
-        amount: 9
-        doAfter: 15
-  - node: marbleLegionary
+  - node: legionaryMarble
     entity: LegionaryMarble
     edges:
     - to: start
@@ -255,21 +244,7 @@
       steps:
       - tool: Prying
         doAfter: 10
-
-- type: constructionGraph
-  id: MarbleBird
-  start: start
-  graph:
-  - node: start
-    actions:
-    - !type:DestroyEntity {}
-    edges:
-    - to: marbleBird
-      steps:
-      - material: Marble
-        amount: 6
-        doAfter: 15
-  - node: marbleBird
+  - node: birdMarble
     entity: BirdMarble
     edges:
     - to: start
@@ -280,21 +255,7 @@
       steps:
       - tool: Prying
         doAfter: 10
-
-- type: constructionGraph
-  id: MarbleCunning
-  start: start
-  graph:
-  - node: start
-    actions:
-    - !type:DestroyEntity {}
-    edges:
-    - to: marbleCunning
-      steps:
-      - material: Marble
-        amount: 8
-        doAfter: 15
-  - node: marbleCunning
+  - node: cunningMarble
     entity: CunningMarble
     edges:
     - to: start
@@ -305,21 +266,7 @@
       steps:
       - tool: Prying
         doAfter: 10
-
-- type: constructionGraph
-  id: MarbleScientist
-  start: start
-  graph:
-  - node: start
-    actions:
-    - !type:DestroyEntity {}
-    edges:
-    - to: marbleScientist
-      steps:
-      - material: Marble
-        amount: 7
-        doAfter: 15
-  - node: marbleScientist
+  - node: scientistMarble
     entity: ScientistMarble
     edges:
     - to: start
@@ -330,21 +277,7 @@
       steps:
       - tool: Prying
         doAfter: 10
-
-- type: constructionGraph
-  id: MarbleEye
-  start: start
-  graph:
-  - node: start
-    actions:
-    - !type:DestroyEntity {}
-    edges:
-    - to: marbleEye
-      steps:
-      - material: Marble
-        amount: 7
-        doAfter: 15
-  - node: marbleEye
+  - node: eyeMarble
     entity: EyeMarble
     edges:
     - to: start
@@ -355,21 +288,7 @@
       steps:
       - tool: Prying
         doAfter: 10
-
-- type: constructionGraph
-  id: MarbleAncestor
-  start: start
-  graph:
-  - node: start
-    actions:
-    - !type:DestroyEntity {}
-    edges:
-    - to: marbleAncestor
-      steps:
-      - material: Marble
-        amount: 6
-        doAfter: 15
-  - node: marbleAncestor
+  - node: ancestorMarble
     entity: AncestorMarble
     edges:
     - to: start
@@ -380,21 +299,7 @@
       steps:
       - tool: Prying
         doAfter: 10
-
-- type: constructionGraph
-  id: MarblePlafeim
-  start: start
-  graph:
-  - node: start
-    actions:
-    - !type:DestroyEntity {}
-    edges:
-    - to: marblePlafeim
-      steps:
-      - material: Marble
-        amount: 9
-        doAfter: 15
-  - node: marblePlafeim
+  - node: plafeimMarble
     entity: PlafeimMarble
     edges:
     - to: start
@@ -405,21 +310,7 @@
       steps:
       - tool: Prying
         doAfter: 10
-
-- type: constructionGraph
-  id: StatueLenin
-  start: start
-  graph:
-  - node: start
-    actions:
-    - !type:DestroyEntity {}
-    edges:
-    - to: statue
-      steps:
-      - material: Marble
-        amount: 8
-        doAfter: 15
-  - node: statue
+  - node: statueLenin
     entity: StatueLenin
     edges:
     - to: start
@@ -430,21 +321,7 @@
       steps:
       - tool: Prying
         doAfter: 10
-
-- type: constructionGraph
-  id: StatueAngel
-  start: start
-  graph:
-  - node: start
-    actions:
-    - !type:DestroyEntity {}
-    edges:
-    - to: statue
-      steps:
-      - material: Marble
-        amount: 8
-        doAfter: 15
-  - node: statue
+  - node: statueAngel
     entity: StatueAngel
     edges:
     - to: start
@@ -455,21 +332,7 @@
       steps:
       - tool: Prying
         doAfter: 10
-
-- type: constructionGraph
-  id: StatueHadii
-  start: start
-  graph:
-  - node: start
-    actions:
-    - !type:DestroyEntity {}
-    edges:
-    - to: statue
-      steps:
-      - material: Marble
-        amount: 8
-        doAfter: 15
-  - node: statue
+  - node: statueHadii
     entity: StatueHadii
     edges:
     - to: start
@@ -480,21 +343,7 @@
       steps:
       - tool: Prying
         doAfter: 10
-
-- type: constructionGraph
-  id: StatueLion
-  start: start
-  graph:
-  - node: start
-    actions:
-    - !type:DestroyEntity {}
-    edges:
-    - to: statue
-      steps:
-      - material: Marble
-        amount: 8
-        doAfter: 15
-  - node: statue
+  - node: statueLion
     entity: StatueLion
     edges:
     - to: start
@@ -505,21 +354,7 @@
       steps:
       - tool: Prying
         doAfter: 10
-
-- type: constructionGraph
-  id: BustHelios
-  start: start
-  graph:
-  - node: start
-    actions:
-    - !type:DestroyEntity {}
-    edges:
-    - to: bust
-      steps:
-      - material: Marble
-        amount: 8
-        doAfter: 15
-  - node: bust
+  - node: bustHelios
     entity: BustHelios
     edges:
     - to: start
@@ -530,21 +365,7 @@
       steps:
       - tool: Prying
         doAfter: 10
-
-- type: constructionGraph
-  id: BustLenin
-  start: start
-  graph:
-  - node: start
-    actions:
-    - !type:DestroyEntity {}
-    edges:
-    - to: bust
-      steps:
-      - material: Marble
-        amount: 8
-        doAfter: 15
-  - node: bust
+  - node: bustLenin
     entity: BustLenin
     edges:
     - to: start
@@ -555,21 +376,7 @@
       steps:
       - tool: Prying
         doAfter: 10
-
-- type: constructionGraph
-  id: BustDarwin
-  start: start
-  graph:
-  - node: start
-    actions:
-    - !type:DestroyEntity {}
-    edges:
-    - to: bust
-      steps:
-      - material: Marble
-        amount: 8
-        doAfter: 15
-  - node: bust
+  - node: bustDarwin
     entity: BustDarwin
     edges:
     - to: start
@@ -580,21 +387,7 @@
       steps:
       - tool: Prying
         doAfter: 10
-
-- type: constructionGraph
-  id: BustPompeii
-  start: start
-  graph:
-  - node: start
-    actions:
-    - !type:DestroyEntity {}
-    edges:
-    - to: bust
-      steps:
-      - material: Marble
-        amount: 8
-        doAfter: 15
-  - node: bust
+  - node: bustPompeii
     entity: BustPompeii
     edges:
     - to: start
