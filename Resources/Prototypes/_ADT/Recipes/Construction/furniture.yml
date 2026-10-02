@@ -1,0 +1,24 @@
+﻿# Fireplace
+- type: construction
+  abstract: true
+  parent: BaseFurniture
+  id: BaseFireplace
+  graph: Fireplace
+  canRotate: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  parent: BaseFireplace
+  id: FireplaceRecipe
+  targetNode: fireplace
+
+- type: construction
+  parent: BaseFireplace
+  id: FireplaceWhiteRecipe
+  targetNode: fireplaceWhite
+
+- type: construction
+  parent: BaseFireplace
+  id: FireplaceWoodenRecipe
+  targetNode: fireplaceWooden

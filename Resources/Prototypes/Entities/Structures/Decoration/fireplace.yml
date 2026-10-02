@@ -50,3 +50,8 @@
   - type: IgnitionSource
     temperature: 700
     ignited: true
+  # RS14-start
+  - type: Construction
+    graph: Fireplace
+    node: fireplace
+  # RS14-end
