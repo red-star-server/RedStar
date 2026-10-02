@@ -8,5 +8,5 @@
     containers:
       entity_storage: !type:AllSelector
         children:
-        - id: Marble
+        - id: MaterialMarble
           amount: 3
