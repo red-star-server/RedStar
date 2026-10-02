@@ -1,11 +1,11 @@
 - type: entity
+  abstract: true
   name: chair
   id: BaseUpholsteredChair
   parent:
   - ChairBase
   - StructureHealthFurniture
   description: It looks comfy.
-  abstract: true
   components:
   - type: HealOnBuckle
     damage:

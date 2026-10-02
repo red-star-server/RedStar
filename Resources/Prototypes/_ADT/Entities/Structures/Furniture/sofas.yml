@@ -1,8 +1,8 @@
 - type: entity
+  abstract: true
   name: sofa
   id: SofaBase
   parent: BaseUpholsteredChair
-  abstract: true
 
 - type: entity
   name: white sofa left side

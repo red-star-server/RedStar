@@ -1,4 +1,5 @@
 - type: entity
+  abstract: true
   id: BaseRoundTable
   parent:
   - BaseStructure
@@ -32,9 +33,7 @@
   - type: InteractionOutline
   - type: Tag
     tags:
-    - Table
     - ForceFixRotations
-  abstract: true
 
 - type: entity
   id: FurnitureTableFrame
