@@ -1,0 +1,41 @@
+- type: jukebox
+  id: Arlekino
+  name: Geoffrey Day - Арлекино
+  path:
+    path: /Audio/_RedStar/Jukebox/arlekino.ogg
+
+- type: jukebox
+  id: Casanova
+  name: Geoffrey Day - Я не казанова
+  path:
+    path: /Audio/_RedStar/Jukebox/casanova.ogg
+
+- type: jukebox
+  id: Devchonki
+  name: Geoffrey Day - Стоят девчонки
+  path:
+    path: /Audio/_RedStar/Jukebox/devchonki.ogg
+
+- type: jukebox
+  id: Jas
+  name: Mujuice - Косил Ясь конюшину
+  path:
+    path: /Audio/_RedStar/Jukebox/jas.ogg
+
+- type: jukebox
+  id: Komarovo
+  name: DVRST - Комарово
+  path:
+    path: /Audio/_RedStar/Jukebox/komarovo.ogg
+
+- type: jukebox
+  id: Leto
+  name: Geoffrey Day - Звёздное лето
+  path:
+    path: /Audio/_RedStar/Jukebox/leto.ogg
+
+- type: jukebox
+  id: Trava
+  name: Geoffrey Day - Трава у дома
+  path:
+    path: /Audio/_RedStar/Jukebox/trava.ogg
