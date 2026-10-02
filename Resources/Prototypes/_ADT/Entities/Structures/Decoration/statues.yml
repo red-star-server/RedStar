@@ -1,96 +1,136 @@
-﻿- type: entity
+- type: entity
   id: StatueAngel
-  parent: BaseStatue
+  parent: RS14TallStatue
   name: statue of an angel
   description: An angel-guardian who protects you from all troubles and misfortunes. Guardian-protector, and in the difficult hour of your life, he will help you overcome difficulties, guardian!
   components:
   - type: Sprite
     noRot: true
-    sprite: __ADT/Structures/Decoration/Statues/angel.rsi
+    sprite: _ADT/Structures/Decoration/Statues/angel.rsi
     state: angel
     drawdepth: Mobs
     offset: "0.0,0.5"
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape: !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,1.5"
-        density: 60
-        mask:
-        - MachineMask
-        layer:
-        - MidImpassable
-        - LowImpassable
   - type: Construction
     graph: StatueAngel
     node: statue
 
 - type: entity
   id: StatueLion
-  parent: BaseStatue
+  parent: RS14TallStatue
   name: statue of a lion
   description: On guard
   components:
   - type: Sprite
     noRot: true
-    sprite: __ADT/Structures/Decoration/Statues/lion.rsi
+    sprite: _ADT/Structures/Decoration/Statues/lion.rsi
     state: lion
     drawdepth: Mobs
     offset: "0.0,0.5"
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape: !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,1.5"
-        density: 60
-        mask:
-        - MachineMask
-        layer:
-        - MidImpassable
-        - LowImpassable
   - type: Construction
     graph: StatueLion
     node: statue
 
 - type: entity
   id: StatueLenin
-  parent: BaseStatue
+  parent: RS14TallStatue
   name: statue of Lenin
   description: Great leader of the proletariat.
   components:
   - type: Sprite
     noRot: true
-    sprite: __ADT/Structures/Decoration/Statues/lenin.rsi
+    sprite: _ADT/Structures/Decoration/Statues/lenin.rsi
     state: lenin
     drawdepth: Mobs
     offset: "0.0,0.5"
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape: !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,1.5"
-        density: 60
-        mask:
-        - MachineMask
-        layer:
-        - MidImpassable
-        - LowImpassable
   - type: Construction
     graph: StatueLenin
     node: statue
 
 - type: entity
   id: StatueHadii
-  parent: BaseStatue
+  parent: RS14TallStatue
   name: statue of Hadji Murat
   description: Courage, honor, dignity and loyalty to one's word - these are the qualities of a hero.
   components:
   - type: Sprite
     noRot: true
-    sprite: __ADT/Structures/Decoration/Statues/hadii.rsi
+    sprite: _ADT/Structures/Decoration/Statues/hadii.rsi
     state: hadii
     drawdepth: Mobs
     offset: "0.0,0.5"
+  - type: Construction
+    graph: StatueHadii
+    node: statue
+
+- type: entity
+  id: BustHelios
+  parent: RS14BustStatue
+  name: bust of Helios
+  description: A sculpture in the form of the ancient Greek God of the Sun.
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: _ADT/Structures/Decoration/Statues/busts.rsi
+    state: helios
+    drawdepth: Mobs
+    offset: "0.0,0.5"
+  - type: Construction
+    graph: BustHelios
+    node: bust
+
+- type: entity
+  id: BustLenin
+  parent: RS14BustStatue
+  name: bust of Lenin
+  description: A bust of the creator of the Bolshevik Party and one of the organizers and leaders of the October Revolution of 1917 in Russia.
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: _ADT/Structures/Decoration/Statues/busts.rsi
+    state: lenin
+    drawdepth: Mobs
+    offset: "0.0,0.5"
+  - type: Construction
+    graph: BustLenin
+    node: bust
+
+- type: entity
+  id: BustDarwin
+  parent: RS14BustStatue
+  name: bust of Darwin
+  description: A prize was named after him!
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: _ADT/Structures/Decoration/Statues/busts.rsi
+    state: darwin
+    drawdepth: Mobs
+    offset: "0.0,0.5"
+  - type: Construction
+    graph: BustDarwin
+    node: bust
+
+- type: entity
+  id: BustPompeii
+  parent: RS14BustStatue
+  name: bust of Pompey
+  description: A sculpture in the form of Pompeia Plotina, daughter of Lucius Pompey.
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: _ADT/Structures/Decoration/Statues/busts.rsi
+    state: pompeii
+    drawdepth: Mobs
+    offset: "0.0,0.5"
+  - type: Construction
+    graph: BustPompeii
+    node: bust
+
+- type: entity
+  abstract: true
+  parent: BaseStatue
+  id: RS14TallStatue
+  components:
   - type: Fixtures
     fixtures:
       fix1:
@@ -102,23 +142,12 @@
         layer:
         - MidImpassable
         - LowImpassable
-  - type: Construction
-    graph: StatueHadii
-    node: statue
 
-# Bust
 - type: entity
-  id: BustHelios
+  abstract: true
   parent: BaseStatue
-  name: bust of Helios
-  description: A sculpture in the form of the ancient Greek God of the Sun.
+  id: RS14BustStatue
   components:
-  - type: Sprite
-    noRot: true
-    sprite: __ADT/Structures/Decoration/Statues/busts.rsi
-    state: helios
-    drawdepth: Mobs
-    offset: "0.0,0.5"
   - type: Fixtures
     fixtures:
       fix1:
@@ -130,110 +159,23 @@
         layer:
         - MidImpassable
         - LowImpassable
-  - type: Construction
-    graph: BustHelios
-    node: bust
 
 - type: entity
-  id: BustLenin
-  parent: BaseStatue
-  name: bust of Lenin
-  description: A bust of the creator of the Bolshevik Party and one of the organizers and leaders of the October Revolution of 1917 in Russia.
-  components:
-  - type: Sprite
-    noRot: true
-    sprite: __ADT/Structures/Decoration/Statues/busts.rsi
-    state: lenin
-    drawdepth: Mobs
-    offset: "0.0,0.5"
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape: !type:PhysShapeAabb
-          bounds: "-0.3,-0.3,0.3,0.8"
-        density: 60
-        mask:
-        - MachineMask
-        layer:
-        - MidImpassable
-        - LowImpassable
-  - type: Construction
-    graph: BustLenin
-    node: bust
-
-- type: entity
-  id: BustDarwin
-  parent: BaseStatue
-  name: bust of Darwin
-  description: A prize was named after him!
-  components:
-  - type: Sprite
-    noRot: true
-    sprite: __ADT/Structures/Decoration/Statues/busts.rsi
-    state: darwin
-    drawdepth: Mobs
-    offset: "0.0,0.5"
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape: !type:PhysShapeAabb
-          bounds: "-0.3,-0.3,0.3,0.8"
-        density: 60
-        mask:
-        - MachineMask
-        layer:
-        - MidImpassable
-        - LowImpassable
-  - type: Construction
-    graph: BustDarwin
-    node: bust
-
-- type: entity
-  id: BustPompeii
-  parent: BaseStatue
-  name: bust of Pompey
-  description: A sculpture in the form of Pompeia Plotina, daughter of Lucius Pompey.
-  components:
-  - type: Sprite
-    noRot: true
-    sprite: __ADT/Structures/Decoration/Statues/busts.rsi
-    state: pompeii
-    drawdepth: Mobs
-    offset: "0.0,0.5"
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape: !type:PhysShapeAabb
-          bounds: "-0.3,-0.3,0.3,0.8"
-        density: 60
-        mask:
-        - MachineMask
-        layer:
-        - MidImpassable
-        - LowImpassable
-  - type: Construction
-    graph: BustPompeii
-    node: bust
-
-# Marble
-- type: entity
+  abstract: true
   parent: BaseStructure
-  id: MarbleLady
-  name: beutiful marble lady
-  description: She's so pretty
-  placement:
-    mode: SnapgridCenter
+  id: RS14MarbleStatueBase
   components:
-  - type: Sprite
-    noRot: true
-    sprite: _ADT/Structures/Decoration/Statues/marble_lady.rsi
-    state: marlady
-    offset: "0.0,0.5"
-    drawdepth: Mobs
   - type: Damageable
     damageModifierSet: Metallic
   - type: Injurable
     damageContainer: StructuralInorganic
+
+- type: entity
+  parent: RS14MarbleStatueBase
+  id: MarbleLady
+  name: beutiful marble lady
+  description: She's so pretty
+  components:
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
@@ -251,382 +193,348 @@
           path: /Audio/Effects/break_stone.ogg
           params:
             volume: -2
+  - type: Sprite
+    noRot: true
+    sprite: _ADT/Structures/Decoration/Statues/marble_lady.rsi
+    state: marlady
+    offset: "0.0,0.5"
+    drawdepth: Mobs
   - type: Construction
     graph: MarbleStatueLady
     node: marblestatueLady
 
-  - type: entity
-    parent: MarbleLady
-    id: MarbleLadyFlower
-    name: marble lady in flowers
-    description: She's so pretty
-    placement:
-      mode: SnapgridCenter
-    components:
-    - type: Sprite
-      sprite: _ADT/Structures/Decoration/Statues/MarbleLady_flower.rsi
-      state: marlady_flowers
-    - type: Construction
-      graph: MarbleStatueLadyFlower
-      node: marblestatueLadyFlower
+- type: entity
+  parent: RS14MarbleStatueBase
+  id: MarbleLadyFlower
+  name: marble lady in flowers
+  description: She's so pretty
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/MarbleLady_flower.rsi
+    state: marlady_flowers
+  - type: Construction
+    graph: MarbleStatueLadyFlower
+    node: marblestatueLadyFlower
 
-  - type: entity
-    parent: MarbleLady
-    id: marblepillar
-    name: marble pillar
-    description: pillar out of marble
-    placement:
-      mode: SnapgridCenter
-    components:
-    - type: Sprite
-      sprite: _ADT/Structures/Decoration/Statues/pillar_marble.rsi
-      state: pillar_marble
+- type: entity
+  parent: RS14MarbleStatueBase
+  id: MarblePillar
+  name: marble pillar
+  description: pillar out of marble
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/pillar_marble.rsi
+    state: pillar_marble
 
-  - type: entity
-    parent: MarbleLady
-    id: marbleStand
-    name: marble stand
-    description: stand for someone
-    placement:
-      mode: SnapgridCenter
-    components:
-    - type: Sprite
-      sprite: _ADT/Structures/Decoration/Statues/marble_stand.rsi
-      offset: "0.0,0.0"
-      state: marstand
-      drawdepth: SmallObjects
-    - type: PlaceableSurface
-      isPlaceable: True
-    - type: Construction
-      graph: MarbleStand
-      node: marblestand
-    - type: Destructible
-      thresholds:
-      - trigger: !type:DamageTrigger
-          damage: 100
-        behaviors:
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            marble1:
-              min: 3
-              max: 5
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
-        - !type:PlaySoundBehavior
-          sound:
-            path: /Audio/Effects/break_stone.ogg
-            params:
-              volume: -2
+- type: entity
+  parent: RS14MarbleStatueBase
+  id: MarbleStand
+  name: marble stand
+  description: stand for someone
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marble_stand.rsi
+    offset: "0.0,0.0"
+    state: marstand
+    drawdepth: SmallObjects
+  - type: PlaceableSurface
+    isPlaceable: True
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          marble1:
+            min: 3
+            max: 5
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+          params:
+            volume: -2
+  - type: Construction
+    graph: MarbleStand
+    node: marblestand
 
-  - type: entity
-    parent: MarbleLady
-    id: marbleMan
-    name: marble man
-    description: he stands
-    placement:
-      mode: SnapgridCenter
-    components:
-    - type: Sprite
-      sprite: _ADT/Structures/Decoration/Statues/marbleman.rsi
-      offset: "0.0,0.0"
-      state: marman
-    - type: Construction
-      graph: MarbleMan
-      node: marbleMan
+- type: entity
+  parent: RS14MarbleStatueBase
+  id: MarbleMan
+  name: marble man
+  description: he stands
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marbleman.rsi
+    offset: "0.0,0.0"
+    state: marman
+  - type: Construction
+    graph: MarbleMan
+    node: marbleMan
 
-  - type: entity
-    parent: MarbleLady
-    id: marbleManDamage
-    name: marble man crack
-    description: he stands
-    placement:
-      mode: SnapgridCenter
-    components:
-    - type: Sprite
-      sprite: _ADT/Structures/Decoration/Statues/marblemandamage.rsi
-      offset: "0.0,0.0"
-      state: marmandmg
-    - type: Construction
-      graph: MarbleManDamage
-      node: marbleManDamage
+- type: entity
+  parent: RS14MarbleStatueBase
+  id: MarbleManDamaged
+  name: marble man crack
+  description: he stands
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marblemandamage.rsi
+    offset: "0.0,0.0"
+    state: marmandmg
+  - type: Construction
+    graph: MarbleManDamage
+    node: marbleManDamage
 
-  - type: entity
-    parent: MarbleLady
-    id: peacemakermarble
-    name: Statue of Peacemaker
-    description: for the peace in world!
-    placement:
-      mode: SnapgridCenter
-    components:
-    - type: Sprite
-      sprite: _ADT/Structures/Decoration/Statues/peacemaker.rsi
-      state: peacemaker
-    - type: Construction
-      graph: MarblePeacemaker
-      node: marblePeacemaker
+- type: entity
+  parent: RS14MarbleStatueBase
+  id: MarblePeacemaker
+  name: Statue of Peacemaker
+  description: for the peace in world!
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/peacemaker.rsi
+    state: peacemaker
+  - type: Construction
+    graph: MarblePeacemaker
+    node: marblePeacemaker
 
-  - type: entity
-    parent: MarbleLady
-    id: KnightMarble
-    name: marble knight
-    description: marble knight
-    placement:
-      mode: SnapgridCenter
-    components:
-    - type: Sprite
-      sprite: _ADT/Structures/Decoration/Statues/marble_knight.rsi
-      state: marble_knight
-    - type: Construction
-      graph: MarbleKnight
-      node: marbleKnight
+- type: entity
+  parent: RS14MarbleStatueBase
+  id: KnightMarble
+  name: marble knight
+  description: marble knight
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marble_knight.rsi
+    state: marble_knight
+  - type: Construction
+    graph: MarbleKnight
+    node: marbleKnight
 
-  - type: entity
-    parent: MarbleLady
-    id: HunterMarble
-    name: marble hunter
-    description: marble hunter
-    placement:
-      mode: SnapgridCenter
-    components:
-    - type: Sprite
-      sprite: _ADT/Structures/Decoration/Statues/marble_hunter.rsi
-      state: marble_hunter
-    - type: Construction
-      graph: MarbleHunter
-      node: marbleHunter
+- type: entity
+  parent: RS14MarbleStatueBase
+  id: HunterMarble
+  name: marble hunter
+  description: marble hunter
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marble_hunter.rsi
+    state: marble_hunter
+  - type: Construction
+    graph: MarbleHunter
+    node: marbleHunter
 
-  - type: entity
-    parent: MarbleLady
-    id: MachineMarble
-    name: marble machine
-    description: marble machine
-    placement:
-      mode: SnapgridCenter
-    components:
-    - type: Sprite
-      sprite: _ADT/Structures/Decoration/Statues/marble_machine.rsi
-      state: marble_machine
-    - type: Construction
-      graph: MarbleMachine
-      node: marbleMachine
+- type: entity
+  parent: RS14MarbleStatueBase
+  id: MachineMarble
+  name: marble machine
+  description: marble machine
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marble_machine.rsi
+    state: marble_machine
+  - type: Construction
+    graph: MarbleMachine
+    node: marbleMachine
 
-  - type: entity
-    parent: MarbleLady
-    id: LegionaryMarble
-    name: marble legionary
-    description: marble legionary
-    placement:
-      mode: SnapgridCenter
-    components:
-    - type: Sprite
-      sprite: _ADT/Structures/Decoration/Statues/marble_legionary.rsi
-      state: marble_legionary
-    - type: Construction
-      graph: MarbleLegionary
-      node: marbleLegionary
+- type: entity
+  parent: RS14MarbleStatueBase
+  id: LegionaryMarble
+  name: marble legionary
+  description: marble legionary
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marble_legionary.rsi
+    state: marble_legionary
+  - type: Construction
+    graph: MarbleLegionary
+    node: marbleLegionary
 
-  - type: entity
-    parent: MarbleLady
-    id: BirdMarble
-    name: marble bird
-    description: marble bird
-    placement:
-      mode: SnapgridCenter
-    components:
-    - type: Sprite
-      sprite: _ADT/Structures/Decoration/Statues/marble_bird.rsi
-      state: marble_bird
-    - type: Construction
-      graph: MarbleBird
-      node: marbleBird
-    - type: Destructible
-      thresholds:
-      - trigger: !type:DamageTrigger
-          damage: 100
-        behaviors:
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            marble1:
-              min: 3
-              max: 4
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
-        - !type:PlaySoundBehavior
-          sound:
-            path: /Audio/Effects/break_stone.ogg
-            params:
-              volume: -2
+- type: entity
+  parent: RS14MarbleStatueBase
+  id: BirdMarble
+  name: marble bird
+  description: marble bird
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marble_bird.rsi
+    state: marble_bird
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          marble1:
+            min: 3
+            max: 4
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+          params:
+            volume: -2
+  - type: Construction
+    graph: MarbleBird
+    node: marbleBird
 
-  - type: entity
-    parent: MarbleLady
-    id: CunningMarble
-    name: marble cunning
-    description: marble cunning
-    placement:
-      mode: SnapgridCenter
-    components:
-    - type: Sprite
-      sprite: _ADT/Structures/Decoration/Statues/marble_cunning.rsi
-      state: marble_cunning
-    - type: Construction
-      graph: MarbleCunning
-      node: marbleCunning
+- type: entity
+  parent: RS14MarbleStatueBase
+  id: CunningMarble
+  name: marble cunning
+  description: marble cunning
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marble_cunning.rsi
+    state: marble_cunning
+  - type: Construction
+    graph: MarbleCunning
+    node: marbleCunning
 
-  - type: entity
-    parent: MarbleLady
-    id: ScientistMarble
-    name: marble scientist
-    description: marble scientist
-    placement:
-      mode: SnapgridCenter
-    components:
-    - type: Sprite
-      sprite: _ADT/Structures/Decoration/Statues/marble_scientist.rsi
-      state: marble_scientist
-    - type: Construction
-      graph: MarbleScientist
-      node: marbleScientist
-    - type: Destructible
-      thresholds:
-      - trigger: !type:DamageTrigger
-          damage: 100
-        behaviors:
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            marble1:
-              min: 4
-              max: 5
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
-        - !type:PlaySoundBehavior
-          sound:
-            path: /Audio/Effects/break_stone.ogg
-            params:
-              volume: -2
+- type: entity
+  parent: RS14MarbleStatueBase
+  id: ScientistMarble
+  name: marble scientist
+  description: marble scientist
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marble_scientist.rsi
+    state: marble_scientist
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          marble1:
+            min: 4
+            max: 5
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+          params:
+            volume: -2
+  - type: Construction
+    graph: MarbleScientist
+    node: marbleScientist
 
-  - type: entity
-    parent: MarbleLady
-    id: EyeMarble
-    name: marble eye
-    description: marble eye
-    placement:
-      mode: SnapgridCenter
-    components:
-    - type: Sprite
-      sprite: _ADT/Structures/Decoration/Statues/marble_eye.rsi
-      state: marble_eye
-    - type: Construction
-      graph: MarbleEye
-      node: marbleEye
-    - type: Destructible
-      thresholds:
-      - trigger: !type:DamageTrigger
-          damage: 100
-        behaviors:
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            marble1:
-              min: 4
-              max: 5
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
-        - !type:PlaySoundBehavior
-          sound:
-            path: /Audio/Effects/break_stone.ogg
-            params:
-              volume: -2
+- type: entity
+  parent: RS14MarbleStatueBase
+  id: EyeMarble
+  name: marble eye
+  description: marble eye
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marble_eye.rsi
+    state: marble_eye
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          marble1:
+            min: 4
+            max: 5
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+          params:
+            volume: -2
+  - type: Construction
+    graph: MarbleEye
+    node: marbleEye
 
-  - type: entity
-    parent: MarbleLady
-    id: UndoneMarble
-    name: marble undone
-    description: marble undone
-    placement:
-      mode: SnapgridCenter
-    components:
-    - type: Sprite
-      sprite: _ADT/Structures/Decoration/Statues/marble_undone.rsi
-      state: marble_undone
+- type: entity
+  parent: RS14MarbleStatueBase
+  id: UndoneMarble
+  name: marble undone
+  description: marble undone
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marble_undone.rsi
+    state: marble_undone
 
-  - type: entity
-    parent: MarbleLady
-    id: AncestorMarble
-    name: marble ancestor
-    description: marble ancestor
-    placement:
-      mode: SnapgridCenter
-    components:
-    - type: Sprite
-      sprite: _ADT/Structures/Decoration/Statues/marble_ancestor.rsi
-      state: marble_ancestor
-    - type: Construction
-      graph: MarbleAncestor
-      node: marbleAncestor
-    - type: Destructible
-      thresholds:
-      - trigger: !type:DamageTrigger
-          damage: 100
-        behaviors:
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            marble1:
-              min: 3
-              max: 5
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
-        - !type:PlaySoundBehavior
-          sound:
-            path: /Audio/Effects/break_stone.ogg
-            params:
-              volume: -2
+- type: entity
+  parent: RS14MarbleStatueBase
+  id: AncestorMarble
+  name: marble ancestor
+  description: marble ancestor
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marble_ancestor.rsi
+    state: marble_ancestor
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          marble1:
+            min: 3
+            max: 5
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+          params:
+            volume: -2
+  - type: Construction
+    graph: MarbleAncestor
+    node: marbleAncestor
 
-  - type: entity
-    parent: MarbleLady
-    id: PlafeimMarble
-    name: marble plafeim
-    description: marble plafeim
-    placement:
-      mode: SnapgridCenter
-    components:
-    - type: Sprite
-      sprite: _ADT/Structures/Decoration/Statues/marble_plafeim.rsi
-      state: marble_plafeim
-    - type: Construction
-      graph: MarblePlafeim
-      node: marblePlafeim
+- type: entity
+  parent: RS14MarbleStatueBase
+  id: PlafeimMarble
+  name: marble plafeim
+  description: marble plafeim
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marble_plafeim.rsi
+    state: marble_plafeim
+  - type: Construction
+    graph: MarblePlafeim
+    node: marblePlafeim
 
-  - type: entity
-    parent: MarbleLady
-    id: ThinkerMarble
-    name: marble thinker
-    description: marble thinker
-    placement:
-      mode: SnapgridCenter
-    components:
-    - type: Sprite
-      sprite: _ADT/Structures/Decoration/Statues/marble_thinker.rsi
-      state: marble_thinker
+- type: entity
+  parent: RS14MarbleStatueBase
+  id: ThinkerMarble
+  name: marble thinker
+  description: marble thinker
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marble_thinker.rsi
+    state: marble_thinker
 
-  - type: entity
-    parent: MarbleLady
-    id: ThinkerTwoMarble
-    name: marble thinker two
-    description: marble thinker two
-    placement:
-      mode: SnapgridCenter
-    components:
-    - type: Sprite
-      sprite: _ADT/Structures/Decoration/Statues/marble_thinker_two.rsi
-      state: marble_thinker_two
+- type: entity
+  parent: RS14MarbleStatueBase
+  id: ThinkerTwoMarble
+  name: marble thinker two
+  description: marble thinker two
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marble_thinker_two.rsi
+    state: marble_thinker_two
 
-  - type: entity
-    parent: MarbleLady
-    id: HeroMarble
-    name: marble hero
-    description: marble hero
-    placement:
-      mode: SnapgridCenter
-    components:
-    - type: Sprite
-      sprite: _ADT/Structures/Decoration/Statues/marble_hero.rsi
-      state: marble_hero
+- type: entity
+  parent: RS14MarbleStatueBase
+  id: HeroMarble
+  name: marble hero
+  description: marble hero
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marble_hero.rsi
+    state: marble_hero
