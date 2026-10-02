@@ -1,52 +1,39 @@
 - type: construction
+  parent: BaseFurniture
   id: MattressRecipe
   name: construction-name-mattress
   description: construction-desc-mattress
-  graph: adt_mattress
-  startNode: start
+  graph: MattressGraph
   targetNode: mattress
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
   conditions:
-  - ''
+  - !type:TileNotBlocked
+
 - type: construction
+  parent: BaseFurniture
   id: MattressCleanRecipe
   name: construction-name-mattress-clean
   description: construction-desc-mattress-clean
-  graph: adt_mattress
-  startNode: start
+  graph: MattressGraph
   targetNode: mattress_clean
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
   conditions:
-  - ''
+  - !type:TileNotBlocked
+
 - type: construction
+  parent: BaseFurniture
   id: MattressCleanFullRecipe
   name: construction-name-mattress-clean-full
   description: construction-desc-mattress-clean-full
-  graph: adt_mattress
-  startNode: start
+  graph: MattressGraph
   targetNode: mattress_clean_full
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
   conditions:
-  - ''
+  - !type:TileNotBlocked
+
 - type: construction
+  parent: BaseFurniture
   id: MattressFullRecipe
   name: construction-name-mattress-full
   description: construction-desc-mattress-full
-  graph: adt_mattress
-  startNode: start
+  graph: MattressGraph
   targetNode: mattress_full
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
   conditions:
-  - ''
+  - !type:TileNotBlocked

@@ -6,307 +6,307 @@
     actions:
     - !type:DestroyEntity {}
     edges:
-    - to: adtsofacutblackleft
+    - to: sofaCutBlackLeftSide
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofacutblackmiddle
+    - to: sofaCutBlackMiddle
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofacutblackright
+    - to: sofaCutBlackRightSide
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofacutblackleftcorner
+    - to: sofaCutBlackLeftCorner
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofacutblackrightcorner
+    - to: sofaCutBlackRightCorner
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofacutcomfyleft
+    - to: sofaCutComfyLeftSide
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofacutcomfymiddle
+    - to: sofaCutComfyMiddle
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofacutcomfyright
+    - to: sofaCutComfyRightSide
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofacutcomfyleftcorner
+    - to: sofaCutComfyLeftCorner
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofacutcomfyrightcorner
+    - to: sofaCutComfyRightCorner
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofacutdainerleft
+    - to: sofaCutDainerLeftSide
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofacutdainermiddle
+    - to: sofaCutDainerMiddle
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofacutdainerright
+    - to: sofaCutDainerRightSide
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofacutdainerleftcorner
+    - to: sofaCutDainerLeftCorner
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofacutdainerrightcorner
+    - to: sofaCutDainerRightCorner
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofawhiteleft
+    - to: sofaWhiteLeftSide
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofawhiteright
+    - to: sofaWhiteRightSide
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofawhiteleft2
+    - to: sofaWhiteLeftSide2
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofawhiteright2
+    - to: sofaWhiteRightSide2
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofawhitemiddle
+    - to: sofaWhiteMiddle
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofawhiteleftcorner
+    - to: sofaWhiteLeftCorner
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofawhiterightcorner
+    - to: sofaWhiteRightCorner
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofablueleft
+    - to: sofaBlueLeftSide
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofablueright
+    - to: sofaBlueRightSide
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofablueleft2
+    - to: sofaBlueLeftSide2
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofablueright2
+    - to: sofaBlueRightSide2
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofabluemiddle
+    - to: sofaBlueMiddle
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofablueleftcorner
+    - to: sofaBlueLeftCorner
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofabluerightcorner
+    - to: sofaBlueRightCorner
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofabrownleft
+    - to: sofaBrownLeftSide
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofabrownright
+    - to: sofaBrownRightSide
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofabrownleft2
+    - to: sofaBrownLeftSide2
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofabrownright2
+    - to: sofaBrownRightSide2
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofabrownmiddle
+    - to: sofaBrownMiddle
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofabrownleftcorner
+    - to: sofaBrownLeftCorner
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofabrownrightcorner
+    - to: sofaBrownRightCorner
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofaofficeblackleft
+    - to: sofaOfficeBlackLeftSide
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofaofficeblackright
+    - to: sofaOfficeBlackRightSide
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofaofficeblackmiddle
+    - to: sofaOfficeBlackMiddle
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofaofficeblackleftcorner
+    - to: sofaOfficeBlackLeftCorner
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofaofficeblackrightcorner
+    - to: sofaOfficeBlackRightCorner
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofaofficewhiteleft
+    - to: sofaOfficeWhiteLeftSide
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofaofficewhiteright
+    - to: sofaOfficeWhiteRightSide
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofaofficewhitemiddle
+    - to: sofaOfficeWhiteMiddle
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofaofficewhiteleftcorner
+    - to: sofaOfficeWhiteLeftCorner
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtsofaofficewhiterightcorner
+    - to: sofaOfficeWhiteRightCorner
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtarmchairblue
+    - to: armchairBlue
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtarmchairblue2
+    - to: armchairBlue2
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtarmchairwhite
+    - to: armchairWhite
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtarmchairwhite2
+    - to: armchairWhite2
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtarmchairbrown
+    - to: armchairBrown
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtarmchairbrown2
+    - to: armchairBrown2
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtchairpizzeria
+    - to: chairPizzeria
       steps:
       - material: WoodPlank
         amount: 2
         doAfter: 1
-    - to: adtchairred
+    - to: chairRed
       steps:
       - material: WoodPlank
         amount: 2
         doAfter: 1
-    - to: adtchairwhite
+    - to: chairWhite
       steps:
       - material: WoodPlank
         amount: 2
         doAfter: 1
-    - to: adtchairbarstool
+    - to: chairBarStool
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtchairbarstool2
+    - to: chairBarStool2
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtchaircomfyblack
+    - to: chairComfyBlack
       steps:
       - material: WoodPlank
         amount: 2
         doAfter: 1
-    - to: adtchaircomfymaroon
+    - to: chairComfyMaroon
       steps:
       - material: WoodPlank
         amount: 2
         doAfter: 1
-    - to: adtchaircomfywhite
+    - to: chairComfyWhite
       steps:
       - material: WoodPlank
         amount: 2
         doAfter: 1
-    - to: adtchairking
+    - to: chairKing
       steps:
       - material: Gold
         amount: 3
@@ -314,7 +314,7 @@
       - material: Cloth
         amount: 1
         doAfter: 1
-    - to: adtchairrich
+    - to: chairRich
       steps:
       - material: Gold
         amount: 3
@@ -322,7 +322,7 @@
       - material: Cloth
         amount: 1
         doAfter: 1
-    - to: adtchairrichwhite
+    - to: chairRichWhite
       steps:
       - material: Gold
         amount: 3
@@ -330,22 +330,22 @@
       - material: Cloth
         amount: 1
         doAfter: 1
-    - to: adtchairstyle
+    - to: chairStyle
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: adtchairwoodenstool
+    - to: chairWoodenStool
       steps:
       - material: WoodPlank
         amount: 2
         doAfter: 1
-    - to: adtchairwoodenstool2
+    - to: chairWoodenStool2
       steps:
       - material: WoodPlank
         amount: 2
         doAfter: 1
-  - node: adtsofacutblackleft
+  - node: sofaCutBlackLeftSide
     entity: SofaCutBlackLeftSide
     edges:
     - to: start
@@ -356,7 +356,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofacutblackmiddle
+  - node: sofaCutBlackMiddle
     entity: SofaCutBlackMiddle
     edges:
     - to: start
@@ -367,7 +367,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofacutblackright
+  - node: sofaCutBlackRightSide
     entity: SofaCutBlackRightSide
     edges:
     - to: start
@@ -378,7 +378,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofacutblackleftcorner
+  - node: sofaCutBlackLeftCorner
     entity: SofaCutBlackLeftCorner
     edges:
     - to: start
@@ -389,7 +389,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofacutblackrightcorner
+  - node: sofaCutBlackRightCorner
     entity: SofaCutBlackRightCorner
     edges:
     - to: start
@@ -400,7 +400,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofacutcomfyleft
+  - node: sofaCutComfyLeftSide
     entity: SofaCutComfyLeftSide
     edges:
     - to: start
@@ -411,7 +411,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofacutcomfymiddle
+  - node: sofaCutComfyMiddle
     entity: SofaCutComfyMiddle
     edges:
     - to: start
@@ -422,7 +422,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofacutcomfyright
+  - node: sofaCutComfyRightSide
     entity: SofaCutComfyRightSide
     edges:
     - to: start
@@ -433,7 +433,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofacutcomfyleftcorner
+  - node: sofaCutComfyLeftCorner
     entity: SofaCutComfyLeftCorner
     edges:
     - to: start
@@ -444,7 +444,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofacutcomfyrightcorner
+  - node: sofaCutComfyRightCorner
     entity: SofaCutComfyRightCorner
     edges:
     - to: start
@@ -455,7 +455,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofacutdainerleft
+  - node: sofaCutDainerLeftSide
     entity: SofaCutDainerLeftSide
     edges:
     - to: start
@@ -466,7 +466,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofacutdainermiddle
+  - node: sofaCutDainerMiddle
     entity: SofaCutDainerMiddle
     edges:
     - to: start
@@ -477,7 +477,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofacutdainerright
+  - node: sofaCutDainerRightSide
     entity: SofaCutDainerRightSide
     edges:
     - to: start
@@ -488,7 +488,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofacutdainerleftcorner
+  - node: sofaCutDainerLeftCorner
     entity: SofaCutDainerLeftCorner
     edges:
     - to: start
@@ -499,7 +499,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofacutdainerrightcorner
+  - node: sofaCutDainerRightCorner
     entity: SofaCutDainerRightCorner
     edges:
     - to: start
@@ -510,7 +510,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofawhiteleft
+  - node: sofaWhiteLeftSide
     entity: SofaWhiteLeftSide
     edges:
     - to: start
@@ -521,7 +521,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofawhiteright
+  - node: sofaWhiteRightSide
     entity: SofaWhiteRightSide
     edges:
     - to: start
@@ -532,7 +532,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofawhiteleft2
+  - node: sofaWhiteLeftSide2
     entity: SofaWhiteLeftSide2
     edges:
     - to: start
@@ -543,7 +543,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofawhiteright2
+  - node: sofaWhiteRightSide2
     entity: SofaWhiteRightSide2
     edges:
     - to: start
@@ -554,7 +554,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofawhitemiddle
+  - node: sofaWhiteMiddle
     entity: SofaWhiteMiddle
     edges:
     - to: start
@@ -565,7 +565,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofawhiteleftcorner
+  - node: sofaWhiteLeftCorner
     entity: SofaWhiteLeftCorner
     edges:
     - to: start
@@ -576,7 +576,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofawhiterightcorner
+  - node: sofaWhiteRightCorner
     entity: SofaWhiteRightCorner
     edges:
     - to: start
@@ -587,7 +587,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofablueleft
+  - node: sofaBlueLeftSide
     entity: SofaBlueLeftSide
     edges:
     - to: start
@@ -598,7 +598,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofablueright
+  - node: sofaBlueRightSide
     entity: SofaBlueRightSide
     edges:
     - to: start
@@ -609,7 +609,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofablueleft2
+  - node: sofaBlueLeftSide2
     entity: SofaBlueLeftSide2
     edges:
     - to: start
@@ -620,7 +620,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofablueright2
+  - node: sofaBlueRightSide2
     entity: SofaBlueRightSide2
     edges:
     - to: start
@@ -631,7 +631,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofabluemiddle
+  - node: sofaBlueMiddle
     entity: SofaBlueMiddle
     edges:
     - to: start
@@ -642,7 +642,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofablueleftcorner
+  - node: sofaBlueLeftCorner
     entity: SofaBlueLeftCorner
     edges:
     - to: start
@@ -653,7 +653,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofabluerightcorner
+  - node: sofaBlueRightCorner
     entity: SofaBlueRightCorner
     edges:
     - to: start
@@ -664,7 +664,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofabrownleft
+  - node: sofaBrownLeftSide
     entity: SofaBrownLeftSide
     edges:
     - to: start
@@ -675,7 +675,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofabrownright
+  - node: sofaBrownRightSide
     entity: SofaBrownRightSide
     edges:
     - to: start
@@ -686,7 +686,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofabrownleft2
+  - node: sofaBrownLeftSide2
     entity: SofaBrownLeftSide2
     edges:
     - to: start
@@ -697,7 +697,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofabrownright2
+  - node: sofaBrownRightSide2
     entity: SofaBrownRightSide2
     edges:
     - to: start
@@ -708,7 +708,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofabrownmiddle
+  - node: sofaBrownMiddle
     entity: SofaBrownMiddle
     edges:
     - to: start
@@ -719,7 +719,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofabrownleftcorner
+  - node: sofaBrownLeftCorner
     entity: SofaBrownLeftCorner
     edges:
     - to: start
@@ -730,7 +730,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofabrownrightcorner
+  - node: sofaBrownRightCorner
     entity: SofaBrownRightCorner
     edges:
     - to: start
@@ -741,7 +741,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofaofficeblackleft
+  - node: sofaOfficeBlackLeftSide
     entity: SofaOfficeBlackLeftSide
     edges:
     - to: start
@@ -752,7 +752,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofaofficeblackright
+  - node: sofaOfficeBlackRightSide
     entity: SofaOfficeBlackRightSide
     edges:
     - to: start
@@ -763,7 +763,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofaofficeblackmiddle
+  - node: sofaOfficeBlackMiddle
     entity: SofaOfficeBlackMiddle
     edges:
     - to: start
@@ -774,7 +774,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofaofficeblackleftcorner
+  - node: sofaOfficeBlackLeftCorner
     entity: SofaOfficeBlackLeftCorner
     edges:
     - to: start
@@ -785,7 +785,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofaofficeblackrightcorner
+  - node: sofaOfficeBlackRightCorner
     entity: SofaOfficeBlackRightCorner
     edges:
     - to: start
@@ -796,7 +796,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofaofficewhiteleft
+  - node: sofaOfficeWhiteLeftSide
     entity: SofaOfficeWhiteLeftSide
     edges:
     - to: start
@@ -807,7 +807,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofaofficewhiteright
+  - node: sofaOfficeWhiteRightSide
     entity: SofaOfficeWhiteRightSide
     edges:
     - to: start
@@ -818,7 +818,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofaofficewhitemiddle
+  - node: sofaOfficeWhiteMiddle
     entity: SofaOfficeWhiteMiddle
     edges:
     - to: start
@@ -829,7 +829,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofaofficewhiteleftcorner
+  - node: sofaOfficeWhiteLeftCorner
     entity: SofaOfficeWhiteLeftCorner
     edges:
     - to: start
@@ -840,7 +840,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtsofaofficewhiterightcorner
+  - node: sofaOfficeWhiteRightCorner
     entity: SofaOfficeWhiteRightCorner
     edges:
     - to: start
@@ -851,7 +851,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtarmchairwhite
+  - node: armchairWhite
     entity: ArmchairWhite
     edges:
     - to: start
@@ -862,7 +862,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtarmchairwhite2
+  - node: armchairWhite2
     entity: ArmchairWhite2
     edges:
     - to: start
@@ -873,7 +873,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtarmchairbrown
+  - node: armchairBrown
     entity: ArmchairBrown
     edges:
     - to: start
@@ -884,7 +884,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtarmchairbrown2
+  - node: armchairBrown2
     entity: ArmchairBrown2
     edges:
     - to: start
@@ -895,7 +895,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtarmchairblue
+  - node: armchairBlue
     entity: ArmchairBlue
     edges:
     - to: start
@@ -906,7 +906,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtarmchairblue2
+  - node: armchairBlue2
     entity: ArmchairBlue2
     edges:
     - to: start
@@ -917,7 +917,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtchairpizzeria
+  - node: chairPizzeria
     entity: ChairPizzeria
     edges:
     - to: start
@@ -927,7 +927,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtchairred
+  - node: chairRed
     entity: ChairRed
     edges:
     - to: start
@@ -937,7 +937,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtchairwhite
+  - node: chairWhite
     entity: ChairWhite
     edges:
     - to: start
@@ -947,7 +947,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtchairbarstool
+  - node: chairBarStool
     entity: ChairBarStool
     edges:
     - to: start
@@ -958,7 +958,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtchairbarstool2
+  - node: chairBarStool2
     entity: ChairBarStool2
     edges:
     - to: start
@@ -969,7 +969,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtchaircomfyblack
+  - node: chairComfyBlack
     entity: ChairComfyBlack
     edges:
     - to: start
@@ -979,7 +979,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtchaircomfymaroon
+  - node: chairComfyMaroon
     entity: ChairComfyMaroon
     edges:
     - to: start
@@ -989,7 +989,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtchaircomfywhite
+  - node: chairComfyWhite
     entity: ChairComfyWhite
     edges:
     - to: start
@@ -999,7 +999,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtchairking
+  - node: chairKing
     entity: ChairKing
     edges:
     - to: start
@@ -1013,7 +1013,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtchairrich
+  - node: chairRich
     entity: ChairRich
     edges:
     - to: start
@@ -1027,7 +1027,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtchairrichwhite
+  - node: chairRichWhite
     entity: ChairRichWhite
     edges:
     - to: start
@@ -1041,7 +1041,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtchairstyle
+  - node: chairStyle
     entity: ChairStyle
     edges:
     - to: start
@@ -1052,7 +1052,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtchairwoodenstool
+  - node: chairWoodenStool
     entity: ChairWoodenStool
     edges:
     - to: start
@@ -1062,7 +1062,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  - node: adtchairwoodenstool2
+  - node: chairWoodenStool2
     entity: ChairWoodenStool2
     edges:
     - to: start

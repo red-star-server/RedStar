@@ -1,5 +1,6 @@
 - type: entity
   id: SteelDarkCenterStairs
+  parent: Stairs
   name: stairs
   suffix: Steel , center
   description: The greatest invention since rocket-propelled grenades.
@@ -7,19 +8,11 @@
   - type: Sprite
     sprite: _ADT/Structures/stairs.rsi
     state: steel_dark_center_stairs
-  - type: Damageable
-    damageModifierSet: SteelStaticMod
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepTile
   - type: Destructible
     thresholds:
-    - trigger: !type:DamageTrigger
-        damage: 500
-      behaviors:
-      - !type:DoActsBehavior
-        acts:
-        - Destruction
     - trigger: !type:DamageTrigger
         damage: 50
       behaviors:
@@ -31,11 +24,10 @@
       - !type:DoActsBehavior
         acts:
         - Destruction
-  parent:
-  - BaseFloorDecoration
-  - StructureHealthFurnitureStrong
+
 - type: entity
   id: WoodCenterStairs
+  parent: Stairs
   name: stairs
   suffix: Wood, center
   description: The greatest invention since rocket-propelled grenades.
@@ -51,12 +43,6 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 500
-      behaviors:
-      - !type:DoActsBehavior
-        acts:
-        - Destruction
-    - trigger: !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:SpawnEntitiesBehavior
@@ -67,9 +53,7 @@
       - !type:DoActsBehavior
         acts:
         - Destruction
-  parent:
-  - BaseFloorDecoration
-  - StructureHealthFurnitureStrong
+
 - type: entity
   id: SteelDarkLeftStairs
   parent: SteelDarkCenterStairs
@@ -77,6 +61,7 @@
   components:
   - type: Sprite
     state: steel_dark_left_stairs
+
 - type: entity
   id: SteelDarkRightStairs
   parent: SteelDarkCenterStairs
@@ -84,6 +69,7 @@
   components:
   - type: Sprite
     state: steel_dark_right_stairs
+
 - type: entity
   id: SteelDarkSingleStairs
   parent: SteelDarkCenterStairs
@@ -93,7 +79,8 @@
     state: steel_dark_single_stairs
   - type: Construction
     graph: SteelDarkSingleStairs
-    node: adtsteeldarksinglestairs
+    node: steelDarkSingleStairs
+
 - type: entity
   id: SteelDarkLightLeftStairs
   parent: SteelDarkCenterStairs
@@ -101,6 +88,7 @@
   components:
   - type: Sprite
     state: steel_dark_light_left_stairs
+
 - type: entity
   id: SteelDarkLightRightStairs
   parent: SteelDarkCenterStairs
@@ -108,6 +96,7 @@
   components:
   - type: Sprite
     state: steel_dark_light_right_stairs
+
 - type: entity
   id: SteelCenterStairs
   parent: SteelDarkCenterStairs
@@ -115,6 +104,7 @@
   components:
   - type: Sprite
     state: steel_center_stairs
+
 - type: entity
   id: SteelLeftStairs
   parent: SteelDarkCenterStairs
@@ -122,6 +112,7 @@
   components:
   - type: Sprite
     state: steel_left_stairs
+
 - type: entity
   id: SteelRightStairs
   parent: SteelDarkCenterStairs
@@ -129,6 +120,7 @@
   components:
   - type: Sprite
     state: steel_right_stairs
+
 - type: entity
   id: SteelSingleStairs
   parent: SteelDarkCenterStairs
@@ -138,7 +130,8 @@
     state: steel_single_stairs
   - type: Construction
     graph: SteelSingleStairs
-    node: adtsteelsinglestairs
+    node: steelSingleStairs
+
 - type: entity
   id: SteelLightLeftStairs
   parent: SteelDarkCenterStairs
@@ -146,6 +139,7 @@
   components:
   - type: Sprite
     state: steel_light_left_stairs
+
 - type: entity
   id: SteelLightRightStairs
   parent: SteelDarkCenterStairs
@@ -153,6 +147,7 @@
   components:
   - type: Sprite
     state: steel_light_right_stairs
+
 - type: entity
   id: SteelWhiteCenterStairs
   parent: SteelDarkCenterStairs
@@ -160,6 +155,7 @@
   components:
   - type: Sprite
     state: steel_white_center_stairs
+
 - type: entity
   id: SteelWhiteLeftStairs
   parent: SteelDarkCenterStairs
@@ -167,6 +163,7 @@
   components:
   - type: Sprite
     state: steel_white_left_stairs
+
 - type: entity
   id: SteelWhiteRightStairs
   parent: SteelDarkCenterStairs
@@ -174,6 +171,7 @@
   components:
   - type: Sprite
     state: steel_white_right_stairs
+
 - type: entity
   id: SteelWhiteSingleStairs
   parent: SteelDarkCenterStairs
@@ -183,7 +181,8 @@
     state: steel_white_single_stairs
   - type: Construction
     graph: SteelWhiteSingleStairs
-    node: adtsteelwhitesinglestairs
+    node: steelWhiteSingleStairs
+
 - type: entity
   id: SteelWhiteLightLeftStairs
   parent: SteelDarkCenterStairs
@@ -191,6 +190,7 @@
   components:
   - type: Sprite
     state: steel_white_light_left_stairs
+
 - type: entity
   id: SteelWhiteLightRightStairs
   parent: SteelDarkCenterStairs
@@ -198,6 +198,7 @@
   components:
   - type: Sprite
     state: steel_white_light_right_stairs
+
 - type: entity
   id: WoodBlackCenterStairs
   parent: WoodCenterStairs
@@ -205,6 +206,7 @@
   components:
   - type: Sprite
     state: wood_black_center_stairs
+
 - type: entity
   id: WoodBlackLeftStairs
   parent: WoodCenterStairs
@@ -212,6 +214,7 @@
   components:
   - type: Sprite
     state: wood_black_left_stairs
+
 - type: entity
   id: WoodBlackRightStairs
   parent: WoodCenterStairs
@@ -219,6 +222,7 @@
   components:
   - type: Sprite
     state: wood_black_right_stairs
+
 - type: entity
   id: WoodBlackSingleStairs
   parent: WoodCenterStairs
@@ -228,7 +232,8 @@
     state: wood_black_single_stairs
   - type: Construction
     graph: WoodBlackSingleStairs
-    node: adtwoodblacksinglestairs
+    node: woodBlackSingleStairs
+
 - type: entity
   id: WoodDarkCenterStairs
   parent: WoodCenterStairs
@@ -236,6 +241,7 @@
   components:
   - type: Sprite
     state: wood_dark_center_stairs
+
 - type: entity
   id: WoodDarkLeftStairs
   parent: WoodCenterStairs
@@ -243,6 +249,7 @@
   components:
   - type: Sprite
     state: wood_dark_left_stairs
+
 - type: entity
   id: WoodDarkRightStairs
   parent: WoodCenterStairs
@@ -250,6 +257,7 @@
   components:
   - type: Sprite
     state: wood_dark_right_stairs
+
 - type: entity
   id: WoodDarkSingleStairs
   parent: WoodCenterStairs
@@ -259,7 +267,8 @@
     state: wood_dark_single_stairs
   - type: Construction
     graph: WoodDarkSingleStairs
-    node: adtwooddarksinglestairs
+    node: woodDarkSingleStairs
+
 - type: entity
   id: WoodLeftStairs
   parent: WoodCenterStairs
@@ -267,6 +276,7 @@
   components:
   - type: Sprite
     state: wood_left_stairs
+
 - type: entity
   id: WoodRightStairs
   parent: WoodCenterStairs
@@ -274,6 +284,7 @@
   components:
   - type: Sprite
     state: wood_right_stairs
+
 - type: entity
   id: WoodSingleStairs
   parent: WoodCenterStairs
@@ -283,7 +294,8 @@
     state: wood_single_stairs
   - type: Construction
     graph: WoodSingleStairs
-    node: adtwoodsinglestairs
+    node: woodSingleStairs
+
 - type: entity
   id: WoodLightCenterStairs
   parent: WoodCenterStairs
@@ -291,6 +303,7 @@
   components:
   - type: Sprite
     state: wood_light_center_stairs
+
 - type: entity
   id: WoodLightLeftStairs
   parent: WoodCenterStairs
@@ -298,6 +311,7 @@
   components:
   - type: Sprite
     state: wood_light_left_stairs
+
 - type: entity
   id: WoodLightRightStairs
   parent: WoodCenterStairs
@@ -305,6 +319,7 @@
   components:
   - type: Sprite
     state: wood_light_right_stairs
+
 - type: entity
   id: WoodLightSingleStairs
   parent: WoodCenterStairs
@@ -314,7 +329,8 @@
     state: wood_light_single_stairs
   - type: Construction
     graph: WoodLightSingleStairs
-    node: adtwoodlightsinglestairs
+    node: woodLightSingleStairs
+
 - type: entity
   id: WoodRedCenterStairs
   parent: WoodCenterStairs
@@ -322,6 +338,7 @@
   components:
   - type: Sprite
     state: wood_red_center_stairs
+
 - type: entity
   id: WoodRedLeftStairs
   parent: WoodCenterStairs
@@ -329,6 +346,7 @@
   components:
   - type: Sprite
     state: wood_red_left_stairs
+
 - type: entity
   id: WoodRedRightStairs
   parent: WoodCenterStairs
@@ -336,6 +354,7 @@
   components:
   - type: Sprite
     state: wood_red_right_stairs
+
 - type: entity
   id: WoodRedSingleStairs
   parent: WoodCenterStairs
@@ -345,4 +364,4 @@
     state: wood_red_single_stairs
   - type: Construction
     graph: WoodRedSingleStairs
-    node: adtwoodredsinglestairs
+    node: woodRedSingleStairs

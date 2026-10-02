@@ -1,8 +1,8 @@
 - type: entity
-  name: часовой шкаф
+  name: grandfather clock
   id: ClockCabinet
-  parent: BaseStructure
-  description: Тик. Так. Тик. Так.
+  parent: [BaseStructure, StructureHealthFurniture]
+  description: Tick. Tock. Tick. Tock.
   components:
   - type: Sprite
     sprite: _ADT/Structures/Furniture/clock_cabinet.rsi
@@ -37,16 +37,8 @@
             state: clock-off
   - type: Damageable
     damageModifierSet: SteelStaticMod
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
-    - trigger: !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts:
-        - Destruction
     - trigger: !type:DamageTrigger
         damage: 50
       behaviors:

@@ -120,6 +120,11 @@
   name: mattress
   description: Better sleep in that then on the floor i guess.
   components:
+  # RS14-start
+  - type: Construction
+    graph: MattressGraph
+    node: mattress
+  # RS14-end
   - type: Sprite
     state: mattress
   - type: Damageable

@@ -11,6 +11,7 @@
   - type: Construction
     graph: StatueAngel
     node: statue
+
 - type: entity
   id: StatueLion
   parent: BaseTallStatue
@@ -23,6 +24,7 @@
   - type: Construction
     graph: StatueLion
     node: statue
+
 - type: entity
   id: StatueLenin
   parent: BaseTallStatue
@@ -35,6 +37,7 @@
   - type: Construction
     graph: StatueLenin
     node: statue
+
 - type: entity
   id: StatueHadii
   parent: BaseTallStatue
@@ -47,6 +50,7 @@
   - type: Construction
     graph: StatueHadii
     node: statue
+
 - type: entity
   id: BustHelios
   parent: BaseBust
@@ -58,6 +62,7 @@
   - type: Construction
     graph: BustHelios
     node: bust
+
 - type: entity
   id: BustLenin
   parent: BaseBust
@@ -69,6 +74,7 @@
   - type: Construction
     graph: BustLenin
     node: bust
+
 - type: entity
   id: BustDarwin
   parent: BaseBust
@@ -80,6 +86,7 @@
   - type: Construction
     graph: BustDarwin
     node: bust
+
 - type: entity
   id: BustPompeii
   parent: BaseBust
@@ -91,6 +98,7 @@
   - type: Construction
     graph: BustPompeii
     node: bust
+
 - type: entity
   abstract: true
   parent: BaseStatue
@@ -104,6 +112,7 @@
       fix1:
         shape: !type:PhysShapeAabb
           bounds: -0.5,-0.5,0.5,1.5
+
 - type: entity
   abstract: true
   parent: BaseStatue
@@ -118,6 +127,7 @@
       fix1:
         shape: !type:PhysShapeAabb
           bounds: -0.3,-0.3,0.3,0.8
+
 - type: entity
   abstract: true
   parent: BaseStatue
@@ -126,6 +136,7 @@
   - type: Sprite
     noRot: true
     offset: 0.0,0.5
+
 - type: entity
   parent: BaseMarbleStatue
   id: MarbleLady
@@ -139,7 +150,7 @@
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
-          marble1:
+          MaterialMarble1:
             min: 4
             max: 6
       - !type:DoActsBehavior
@@ -156,8 +167,9 @@
   - type: Construction
     graph: MarbleStatueLady
     node: marblestatueLady
+
 - type: entity
-  parent: BaseMarbleStatue
+  parent: MarbleLady
   id: MarbleLadyFlower
   name: marble lady in flowers
   description: She's so pretty
@@ -168,6 +180,7 @@
   - type: Construction
     graph: MarbleStatueLadyFlower
     node: marblestatueLadyFlower
+
 - type: entity
   parent: BaseMarbleStatue
   id: MarblePillar
@@ -177,6 +190,7 @@
   - type: Sprite
     sprite: _ADT/Structures/Decoration/Statues/pillar_marble.rsi
     state: pillar_marble
+
 - type: entity
   parent: BaseMarbleStatue
   id: MarbleStand
@@ -197,7 +211,7 @@
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
-          marble1:
+          MaterialMarble1:
             min: 3
             max: 5
       - !type:DoActsBehavior
@@ -211,6 +225,7 @@
   - type: Construction
     graph: MarbleStand
     node: marblestand
+
 - type: entity
   parent: BaseMarbleStatue
   id: MarbleMan
@@ -224,8 +239,9 @@
   - type: Construction
     graph: MarbleMan
     node: marbleMan
+
 - type: entity
-  parent: BaseMarbleStatue
+  parent: MarbleMan
   id: MarbleManDamaged
   name: marble man crack
   description: he stands
@@ -235,8 +251,9 @@
     offset: 0.0,0.0
     state: marmandmg
   - type: Construction
-    graph: MarbleManDamage
+    graph: MarbleManDamaged
     node: marbleManDamage
+
 - type: entity
   parent: BaseMarbleStatue
   id: MarblePeacemaker
@@ -249,6 +266,7 @@
   - type: Construction
     graph: MarblePeacemaker
     node: marblePeacemaker
+
 - type: entity
   parent: BaseMarbleStatue
   id: KnightMarble
@@ -261,6 +279,7 @@
   - type: Construction
     graph: MarbleKnight
     node: marbleKnight
+
 - type: entity
   parent: BaseMarbleStatue
   id: HunterMarble
@@ -273,6 +292,7 @@
   - type: Construction
     graph: MarbleHunter
     node: marbleHunter
+
 - type: entity
   parent: BaseMarbleStatue
   id: MachineMarble
@@ -285,6 +305,7 @@
   - type: Construction
     graph: MarbleMachine
     node: marbleMachine
+
 - type: entity
   parent: BaseMarbleStatue
   id: LegionaryMarble
@@ -297,6 +318,7 @@
   - type: Construction
     graph: MarbleLegionary
     node: marbleLegionary
+
 - type: entity
   parent: BaseMarbleStatue
   id: BirdMarble
@@ -313,7 +335,7 @@
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
-          marble1:
+          MaterialMarble1:
             min: 3
             max: 4
       - !type:DoActsBehavior
@@ -327,6 +349,7 @@
   - type: Construction
     graph: MarbleBird
     node: marbleBird
+
 - type: entity
   parent: BaseMarbleStatue
   id: CunningMarble
@@ -339,6 +362,7 @@
   - type: Construction
     graph: MarbleCunning
     node: marbleCunning
+
 - type: entity
   parent: BaseMarbleStatue
   id: ScientistMarble
@@ -355,7 +379,7 @@
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
-          marble1:
+          MaterialMarble1:
             min: 4
             max: 5
       - !type:DoActsBehavior
@@ -369,6 +393,7 @@
   - type: Construction
     graph: MarbleScientist
     node: marbleScientist
+
 - type: entity
   parent: BaseMarbleStatue
   id: EyeMarble
@@ -385,7 +410,7 @@
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
-          marble1:
+          MaterialMarble1:
             min: 4
             max: 5
       - !type:DoActsBehavior
@@ -399,6 +424,7 @@
   - type: Construction
     graph: MarbleEye
     node: marbleEye
+
 - type: entity
   parent: BaseMarbleStatue
   id: UndoneMarble
@@ -408,6 +434,7 @@
   - type: Sprite
     sprite: _ADT/Structures/Decoration/Statues/marble_undone.rsi
     state: marble_undone
+
 - type: entity
   parent: BaseMarbleStatue
   id: AncestorMarble
@@ -424,7 +451,7 @@
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
-          marble1:
+          MaterialMarble1:
             min: 3
             max: 5
       - !type:DoActsBehavior
@@ -438,6 +465,7 @@
   - type: Construction
     graph: MarbleAncestor
     node: marbleAncestor
+
 - type: entity
   parent: BaseMarbleStatue
   id: PlafeimMarble
@@ -450,6 +478,7 @@
   - type: Construction
     graph: MarblePlafeim
     node: marblePlafeim
+
 - type: entity
   parent: BaseMarbleStatue
   id: ThinkerMarble
@@ -459,6 +488,7 @@
   - type: Sprite
     sprite: _ADT/Structures/Decoration/Statues/marble_thinker.rsi
     state: marble_thinker
+
 - type: entity
   parent: BaseMarbleStatue
   id: ThinkerTwoMarble
@@ -468,6 +498,7 @@
   - type: Sprite
     sprite: _ADT/Structures/Decoration/Statues/marble_thinker_two.rsi
     state: marble_thinker_two
+
 - type: entity
   parent: BaseMarbleStatue
   id: HeroMarble

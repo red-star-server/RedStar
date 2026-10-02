@@ -1,6 +1,7 @@
 - type: entity
   id: FireplaceBase
-  parent: BaseStructure
+  abstract: true
+  parent: [BaseStructure, StructureHealthFurnitureStrong]
   components:
   - type: Appearance
   - type: AmbientSound
@@ -14,8 +15,6 @@
     color: '#FF6F00'
   - type: Damageable
     damageModifierSet: SteelStaticMod
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
@@ -25,12 +24,12 @@
         acts:
         - Destruction
   - type: AlwaysHot
-  abstract: true
+
 - type: entity
   id: FireplaceWhite
   parent: FireplaceBase
-  name: белый камин
-  description: Изысканный белый камин. Может быть зажжён для создания уютной атмосферы.
+  name: white fireplace
+  description: An elegant white fireplace that fills the room with warmth.
   components:
   - type: Sprite
     sprite: _ADT/Structures/Decoration/fireplace.rsi
@@ -43,11 +42,12 @@
   - type: Construction
     graph: Fireplace
     node: fireplaceWhite
+
 - type: entity
   id: FireplaceWooden
   parent: FireplaceBase
-  name: деревянный камин
-  description: Изысканный деревянный камин. Может быть зажжён для создания уютной атмосферы.
+  name: wooden fireplace
+  description: An elegant wooden fireplace that fills the room with warmth.
   components:
   - type: Sprite
     sprite: _ADT/Structures/Decoration/fireplace.rsi

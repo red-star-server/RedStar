@@ -44,6 +44,11 @@
   name: nanotrasen banner
   description: A banner displaying the Nanotrasen logo. It looks rather cheap.
   components:
+  # RS14-start
+  - type: Construction
+    graph: BannerNanotrasen
+    node: banner
+  # RS14-end
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner
@@ -54,6 +59,11 @@
   name: cargo banner
   description: A banner displaying the colors of the cargo department. Not. Cargonia.
   components:
+  # RS14-start
+  - type: Construction
+    graph: BannerCargo
+    node: banner
+  # RS14-end
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner_cargo
@@ -64,6 +74,11 @@
   name: engineering banner
   description: A banner displaying the colors of the engineering department. Scrungularty.
   components:
+  # RS14-start
+  - type: Construction
+    graph: BannerEngineering
+    node: banner
+  # RS14-end
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner_engineering
@@ -74,6 +89,11 @@
   name: medical banner
   description: A banner displaying the colors of the medical department. How sterile.
   components:
+  # RS14-start
+  - type: Construction
+    graph: BannerMedical
+    node: banner
+  # RS14-end
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner_medical
@@ -104,6 +124,11 @@
   name: science banner
   description: A banner displaying the colors of the science department. Where science has no bounds, and regulations are rarely followed.
   components:
+  # RS14-start
+  - type: Construction
+    graph: BannerScience
+    node: banner
+  # RS14-end
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner_science
@@ -114,6 +139,11 @@
   name: security banner
   description: A banner displaying the colors of the security department. You're surprised it's not vandalised.
   components:
+  # RS14-start
+  - type: Construction
+    graph: BannerSecurity
+    node: banner
+  # RS14-end
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner_security
@@ -124,6 +154,11 @@
   name: blue banner
   description: A banner displaying the color blue. Dabudidabudai.
   components:
+  # RS14-start
+  - type: Construction
+    graph: BannerBlue
+    node: banner
+  # RS14-end
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner-blue
@@ -134,6 +169,11 @@
   name: red banner
   description: A banner displaying the color red. The edgy one.
   components:
+  # RS14-start
+  - type: Construction
+    graph: BannerRed
+    node: banner
+  # RS14-end
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner-red
@@ -144,6 +184,11 @@
   name: yellow banner
   description: A banner displaying the color yellow. Reminds you of ducks and lemon stands.
   components:
+  # RS14-start
+  - type: Construction
+    graph: BannerYellow
+    node: banner
+  # RS14-end
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner-yellow
@@ -154,6 +199,11 @@
   name: green banner
   description: A banner displaying the color green. Grass, leaves, guacamole.
   components:
+  # RS14-start
+  - type: Construction
+    graph: BannerGreen
+    node: banner
+  # RS14-end
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner-green

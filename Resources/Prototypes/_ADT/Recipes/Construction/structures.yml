@@ -1,336 +1,201 @@
 - type: construction
+  parent: BaseStructureFullTile
   id: SteelDarkSingleStairs
   graph: SteelDarkSingleStairs
-  startNode: start
-  targetNode: adtsteeldarksinglestairs
-  category: construction-category-structures
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-  - ''
+  targetNode: steelDarkSingleStairs
+
 - type: construction
+  parent: BaseStructureFullTile
   id: SteelSingleStairs
   graph: SteelSingleStairs
-  startNode: start
-  targetNode: adtsteelsinglestairs
-  category: construction-category-structures
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-  - ''
+  targetNode: steelSingleStairs
+
 - type: construction
+  parent: BaseStructureFullTile
   id: SteelWhiteSingleStairs
   graph: SteelWhiteSingleStairs
-  startNode: start
-  targetNode: adtsteelwhitesinglestairs
-  category: construction-category-structures
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-  - ''
+  targetNode: steelWhiteSingleStairs
+
 - type: construction
+  parent: BaseStructureFullTile
   id: WoodBlackSingleStairs
   graph: WoodBlackSingleStairs
-  startNode: start
-  targetNode: adtwoodblacksinglestairs
-  category: construction-category-structures
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-  - ''
+  targetNode: woodBlackSingleStairs
+
 - type: construction
+  parent: BaseStructureFullTile
   id: WoodDarkSingleStairs
   graph: WoodDarkSingleStairs
-  startNode: start
-  targetNode: adtwooddarksinglestairs
-  category: construction-category-structures
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-  - ''
+  targetNode: woodDarkSingleStairs
+
 - type: construction
+  parent: BaseStructureFullTile
   id: WoodSingleStairs
   graph: WoodSingleStairs
-  startNode: start
-  targetNode: adtwoodsinglestairs
-  category: construction-category-structures
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-  - ''
+  targetNode: woodSingleStairs
+
 - type: construction
+  parent: BaseStructureFullTile
   id: WoodLightSingleStairs
   graph: WoodLightSingleStairs
-  startNode: start
-  targetNode: adtwoodlightsinglestairs
-  category: construction-category-structures
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-  - ''
+  targetNode: woodLightSingleStairs
+
 - type: construction
+  parent: BaseStructureFullTile
   id: WoodRedSingleStairs
   graph: WoodRedSingleStairs
-  startNode: start
-  targetNode: adtwoodredsinglestairs
-  category: construction-category-structures
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-  - ''
+  targetNode: woodRedSingleStairs
+
 - type: construction
+  parent: BaseStructureFullTile
   id: MarbleLady
   graph: MarbleStatueLady
-  startNode: start
   targetNode: marblestatueLady
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-  - ''
+
 - type: construction
+  parent: BaseStructureFullTile
   id: MarbleLadyFlower
   graph: MarbleStatueLadyFlower
-  startNode: start
   targetNode: marblestatueLadyFlower
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-  - ''
+
 - type: construction
+  parent: BaseStructureFullTile
   id: MarbleStand
   graph: MarbleStand
-  startNode: start
   targetNode: marblestand
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-  - ''
+
 - type: construction
+  parent: BaseStructureFullTile
   id: MarbleMan
   graph: MarbleMan
-  startNode: start
   targetNode: marbleMan
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
   canRotate: true
-  conditions:
-  - ''
+
 - type: construction
-  id: MarbleManDamage
-  graph: MarbleManDamage
-  startNode: start
+  parent: BaseStructureFullTile
+  id: MarbleManDamaged
+  graph: MarbleManDamaged
   targetNode: marbleManDamage
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
   canRotate: true
-  conditions:
-  - ''
+
 - type: construction
+  parent: BaseStructureFullTile
   id: MarblePeacemaker
   graph: MarblePeacemaker
-  startNode: start
   targetNode: marblePeacemaker
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-  - ''
+
 - type: construction
+  parent: BaseStructureFullTile
   id: MarbleKnight
   graph: MarbleKnight
-  startNode: start
   targetNode: marbleKnight
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-  - ''
+
 - type: construction
+  parent: BaseStructureFullTile
   id: MarbleHunter
   graph: MarbleHunter
-  startNode: start
   targetNode: marbleHunter
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-  - ''
+
 - type: construction
+  parent: BaseStructureFullTile
   id: MarbleMachine
   graph: MarbleMachine
-  startNode: start
   targetNode: marbleMachine
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-  - ''
+
 - type: construction
+  parent: BaseStructureFullTile
   id: MarbleLegionary
   graph: MarbleLegionary
-  startNode: start
   targetNode: marbleLegionary
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-  - ''
+
 - type: construction
+  parent: BaseStructureFullTile
   id: MarbleBird
   graph: MarbleBird
-  startNode: start
   targetNode: marbleBird
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-  - ''
+
 - type: construction
+  parent: BaseStructureFullTile
   id: MarbleCunning
   graph: MarbleCunning
-  startNode: start
   targetNode: marbleCunning
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-  - ''
+
 - type: construction
+  parent: BaseStructureFullTile
   id: MarbleScientist
   graph: MarbleScientist
-  startNode: start
   targetNode: marbleScientist
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-  - ''
+
 - type: construction
+  parent: BaseStructureFullTile
   id: MarbleEye
   graph: MarbleEye
-  startNode: start
   targetNode: marbleEye
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-  - ''
+
 - type: construction
+  parent: BaseStructureFullTile
   id: MarbleAncestor
   graph: MarbleAncestor
-  startNode: start
   targetNode: marbleAncestor
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-  - ''
+
 - type: construction
+  parent: BaseStructureFullTile
   id: MarblePlafeim
   graph: MarblePlafeim
-  startNode: start
   targetNode: marblePlafeim
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-  - ''
+
 - type: construction
+  parent: BaseStructureFullTile
   name: construction-name-bust-helios
   description: construction-desc-bust-helios
   id: BustHelios
   graph: BustHelios
-  startNode: start
   targetNode: bust
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-  - ''
+
 - type: construction
+  parent: BaseStructureFullTile
   name: construction-name-bust-lenin
   description: construction-desc-bust-lenin
   id: BustLenin
   graph: BustLenin
-  startNode: start
   targetNode: bust
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-  - ''
+
 - type: construction
+  parent: BaseStructureFullTile
   name: construction-name-bust-darwin
   description: construction-desc-bust-darwin
   id: BustDarwin
   graph: BustDarwin
-  startNode: start
   targetNode: bust
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-  - ''
+
 - type: construction
+  parent: BaseStructureFullTile
   name: construction-name-bust-pompeii
   description: construction-desc-bust-pompeii
   id: BustPompeii
   graph: BustPompeii
-  startNode: start
   targetNode: bust
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-  - ''
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: StatueAngel
+  graph: StatueAngel
+  targetNode: statue
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: StatueLion
+  graph: StatueLion
+  targetNode: statue
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: StatueLenin
+  graph: StatueLenin
+  targetNode: statue
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: StatueHadii
+  graph: StatueHadii
+  targetNode: statue

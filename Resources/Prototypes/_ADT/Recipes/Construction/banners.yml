@@ -1,130 +1,99 @@
 - type: construction
+  parent: BaseFurniture
   id: BannerRedRecipe
   name: construction-name-banner-red
   description: construction-desc-banner-red
   graph: BannerRed
-  startNode: start
   targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
   conditions:
-  - ''
+  - !type:TileNotBlocked
+
 - type: construction
+  parent: BaseFurniture
   id: BannerBlueRecipe
   name: construction-name-banner-blue
   description: construction-desc-banner-blue
   graph: BannerBlue
-  startNode: start
   targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
   conditions:
-  - ''
+  - !type:TileNotBlocked
+
 - type: construction
+  parent: BaseFurniture
   id: BannerGreenRecipe
   name: construction-name-banner-green
   description: construction-desc-banner-green
   graph: BannerGreen
-  startNode: start
   targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
   conditions:
-  - ''
+  - !type:TileNotBlocked
+
 - type: construction
+  parent: BaseFurniture
   id: BannerYellowRecipe
   name: construction-name-banner-yellow
   description: construction-desc-banner-yellow
   graph: BannerYellow
-  startNode: start
   targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
   conditions:
-  - ''
+  - !type:TileNotBlocked
+
 - type: construction
+  parent: BaseFurniture
   id: BannerNanotrasenRecipe
   name: construction-name-banner-nanotrasen
   description: construction-desc-banner-nanotrasen
   graph: BannerNanotrasen
-  startNode: start
   targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
   conditions:
-  - ''
+  - !type:TileNotBlocked
+
 - type: construction
+  parent: BaseFurniture
   id: BannerCargoRecipe
   name: construction-name-banner-cargo
   description: construction-desc-banner-cargo
   graph: BannerCargo
-  startNode: start
   targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
   conditions:
-  - ''
+  - !type:TileNotBlocked
+
 - type: construction
+  parent: BaseFurniture
   id: BannerEngineeringRecipe
   name: construction-name-banner-engineering
   description: construction-desc-banner-engineering
   graph: BannerEngineering
-  startNode: start
   targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
   conditions:
-  - ''
+  - !type:TileNotBlocked
+
 - type: construction
+  parent: BaseFurniture
   id: BannerMedicalRecipe
   name: construction-name-banner-medical
   description: construction-desc-banner-medical
   graph: BannerMedical
-  startNode: start
   targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
   conditions:
-  - ''
+  - !type:TileNotBlocked
+
 - type: construction
+  parent: BaseFurniture
   id: BannerScienceRecipe
   name: construction-name-banner-science
   description: construction-desc-banner-science
   graph: BannerScience
-  startNode: start
   targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
   conditions:
-  - ''
+  - !type:TileNotBlocked
+
 - type: construction
+  parent: BaseFurniture
   id: BannerSecurityRecipe
   name: construction-name-banner-security
   description: construction-desc-banner-security
   graph: BannerSecurity
-  startNode: start
   targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
   conditions:
-  - ''
+  - !type:TileNotBlocked

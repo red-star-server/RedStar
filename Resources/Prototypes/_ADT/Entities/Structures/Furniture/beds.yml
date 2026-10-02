@@ -2,20 +2,21 @@
   parent: Bed
   id: DoubleBed
   name: double bed
-  description: A large bed for two people. Can place two bedsheets and buckle two people.
+  description: A large bed for two people. It can accommodate two people.
   components:
   - type: Sprite
     sprite: _ADT/Structures/Furniture/bed_double.rsi
     state: bed_double
   - type: Construction
-    graph: DoubleBedGraph
+    graph: bed
     node: double_bed_complete
   - type: Appearance
   - type: Strap
     size: 200
     buckleOffset: 0,-0.25
+
 - type: entity
-  parent: Bed
+  parent: Mattress
   id: MattressClean
   name: clean mattress
   description: A clean mattress for sleeping.
@@ -24,10 +25,11 @@
     sprite: _ADT/Structures/Furniture/mattress.rsi
     state: mattress_clean
   - type: Construction
-    graph: adt_mattress
+    graph: MattressGraph
     node: mattress_clean
+
 - type: entity
-  parent: Bed
+  parent: Mattress
   id: MattressCleanFull
   name: clean mattress
   description: A large clean mattress for two people.
@@ -36,13 +38,14 @@
     sprite: _ADT/Structures/Furniture/mattress.rsi
     state: mattress_clean_full
   - type: Construction
-    graph: adt_mattress
+    graph: MattressGraph
     node: mattress_clean_full
   - type: Strap
     size: 200
     buckleOffset: 0,-0.25
+
 - type: entity
-  parent: Bed
+  parent: Mattress
   id: MattressFull
   name: wide mattress
   description: A large mattress for two people.
@@ -51,8 +54,25 @@
     sprite: _ADT/Structures/Furniture/mattress.rsi
     state: mattress_full
   - type: Construction
-    graph: adt_mattress
+    graph: MattressGraph
     node: mattress_full
   - type: Strap
     size: 200
     buckleOffset: 0,-0.25
+
+- type: entity
+  parent: Bed
+  id: DeckChair
+  name: deckchair
+  description: A deckchair for the acquisition of an even tan under the light of the nearest star.
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Furniture/deckchair.rsi
+    state: deckchair
+  - type: Construction
+    graph: deckchair
+    node: deckchair
+  - type: Strap
+    position: Down
+    rotation: -90
+    buckleOffset: "0,-0.15"

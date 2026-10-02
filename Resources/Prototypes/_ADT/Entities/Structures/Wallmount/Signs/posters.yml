@@ -5,6 +5,7 @@
   components:
   - type: Sprite
     sprite: _ADT/Structures/Wallmounts/posters.rsi
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterChih
@@ -14,6 +15,7 @@
   components:
   - type: Sprite
     state: poster_adtchihposter
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterLegitTurnOnSensors
@@ -22,6 +24,7 @@
   components:
   - type: Sprite
     state: poster_adtturnonsensors_legit
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterContrabandLustTayaran
@@ -30,6 +33,7 @@
   components:
   - type: Sprite
     state: poster_adtlusttayaran_contraband
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterContrabandLustUma
@@ -38,6 +42,7 @@
   components:
   - type: Sprite
     state: poster_adtlustuma_contraband
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterContrabandLustArDeco
@@ -46,6 +51,7 @@
   components:
   - type: Sprite
     state: poster_adtlustardeco_contraband
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterContrabandLostParadise
@@ -54,6 +60,7 @@
   components:
   - type: Sprite
     state: lp_contraband
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterContrabandSlimeBarmaid
@@ -62,6 +69,7 @@
   components:
   - type: Sprite
     state: bar_contraband
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterContrabandHonkminator
@@ -70,6 +78,7 @@
   components:
   - type: Sprite
     state: honkminator_contraband
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterContrabandHonkDance
@@ -78,6 +87,7 @@
   components:
   - type: Sprite
     state: honkdance_contraband
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterContrabandBorgBro
@@ -86,6 +96,7 @@
   components:
   - type: Sprite
     state: borgbro_contraband
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterContrabandLadyRnd
@@ -94,6 +105,7 @@
   components:
   - type: Sprite
     state: ladyrnd_contraband
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterLegitMissNT1
@@ -102,6 +114,7 @@
   components:
   - type: Sprite
     state: missnt1_legit
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterLegitMissNT2
@@ -110,6 +123,7 @@
   components:
   - type: Sprite
     state: missnt2_legit
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterContrabandSkrellSinger
@@ -118,6 +132,7 @@
   components:
   - type: Sprite
     state: skrell_contraband
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterContrabandSpaceNinja
@@ -126,6 +141,7 @@
   components:
   - type: Sprite
     state: ninja_contraband
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterCalendarNT
@@ -134,6 +150,7 @@
   components:
   - type: Sprite
     state: calendar_nt
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterContrabandAnime
@@ -142,6 +159,7 @@
   components:
   - type: Sprite
     state: anime_contraband
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterContrabandUnati
@@ -150,6 +168,7 @@
   components:
   - type: Sprite
     state: unati_contraband
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterContrabandPinning
@@ -158,6 +177,7 @@
   components:
   - type: Sprite
     state: pinning_contraband
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterLegitObjection
@@ -166,6 +186,7 @@
   components:
   - type: Sprite
     state: objection_legit
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterContrabandGorlaxSanta
@@ -174,6 +195,7 @@
   components:
   - type: Sprite
     state: gorlaxsanta_contraband
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterGerbBKF
@@ -184,6 +206,7 @@
   - type: Sprite
     sprite: _ADT/Structures/Wallmounts/poster_ussp.rsi
     state: bkf
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterGerbKDV
@@ -194,6 +217,7 @@
   - type: Sprite
     sprite: _ADT/Structures/Wallmounts/poster_ussp.rsi
     state: kdv
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterGerbKS
@@ -204,6 +228,7 @@
   - type: Sprite
     sprite: _ADT/Structures/Wallmounts/poster_ussp.rsi
     state: ks
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterGerbUSSP
@@ -214,6 +239,7 @@
   - type: Sprite
     sprite: _ADT/Structures/Wallmounts/poster_ussp.rsi
     state: ussp
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterGerbUSSP2
@@ -224,6 +250,7 @@
   - type: Sprite
     sprite: _ADT/Structures/Wallmounts/poster_ussp.rsi
     state: ussp2
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterUSSPRHBZ
@@ -234,6 +261,7 @@
   - type: Sprite
     sprite: _ADT/Structures/Wallmounts/poster_ussp.rsi
     state: rhbz
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterUSSPKS
@@ -244,6 +272,7 @@
   - type: Sprite
     sprite: _ADT/Structures/Wallmounts/poster_ussp.rsi
     state: ks2
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterUSSPKDV
@@ -254,6 +283,7 @@
   - type: Sprite
     sprite: _ADT/Structures/Wallmounts/poster_ussp.rsi
     state: kdv2
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterContrabandUmaHot
@@ -263,6 +293,7 @@
   components:
   - type: Sprite
     state: poster_umahot_contraband
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterContrabandUmaPress
@@ -272,6 +303,7 @@
   components:
   - type: Sprite
     state: poster_umapress_contraband
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterContrabandUmaSport
@@ -281,6 +313,7 @@
   components:
   - type: Sprite
     state: poster_umasport_contraband
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterContrabandUmaAndAzalia
@@ -290,6 +323,7 @@
   components:
   - type: Sprite
     state: poster_umaazalia_contraband
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterContrabandUmaRabbit
@@ -299,6 +333,7 @@
   components:
   - type: Sprite
     state: poster_umarabbit_contraband
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterContrabandUmaOnBeach
@@ -308,6 +343,7 @@
   components:
   - type: Sprite
     state: poster_umaonbeach_contraband
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterUnclePrazLegit
@@ -316,6 +352,7 @@
   components:
   - type: Sprite
     state: poster_unclepraz_legit
+
 - type: entity
   parent: BaseDecorativePoster
   id: PosterStandard

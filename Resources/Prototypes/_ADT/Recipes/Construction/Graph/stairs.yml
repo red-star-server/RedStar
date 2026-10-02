@@ -6,14 +6,15 @@
     actions:
     - !type:DestroyEntity {}
     edges:
-    - to: adtsteeldarksinglestairs
+    - to: steelDarkSingleStairs
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-  - node: adtsteeldarksinglestairs
+  - node: steelDarkSingleStairs
     entity: SteelDarkSingleStairs
     edges: []
+
 - type: constructionGraph
   id: SteelSingleStairs
   start: start
@@ -22,14 +23,15 @@
     actions:
     - !type:DestroyEntity {}
     edges:
-    - to: adtsteelsinglestairs
+    - to: steelSingleStairs
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-  - node: adtsteelsinglestairs
+  - node: steelSingleStairs
     entity: SteelSingleStairs
     edges: []
+
 - type: constructionGraph
   id: SteelWhiteSingleStairs
   start: start
@@ -38,14 +40,15 @@
     actions:
     - !type:DestroyEntity {}
     edges:
-    - to: adtsteelwhitesinglestairs
+    - to: steelWhiteSingleStairs
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-  - node: adtsteelwhitesinglestairs
+  - node: steelWhiteSingleStairs
     entity: SteelWhiteSingleStairs
     edges: []
+
 - type: constructionGraph
   id: WoodBlackSingleStairs
   start: start
@@ -54,14 +57,15 @@
     actions:
     - !type:DestroyEntity {}
     edges:
-    - to: adtwoodblacksinglestairs
+    - to: woodBlackSingleStairs
       steps:
       - material: WoodPlank
         amount: 2
         doAfter: 1
-  - node: adtwoodblacksinglestairs
+  - node: woodBlackSingleStairs
     entity: WoodBlackSingleStairs
     edges: []
+
 - type: constructionGraph
   id: WoodDarkSingleStairs
   start: start
@@ -70,14 +74,15 @@
     actions:
     - !type:DestroyEntity {}
     edges:
-    - to: adtwooddarksinglestairs
+    - to: woodDarkSingleStairs
       steps:
       - material: WoodPlank
         amount: 2
         doAfter: 1
-  - node: adtwooddarksinglestairs
+  - node: woodDarkSingleStairs
     entity: WoodDarkSingleStairs
     edges: []
+
 - type: constructionGraph
   id: WoodSingleStairs
   start: start
@@ -86,14 +91,15 @@
     actions:
     - !type:DestroyEntity {}
     edges:
-    - to: adtwoodsinglestairs
+    - to: woodSingleStairs
       steps:
       - material: WoodPlank
         amount: 2
         doAfter: 1
-  - node: adtwoodsinglestairs
+  - node: woodSingleStairs
     entity: WoodSingleStairs
     edges: []
+
 - type: constructionGraph
   id: WoodLightSingleStairs
   start: start
@@ -102,14 +108,15 @@
     actions:
     - !type:DestroyEntity {}
     edges:
-    - to: adtwoodlightsinglestairs
+    - to: woodLightSingleStairs
       steps:
       - material: WoodPlank
         amount: 2
         doAfter: 1
-  - node: adtwoodlightsinglestairs
+  - node: woodLightSingleStairs
     entity: WoodLightSingleStairs
     edges: []
+
 - type: constructionGraph
   id: WoodRedSingleStairs
   start: start
@@ -118,11 +125,11 @@
     actions:
     - !type:DestroyEntity {}
     edges:
-    - to: adtwoodredsinglestairs
+    - to: woodRedSingleStairs
       steps:
       - material: WoodPlank
         amount: 2
         doAfter: 1
-  - node: adtwoodredsinglestairs
+  - node: woodRedSingleStairs
     entity: WoodRedSingleStairs
     edges: []

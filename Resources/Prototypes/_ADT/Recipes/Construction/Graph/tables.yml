@@ -6,7 +6,7 @@
     actions:
     - !type:DeleteEntity {}
     edges:
-    - to: adttableframe
+    - to: furnitureTableFrame
       completed:
       - !type:SnapToGrid
         southRotation: true
@@ -14,7 +14,7 @@
       - material: MetalRod
         amount: 2
         doAfter: 1
-    - to: adttableroundframe
+    - to: tableRoundFrame
       completed:
       - !type:SnapToGrid
         southRotation: true
@@ -22,7 +22,7 @@
       - material: MetalRod
         amount: 2
         doAfter: 1
-    - to: adttableroundplastic
+    - to: tableRoundPlastic
       completed:
       - !type:SnapToGrid
         southRotation: true
@@ -30,7 +30,7 @@
       - material: Plastic
         amount: 4
         doAfter: 4
-    - to: adttableroundwood
+    - to: tableRoundWood
       completed:
       - !type:SnapToGrid
         southRotation: true
@@ -38,7 +38,7 @@
       - material: WoodPlank
         amount: 4
         doAfter: 4
-    - to: adttableroundglass
+    - to: tableRoundGlass
       completed:
       - !type:SnapToGrid
         southRotation: true
@@ -46,7 +46,7 @@
       - material: Glass
         amount: 4
         doAfter: 4
-  - node: adttableframe
+  - node: furnitureTableFrame
     entity: FurnitureTableFrame
     edges:
     - to: start
@@ -57,27 +57,27 @@
       steps:
       - tool: Anchoring
         doAfter: 1
-    - to: adttableplastic
+    - to: tablePlastic
       steps:
       - material: Plastic
         amount: 1
         doAfter: 1
-    - to: adttableuraniumglass
+    - to: tableUraniumGlass
       steps:
       - material: UraniumGlass
         amount: 1
         doAfter: 1
-    - to: adttablereinforcedplasmaglass
+    - to: tableReinforcedPlasmaGlass
       steps:
       - material: ReinforcedPlasmaGlass
         amount: 1
         doAfter: 1
-    - to: adttablereinforceduraniumglass
+    - to: tableReinforcedUraniumGlass
       steps:
       - material: ReinforcedUraniumGlass
         amount: 1
         doAfter: 1
-  - node: adttableroundframe
+  - node: tableRoundFrame
     entity: TableRoundFrame
     edges:
     - to: start
@@ -88,27 +88,27 @@
       steps:
       - tool: Anchoring
         doAfter: 1
-    - to: adttableroundplastic
+    - to: tableRoundPlastic
       steps:
       - material: Plastic
         amount: 4
         doAfter: 4
-    - to: adttableroundwood
+    - to: tableRoundWood
       steps:
       - material: WoodPlank
         amount: 4
         doAfter: 4
-    - to: adttableroundglass
+    - to: tableRoundGlass
       steps:
       - material: Glass
         amount: 4
         doAfter: 4
-    - to: adttableroundgeneric
+    - to: tableRoundGeneric
       steps:
       - material: Steel
         amount: 1
         doAfter: 1
-    - to: adttableroundcarpet
+    - to: tableRoundCarpet
       steps:
       - material: WoodPlank
         amount: 1
@@ -116,15 +116,15 @@
       - material: Cloth
         amount: 1
         doAfter: 1
-    - to: adttableroundplasma
+    - to: tableRoundPlasma
       steps:
       - material: PlasmaGlass
         amount: 1
         doAfter: 1
-  - node: adttableroundplastic
+  - node: tableRoundPlastic
     entity: TableRoundPlastic
     edges:
-    - to: adttableroundframe
+    - to: tableRoundFrame
       completed:
       - !type:SpawnPrototype
         prototype: SheetPlastic1
@@ -133,10 +133,10 @@
       steps:
       - tool: Prying
         doAfter: 4
-  - node: adttableroundwood
+  - node: tableRoundWood
     entity: TableRoundWood
     edges:
-    - to: adttableroundframe
+    - to: tableRoundFrame
       completed:
       - !type:SpawnPrototype
         prototype: MaterialWoodPlank1
@@ -145,10 +145,10 @@
       steps:
       - tool: Prying
         doAfter: 4
-  - node: adttableroundglass
+  - node: tableRoundGlass
     entity: TableRoundGlass
     edges:
-    - to: adttableroundframe
+    - to: tableRoundFrame
       completed:
       - !type:SpawnPrototype
         prototype: SheetGlass1
@@ -157,10 +157,10 @@
       steps:
       - tool: Prying
         doAfter: 4
-  - node: adttableroundgeneric
+  - node: tableRoundGeneric
     entity: TableRoundGeneric
     edges:
-    - to: adttableroundframe
+    - to: tableRoundFrame
       completed:
       - !type:SpawnPrototype
         prototype: SheetSteel1
@@ -168,10 +168,10 @@
       steps:
       - tool: Anchoring
         doAfter: 1
-  - node: adttableroundcarpet
+  - node: tableRoundCarpet
     entity: TableRoundCarpet
     edges:
-    - to: adttableroundframe
+    - to: tableRoundFrame
       completed:
       - !type:SpawnPrototype
         prototype: MaterialWoodPlank1
@@ -182,10 +182,10 @@
       steps:
       - tool: Anchoring
         doAfter: 1
-  - node: adttableroundplasma
+  - node: tableRoundPlasma
     entity: TableRoundPlasma
     edges:
-    - to: adttableroundframe
+    - to: tableRoundFrame
       completed:
       - !type:SpawnPrototype
         prototype: SheetPGlass1
@@ -193,10 +193,10 @@
       steps:
       - tool: Anchoring
         doAfter: 1
-  - node: adttableplastic
+  - node: tablePlastic
     entity: TablePlastic
     edges:
-    - to: adttableframe
+    - to: furnitureTableFrame
       completed:
       - !type:SpawnPrototype
         prototype: SheetPlastic1
@@ -204,10 +204,10 @@
       steps:
       - tool: Anchoring
         doAfter: 1
-  - node: adttableuraniumglass
+  - node: tableUraniumGlass
     entity: TableUraniumGlass
     edges:
-    - to: adttableframe
+    - to: furnitureTableFrame
       completed:
       - !type:SpawnPrototype
         prototype: SheetUGlass1
@@ -215,10 +215,10 @@
       steps:
       - tool: Anchoring
         doAfter: 1
-  - node: adttablereinforcedplasmaglass
+  - node: tableReinforcedPlasmaGlass
     entity: TableReinforcedPlasmaGlass
     edges:
-    - to: adttableframe
+    - to: furnitureTableFrame
       completed:
       - !type:SpawnPrototype
         prototype: SheetRPGlass1
@@ -226,10 +226,10 @@
       steps:
       - tool: Anchoring
         doAfter: 1
-  - node: adttablereinforceduraniumglass
+  - node: tableReinforcedUraniumGlass
     entity: TableReinforcedUraniumGlass
     edges:
-    - to: adttableframe
+    - to: furnitureTableFrame
       completed:
       - !type:SpawnPrototype
         prototype: SheetRUGlass1

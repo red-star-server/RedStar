@@ -7,11 +7,6 @@
   description: It looks comfy.
   abstract: true
   components:
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape: ''
-        density: 190
   - type: HealOnBuckle
     damage:
       types:
@@ -20,6 +15,7 @@
   - type: Strap
     position: Down
     rotation: 0
+
 - type: entity
   name: pizzeria chair
   id: ChairPizzeria
@@ -31,7 +27,8 @@
     state: pizza_chair
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtchairpizzeria
+    node: chairPizzeria
+
 - type: entity
   name: red chair
   id: ChairRed
@@ -42,7 +39,8 @@
     state: red_chair
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtchairred
+    node: chairRed
+
 - type: entity
   name: white chair
   id: ChairWhite
@@ -53,7 +51,8 @@
     state: white_chair
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtchairwhite
+    node: chairWhite
+
 - type: entity
   name: rusty chair
   id: ChairRusty
@@ -62,6 +61,7 @@
   - type: Sprite
     sprite: _ADT/Structures/Furniture/Chairs/chairs.rsi
     state: rusty_chair
+
 - type: entity
   name: bar stool
   id: ChairBarStool
@@ -73,7 +73,8 @@
     state: bar-stool
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtchairbarstool
+    node: chairBarStool
+
 - type: entity
   name: bar stool
   id: ChairBarStool2
@@ -85,7 +86,8 @@
     state: bar-stool2
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtchairbarstool2
+    node: chairBarStool2
+
 - type: entity
   name: comfy black chair
   id: ChairComfyBlack
@@ -97,7 +99,8 @@
     state: comfy_black
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtchaircomfyblack
+    node: chairComfyBlack
+
 - type: entity
   name: comfy maroon chair
   id: ChairComfyMaroon
@@ -109,7 +112,8 @@
     state: comfy_maroon
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtchaircomfymaroon
+    node: chairComfyMaroon
+
 - type: entity
   name: comfy white chair
   id: ChairComfyWhite
@@ -121,7 +125,8 @@
     state: comfy_white
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtchaircomfywhite
+    node: chairComfyWhite
+
 - type: entity
   name: king chair
   id: ChairKing
@@ -135,7 +140,8 @@
     price: 300
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtchairking
+    node: chairKing
+
 - type: entity
   name: rich chair
   id: ChairRich
@@ -149,7 +155,8 @@
     price: 260
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtchairrich
+    node: chairRich
+
 - type: entity
   name: rich white chair
   id: ChairRichWhite
@@ -163,7 +170,8 @@
     price: 260
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtchairrichwhite
+    node: chairRichWhite
+
 - type: entity
   name: style chair
   id: ChairStyle
@@ -175,7 +183,8 @@
     state: style
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtchairstyle
+    node: chairStyle
+
 - type: entity
   name: wooden stool
   id: ChairWoodenStool
@@ -187,7 +196,8 @@
     state: wooden-stool
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtchairwoodenstool
+    node: chairWoodenStool
+
 - type: entity
   name: wooden stool
   id: ChairWoodenStool2
@@ -199,7 +209,8 @@
     state: wooden-stool2
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtchairwoodenstool2
+    node: chairWoodenStool2
+
 - type: entity
   name: white armchair
   id: ArmchairWhite
@@ -211,7 +222,8 @@
     state: white_armchair
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtarmchairwhite
+    node: armchairWhite
+
 - type: entity
   name: white armchair
   id: ArmchairWhite2
@@ -223,7 +235,8 @@
     state: white_armchair_02
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtarmchairwhite2
+    node: armchairWhite2
+
 - type: entity
   name: brown armchair
   id: ArmchairBrown
@@ -235,7 +248,8 @@
     state: brown_armchair
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtarmchairbrown
+    node: armchairBrown
+
 - type: entity
   name: brown armchair
   id: ArmchairBrown2
@@ -247,7 +261,8 @@
     state: brown_armchair_02
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtarmchairbrown2
+    node: armchairBrown2
+
 - type: entity
   name: blue armchair
   id: ArmchairBlue
@@ -259,7 +274,8 @@
     state: blue_armchair
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtarmchairblue
+    node: armchairBlue
+
 - type: entity
   name: blue armchair
   id: ArmchairBlue2
@@ -271,4 +287,4 @@
     state: blue_armchair_02
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtarmchairblue2
+    node: armchairBlue2

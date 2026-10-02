@@ -3,6 +3,7 @@
   id: SofaBase
   parent: BaseUpholsteredChair
   abstract: true
+
 - type: entity
   name: white sofa left side
   id: SofaWhiteLeftSide
@@ -13,7 +14,8 @@
     state: whitesofa_left
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofawhiteleft
+    node: sofaWhiteLeftSide
+
 - type: entity
   name: white sofa right side
   id: SofaWhiteRightSide
@@ -24,7 +26,8 @@
     state: whitesofa_right
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofawhiteright
+    node: sofaWhiteRightSide
+
 - type: entity
   name: white sofa left side
   id: SofaWhiteLeftSide2
@@ -35,7 +38,8 @@
     state: whitesofa_left_02
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofawhiteleft2
+    node: sofaWhiteLeftSide2
+
 - type: entity
   name: white sofa right side
   id: SofaWhiteRightSide2
@@ -46,7 +50,8 @@
     state: whitesofa_right_02
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofawhiteright2
+    node: sofaWhiteRightSide2
+
 - type: entity
   name: white sofa middle
   id: SofaWhiteMiddle
@@ -57,7 +62,8 @@
     state: whitesofa_middle
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofawhitemiddle
+    node: sofaWhiteMiddle
+
 - type: entity
   name: white sofa right corner
   id: SofaWhiteRightCorner
@@ -68,7 +74,8 @@
     state: whitesofa_rightcorner
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofawhiterightcorner
+    node: sofaWhiteRightCorner
+
 - type: entity
   name: white sofa left corner
   id: SofaWhiteLeftCorner
@@ -79,7 +86,8 @@
     state: whitesofa_leftcorner
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofawhiteleftcorner
+    node: sofaWhiteLeftCorner
+
 - type: entity
   name: blue sofa left side
   id: SofaBlueLeftSide
@@ -90,7 +98,8 @@
     state: bluesofa_left
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofablueleft
+    node: sofaBlueLeftSide
+
 - type: entity
   name: blue sofa right side
   id: SofaBlueRightSide
@@ -101,7 +110,8 @@
     state: bluesofa_right
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofablueright
+    node: sofaBlueRightSide
+
 - type: entity
   name: blue sofa left side
   id: SofaBlueLeftSide2
@@ -112,7 +122,8 @@
     state: bluesofa_left_02
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofablueleft2
+    node: sofaBlueLeftSide2
+
 - type: entity
   name: blue sofa right side
   id: SofaBlueRightSide2
@@ -123,7 +134,8 @@
     state: bluesofa_right_02
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofablueright2
+    node: sofaBlueRightSide2
+
 - type: entity
   name: blue sofa middle
   id: SofaBlueMiddle
@@ -134,7 +146,8 @@
     state: bluesofa_middle
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofabluemiddle
+    node: sofaBlueMiddle
+
 - type: entity
   name: blue sofa right corner
   id: SofaBlueRightCorner
@@ -145,7 +158,8 @@
     state: bluesofa_rightcorner
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofabluerightcorner
+    node: sofaBlueRightCorner
+
 - type: entity
   name: blue sofa left corner
   id: SofaBlueLeftCorner
@@ -156,7 +170,8 @@
     state: bluesofa_leftcorner
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofablueleftcorner
+    node: sofaBlueLeftCorner
+
 - type: entity
   name: brown sofa left side
   id: SofaBrownLeftSide
@@ -167,7 +182,8 @@
     state: brownsofa_left
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofabrownleft
+    node: sofaBrownLeftSide
+
 - type: entity
   name: brown sofa right side
   id: SofaBrownRightSide
@@ -178,7 +194,8 @@
     state: brownsofa_right
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofabrownright
+    node: sofaBrownRightSide
+
 - type: entity
   name: brown sofa left side
   id: SofaBrownLeftSide2
@@ -189,7 +206,8 @@
     state: brownsofa_left_02
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofabrownleft2
+    node: sofaBrownLeftSide2
+
 - type: entity
   name: brown sofa right side
   id: SofaBrownRightSide2
@@ -200,7 +218,8 @@
     state: brownsofa_right_02
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofabrownright2
+    node: sofaBrownRightSide2
+
 - type: entity
   name: brown sofa middle
   id: SofaBrownMiddle
@@ -211,7 +230,8 @@
     state: brownsofa_middle
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofabrownmiddle
+    node: sofaBrownMiddle
+
 - type: entity
   name: brown sofa right corner
   id: SofaBrownRightCorner
@@ -222,7 +242,8 @@
     state: brownsofa_rightcorner
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofabrownrightcorner
+    node: sofaBrownRightCorner
+
 - type: entity
   name: brown sofa left corner
   id: SofaBrownLeftCorner
@@ -233,7 +254,8 @@
     state: brownsofa_leftcorner
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofabrownleftcorner
+    node: sofaBrownLeftCorner
+
 - type: entity
   name: black office sofa left side
   id: SofaOfficeBlackLeftSide
@@ -244,7 +266,8 @@
     state: sofa_left
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofaofficeblackleft
+    node: sofaOfficeBlackLeftSide
+
 - type: entity
   name: black office sofa right side
   id: SofaOfficeBlackRightSide
@@ -255,7 +278,8 @@
     state: sofa_right
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofaofficeblackright
+    node: sofaOfficeBlackRightSide
+
 - type: entity
   name: black office sofa middle
   id: SofaOfficeBlackMiddle
@@ -266,7 +290,8 @@
     state: sofa_middle
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofaofficeblackmiddle
+    node: sofaOfficeBlackMiddle
+
 - type: entity
   name: black office sofa right corner
   id: SofaOfficeBlackRightCorner
@@ -277,7 +302,8 @@
     state: sofa_rightcorner
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofaofficeblackrightcorner
+    node: sofaOfficeBlackRightCorner
+
 - type: entity
   name: black office sofa left corner
   id: SofaOfficeBlackLeftCorner
@@ -288,7 +314,8 @@
     state: sofa_leftcorner
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofaofficeblackleftcorner
+    node: sofaOfficeBlackLeftCorner
+
 - type: entity
   name: white office sofa left side
   id: SofaOfficeWhiteLeftSide
@@ -299,7 +326,8 @@
     state: sofa_left
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofaofficewhiteleft
+    node: sofaOfficeWhiteLeftSide
+
 - type: entity
   name: white office sofa right side
   id: SofaOfficeWhiteRightSide
@@ -310,7 +338,8 @@
     state: sofa_right
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofaofficewhiteright
+    node: sofaOfficeWhiteRightSide
+
 - type: entity
   name: white office sofa middle
   id: SofaOfficeWhiteMiddle
@@ -321,7 +350,8 @@
     state: sofa_middle
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofaofficewhitemiddle
+    node: sofaOfficeWhiteMiddle
+
 - type: entity
   name: white office sofa right corner
   id: SofaOfficeWhiteRightCorner
@@ -332,7 +362,8 @@
     state: sofa_rightcorner
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofaofficewhiterightcorner
+    node: sofaOfficeWhiteRightCorner
+
 - type: entity
   name: white office sofa left corner
   id: SofaOfficeWhiteLeftCorner
@@ -343,7 +374,8 @@
     state: sofa_leftcorner
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofaofficewhiteleftcorner
+    node: sofaOfficeWhiteLeftCorner
+
 - type: entity
   name: black sofa left side
   id: SofaCutBlackLeftSide
@@ -354,7 +386,8 @@
     state: sofa_left
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofacutblackleft
+    node: sofaCutBlackLeftSide
+
 - type: entity
   name: black sofa middle
   id: SofaCutBlackMiddle
@@ -365,7 +398,8 @@
     state: sofa_middle
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofacutblackmiddle
+    node: sofaCutBlackMiddle
+
 - type: entity
   name: black sofa right side
   id: SofaCutBlackRightSide
@@ -376,7 +410,8 @@
     state: sofa_right
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofacutblackright
+    node: sofaCutBlackRightSide
+
 - type: entity
   name: black sofa left corner
   id: SofaCutBlackLeftCorner
@@ -387,7 +422,8 @@
     state: sofa_corner
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofacutblackleftcorner
+    node: sofaCutBlackLeftCorner
+
 - type: entity
   name: black sofa right corner
   id: SofaCutBlackRightCorner
@@ -398,7 +434,8 @@
     state: sofa_corner
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofacutblackrightcorner
+    node: sofaCutBlackRightCorner
+
 - type: entity
   name: comfy sofa left side
   id: SofaCutComfyLeftSide
@@ -409,7 +446,8 @@
     state: sofa_left
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofacutcomfyleft
+    node: sofaCutComfyLeftSide
+
 - type: entity
   name: comfy sofa middle
   id: SofaCutComfyMiddle
@@ -420,7 +458,8 @@
     state: sofa_middle
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofacutcomfymiddle
+    node: sofaCutComfyMiddle
+
 - type: entity
   name: comfy sofa right side
   id: SofaCutComfyRightSide
@@ -431,7 +470,8 @@
     state: sofa_right
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofacutcomfyright
+    node: sofaCutComfyRightSide
+
 - type: entity
   name: comfy sofa left corner
   id: SofaCutComfyLeftCorner
@@ -442,7 +482,8 @@
     state: sofa_corner
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofacutcomfyleftcorner
+    node: sofaCutComfyLeftCorner
+
 - type: entity
   name: comfy sofa right corner
   id: SofaCutComfyRightCorner
@@ -453,7 +494,8 @@
     state: sofa_corner
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofacutcomfyrightcorner
+    node: sofaCutComfyRightCorner
+
 - type: entity
   name: dainer sofa left side
   id: SofaCutDainerLeftSide
@@ -464,7 +506,8 @@
     state: sofa_left
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofacutdainerleft
+    node: sofaCutDainerLeftSide
+
 - type: entity
   name: dainer sofa middle
   id: SofaCutDainerMiddle
@@ -475,7 +518,8 @@
     state: sofa_middle
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofacutdainermiddle
+    node: sofaCutDainerMiddle
+
 - type: entity
   name: dainer sofa right side
   id: SofaCutDainerRightSide
@@ -486,7 +530,8 @@
     state: sofa_right
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofacutdainerright
+    node: sofaCutDainerRightSide
+
 - type: entity
   name: dainer sofa left corner
   id: SofaCutDainerLeftCorner
@@ -497,7 +542,8 @@
     state: sofa_corner
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofacutdainerleftcorner
+    node: sofaCutDainerLeftCorner
+
 - type: entity
   name: dainer sofa right corner
   id: SofaCutDainerRightCorner
@@ -508,4 +554,4 @@
     state: sofa_corner
   - type: Construction
     graph: UpholsteredSeatGraph
-    node: adtsofacutdainerrightcorner
+    node: sofaCutDainerRightCorner

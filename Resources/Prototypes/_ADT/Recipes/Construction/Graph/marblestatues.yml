@@ -8,7 +8,7 @@
     edges:
     - to: marblestatueLady
       steps:
-      - material: ADTmarbleStack
+      - material: Marble
         amount: 10
         doAfter: 15
   - node: marblestatueLady
@@ -17,11 +17,12 @@
     - to: start
       completed:
       - !type:SpawnPrototype
-        prototype: ADTmarble1
+        prototype: MaterialMarble1
         amount: 7
       steps:
       - tool: Prying
         doAfter: 10
+
 - type: constructionGraph
   id: MarbleStatueLadyFlower
   start: start
@@ -32,7 +33,7 @@
     edges:
     - to: marblestatueLadyFlower
       steps:
-      - material: ADTmarbleStack
+      - material: Marble
         amount: 10
         doAfter: 15
       - tag: Flower
@@ -46,7 +47,7 @@
     - to: start
       completed:
       - !type:SpawnPrototype
-        prototype: ADTmarble1
+        prototype: MaterialMarble1
         amount: 7
       - !type:SpawnPrototype
         prototype: FoodPoppy
@@ -54,6 +55,7 @@
       steps:
       - tool: Prying
         doAfter: 10
+
 - type: constructionGraph
   id: MarbleStand
   start: start
@@ -64,7 +66,7 @@
     edges:
     - to: marblestand
       steps:
-      - material: ADTmarbleStack
+      - material: Marble
         amount: 7
         doAfter: 15
   - node: marblestand
@@ -73,11 +75,12 @@
     - to: start
       completed:
       - !type:SpawnPrototype
-        prototype: ADTmarble1
+        prototype: MaterialMarble1
         amount: 6
       steps:
       - tool: Prying
         doAfter: 10
+
 - type: constructionGraph
   id: MarbleMan
   start: start
@@ -88,7 +91,7 @@
     edges:
     - to: marbleMan
       steps:
-      - material: ADTmarbleStack
+      - material: Marble
         amount: 8
         doAfter: 15
   - node: marbleMan
@@ -97,13 +100,14 @@
     - to: start
       completed:
       - !type:SpawnPrototype
-        prototype: ADTmarble1
+        prototype: MaterialMarble1
         amount: 6
       steps:
       - tool: Prying
         doAfter: 10
+
 - type: constructionGraph
-  id: MarbleManDamage
+  id: MarbleManDamaged
   start: start
   graph:
   - node: start
@@ -112,7 +116,7 @@
     edges:
     - to: marbleManDamage
       steps:
-      - material: ADTmarbleStack
+      - material: Marble
         amount: 8
         doAfter: 15
   - node: marbleManDamage
@@ -121,11 +125,12 @@
     - to: start
       completed:
       - !type:SpawnPrototype
-        prototype: ADTmarble1
+        prototype: MaterialMarble1
         amount: 6
       steps:
       - tool: Prying
         doAfter: 10
+
 - type: constructionGraph
   id: MarblePeacemaker
   start: start
@@ -136,7 +141,7 @@
     edges:
     - to: marblePeacemaker
       steps:
-      - material: ADTmarbleStack
+      - material: Marble
         amount: 10
         doAfter: 15
   - node: marblePeacemaker
@@ -145,11 +150,12 @@
     - to: start
       completed:
       - !type:SpawnPrototype
-        prototype: ADTmarble1
+        prototype: MaterialMarble1
         amount: 7
       steps:
       - tool: Prying
         doAfter: 10
+
 - type: constructionGraph
   id: MarbleKnight
   start: start
@@ -160,7 +166,7 @@
     edges:
     - to: marbleKnight
       steps:
-      - material: ADTmarbleStack
+      - material: Marble
         amount: 9
         doAfter: 15
   - node: marbleKnight
@@ -169,11 +175,12 @@
     - to: start
       completed:
       - !type:SpawnPrototype
-        prototype: ADTmarble1
+        prototype: MaterialMarble1
         amount: 6
       steps:
       - tool: Prying
         doAfter: 10
+
 - type: constructionGraph
   id: MarbleHunter
   start: start
@@ -184,7 +191,7 @@
     edges:
     - to: marbleHunter
       steps:
-      - material: ADTmarbleStack
+      - material: Marble
         amount: 9
         doAfter: 15
   - node: marbleHunter
@@ -193,11 +200,12 @@
     - to: start
       completed:
       - !type:SpawnPrototype
-        prototype: ADTmarble1
+        prototype: MaterialMarble1
         amount: 6
       steps:
       - tool: Prying
         doAfter: 10
+
 - type: constructionGraph
   id: MarbleMachine
   start: start
@@ -208,7 +216,7 @@
     edges:
     - to: marbleMachine
       steps:
-      - material: ADTmarbleStack
+      - material: Marble
         amount: 9
         doAfter: 15
   - node: marbleMachine
@@ -217,11 +225,12 @@
     - to: start
       completed:
       - !type:SpawnPrototype
-        prototype: ADTmarble1
+        prototype: MaterialMarble1
         amount: 6
       steps:
       - tool: Prying
         doAfter: 10
+
 - type: constructionGraph
   id: MarbleLegionary
   start: start
@@ -232,7 +241,7 @@
     edges:
     - to: marbleLegionary
       steps:
-      - material: ADTmarbleStack
+      - material: Marble
         amount: 9
         doAfter: 15
   - node: marbleLegionary
@@ -241,11 +250,12 @@
     - to: start
       completed:
       - !type:SpawnPrototype
-        prototype: ADTmarble1
+        prototype: MaterialMarble1
         amount: 6
       steps:
       - tool: Prying
         doAfter: 10
+
 - type: constructionGraph
   id: MarbleBird
   start: start
@@ -256,7 +266,7 @@
     edges:
     - to: marbleBird
       steps:
-      - material: ADTmarbleStack
+      - material: Marble
         amount: 6
         doAfter: 15
   - node: marbleBird
@@ -265,11 +275,12 @@
     - to: start
       completed:
       - !type:SpawnPrototype
-        prototype: ADTmarble1
+        prototype: MaterialMarble1
         amount: 4
       steps:
       - tool: Prying
         doAfter: 10
+
 - type: constructionGraph
   id: MarbleCunning
   start: start
@@ -280,7 +291,7 @@
     edges:
     - to: marbleCunning
       steps:
-      - material: ADTmarbleStack
+      - material: Marble
         amount: 8
         doAfter: 15
   - node: marbleCunning
@@ -289,11 +300,12 @@
     - to: start
       completed:
       - !type:SpawnPrototype
-        prototype: ADTmarble1
+        prototype: MaterialMarble1
         amount: 6
       steps:
       - tool: Prying
         doAfter: 10
+
 - type: constructionGraph
   id: MarbleScientist
   start: start
@@ -304,7 +316,7 @@
     edges:
     - to: marbleScientist
       steps:
-      - material: ADTmarbleStack
+      - material: Marble
         amount: 7
         doAfter: 15
   - node: marbleScientist
@@ -313,11 +325,12 @@
     - to: start
       completed:
       - !type:SpawnPrototype
-        prototype: ADTmarble1
+        prototype: MaterialMarble1
         amount: 5
       steps:
       - tool: Prying
         doAfter: 10
+
 - type: constructionGraph
   id: MarbleEye
   start: start
@@ -328,7 +341,7 @@
     edges:
     - to: marbleEye
       steps:
-      - material: ADTmarbleStack
+      - material: Marble
         amount: 7
         doAfter: 15
   - node: marbleEye
@@ -337,11 +350,12 @@
     - to: start
       completed:
       - !type:SpawnPrototype
-        prototype: ADTmarble1
+        prototype: MaterialMarble1
         amount: 5
       steps:
       - tool: Prying
         doAfter: 10
+
 - type: constructionGraph
   id: MarbleAncestor
   start: start
@@ -352,7 +366,7 @@
     edges:
     - to: marbleAncestor
       steps:
-      - material: ADTmarbleStack
+      - material: Marble
         amount: 6
         doAfter: 15
   - node: marbleAncestor
@@ -361,11 +375,12 @@
     - to: start
       completed:
       - !type:SpawnPrototype
-        prototype: ADTmarble1
+        prototype: MaterialMarble1
         amount: 5
       steps:
       - tool: Prying
         doAfter: 10
+
 - type: constructionGraph
   id: MarblePlafeim
   start: start
@@ -376,7 +391,7 @@
     edges:
     - to: marblePlafeim
       steps:
-      - material: ADTmarbleStack
+      - material: Marble
         amount: 9
         doAfter: 15
   - node: marblePlafeim
@@ -385,11 +400,12 @@
     - to: start
       completed:
       - !type:SpawnPrototype
-        prototype: ADTmarble1
+        prototype: MaterialMarble1
         amount: 6
       steps:
       - tool: Prying
         doAfter: 10
+
 - type: constructionGraph
   id: StatueLenin
   start: start
@@ -400,7 +416,7 @@
     edges:
     - to: statue
       steps:
-      - material: ADTmarbleStack
+      - material: Marble
         amount: 8
         doAfter: 15
   - node: statue
@@ -409,11 +425,12 @@
     - to: start
       completed:
       - !type:SpawnPrototype
-        prototype: ADTmarble1
+        prototype: MaterialMarble1
         amount: 6
       steps:
       - tool: Prying
         doAfter: 10
+
 - type: constructionGraph
   id: StatueAngel
   start: start
@@ -424,7 +441,7 @@
     edges:
     - to: statue
       steps:
-      - material: ADTmarbleStack
+      - material: Marble
         amount: 8
         doAfter: 15
   - node: statue
@@ -433,11 +450,12 @@
     - to: start
       completed:
       - !type:SpawnPrototype
-        prototype: ADTmarble1
+        prototype: MaterialMarble1
         amount: 6
       steps:
       - tool: Prying
         doAfter: 10
+
 - type: constructionGraph
   id: StatueHadii
   start: start
@@ -448,7 +466,7 @@
     edges:
     - to: statue
       steps:
-      - material: ADTmarbleStack
+      - material: Marble
         amount: 8
         doAfter: 15
   - node: statue
@@ -457,11 +475,12 @@
     - to: start
       completed:
       - !type:SpawnPrototype
-        prototype: ADTmarble1
+        prototype: MaterialMarble1
         amount: 6
       steps:
       - tool: Prying
         doAfter: 10
+
 - type: constructionGraph
   id: StatueLion
   start: start
@@ -472,7 +491,7 @@
     edges:
     - to: statue
       steps:
-      - material: ADTmarbleStack
+      - material: Marble
         amount: 8
         doAfter: 15
   - node: statue
@@ -481,11 +500,12 @@
     - to: start
       completed:
       - !type:SpawnPrototype
-        prototype: ADTmarble1
+        prototype: MaterialMarble1
         amount: 6
       steps:
       - tool: Prying
         doAfter: 10
+
 - type: constructionGraph
   id: BustHelios
   start: start
@@ -496,7 +516,7 @@
     edges:
     - to: bust
       steps:
-      - material: ADTmarbleStack
+      - material: Marble
         amount: 8
         doAfter: 15
   - node: bust
@@ -505,11 +525,12 @@
     - to: start
       completed:
       - !type:SpawnPrototype
-        prototype: ADTmarble1
+        prototype: MaterialMarble1
         amount: 6
       steps:
       - tool: Prying
         doAfter: 10
+
 - type: constructionGraph
   id: BustLenin
   start: start
@@ -520,7 +541,7 @@
     edges:
     - to: bust
       steps:
-      - material: ADTmarbleStack
+      - material: Marble
         amount: 8
         doAfter: 15
   - node: bust
@@ -529,11 +550,12 @@
     - to: start
       completed:
       - !type:SpawnPrototype
-        prototype: ADTmarble1
+        prototype: MaterialMarble1
         amount: 6
       steps:
       - tool: Prying
         doAfter: 10
+
 - type: constructionGraph
   id: BustDarwin
   start: start
@@ -544,7 +566,7 @@
     edges:
     - to: bust
       steps:
-      - material: ADTmarbleStack
+      - material: Marble
         amount: 8
         doAfter: 15
   - node: bust
@@ -553,11 +575,12 @@
     - to: start
       completed:
       - !type:SpawnPrototype
-        prototype: ADTmarble1
+        prototype: MaterialMarble1
         amount: 6
       steps:
       - tool: Prying
         doAfter: 10
+
 - type: constructionGraph
   id: BustPompeii
   start: start
@@ -568,7 +591,7 @@
     edges:
     - to: bust
       steps:
-      - material: ADTmarbleStack
+      - material: Marble
         amount: 8
         doAfter: 15
   - node: bust
@@ -577,7 +600,7 @@
     - to: start
       completed:
       - !type:SpawnPrototype
-        prototype: ADTmarble1
+        prototype: MaterialMarble1
         amount: 6
       steps:
       - tool: Prying

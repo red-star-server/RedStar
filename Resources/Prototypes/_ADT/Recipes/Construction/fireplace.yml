@@ -1,8 +1,11 @@
 - type: construction
-  abstract: true
-  parent: BaseFurniture
-  id: BaseFireplace
+  parent: BaseStructureFullTile
+  id: FireplaceWhite
   graph: Fireplace
-  canRotate: false
-  conditions:
-  - ''
+  targetNode: fireplaceWhite
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: FireplaceWooden
+  graph: Fireplace
+  targetNode: fireplaceWooden

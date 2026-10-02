@@ -1,169 +1,142 @@
 - type: construction
+  parent: BaseFurniture
   id: BlankFlagVerticalRecipe
   name: construction-name-flag-blank
   description: construction-desc-flag-blank
   graph: BlankFlagVerticalGraph
-  startNode: start
   targetNode: flag
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
   canBuildInImpassable: true
   conditions:
-  - ''
+  - !type:TileNotBlocked
+
 - type: construction
+  parent: BaseFurniture
   id: NTFlagVerticalRecipe
   name: construction-name-flag-nanotrasen
   description: construction-desc-flag-nanotrasen
   graph: NTFlagVerticalGraph
-  startNode: start
   targetNode: flag
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
   canBuildInImpassable: true
   conditions:
-  - ''
+  - !type:TileNotBlocked
+
 - type: construction
+  parent: BaseFurniture
   id: KMTFlagRecipe
   name: construction-name-flag-kmt
   description: construction-desc-flag-kmt
   graph: KMTFlagGraph
-  startNode: start
   targetNode: flag
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
   canBuildInImpassable: true
   conditions:
-  - ''
+  - !type:TileNotBlocked
+
 - type: construction
+  parent: BaseFurniture
   id: KMTFlagVerticalRecipe
   name: construction-name-flag-kmt-vertical
   description: construction-desc-flag-kmt
   graph: KMTFlagVerticalGraph
-  startNode: start
   targetNode: flag
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
   canBuildInImpassable: true
   conditions:
-  - ''
+  - !type:TileNotBlocked
+
 - type: construction
+  parent: BaseFurniture
   id: ElysiumFlagRecipe
   name: construction-name-flag-elysium
   description: construction-desc-flag-elysium
   graph: ElysiumFlagGraph
-  startNode: start
   targetNode: flag
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
   canBuildInImpassable: true
   conditions:
-  - ''
+  - !type:TileNotBlocked
+
 - type: construction
+  parent: BaseFurniture
   id: ElysiumFlagVerticalRecipe
   name: construction-name-flag-elysium-vertical
   description: construction-desc-flag-elysium
   graph: ElysiumFlagVerticalGraph
-  startNode: start
   targetNode: flag
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
   canBuildInImpassable: true
   conditions:
-  - ''
+  - !type:TileNotBlocked
+
 - type: construction
+  parent: BaseFurniture
   id: TSFFlagRecipe
   name: construction-name-flag-tsf
   description: construction-desc-flag-tsf
   graph: TSFFlagGraph
-  startNode: start
   targetNode: flag
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
   canBuildInImpassable: true
   conditions:
-  - ''
+  - !type:TileNotBlocked
+
 - type: construction
+  parent: BaseFurniture
   id: TSFFlagVerticalRecipe
   name: construction-name-flag-tsf-vertical
   description: construction-desc-flag-tsf
   graph: TSFFlagVerticalGraph
-  startNode: start
   targetNode: flag
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
   canBuildInImpassable: true
   conditions:
-  - ''
+  - !type:TileNotBlocked
+
 - type: construction
+  parent: BaseFurniture
   id: USSPFlagRecipe
   name: construction-name-flag-ussp
   description: construction-desc-flag-ussp
   graph: USSPFlagGraph
-  startNode: start
   targetNode: flag
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
   canBuildInImpassable: true
   conditions:
-  - ''
+  - !type:TileNotBlocked
+
 - type: construction
+  parent: BaseFurniture
   id: USSPFlagVerticalRecipe
   name: construction-name-flag-ussp-vertical
   description: construction-desc-flag-ussp
   graph: USSPFlagVerticalGraph
-  startNode: start
   targetNode: flag
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
   canBuildInImpassable: true
   conditions:
-  - ''
+  - !type:TileNotBlocked
+
 - type: construction
+  parent: BaseFurniture
   id: USSPFlagVertical2Recipe
   name: construction-name-flag-ussp-vertical-2
   description: construction-desc-flag-ussp
   graph: USSPFlagVertical2Graph
-  startNode: start
   targetNode: flag
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
   canBuildInImpassable: true
   conditions:
-  - ''
+  - !type:TileNotBlocked
+
 - type: construction
+  parent: BaseFurniture
   id: RastamanFlagRecipe
   name: construction-name-flag-rastaman
   description: construction-desc-flag-rastaman
   graph: RastamanFlagGraph
-  startNode: start
   targetNode: flag
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
   canBuildInImpassable: true
   conditions:
-  - ''
+  - !type:TileNotBlocked
+
 - type: construction
+  parent: BaseFurniture
   id: RomanFlagRecipe
   name: construction-name-flag-roman
   description: construction-desc-flag-roman
   graph: RomanFlagGraph
-  startNode: start
   targetNode: flag
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
   canBuildInImpassable: true
   conditions:
-  - ''
+  - !type:TileNotBlocked

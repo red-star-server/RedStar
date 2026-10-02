@@ -17,6 +17,7 @@
   - node: banner
     entity: BannerRed
     edges: []
+
 - type: constructionGraph
   id: BannerBlue
   start: start
@@ -36,6 +37,7 @@
   - node: banner
     entity: BannerBlue
     edges: []
+
 - type: constructionGraph
   id: BannerGreen
   start: start
@@ -55,6 +57,7 @@
   - node: banner
     entity: BannerGreen
     edges: []
+
 - type: constructionGraph
   id: BannerYellow
   start: start
@@ -74,6 +77,7 @@
   - node: banner
     entity: BannerYellow
     edges: []
+
 - type: constructionGraph
   id: BannerNanotrasen
   start: start
@@ -93,6 +97,7 @@
   - node: banner
     entity: BannerNanotrasen
     edges: []
+
 - type: constructionGraph
   id: BannerCargo
   start: start
@@ -112,6 +117,7 @@
   - node: banner
     entity: BannerCargo
     edges: []
+
 - type: constructionGraph
   id: BannerEngineering
   start: start
@@ -131,6 +137,7 @@
   - node: banner
     entity: BannerEngineering
     edges: []
+
 - type: constructionGraph
   id: BannerMedical
   start: start
@@ -150,6 +157,7 @@
   - node: banner
     entity: BannerMedical
     edges: []
+
 - type: constructionGraph
   id: BannerScience
   start: start
@@ -169,6 +177,7 @@
   - node: banner
     entity: BannerScience
     edges: []
+
 - type: constructionGraph
   id: BannerSecurity
   start: start

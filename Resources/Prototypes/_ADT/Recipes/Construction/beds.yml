@@ -1,0 +1,9 @@
+- type: construction
+  parent: BaseFurniture
+  id: DoubleBedRecipe
+  name: construction-name-double-bed
+  description: construction-desc-double-bed
+  graph: bed
+  targetNode: double_bed_complete
+  conditions:
+  - !type:TileNotBlocked
