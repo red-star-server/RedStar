@@ -286,6 +286,17 @@
 
 - type: entity
   parent: BaseDecorativePoster
+  id: PosterUSSPLegit
+  name: USSP poster
+  description: An official USSP poster.
+  suffix: USSP
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Wallmounts/poster_ussp.rsi
+    state: ussp_legit
+
+- type: entity
+  parent: BaseDecorativePoster
   id: PosterContrabandUmaHot
   name: Uma`s poster 1
   description: Uma`s poster 1

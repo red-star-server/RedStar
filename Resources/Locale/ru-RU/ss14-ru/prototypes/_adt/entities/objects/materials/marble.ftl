@@ -1,0 +1,9 @@
+ent-MaterialMarble = мрамор
+    .desc = Плита полированного мрамора.
+    .suffix = Полный
+ent-MaterialMarble1 = { ent-MaterialMarble }
+    .desc = { ent-MaterialMarble.desc }
+    .suffix = Один
+ent-MaterialMarble5 = { ent-MaterialMarble }
+    .desc = { ent-MaterialMarble.desc }
+    .suffix = 5
