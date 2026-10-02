@@ -427,16 +427,6 @@
 
 - type: entity
   parent: BaseMarbleStatue
-  id: UndoneMarble
-  name: marble undone
-  description: marble undone
-  components:
-  - type: Sprite
-    sprite: _ADT/Structures/Decoration/Statues/marble_undone.rsi
-    state: marble_undone
-
-- type: entity
-  parent: BaseMarbleStatue
   id: AncestorMarble
   name: marble ancestor
   description: marble ancestor

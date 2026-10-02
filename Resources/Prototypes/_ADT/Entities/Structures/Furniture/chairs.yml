@@ -54,15 +54,6 @@
     node: chairWhite
 
 - type: entity
-  name: rusty chair
-  id: ChairRusty
-  parent: ChairBase
-  components:
-  - type: Sprite
-    sprite: _ADT/Structures/Furniture/Chairs/chairs.rsi
-    state: rusty_chair
-
-- type: entity
   name: bar stool
   id: ChairBarStool
   parent: BaseUpholsteredChair
