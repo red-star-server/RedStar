@@ -1,8 +1,6 @@
 - type: construction
   parent: BaseFurniture
   id: DoubleBedRecipe
-  name: construction-name-double-bed
-  description: construction-desc-double-bed
   graph: bed
   targetNode: double_bed_complete
   conditions:
@@ -11,8 +9,6 @@
 - type: construction
   parent: BaseFurniture
   id: DeckChairRecipe
-  name: construction-name-deckchair
-  description: construction-desc-deckchair
   graph: DeckChairGraph
   targetNode: deckChair
   conditions:
