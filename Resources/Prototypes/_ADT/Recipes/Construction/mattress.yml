@@ -1,8 +1,6 @@
 - type: construction
   parent: BaseFurniture
   id: MattressRecipe
-  name: construction-name-mattress
-  description: construction-desc-mattress
   graph: MattressGraph
   targetNode: mattress
   conditions:
@@ -11,8 +9,6 @@
 - type: construction
   parent: BaseFurniture
   id: MattressCleanRecipe
-  name: construction-name-mattress-clean
-  description: construction-desc-mattress-clean
   graph: MattressGraph
   targetNode: mattress_clean
   conditions:
@@ -21,8 +17,6 @@
 - type: construction
   parent: BaseFurniture
   id: MattressCleanFullRecipe
-  name: construction-name-mattress-clean-full
-  description: construction-desc-mattress-clean-full
   graph: MattressGraph
   targetNode: mattress_clean_full
   conditions:
@@ -31,8 +25,6 @@
 - type: construction
   parent: BaseFurniture
   id: MattressFullRecipe
-  name: construction-name-mattress-full
-  description: construction-desc-mattress-full
   graph: MattressGraph
   targetNode: mattress_full
   conditions:

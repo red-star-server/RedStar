@@ -1,8 +1,6 @@
 - type: construction
   parent: BaseFurniture
   id: BlankFlagVerticalRecipe
-  name: construction-name-flag-blank
-  description: construction-desc-flag-blank
   graph: DecorativeFlagGraph
   targetNode: blankFlagVertical
   canBuildInImpassable: true
@@ -12,8 +10,6 @@
 - type: construction
   parent: BaseFurniture
   id: NTFlagVerticalRecipe
-  name: construction-name-flag-nanotrasen
-  description: construction-desc-flag-nanotrasen
   graph: DecorativeFlagGraph
   targetNode: nTFlagVertical
   canBuildInImpassable: true
@@ -23,8 +19,6 @@
 - type: construction
   parent: BaseFurniture
   id: KMTFlagRecipe
-  name: construction-name-flag-kmt
-  description: construction-desc-flag-kmt
   graph: DecorativeFlagGraph
   targetNode: kMTFlag
   canBuildInImpassable: true
@@ -34,8 +28,6 @@
 - type: construction
   parent: BaseFurniture
   id: KMTFlagVerticalRecipe
-  name: construction-name-flag-kmt-vertical
-  description: construction-desc-flag-kmt
   graph: DecorativeFlagGraph
   targetNode: kMTFlagVertical
   canBuildInImpassable: true
@@ -45,8 +37,6 @@
 - type: construction
   parent: BaseFurniture
   id: ElysiumFlagRecipe
-  name: construction-name-flag-elysium
-  description: construction-desc-flag-elysium
   graph: DecorativeFlagGraph
   targetNode: elysiumFlag
   canBuildInImpassable: true
@@ -56,8 +46,6 @@
 - type: construction
   parent: BaseFurniture
   id: ElysiumFlagVerticalRecipe
-  name: construction-name-flag-elysium-vertical
-  description: construction-desc-flag-elysium
   graph: DecorativeFlagGraph
   targetNode: elysiumFlagVertical
   canBuildInImpassable: true
@@ -67,8 +55,6 @@
 - type: construction
   parent: BaseFurniture
   id: TSFFlagRecipe
-  name: construction-name-flag-tsf
-  description: construction-desc-flag-tsf
   graph: DecorativeFlagGraph
   targetNode: tSFFlag
   canBuildInImpassable: true
@@ -78,8 +64,6 @@
 - type: construction
   parent: BaseFurniture
   id: TSFFlagVerticalRecipe
-  name: construction-name-flag-tsf-vertical
-  description: construction-desc-flag-tsf
   graph: DecorativeFlagGraph
   targetNode: tSFFlagVertical
   canBuildInImpassable: true
@@ -89,8 +73,6 @@
 - type: construction
   parent: BaseFurniture
   id: USSPFlagRecipe
-  name: construction-name-flag-ussp
-  description: construction-desc-flag-ussp
   graph: DecorativeFlagGraph
   targetNode: uSSPFlag
   canBuildInImpassable: true
@@ -100,8 +82,6 @@
 - type: construction
   parent: BaseFurniture
   id: USSPFlagVerticalRecipe
-  name: construction-name-flag-ussp-vertical
-  description: construction-desc-flag-ussp
   graph: DecorativeFlagGraph
   targetNode: uSSPFlagVertical
   canBuildInImpassable: true
@@ -111,8 +91,6 @@
 - type: construction
   parent: BaseFurniture
   id: USSPFlagVertical2Recipe
-  name: construction-name-flag-ussp-vertical-2
-  description: construction-desc-flag-ussp
   graph: DecorativeFlagGraph
   targetNode: uSSPFlagVertical2
   canBuildInImpassable: true
@@ -122,8 +100,6 @@
 - type: construction
   parent: BaseFurniture
   id: RastamanFlagRecipe
-  name: construction-name-flag-rastaman
-  description: construction-desc-flag-rastaman
   graph: DecorativeFlagGraph
   targetNode: rastamanFlag
   canBuildInImpassable: true
@@ -133,8 +109,6 @@
 - type: construction
   parent: BaseFurniture
   id: RomanFlagRecipe
-  name: construction-name-flag-roman
-  description: construction-desc-flag-roman
   graph: DecorativeFlagGraph
   targetNode: romanFlag
   canBuildInImpassable: true

@@ -146,32 +146,24 @@
 
 - type: construction
   parent: BaseStructureFullTile
-  name: construction-name-bust-helios
-  description: construction-desc-bust-helios
   id: BustHelios
   graph: DecorativeStatueGraph
   targetNode: bustHelios
 
 - type: construction
   parent: BaseStructureFullTile
-  name: construction-name-bust-lenin
-  description: construction-desc-bust-lenin
   id: BustLenin
   graph: DecorativeStatueGraph
   targetNode: bustLenin
 
 - type: construction
   parent: BaseStructureFullTile
-  name: construction-name-bust-darwin
-  description: construction-desc-bust-darwin
   id: BustDarwin
   graph: DecorativeStatueGraph
   targetNode: bustDarwin
 
 - type: construction
   parent: BaseStructureFullTile
-  name: construction-name-bust-pompeii
-  description: construction-desc-bust-pompeii
   id: BustPompeii
   graph: DecorativeStatueGraph
   targetNode: bustPompeii

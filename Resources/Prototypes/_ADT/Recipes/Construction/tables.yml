@@ -1,79 +1,59 @@
 - type: construction
   parent: BaseTable
-  name: construction-name-plastic-round-table
   id: TableRoundPlasticRecipe
   graph: FurnitureTableGraph
   targetNode: tableRoundPlastic
-  description: construction-desc-plastic-round-table
 
 - type: construction
   parent: BaseTable
-  name: construction-name-wood-round-table
   id: TableRoundWoodRecipe
   graph: FurnitureTableGraph
   targetNode: tableRoundWood
-  description: construction-desc-wood-round-table
 
 - type: construction
   parent: BaseTable
-  name: construction-name-glass-round-table
   id: TableRoundGlassRecipe
   graph: FurnitureTableGraph
   targetNode: tableRoundGlass
-  description: construction-desc-glass-round-table
 
 - type: construction
   parent: BaseTable
-  name: construction-name-round-table
   id: TableRoundGenericRecipe
   graph: FurnitureTableGraph
   targetNode: tableRoundGeneric
-  description: construction-desc-round-table
 
 - type: construction
   parent: BaseTable
-  name: construction-name-gambling-round-table
   id: TableRoundCarpetRecipe
   graph: FurnitureTableGraph
   targetNode: tableRoundCarpet
-  description: construction-desc-gambling-round-table
 
 - type: construction
   parent: BaseTable
-  name: construction-name-plasma-round-table
   id: TableRoundPlasmaRecipe
   graph: FurnitureTableGraph
   targetNode: tableRoundPlasma
-  description: construction-desc-plasma-round-table
 
 - type: construction
   parent: BaseTable
-  name: construction-name-plastic-table
   id: TablePlasticRecipe
   graph: FurnitureTableGraph
   targetNode: tablePlastic
-  description: construction-desc-plastic-table
 
 - type: construction
   parent: BaseTable
-  name: construction-name-uranium-glass-table
   id: TableUraniumGlassRecipe
   graph: FurnitureTableGraph
   targetNode: tableUraniumGlass
-  description: construction-desc-uranium-glass-table
 
 - type: construction
   parent: BaseTable
-  name: construction-name-reinforced-plasma-glass-table
   id: TableReinforcedPlasmaGlassRecipe
   graph: FurnitureTableGraph
   targetNode: tableReinforcedPlasmaGlass
-  description: construction-desc-reinforced-plasma-glass-table
 
 - type: construction
   parent: BaseTable
-  name: construction-name-reinforced-uranium-glass-table
   id: TableReinforcedUraniumGlassRecipe
   graph: FurnitureTableGraph
   targetNode: tableReinforcedUraniumGlass
-  description: construction-desc-reinforced-uranium-glass-table
