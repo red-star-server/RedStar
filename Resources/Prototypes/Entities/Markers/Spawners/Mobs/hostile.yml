@@ -253,17 +253,17 @@
     prototypes:
     - MobWatcherMagmawing
 
-- type: entity
-  parent: MarkerBase
-  id: SpawnMobWatcherPride
-  name: Watcher Pride Spawner
-  components:
-  - type: Sprite
-    layers:
-    - state: green
-    - state: watcher # RS14
-      sprite: _RedStar/Mobs/Aliens/Lavaland/watcher.rsi # RS14
-    - state: ai
-  - type: ConditionalSpawner
-    prototypes:
-    - MobWatcherPride
+#- type: entity
+#  parent: MarkerBase
+#  id: SpawnMobWatcherPride
+#  name: Watcher Pride Spawner
+#  components:
+#  - type: Sprite
+#    layers:
+#    - state: green
+#    - state: watcher # RS14
+#      sprite: _RedStar/Mobs/Aliens/Lavaland/watcher.rsi # RS14
+#    - state: ai
+#  - type: ConditionalSpawner
+#    prototypes:
+#    - MobWatcherPride

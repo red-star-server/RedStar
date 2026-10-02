@@ -141,22 +141,22 @@
       Dead:
         Base: watcher_magmawing_dead
 
-- type: entity
-  id: MobWatcherPride
-  parent: MobWatcherBase
-  name: pride watcher
-  suffix: Admeme
-  description: This rare subspecies only appears in June.
-  components:
-  - type: Sprite
-    layers:
-    - map: [ "enum.DamageStateVisualLayers.Base" ]
-      state: watcher # RS14
-    #- map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ] # RS14
-    #  state: unshaded
-    #  shader: unshaded
-  - type: PointLight
-    radius: 1
-    energy: 3
-  - type: RgbLightController
-    layers: [ 1 ]
+#- type: entity
+#  id: MobWatcherPride
+#  parent: MobWatcherBase
+#  name: pride watcher
+#  suffix: Admeme
+#  description: This rare subspecies only appears in June.
+#  components:
+#  - type: Sprite
+#    layers:
+#    - map: [ "enum.DamageStateVisualLayers.Base" ]
+#      state: watcher # RS14
+#    #- map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ] # RS14
+#    #  state: unshaded
+#    #  shader: unshaded
+#  - type: PointLight
+#    radius: 1
+#    energy: 3
+#  - type: RgbLightController
+#    layers: [ 1 ]
