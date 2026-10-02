@@ -20,7 +20,7 @@
     layerStates:
     - icon
     - marble2
-    - marblemat3
+    - marble3
   - type: PhysicalComposition
     materialComposition:
       Marble: 100

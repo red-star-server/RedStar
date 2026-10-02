@@ -2,7 +2,7 @@
   id: MaterialMarble
   icon:
     sprite: _ADT/Objects/Materials/marble.rsi
-    state: marblemat3
+    state: marble3
   product: CrateMaterialMarble
   cost: 3500
   category: cargoproduct-category-name-materials
