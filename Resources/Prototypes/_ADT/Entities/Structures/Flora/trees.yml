@@ -1,0 +1,33 @@
+﻿- type: entity
+  parent: BaseTree
+  id: FloraPalmTree01
+  name: palm tree
+  description: A tropical palm tree. Gives the atmosphere of a paradise island.
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Flora/flora_treepalm.rsi
+    state: treepalm01
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Log:
+            min: 2
+            max: 5
+
+- type: entity
+  parent: FloraPalmTree01
+  id: FloraPalmTree02
+  components:
+  - type: Sprite
+    state: treepalm02
+
+- type: entity
+  parent: FloraPalmTree01
+  id: FloraPalmTree03
+  components:
+  - type: Sprite
+    state: treepalm03
