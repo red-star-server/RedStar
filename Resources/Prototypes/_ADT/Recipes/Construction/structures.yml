@@ -1,69 +1,6 @@
 - type: construction
-  id: ADTDiscoFloor
-  graph: ADTDiscoFloor
-  startNode: start
-  targetNode: discoSquare
-  category: construction-category-tiles
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: shuttle
-  graph: ADTLightFixtureShuttle
-  startNode: start
-  targetNode: shuttle
-  category: construction-category-structures
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canRotate: true
-  canBuildInImpassable: false
-  conditions:
-  # Need an *additional* condition here that forces there to be a wall in the opposite direction to the one used for placement.
-  # Also see below. Didn't add it b/c construction ECS work going on. Cheers, - 20kdc
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTDeflectorTrinary
-  graph: ADTTrinaryProjectileMirrorGraph
-  startNode: start
-  targetNode: adttrinaryprojectilemirror
-  category: construction-category-structures
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTDeflectorBinary
-  graph: ADTBinaryProjectileMirrorGraph
-  startNode: start
-  targetNode: adtbinaryprojectilemirror
-  category: construction-category-structures
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTDeflectorTBinary
-  graph: ADTTBinaryProjectileMirrorGraph
-  startNode: start
-  targetNode: adttbinaryprojectilemirror
-  category: construction-category-structures
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-  
-- type: construction
-  id: ADTSteelDarkSingleStairs
-  graph: ADTSteelDarkSingleStairs
+  id: SteelDarkSingleStairs
+  graph: SteelDarkSingleStairs
   startNode: start
   targetNode: adtsteeldarksinglestairs
   category: construction-category-structures
@@ -71,11 +8,10 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-    
+  - ''
 - type: construction
-  id: ADTSteelSingleStairs
-  graph: ADTSteelSingleStairs
+  id: SteelSingleStairs
+  graph: SteelSingleStairs
   startNode: start
   targetNode: adtsteelsinglestairs
   category: construction-category-structures
@@ -83,11 +19,10 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-    
+  - ''
 - type: construction
-  id: ADTSteelWhiteSingleStairs
-  graph: ADTSteelWhiteSingleStairs
+  id: SteelWhiteSingleStairs
+  graph: SteelWhiteSingleStairs
   startNode: start
   targetNode: adtsteelwhitesinglestairs
   category: construction-category-structures
@@ -95,11 +30,10 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-    
+  - ''
 - type: construction
-  id: ADTWoodBlackSingleStairs
-  graph: ADTWoodBlackSingleStairs
+  id: WoodBlackSingleStairs
+  graph: WoodBlackSingleStairs
   startNode: start
   targetNode: adtwoodblacksinglestairs
   category: construction-category-structures
@@ -107,11 +41,10 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-    
+  - ''
 - type: construction
-  id: ADTWoodDarkSingleStairs
-  graph: ADTWoodDarkSingleStairs
+  id: WoodDarkSingleStairs
+  graph: WoodDarkSingleStairs
   startNode: start
   targetNode: adtwooddarksinglestairs
   category: construction-category-structures
@@ -119,11 +52,10 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-    
+  - ''
 - type: construction
-  id: ADTWoodSingleStairs
-  graph: ADTWoodSingleStairs
+  id: WoodSingleStairs
+  graph: WoodSingleStairs
   startNode: start
   targetNode: adtwoodsinglestairs
   category: construction-category-structures
@@ -131,11 +63,10 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-    
+  - ''
 - type: construction
-  id: ADTWoodLightSingleStairs
-  graph: ADTWoodLightSingleStairs
+  id: WoodLightSingleStairs
+  graph: WoodLightSingleStairs
   startNode: start
   targetNode: adtwoodlightsinglestairs
   category: construction-category-structures
@@ -143,11 +74,10 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-    
+  - ''
 - type: construction
-  id: ADTWoodRedSingleStairs
-  graph: ADTWoodRedSingleStairs
+  id: WoodRedSingleStairs
+  graph: WoodRedSingleStairs
   startNode: start
   targetNode: adtwoodredsinglestairs
   category: construction-category-structures
@@ -155,10 +85,9 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
-  id: ADTMarbleLady
+  id: MarbleLady
   graph: MarbleStatueLady
   startNode: start
   targetNode: marblestatueLady
@@ -168,10 +97,9 @@
   canBuildInImpassable: false
   canRotate: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
-  id: ADTMarbleLadyFlower
+  id: MarbleLadyFlower
   graph: MarbleStatueLadyFlower
   startNode: start
   targetNode: marblestatueLadyFlower
@@ -181,10 +109,9 @@
   canBuildInImpassable: false
   canRotate: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
-  id: ADTMarbleStand
+  id: MarbleStand
   graph: MarbleStand
   startNode: start
   targetNode: marblestand
@@ -194,10 +121,9 @@
   canBuildInImpassable: false
   canRotate: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
-  id: ADTMarbleMan
+  id: MarbleMan
   graph: MarbleMan
   startNode: start
   targetNode: marbleMan
@@ -207,10 +133,9 @@
   canBuildInImpassable: false
   canRotate: true
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
-  id: ADTMarbleManDamage
+  id: MarbleManDamage
   graph: MarbleManDamage
   startNode: start
   targetNode: marbleManDamage
@@ -220,70 +145,9 @@
   canBuildInImpassable: false
   canRotate: true
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
-  id: ADTStatueLeninRecipe
-  name: construction-name-statue-lenin
-  description: construction-desc-statue-lenin
-  graph: ADTStatueLenin
-  startNode: start
-  targetNode: statue
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTStatueAngelRecipe
-  name: construction-name-statue-angel
-  description: construction-desc-statue-angel
-  graph: ADTStatueAngel
-  startNode: start
-  targetNode: statue
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTStatueHadiiRecipe
-  name: construction-name-statue-hadii
-  description: construction-desc-statue-hadii
-  graph: ADTStatueHadii
-  startNode: start
-  targetNode: statue
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTStatueLionRecipe
-  name: construction-name-statue-lion
-  description: construction-desc-statue-lion
-  graph: ADTStatueLion
-  startNode: start
-  targetNode: statue
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTMarblePeacemaker
+  id: MarblePeacemaker
   graph: MarblePeacemaker
   startNode: start
   targetNode: marblePeacemaker
@@ -293,10 +157,9 @@
   canBuildInImpassable: false
   canRotate: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
-  id: ADTMarbleKnight
+  id: MarbleKnight
   graph: MarbleKnight
   startNode: start
   targetNode: marbleKnight
@@ -306,10 +169,9 @@
   canBuildInImpassable: false
   canRotate: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
-  id: ADTMarbleHunter
+  id: MarbleHunter
   graph: MarbleHunter
   startNode: start
   targetNode: marbleHunter
@@ -319,10 +181,9 @@
   canBuildInImpassable: false
   canRotate: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
-  id: ADTMarbleMachine
+  id: MarbleMachine
   graph: MarbleMachine
   startNode: start
   targetNode: marbleMachine
@@ -332,10 +193,9 @@
   canBuildInImpassable: false
   canRotate: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
-  id: ADTMarbleLegionary
+  id: MarbleLegionary
   graph: MarbleLegionary
   startNode: start
   targetNode: marbleLegionary
@@ -345,10 +205,9 @@
   canBuildInImpassable: false
   canRotate: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
-  id: ADTMarbleBird
+  id: MarbleBird
   graph: MarbleBird
   startNode: start
   targetNode: marbleBird
@@ -358,10 +217,9 @@
   canBuildInImpassable: false
   canRotate: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
-  id: ADTMarbleCunning
+  id: MarbleCunning
   graph: MarbleCunning
   startNode: start
   targetNode: marbleCunning
@@ -371,10 +229,9 @@
   canBuildInImpassable: false
   canRotate: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
-  id: ADTMarbleScientist
+  id: MarbleScientist
   graph: MarbleScientist
   startNode: start
   targetNode: marbleScientist
@@ -384,10 +241,9 @@
   canBuildInImpassable: false
   canRotate: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
-  id: ADTMarbleEye
+  id: MarbleEye
   graph: MarbleEye
   startNode: start
   targetNode: marbleEye
@@ -397,10 +253,9 @@
   canBuildInImpassable: false
   canRotate: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
-  id: ADTMarbleAncestor
+  id: MarbleAncestor
   graph: MarbleAncestor
   startNode: start
   targetNode: marbleAncestor
@@ -410,10 +265,9 @@
   canBuildInImpassable: false
   canRotate: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
-  id: ADTMarblePlafeim
+  id: MarblePlafeim
   graph: MarblePlafeim
   startNode: start
   targetNode: marblePlafeim
@@ -423,14 +277,12 @@
   canBuildInImpassable: false
   canRotate: false
   conditions:
-    - !type:TileNotBlocked
-
-
+  - ''
 - type: construction
   name: construction-name-bust-helios
   description: construction-desc-bust-helios
-  id: ADTBustHelios
-  graph: ADTBustHelios
+  id: BustHelios
+  graph: BustHelios
   startNode: start
   targetNode: bust
   category: construction-category-structures
@@ -439,13 +291,12 @@
   canBuildInImpassable: false
   canRotate: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-bust-lenin
   description: construction-desc-bust-lenin
-  id: ADTBustLenin
-  graph: ADTBustLenin
+  id: BustLenin
+  graph: BustLenin
   startNode: start
   targetNode: bust
   category: construction-category-structures
@@ -454,13 +305,12 @@
   canBuildInImpassable: false
   canRotate: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-bust-darwin
   description: construction-desc-bust-darwin
-  id: ADTBustDarwin
-  graph: ADTBustDarwin
+  id: BustDarwin
+  graph: BustDarwin
   startNode: start
   targetNode: bust
   category: construction-category-structures
@@ -469,13 +319,12 @@
   canBuildInImpassable: false
   canRotate: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-bust-pompeii
   description: construction-desc-bust-pompeii
-  id: ADTBustPompeii
-  graph: ADTBustPompeii
+  id: BustPompeii
+  graph: BustPompeii
   startNode: start
   targetNode: bust
   category: construction-category-structures
@@ -484,212 +333,4 @@
   canBuildInImpassable: false
   canRotate: false
   conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: construction-name-barrel-water-open
-  description: construction-desc-barrel-water-open
-  id: ADTBarrelChemWaterOpen
-  graph: ADTBarrelChemWaterOpen
-  startNode: start
-  targetNode: barrel
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: construction-name-barrel-welding-open
-  description: construction-desc-barrel-welding-open
-  id: ADTBarrelChemWeldingOpen
-  graph: ADTBarrelChemWeldingOpen
-  startNode: start
-  targetNode: barrel
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: construction-name-barrel-silicate-open
-  description: construction-desc-barrel-silicate-open
-  id: ADTBarrelChemSilicateOpen
-  graph: ADTBarrelChemSilicateOpen
-  startNode: start
-  targetNode: barrel
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: construction-name-barrel-wooden-open
-  description: construction-desc-barrel-wooden-open
-  id: ADTBarrelWoodenOpen
-  graph: ADTBarrelWoodenOpen
-  startNode: start
-  targetNode: barrel
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: construction-name-barrel-metal-open
-  description: construction-desc-barrel-metal-open
-  id: ADTBarrelMetalOpen
-  graph: ADTBarrelMetalOpen
-  startNode: start
-  targetNode: barrel
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: construction-name-barrel-rad-open
-  description: construction-desc-barrel-rad-open
-  id: ADTBarrelRadOpen
-  graph: ADTBarrelRadOpen
-  startNode: start
-  targetNode: barrel
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTBaseBarrel
-  graph: ADTBaseBarrel
-  startNode: start
-  targetNode: adtbasebarrel
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTBarrelPlanks
-  graph: ADTBarrelPlanks
-  startNode: start
-  targetNode: adtbarrelplanks
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTBarrelFire
-  graph: ADTBarrelFire
-  startNode: start
-  targetNode: adtbarrelfire
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTCandelabraLit
-  graph: ADTCandelabraLit
-  startNode: start
-  targetNode: adtcandelabralit
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTCeilingFan
-  graph: ADTCeilingFan
-  startNode: start
-  targetNode: adtceilingfan
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTConstructionBarricade
-  graph: ADTConstructionBarricade
-  startNode: start
-  targetNode: adtconstructionbarricade
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: false
-  canRotate: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTWallClock
-  graph: ADTWallClock
-  startNode: start
-  targetNode: adtwallclock
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canBuildInImpassable: true
-  canRotate: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTOpenSignRecipe
-  graph: ADTOpenSignGraph
-  startNode: start
-  targetNode: ADTOpenSignNode
-  category: construction-category-machines
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: true
-  conditions:
-    - !type:WallmountCondition
-
-- type: construction
-  id: ADTBarSignRecipe
-  name: construction-name-bar-sign
-  description: construction-desc-bar-sign
-  graph: ADTBarSignGraph
-  startNode: start
-  targetNode: barSign
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: true
-  conditions:
-    - !type:WallmountCondition
-
+  - ''

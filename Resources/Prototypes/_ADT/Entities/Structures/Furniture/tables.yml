@@ -1,153 +1,25 @@
-﻿# База
 - type: entity
-  id: ADTTableBase
-  parent: TableBase
-  name: base for tables
-  description: A square piece of metal standing on four metal legs.
-  abstract: true
-
-- type: entity
-  id: ADTTableFrame
-  parent: TableFrame
-  name: table frame
-  description: Pieces of metal that make the frame of a table.
-  components:
-  - type: Construction
-    graph: ADTTable
-    node: adttableframe
-
-- type: entity
-  id: ADTTableRedWood
-  parent: ADTTableBase
-  name: wood red table
-  description: Do not apply fire to this. Rumour says it burns easily.
-  components:
-  - type: Sprite
-    sprite: ADT/Structures/Furniture/Tables/table_red_wood.rsi
-  - type: Icon
-    sprite: ADT/Structures/Furniture/Tables/table_red_wood.rsi
-  - type: Damageable
-    damageModifierSet: Wood
-  - type: Injurable
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 15
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          MaterialWoodPlank:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: Tag
-    tags:
-    - Wooden
-  - type: Construction
-    graph: ADTTable
-    node: adttableredwood
-
-- type: entity
-  id: ADTTableWhiteWood
-  parent: ADTTableBase
-  name: wood white table
-  description: Do not apply fire to this. Rumour says it burns easily.
-  components:
-  - type: Sprite
-    sprite: ADT/Structures/Furniture/Tables/table_white_wood.rsi
-  - type: Icon
-    sprite: ADT/Structures/Furniture/Tables/table_white_wood.rsi
-  - type: Damageable
-    damageModifierSet: Wood
-  - type: Injurable
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 15
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          MaterialWoodPlank:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: Tag
-    tags:
-    - Wooden
-  - type: Construction
-    graph: ADTTable
-    node: adttablewhitewood
-
-- type: entity
-  id: ADTTableRoundPlastic
-  parent: BaseStructure
-  name: plastic round table
-  description: Do not apply fire to this. Rumour says it burns easily.
+  id: BaseRoundTable
+  parent:
+  - BaseStructure
+  - StructureHealthFurniture
   components:
   - type: Animateable
-  - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 15
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/metal_break1.ogg
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: PlaceableSurface
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.5
         density: 55
-        mask: # tables should collide with other tables
+        mask:
         - TableMask
         layer:
         - TableLayer
   - type: SpriteFade
   - type: Sprite
-    sprite: ADT/Structures/Furniture/Tables/roundtable.rsi
-    state: round_plastic
     noRot: true
   - type: Icon
-    sprite: ADT/Structures/Furniture/Tables/roundtable.rsi
-    state: round_plastic
   - type: Climbable
   - type: Bonkable
     bonkDamage:
@@ -155,60 +27,93 @@
         Blunt: 4
     bonkSound: !type:SoundCollectionSpecifier
       collection: TrayHit
-  - type: Clickable
   - type: Anchorable
   - type: Rotatable
   - type: InteractionOutline
-  - type: Physics
-    bodyType: Static
-  - type: Construction
-    graph: ADTTable
-    node: adttableroundplastic
   - type: Tag
     tags:
     - Table
     - ForceFixRotations
-
+  abstract: true
 - type: entity
-  id: ADTTableRoundWood
-  parent: ADTTableRoundPlastic
-  name: wood round table
+  id: FurnitureTableFrame
+  parent: TableFrame
+  name: table frame
+  description: Pieces of metal that make the frame of a table.
+  components:
+  - type: Construction
+    graph: FurnitureTableGraph
+    node: adttableframe
+- type: entity
+  id: TableRoundPlastic
+  parent: BaseRoundTable
+  name: plastic round table
   description: Do not apply fire to this. Rumour says it burns easily.
   components:
   - type: Damageable
-    damageModifierSet: Wood
+    damageModifierSet: SteelStaticMod
   - type: Injurable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 100
-      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      behaviors:
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
+        acts:
+        - Destruction
+    - trigger: !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metal_break1.ogg
+      - !type:DoActsBehavior
+        acts:
+        - Destruction
+  - type: Sprite
+    sprite: _ADT/Structures/Furniture/Tables/roundtable.rsi
+    state: round_plastic
+  - type: Icon
+    sprite: _ADT/Structures/Furniture/Tables/roundtable.rsi
+    state: round_plastic
+  - type: Construction
+    graph: FurnitureTableGraph
+    node: adttableroundplastic
+- type: entity
+  id: TableRoundWood
+  parent: TableRoundPlastic
+  name: wood round table
+  description: Do not apply fire to this. Rumour says it burns easily.
+  components:
+  - type: Damageable
+    damageModifierSet: WoodMod
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts:
+        - Destruction
+    - trigger: !type:DamageTrigger
         damage: 15
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: WoodDestroy
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        acts:
+        - Destruction
   - type: Sprite
-    sprite: ADT/Structures/Furniture/Tables/roundtable.rsi
     state: round_wood
   - type: Icon
-    sprite: ADT/Structures/Furniture/Tables/roundtable.rsi
     state: round_wood
   - type: Construction
-    graph: ADTTable
     node: adttableroundwood
-
 - type: entity
-  id: ADTTableRoundGlass
-  parent: ADTTableRoundPlastic
+  id: TableRoundGlass
+  parent: TableRoundPlastic
   name: glass round table
   description: Do not apply fire to this. Rumour says it burns easily.
   components:
@@ -222,144 +127,99 @@
     tableMassLimit: 60
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 100
-      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      behaviors:
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
+        acts:
+        - Destruction
+    - trigger: !type:DamageTrigger
         damage: 15
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/glass_break2.ogg
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        acts:
+        - Destruction
   - type: Sprite
-    sprite: ADT/Structures/Furniture/Tables/roundtable.rsi
     state: round_glass
   - type: Icon
-    sprite: ADT/Structures/Furniture/Tables/roundtable.rsi
     state: round_glass
   - type: Construction
-    graph: ADTTable
     node: adttableroundglass
-
 - type: entity
-  id: ADTTableRoundFrame
-  parent: BaseStructure
+  id: TableRoundFrame
+  parent: BaseRoundTable
   name: round table frame
   description: Pieces of metal that make the frame of a round table.
   components:
-  - type: Animateable
   - type: Damageable
-    damageModifierSet: Metallic
+    damageModifierSet: SteelStaticMod
   - type: Injurable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
+        acts:
+        - Destruction
+    - trigger: !type:DamageTrigger
         damage: 15
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/metal_break1.ogg
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: PlaceableSurface
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.5
-        density: 55
-        mask:
-        - TableMask
-        layer:
-        - TableLayer
-  - type: SpriteFade
+        acts:
+        - Destruction
   - type: Sprite
-    sprite: ADT/Structures/Furniture/Tables/roundtable.rsi
+    sprite: _ADT/Structures/Furniture/Tables/roundtable.rsi
     state: round_frame
-    noRot: true
   - type: Icon
-    sprite: ADT/Structures/Furniture/Tables/roundtable.rsi
+    sprite: _ADT/Structures/Furniture/Tables/roundtable.rsi
     state: round_frame
-  - type: Climbable
-  - type: Bonkable
-    bonkDamage:
-      types:
-        Blunt: 4
-    bonkSound: !type:SoundCollectionSpecifier
-      collection: TrayHit
-  - type: Clickable
-  - type: Anchorable
-  - type: Rotatable
-  - type: InteractionOutline
-  - type: Physics
-    bodyType: Static
   - type: Construction
-    graph: ADTTable
+    graph: FurnitureTableGraph
     node: adttableroundframe
-  - type: Tag
-    tags:
-    - Table
-    - ForceFixRotations
-
 - type: entity
-  id: ADTTableRoundGeneric
-  parent: ADTTableRoundPlastic
+  id: TableRoundGeneric
+  parent: TableRoundPlastic
   name: round table
   description: A round piece of metal standing on a metal leg.
   components:
   - type: Sprite
-    sprite: ADT/Structures/Furniture/Tables/roundtable.rsi
     state: round_generic
   - type: Icon
-    sprite: ADT/Structures/Furniture/Tables/roundtable.rsi
     state: round_generic
   - type: Construction
-    graph: ADTTable
     node: adttableroundgeneric
-
 - type: entity
-  id: ADTTableRoundCarpet
-  parent: ADTTableRoundPlastic
+  id: TableRoundCarpet
+  parent: TableRoundPlastic
   name: gambling round table
   description: Play em' cowboy.
   components:
   - type: Sprite
-    sprite: ADT/Structures/Furniture/Tables/roundtable.rsi
     state: round_carpet
   - type: Icon
-    sprite: ADT/Structures/Furniture/Tables/roundtable.rsi
     state: round_carpet
   - type: Damageable
-    damageModifierSet: Wood
-  - type: Injurable
+    damageModifierSet: WoodMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: WoodDestroy
       - !type:DoActsBehavior
-        acts: ["Destruction"]
-    - trigger:
-        !type:DamageTrigger
+        acts:
+        - Destruction
+    - trigger: !type:DamageTrigger
         damage: 15
       behaviors:
       - !type:PlaySoundBehavior
@@ -374,7 +234,8 @@
             min: 1
             max: 1
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        acts:
+        - Destruction
   - type: Tag
     tags:
     - Wooden
@@ -382,12 +243,10 @@
     footstepSoundCollection:
       collection: FootstepCarpet
   - type: Construction
-    graph: ADTTable
     node: adttableroundcarpet
-
 - type: entity
-  id: ADTTableRoundPlasma
-  parent: ADTTableRoundPlastic
+  id: TableRoundPlasma
+  parent: TableRoundPlastic
   name: plasma round table
   description: A round piece of plasma glass, standing on a metal leg. Pretty!
   components:
@@ -401,190 +260,53 @@
     tableMassLimit: 240
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 250
       behaviors:
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        acts:
+        - Destruction
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        acts:
+        - Destruction
   - type: Sprite
-    sprite: ADT/Structures/Furniture/Tables/roundtable.rsi
     state: round_plasma
   - type: Icon
-    sprite: ADT/Structures/Furniture/Tables/roundtable.rsi
     state: round_plasma
   - type: Construction
-    graph: ADTTable
     node: adttableroundplasma
-
 - type: entity
-  id: ADTTableRoulette
-  parent: BaseStructure
-  name: roulette table
-  description: Watch you don't lose your salary.
-  components:
-  - type: Animateable
-  - type: Damageable
-    damageModifierSet: Wood
-  - type: Injurable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 15
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          MaterialWoodPlank:
-            min: 1
-            max: 1
-          MaterialCloth1:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: PlaceableSurface
-  - type: SpriteFade
-  - type: Sprite
-    sprite: ADT/Structures/Furniture/Tables/roulette.rsi
-    noRot: true
-    layers:
-    - state: idle
-      map: ["enum.RouletteVisualLayers.Base"]
-  - type: Icon
-    sprite: ADT/Structures/Furniture/Tables/roulette.rsi
-    state: idle
-  - type: Appearance
-  - type: Roulette
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-1.0,-0.5,1.0,0.5"
-        density: 55
-        mask:
-        - TableMask
-        layer:
-        - TableLayer
-  - type: Climbable
-  - type: Bonkable
-    bonkDamage:
-      types:
-        Blunt: 4
-    bonkSound: !type:SoundCollectionSpecifier
-      collection: TrayHit
-  - type: Clickable
-  - type: Anchorable
-  - type: Rotatable
-  - type: InteractionOutline
-  - type: Physics
-    bodyType: Static
-  - type: Construction
-    graph: ADTTable
-    node: adttableroulette
-  - type: Tag
-    tags:
-    - Table
-    - ForceFixRotations
-  - type: FootstepModifier
-    footstepSoundCollection:
-      collection: FootstepCarpet
-
-- type: entity
-  id: ADTTableRusty
-  parent: ADTTableBase
-  name: table
-  description: A square piece of metal standing on four metal legs. Rusty.
-  components:
-  - type: Sprite
-    sprite: ADT/Structures/Furniture/Tables/table_rusty.rsi
-  - type: Icon
-    sprite: ADT/Structures/Furniture/Tables/table_rusty.rsi
-  - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 125
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 25
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
-          params:
-            volume: -6
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel1:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: IconSmooth
-    key: metaltable
-    base: state_
-  - type: Tag # goob edit
-    tags:
-    - Table
-
-- type: entity
-  id: ADTTablePlastic
-  parent: ADTTableBase
+  id: TablePlastic
+  parent:
+  - TableBase
+  - StructureHealthFurniture
   name: plastic table
   description: A square piece of plastic, standing on four metal legs.
   components:
   - type: Sprite
-    sprite: ADT/Structures/Furniture/Tables/plastic.rsi
+    sprite: _ADT/Structures/Furniture/Tables/plastic.rsi
   - type: Icon
-    sprite: ADT/Structures/Furniture/Tables/plastic.rsi
+    sprite: _ADT/Structures/Furniture/Tables/plastic.rsi
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: SteelStaticMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 125
       behaviors:
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
+        acts:
+        - Destruction
+    - trigger: !type:DamageTrigger
         damage: 25
       behaviors:
       - !type:PlaySoundBehavior
@@ -600,26 +322,28 @@
       - !type:ChangeConstructionNodeBehavior
         node: adttableframe
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        acts:
+        - Destruction
   - type: IconSmooth
     key: plastictable
   - type: Construction
-    graph: ADTTable
+    graph: FurnitureTableGraph
     node: adttableplastic
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepTile
-
 - type: entity
-  id: ADTTableUraniumGlass
-  parent: ADTTableBase
+  id: TableUraniumGlass
+  parent:
+  - TableBase
+  - StructureHealthFurniture
   name: uranium glass table
   description: A square piece of uranium glass, standing on four metal legs. Radioactive!
   components:
   - type: Sprite
-    sprite: ADT/Structures/Furniture/Tables/uranium.rsi
+    sprite: _ADT/Structures/Furniture/Tables/uranium.rsi
   - type: Icon
-    sprite: ADT/Structures/Furniture/Tables/uranium.rsi
+    sprite: _ADT/Structures/Furniture/Tables/uranium.rsi
   - type: GlassTable
     climberDamage:
       types:
@@ -630,17 +354,16 @@
     tableMassLimit: 160
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 25
       behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-        - !type:PlaySoundBehavior
-          sound:
-            collection: GlassBreak
-    - trigger:
-        !type:DamageTrigger
+      - !type:DoActsBehavior
+        acts:
+        - Destruction
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+    - trigger: !type:DamageTrigger
         damage: 5
       behaviors:
       - !type:PlaySoundBehavior
@@ -654,26 +377,28 @@
       - !type:ChangeConstructionNodeBehavior
         node: adttableframe
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        acts:
+        - Destruction
   - type: IconSmooth
     key: uraniumglasstable
   - type: Construction
-    graph: ADTTable
+    graph: FurnitureTableGraph
     node: adttableuraniumglass
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepTile
-
 - type: entity
-  id: ADTTableReinforcedPlasmaGlass
-  parent: ADTTableBase
+  id: TableReinforcedPlasmaGlass
+  parent:
+  - TableBase
+  - StructureHealthFurniture
   name: reinforced plasma glass table
   description: A square piece of reinforced plasma glass, standing on four metal legs. Extra robust and pretty!
   components:
   - type: Sprite
-    sprite: ADT/Structures/Furniture/Tables/r_plasma.rsi
+    sprite: _ADT/Structures/Furniture/Tables/r_plasma.rsi
   - type: Icon
-    sprite: ADT/Structures/Furniture/Tables/r_plasma.rsi
+    sprite: _ADT/Structures/Furniture/Tables/r_plasma.rsi
   - type: GlassTable
     climberDamage:
       types:
@@ -684,17 +409,16 @@
     tableMassLimit: 240
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 250
       behaviors:
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        acts:
+        - Destruction
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:PlaySoundBehavior
@@ -711,26 +435,28 @@
             min: 1
             max: 1
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        acts:
+        - Destruction
   - type: IconSmooth
     key: reinforcedplasmaglasstable
   - type: Construction
-    graph: ADTTable
+    graph: FurnitureTableGraph
     node: adttablereinforcedplasmaglass
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepTile
-
 - type: entity
-  id: ADTTableReinforcedUraniumGlass
-  parent: ADTTableBase
+  id: TableReinforcedUraniumGlass
+  parent:
+  - TableBase
+  - StructureHealthFurniture
   name: reinforced uranium glass table
   description: A square piece of reinforced uranium glass, standing on four metal legs. Extra robust and radioactive!
   components:
   - type: Sprite
-    sprite: ADT/Structures/Furniture/Tables/r_uran.rsi
+    sprite: _ADT/Structures/Furniture/Tables/r_uran.rsi
   - type: Icon
-    sprite: ADT/Structures/Furniture/Tables/r_uran.rsi
+    sprite: _ADT/Structures/Furniture/Tables/r_uran.rsi
   - type: GlassTable
     climberDamage:
       types:
@@ -741,17 +467,16 @@
     tableMassLimit: 240
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 250
       behaviors:
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        acts:
+        - Destruction
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:PlaySoundBehavior
@@ -768,11 +493,12 @@
             min: 1
             max: 1
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        acts:
+        - Destruction
   - type: IconSmooth
     key: reinforceduraniumglasstable
   - type: Construction
-    graph: ADTTable
+    graph: FurnitureTableGraph
     node: adttablereinforceduraniumglass
   - type: FootstepModifier
     footstepSoundCollection:

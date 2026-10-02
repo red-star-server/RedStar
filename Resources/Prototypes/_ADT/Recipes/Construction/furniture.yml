@@ -1,54 +1,7 @@
-# sofa
-# sofa-black
-
-- type: construction
-  name: construction-name-sofa-left-side
-  id: ADTSofaBlackLeftSideRecipe
-  graph: ADTSeat
-  startNode: start
-  targetNode: adtsofablackleft
-  category: construction-category-furniture
-  description: construction-desc-sofa-left-side
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: construction-name-sofa-middle
-  id: ADTSofaBlackMiddleRecipe
-  graph: ADTSeat
-  startNode: start
-  targetNode: adtsofablackmiddle
-  category: construction-category-furniture
-  description: construction-desc-sofa-middle
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: construction-name-sofa-right-side
-  id: ADTSofaBlackRightSideRecipe
-  graph: ADTSeat
-  startNode: start
-  targetNode: adtsofablackright
-  category: construction-category-furniture
-  description: construction-desc-sofa-right-side
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-# sofa (furniture_cut, no overlays)
-
 - type: construction
   name: construction-name-black-sofa-left-side
-  id: ADTSofaCutBlackLeftSideRecipe
-  graph: ADTSeat
+  id: SofaCutBlackLeftSideRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofacutblackleft
   category: construction-category-furniture
@@ -57,12 +10,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-black-sofa-middle
-  id: ADTSofaCutBlackMiddleRecipe
-  graph: ADTSeat
+  id: SofaCutBlackMiddleRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofacutblackmiddle
   category: construction-category-furniture
@@ -71,12 +23,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-black-sofa-right-side
-  id: ADTSofaCutBlackRightSideRecipe
-  graph: ADTSeat
+  id: SofaCutBlackRightSideRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofacutblackright
   category: construction-category-furniture
@@ -85,12 +36,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-black-sofa-left-corner
-  id: ADTSofaCutBlackLeftCornerRecipe
-  graph: ADTSeat
+  id: SofaCutBlackLeftCornerRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofacutblackleftcorner
   category: construction-category-furniture
@@ -99,12 +49,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-black-sofa-right-corner
-  id: ADTSofaCutBlackRightCornerRecipe
-  graph: ADTSeat
+  id: SofaCutBlackRightCornerRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofacutblackrightcorner
   category: construction-category-furniture
@@ -113,12 +62,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-comfy-sofa-left-side
-  id: ADTSofaCutComfyLeftSideRecipe
-  graph: ADTSeat
+  id: SofaCutComfyLeftSideRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofacutcomfyleft
   category: construction-category-furniture
@@ -127,12 +75,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-comfy-sofa-middle
-  id: ADTSofaCutComfyMiddleRecipe
-  graph: ADTSeat
+  id: SofaCutComfyMiddleRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofacutcomfymiddle
   category: construction-category-furniture
@@ -141,12 +88,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-comfy-sofa-right-side
-  id: ADTSofaCutComfyRightSideRecipe
-  graph: ADTSeat
+  id: SofaCutComfyRightSideRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofacutcomfyright
   category: construction-category-furniture
@@ -155,12 +101,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-comfy-sofa-left-corner
-  id: ADTSofaCutComfyLeftCornerRecipe
-  graph: ADTSeat
+  id: SofaCutComfyLeftCornerRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofacutcomfyleftcorner
   category: construction-category-furniture
@@ -169,12 +114,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-comfy-sofa-right-corner
-  id: ADTSofaCutComfyRightCornerRecipe
-  graph: ADTSeat
+  id: SofaCutComfyRightCornerRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofacutcomfyrightcorner
   category: construction-category-furniture
@@ -183,12 +127,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-dainer-sofa-left-side
-  id: ADTSofaCutDainerLeftSideRecipe
-  graph: ADTSeat
+  id: SofaCutDainerLeftSideRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofacutdainerleft
   category: construction-category-furniture
@@ -197,12 +140,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-dainer-sofa-middle
-  id: ADTSofaCutDainerMiddleRecipe
-  graph: ADTSeat
+  id: SofaCutDainerMiddleRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofacutdainermiddle
   category: construction-category-furniture
@@ -211,12 +153,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-dainer-sofa-right-side
-  id: ADTSofaCutDainerRightSideRecipe
-  graph: ADTSeat
+  id: SofaCutDainerRightSideRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofacutdainerright
   category: construction-category-furniture
@@ -225,12 +166,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-dainer-sofa-left-corner
-  id: ADTSofaCutDainerLeftCornerRecipe
-  graph: ADTSeat
+  id: SofaCutDainerLeftCornerRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofacutdainerleftcorner
   category: construction-category-furniture
@@ -239,12 +179,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-dainer-sofa-right-corner
-  id: ADTSofaCutDainerRightCornerRecipe
-  graph: ADTSeat
+  id: SofaCutDainerRightCornerRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofacutdainerrightcorner
   category: construction-category-furniture
@@ -253,146 +192,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
-# sofa-red
-
-- type: construction
-  name: construction-name-red-sofa-left-side
-  id: ADTSofaRedLeftSideRecipe
-  graph: ADTSeat
-  startNode: start
-  targetNode: adtsofaredleft
-  category: construction-category-furniture
-  description: construction-desc-red-sofa-left-side
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: construction-name-red-sofa-middle
-  id: ADTSofaRedMiddleRecipe
-  graph: ADTSeat
-  startNode: start
-  targetNode: adtsofaredmiddle
-  category: construction-category-furniture
-  description: construction-desc-red-sofa-middle
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: construction-name-red-sofa-right-side
-  id: ADTSofaRedRightSideRecipe
-  graph: ADTSeat
-  startNode: start
-  targetNode: adtsofaredright
-  category: construction-category-furniture
-  description: construction-desc-red-sofa-right-side
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-# sofa-violet
-
-- type: construction
-  name: construction-name-violet-sofa-left-side
-  id: ADTVioletSofaLeftSideRecipe
-  graph: ADTSeat
-  startNode: start
-  targetNode: adtsofavioletleft
-  category: construction-category-furniture
-  description: construction-desc-violet-sofa-left-side
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: construction-name-violet-sofa-middle
-  id: ADTSofaVioletMiddleRecipe
-  graph: ADTSeat
-  startNode: start
-  targetNode: adtsofavioletmiddle
-  category: construction-category-furniture
-  description: construction-desc-violet-sofa-middle
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: construction-name-violet-sofa-right-side
-  id: ADTSofaVioletRightSideRecipe
-  graph: ADTSeat
-  startNode: start
-  targetNode: adtsofavioletright
-  category: construction-category-furniture
-  description: construction-desc-violet-sofa-right-side
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-# sofa-leather
-
-- type: construction
-  name: construction-name-leather-sofa-left-side
-  id: ADTSofaLeatherLeftSideRecipe
-  graph: ADTSeat
-  startNode: start
-  targetNode: adtsofaleatherleft
-  category: construction-category-furniture
-  description: construction-desc-leather-sofa-left-side
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: construction-name-leather-sofa-middle
-  id: ADTSofaLeatherMiddleRecipe
-  graph: ADTSeat
-  startNode: start
-  targetNode: adtsofaleathermiddle
-  category: construction-category-furniture
-  description: construction-desc-leather-sofa-middle
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: construction-name-leather-sofa-right-side
-  id: ADTSofaLeatherRightSideRecipe
-  graph: ADTSeat
-  startNode: start
-  targetNode: adtsofaleatherright
-  category: construction-category-furniture
-  description: construction-desc-leather-sofa-right-side
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-# sofa-white
-
+  - ''
 - type: construction
   name: construction-name-white-sofa-left-side
-  id: ADTSofaWhiteLeftSideRecipe
-  graph: ADTSeat
+  id: SofaWhiteLeftSideRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofawhiteleft
   category: construction-category-furniture
@@ -401,12 +205,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-white-sofa-right-side
-  id: ADTSofaWhiteRightSideRecipe
-  graph: ADTSeat
+  id: SofaWhiteRightSideRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofawhiteright
   category: construction-category-furniture
@@ -415,12 +218,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-white-sofa-left-side-2
-  id: ADTSofaWhiteLeftSideRecipe2
-  graph: ADTSeat
+  id: SofaWhiteLeftSideRecipe2
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofawhiteleft2
   category: construction-category-furniture
@@ -429,12 +231,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-white-sofa-right-side-2
-  id: ADTSofaWhiteRightSideRecipe2
-  graph: ADTSeat
+  id: SofaWhiteRightSideRecipe2
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofawhiteright2
   category: construction-category-furniture
@@ -443,12 +244,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-white-sofa-middle
-  id: ADTSofaWhiteMiddleRecipe
-  graph: ADTSeat
+  id: SofaWhiteMiddleRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofawhitemiddle
   category: construction-category-furniture
@@ -457,12 +257,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-white-sofa-left-corner
-  id: ADTSofaWhiteLeftCornerRecipe
-  graph: ADTSeat
+  id: SofaWhiteLeftCornerRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofawhiteleftcorner
   category: construction-category-furniture
@@ -471,12 +270,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-white-sofa-right-corner
-  id: ADTSofaWhiteRightCornerRecipe
-  graph: ADTSeat
+  id: SofaWhiteRightCornerRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofawhiterightcorner
   category: construction-category-furniture
@@ -485,14 +283,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
-# sofa-blue
-
+  - ''
 - type: construction
   name: construction-name-blue-sofa-left-side
-  id: ADTSofaBlueLeftSideRecipe
-  graph: ADTSeat
+  id: SofaBlueLeftSideRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofablueleft
   category: construction-category-furniture
@@ -501,12 +296,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-blue-sofa-right-side
-  id: ADTSofaBlueRightSideRecipe
-  graph: ADTSeat
+  id: SofaBlueRightSideRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofablueright
   category: construction-category-furniture
@@ -515,12 +309,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-blue-sofa-left-side-2
-  id: ADTSofaBlueLeftSideRecipe2
-  graph: ADTSeat
+  id: SofaBlueLeftSideRecipe2
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofablueleft2
   category: construction-category-furniture
@@ -529,12 +322,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-blue-sofa-right-side-2
-  id: ADTSofaBlueRightSideRecipe2
-  graph: ADTSeat
+  id: SofaBlueRightSideRecipe2
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofablueright2
   category: construction-category-furniture
@@ -543,12 +335,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-blue-sofa-middle
-  id: ADTSofaBlueMiddleRecipe
-  graph: ADTSeat
+  id: SofaBlueMiddleRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofabluemiddle
   category: construction-category-furniture
@@ -557,12 +348,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-blue-sofa-left-corner
-  id: ADTSofaBlueLeftCornerRecipe
-  graph: ADTSeat
+  id: SofaBlueLeftCornerRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofablueleftcorner
   category: construction-category-furniture
@@ -571,12 +361,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-blue-sofa-right-corner
-  id: ADTSofaBlueRightCornerRecipe
-  graph: ADTSeat
+  id: SofaBlueRightCornerRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofabluerightcorner
   category: construction-category-furniture
@@ -585,13 +374,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
-# sofa-brown
+  - ''
 - type: construction
   name: construction-name-brown-sofa-left-side
-  id: ADTSofabrownLeftSideRecipe
-  graph: ADTSeat
+  id: SofabrownLeftSideRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofabrownleft
   category: construction-category-furniture
@@ -600,12 +387,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-brown-sofa-right-side
-  id: ADTSofabrownRightSideRecipe
-  graph: ADTSeat
+  id: SofabrownRightSideRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofabrownright
   category: construction-category-furniture
@@ -614,12 +400,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-brown-sofa-left-side-2
-  id: ADTSofabrownLeftSideRecipe2
-  graph: ADTSeat
+  id: SofabrownLeftSideRecipe2
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofabrownleft2
   category: construction-category-furniture
@@ -628,12 +413,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-brown-sofa-right-side-2
-  id: ADTSofabrownRightSideRecipe2
-  graph: ADTSeat
+  id: SofabrownRightSideRecipe2
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofabrownright2
   category: construction-category-furniture
@@ -642,12 +426,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-brown-sofa-middle
-  id: ADTSofabrownMiddleRecipe
-  graph: ADTSeat
+  id: SofabrownMiddleRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofabrownmiddle
   category: construction-category-furniture
@@ -656,12 +439,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-brown-sofa-left-corner
-  id: ADTSofabrownLeftCornerRecipe
-  graph: ADTSeat
+  id: SofabrownLeftCornerRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofabrownleftcorner
   category: construction-category-furniture
@@ -670,12 +452,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-brown-sofa-right-corner
-  id: ADTSofabrownRightCornerRecipe
-  graph: ADTSeat
+  id: SofabrownRightCornerRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofabrownrightcorner
   category: construction-category-furniture
@@ -684,14 +465,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
-# sofa-office-black
-
+  - ''
 - type: construction
   name: construction-name-black-office-sofa-left-side
-  id: ADTSofaOfficeBlackLeftSideRecipe
-  graph: ADTSeat
+  id: SofaOfficeBlackLeftSideRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofaofficeblackleft
   category: construction-category-furniture
@@ -700,12 +478,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-black-office-sofa-right-side
-  id: ADTSofaOfficeBlackRightSideRecipe
-  graph: ADTSeat
+  id: SofaOfficeBlackRightSideRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofaofficeblackright
   category: construction-category-furniture
@@ -714,12 +491,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-black-office-sofa-middle
-  id: ADTSofaOfficeBlackMiddleRecipe
-  graph: ADTSeat
+  id: SofaOfficeBlackMiddleRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofaofficeblackmiddle
   category: construction-category-furniture
@@ -728,12 +504,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-black-office-sofa-left-corner
-  id: ADTSofaOfficeBlackLeftCornerRecipe
-  graph: ADTSeat
+  id: SofaOfficeBlackLeftCornerRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofaofficeblackleftcorner
   category: construction-category-furniture
@@ -742,12 +517,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-black-office-sofa-right-corner
-  id: ADTSofaOfficeBlackRightCornerRecipe
-  graph: ADTSeat
+  id: SofaOfficeBlackRightCornerRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofaofficeblackrightcorner
   category: construction-category-furniture
@@ -756,14 +530,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
-# sofa-office-white
-
+  - ''
 - type: construction
   name: construction-name-white-office-sofa-left-side
-  id: ADTSofaOfficeWhiteLeftSideRecipe
-  graph: ADTSeat
+  id: SofaOfficeWhiteLeftSideRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofaofficewhiteleft
   category: construction-category-furniture
@@ -772,12 +543,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-white-office-sofa-right-side
-  id: ADTSofaOfficeWhiteRightSideRecipe
-  graph: ADTSeat
+  id: SofaOfficeWhiteRightSideRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofaofficewhiteright
   category: construction-category-furniture
@@ -786,12 +556,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-white-office-sofa-middle
-  id: ADTSofaOfficeWhiteMiddleRecipe
-  graph: ADTSeat
+  id: SofaOfficeWhiteMiddleRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofaofficewhitemiddle
   category: construction-category-furniture
@@ -800,12 +569,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-white-office-sofa-left-corner
-  id: ADTSofaOfficeWhiteLeftCornerRecipe
-  graph: ADTSeat
+  id: SofaOfficeWhiteLeftCornerRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofaofficewhiteleftcorner
   category: construction-category-furniture
@@ -814,12 +582,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-white-office-sofa-right-corner
-  id: ADTSofaOfficeWhiteRightCornerRecipe
-  graph: ADTSeat
+  id: SofaOfficeWhiteRightCornerRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtsofaofficewhiterightcorner
   category: construction-category-furniture
@@ -828,73 +595,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
-# Chairs
-# From Yuna
-
-- type: construction
-  name: construction-name-violet-chair
-  id: ADTArmchairVioletRecipe
-  graph: ADTSeat
-  startNode: start
-  targetNode: adtarmchairviolet
-  category: construction-category-furniture
-  description: construction-desc-violet-chair
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: construction-name-red-chair
-  id: ADTArmchairRedRecipe
-  graph: ADTSeat
-  startNode: start
-  targetNode: adtarmchairred
-  category: construction-category-furniture
-  description: construction-desc-red-chair
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: construction-name-leather-chair
-  id: ADTArmchairLeatherRecipe
-  graph: ADTSeat
-  startNode: start
-  targetNode: adtarmchairleather
-  category: construction-category-furniture
-  description: construction-desc-leather-chair
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-# From Luna
-
-- type: construction
-  name: construction-name-black-chair
-  id: ADTArmchairBlackRecipe
-  graph: ADTSeat
-  startNode: start
-  targetNode: adtarmchairblack
-  category: construction-category-furniture
-  description: construction-desc-black-chair
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-white-armchair
-  id: ADTArmchairWhiteRecipe
-  graph: ADTSeat
+  id: ArmchairWhiteRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtarmchairwhite
   category: construction-category-furniture
@@ -903,12 +608,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-white-armchair-2
-  id: ADTArmchairWhiteRecipe2
-  graph: ADTSeat
+  id: ArmchairWhiteRecipe2
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtarmchairwhite2
   category: construction-category-furniture
@@ -917,12 +621,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-brown-armchair
-  id: ADTArmchairBrownRecipe
-  graph: ADTSeat
+  id: ArmchairBrownRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtarmchairbrown
   category: construction-category-furniture
@@ -931,12 +634,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-brown-armchair-2
-  id: ADTArmchairBrownRecipe2
-  graph: ADTSeat
+  id: ArmchairBrownRecipe2
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtarmchairbrown2
   category: construction-category-furniture
@@ -945,12 +647,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-blue-armchair
-  id: ADTArmchairBlueRecipe
-  graph: ADTSeat
+  id: ArmchairBlueRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtarmchairblue
   category: construction-category-furniture
@@ -959,12 +660,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-blue-armchair-2
-  id: ADTArmchairBlueRecipe2
-  graph: ADTSeat
+  id: ArmchairBlueRecipe2
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtarmchairblue2
   category: construction-category-furniture
@@ -973,14 +673,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
-# Tables
-
+  - ''
 - type: construction
   name: construction-name-plastic-round-table
-  id: ADTTableRoundPlasticRecipe
-  graph: ADTTable
+  id: TableRoundPlasticRecipe
+  graph: FurnitureTableGraph
   startNode: start
   targetNode: adttableroundplastic
   category: construction-category-furniture
@@ -989,12 +686,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-wood-round-table
-  id: ADTTableRoundWoodRecipe
-  graph: ADTTable
+  id: TableRoundWoodRecipe
+  graph: FurnitureTableGraph
   startNode: start
   targetNode: adttableroundwood
   category: construction-category-furniture
@@ -1003,12 +699,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-glass-round-table
-  id: ADTTableRoundGlassRecipe
-  graph: ADTTable
+  id: TableRoundGlassRecipe
+  graph: FurnitureTableGraph
   startNode: start
   targetNode: adttableroundglass
   category: construction-category-furniture
@@ -1017,12 +712,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-round-table
-  id: ADTTableRoundGenericRecipe
-  graph: ADTTable
+  id: TableRoundGenericRecipe
+  graph: FurnitureTableGraph
   startNode: start
   targetNode: adttableroundgeneric
   category: construction-category-furniture
@@ -1031,12 +725,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-gambling-round-table
-  id: ADTTableRoundCarpetRecipe
-  graph: ADTTable
+  id: TableRoundCarpetRecipe
+  graph: FurnitureTableGraph
   startNode: start
   targetNode: adttableroundcarpet
   category: construction-category-furniture
@@ -1045,12 +738,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-plasma-round-table
-  id: ADTTableRoundPlasmaRecipe
-  graph: ADTTable
+  id: TableRoundPlasmaRecipe
+  graph: FurnitureTableGraph
   startNode: start
   targetNode: adttableroundplasma
   category: construction-category-furniture
@@ -1059,40 +751,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: construction-name-white-wood-table
-  id: ADTTableWhiteWoodRecipe
-  graph: ADTTable
-  startNode: start
-  targetNode: adttablewhitewood
-  category: construction-category-furniture
-  description: construction-desc-white-wood-table
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: construction-name-red-wood-table
-  id: ADTTableRedWoodRecipe
-  graph: ADTTable
-  startNode: start
-  targetNode: adttableredwood
-  category: construction-category-furniture
-  description: construction-desc-red-wood-table
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-plastic-table
-  id: ADTTablePlasticRecipe
-  graph: ADTTable
+  id: TablePlasticRecipe
+  graph: FurnitureTableGraph
   startNode: start
   targetNode: adttableplastic
   category: construction-category-furniture
@@ -1101,12 +764,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-uranium-glass-table
-  id: ADTTableUraniumGlassRecipe
-  graph: ADTTable
+  id: TableUraniumGlassRecipe
+  graph: FurnitureTableGraph
   startNode: start
   targetNode: adttableuraniumglass
   category: construction-category-furniture
@@ -1115,12 +777,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-reinforced-plasma-glass-table
-  id: ADTTableReinforcedPlasmaGlassRecipe
-  graph: ADTTable
+  id: TableReinforcedPlasmaGlassRecipe
+  graph: FurnitureTableGraph
   startNode: start
   targetNode: adttablereinforcedplasmaglass
   category: construction-category-furniture
@@ -1129,12 +790,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-reinforced-uranium-glass-table
-  id: ADTTableReinforcedUraniumGlassRecipe
-  graph: ADTTable
+  id: TableReinforcedUraniumGlassRecipe
+  graph: FurnitureTableGraph
   startNode: start
   targetNode: adttablereinforceduraniumglass
   category: construction-category-furniture
@@ -1143,42 +803,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: construction-name-cable-reel
-  id: ADTCableReelRecipe
-  graph: ADTTable
-  startNode: start
-  targetNode: adtcablereel
-  category: construction-category-furniture
-  description: construction-desc-cable-reel
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: construction-name-chalkboard
-  id: ADTChalkboardRecipe
-  graph: ADTChalkboard
-  startNode: start
-  targetNode: adtchalkboard
-  category: construction-category-furniture
-  description: construction-desc-chalkboard
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-# Chairs
-
+  - ''
 - type: construction
   name: construction-name-pizza-chair
-  id: ADTChairPizzeriaRecipe
-  graph: ADTSeat
+  id: ChairPizzeriaRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtchairpizzeria
   category: construction-category-furniture
@@ -1187,12 +816,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-white-chair
-  id: ADTChairWhiteRecipe
-  graph: ADTSeat
+  id: ChairWhiteRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtchairwhite
   category: construction-category-furniture
@@ -1201,12 +829,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-red-chair
-  id: ADTChairRedRecipe
-  graph: ADTSeat
+  id: ChairRedRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtchairred
   category: construction-category-furniture
@@ -1215,40 +842,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: construction-name-barbell-chair
-  id: ADTBarbellChairRecipe
-  graph: ADTSeat
-  startNode: start
-  targetNode: adtbarbellchair
-  category: construction-category-furniture
-  description: construction-desc-barbell-chair
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: construction-name-oktoberfest-chair
-  id: ADTChairOktoberfestOrangeRecipe
-  graph: ADTSeat
-  startNode: start
-  targetNode: adtchairoktoberfestorange
-  category: construction-category-furniture
-  description: construction-desc-oktoberfest-chair
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-bar-stool
-  id: ADTChairBarStoolRecipe
-  graph: ADTSeat
+  id: ChairBarStoolRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtchairbarstool
   category: construction-category-furniture
@@ -1257,12 +855,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-bar-stool-2
-  id: ADTChairBarStool2Recipe
-  graph: ADTSeat
+  id: ChairBarStool2Recipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtchairbarstool2
   category: construction-category-furniture
@@ -1271,12 +868,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-comfy-black-chair
-  id: ADTChairComfyBlackRecipe
-  graph: ADTSeat
+  id: ChairComfyBlackRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtchaircomfyblack
   category: construction-category-furniture
@@ -1285,12 +881,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-comfy-maroon-chair
-  id: ADTChairComfyMaroonRecipe
-  graph: ADTSeat
+  id: ChairComfyMaroonRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtchaircomfymaroon
   category: construction-category-furniture
@@ -1299,12 +894,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-comfy-white-chair
-  id: ADTChairComfyWhiteRecipe
-  graph: ADTSeat
+  id: ChairComfyWhiteRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtchaircomfywhite
   category: construction-category-furniture
@@ -1313,12 +907,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-king-chair
-  id: ADTChairKingRecipe
-  graph: ADTSeat
+  id: ChairKingRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtchairking
   category: construction-category-furniture
@@ -1327,12 +920,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-rich-chair
-  id: ADTChairRichRecipe
-  graph: ADTSeat
+  id: ChairRichRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtchairrich
   category: construction-category-furniture
@@ -1341,12 +933,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-rich-white-chair
-  id: ADTChairRichWhiteRecipe
-  graph: ADTSeat
+  id: ChairRichWhiteRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtchairrichwhite
   category: construction-category-furniture
@@ -1355,12 +946,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-style-chair
-  id: ADTChairStyleRecipe
-  graph: ADTSeat
+  id: ChairStyleRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtchairstyle
   category: construction-category-furniture
@@ -1369,12 +959,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-wooden-stool
-  id: ADTChairWoodenStoolRecipe
-  graph: ADTSeat
+  id: ChairWoodenStoolRecipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtchairwoodenstool
   category: construction-category-furniture
@@ -1383,12 +972,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
   name: construction-name-wooden-stool-2
-  id: ADTChairWoodenStool2Recipe
-  graph: ADTSeat
+  id: ChairWoodenStool2Recipe
+  graph: UpholsteredSeatGraph
   startNode: start
   targetNode: adtchairwoodenstool2
   category: construction-category-furniture
@@ -1397,126 +985,9 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
-# Benches
-
+  - ''
 - type: construction
-  name: construction-name-church-bench-left-side
-  id: ADTBenchChurchLeftSideRecipe
-  graph: ADTSeat
-  startNode: start
-  targetNode: adtbenchchurchleft
-  category: construction-category-furniture
-  description: construction-desc-church-bench-left-side
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: construction-name-church-bench-middle
-  id: ADTBenchChurchMiddleRecipe
-  graph: ADTSeat
-  startNode: start
-  targetNode: adtbenchchurchmiddle
-  category: construction-category-furniture
-  description: construction-desc-church-bench-middle
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: construction-name-church-bench-right-side
-  id: ADTBenchChurchRightSideRecipe
-  graph: ADTSeat
-  startNode: start
-  targetNode: adtbenchchurchright
-  category: construction-category-furniture
-  description: construction-desc-church-bench-right-side
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-# Other
-
-- type: construction
-  name: construction-name-fireplace
-  id: ADTFireplaceRecipe
-  graph: ADTFireplace
-  startNode: start
-  targetNode: fireplace
-  category: construction-category-furniture
-  description: construction-desc-fireplace
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: construction-name-fireplace-white
-  id: ADTFireplaceWhiteRecipe
-  graph: ADTFireplaceWhite
-  startNode: start
-  targetNode: fireplace
-  category: construction-category-furniture
-  description: construction-desc-fireplace-white
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: construction-name-fireplace-wooden
-  id: ADTFireplaceWoodenRecipe
-  graph: ADTFireplaceWooden
-  startNode: start
-  targetNode: fireplace
-  category: construction-category-furniture
-  description: construction-desc-fireplace-wooden
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: construction-name-deckchair
-  id: ADTDeckChairRecipe
-  description: construction-desc-deckchair
-  graph: adt_deckchair
-  startNode: start
-  targetNode: adtdeckchair
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: construction-name-adt-barbell-bench
-  id: ADTBarbellBenchRecipe
-  description: construction-desc-adt-barbell-bench
-  graph: ADTBarbellBench
-  startNode: start
-  targetNode: barbellbench
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTDoubleBedRecipe
+  id: DoubleBedRecipe
   name: construction-name-double-bed
   description: construction-desc-double-bed
   graph: adt_double_bed
@@ -1527,637 +998,4 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTBonfireRecipe
-  name: construction-name-bonfire
-  description: construction-desc-bonfire
-  graph: ADTBonfire
-  startNode: start
-  targetNode: bonfire
-  category: construction-category-misc
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: construction-name-disco-ball
-  id: ADTDiscoBallRecipe
-  graph: ADTDiscoBallGraph
-  startNode: start
-  targetNode: adtdiscoball
-  category: construction-category-furniture
-  description: construction-desc-disco-ball
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: construction-name-roulette
-  id: ADTTableRouletteRecipe
-  graph: ADTTable
-  startNode: start
-  targetNode: adttableroulette
-  category: construction-category-furniture
-  description: construction-desc-roulette
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: construction-name-altar
-  id: AltarConvert
-  graph: AltarsGraph
-  startNode: start
-  targetNode: AltarConvertNode
-  category: construction-category-structures
-  description: construction-desc-altar
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canRotate: false
-  canBuildInImpassable: false
-  conditions:
-  - !type:TileNotBlocked
-
-# Баннеры
-- type: construction
-  id: BannerRedRecipe
-  name: construction-name-banner-red
-  description: construction-desc-banner-red
-  graph: BannerRed
-  startNode: start
-  targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: BannerBlueRecipe
-  name: construction-name-banner-blue
-  description: construction-desc-banner-blue
-  graph: BannerBlue
-  startNode: start
-  targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: BannerGreenRecipe
-  name: construction-name-banner-green
-  description: construction-desc-banner-green
-  graph: BannerGreen
-  startNode: start
-  targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: BannerYellowRecipe
-  name: construction-name-banner-yellow
-  description: construction-desc-banner-yellow
-  graph: BannerYellow
-  startNode: start
-  targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: BannerNanotrasenRecipe
-  name: construction-name-banner-nanotrasen
-  description: construction-desc-banner-nanotrasen
-  graph: BannerNanotrasen
-  startNode: start
-  targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTBannerVulpRecipe
-  name: construction-name-banner-vulp
-  description: construction-desc-banner-vulp
-  graph: ADTBannerVulp
-  startNode: start
-  targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTBannerEmpireKhsiraRecipe
-  name: construction-name-banner-empire-khsira
-  description: construction-desc-banner-empire-khsira
-  graph: ADTBannerEmpireKhsira
-  startNode: start
-  targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTBannerNianRecipe
-  name: construction-name-banner-nian
-  description: construction-desc-banner-nian
-  graph: ADTBannerNian
-  startNode: start
-  targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTBannerUSSPRecipe
-  name: construction-name-banner-ussp
-  description: construction-desc-banner-ussp
-  graph: ADTBannerUSSP
-  startNode: start
-  targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTBannerSlimeRecipe
-  name: construction-name-banner-slime
-  description: construction-desc-banner-slime
-  graph: ADTBannerSlime
-  startNode: start
-  targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTBannerIPCRecipe
-  name: construction-name-banner-ipc
-  description: construction-desc-banner-ipc
-  graph: ADTBannerIPC
-  startNode: start
-  targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTBannerMagicRecipe
-  name: construction-name-banner-magic
-  description: construction-desc-banner-magic
-  graph: ADTBannerMagic
-  startNode: start
-  targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTBannerGreytideRecipe
-  name: construction-name-banner-greytide
-  description: construction-desc-banner-greytide
-  graph: ADTBannerGreytide
-  startNode: start
-  targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTBannerMimeRecipe
-  name: construction-name-banner-mime
-  description: construction-desc-banner-mime
-  graph: ADTBannerMime
-  startNode: start
-  targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTBannerTajaranRecipe
-  name: construction-name-banner-tajaran
-  description: construction-desc-banner-tajaran
-  graph: ADTBannerTajaran
-  startNode: start
-  targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTBannerDionaRecipe
-  name: construction-name-banner-diona
-  description: construction-desc-banner-diona
-  graph: ADTBannerDiona
-  startNode: start
-  targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTBannerDraskRecipe
-  name: construction-name-banner-drask
-  description: construction-desc-banner-drask
-  graph: ADTBannerDrask
-  startNode: start
-  targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTBannerElysiumRecipe
-  name: construction-name-banner-elysium
-  description: construction-desc-banner-elysium
-  graph: ADTBannerElysium
-  startNode: start
-  targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTBannerClownRecipe
-  name: construction-name-banner-clown
-  description: construction-desc-banner-clown
-  graph: ADTBannerClown
-  startNode: start
-  targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTBannerVoxRecipe
-  name: construction-name-banner-vox
-  description: construction-desc-banner-vox
-  graph: ADTBannerVox
-  startNode: start
-  targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTBannerNovakidRecipe
-  name: construction-name-banner-novakid
-  description: construction-desc-banner-novakid
-  graph: ADTBannerNovakid
-  startNode: start
-  targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTBannerRobustRecipe
-  name: construction-name-banner-robust
-  description: construction-desc-banner-robust
-  graph: ADTBannerRobust
-  startNode: start
-  targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: BannerCargoRecipe
-  name: construction-name-banner-cargo
-  description: construction-desc-banner-cargo
-  graph: BannerCargo
-  startNode: start
-  targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: BannerEngineeringRecipe
-  name: construction-name-banner-engineering
-  description: construction-desc-banner-engineering
-  graph: BannerEngineering
-  startNode: start
-  targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: BannerMedicalRecipe
-  name: construction-name-banner-medical
-  description: construction-desc-banner-medical
-  graph: BannerMedical
-  startNode: start
-  targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: BannerScienceRecipe
-  name: construction-name-banner-science
-  description: construction-desc-banner-science
-  graph: BannerScience
-  startNode: start
-  targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: BannerSecurityRecipe
-  name: construction-name-banner-security
-  description: construction-desc-banner-security
-  graph: BannerSecurity
-  startNode: start
-  targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ADTBannerHumanFlagRecipe
-  name: construction-name-banner-human-flag
-  description: construction-desc-banner-human-flag
-  graph: ADTBannerHumanFlag
-  startNode: start
-  targetNode: banner
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-# ADT wallmount flags
-- type: construction
-  id: ADTBlankFlagVerticalRecipe
-  name: construction-name-flag-blank
-  description: construction-desc-flag-blank
-  graph: ADTBlankFlagVerticalGraph
-  startNode: start
-  targetNode: flag
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: true
-  conditions:
-    - !type:WallmountCondition
-
-- type: construction
-  id: ADTNTFlagVerticalRecipe
-  name: construction-name-flag-nanotrasen
-  description: construction-desc-flag-nanotrasen
-  graph: ADTNTFlagVerticalGraph
-  startNode: start
-  targetNode: flag
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: true
-  conditions:
-    - !type:WallmountCondition
-
-- type: construction
-  id: ADTKMTFlagRecipe
-  name: construction-name-flag-kmt
-  description: construction-desc-flag-kmt
-  graph: ADTKMTFlagGraph
-  startNode: start
-  targetNode: flag
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: true
-  conditions:
-    - !type:WallmountCondition
-
-- type: construction
-  id: ADTKMTFlagVerticalRecipe
-  name: construction-name-flag-kmt-vertical
-  description: construction-desc-flag-kmt
-  graph: ADTKMTFlagVerticalGraph
-  startNode: start
-  targetNode: flag
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: true
-  conditions:
-    - !type:WallmountCondition
-
-- type: construction
-  id: ADTElysiumFlagRecipe
-  name: construction-name-flag-elysium
-  description: construction-desc-flag-elysium
-  graph: ADTElysiumFlagGraph
-  startNode: start
-  targetNode: flag
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: true
-  conditions:
-    - !type:WallmountCondition
-
-- type: construction
-  id: ADTElysiumFlagVerticalRecipe
-  name: construction-name-flag-elysium-vertical
-  description: construction-desc-flag-elysium
-  graph: ADTElysiumFlagVerticalGraph
-  startNode: start
-  targetNode: flag
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: true
-  conditions:
-    - !type:WallmountCondition
-
-- type: construction
-  id: ADTTSFFlagRecipe
-  name: construction-name-flag-tsf
-  description: construction-desc-flag-tsf
-  graph: ADTTSFFlagGraph
-  startNode: start
-  targetNode: flag
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: true
-  conditions:
-    - !type:WallmountCondition
-
-- type: construction
-  id: ADTTSFFlagVerticalRecipe
-  name: construction-name-flag-tsf-vertical
-  description: construction-desc-flag-tsf
-  graph: ADTTSFFlagVerticalGraph
-  startNode: start
-  targetNode: flag
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: true
-  conditions:
-    - !type:WallmountCondition
-
-- type: construction
-  id: ADTUSSPFlagRecipe
-  name: construction-name-flag-ussp
-  description: construction-desc-flag-ussp
-  graph: ADTUSSPFlagGraph
-  startNode: start
-  targetNode: flag
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: true
-  conditions:
-    - !type:WallmountCondition
-
-- type: construction
-  id: ADTUSSPFlagVerticalRecipe
-  name: construction-name-flag-ussp-vertical
-  description: construction-desc-flag-ussp
-  graph: ADTUSSPFlagVerticalGraph
-  startNode: start
-  targetNode: flag
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: true
-  conditions:
-    - !type:WallmountCondition
-
-- type: construction
-  id: ADTUSSPFlagVertical2Recipe
-  name: construction-name-flag-ussp-vertical-2
-  description: construction-desc-flag-ussp
-  graph: ADTUSSPFlagVertical2Graph
-  startNode: start
-  targetNode: flag
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: true
-  conditions:
-    - !type:WallmountCondition
-
-- type: construction
-  id: ADTRastamanFlagRecipe
-  name: construction-name-flag-rastaman
-  description: construction-desc-flag-rastaman
-  graph: ADTRastamanFlagGraph
-  startNode: start
-  targetNode: flag
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: true
-  conditions:
-    - !type:WallmountCondition
-
-- type: construction
-  id: ADTRomanFlagRecipe
-  name: construction-name-flag-roman
-  description: construction-desc-flag-roman
-  graph: ADTRomanFlagGraph
-  startNode: start
-  targetNode: flag
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: true
-  conditions:
-    - !type:WallmountCondition
+  - ''

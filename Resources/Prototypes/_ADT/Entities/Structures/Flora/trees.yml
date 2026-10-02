@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: BaseTree
   id: FloraPalmTree01
   name: palm tree
@@ -17,14 +17,12 @@
           Log:
             min: 2
             max: 5
-
 - type: entity
   parent: FloraPalmTree01
   id: FloraPalmTree02
   components:
   - type: Sprite
     state: treepalm02
-
 - type: entity
   parent: FloraPalmTree01
   id: FloraPalmTree03

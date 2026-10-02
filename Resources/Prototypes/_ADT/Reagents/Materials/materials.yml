@@ -1,0 +1,6 @@
+﻿- type: material
+  id: Marble
+  stackEntity: ADTmarble1
+  name: materials-marble
+  icon: { sprite: ADT/Objects/Materials/marble.rsi, state: icon }
+  price: 0.5

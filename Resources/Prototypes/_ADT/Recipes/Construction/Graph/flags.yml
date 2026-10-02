@@ -1,6 +1,5 @@
-﻿
 - type: constructionGraph
-  id: ADTBlankFlagVerticalGraph
+  id: BlankFlagVerticalGraph
   start: start
   graph:
   - node: start
@@ -11,10 +10,10 @@
         amount: 5
         doAfter: 3
   - node: flag
-    entity: ADTBlankFlagVertical
-
+    entity: BlankFlagVertical
+    edges: []
 - type: constructionGraph
-  id: ADTNTFlagVerticalGraph
+  id: NTFlagVerticalGraph
   start: start
   graph:
   - node: start
@@ -25,10 +24,10 @@
         amount: 5
         doAfter: 3
   - node: flag
-    entity: ADTNTFlagVertical
-
+    entity: NTFlagVertical
+    edges: []
 - type: constructionGraph
-  id: ADTKMTFlagGraph
+  id: KMTFlagGraph
   start: start
   graph:
   - node: start
@@ -39,10 +38,10 @@
         amount: 5
         doAfter: 3
   - node: flag
-    entity: ADTKMTFlag
-
+    entity: KMTFlag
+    edges: []
 - type: constructionGraph
-  id: ADTKMTFlagVerticalGraph
+  id: KMTFlagVerticalGraph
   start: start
   graph:
   - node: start
@@ -53,10 +52,10 @@
         amount: 5
         doAfter: 3
   - node: flag
-    entity: ADTKMTFlagVertical
-
+    entity: KMTFlagVertical
+    edges: []
 - type: constructionGraph
-  id: ADTElysiumFlagGraph
+  id: ElysiumFlagGraph
   start: start
   graph:
   - node: start
@@ -67,10 +66,10 @@
         amount: 5
         doAfter: 3
   - node: flag
-    entity: ADTElysiumFlag
-
+    entity: ElysiumFlag
+    edges: []
 - type: constructionGraph
-  id: ADTElysiumFlagVerticalGraph
+  id: ElysiumFlagVerticalGraph
   start: start
   graph:
   - node: start
@@ -81,10 +80,10 @@
         amount: 5
         doAfter: 3
   - node: flag
-    entity: ADTElysiumFlagVertical
-
+    entity: ElysiumFlagVertical
+    edges: []
 - type: constructionGraph
-  id: ADTTSFFlagGraph
+  id: TSFFlagGraph
   start: start
   graph:
   - node: start
@@ -95,10 +94,10 @@
         amount: 5
         doAfter: 3
   - node: flag
-    entity: ADTTSFFlag
-
+    entity: TSFFlag
+    edges: []
 - type: constructionGraph
-  id: ADTTSFFlagVerticalGraph
+  id: TSFFlagVerticalGraph
   start: start
   graph:
   - node: start
@@ -109,10 +108,10 @@
         amount: 5
         doAfter: 3
   - node: flag
-    entity: ADTTSFFlagVertical
-
+    entity: TSFFlagVertical
+    edges: []
 - type: constructionGraph
-  id: ADTUSSPFlagGraph
+  id: USSPFlagGraph
   start: start
   graph:
   - node: start
@@ -123,10 +122,10 @@
         amount: 5
         doAfter: 3
   - node: flag
-    entity: ADTUSSPFlag
-
+    entity: USSPFlag
+    edges: []
 - type: constructionGraph
-  id: ADTUSSPFlagVerticalGraph
+  id: USSPFlagVerticalGraph
   start: start
   graph:
   - node: start
@@ -137,10 +136,10 @@
         amount: 5
         doAfter: 3
   - node: flag
-    entity: ADTUSSPFlagVertical
-
+    entity: USSPFlagVertical
+    edges: []
 - type: constructionGraph
-  id: ADTUSSPFlagVertical2Graph
+  id: USSPFlagVertical2Graph
   start: start
   graph:
   - node: start
@@ -151,10 +150,10 @@
         amount: 5
         doAfter: 3
   - node: flag
-    entity: ADTUSSPFlagVertical2
-
+    entity: USSPFlagVertical2
+    edges: []
 - type: constructionGraph
-  id: ADTRastamanFlagGraph
+  id: RastamanFlagGraph
   start: start
   graph:
   - node: start
@@ -165,10 +164,10 @@
         amount: 5
         doAfter: 3
   - node: flag
-    entity: ADTRastamanFlag
-
+    entity: RastamanFlag
+    edges: []
 - type: constructionGraph
-  id: ADTRomanFlagGraph
+  id: RomanFlagGraph
   start: start
   graph:
   - node: start
@@ -179,4 +178,5 @@
         amount: 5
         doAfter: 3
   - node: flag
-    entity: ADTRomanFlag
+    entity: RomanFlag
+    edges: []

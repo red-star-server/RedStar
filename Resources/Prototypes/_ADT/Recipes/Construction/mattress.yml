@@ -1,5 +1,5 @@
 - type: construction
-  id: ADTMattressRecipe
+  id: MattressRecipe
   name: construction-name-mattress
   description: construction-desc-mattress
   graph: adt_mattress
@@ -10,10 +10,9 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
-  id: ADTMattressCleanRecipe
+  id: MattressCleanRecipe
   name: construction-name-mattress-clean
   description: construction-desc-mattress-clean
   graph: adt_mattress
@@ -24,10 +23,9 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
-  id: ADTMattressCleanFullRecipe
+  id: MattressCleanFullRecipe
   name: construction-name-mattress-clean-full
   description: construction-desc-mattress-clean-full
   graph: adt_mattress
@@ -38,10 +36,9 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
-
+  - ''
 - type: construction
-  id: ADTMattressFullRecipe
+  id: MattressFullRecipe
   name: construction-name-mattress-full
   description: construction-desc-mattress-full
   graph: adt_mattress
@@ -52,4 +49,4 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
+  - ''

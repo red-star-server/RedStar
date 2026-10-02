@@ -1,8 +1,8 @@
-﻿- type: construction
-  id: ADTBlankFlagVerticalRecipe
+- type: construction
+  id: BlankFlagVerticalRecipe
   name: construction-name-flag-blank
   description: construction-desc-flag-blank
-  graph: ADTBlankFlagVerticalGraph
+  graph: BlankFlagVerticalGraph
   startNode: start
   targetNode: flag
   category: construction-category-furniture
@@ -10,13 +10,12 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: true
   conditions:
-  - !type:WallmountCondition
-
+  - ''
 - type: construction
-  id: ADTNTFlagVerticalRecipe
+  id: NTFlagVerticalRecipe
   name: construction-name-flag-nanotrasen
   description: construction-desc-flag-nanotrasen
-  graph: ADTNTFlagVerticalGraph
+  graph: NTFlagVerticalGraph
   startNode: start
   targetNode: flag
   category: construction-category-furniture
@@ -24,13 +23,12 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: true
   conditions:
-  - !type:WallmountCondition
-
+  - ''
 - type: construction
-  id: ADTKMTFlagRecipe
+  id: KMTFlagRecipe
   name: construction-name-flag-kmt
   description: construction-desc-flag-kmt
-  graph: ADTKMTFlagGraph
+  graph: KMTFlagGraph
   startNode: start
   targetNode: flag
   category: construction-category-furniture
@@ -38,13 +36,12 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: true
   conditions:
-  - !type:WallmountCondition
-
+  - ''
 - type: construction
-  id: ADTKMTFlagVerticalRecipe
+  id: KMTFlagVerticalRecipe
   name: construction-name-flag-kmt-vertical
   description: construction-desc-flag-kmt
-  graph: ADTKMTFlagVerticalGraph
+  graph: KMTFlagVerticalGraph
   startNode: start
   targetNode: flag
   category: construction-category-furniture
@@ -52,13 +49,12 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: true
   conditions:
-  - !type:WallmountCondition
-
+  - ''
 - type: construction
-  id: ADTElysiumFlagRecipe
+  id: ElysiumFlagRecipe
   name: construction-name-flag-elysium
   description: construction-desc-flag-elysium
-  graph: ADTElysiumFlagGraph
+  graph: ElysiumFlagGraph
   startNode: start
   targetNode: flag
   category: construction-category-furniture
@@ -66,13 +62,12 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: true
   conditions:
-  - !type:WallmountCondition
-
+  - ''
 - type: construction
-  id: ADTElysiumFlagVerticalRecipe
+  id: ElysiumFlagVerticalRecipe
   name: construction-name-flag-elysium-vertical
   description: construction-desc-flag-elysium
-  graph: ADTElysiumFlagVerticalGraph
+  graph: ElysiumFlagVerticalGraph
   startNode: start
   targetNode: flag
   category: construction-category-furniture
@@ -80,13 +75,12 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: true
   conditions:
-  - !type:WallmountCondition
-
+  - ''
 - type: construction
-  id: ADTTSFFlagRecipe
+  id: TSFFlagRecipe
   name: construction-name-flag-tsf
   description: construction-desc-flag-tsf
-  graph: ADTTSFFlagGraph
+  graph: TSFFlagGraph
   startNode: start
   targetNode: flag
   category: construction-category-furniture
@@ -94,13 +88,12 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: true
   conditions:
-  - !type:WallmountCondition
-
+  - ''
 - type: construction
-  id: ADTTSFFlagVerticalRecipe
+  id: TSFFlagVerticalRecipe
   name: construction-name-flag-tsf-vertical
   description: construction-desc-flag-tsf
-  graph: ADTTSFFlagVerticalGraph
+  graph: TSFFlagVerticalGraph
   startNode: start
   targetNode: flag
   category: construction-category-furniture
@@ -108,13 +101,12 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: true
   conditions:
-  - !type:WallmountCondition
-
+  - ''
 - type: construction
-  id: ADTUSSPFlagRecipe
+  id: USSPFlagRecipe
   name: construction-name-flag-ussp
   description: construction-desc-flag-ussp
-  graph: ADTUSSPFlagGraph
+  graph: USSPFlagGraph
   startNode: start
   targetNode: flag
   category: construction-category-furniture
@@ -122,13 +114,12 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: true
   conditions:
-  - !type:WallmountCondition
-
+  - ''
 - type: construction
-  id: ADTUSSPFlagVerticalRecipe
+  id: USSPFlagVerticalRecipe
   name: construction-name-flag-ussp-vertical
   description: construction-desc-flag-ussp
-  graph: ADTUSSPFlagVerticalGraph
+  graph: USSPFlagVerticalGraph
   startNode: start
   targetNode: flag
   category: construction-category-furniture
@@ -136,13 +127,12 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: true
   conditions:
-  - !type:WallmountCondition
-
+  - ''
 - type: construction
-  id: ADTUSSPFlagVertical2Recipe
+  id: USSPFlagVertical2Recipe
   name: construction-name-flag-ussp-vertical-2
   description: construction-desc-flag-ussp
-  graph: ADTUSSPFlagVertical2Graph
+  graph: USSPFlagVertical2Graph
   startNode: start
   targetNode: flag
   category: construction-category-furniture
@@ -150,13 +140,12 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: true
   conditions:
-  - !type:WallmountCondition
-
+  - ''
 - type: construction
-  id: ADTRastamanFlagRecipe
+  id: RastamanFlagRecipe
   name: construction-name-flag-rastaman
   description: construction-desc-flag-rastaman
-  graph: ADTRastamanFlagGraph
+  graph: RastamanFlagGraph
   startNode: start
   targetNode: flag
   category: construction-category-furniture
@@ -164,13 +153,12 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: true
   conditions:
-  - !type:WallmountCondition
-
+  - ''
 - type: construction
-  id: ADTRomanFlagRecipe
+  id: RomanFlagRecipe
   name: construction-name-flag-roman
   description: construction-desc-flag-roman
-  graph: ADTRomanFlagGraph
+  graph: RomanFlagGraph
   startNode: start
   targetNode: flag
   category: construction-category-furniture
@@ -178,4 +166,4 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: true
   conditions:
-  - !type:WallmountCondition
+  - ''
