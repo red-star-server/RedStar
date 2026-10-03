@@ -9,17 +9,17 @@
     - to: steelDarkSingleStairs
       steps:
       - material: Steel
-        amount: 2
+        amount: 4
         doAfter: 1
     - to: steelSingleStairs
       steps:
       - material: Steel
-        amount: 2
+        amount: 4
         doAfter: 1
     - to: steelWhiteSingleStairs
       steps:
       - material: Steel
-        amount: 2
+        amount: 4
         doAfter: 1
     - to: woodBlackSingleStairs
       steps:
