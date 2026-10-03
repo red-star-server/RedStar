@@ -1,36 +1,24 @@
-﻿# Chapel (Shrine) Pew
+# Chapel (Shrine) Pew
 
 - type: entity
   name: Pew Base
   id: PewBase
   abstract: true
-  parent: ChairBase
+  parent: [ ChairBase, StructureHealthFurniture ]
   components:
   - type: Damageable
-    damageModifierSet: Wood
+    damageModifierSet: WoodMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
+    - trigger: !type:DamageTrigger
+        damage: 40
       behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-    - trigger:
-        !type:DamageTrigger
-        damage: 25
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: WoodDestroy
       - !type:SpawnEntitiesBehavior
         spawn:
-          MaterialWoodPlank:
+          MaterialWoodPlank1:
             min: 1
             max: 1
   - type: Tag
@@ -80,7 +68,6 @@
 
 #region Bench White
 - type: entity
-  name: comfortable bench
   id: BenchWhiteComfy
   parent: BenchComfy
   components:
@@ -89,97 +76,61 @@
     node: whiteComfBench
 
 - type: entity
-  name: comfortable bench
   suffix: Corner. White
   id: BenchComfyCorner
-  parent: SeatBase
-  description: A bench with an extremely comfortable backrest.
+  parent: BenchComfy
   components:
-  - type: Transform
-    anchored: true
-  - type: Rotatable
   - type: Sprite
     sprite: _Starlight/Structures/Furniture/Benches/bench_corner.rsi
     layers:
     - state: base
       color: "#767e82"
     - state: cover
-  - type: Physics
-    bodyType: Static
-  - type: StaticPrice
-    price: 35
   - type: Construction
     graph: BenchSL
     node: whiteComfBenchCorner
 
 - type: entity
-  name: comfortable bench
   suffix: End Left. White
   id: BenchComfyEndLeft
-  parent: SeatBase
-  description: A bench with an extremely comfortable backrest.
+  parent: BenchComfy
   components:
-  - type: Transform
-    anchored: true
-  - type: Rotatable
   - type: Sprite
     sprite: _Starlight/Structures/Furniture/Benches/bench_end_left.rsi
     layers:
     - state: base
       color: "#767e82"
     - state: cover
-  - type: Physics
-    bodyType: Static
-  - type: StaticPrice
-    price: 35
   - type: Construction
     graph: BenchSL
     node: whiteComfBenchLeft
 
 - type: entity
-  name: comfortable bench
   suffix: End Right. White
   id: BenchComfyEndRight
-  parent: SeatBase
-  description: A bench with an extremely comfortable backrest.
+  parent: BenchComfy
   components:
-  - type: Transform
-    anchored: true
-  - type: Rotatable
   - type: Sprite
     sprite: _Starlight/Structures/Furniture/Benches/bench_end_right.rsi
     layers:
     - state: base
       color: "#767e82"
     - state: cover
-  - type: Physics
-    bodyType: Static
-  - type: StaticPrice
-    price: 35
   - type: Construction
     graph: BenchSL
     node: whiteComfBenchRight
 
 - type: entity
-  name: comfortable bench
   suffix: Middle. White
   id: BenchComfyMiddle
-  parent: SeatBase
-  description: A bench with an extremely comfortable backrest.
+  parent: BenchComfy
   components:
-  - type: Transform
-    anchored: true
-  - type: Rotatable
   - type: Sprite
     sprite: _Starlight/Structures/Furniture/Benches/bench_middle.rsi
     layers:
     - state: base
       color: "#767e82"
     - state: cover
-  - type: Physics
-    bodyType: Static
-  - type: StaticPrice
-    price: 35
   - type: Construction
     graph: BenchSL
     node: whiteComfBenchMid

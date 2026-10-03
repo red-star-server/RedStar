@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "State based copyright",
+  "copyright": "Originals taken from tgstation at commit https://github.com/tgstation/tgstation/blob/HEAD/icons/map_icons/objects.dmi, edits by Conflee",
   "size": {
     "x": 32,
     "y": 32
@@ -9,18 +9,15 @@
   "states": [
     {
       "name": "base",
-      "directions": 4,
-      "copyright": "Originals taken from tgstation at commit https://github.com/tgstation/tgstation/blob/HEAD/icons/map_icons/objects.dmi, edits by Conflee"
+      "directions": 4
     },
     {
       "name": "cover",
-      "directions": 4,
-      "copyright": "Originals taken from tgstation at commit https://github.com/tgstation/tgstation/blob/HEAD/icons/map_icons/objects.dmi, edits by Conflee"
+      "directions": 4
     },
     {
       "name": "full",
-      "directions": 4,
-      "copyright": "Originals taken from tgstation at commit https://github.com/tgstation/tgstation/blob/HEAD/icons/map_icons/objects.dmi, edits by Conflee"
+      "directions": 4
     }
   ]
 }

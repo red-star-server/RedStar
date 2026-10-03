@@ -1,7 +1,8 @@
 - type: entity
   id: TableCounterRetroSteel
-  parent: TableCounterMetal
+  parent: [ CounterBase, StructureHealthFurniture ]
   name: retro steel counter
+  description: Looks like a good place to put a drink down.
   components:
   - type: Sprite
     sprite: _Starlight/Structures/Furniture/Tables/steel_counter.rsi
@@ -9,13 +10,30 @@
     sprite: _Starlight/Structures/Furniture/Tables/steel_counter.rsi
   - type: IconSmooth
     key: counterretrosteel
+  - type: Damageable
+    damageModifierSet: SteelMod
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 40
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -6
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 0
+            max: 1
   - type: Construction
     graph: CounterRetroSteel
     node: CounterRetroSteel
 
 - type: entity
   id: TableCounterRetroWood
-  parent: TableCounterWood
+  parent: [ CounterBase, StructureHealthFurniture ]
   name: retro wood counter
   description: Looks like a good place to put a drink down.
   components:
@@ -25,13 +43,33 @@
     sprite: _Starlight/Structures/Furniture/Tables/wood_counter.rsi
   - type: IconSmooth
     key: counterretrowood
+  - type: Damageable
+    damageModifierSet: WoodMod
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 40
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+          params:
+            volume: -4
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 0
+            max: 1
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepWood
   - type: Construction
     graph: CounterRetroWood
     node: CounterRetroWood
 
 - type: entity
   id: TableCounterRetroKitchen
-  parent: TableCounterMetal
+  parent: TableCounterRetroSteel
   name: retro kitchen counter
   components:
   - type: Sprite
@@ -46,7 +84,7 @@
 
 - type: entity
   id: TableCounterRetroSteelWood
-  parent: TableCounterMetal
+  parent: TableCounterRetroSteel
   name: retro steel and wood counter
   components:
   - type: Sprite
@@ -61,7 +99,7 @@
 
 - type: entity
   id: TableCounterRetroWhiteOrange
-  parent: TableCounterMetal
+  parent: TableCounterRetroSteel
   name: retro white and orange counter
   components:
   - type: Sprite
@@ -76,7 +114,7 @@
 
 - type: entity
   id: TableCounterRetroWhiteTeal
-  parent: TableCounterMetal
+  parent: TableCounterRetroSteel
   name: retro white and teal counter
   components:
   - type: Sprite
@@ -91,7 +129,7 @@
 
 - type: entity
   id: TableCounterRetroDiner
-  parent: TableCounterMetal
+  parent: TableCounterRetroSteel
   name: retro diner counter
   components:
   - type: Sprite
