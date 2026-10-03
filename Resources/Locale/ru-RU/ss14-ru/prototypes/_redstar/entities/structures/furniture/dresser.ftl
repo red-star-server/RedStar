@@ -1,0 +1,12 @@
+ent-DresserBox = { ent-Dresser }
+    .desc = { ent-Dresser.desc }
+    .suffix = Пустой
+ent-DresserBoxFilled = { ent-DresserBox }
+    .desc = { ent-DresserBox.desc }
+    .suffix = Заполненный
+ent-FancyWardrobe = гардероб
+    .desc = Большой красивый гардероб. В довольно хорошем состоянии.
+    .suffix = Пустой
+ent-FancyWardrobeFilled = { ent-FancyWardrobe }
+    .desc = { ent-FancyWardrobe.desc }
+    .suffix = Заполненный
