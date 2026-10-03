@@ -717,6 +717,7 @@
   - QuartermasterTurtleneck
   - QuartermasterTurtleneckSkirt
   - QuartermasterFormalSuit
+  - QuartermasterFormalDress
 
 - type: loadoutGroup
   id: QuartermasterNeck

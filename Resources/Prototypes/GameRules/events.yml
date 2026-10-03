@@ -115,6 +115,8 @@
     weight: 8
     duration: 35
   - type: AnomalySpawnRule
+  - type: DynamicRuleCost
+    cost: 10
 
 - type: entity
   id: BluespaceArtifact
@@ -131,6 +133,8 @@
     weight: 8
     duration: 35
   - type: BluespaceArtifactRule
+  - type: DynamicRuleCost
+    cost: 10
 
 - type: entity
   id: BluespaceLocker
@@ -142,6 +146,8 @@
     earliestStart: 1
     duration: 1
   - type: BluespaceLockerRule
+  - type: DynamicRuleCost
+    cost: 10
 
 - type: entity
   id: BreakerFlip
@@ -157,7 +163,8 @@
     blacklist:
       components:
         - ProtectedGrid
-
+  - type: DynamicRuleCost
+    cost: 10
 
 - type: entity
   id: BureaucraticError
@@ -175,6 +182,8 @@
     - MedicalIntern
     - SecurityCadet
     - TechnicalAssistant
+  - type: DynamicRuleCost
+    cost: 10
 
 - type: entity
   id: ClericalError
@@ -186,6 +195,8 @@
     weight: 5
     duration: 1
   - type: ClericalErrorRule
+  - type: DynamicRuleCost
+    cost: 15
 
 - type: entity
   parent: BaseGameRule
@@ -198,6 +209,8 @@
     minimumPlayers: 10
   - type: RandomEntityStorageSpawnRule
     prototype: MobSkeletonCloset
+  - type: DynamicRuleCost
+    cost: 50
 
 - type: entity
   parent: BaseAntagGhostRoleRule
@@ -315,7 +328,7 @@
     - !type:FixedAntagCount
       proto: ParadoxClone
   - type: DynamicRuleCost
-    cost: 50
+    cost: 75
 
 - type: entity
   parent: BaseGameRule
@@ -329,6 +342,8 @@
     minimumPlayers: 20
   - type: RandomSpawnRule
     prototype: MobRevenant
+  - type: DynamicRuleCost
+    cost: 75
 
 - type: entity
   parent: [ BaseAntagGhostRoleRule, BaseWizardRule ]
@@ -365,6 +380,8 @@
     endAudio:
       path: /Audio/_Corvax/Announcements/gasleak_end.ogg # RS14
   - type: GasLeakRule
+  - type: DynamicRuleCost
+    cost: 25
 
 - type: entity
   id: KudzuGrowth
@@ -376,6 +393,8 @@
     weight: 7
     duration: 240
   - type: KudzuGrowthRule
+  - type: DynamicRuleCost
+    cost: 40 #this shit can get insane
 
 - type: entity
   id: PowerGridCheck
@@ -392,6 +411,8 @@
     duration: 50
     maxDuration: 100
   - type: PowerGridCheckRule
+  - type: DynamicRuleCost
+    cost: 20
 
 - type: entity
   parent: BaseGameRule
@@ -420,6 +441,8 @@
     extraCount: 2
     lightBreakChancePerSecond: 0.0003
     doorToggleChancePerSecond: 0.001
+  - type: DynamicRuleCost
+    cost: 10
 
 - type: entity
   id: VentClog
@@ -434,6 +457,8 @@
     weight: 5
     duration: 60
   - type: VentClogRule
+  - type: DynamicRuleCost
+    cost: 15
 
 # Critters
 
@@ -457,6 +482,8 @@
       - id: MobAdultSlimesBlueAngry
       - id: MobAdultSlimesGreenAngry
       - id: MobAdultSlimesYellowAngry
+  - type: DynamicRuleCost
+    cost: 30
 
 - type: entity
   id: SnakeSpawnHorde
@@ -478,6 +505,8 @@
       - id: MobPurpleSnake
       - id: MobSmallPurpleSnake
       - id: MobCobraSpace
+  - type: DynamicRuleCost
+    cost: 30
 
 - type: entity
   id: SpiderSpawnHorde
@@ -501,6 +530,8 @@
       - id: MobGiantSpiderGuardAngry
       - id: MobGiantSpiderMidwifeAngry
       - id: MobGiantSpiderNurseAngry
+  - type: DynamicRuleCost
+    cost: 30
 
 - type: entity
   id: SpiderClownSpawnHorde
@@ -520,6 +551,8 @@
       rolls: 4, 8
       children:
       - id: MobGiantSpiderClownAngry
+  - type: DynamicRuleCost
+    cost: 30
 
 - type: entity
   id: ZombieOutbreak
@@ -586,6 +619,8 @@
       range:
         min: 1
         max: 2
+  - type: DynamicRuleCost
+    cost: 50
 
 - type: entity
   id: MassHallucinations
@@ -602,6 +637,8 @@
     maxSoundDistance: 7
     sounds:
       collection: Paracusia
+  - type: DynamicRuleCost
+    cost: 10
 
 - type: entity
   parent: BaseGameRule
@@ -614,6 +651,8 @@
     startAudio:
       path: /Audio/_Corvax/Announcements/i-storm1.ogg # RS14
   - type: IonStormRule
+  - type: DynamicRuleCost
+    cost: 25
 
 - type: entity
   id: GreytideVirus
@@ -635,6 +674,8 @@
     - Service
     blacklist:
     - External # don't space everything
+  - type: DynamicRuleCost
+    cost: 25
 
 - type: entity
   parent: BaseGameRule
@@ -662,6 +703,8 @@
     occursDuringRoundEnd: false
   - type: SpaceSpawnRule
     spawnDistance: 0
+  - type: DynamicRuleCost
+    cost: 45
 
 - type: entity
   parent: BaseDerelictCyborgSpawn
