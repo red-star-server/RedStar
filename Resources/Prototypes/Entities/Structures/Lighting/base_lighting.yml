@@ -31,10 +31,10 @@
       state: glow
       shader: unshaded
   - type: PointLight
-    color: "#FFE4CE" # 5000K color temp
+    color: "#FFD6B3" # 5000K color temp # RS14
     energy: 0.8
     radius: 10
-    softness: 1
+    softness: 1.5 # RS14
 #    offset: "0, 0.25"
   - type: RCDDeconstructable
     cost: 4
@@ -272,7 +272,7 @@
       color: "#FFD1A3"
       energy: 1.0
       radius: 6
-      softness: 1.1
+      softness: 1.5 # RS14
       enabled: true
     - type: Fixtures
       fixtures:

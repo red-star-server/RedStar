@@ -103,7 +103,7 @@
     color: "#FFD1A3" # 4000K color temp
     lightEnergy: 1.0
     lightRadius: 6
-    lightSoftness: 1.1
+    lightSoftness: 1.5 # RS14
     shortName: comp-light-bulb-incandescent
   - type: Tag
     tags:
@@ -177,7 +177,7 @@
     color: "#FFD1A3" # 4000K color temp
     lightEnergy: 0.3 # old incandescents just arent as bright
     lightRadius: 6
-    lightSoftness: 1.1
+    lightSoftness: 1.5 # RS14
     shortName: comp-light-bulb-old
 
 - type: entity
@@ -219,10 +219,10 @@
   description: A light fixture.
   components:
   - type: LightBulb
-    color: "#FFE4CE" # 5000K color temp
+    color: "#FFD6B3" # 5000K color temp # RS14
     lightEnergy: 0.8
     lightRadius: 10
-    lightSoftness: 1
+    lightSoftness: 1.5 # RS14
     PowerUse: 25
     shortName: comp-light-bulb-fluorescent
 
