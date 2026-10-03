@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/1516a728931b4985c1e86f0c5995a5aa1554a1ad and modified by Swept and potato1234x",
+  "copyright": "Taken from TauCetiClassic at https://github.com/TauCetiStation/TauCetiClassic/commit/5a1be762e81c5a85a0982e821ce3dbbf9258302f and modified by Potato1234x (Github) for SS14, resprited by @mishutka09 (discord:1152277579206774854)",
   "size": {
     "x": 32,
     "y": 32
@@ -11,9 +11,12 @@
       "name": "normal-unshaded",
       "delays": [
         [
-          2.5,
-          0.05,
-          3.4
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
         ]
       ]
     },
@@ -24,9 +27,25 @@
       "name": "deny-unshaded",
       "delays": [
         [
-          0.1,
-          0.1,
-          0.1
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "eject-unshaded",
+      "delays": [
+        [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
         ]
       ]
     },
@@ -35,18 +54,6 @@
     },
     {
       "name": "panel"
-    },
-    {
-      "name": "eject-unshaded",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.8,
-          0.1,
-          0.1
-        ]
-      ]
     }
   ]
 }

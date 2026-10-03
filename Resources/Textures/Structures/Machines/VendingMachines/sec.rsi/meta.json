@@ -1,20 +1,25 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/1516a728931b4985c1e86f0c5995a5aa1554a1ad and modified by Swept",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/1516a728931b4985c1e86f0c5995a5aa1554a1ad and modified by Swept, resprited by @mishutka09 (discord:1152277579206774854), Color fix by ReArtInt",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "normal-unshaded",
+      "name": "broken"
+    },
+    {
+      "name": "deny-unshaded",
       "delays": [
         [
-          2.5,
-          0.05,
-          3.4,
-          0.05
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
         ]
       ]
     },
@@ -22,25 +27,27 @@
       "name": "eject-unshaded",
       "delays": [
         [
-          0.1,
-          0.4,
-          0.2,
-          0.4,
-          0.1
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
         ]
       ]
     },
     {
-      "name": "deny-unshaded",
+      "name": "normal-unshaded",
       "delays": [
         [
-          0.5,
-          0.1
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
         ]
       ]
-    },
-    {
-      "name": "broken"
     },
     {
       "name": "off"

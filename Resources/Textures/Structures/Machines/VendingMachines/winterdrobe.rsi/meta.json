@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Sprited by MrGreen06#0618 (discord)",
+  "copyright": "Sprited by @mishutka09 (discord:1152277579206774854)",
   "size": {
     "x": 32,
     "y": 32
@@ -11,14 +11,12 @@
       "name": "normal-unshaded",
       "delays": [
         [
-          3,
-          3,
-          3,
-          3,
-          3,
-          3,
-          3,
-          3
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
         ]
       ]
     },
@@ -26,8 +24,12 @@
       "name": "deny-unshaded",
       "delays": [
         [
-          1,
-          0.1
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
         ]
       ]
     },
