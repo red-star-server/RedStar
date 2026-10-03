@@ -137,21 +137,6 @@
 
 #region Bench Red
 - type: entity
-  id: BenchRedComfy
-  suffix: Solo. Red
-  parent: BenchComfy
-  components:
-  - type: Sprite
-    layers:
-    - state: bench_solo_base
-      color: "#767e82"
-    - state: bench_solo_cover
-      color: "#8c4141"
-  - type: Construction
-    graph: Seat
-    node: redComfBench
-
-- type: entity
   id: BenchRedComfyCorner
   suffix: Corner. Red
   parent: BenchComfy
@@ -216,21 +201,6 @@
     node: redComfBenchMid
 
 #region Bench Blue
-- type: entity
-  id: BenchBlueComfy
-  suffix: Solo. Blue
-  parent: BenchComfy
-  components:
-  - type: Sprite
-    layers:
-    - state: bench_solo_base
-      color: "#767e82"
-    - state: bench_solo_cover
-      color: "#334e6d"
-  - type: Construction
-    graph: Seat
-    node: blueComfBench
-
 - type: entity
   id: BenchBlueComfyCorner
   suffix: Corner. Blue
