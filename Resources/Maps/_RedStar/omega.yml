@@ -1436,7 +1436,7 @@ entities:
     - type: GasTileOverlay
     - type: RadiationGridResistance
     - type: BecomesStation
-      id: Cluster
+      id: Omega
     - type: SpreaderGrid
     - type: GridPathfinding
     - type: ImplicitRoof
