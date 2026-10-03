@@ -55,7 +55,7 @@
     name: seeds-wheat-name
     packetPrototype: WheatSeeds
     productPrototypes: [ WheatBushel ]
-    mutationPrototypes: [ MeatWheatPlants ]
+    mutations: [{ target: AgentgrainPlants, chance: 0.1 }] # RS14
   - type: Plant
     lifespan: 25
     maturation: 6
@@ -149,7 +149,7 @@
     name: seeds-banana-name
     packetPrototype: BananaSeeds
     productPrototypes: [ FoodBanana ]
-    mutationPrototypes: [ MimanaPlants ]
+    mutations: [{ target: MimanaPlants, chance: 0.25 }] # RS14
   - type: Plant
     lifespan: 50
     maturation: 6
@@ -182,6 +182,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/mimana.rsi
   - type: PlantData
+    mutations: [{ target: MonkananaPlants, chance: 0.12 }] # RS14
     name: seeds-mimana-name
     packetPrototype: MimanaSeeds
     productPrototypes: [ FoodMimana ]
@@ -256,7 +257,7 @@
     name: seeds-laughin-pea-name
     packetPrototype: LaughinPeaSeeds
     productPrototypes: [ FoodLaughinPeaPod ]
-    mutationPrototypes: [ WorldPeaPlants ]
+    mutations: [{ target: WorldPeaPlants, chance: 0.12 }] # RS14
   - type: Plant
     lifespan: 25
     growthStages: 3
@@ -296,7 +297,11 @@
     name: seeds-lemon-name
     packetPrototype: LemonSeeds
     productPrototypes: [ FoodLemon ]
-    mutationPrototypes: [ LemoonPlants, LimePlants, OrangePlants ]
+    mutations: # RS14
+    - target: LimePlants
+      chance: 0.25
+    - target: LemoPlants
+      chance: 0.1
   - type: Plant
     lifespan: 55
     maturation: 6
@@ -325,6 +330,12 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/lemoon.rsi
   - type: PlantData
+    mutations: # RS14
+    - target: ExtradimensionalOrangePlants
+      chance: 0.03
+      requirements:
+        minPotency: 75
+        minGeneticInstability: 50
     name: seeds-lemoon-name
     packetPrototype: LemoonSeeds
     productPrototypes: [ FoodLemoon ]
@@ -359,7 +370,7 @@
     name: seeds-lime-name
     packetPrototype: LimeSeeds
     productPrototypes: [ FoodLime ]
-    mutationPrototypes: [ OrangePlants, LemonPlants ]
+    mutations: [{ target: OrangePlants, chance: 0.12 }] # RS14
   - type: Plant
     lifespan: 55
     maturation: 6
@@ -391,7 +402,7 @@
     name: seeds-orange-name
     packetPrototype: OrangeSeeds
     productPrototypes: [ FoodOrange ]
-    mutationPrototypes: [ ExtradimensionalOrangePlants, LemonPlants, LimePlants ]
+    mutations: [{ target: LemoonPlants, chance: 0.07 }] # RS14
   - type: Plant
     lifespan: 55
     maturation: 6
@@ -526,7 +537,7 @@
     name: seeds-sugarcane-name
     packetPrototype: SugarcaneSeeds
     productPrototypes: [ Sugarcane ]
-    mutationPrototypes: [ PapercanePlants ]
+    mutations: [{ target: PapercanePlants, chance: 0.2 }] # RS14
   - type: Plant
     lifespan: 60
     maturation: 6
@@ -617,7 +628,7 @@
     name: seeds-towercap-name
     packetPrototype: TowercapSeeds
     productPrototypes: [ Log ]
-    mutationPrototypes: [ SteelcapPlants ]
+    mutations: [{ target: SteelcapPlants, chance: 0.25 }] # RS14
   - type: Plant
     lifespan: 80
     maturation: 15
@@ -642,6 +653,12 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/steelcap.rsi
   - type: PlantData
+    mutations: # RS14
+    - target: PlaststeelcapPlants
+      chance: 0.04
+      requirements:
+        minPotency: 70
+        minGeneticInstability: 50
     noun: seeds-noun-spores
     name: seeds-steelcap-name
     packetPrototype: SteelcapSeeds
@@ -673,7 +690,11 @@
     name: seeds-tomato-name
     packetPrototype: TomatoSeeds
     productPrototypes: [ FoodTomato ]
-    mutationPrototypes: [ BlueTomatoPlants, BloodTomatoPlants ]
+    mutations: # RS14
+    - target: BlueTomatoPlants
+      chance: 0.25
+    - target: BloodTomatoPlants
+      chance: 0.1
   - type: Plant
     lifespan: 25
     maturation: 8
@@ -712,6 +733,17 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/blue_tomato.rsi
   - type: PlantData
+    mutations: # RS14
+    - target: BluespaceTomatoPlants
+      chance: 0.05
+      requirements:
+        minPotency: 70
+        reagents:
+        - id: UnstableMutagen
+          minAmount: 5
+        environment:
+          minTemperature: 285
+          maxTemperature: 310
     name: seeds-bluetomato-name
     packetPrototype: BlueTomatoSeeds
     productPrototypes: [ FoodBlueTomato ]
@@ -756,7 +788,11 @@
     name: seeds-bloodtomato-name
     packetPrototype: BloodTomatoSeeds
     productPrototypes: [ FoodBloodTomato ]
-    mutationPrototypes: [ KillerTomatoPlants ]
+    mutations: # RS14
+    - target: KisserTomatoPlants
+      chance: 0.05
+    - target: KisserTomatoFakePlants
+      chance: 0.03
   - type: Plant
     lifespan: 60
     maturation: 8
@@ -834,7 +870,7 @@
     name: seeds-eggplant-name
     packetPrototype: EggplantSeeds
     productPrototypes: [ FoodEggplant ]
-    mutationPrototypes: [ EggyPlants ]
+    mutations: [{ target: EggyPlants, chance: 0.2 }] # RS14
   - type: Plant
     lifespan: 25
     maturation: 6
@@ -934,7 +970,11 @@
     name: seeds-apple-name
     packetPrototype: AppleSeeds
     productPrototypes: [ FoodApple ]
-    mutationPrototypes: [ GoldenApplePlants ]
+    mutations: # RS14
+    - target: GoldenApplePlants
+      chance: 0.2
+    - target: EvilApplePlants
+      chance: 0.1
   - type: Plant
     lifespan: 55
     maturation: 6
@@ -963,6 +1003,15 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/golden_apple.rsi
   - type: PlantData
+    mutations: # RS14
+    - target: SpesosPlants
+      chance: 0.03
+      requirements:
+        minPotency: 75
+        minGeneticInstability: 55
+        reagents:
+        - id: UnstableMutagen
+          minAmount: 5
     name: seeds-goldenapple-name
     packetPrototype: GoldenAppleSeeds
     productPrototypes: [ FoodGoldenApple ]
@@ -1000,6 +1049,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/corn.rsi
   - type: PlantData
+    mutations: [{ target: SnapcornPlants, chance: 0.08 }] # RS14
     name: seeds-corn-name
     packetPrototype: CornSeeds
     productPrototypes: [ FoodCorn ]
@@ -1038,7 +1088,11 @@
     name: seeds-onion-name
     packetPrototype: OnionSeeds
     productPrototypes: [ FoodOnion ]
-    mutationPrototypes: [ OnionRedPlants, BloonionPlants ]
+    mutations: # RS14
+    - target: OnionRedPlants
+      chance: 0.2
+    - target: BloonionPlants
+      chance: 0.08
   - type: Plant
     lifespan: 25
     maturation: 10
@@ -1119,6 +1173,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/chanterelle.rsi
   - type: PlantData
+    mutations: [{ target: FlyAmanitaPlants, chance: 0.2 }] # RS14
     noun: seeds-noun-spores
     name: seeds-chanterelle-name
     packetPrototype: ChanterelleSeeds
@@ -1187,7 +1242,7 @@
     name: seeds-cannabis-name
     packetPrototype: CannabisSeeds
     productPrototypes: [ LeavesCannabis ]
-    mutationPrototypes: [ RainbowCannabisPlants ]
+    mutations: [{ target: GreenMarijuanaPlants, chance: 0.25 }] # RS14
   - type: Plant
     lifespan: 75
     maturation: 8
@@ -1218,6 +1273,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
   - type: PlantData
+    mutations: [{ target: CannabisVitaPlants, chance: 0.06 }] # RS14
     name: seeds-rainbow-cannabis-name
     packetPrototype: RainbowCannabisSeeds
     productPrototypes: [ LeavesCannabisRainbow ]
@@ -1301,7 +1357,7 @@
     name: seeds-nettle-name
     packetPrototype: NettleSeeds
     productPrototypes: [ Nettle ]
-    mutationPrototypes: [ DeathNettlePlants ]
+    mutations: [{ target: DeathNettlePlants, chance: 0.04 }] # RS14
   - type: Plant
     lifespan: 25
     maturation: 8
@@ -1371,7 +1427,7 @@
     name: seeds-chili-name
     packetPrototype: ChiliSeeds
     productPrototypes: [ FoodChiliPepper ]
-    mutationPrototypes: [ ChillyPlants ]
+    mutations: [{ target: ChillyPlants, chance: 0.2 }] # RS14
   - type: Plant
     lifespan: 25
     maturation: 6
@@ -1407,6 +1463,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/chilly.rsi
   - type: PlantData
+    mutations: [{ target: GhostPepperPlants, chance: 0.12 }] # RS14
     name: seeds-chilly-name
     packetPrototype: ChillySeeds
     productPrototypes: [ FoodChillyPepper ]
@@ -1448,7 +1505,7 @@
     name: seeds-poppy-name
     packetPrototype: PoppySeeds
     productPrototypes: [ FoodPoppy ]
-    mutationPrototypes: [ LilyPlants ]
+    mutations: [{ target: LilyPlants, chance: 0.2 }] # RS14
   - type: Plant
     lifespan: 25
     maturation: 10
@@ -1481,7 +1538,7 @@
     name: seeds-lily-name
     packetPrototype: LilySeeds
     productPrototypes: [ FoodLily ]
-    mutationPrototypes: [ SpacemansTrumpetPlants ]
+    mutations: [{ target: WhiteLilyPlants, chance: 0.12 }] # RS14
   - type: Plant
     lifespan: 25
     maturation: 10
@@ -1543,6 +1600,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/lingzhi.rsi
   - type: PlantData
+    mutations: [{ target: NfglowshroomPlants, chance: 0.06 }] # RS14
     noun: seeds-noun-spores
     name: seeds-lingzhi-name
     packetPrototype: LingzhiSeeds
@@ -1579,7 +1637,7 @@
     name: seeds-ambrosiavulgaris-name
     packetPrototype: AmbrosiaVulgarisSeeds
     productPrototypes: [ FoodAmbrosiaVulgaris ]
-    mutationPrototypes: [ AmbrosiaDeusPlants ]
+    mutations: [{ target: AmbrosiaNobilisPlants, chance: 0.18 }] # RS14
   - type: Plant
     lifespan: 25
     maturation: 10
@@ -1617,6 +1675,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/ambrosia_deus.rsi
   - type: PlantData
+    mutations: [{ target: GalaxythistlePlants, chance: 0.04 }] # RS14
     name: seeds-ambrosiadeus-name
     packetPrototype: AmbrosiaDeusSeeds
     productPrototypes: [ FoodAmbrosiaDeus ]
@@ -1656,7 +1715,14 @@
     name: seeds-galaxythistle-name
     packetPrototype: GalaxythistleSeeds
     productPrototypes: [ FoodGalaxythistle ]
-    mutationPrototypes: [ GlasstlePlants ]
+    mutations: # RS14
+    - target: GlasstlePlants
+      chance: 0.08
+    - target: CrystalThistlePlants
+      chance: 0.03
+      requirements:
+        minPotency: 75
+        minGeneticInstability: 60
   - type: Plant
     lifespan: 25
     maturation: 10
@@ -1712,6 +1778,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/fly_amanita.rsi
   - type: PlantData
+    mutations: [{ target: LingzhiPlants, chance: 0.1 }] # RS14
     noun: seeds-noun-spores
     name: seeds-flyamanita-name
     packetPrototype: FlyAmanitaSeeds
@@ -1749,7 +1816,11 @@
     name: seeds-gatfruit-name
     packetPrototype: GatfruitSeeds
     productPrototypes: [ FoodGatfruit ]
-    mutationPrototypes: [ FakeCapfruitPlants, RealCapfruitPlants ]
+    mutations: # RS14
+    - target: FakeCapfruitPlants
+      chance: 0.15
+    - target: RealCapfruitPlants
+      chance: 0.08
   - type: Plant
     lifespan: 65
     maturation: 25
@@ -1873,7 +1944,7 @@
     name: seeds-soybeans-name
     packetPrototype: SoybeanSeeds
     productPrototypes: [ FoodSoybeans ]
-    mutationPrototypes: [ KoibeanPlants ]
+    mutations: [{ target: KoibeanPlants, chance: 0.04 }] # RS14
   - type: Plant
     lifespan: 25
     maturation: 6
@@ -1996,7 +2067,7 @@
     name: seeds-watermelon-name
     packetPrototype: WatermelonSeeds
     productPrototypes: [ FoodWatermelon ]
-    mutationPrototypes: [ HolymelonPlants ]
+    mutations: [{ target: HolymelonPlants, chance: 0.03 }] # RS14
   - type: Plant
     lifespan: 55
     maturation: 12
@@ -2096,6 +2167,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/berries.rsi
   - type: PlantData
+    mutations: [{ target: StrangeBerriesPlants, chance: 0.18 }] # RS14
     name: seeds-berries-name
     packetPrototype: BerrySeeds
     productPrototypes: [ FoodBerries ]
@@ -2128,6 +2200,16 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/bungo.rsi
   - type: PlantData
+    mutations: # RS14
+    - target: ExplosiveBananaPlants
+      chance: 0.02
+      requirements:
+        minPotency: 85
+        minGeneticInstability: 70
+        reagents:
+        - id: UnstableMutagen
+          minAmount: 10
+          consumeAmount: 5
     name: seeds-bungo-name
     packetPrototype: BungoSeeds
     productPrototypes: [ FoodBungo ]
@@ -2168,7 +2250,7 @@
     name: seeds-pea-name
     packetPrototype: PeaSeeds
     productPrototypes: [ FoodPeaPod ]
-    mutationPrototypes: [ LaughinPeaPlants ]
+    mutations: [{ target: LaughinPeaPlants, chance: 0.25 }] # RS14
   - type: Plant
     lifespan: 25
     growthStages: 3
@@ -2241,7 +2323,7 @@
     name: seeds-pumpkin-name
     packetPrototype: PumpkinSeeds
     productPrototypes: [ FoodPumpkin ]
-    mutationPrototypes: [ BluePumpkinPlants ]
+    mutations: [{ target: BluePumpkinPlants, chance: 0.2 }] # RS14
   - type: Plant
     lifespan: 55
     maturation: 10
@@ -2312,7 +2394,7 @@
     name: seeds-cotton-name
     packetPrototype: CottonSeeds
     productPrototypes: [ CottonBol ]
-    mutationPrototypes: [ PyrottonPlants ]
+    mutations: [{ target: PyrottonPlants, chance: 0.05 }] # RS14
   - type: Plant
     lifespan: 25
     maturation: 8
