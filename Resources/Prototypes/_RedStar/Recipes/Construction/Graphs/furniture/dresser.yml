@@ -1,0 +1,44 @@
+- type: constructionGraph
+  id: WoodenStorage
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DestroyEntity {}
+      edges:
+        - to: dresserBox
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: WoodPlank
+              amount: 3
+              doAfter: 2
+        - to: fancyWardrobe
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: WoodPlank
+              amount: 5
+              doAfter: 2
+    - node: dresserBox
+      entity: DresserBox
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: MaterialWoodPlank
+              amount: 3
+          steps:
+            - tool: Prying
+              doAfter: 3
+    - node: fancyWardrobe
+      entity: FancyWardrobe
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: MaterialWoodPlank
+              amount: 5
+          steps:
+            - tool: Prying
+              doAfter: 5
