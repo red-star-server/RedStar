@@ -1,0 +1,38 @@
+- type: entity
+  id: XenobiologySampleAnalyzer
+  parent: [BaseMachinePowered, ConstructibleMachine, StructureHealthMachineStrong]
+  name: xenobiology sample analyzer
+  description: Analyzes slime extracts for the connected R&D server.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/grinder.rsi
+    state: grinder_empty
+    snapCardinals: true
+  - type: ApcPowerReceiver
+    powerLoad: 100
+  - type: ExtensionCableReceiver
+  - type: ResearchClient
+  - type: ActivatableUI
+    key: enum.XenobiologySampleAnalyzerUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+      enum.XenobiologySampleAnalyzerUiKey.Key:
+        type: XenobiologySampleAnalyzerBoundUserInterface
+      enum.ResearchClientUiKey.Key:
+        type: ResearchClientBoundUserInterface
+  - type: XenobiologySampleAnalyzer
+  - type: Machine
+    board: XenobiologySampleAnalyzerMachineCircuitboard
+  - type: ItemSlots
+    slots:
+      sample:
+        name: xenobiology-analyzer-sample-slot
+        whitelist:
+          components:
+          - SlimeExtract
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      sample: !type:ContainerSlot

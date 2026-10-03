@@ -1,0 +1,464 @@
+- type: entity
+  id: XenobiologySlimeBase
+  parent:
+  - MobRespirator
+  - MobAtmosStandard
+  - SimpleSpaceMobBase
+  abstract: true
+  description: I don't think you should be seeing this.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _RedStar/Mobs/XenoSlimes/gray.rsi
+    layers:
+    - state: adult
+  - type: Satiation
+    satiations:
+      Hunger:
+        prototype: XenobiologySlimeHunger
+  - type: SlimeHusbandry
+    overcrowdingRadius: 2.5
+    restlessThreshold: 3
+    aggressiveThreshold: 5
+    restlessBelow: Okay
+    aggressiveBelow: Starving
+    calmGrowthMultiplier: 1
+    restlessGrowthMultiplier: 0.5
+    aggressiveGrowthMultiplier: 0
+  - type: Slime
+    damageOnEat:
+      types:
+        Piercing: 5
+    nutritionOnHit: 10
+  - type: HTN
+    rootTask:
+      task: SlimeMainCompound
+  - type: TemperatureDamage
+    coldDamage:
+      types:
+        Cold: 10.0
+
+- type: entity
+  name: gray xenobiology slime
+  id: XenobiologySlimeGray
+  parent: XenobiologySlimeBase
+  components:
+  - type: Slime
+    extract: GraySlimeExtract
+  - type: SlimeLifecycle
+    adultPrototype: XenobiologySlimeGray
+    babyPrototype: XenobiologySlimeGrayBaby
+    mutationChance: 0.25
+    mutations:
+    - target: XenobiologySlimeOrange
+      weight: 1
+      conditions:
+      - !type:SatiationCondition
+        satiationType: Hunger
+        min: 140
+    - target: XenobiologySlimePurple
+      weight: 1
+      conditions:
+      - !type:SatiationCondition
+        satiationType: Hunger
+        max: 140
+    - target: XenobiologySlimeBlue
+      weight: 1
+      conditions:
+      - !type:TemperatureCondition
+        max: 290
+    - target: XenobiologySlimeMetal
+      weight: 1
+      conditions:
+      - !type:TemperatureCondition
+        min: 310
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/gray.rsi
+    layers:
+    - state: adult
+
+- type: entity
+  name: orange xenobiology slime
+  id: XenobiologySlimeOrange
+  parent: XenobiologySlimeBase
+  components:
+  - type: Slime
+    extract: OrangeSlimeExtract
+  - type: SlimeLifecycle
+    adultPrototype: XenobiologySlimeOrange
+    babyPrototype: XenobiologySlimeOrangeBaby
+    mutations:
+    - target: XenobiologySlimeYellow
+      weight: 1
+    - target: XenobiologySlimeDarkPurple
+      weight: 1
+    - target: XenobiologySlimeRed
+      weight: 2
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/orange.rsi
+    layers:
+    - state: adult
+
+- type: entity
+  name: purple xenobiology slime
+  id: XenobiologySlimePurple
+  parent: XenobiologySlimeBase
+  components:
+  - type: Slime
+    extract: PurpleSlimeExtract
+  - type: SlimeLifecycle
+    adultPrototype: XenobiologySlimePurple
+    babyPrototype: XenobiologySlimePurpleBaby
+    mutations:
+    - target: XenobiologySlimeDarkPurple
+      weight: 1
+    - target: XenobiologySlimeDarkBlue
+      weight: 1
+    - target: XenobiologySlimeGreen
+      weight: 2
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/purple.rsi
+    layers:
+    - state: adult
+
+- type: entity
+  name: blue xenobiology slime
+  id: XenobiologySlimeBlue
+  parent: XenobiologySlimeBase
+  components:
+  - type: Slime
+    extract: BlueSlimeExtract
+  - type: SlimeLifecycle
+    adultPrototype: XenobiologySlimeBlue
+    babyPrototype: XenobiologySlimeBlueBaby
+    mutations:
+    - target: XenobiologySlimeDarkBlue
+      weight: 1
+    - target: XenobiologySlimeSilver
+      weight: 1
+    - target: XenobiologySlimePink
+      weight: 2
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/blue.rsi
+    layers:
+    - state: adult
+
+- type: entity
+  name: metal xenobiology slime
+  id: XenobiologySlimeMetal
+  parent: XenobiologySlimeBase
+  components:
+  - type: Slime
+    extract: MetalSlimeExtract
+  - type: SlimeLifecycle
+    adultPrototype: XenobiologySlimeMetal
+    babyPrototype: XenobiologySlimeMetalBaby
+    mutations:
+    - target: XenobiologySlimeYellow
+      weight: 1
+    - target: XenobiologySlimeSilver
+      weight: 1
+    - target: XenobiologySlimeGold
+      weight: 2
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/metal.rsi
+    layers:
+    - state: adult
+
+- type: entity
+  name: yellow xenobiology slime
+  id: XenobiologySlimeYellow
+  parent: XenobiologySlimeBase
+  components:
+  - type: Slime
+    extract: YellowSlimeExtract
+  - type: SlimeLifecycle
+    adultPrototype: XenobiologySlimeYellow
+    babyPrototype: XenobiologySlimeYellowBaby
+    mutations:
+    - target: XenobiologySlimeOrange
+      weight: 1
+    - target: XenobiologySlimeMetal
+      weight: 1
+    - target: XenobiologySlimeBluespace
+      weight: 2
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/yellow.rsi
+    layers:
+    - state: adult
+
+- type: entity
+  name: dark purple xenobiology slime
+  id: XenobiologySlimeDarkPurple
+  parent: XenobiologySlimeBase
+  components:
+  - type: Slime
+    extract: DarkPurpleSlimeExtract
+  - type: SlimeLifecycle
+    adultPrototype: XenobiologySlimeDarkPurple
+    babyPrototype: XenobiologySlimeDarkPurpleBaby
+    mutations:
+    - target: XenobiologySlimeOrange
+      weight: 1
+    - target: XenobiologySlimePurple
+      weight: 1
+    - target: XenobiologySlimeSepia
+      weight: 2
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/dark_purple.rsi
+    layers:
+    - state: adult
+
+- type: entity
+  name: dark blue xenobiology slime
+  id: XenobiologySlimeDarkBlue
+  parent: XenobiologySlimeBase
+  components:
+  - type: Slime
+    extract: DarkBlueSlimeExtract
+  - type: SlimeLifecycle
+    adultPrototype: XenobiologySlimeDarkBlue
+    babyPrototype: XenobiologySlimeDarkBlueBaby
+    mutations:
+    - target: XenobiologySlimePurple
+      weight: 1
+    - target: XenobiologySlimeBlue
+      weight: 1
+    - target: XenobiologySlimeCerulean
+      weight: 2
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/dark_blue.rsi
+    layers:
+    - state: adult
+
+- type: entity
+  name: silver xenobiology slime
+  id: XenobiologySlimeSilver
+  parent: XenobiologySlimeBase
+  components:
+  - type: Slime
+    extract: SilverSlimeExtract
+  - type: SlimeLifecycle
+    adultPrototype: XenobiologySlimeSilver
+    babyPrototype: XenobiologySlimeSilverBaby
+    mutations:
+    - target: XenobiologySlimeMetal
+      weight: 1
+    - target: XenobiologySlimeBlue
+      weight: 1
+    - target: XenobiologySlimePyrite
+      weight: 2
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/silver.rsi
+    layers:
+    - state: adult
+
+- type: entity
+  name: bluespace xenobiology slime
+  id: XenobiologySlimeBluespace
+  parent: XenobiologySlimeBase
+  components:
+  - type: Slime
+    extract: BluespaceSlimeExtract
+  - type: SlimeLifecycle
+    adultPrototype: XenobiologySlimeBluespace
+    babyPrototype: XenobiologySlimeBluespaceBaby
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/bluespace.rsi
+    layers:
+    - state: adult
+
+- type: entity
+  name: sepia xenobiology slime
+  id: XenobiologySlimeSepia
+  parent: XenobiologySlimeBase
+  components:
+  - type: Slime
+    extract: SepiaSlimeExtract
+  - type: SlimeLifecycle
+    adultPrototype: XenobiologySlimeSepia
+    babyPrototype: XenobiologySlimeSepiaBaby
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/sepia.rsi
+    layers:
+    - state: adult
+
+- type: entity
+  name: cerulean xenobiology slime
+  id: XenobiologySlimeCerulean
+  parent: XenobiologySlimeBase
+  components:
+  - type: Slime
+    extract: CeruleanSlimeExtract
+  - type: SlimeLifecycle
+    adultPrototype: XenobiologySlimeCerulean
+    babyPrototype: XenobiologySlimeCeruleanBaby
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/cerulean.rsi
+    layers:
+    - state: adult
+
+- type: entity
+  name: pyrite xenobiology slime
+  id: XenobiologySlimePyrite
+  parent: XenobiologySlimeBase
+  components:
+  - type: Slime
+    extract: PyriteSlimeExtract
+  - type: SlimeLifecycle
+    adultPrototype: XenobiologySlimePyrite
+    babyPrototype: XenobiologySlimePyriteBaby
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/pyrite.rsi
+    layers:
+    - state: adult
+
+- type: entity
+  name: red xenobiology slime
+  id: XenobiologySlimeRed
+  parent: XenobiologySlimeBase
+  components:
+  - type: Slime
+    extract: RedSlimeExtract
+  - type: SlimeLifecycle
+    adultPrototype: XenobiologySlimeRed
+    babyPrototype: XenobiologySlimeRedBaby
+    mutations:
+    - target: XenobiologySlimeOil
+      weight: 1
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/red.rsi
+    layers:
+    - state: adult
+
+- type: entity
+  name: green xenobiology slime
+  id: XenobiologySlimeGreen
+  parent: XenobiologySlimeBase
+  components:
+  - type: Slime
+    extract: GreenSlimeExtract
+  - type: SlimeLifecycle
+    adultPrototype: XenobiologySlimeGreen
+    babyPrototype: XenobiologySlimeGreenBaby
+    mutations:
+    - target: XenobiologySlimeBlack
+      weight: 1
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/green.rsi
+    layers:
+    - state: adult
+
+- type: entity
+  name: pink xenobiology slime
+  id: XenobiologySlimePink
+  parent: XenobiologySlimeBase
+  components:
+  - type: Slime
+    extract: PinkSlimeExtract
+  - type: SlimeLifecycle
+    adultPrototype: XenobiologySlimePink
+    babyPrototype: XenobiologySlimePinkBaby
+    mutations:
+    - target: XenobiologySlimeLightPink
+      weight: 1
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/pink.rsi
+    layers:
+    - state: adult
+
+- type: entity
+  name: gold xenobiology slime
+  id: XenobiologySlimeGold
+  parent: XenobiologySlimeBase
+  components:
+  - type: Slime
+    extract: GoldSlimeExtract
+  - type: SlimeLifecycle
+    adultPrototype: XenobiologySlimeGold
+    babyPrototype: XenobiologySlimeGoldBaby
+    mutations:
+    - target: XenobiologySlimeAdamantine
+      weight: 1
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/gold.rsi
+    layers:
+    - state: adult
+
+- type: entity
+  name: oil xenobiology slime
+  id: XenobiologySlimeOil
+  parent: XenobiologySlimeBase
+  components:
+  - type: Slime
+    extract: OilSlimeExtract
+  - type: SlimeLifecycle
+    adultPrototype: XenobiologySlimeOil
+    babyPrototype: XenobiologySlimeOilBaby
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/oil.rsi
+    layers:
+    - state: adult
+
+- type: entity
+  name: black xenobiology slime
+  id: XenobiologySlimeBlack
+  parent: XenobiologySlimeBase
+  components:
+  - type: Slime
+    extract: BlackSlimeExtract
+  - type: SlimeLifecycle
+    adultPrototype: XenobiologySlimeBlack
+    babyPrototype: XenobiologySlimeBlackBaby
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/black.rsi
+    layers:
+    - state: adult
+
+- type: entity
+  name: light pink xenobiology slime
+  id: XenobiologySlimeLightPink
+  parent: XenobiologySlimeBase
+  components:
+  - type: Slime
+    extract: LightPinkSlimeExtract
+  - type: SlimeLifecycle
+    adultPrototype: XenobiologySlimeLightPink
+    babyPrototype: XenobiologySlimeLightPinkBaby
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/light_pink.rsi
+    layers:
+    - state: adult
+
+- type: entity
+  name: adamantine xenobiology slime
+  id: XenobiologySlimeAdamantine
+  parent: XenobiologySlimeBase
+  components:
+  - type: Slime
+    extract: AdamantineSlimeExtract
+  - type: SlimeLifecycle
+    adultPrototype: XenobiologySlimeAdamantine
+    babyPrototype: XenobiologySlimeAdamantineBaby
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/adamantine.rsi
+    layers:
+    - state: adult
+
+- type: entity
+  name: rainbow xenobiology slime
+  id: XenobiologySlimeRainbow
+  parent: XenobiologySlimeBase
+  components:
+  - type: Slime
+    extract: RainbowSlimeExtract
+  - type: SlimeLifecycle
+    adultPrototype: XenobiologySlimeRainbow
+    babyPrototype: XenobiologySlimeRainbowBaby
+  - type: PointLight
+    radius: 1
+    energy: 1
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/rainbow.rsi
+    layers:
+    - state: adult

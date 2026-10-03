@@ -1,0 +1,34 @@
+- type: entity
+  parent: BaseComputer
+  id: XenobiologyConsole
+  name: xenobiology console
+  description: Analyzes living slimes detected by linked cell scanners.
+  components:
+  - type: Computer
+    board: XenobiologyConsoleCircuitboard
+  - type: XenobiologyConsole
+  - type: DeviceLinkSource
+    ports: [ XenobiologyConsole ]
+  - type: ActivatableUI
+    singleUser: true
+    key: enum.XenobiologyConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.XenobiologyConsoleUiKey.Key:
+        type: XenobiologyConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      sprite: _RedStar/Structures/Machines/slime_computer.rsi
+      state: slime
+    - map: ["computerLayerKeys"]
+      sprite: _RedStar/Structures/Machines/slime_computer.rsi
+      state: slime_key
+    - map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      state: generic_panel_open

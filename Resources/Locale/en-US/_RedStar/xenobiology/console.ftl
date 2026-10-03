@@ -1,0 +1,21 @@
+ent-XenobiologyConsole = xenobiology console
+    .desc = Analyzes living slimes detected by linked cell scanners.
+ent-XenobiologyCellScanner = xenobiology cell scanner
+    .desc = Detects nearby living slimes for a linked xenobiology console.
+
+xenobiology-console-title = Xenobiology console
+xenobiology-console-scanners = Linked cells
+xenobiology-console-scanner-short = Cell scanner
+xenobiology-console-scanner-numbered = Cell scanner { $number }
+xenobiology-console-slimes = Cell contents
+xenobiology-console-scan = Selected specimen
+xenobiology-console-link-hint = Connect cell scanners using a multitool in linking mode.
+xenobiology-console-no-scanners = No cell scanners linked.
+xenobiology-console-select-scanner = Select a linked cell to view its specimens.
+xenobiology-console-no-slimes = No living slimes detected in this cell.
+xenobiology-console-select-slime = Select a specimen to view its analysis.
+xenobiology-console-specimen-lost = The selected specimen is no longer detected. Select another specimen.
+xenobiology-port-console-name = Cell scanners
+xenobiology-port-console-description = Links this console to cell scanners for specimen analysis.
+xenobiology-port-scanner-name = Specimen detection
+xenobiology-port-scanner-description = Makes nearby living slimes available to a linked xenobiology console.

@@ -1,0 +1,14 @@
+- type: entity
+  name: handheld slime scanner
+  id: HandheldSlimeScanner
+  parent: BaseItem
+  description: A hand-held scanner for collecting information on slimes.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Objects/Specific/Xenobiology/slime_scanner.rsi
+    state: icon
+  - type: SlimeScanner
+  - type: UserInterface
+    interfaces:
+      enum.SlimeScannerUiKey.Key:
+        type: SlimeScannerBoundUserInterface

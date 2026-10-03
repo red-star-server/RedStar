@@ -1,0 +1,32 @@
+- type: entity
+  id: XenobiologySlimeProcessor
+  parent: [BaseMachinePowered, ConstructibleMachine]
+  name: slime processor
+  description: Processes dead slimes into physical extracts.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Machines/slime_processor.rsi
+    layers:
+    - state: processor
+      map: ["enum.SlimeProcessorVisualLayers.Main"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.SlimeProcessorVisuals.Processing:
+        enum.SlimeProcessorVisualLayers.Main:
+          True: { state: processor_on }
+          False: { state: processor }
+  - type: Transform
+    anchored: true
+  - type: ApcPowerReceiver
+    powerLoad: 200
+  - type: SlimeProcessor
+    processingTime: 5
+    slimeAcquireCooldown: 1
+  - type: Machine
+    board: XenobiologySlimeProcessorMachineCircuitboard
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      slimes: !type:Container

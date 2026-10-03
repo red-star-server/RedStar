@@ -1,0 +1,38 @@
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: XenobiologyConsoleCircuitboard
+  name: xenobiology console board
+  description: A computer printed circuit board for a xenobiology console.
+  components:
+  - type: Sprite
+    state: cpu_science
+  - type: ComputerBoard
+    prototype: XenobiologyConsole
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: XenobiologySampleAnalyzerMachineCircuitboard
+  name: xenobiology sample analyzer machine board
+  description: A machine printed circuit board for a xenobiology sample analyzer.
+  components:
+  - type: Sprite
+    state: science
+  - type: MachineBoard
+    prototype: XenobiologySampleAnalyzer
+    stackRequirements:
+      Manipulator: 1
+      Glass: 5
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: XenobiologySlimeProcessorMachineCircuitboard
+  name: slime processor machine board
+  description: A machine printed circuit board for a slime processor.
+  components:
+  - type: Sprite
+    state: science
+  - type: MachineBoard
+    prototype: XenobiologySlimeProcessor
+    stackRequirements:
+      Manipulator: 2
+      Glass: 1

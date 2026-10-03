@@ -1,0 +1,4 @@
+- type: satiation
+  id: XenobiologySlimeHunger
+  parent: NormalSatiationHunger
+  baseChangeRate: -1
