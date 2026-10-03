@@ -11,7 +11,6 @@ ent-PewMiddle = деревянная церковная скамья
     .suffix = Середина
 ent-BenchWhiteComfy = { ent-BenchComfy }
     .desc = { ent-BenchComfy.desc }
-    .suffix = Одинарная, Белая
 ent-BenchComfyCorner = { ent-BenchComfy }
     .desc = { ent-BenchComfy.desc }
     .suffix = Угол, Белая

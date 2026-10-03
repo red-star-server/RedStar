@@ -1,6 +1,6 @@
 ent-MobGiantSpiderNurse = паук-сиделка
     .desc = Бледный, жуткий паук, выделяющий что-то едкое.
-    .suffix = { ent-MobSpiderAnimated.suffix }
+    .suffix = { ent-MobSpiderBase.suffix }
 ent-SolutionVenomSpiderNurse = { ent-SolutionWeapon }
     .desc = { ent-SolutionWeapon.desc }
 ent-MobGiantSpiderNurseAngry = { ent-MobGiantSpiderNurse }
