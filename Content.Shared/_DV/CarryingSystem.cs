@@ -3,6 +3,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Climbing.Events;
 using Content.Shared.DoAfter;
+using Content.Shared.Ghost.Components;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -59,6 +60,21 @@ public sealed partial class CarryingSystem : EntitySystem
         {
             Act = () => StartCarryDoAfter(user, ent),
             Text = Loc.GetString("carry-verb"),
+            Priority = 2
+        });
+    }
+
+    [SubscribeLocalEvent]
+    private void AddDropVerb(Entity<BeingCarriedComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!args.CanInteract || !args.CanAccess || args.User != ent.Comp.Carrier || ent.Comp.Releasing)
+            return;
+
+        var carrier = ent.Comp.Carrier;
+        args.Verbs.Add(new AlternativeVerb
+        {
+            Act = () => DropCarried(carrier, ent),
+            Text = Loc.GetString("verbs-dataset-650"),
             Priority = 2
         });
     }
@@ -237,6 +253,9 @@ public sealed partial class CarryingSystem : EntitySystem
             return;
         }
 
+        if (!CanCarry(carrier, carried))
+            return;
+
         if (!HasComp<KnockedDownComponent>(carried))
             length *= carried.Comp.StandingPickupMultiplier;
 
@@ -362,6 +381,8 @@ public sealed partial class CarryingSystem : EntitySystem
         var handsRequired = GetRequiredHands(carrier, carried);
 
         return carrier != carried.Owner &&
+               !HasComp<GhostComponent>(carrier) &&
+               HasComp<DoAfterComponent>(carrier) &&
                !HasComp<CarryingComponent>(carrier) &&
                HasComp<MapGridComponent>(Transform(carrier).ParentUid) &&
                !HasComp<BeingCarriedComponent>(carrier) &&
