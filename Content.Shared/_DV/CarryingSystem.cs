@@ -3,7 +3,6 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Climbing.Events;
 using Content.Shared.DoAfter;
-using Content.Shared.Ghost.Components;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -381,14 +380,15 @@ public sealed partial class CarryingSystem : EntitySystem
         var handsRequired = GetRequiredHands(carrier, carried);
 
         return carrier != carried.Owner &&
-               !HasComp<GhostComponent>(carrier) &&
+               TryComp<StandingStateComponent>(carrier, out var standing) && standing.Standing &&
                HasComp<DoAfterComponent>(carrier) &&
                !HasComp<CarryingComponent>(carrier) &&
                HasComp<MapGridComponent>(Transform(carrier).ParentUid) &&
                !HasComp<BeingCarriedComponent>(carrier) &&
                !HasComp<BeingCarriedComponent>(carried) &&
                TryComp<HandsComponent>(carrier, out var hands) &&
-               _hands.CountFreeHands((carrier, hands)) >= handsRequired;
+               _hands.CountFreeHands((carrier, hands)) >= handsRequired &&
+               GetPickupDuration(carrier, carried) < carried.Comp.MaximumPickupDuration;
     }
 
     private int GetRequiredHands(EntityUid carrier, Entity<CarriableComponent> carried)
