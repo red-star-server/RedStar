@@ -124,19 +124,22 @@ public sealed partial class CarryingSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnMoveAttempt(Entity<BeingCarriedComponent> ent, ref UpdateCanMoveEvent args)
     {
-        args.Cancel();
+        if (!ent.Comp.Releasing)
+            args.Cancel();
     }
 
     [SubscribeLocalEvent]
     private void OnStandAttempt(Entity<BeingCarriedComponent> ent, ref StandAttemptEvent args)
     {
-        args.Cancel();
+        if (!ent.Comp.Releasing)
+            args.Cancel();
     }
 
     [SubscribeLocalEvent]
     private void OnPullAttempt(Entity<BeingCarriedComponent> ent, ref PullAttemptEvent args)
     {
-        args.Cancelled = true;
+        if (!ent.Comp.Releasing)
+            args.Cancelled = true;
     }
 
     [SubscribeLocalEvent]
@@ -181,12 +184,22 @@ public sealed partial class CarryingSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnRemoved(Entity<BeingCarriedComponent> ent, ref ComponentRemove args)
+    private void OnShutdown(Entity<BeingCarriedComponent> ent, ref ComponentShutdown args)
     {
-        if (!HasComp<CarryingComponent>(ent.Comp.Carrier))
-            return;
+        ReleaseCarried(ent);
+    }
 
-        CleanupCarrier(ent.Comp.Carrier, ent);
+    [SubscribeLocalEvent]
+    private void OnCarrierShutdown(Entity<CarryingComponent> ent, ref ComponentShutdown args)
+    {
+        DropCarried(ent, ent.Comp.Carried);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnCarrierTerminating(Entity<CarryingComponent> ent, ref EntityTerminatingEvent args)
+    {
+        // Detach before the engine recursively marks transform children for deletion.
+        DropCarried(ent, ent.Comp.Carried);
     }
 
     [SubscribeLocalEvent]
@@ -222,7 +235,9 @@ public sealed partial class CarryingSystem : EntitySystem
             NeedHand = true,
         };
 
-        _doAfter.TryStartDoAfter(args);
+        if (!_doAfter.TryStartDoAfter(args))
+            return;
+
         _popup.PopupEntity(Loc.GetString("carry-started", ("carrier", carrier)), carried, carried);
     }
 
@@ -247,64 +262,69 @@ public sealed partial class CarryingSystem : EntitySystem
 
         var beingCarried = EnsureComp<BeingCarriedComponent>(carried);
         beingCarried.Carrier = carrier;
+        beingCarried.WasStanding = !_standingState.IsDown(carried.Owner);
         Dirty(carried, beingCarried);
 
-        EnsureComp<KnockedDownComponent>(carried);
+        _standingState.Down(carried, playSound: false, dropHeldItems: false, force: true);
         ApplyCarrySlowdown(carrier, carried);
         _actionBlocker.UpdateCanMove(carried);
 
         if (_net.IsClient)
             return;
 
-        var freeHandsRequired = carried.Comp.FreeHandsRequired;
-        if (HasComp<CarrierOneHandComponent>(carrier))
-            freeHandsRequired = 1;
+        var freeHandsRequired = GetRequiredHands(carrier, carried);
 
         for (var i = 0; i < freeHandsRequired; i++)
         {
-            _virtualItem.TrySpawnVirtualItemInHand(carried, carrier);
+            if (_virtualItem.TrySpawnVirtualItemInHand(carried, carrier))
+                continue;
+
+            DropCarried(carrier, carried);
+            return;
         }
-    }
-
-    public bool TryCarry(EntityUid carrier, Entity<CarriableComponent?> toCarry)
-    {
-        if (!Resolve(toCarry, ref toCarry.Comp, false))
-            return false;
-
-        if (!CanCarry(carrier, (toCarry, toCarry.Comp)))
-            return false;
-
-        if (GetPickupDuration(carrier, (toCarry.Owner, toCarry.Comp)) >= toCarry.Comp.MaximumPickupDuration)
-            return false;
-
-        Carry(carrier, (toCarry.Owner, toCarry.Comp));
-        return true;
     }
 
     public void DropCarried(EntityUid carrier, EntityUid carried, bool attachToGrid = true)
     {
-        Drop(carried, attachToGrid);
-        CleanupCarrier(carrier, carried);
+        if (!TryComp<BeingCarriedComponent>(carried, out var component) || component.Carrier != carrier || component.Releasing)
+            return;
+
+        ReleaseCarried((carried, component), attachToGrid);
+        RemComp<BeingCarriedComponent>(carried);
     }
 
     private void CleanupCarrier(EntityUid carrier, EntityUid carried)
     {
-        RemComp<CarryingComponent>(carrier);
+        if (TerminatingOrDeleted(carrier) ||
+            !TryComp<CarryingComponent>(carrier, out var carrying) || carrying.Carried != carried)
+            return;
+
+        // Remove the subscription before deleting virtual items, which raise deletion events.
+        if (carrying.LifeStage < ComponentLifeStage.Stopping)
+            RemComp<CarryingComponent>(carrier);
+
         RemComp<CarryingSlowdownComponent>(carrier);
         _virtualItem.DeleteInHandsMatching(carrier, carried);
         _movementSpeed.RefreshMovementSpeedModifiers(carrier);
     }
 
-    private void Drop(EntityUid carried, bool attachToGrid = true)
+    private void ReleaseCarried(Entity<BeingCarriedComponent> ent, bool attachToGrid = true)
     {
-        RemComp<BeingCarriedComponent>(carried);
-        RemComp<KnockedDownComponent>(carried);
-        _actionBlocker.UpdateCanMove(carried);
+        if (ent.Comp.Releasing)
+            return;
 
+        ent.Comp.Releasing = true;
+        CleanupCarrier(ent.Comp.Carrier, ent);
+
+        if (TerminatingOrDeleted(ent))
+            return;
+
+        _actionBlocker.UpdateCanMove(ent);
         if (attachToGrid)
-            _transform.AttachToGridOrMap(carried);
+            _transform.AttachToGridOrMap(ent);
 
-        _standingState.Stand(carried);
+        if (ent.Comp.WasStanding && !HasComp<KnockedDownComponent>(ent))
+            _standingState.Stand(ent);
     }
 
     private void ApplyCarrySlowdown(EntityUid carrier, Entity<CarriableComponent> carried)
@@ -324,9 +344,7 @@ public sealed partial class CarryingSystem : EntitySystem
 
     public bool CanCarry(EntityUid carrier, Entity<CarriableComponent> carried)
     {
-        var handsRequired = carried.Comp.FreeHandsRequired;
-        if (HasComp<CarrierOneHandComponent>(carrier))
-            handsRequired = 1;
+        var handsRequired = GetRequiredHands(carrier, carried);
 
         return carrier != carried.Owner &&
                !HasComp<CarryingComponent>(carrier) &&
@@ -335,6 +353,11 @@ public sealed partial class CarryingSystem : EntitySystem
                !HasComp<BeingCarriedComponent>(carried) &&
                TryComp<HandsComponent>(carrier, out var hands) &&
                _hands.CountFreeHands((carrier, hands)) >= handsRequired;
+    }
+
+    private int GetRequiredHands(EntityUid carrier, Entity<CarriableComponent> carried)
+    {
+        return HasComp<CarrierOneHandComponent>(carrier) ? 1 : carried.Comp.FreeHandsRequired;
     }
 
     private float MassContest(EntityUid carrier, EntityUid target)
@@ -373,7 +396,7 @@ public sealed partial class CarryingSystem : EntitySystem
 
             if (TerminatingOrDeleted(carrier))
             {
-                RemCompDeferred<BeingCarriedComponent>(carried);
+                DropCarried(carrier, carried);
                 continue;
             }
 

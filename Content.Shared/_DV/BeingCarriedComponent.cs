@@ -11,4 +11,15 @@ public sealed partial class BeingCarriedComponent : Component
 {
     [DataField, AutoNetworkedField]
     public EntityUid Carrier;
+
+    /// <summary>
+    /// Whether the entity was standing before it was carried.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool WasStanding;
+
+    /// <summary>
+    /// Prevents reentrant cleanup and disables carry restrictions during release.
+    /// </summary>
+    public bool Releasing;
 }
