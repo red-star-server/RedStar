@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Made by Pato Grone for SS14, Wielded states by Jonathan Argo",
+    "copyright": "Made by Pato Grone for SS14, Wielded states by Jonathan Argo, backpack sprites by DVD Player, rest edited by DVD Player",
     "size": {
         "x": 32,
         "y": 32
@@ -25,6 +25,14 @@
         },
         {
             "name": "base"
+        },
+        {
+            "name": "equipped-BACKPACK",
+            "directions": 4
+        },
+        {
+            "name": "equipped-SUITSTORAGE",
+            "directions": 4
         }
     ]
 }

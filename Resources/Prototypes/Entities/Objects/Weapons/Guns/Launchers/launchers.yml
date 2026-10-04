@@ -124,6 +124,12 @@
       map: [ "enum.GunVisualLayers.Mag" ]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
+    # RS14-start
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+    # RS14-end
   - type: Gun
     fireRate: 0.5
     soundGunshot:
@@ -198,6 +204,12 @@
       map: [ "enum.GunVisualLayers.Mag" ]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
+    # RS14-start
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+    # RS14-end
   - type: Gun
     fireRate: 6
     selectedMode: FullAuto
