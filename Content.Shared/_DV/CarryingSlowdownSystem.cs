@@ -2,16 +2,9 @@ using Content.Shared.Movement.Systems;
 
 namespace Content.Shared._DV;
 
-public sealed class CarryingSlowdownSystem : EntitySystem
+public sealed partial class CarryingSlowdownSystem : EntitySystem
 {
-    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<CarryingSlowdownComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMoveSpeed);
-    }
+    [Dependency] private MovementSpeedModifierSystem _movementSpeed = default!;
 
     public void SetModifier(Entity<CarryingSlowdownComponent?> ent, float modifier)
     {
@@ -22,6 +15,7 @@ public sealed class CarryingSlowdownSystem : EntitySystem
         _movementSpeed.RefreshMovementSpeedModifiers(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnRefreshMoveSpeed(Entity<CarryingSlowdownComponent> ent, ref RefreshMovementSpeedModifiersEvent args)
     {
         args.ModifySpeed(ent.Comp.Modifier, ent.Comp.Modifier);

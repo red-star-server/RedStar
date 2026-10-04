@@ -1,4 +1,5 @@
 using Content.Server.Popups;
+using Content.Shared._DV;
 using Content.Shared.Storage.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DoAfter;
@@ -91,4 +92,18 @@ public sealed partial class EscapeInventorySystem : EntitySystem
         if (component.DoAfter != null)
             _doAfterSystem.Cancel(component.DoAfter);
     }
+
+    // RS14-start
+    [SubscribeLocalEvent]
+    private void OnCarriedEscape(EntityUid uid, BeingCarriedComponent carried, ref MoveInputEvent args)
+    {
+        if (!args.HasDirectionalMovement)
+            return;
+
+        if (!TryComp<CanEscapeInventoryComponent>(uid, out var component) || component.IsEscaping)
+            return;
+
+        AttemptEscape(uid, carried.Carrier, component);
+    }
+    // RS14-end
 }

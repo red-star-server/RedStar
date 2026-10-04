@@ -26,10 +26,6 @@ using Robust.Shared.Physics.Components;
 
 namespace Content.Shared._DV;
 
-/// <summary>
-/// Carrying implementation based on the Delta-V/Nyanotrasen carrying system.
-/// PseudoItem/storage integration and fork-specific polymorph integration are intentionally omitted.
-/// </summary>
 public sealed partial class CarryingSystem : EntitySystem
 {
     [Dependency] private ActionBlockerSystem _actionBlocker = default!;
@@ -55,7 +51,6 @@ public sealed partial class CarryingSystem : EntitySystem
         SubscribeLocalEvent<BeingCarriedComponent, UnbuckledEvent>(OnDrop);
         SubscribeLocalEvent<BeingCarriedComponent, StrappedEvent>(OnDrop);
         SubscribeLocalEvent<BeingCarriedComponent, UnstrappedEvent>(OnDrop);
-        SubscribeLocalEvent<BeingCarriedComponent, EscapeInventoryEvent>(OnDrop);
     }
 
     [SubscribeLocalEvent]
@@ -95,6 +90,9 @@ public sealed partial class CarryingSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnThrow(Entity<CarryingComponent> ent, ref BeforeThrowEvent args)
     {
+        if (ent.Owner != args.PlayerUid)
+            return;
+
         if (!TryComp<VirtualItemComponent>(args.ItemUid, out var virtualItem) ||
             virtualItem.BlockingEntity != ent.Comp.Carried)
         {
@@ -166,6 +164,15 @@ public sealed partial class CarryingSystem : EntitySystem
 
     private void OnDrop<TEvent>(Entity<BeingCarriedComponent> ent, ref TEvent args)
     {
+        DropCarried(ent.Comp.Carrier, ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnEscapeDrop(Entity<BeingCarriedComponent> ent, ref EscapeInventoryEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
         DropCarried(ent.Comp.Carrier, ent);
     }
 
