@@ -310,6 +310,15 @@
       layers:
         - state: freezerOff
           map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+        # RS14-start
+        - state: freezerOn
+          map: ["enum.PowerDeviceVisualLayers.Powered"]
+          visible: false
+        - state: freezer-Unshaded
+          shader: unshaded
+          map: ["freezing"]
+          visible: false
+        # RS14-end
         - state: freezerPanelOpen
           map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
         - sprite: !type:CreateVariants
@@ -332,8 +341,13 @@
       visuals:
         enum.PowerDeviceVisuals.Powered:
           enum.PowerDeviceVisualLayers.Powered:
-            True: { state: freezerOn }
-            False: { state: freezerOff }
+          # RS14-start
+            True: { visible: true }
+            False: { visible: false }
+          freezing:
+            True: { visible: true }
+            False: { visible: false }
+          # RS14-end
     - type: GasThermoMachine
       coefficientOfPerformance: -3.9
     - type: ApcPowerReceiver
@@ -376,6 +390,14 @@
       layers:
         - state: heaterOff
           map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+        # RS14-start
+        - state: heaterOn
+          map: ["enum.PowerDeviceVisualLayers.Powered"]
+          visible: false
+        - state: heater-Unshaded
+          shader: unshaded
+          map: ["heating"]
+        # RS14-end
         - state: heaterPanelOpen
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
         - sprite: !type:CreateVariants
@@ -398,8 +420,13 @@
       visuals:
         enum.PowerDeviceVisuals.Powered:
           enum.PowerDeviceVisualLayers.Powered:
-            True: { state: heaterOn }
-            False: { state: heaterOff }
+          # RS14-start
+            True: { visible: true }
+            False: { visible: false }
+          heating:
+            True: { visible: true }
+            False: { visible: false }
+          # RS14-end
     - type: GasThermoMachine
       coefficientOfPerformance: 0.95
     - type: ApcPowerReceiver
