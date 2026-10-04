@@ -59,7 +59,7 @@ public sealed partial class CarryingSystem : EntitySystem
         {
             Act = () => StartCarryDoAfter(user, ent),
             Text = Loc.GetString("carry-verb"),
-            Priority = 2,
+            Priority = 2
         });
     }
 
@@ -244,7 +244,7 @@ public sealed partial class CarryingSystem : EntitySystem
         var args = new DoAfterArgs(EntityManager, carrier, length, ev, carried, target: carried)
         {
             BreakOnMove = true,
-            NeedHand = true,
+            NeedHand = true
         };
 
         if (!_doAfter.TryStartDoAfter(args))
