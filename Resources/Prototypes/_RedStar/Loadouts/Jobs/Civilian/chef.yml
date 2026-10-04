@@ -27,3 +27,9 @@
   id: UnderwearSocksChef
   equipment:
     socks: ClothingUnderwearSocksChef
+
+# Outer clothing
+- type: loadout
+  id: ChefCuteApron
+  equipment:
+    outerClothing: ClothingOuterApronCuteChef
