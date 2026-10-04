@@ -12,7 +12,7 @@ public sealed partial class CarryingSlowdownSystem : EntitySystem
         ent.Comp.Modifier = modifier;
         Dirty(ent, ent.Comp);
 
-        _movementSpeed.RefreshMovementSpeedModifiers(ent);
+        _movementSpeed.RefreshMovementSpeedModifiers(ent.Owner);
     }
 
     [SubscribeLocalEvent]

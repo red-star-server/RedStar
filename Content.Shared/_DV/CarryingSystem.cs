@@ -6,7 +6,6 @@ using Content.Shared.DoAfter;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Mobs;
 using Content.Shared.Movement.Events;
@@ -40,18 +39,7 @@ public sealed partial class CarryingSystem : EntitySystem
     [Dependency] private SharedVirtualItemSystem _virtualItem = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
 
-    private EntityQuery<PhysicsComponent> _physicsQuery;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        _physicsQuery = GetEntityQuery<PhysicsComponent>();
-        SubscribeLocalEvent<BeingCarriedComponent, StartClimbEvent>(OnDrop);
-        SubscribeLocalEvent<BeingCarriedComponent, UnbuckledEvent>(OnDrop);
-        SubscribeLocalEvent<BeingCarriedComponent, StrappedEvent>(OnDrop);
-        SubscribeLocalEvent<BeingCarriedComponent, UnstrappedEvent>(OnDrop);
-    }
+    [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery;
 
     [SubscribeLocalEvent]
     private void AddCarryVerb(Entity<CarriableComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
@@ -80,8 +68,10 @@ public sealed partial class CarryingSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnVirtualItemDeleted(Entity<CarryingComponent> ent, ref VirtualItemDeletedEvent args)
     {
-        if (args.BlockingEntity == ent.Comp.Carried && HasComp<CarriableComponent>(args.BlockingEntity))
-            DropCarried(ent, args.BlockingEntity);
+        if (args.BlockingEntity != ent.Comp.Carried)
+            return;
+
+        DropCarried(ent, ent.Comp.Carried);
     }
 
     /// <summary>
@@ -93,15 +83,15 @@ public sealed partial class CarryingSystem : EntitySystem
         if (ent.Owner != args.PlayerUid)
             return;
 
+        var carried = ent.Comp.Carried;
         if (!TryComp<VirtualItemComponent>(args.ItemUid, out var virtualItem) ||
-            virtualItem.BlockingEntity != ent.Comp.Carried)
+            virtualItem.BlockingEntity != carried)
         {
             return;
         }
 
-        var carried = virtualItem.BlockingEntity;
         args.ItemUid = carried;
-        args.ThrowSpeed = 5f * MassContest(ent, carried);
+        args.ThrowSpeed = Comp<CarriableComponent>(carried).ThrowSpeed * MassContest(ent, carried);
     }
 
     [SubscribeLocalEvent]
@@ -131,13 +121,6 @@ public sealed partial class CarryingSystem : EntitySystem
         DropCarried(ent, ent.Comp.Carried);
     }
 
-    // Kept intentionally permissive, matching the newer Floof/Delta-V behavior.
-    // Blocking all interactions here prevents resistance and some legitimate self-interactions.
-    [SubscribeLocalEvent]
-    private void OnInteractionAttempt(Entity<BeingCarriedComponent> ent, ref InteractionAttemptEvent args)
-    {
-    }
-
     [SubscribeLocalEvent]
     private void OnMoveAttempt(Entity<BeingCarriedComponent> ent, ref UpdateCanMoveEvent args)
     {
@@ -150,19 +133,33 @@ public sealed partial class CarryingSystem : EntitySystem
         args.Cancel();
     }
 
-    // Kept intentionally permissive, matching the newer Floof/Delta-V behavior.
-    [SubscribeLocalEvent]
-    private void OnInteractedWith(Entity<BeingCarriedComponent> ent, ref GettingInteractedWithAttemptEvent args)
-    {
-    }
-
     [SubscribeLocalEvent]
     private void OnPullAttempt(Entity<BeingCarriedComponent> ent, ref PullAttemptEvent args)
     {
         args.Cancelled = true;
     }
 
-    private void OnDrop<TEvent>(Entity<BeingCarriedComponent> ent, ref TEvent args)
+    [SubscribeLocalEvent]
+    private void OnStartClimb(Entity<BeingCarriedComponent> ent, ref StartClimbEvent args)
+    {
+        DropCarried(ent.Comp.Carrier, ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnUnbuckled(Entity<BeingCarriedComponent> ent, ref UnbuckledEvent args)
+    {
+        DropCarried(ent.Comp.Carrier, ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnStrapped(Entity<BeingCarriedComponent> ent, ref StrappedEvent args)
+    {
+        DropCarried(ent.Comp.Carrier, ent);
+    }
+
+
+    [SubscribeLocalEvent]
+    private void OnUnstrapped(Entity<BeingCarriedComponent> ent, ref UnstrappedEvent args)
     {
         DropCarried(ent.Comp.Carrier, ent);
     }
@@ -209,14 +206,14 @@ public sealed partial class CarryingSystem : EntitySystem
     {
         var length = GetPickupDuration(carrier, carried);
 
-        if (length.TotalSeconds >= 9f)
+        if (length >= carried.Comp.MaximumPickupDuration)
         {
-            _popup.PopupClient(Loc.GetString("carry-too-heavy"), carried, carrier, PopupType.SmallCaution);
+            _popup.PopupEntity(Loc.GetString("carry-too-heavy"), carried, carrier, PopupType.SmallCaution);
             return;
         }
 
         if (!HasComp<KnockedDownComponent>(carried))
-            length *= 2f;
+            length *= carried.Comp.StandingPickupMultiplier;
 
         var ev = new CarryDoAfterEvent();
         var args = new DoAfterArgs(EntityManager, carrier, length, ev, carried, target: carried)
@@ -229,7 +226,7 @@ public sealed partial class CarryingSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("carry-started", ("carrier", carrier)), carried, carried);
     }
 
-    private void Carry(EntityUid carrier, EntityUid carried)
+    private void Carry(EntityUid carrier, Entity<CarriableComponent> carried)
     {
         if (TryComp<PullableComponent>(carried, out var carriedPullable))
             _pulling.TryStopPull(carried, carriedPullable);
@@ -259,7 +256,7 @@ public sealed partial class CarryingSystem : EntitySystem
         if (_net.IsClient)
             return;
 
-        var freeHandsRequired = Comp<CarriableComponent>(carried).FreeHandsRequired;
+        var freeHandsRequired = carried.Comp.FreeHandsRequired;
         if (HasComp<CarrierOneHandComponent>(carrier))
             freeHandsRequired = 1;
 
@@ -277,13 +274,10 @@ public sealed partial class CarryingSystem : EntitySystem
         if (!CanCarry(carrier, (toCarry, toCarry.Comp)))
             return false;
 
-        if (HasComp<BeingCarriedComponent>(carrier))
+        if (GetPickupDuration(carrier, (toCarry.Owner, toCarry.Comp)) >= toCarry.Comp.MaximumPickupDuration)
             return false;
 
-        if (GetPickupDuration(carrier, toCarry).TotalSeconds > 9f)
-            return false;
-
-        Carry(carrier, toCarry);
+        Carry(carrier, (toCarry.Owner, toCarry.Comp));
         return true;
     }
 
@@ -313,18 +307,19 @@ public sealed partial class CarryingSystem : EntitySystem
         _standingState.Stand(carried);
     }
 
-    private void ApplyCarrySlowdown(EntityUid carrier, EntityUid carried)
+    private void ApplyCarrySlowdown(EntityUid carrier, Entity<CarriableComponent> carried)
     {
         var massRatio = MassContest(carrier, carried);
 
         if (massRatio == 0f)
             massRatio = 1f;
 
-        var massRatioSquared = Math.Pow(massRatio, 2);
-        var modifier = 1 - (0.15 / massRatioSquared);
-        modifier = Math.Max(0.1, modifier);
+        var carriable = carried.Comp;
+        var massRatioSquared = massRatio * massRatio;
+        var modifier = 1f - carriable.SpeedPenalty / massRatioSquared;
+        modifier = Math.Max(carriable.MinimumSpeedModifier, modifier);
 
-        _slowdown.SetModifier(carrier, (float) modifier);
+        _slowdown.SetModifier(carrier, modifier);
     }
 
     public bool CanCarry(EntityUid carrier, Entity<CarriableComponent> carried)
@@ -356,9 +351,9 @@ public sealed partial class CarryingSystem : EntitySystem
         return carrierPhysics.FixturesMass / targetPhysics.FixturesMass;
     }
 
-    private TimeSpan GetPickupDuration(EntityUid carrier, EntityUid carried)
+    private TimeSpan GetPickupDuration(EntityUid carrier, Entity<CarriableComponent> carried)
     {
-        var length = TimeSpan.FromSeconds(3);
+        var length = carried.Comp.PickupDuration;
         var modifier = MassContest(carrier, carried);
 
         if (modifier != 0f)
