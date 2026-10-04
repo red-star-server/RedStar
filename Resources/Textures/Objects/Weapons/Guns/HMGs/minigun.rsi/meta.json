@@ -8,6 +8,12 @@
   },
   "states": [
     {
+      "name": "holstered"
+    },
+    {
+      "name": "notholstered"
+    },
+    {
       "name": "base",
       "delays": [
         [
