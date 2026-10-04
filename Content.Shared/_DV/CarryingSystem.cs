@@ -22,6 +22,7 @@ using Content.Shared.Verbs;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Timing;
 
 namespace Content.Shared._DV;
 
@@ -30,6 +31,7 @@ public sealed partial class CarryingSystem : EntitySystem
     [Dependency] private ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private CarryingSlowdownSystem _slowdown = default!;
     [Dependency] private INetManager _net = default!;
+    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private MovementSpeedModifierSystem _movementSpeed = default!;
     [Dependency] private PullingSystem _pulling = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
@@ -97,6 +99,9 @@ public sealed partial class CarryingSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnParentChanged(Entity<CarryingComponent> ent, ref EntParentChangedMessage args)
     {
+        if (_timing.ApplyingState)
+            return;
+
         var xform = Transform(ent);
 
         if (xform.MapUid != args.OldMapId)
@@ -203,6 +208,13 @@ public sealed partial class CarryingSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
+    private void OnCarriableShutdown(Entity<CarriableComponent> ent, ref ComponentShutdown args)
+    {
+        if (TryComp<BeingCarriedComponent>(ent, out var carried))
+            DropCarried(carried.Carrier, ent);
+    }
+
+    [SubscribeLocalEvent]
     private void OnDoAfter(Entity<CarriableComponent> ent, ref CarryDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled)
@@ -286,6 +298,9 @@ public sealed partial class CarryingSystem : EntitySystem
 
     public void DropCarried(EntityUid carrier, EntityUid carried, bool attachToGrid = true)
     {
+        if (_timing.ApplyingState)
+            return;
+
         if (!TryComp<BeingCarriedComponent>(carried, out var component) || component.Carrier != carrier || component.Releasing)
             return;
 
@@ -310,7 +325,7 @@ public sealed partial class CarryingSystem : EntitySystem
 
     private void ReleaseCarried(Entity<BeingCarriedComponent> ent, bool attachToGrid = true)
     {
-        if (ent.Comp.Releasing)
+        if (_timing.ApplyingState || ent.Comp.Releasing)
             return;
 
         ent.Comp.Releasing = true;

@@ -21,5 +21,6 @@ public sealed partial class BeingCarriedComponent : Component
     /// <summary>
     /// Prevents reentrant cleanup and disables carry restrictions during release.
     /// </summary>
+    [AutoNetworkedField]
     public bool Releasing;
 }
