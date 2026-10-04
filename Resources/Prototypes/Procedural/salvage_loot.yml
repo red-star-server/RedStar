@@ -105,6 +105,10 @@
         - proto: WeaponTeslaGun
           prob: 0.1
           cost: 2
+        # RS14-start
+        - proto: ClothingShoesHeelsGold
+          prob: 0.75
+        # RS14-end
 
 # Mob loot table
 
