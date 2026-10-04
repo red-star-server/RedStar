@@ -8,6 +8,9 @@
     },
     "states": [
         {
+            "name": "bolt-open"
+        },
+        {
             "name": "icon"
         },
         {

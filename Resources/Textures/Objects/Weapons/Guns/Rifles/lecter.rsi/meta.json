@@ -8,6 +8,18 @@
     },
     "states": [
         {
+            "name": "mag-1"
+        },
+        {
+            "name": "mag-2"
+        },
+        {
+            "name": "mag-3"
+        },
+        {
+            "name": "mag-4"
+        },
+        {
             "name": "icon"
         },
         {

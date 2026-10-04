@@ -8,6 +8,10 @@
     },
     "states": [
         {
+            "name": "equipped-SUITSTORAGE",
+            "directions": 4
+        },
+        {
             "name": "icon"
         },
         {
