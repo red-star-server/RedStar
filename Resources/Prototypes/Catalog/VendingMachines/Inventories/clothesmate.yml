@@ -61,6 +61,13 @@
       ClothingShoesColorOrange: 2
       ClothingShoesColorRed: 2
       ClothingShoesColorPurple: 2
+      # RS14-start
+      ClothingShoesHeelsRed: 4
+      ClothingShoesHeelsBlack: 4
+      ClothingShoesHeelsBlue: 4
+      ClothingShoesHeelsGreen: 4
+      ClothingShoesHeelsBrown: 4
+      # RS14-end
   - name: vending-machine-category-headwear
     icon: { entity: ClothingHeadHatGreysoft }
     startingInventory:

@@ -1,0 +1,25 @@
+﻿# Shoes
+- type: loadout
+  id: BlackCommandHeels
+  equipment:
+    shoes: ClothingShoesHeelsCommandBlack
+
+- type: loadout
+  id: BlueCommandHeels
+  equipment:
+    shoes: ClothingShoesHeelsCommandBlue
+
+- type: loadout
+  id: RedCommandHeels
+  equipment:
+    shoes: ClothingShoesHeelsCommandRed
+
+- type: loadout
+  id: LeatherShoes
+  equipment:
+    shoes: ClothingShoesLeather
+
+- type: loadout
+  id: LacedShoes
+  equipment:
+    shoes: ClothingShoesBootsLaceup

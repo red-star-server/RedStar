@@ -10,7 +10,7 @@
     sprite: _Impstation/Clothing/Shoes/Heels/heelsred.rsi
   - type: FootstepModifier
     footstepSoundCollection:
-      collection: FootstepHighheels
+      collection: FootstepHeelsHigh
   - type: MeleeWeapon
     damage:
       types:
@@ -94,3 +94,14 @@
     sprite: _Impstation/Clothing/Shoes/Heels/heelscommandblue.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Shoes/Heels/heelscommandblue.rsi
+
+- type: entity
+  parent: ClothingShoesHeelsCommandBlack
+  id: ClothingShoesHeelsCommandRed
+  name: gilded red high-heels
+  description: Gilded red high-heels specially made for command, these are sure to strike fear in others.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Shoes/Heels/heelscommandred.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Shoes/Heels/heelscommandred.rsi
