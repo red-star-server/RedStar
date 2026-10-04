@@ -311,9 +311,6 @@
         - state: freezerOff
           map: [ "enum.PowerDeviceVisualLayers.Powered" ]
         # RS14-start
-        - state: freezerOn
-          map: ["enum.PowerDeviceVisualLayers.Powered"]
-          visible: false
         - state: freezer-Unshaded
           shader: unshaded
           map: ["freezing"]
@@ -341,9 +338,9 @@
       visuals:
         enum.PowerDeviceVisuals.Powered:
           enum.PowerDeviceVisualLayers.Powered:
+            True: { state: freezerOn }
+            False: { state: freezerOff }
           # RS14-start
-            True: { visible: true }
-            False: { visible: false }
           freezing:
             True: { visible: true }
             False: { visible: false }
@@ -391,12 +388,10 @@
         - state: heaterOff
           map: [ "enum.PowerDeviceVisualLayers.Powered" ]
         # RS14-start
-        - state: heaterOn
-          map: ["enum.PowerDeviceVisualLayers.Powered"]
-          visible: false
         - state: heater-Unshaded
           shader: unshaded
           map: ["heating"]
+          visible: false
         # RS14-end
         - state: heaterPanelOpen
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
@@ -420,9 +415,9 @@
       visuals:
         enum.PowerDeviceVisuals.Powered:
           enum.PowerDeviceVisualLayers.Powered:
+            True: { state: heaterOn }
+            False: { state: heaterOff }
           # RS14-start
-            True: { visible: true }
-            False: { visible: false }
           heating:
             True: { visible: true }
             False: { visible: false }
