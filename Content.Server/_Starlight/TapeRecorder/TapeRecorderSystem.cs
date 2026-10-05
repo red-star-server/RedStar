@@ -9,7 +9,10 @@ using Content.Shared._Starlight.TapeRecorder.Events;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using System.Text;
+using System.Linq;
 using Content.Shared._Corvax.TTS.Components;
+using Content.Shared._Corvax.TTS.Events;
+using Content.Shared.Humanoid;
 using Content.Shared.Speech.Components;
 
 namespace Content.Server._Starlight.TapeRecorder;
@@ -46,9 +49,9 @@ public sealed partial class TapeRecorderSystem : SharedTapeRecorderSystem
         var speech = EnsureComp<SpeechComponent>(ent);
         var tts = EnsureComp<TTSComponent>(ent);
 
-        foreach (var message in tape.RecordedData)
+        foreach (var message in tape.RecordedData.OrderBy(x => x.Timestamp))
         {
-            if (message.Timestamp < tape.CurrentPosition || message.Timestamp >= segmentEnd)
+            if (message.Timestamp < segmentStart || message.Timestamp >= segmentEnd)
                 continue;
 
             //Change the voice to match the speaker
@@ -58,11 +61,7 @@ public sealed partial class TapeRecorderSystem : SharedTapeRecorderSystem
             speech.SpeechVerb = _proto.Index(verb);
 
             // Set the TTS voice if one was recorded for this message
-            if (!string.IsNullOrEmpty(message.VoiceId))
-            {
-                tts.VoicePrototypeId = message.VoiceId;
-                Dirty(ent, tts);
-            }
+            tts.VoicePrototypeId = message.VoiceId;
 
             //Play the message
             _chat.TrySendInGameICMessage(ent, message.Message, InGameICChatType.Speak, false);
@@ -92,11 +91,19 @@ public sealed partial class TapeRecorderSystem : SharedTapeRecorderSystem
         var nameEv = new TransformSpeakerNameEvent(args.Source, Name(args.Source));
         RaiseLocalEvent(args.Source, nameEv);
 
-        //Get the speaker's TTS voice if they have one
+        // Resolve the same voice as TTSSystem, including profile voices and voice masks.
         string? voiceId = null;
         if (TryComp<TTSComponent>(args.Source, out var ttsComp))
-        {
             voiceId = ttsComp.VoicePrototypeId;
+
+        if (voiceId == null && TryComp<HumanoidProfileComponent>(args.Source, out var humanoid))
+            voiceId = humanoid.TTSVoice;
+
+        if (voiceId != null)
+        {
+            var voiceEv = new TransformSpeakerVoiceEvent(args.Source, voiceId);
+            RaiseLocalEvent(args.Source, voiceEv);
+            voiceId = voiceEv.VoiceId;
         }
 
         //Add a new entry to the tape
@@ -119,10 +126,8 @@ public sealed partial class TapeRecorderSystem : SharedTapeRecorderSystem
         var text = new StringBuilder();
         var paper = Spawn(comp.PaperPrototype, Transform(ent).Coordinates);
 
-        // Sorting list by time for overwrite order
-        // TODO: why is this needed? why wouldn't it be stored in order
-        var data = cassette.Comp.RecordedData;
-        data.Sort((x,y) => x.Timestamp.CompareTo(y.Timestamp));
+        // Re-recording an earlier section can append entries after later recordings.
+        var data = cassette.Comp.RecordedData.OrderBy(x => x.Timestamp);
 
         // Looking if player's entity exists to give paper in its hand
         var player = args.Actor;
@@ -136,7 +141,7 @@ public sealed partial class TapeRecorderSystem : SharedTapeRecorderSystem
 
         text.AppendLine(Loc.GetString("tape-recorder-print-start-text"));
         text.AppendLine();
-        foreach (var message in cassette.Comp.RecordedData)
+        foreach (var message in data)
         {
             var name = message.Name ?? ent.Comp.DefaultName;
             var time = TimeSpan.FromSeconds(message.Timestamp);

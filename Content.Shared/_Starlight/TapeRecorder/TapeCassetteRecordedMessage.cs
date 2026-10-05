@@ -7,7 +7,7 @@ namespace Content.Shared._Starlight.TapeRecorder;
 /// Every chat event recorded on a tape is saved in this format
 /// </summary>
 [ImplicitDataDefinitionForInheritors]
-public sealed partial class TapeCassetteRecordedMessage : IComparable<TapeCassetteRecordedMessage>
+public sealed partial class TapeCassetteRecordedMessage
 {
     /// <summary>
     /// Number of seconds since the start of the tape that this event was recorded at
@@ -46,13 +46,5 @@ public sealed partial class TapeCassetteRecordedMessage : IComparable<TapeCasset
         Verb = verb;
         Message = message;
         VoiceId = voiceId;
-    }
-
-    public int CompareTo(TapeCassetteRecordedMessage? other)
-    {
-        if (other == null)
-            return 0;
-
-        return (int) (Timestamp - other.Timestamp);
     }
 }

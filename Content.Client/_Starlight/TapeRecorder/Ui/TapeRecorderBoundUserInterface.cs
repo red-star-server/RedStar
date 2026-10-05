@@ -1,9 +1,11 @@
 using Content.Shared._Starlight.TapeRecorder.Components;
 using Content.Shared._Starlight.TapeRecorder.Events;
+using JetBrains.Annotations;
 using Robust.Shared.Timing;
 
 namespace Content.Client._Starlight.TapeRecorder.Ui;
 
+[UsedImplicitly]
 public sealed partial class TapeRecorderBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [Dependency] private IEntityManager _entMan = default!;
@@ -54,7 +56,7 @@ public sealed partial class TapeRecorderBoundUserInterface(EntityUid owner, Enum
     {
         base.Dispose(disposing);
         if (disposing)
-            _window?.Dispose();
+            _window?.Close();
     }
 }
 
