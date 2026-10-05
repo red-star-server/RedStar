@@ -1,0 +1,14 @@
+- type: entity
+  id: SlimeOperatingTable
+  parent: DogBed
+  name: slime operating table
+  description: Special medical table for surgery. This one just seems to be a useless prop, though.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Tables/slime_optable.rsi
+    state: operating_table
+    noRot: true
+  - type: Icon
+    sprite: _RedStar/Structures/Furniture/Tables/slime_optable.rsi
+    state: table_slime
+  - type: AmbientMusicMarkerMedical
