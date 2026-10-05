@@ -75,7 +75,10 @@ public sealed partial class TapeRecorderComponent : Component
     /// What sound is used when rewind mode is activated
     /// </summary>
     [DataField]
-    public SoundSpecifier? RewindSound = null; // Needs Rewind sound.
+    public SoundSpecifier RewindSound = new SoundPathSpecifier("/Audio/_Starlight/Items/Taperecorder/taperecorder_rewind.ogg")
+    {
+        Params = AudioParams.Default.WithVolume(-2f).WithMaxDistance(3f)
+    };
 
     //Locale references
     [DataField]

@@ -338,7 +338,7 @@ public abstract partial class SharedTapeRecorderSystem : EntitySystem
             EnsureComp<ActiveTapeRecorderComponent>(ent);
         }
 
-        var sound = ent.Comp.Mode switch
+        var sound = mode switch
         {
             TapeRecorderMode.Stopped => ent.Comp.StopSound,
             TapeRecorderMode.Rewinding => ent.Comp.RewindSound,
