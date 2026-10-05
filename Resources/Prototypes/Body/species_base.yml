@@ -133,6 +133,7 @@
         type: HumanoidMarkingModifierBoundUserInterface
       enum.StrippingUiKey.Key:
         type: StrippableBoundUserInterface
+  - type: OfferItem # RS14
   - type: Puller
   - type: Speech
     speechSounds: Alto
