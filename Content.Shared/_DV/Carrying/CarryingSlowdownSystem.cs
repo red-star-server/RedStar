@@ -1,6 +1,6 @@
 using Content.Shared.Movement.Systems;
 
-namespace Content.Shared._DV;
+namespace Content.Shared._DV.Carrying;
 
 public sealed partial class CarryingSlowdownSystem : EntitySystem
 {

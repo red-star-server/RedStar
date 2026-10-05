@@ -25,7 +25,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 
-namespace Content.Shared._DV;
+namespace Content.Shared._DV.Carrying;
 
 public sealed partial class CarryingSystem : EntitySystem
 {

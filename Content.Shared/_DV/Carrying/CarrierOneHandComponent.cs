@@ -1,4 +1,4 @@
-namespace Content.Shared._DV;
+namespace Content.Shared._DV.Carrying;
 
 /// <summary>
 /// Entities with this component override the number of free hands required to carry an entity,
