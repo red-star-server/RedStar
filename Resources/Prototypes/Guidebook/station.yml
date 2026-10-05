@@ -18,14 +18,17 @@
 - type: guideEntry
   id: SpaceLaw
   name: guide-entry-rules-space-law
-  text: "/ServerInfo/Guidebook/ServerRules/SpaceLaw/SpaceLaw.xml"
+  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/SpaceLaw/SpaceLaw.xml" # RS14
   children:
   - SpaceLawCrimeList
+  - RedStarSpaceLawSentencing # RS14
+  - RedStarSpaceLawInvestigation # RS14
+  - RedStarSpaceLawCustody # RS14
 
 - type: guideEntry
   id: SpaceLawCrimeList
   name: guide-entry-rules-sl-crime-list
-  text: "/ServerInfo/Guidebook/ServerRules/SpaceLaw/SLCrimeList.xml"
+  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/SpaceLaw/SLCrimeList.xml" # RS14
 
 - type: guideEntry
   id: Survival

@@ -1,0 +1,14 @@
+- type: guideEntry
+  id: RedStarSpaceLawSentencing
+  name: guide-entry-redstar-space-law-sentencing
+  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/SpaceLaw/SLSentencing.xml"
+
+- type: guideEntry
+  id: RedStarSpaceLawInvestigation
+  name: guide-entry-redstar-space-law-investigation
+  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/SpaceLaw/SLInvestigation.xml"
+
+- type: guideEntry
+  id: RedStarSpaceLawCustody
+  name: guide-entry-redstar-space-law-custody
+  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/SpaceLaw/SLCustody.xml"
