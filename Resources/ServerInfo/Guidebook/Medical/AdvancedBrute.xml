@@ -1,28 +1,28 @@
 <Document>
   
-  # Specialized Brute Chemicals
+  # Специальные препараты от механических повреждений
 
-  Nanotrasen's greatest scientists have synthesized three more specific brute chemicals! Each one heals a specific damage subtype.
+  Лучшие учёные СССП синтезировали три препарата для разных видов механических повреждений. Каждый лечит свой подтип урона.
 
   <GuideReagentEmbed Reagent="Bruizine"/>
   <GuideReagentEmbed Reagent="Puncturase"/>
   <GuideReagentEmbed Reagent="Lacerinol"/>
 
-  # Razorium
+  # Бритвиум
 
-  [color=red]USE CAUTION[/color] when using the aforementioned specialized brute chemicals. Should one mix together with a different type of brute chemical, the resulting mixture will create a dangerous chemical known as Razorium!
+  [color=red]БУДЬТЕ ОСТОРОЖНЫ[/color] с этими препаратами. Если смешать средства от разных видов механических повреждений, образуется опасный бритвиум!
   <GuideReagentEmbed Reagent="Razorium"/>
-  To avoid this, make sure the patient is done metabolizing one brute medication before giving them another. Keep an eye on the rate their health is changing.
+  Перед введением следующего препарата дождитесь, пока предыдущий полностью выведется из организма пациента. Следите за изменением его состояния.
 
-  [bold]Some examples of mixtures that create Razorium are as follows:[/bold]
+  [bold]Примеры сочетаний, образующих бритвиум:[/bold]
 
-  Bicaridine and Puncturase
+  Бикаридин и пунктураз
 
-  Puncturase and Lacerinol
+  Пунктураз и лацеринол
 
-  Bruizine and Bicaridine
+  Бруизин и бикаридин
 
-  Lacerinol and Bruizine
+  Лацеринол и бруизин
 
-  Please note that [bold]any[/bold] combination of these 4 chemicals will likely mix and create Razorium! Be careful when creating these chemicals, as they contain Bicaridine. Any leftover Bicaridine will likely mix to create Razorium!
+  [bold]Любая[/bold] комбинация этих четырёх веществ может образовать бритвиум. Будьте внимательны при приготовлении препаратов: остатки бикаридина тоже вступают в реакцию!
 </Document>
