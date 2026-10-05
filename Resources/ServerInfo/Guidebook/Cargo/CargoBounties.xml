@@ -1,21 +1,21 @@
 <Document>
-  # Cargo Bounties
-  While [textlink="Cargo" link="Cargo"] can make [color=cyan]spesos[color] selling just about anything, more spesos can be made by fulfilling [color=cyan]bounties[/color] found through the Cargo Bounty Computer.
+  # Запросы отдела снабжения
+  Хотя [textlink="снабжение" link="Cargo"] может зарабатывать [color=cyan]кредиты[/color], продавая почти любые вещи, выполнение [color=cyan]запросов[/color] с консоли запросов приносит больше денег.
 
-  ## Starting Bounties
+  ## Выбор запроса
 
   <Box>
     <GuideEntityEmbed Entity="ComputerCargoBounty"/>
     <GuideEntityEmbed Entity="PaperCargoBountyManifest"/>
   </Box>
 
-  To start a bounty, open the bounty screen by interacting with the [color=cyan]Cargo Bounty Computer[/color]. The Cargo Bounty Computer maintains a list of all the current bounties and lets you either print out a label or skip it.
+  Воспользуйтесь [color=cyan]консолью запросов[/color], чтобы открыть их список. Для каждого активного запроса можно распечатать этикетку или пропустить его.
 
-  - Printing the label gives you a [color=cyan]Bounty Manifest[/color] listing the goods that need to be acquired. You can print out infinite Bounty Manifests, so ensure you are not repeating the same work as another Cargo Technician.
+  - При печати вы получите [color=cyan]этикетку запроса[/color] со списком необходимых товаров. Этикетки можно печатать сколько угодно, но следите, чтобы не повторять работу другого грузчика.
 
-  - Skipping a bounty replaces that bounty with a new one, as there can only be six active bounties at any time. Skipping has a 15-minute cooldown and voids that bounty, which may anger other Cargo Technicians working on it.
+  - Если пропустить запрос, вместо него появится новый: одновременно активны не более шести запросов. Повторно пропустить запрос можно лишь через 15 минут. Пропущенный запрос отменяется, что может расстроить грузчиков, которые уже собирали для него товары.
 
-  ## Fulfilling Bounties
+  ## Выполнение запроса
 
   <Box>
     <GuideEntityEmbed Entity="PaperCargoBountyManifest"/>
@@ -23,13 +23,13 @@
     <GuideEntityEmbed Entity="AppraisalTool"/>
   </Box>
 
-  With the [color=cyan]Bounty Manifest[/color], it is now up to you to collect the required goods, but most departments will give you what you need if you ask for it with a Bounty Manifest.
+  Соберите товары, указанные на [color=cyan]этикетке запроса[/color]. Сотрудники других отделов обычно помогут, если показать им этикетку.
 
-  Once you have collected the goods, return to the cargo bay and put the goods inside an empty [color=cyan]Crate[/color]. After everything is in the crate, close it, and then apply the Bounty Manifest to it.
+  Вернитесь в грузовой отсек и сложите товары в пустой [color=cyan]ящик[/color]. Закройте его и прикрепите этикетку запроса.
 
-  To verify the completion of a bounty, use the [color=cyan]Appraisal Tool[/color] on it. It should show a confirmation that the bounty has been completed.
+  Проверьте ящик [color=cyan]оценочным инструментом[/color]: он должен подтвердить, что запрос выполнен.
 
-  ## Selling Bounties
+  ## Продажа товаров по запросу
 
   <Box>
     <GuideEntityEmbed Entity="PaperCargoBountyManifest"/>
@@ -37,9 +37,9 @@
     <GuideEntityEmbed Entity="CargoPalletSell"/>
   </Box>
 
-  Once you have verified that you have completed the bounty, follow the same steps as selling anything else.
+  Убедившись, что запрос выполнен, продавайте ящик как любой другой груз.
 
-  Just transport it to the [color=cyan]Trading Station[/color], sell it, and you are done!
+  Доставьте его на [color=cyan]торговую станцию[/color] и продайте.
 
-  When you return, there should be a new bounty to take its place.
+  Когда вернётесь, на месте выполненного запроса появится новый.
 </Document>
