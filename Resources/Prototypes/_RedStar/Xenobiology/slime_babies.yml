@@ -7,6 +7,8 @@
   components:
   - type: SlimeLifecycle
     stage: Baby
+  - type: Butcherable
+    spawned: []
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/gray.rsi
     layers:
@@ -19,6 +21,8 @@
   components:
   - type: SlimeLifecycle
     stage: Baby
+  - type: Butcherable
+    spawned: []
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/orange.rsi
     layers:
@@ -31,6 +35,8 @@
   components:
   - type: SlimeLifecycle
     stage: Baby
+  - type: Butcherable
+    spawned: []
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/purple.rsi
     layers:
@@ -43,6 +49,8 @@
   components:
   - type: SlimeLifecycle
     stage: Baby
+  - type: Butcherable
+    spawned: []
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/blue.rsi
     layers:
@@ -55,6 +63,8 @@
   components:
   - type: SlimeLifecycle
     stage: Baby
+  - type: Butcherable
+    spawned: []
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/metal.rsi
     layers:
@@ -67,6 +77,8 @@
   components:
   - type: SlimeLifecycle
     stage: Baby
+  - type: Butcherable
+    spawned: []
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/yellow.rsi
     layers:
@@ -79,6 +91,8 @@
   components:
   - type: SlimeLifecycle
     stage: Baby
+  - type: Butcherable
+    spawned: []
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/dark_purple.rsi
     layers:
@@ -91,6 +105,8 @@
   components:
   - type: SlimeLifecycle
     stage: Baby
+  - type: Butcherable
+    spawned: []
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/dark_blue.rsi
     layers:
@@ -103,6 +119,8 @@
   components:
   - type: SlimeLifecycle
     stage: Baby
+  - type: Butcherable
+    spawned: []
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/silver.rsi
     layers:
@@ -115,6 +133,8 @@
   components:
   - type: SlimeLifecycle
     stage: Baby
+  - type: Butcherable
+    spawned: []
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/bluespace.rsi
     layers:
@@ -127,6 +147,8 @@
   components:
   - type: SlimeLifecycle
     stage: Baby
+  - type: Butcherable
+    spawned: []
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/sepia.rsi
     layers:
@@ -139,6 +161,8 @@
   components:
   - type: SlimeLifecycle
     stage: Baby
+  - type: Butcherable
+    spawned: []
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/cerulean.rsi
     layers:
@@ -151,6 +175,8 @@
   components:
   - type: SlimeLifecycle
     stage: Baby
+  - type: Butcherable
+    spawned: []
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/pyrite.rsi
     layers:
@@ -163,6 +189,8 @@
   components:
   - type: SlimeLifecycle
     stage: Baby
+  - type: Butcherable
+    spawned: []
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/red.rsi
     layers:
@@ -175,6 +203,8 @@
   components:
   - type: SlimeLifecycle
     stage: Baby
+  - type: Butcherable
+    spawned: []
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/green.rsi
     layers:
@@ -187,6 +217,8 @@
   components:
   - type: SlimeLifecycle
     stage: Baby
+  - type: Butcherable
+    spawned: []
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/pink.rsi
     layers:
@@ -199,6 +231,8 @@
   components:
   - type: SlimeLifecycle
     stage: Baby
+  - type: Butcherable
+    spawned: []
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/gold.rsi
     layers:
@@ -211,6 +245,8 @@
   components:
   - type: SlimeLifecycle
     stage: Baby
+  - type: Butcherable
+    spawned: []
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/oil.rsi
     layers:
@@ -223,6 +259,8 @@
   components:
   - type: SlimeLifecycle
     stage: Baby
+  - type: Butcherable
+    spawned: []
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/black.rsi
     layers:
@@ -235,6 +273,8 @@
   components:
   - type: SlimeLifecycle
     stage: Baby
+  - type: Butcherable
+    spawned: []
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/light_pink.rsi
     layers:
@@ -247,6 +287,8 @@
   components:
   - type: SlimeLifecycle
     stage: Baby
+  - type: Butcherable
+    spawned: []
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/adamantine.rsi
     layers:
@@ -259,6 +301,8 @@
   components:
   - type: SlimeLifecycle
     stage: Baby
+  - type: Butcherable
+    spawned: []
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/rainbow.rsi
     layers:

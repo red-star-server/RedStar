@@ -1,6 +1,5 @@
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server._RedStar.Xenobiology.Slimes.Components;
 
@@ -21,10 +20,4 @@ public sealed partial class SlimeComponent : Component
     /// </summary>
     [DataField(required: true)]
     public FixedPoint2 NutritionOnHit;
-
-    /// <summary>
-    /// The extract this slime provides when processed in the Slime Processor.
-    /// </summary>
-    [DataField(required: true)]
-    public EntProtoId Extract;
 }
