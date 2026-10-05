@@ -15,6 +15,7 @@
   - RedStarRule7
   - RedStarRule8
   - RedStarRule9
+  - RedStarRoleTypes
   - RedStarSiliconRules
 
 - type: guideEntry
@@ -88,9 +89,16 @@
   text: "/ServerInfo/_RedStar/Guidebook/ServerRules/CoreRules/Rule9.xml"
 
 - type: guideEntry
+  id: RedStarRoleTypes
+  name: guide-entry-redstar-role-types
+  priority: 11
+  ruleEntry: true
+  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/RoleTypes.xml"
+
+- type: guideEntry
   id: RedStarSiliconRules
   name: guide-entry-redstar-silicon-rules
-  priority: 11
+  priority: 12
   ruleEntry: true
   text: "/ServerInfo/_RedStar/Guidebook/ServerRules/SiliconRules/RuleS0.xml"
   children:

@@ -8,6 +8,7 @@ guide-entry-redstar-rule-6 = Правило 6: Павергейм
 guide-entry-redstar-rule-7 = Правило 7: Нечестная игра
 guide-entry-redstar-rule-8 = Правило 8: ERP
 guide-entry-redstar-rule-9 = Правило 9: Игра за антагониста
+guide-entry-redstar-role-types = Виды ролей
 guide-entry-redstar-silicon-rules = Правила синтетиков
 guide-entry-redstar-rule-s1 = Правило синтетиков 1: Законы синтетика являются правилами
 guide-entry-redstar-rule-s2 = Правило синтетиков 2: Приоритет законов определяется их порядком
