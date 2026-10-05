@@ -13,5 +13,5 @@
     canCollide: false
   - type: Sprite
     drawdepth: FloorObjects
-    sprite: Structures/Specific/Atmospherics/sensor.rsi
+    sprite: _RedStar/Structures/Machines/slime_scanner.rsi
     state: gsensor1
