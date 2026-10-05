@@ -21,10 +21,10 @@ public enum XenobiologySampleStatus : byte
 }
 
 [Serializable, NetSerializable]
-public readonly record struct XenobiologyResearchEntry(EntProtoId<SlimeExtractComponent> Sample, int Reward);
+public readonly record struct XenobiologyResearchEntry(EntProtoId<XenobiologySampleComponent> Sample, int Reward);
 
 [Serializable, NetSerializable]
-public readonly record struct XenobiologyAnalysisResult(EntProtoId<SlimeExtractComponent> Sample, int Reward);
+public readonly record struct XenobiologyAnalysisResult(EntProtoId<XenobiologySampleComponent> Sample, int Reward);
 
 [Serializable, NetSerializable]
 public sealed class XenobiologySampleAnalyzerUiState(
@@ -33,7 +33,7 @@ public sealed class XenobiologySampleAnalyzerUiState(
     int remainingSamples,
     string? serverName,
     NetEntity? sample,
-    EntProtoId<SlimeExtractComponent>? samplePrototype,
+    EntProtoId<XenobiologySampleComponent>? samplePrototype,
     XenobiologySampleStatus status,
     XenobiologyAnalysisResult? result) : BoundUserInterfaceState
 {
@@ -42,7 +42,7 @@ public sealed class XenobiologySampleAnalyzerUiState(
     public int RemainingSamples { get; } = remainingSamples;
     public string? ServerName { get; } = serverName;
     public NetEntity? Sample { get; } = sample;
-    public EntProtoId<SlimeExtractComponent>? SamplePrototype { get; } = samplePrototype;
+    public EntProtoId<XenobiologySampleComponent>? SamplePrototype { get; } = samplePrototype;
     public XenobiologySampleStatus Status { get; } = status;
     public XenobiologyAnalysisResult? Result { get; } = result;
 }

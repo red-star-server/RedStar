@@ -2,7 +2,7 @@
   id: XenobiologySampleAnalyzer
   parent: [BaseMachinePowered, ConstructibleMachine, StructureHealthMachineStrong]
   name: xenobiology sample analyzer
-  description: Analyzes slime extracts for the connected R&D server.
+  description: Analyzes xenobiology samples for the connected R&D server.
   components:
   - type: Sprite
     sprite: Structures/Machines/grinder.rsi
@@ -30,7 +30,7 @@
         name: xenobiology-analyzer-sample-slot
         whitelist:
           components:
-          - SlimeExtract
+          - XenobiologySample
   - type: ContainerContainer
     containers:
       machine_board: !type:Container

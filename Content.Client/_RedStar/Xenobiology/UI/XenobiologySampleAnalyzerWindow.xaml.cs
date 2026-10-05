@@ -151,7 +151,7 @@ public sealed partial class XenobiologySampleAnalyzerWindow : FancyWindow
         CompletedEntries.AddChild(entry);
     }
 
-    private string NameOf(EntProtoId<SlimeExtractComponent> sample) =>
+    private string NameOf(EntProtoId<XenobiologySampleComponent> sample) =>
         _prototypes.TryIndex(sample, out var prototype) ? prototype.Name : sample.Id;
 
 }

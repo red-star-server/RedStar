@@ -5,6 +5,7 @@
   components:
   - type: Item
     size: Tiny
+  - type: XenobiologySample
   - type: SlimeExtract
 
 - type: entity

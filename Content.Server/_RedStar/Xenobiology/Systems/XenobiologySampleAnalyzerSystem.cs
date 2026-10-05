@@ -71,11 +71,11 @@ public sealed partial class XenobiologySampleAnalyzerSystem : EntitySystem
         if (!this.IsPowered(ent, EntityManager) ||
             _slots.GetItemOrNull(ent.Owner, ent.Comp.SampleSlot) is not { } sample ||
             TerminatingOrDeleted(sample) || EntityManager.IsQueuedForDeletion(sample) ||
-            !HasComp<SlimeExtractComponent>(sample) || MetaData(sample).EntityPrototype is not { } prototype ||
+            !HasComp<XenobiologySampleComponent>(sample) || MetaData(sample).EntityPrototype is not { } prototype ||
             !_research.TryGetClientServer(ent.Owner, out var server, out _))
             return;
 
-        if (!_xenobiology.TryCompleteSample(server.Value, new EntProtoId<SlimeExtractComponent>(prototype.ID), out var reward))
+        if (!_xenobiology.TryCompleteSample(server.Value, new EntProtoId<XenobiologySampleComponent>(prototype.ID), out var reward))
             return;
 
         ent.Comp.Result = new XenobiologyAnalysisResult(prototype.ID, reward);
@@ -108,10 +108,10 @@ public sealed partial class XenobiologySampleAnalyzerSystem : EntitySystem
         if (sample != null)
             ent.Comp.Result = null;
 
-        EntProtoId<SlimeExtractComponent>? prototype = null;
-        if (sample is { } sampleUid && HasComp<SlimeExtractComponent>(sampleUid) &&
+        EntProtoId<XenobiologySampleComponent>? prototype = null;
+        if (sample is { } sampleUid && HasComp<XenobiologySampleComponent>(sampleUid) &&
             MetaData(sampleUid).EntityPrototype is { } samplePrototype)
-            prototype = new EntProtoId<SlimeExtractComponent>(samplePrototype.ID);
+            prototype = new EntProtoId<XenobiologySampleComponent>(samplePrototype.ID);
 
         var status = !this.IsPowered(ent, EntityManager) ? XenobiologySampleStatus.Unpowered
             : !hasServer ? XenobiologySampleStatus.NoServer

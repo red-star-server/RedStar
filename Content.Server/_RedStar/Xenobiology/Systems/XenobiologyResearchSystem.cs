@@ -23,7 +23,7 @@ public sealed partial class XenobiologyResearchSystem : EntitySystem
         FillTargets(ent.Comp);
     }
 
-    public bool HasActiveSample(Entity<XenobiologyResearchDatabaseComponent?> server, EntProtoId<SlimeExtractComponent> sample)
+    public bool HasActiveSample(Entity<XenobiologyResearchDatabaseComponent?> server, EntProtoId<XenobiologySampleComponent> sample)
     {
         if (!Resolve(server, ref server.Comp, false) || server.Comp is not { } database)
             return false;
@@ -85,7 +85,7 @@ public sealed partial class XenobiologyResearchSystem : EntitySystem
         return count;
     }
 
-    public bool TryCompleteSample(Entity<XenobiologyResearchDatabaseComponent?> server, EntProtoId<SlimeExtractComponent> sample, out int reward)
+    public bool TryCompleteSample(Entity<XenobiologyResearchDatabaseComponent?> server, EntProtoId<XenobiologySampleComponent> sample, out int reward)
     {
         reward = 0;
         if (!Resolve(server, ref server.Comp, false) || server.Comp is not { } database)

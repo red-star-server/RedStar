@@ -10,7 +10,7 @@ public sealed partial class XenobiologyResearchPrototype : IPrototype
     public string ID { get; private set; } = default!;
 
     [DataField(required: true)]
-    public EntProtoId<SlimeExtractComponent> Sample { get; private set; }
+    public EntProtoId<XenobiologySampleComponent> Sample { get; private set; }
 
     [DataField(required: true)]
     public int Reward { get; private set; }
