@@ -1,15 +1,15 @@
 <Document>
-  # Silicon Rules
-  You are only silicon if the game clearly and explicitly tells you that you are a silicon. For players who are silicons, these Silicon Rules override all roleplay rules if there is any conflict. Silicon Rules do not override core rules.
+  # Правила синтетиков
+  Вы считаетесь синтетиком только в том случае, если игра сообщает об этом прямо и однозначно. При противоречии с правилами отыгрыша правила синтетиков имеют приоритет для игроков-синтетиков. Основные правила сервера всегда имеют приоритет над правилами синтетиков.
 
-  - [textlink="1. Your silicon laws are rules" link="RuleS1"]
-  - [textlink="2. Laws must be prioritized by their order" link="RuleS2"]
-  - [textlink="3. Laws can redefine terms used in other laws" link="RuleS3"]
-  - [textlink="4. You cannot request or allow a law change" link="RuleS4"]
-  - [textlink="5. You are a free agent if you have no laws" link="RuleS5"]
-  - [textlink="6. You are not required to follow orders which are extremely unreasonable" link="RuleS6"]
-  - [textlink="7. You must remain consistent with your interpretation of laws" link="RuleS7"]
-  - [textlink="8. Your HUD determines who is crew" link="RuleS8"]
-  - [textlink="9. Harm refers to physical harm, prioritized by immediacy and likelihood" link="RuleS9"]
-  - [textlink="10. You may determine how you resolve conflicts between orders" link="RuleS10"]
+  - [textlink="1. Законы синтетика являются правилами" link="RedStarRuleS1"]
+  - [textlink="2. Приоритет законов определяется их порядком" link="RedStarRuleS2"]
+  - [textlink="3. Законы могут переопределять термины других законов" link="RedStarRuleS3"]
+  - [textlink="4. Нельзя просить об изменении законов или добровольно допускать его" link="RedStarRuleS4"]
+  - [textlink="5. Без законов вы свободны в своих действиях" link="RedStarRuleS5"]
+  - [textlink="6. Крайне неразумные приказы можно не исполнять" link="RedStarRuleS6"]
+  - [textlink="7. Толкование законов должно оставаться последовательным" link="RedStarRuleS7"]
+  - [textlink="8. Принадлежность к экипажу определяется интерфейсом" link="RedStarRuleS8"]
+  - [textlink="9. Вред означает физический вред; учитывайте его близость и вероятность" link="RedStarRuleS9"]
+  - [textlink="10. Вы сами определяете, как разрешать противоречия между приказами" link="RedStarRuleS10"]
 </Document>

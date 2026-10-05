@@ -1,9 +1,9 @@
 <Document>
-  # Silicon Rule 10 - You may determine how you resolve conflicts between orders
-  If your laws do not make clear how you should deal with conflicting orders, then it is up to you to determine how to do so. This is considered an interpretation of your laws, so you must stay consistent with whatever method you choose.
+  # Правило синтетиков 10 — Вы сами определяете, как разрешать противоречия между приказами
+  Если законы не объясняют, как поступать при противоречащих друг другу приказах, вы можете выбрать способ сами. Это считается толкованием законов, поэтому придерживайтесь выбранного способа последовательно.
 
-  ## Recommended Methods
-  The following are easy to follow and recommended ways to resolve conflicts in orders:
-  - If two orders conflict, I will follow the most recently given order.
-  - If two orders conflict, I will follow the order from the highest ranking crewmember. If the orders are from equal rank crewmembers, I will follow the most recently given order.
+  ## Рекомендуемые способы
+  Вот два простых способа разрешать противоречия:
+  - Если приказы противоречат друг другу, выполнять последний полученный приказ.
+  - Если приказы противоречат друг другу, выполнять приказ старшего по должности члена экипажа. При равенстве должностей выполнять последний полученный приказ.
 </Document>
