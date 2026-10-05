@@ -14,10 +14,4 @@ public sealed partial class XenobiologyResearchPrototype : IPrototype
 
     [DataField(required: true)]
     public int Reward { get; private set; }
-
-    [DataField]
-    public List<ProtoId<XenobiologyResearchPrototype>> Prerequisites { get; private set; } = [];
-
-    [DataField]
-    public float Weight { get; private set; } = 1;
 }

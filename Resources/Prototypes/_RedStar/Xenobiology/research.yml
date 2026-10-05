@@ -7,153 +7,103 @@
   id: XenobiologyResearchOrange
   sample: OrangeSlimeExtract
   reward: 750
-  prerequisites:
-  - XenobiologyResearchGray
 
 - type: xenobiologyResearch
   id: XenobiologyResearchPurple
   sample: PurpleSlimeExtract
   reward: 750
-  prerequisites:
-  - XenobiologyResearchGray
 
 - type: xenobiologyResearch
   id: XenobiologyResearchBlue
   sample: BlueSlimeExtract
   reward: 750
-  prerequisites:
-  - XenobiologyResearchGray
-  weight: 2
 
 - type: xenobiologyResearch
   id: XenobiologyResearchMetal
   sample: MetalSlimeExtract
   reward: 1000
-  prerequisites:
-  - XenobiologyResearchGray
 
 - type: xenobiologyResearch
   id: XenobiologyResearchYellow
   sample: YellowSlimeExtract
   reward: 1250
-  prerequisites:
-  - XenobiologyResearchOrange
 
 - type: xenobiologyResearch
   id: XenobiologyResearchDarkPurple
   sample: DarkPurpleSlimeExtract
   reward: 1250
-  prerequisites:
-  - XenobiologyResearchPurple
 
 - type: xenobiologyResearch
   id: XenobiologyResearchDarkBlue
   sample: DarkBlueSlimeExtract
   reward: 1250
-  prerequisites:
-  - XenobiologyResearchBlue
 
 - type: xenobiologyResearch
   id: XenobiologyResearchSilver
   sample: SilverSlimeExtract
   reward: 1250
-  prerequisites:
-  - XenobiologyResearchMetal
 
 - type: xenobiologyResearch
   id: XenobiologyResearchBluespace
   sample: BluespaceSlimeExtract
   reward: 1750
-  prerequisites:
-  - XenobiologyResearchYellow
 
 - type: xenobiologyResearch
   id: XenobiologyResearchSepia
   sample: SepiaSlimeExtract
   reward: 1750
-  prerequisites:
-  - XenobiologyResearchDarkPurple
 
 - type: xenobiologyResearch
   id: XenobiologyResearchCerulean
   sample: CeruleanSlimeExtract
   reward: 1750
-  prerequisites:
-  - XenobiologyResearchDarkBlue
 
 - type: xenobiologyResearch
   id: XenobiologyResearchPyrite
   sample: PyriteSlimeExtract
   reward: 1750
-  prerequisites:
-  - XenobiologyResearchSilver
 
 - type: xenobiologyResearch
   id: XenobiologyResearchRed
   sample: RedSlimeExtract
   reward: 1250
-  prerequisites:
-  - XenobiologyResearchOrange
 
 - type: xenobiologyResearch
   id: XenobiologyResearchGreen
   sample: GreenSlimeExtract
   reward: 1250
-  prerequisites:
-  - XenobiologyResearchPurple
 
 - type: xenobiologyResearch
   id: XenobiologyResearchPink
   sample: PinkSlimeExtract
   reward: 1250
-  prerequisites:
-  - XenobiologyResearchBlue
 
 - type: xenobiologyResearch
   id: XenobiologyResearchGold
   sample: GoldSlimeExtract
   reward: 1250
-  prerequisites:
-  - XenobiologyResearchMetal
 
 - type: xenobiologyResearch
   id: XenobiologyResearchOil
   sample: OilSlimeExtract
   reward: 1750
-  prerequisites:
-  - XenobiologyResearchRed
 
 - type: xenobiologyResearch
   id: XenobiologyResearchBlack
   sample: BlackSlimeExtract
   reward: 1750
-  prerequisites:
-  - XenobiologyResearchGreen
 
 - type: xenobiologyResearch
   id: XenobiologyResearchLightPink
   sample: LightPinkSlimeExtract
   reward: 1750
-  prerequisites:
-  - XenobiologyResearchPink
 
 - type: xenobiologyResearch
   id: XenobiologyResearchAdamantine
   sample: AdamantineSlimeExtract
   reward: 1750
-  prerequisites:
-  - XenobiologyResearchGold
 
 - type: xenobiologyResearch
   id: XenobiologyResearchRainbow
   sample: RainbowSlimeExtract
   reward: 3000
-  prerequisites:
-  - XenobiologyResearchBluespace
-  - XenobiologyResearchSepia
-  - XenobiologyResearchCerulean
-  - XenobiologyResearchPyrite
-  - XenobiologyResearchOil
-  - XenobiologyResearchBlack
-  - XenobiologyResearchLightPink
-  - XenobiologyResearchAdamantine

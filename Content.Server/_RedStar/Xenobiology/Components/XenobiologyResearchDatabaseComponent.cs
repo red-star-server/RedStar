@@ -4,17 +4,14 @@ using Robust.Shared.Prototypes;
 namespace Content.Server._RedStar.Xenobiology.Components;
 
 /// <summary>
-/// Xenobiology research progress owned by a regular research server.
+/// Xenobiology discoveries owned by a regular research server.
 /// </summary>
 [RegisterComponent]
 public sealed partial class XenobiologyResearchDatabaseComponent : Component
 {
     [DataField]
-    public int ActiveTargetCount = 3;
+    public HashSet<ProtoId<XenobiologyResearchPrototype>> DiscoveredSamples = [];
 
     [DataField]
-    public HashSet<ProtoId<XenobiologyResearchPrototype>> CompletedTargets = [];
-
-    [DataField]
-    public List<ProtoId<XenobiologyResearchPrototype>> ActiveTargets = [];
+    public float RepeatRewardMultiplier = 0.2f;
 }

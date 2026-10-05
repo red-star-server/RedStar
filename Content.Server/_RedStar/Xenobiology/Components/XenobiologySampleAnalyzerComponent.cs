@@ -1,4 +1,3 @@
-using Content.Shared._RedStar.Xenobiology.UI;
 using Robust.Shared.Audio;
 
 namespace Content.Server._RedStar.Xenobiology.Components;
@@ -10,9 +9,16 @@ public sealed partial class XenobiologySampleAnalyzerComponent : Component
     public string SampleSlot = "sample";
 
     [DataField]
+    public TimeSpan AnalysisDuration = TimeSpan.FromSeconds(8);
+
+    [DataField]
     public SoundSpecifier CompletionSound = new SoundPathSpecifier("/Audio/Machines/scan_finish.ogg");
 
-    public XenobiologyAnalysisResult? Result;
-
-    public XenobiologySampleAnalyzerUiState? LastState;
+    public EntityUid? ProcessingSample;
+    public EntityUid? ProcessingServer;
+    public TimeSpan? AnalysisEndTime;
+    public TimeSpan RemainingAnalysisTime;
+    public TimeSpan NextUiUpdate;
+    public TimeSpan? CompleteUntil;
+    public int? LastReward;
 }

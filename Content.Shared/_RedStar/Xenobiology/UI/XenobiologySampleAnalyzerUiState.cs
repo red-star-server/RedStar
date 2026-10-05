@@ -1,5 +1,3 @@
-using Content.Shared._RedStar.Xenobiology.Components;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared._RedStar.Xenobiology.UI;
@@ -17,34 +15,22 @@ public enum XenobiologySampleStatus : byte
     NoServer,
     Unpowered,
     Unmatched,
-    Ready
+    Ready,
+    Processing,
+    Complete
 }
 
 [Serializable, NetSerializable]
-public readonly record struct XenobiologyResearchEntry(EntProtoId<XenobiologySampleComponent> Sample, int Reward);
-
-[Serializable, NetSerializable]
-public readonly record struct XenobiologyAnalysisResult(EntProtoId<XenobiologySampleComponent> Sample, int Reward);
-
-[Serializable, NetSerializable]
 public sealed class XenobiologySampleAnalyzerUiState(
-    XenobiologyResearchEntry[] targets,
-    XenobiologyResearchEntry[] completedTargets,
-    int remainingSamples,
-    string? serverName,
     NetEntity? sample,
-    EntProtoId<XenobiologySampleComponent>? samplePrototype,
     XenobiologySampleStatus status,
-    XenobiologyAnalysisResult? result) : BoundUserInterfaceState
+    float progress,
+    int? reward) : BoundUserInterfaceState
 {
-    public XenobiologyResearchEntry[] Targets { get; } = targets;
-    public XenobiologyResearchEntry[] CompletedTargets { get; } = completedTargets;
-    public int RemainingSamples { get; } = remainingSamples;
-    public string? ServerName { get; } = serverName;
     public NetEntity? Sample { get; } = sample;
-    public EntProtoId<XenobiologySampleComponent>? SamplePrototype { get; } = samplePrototype;
     public XenobiologySampleStatus Status { get; } = status;
-    public XenobiologyAnalysisResult? Result { get; } = result;
+    public float Progress { get; } = progress;
+    public int? Reward { get; } = reward;
 }
 
 [Serializable, NetSerializable]

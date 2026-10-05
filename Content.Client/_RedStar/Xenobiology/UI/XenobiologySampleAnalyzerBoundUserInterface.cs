@@ -1,5 +1,4 @@
 using Content.Shared._RedStar.Xenobiology.UI;
-using Content.Shared.Research.Components;
 using Robust.Client.UserInterface;
 
 namespace Content.Client._RedStar.Xenobiology.UI;
@@ -13,7 +12,6 @@ public sealed class XenobiologySampleAnalyzerBoundUserInterface(EntityUid owner,
         base.Open();
         _window = this.CreateWindow<XenobiologySampleAnalyzerWindow>();
         _window.AnalyzeRequested += () => SendMessage(new XenobiologyAnalyzeSampleMessage());
-        _window.ServerRequested += () => SendMessage(new ConsoleServerSelectionMessage());
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
