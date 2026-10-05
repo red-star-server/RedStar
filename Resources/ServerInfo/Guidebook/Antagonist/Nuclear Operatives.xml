@@ -1,83 +1,83 @@
 <Document>
-  # Nuclear Operatives
+  # Ядерные оперативники
 
   <Box>
-    [color=#999999][italic]"OPERATIVES STANDBY. YOUR OBJECTIVES ARE SIMPLE.[/italic][/color]
+    [color=#999999][italic]"ОПЕРАТИВНИКИ, ПРИГОТОВИТЬСЯ. ВАША ЗАДАЧА ПРОСТА.[/italic][/color]
   </Box>
   <Box>
-    [color=#999999][italic]DELIVER THE PAYLOAD AND GET OUT BEFORE THE PAYLOAD DETONATES. BEGIN MISSION."[/italic][/color]
+    [color=#999999][italic]ДОСТАВЬТЕ ЗАРЯД И УБИРАЙТЕСЬ ДО ВЗРЫВА. ПРИСТУПАЙТЕ К ЗАДАНИЮ."[/italic][/color]
   </Box>
   <Box>
     <GuideEntityEmbed Entity="PosterContrabandEnlistGorlex" Caption=""/>
   </Box>
 
-  You've just been chosen to be a nuclear operative for the [color=#ff0000]Syndicate[/color]. You have one goal, to blow up one of Nanotrasen's finest vessels with a nuclear fission explosive.
+  Вас выбрали ядерным оперативником [color=#ff0000]Синдиката[/color]. Ваша цель — уничтожить один из лучших кораблей СССП ядерным зарядом.
 
-  ## Operatives
-  Your team will be made up of several different roles, which are:
-  - [bold]Operatives[/bold], standard soldiers who can take up the grunt work.
-  - The [bold]Corpsman[/bold] who works with reagents to make medicines or chemical weapons.
-  - The [bold]Commander[/bold] who draws up the plan and leads the team.
+  ## Оперативники
+  В команде есть несколько ролей:
+  - [bold]Оперативники[/bold] — бойцы, выполняющие основную работу.
+  - [bold]Медик[/bold] работает с реагентами, готовит лекарства и химическое оружие.
+  - [bold]Командир[/bold] составляет план и руководит командой.
 
   <Box>
     <GuideEntityEmbed Entity="ClothingOuterHardsuitSyndie"/>
-    <GuideEntityEmbed Entity="ClothingOuterHardsuitSyndieMedic" Caption="corpsman's hardsuit"/>
-    <GuideEntityEmbed Entity="ClothingOuterHardsuitSyndieCommander" Caption="commander's hardsuit"/>
+    <GuideEntityEmbed Entity="ClothingOuterHardsuitSyndieMedic" Caption="Кроваво-красный медицинский скафандр"/>
+    <GuideEntityEmbed Entity="ClothingOuterHardsuitSyndieCommander" Caption="Скафандр командира Синдиката"/>
   </Box>
 
-  If you have been selected as the Corpsman or Commander but don't feel ready, one of your teammates can take over your responsibilities.
+  Если вас выбрали медиком или командиром, но вы не готовы к этой роли, ваши обязанности может взять на себя товарищ по команде.
 
-  ## The Disk
+  ## Диск
 
-  Each operative starts with a [color=cyan]pinpointer[/color], which you should turn on and keep with you at all times. It will always point to the [color=cyan]nuclear authentication disk.[/color]
-  The disk belongs to the [color=yellow]Captain[/color], who will almost always have it on them. Follow the direction of the arrow on the pinpointer to the disk, and [italic]do whatever it takes to get it[/italic].
+  Каждый оперативник начинает с [color=cyan]пинпоинтером[/color]. Включите его и всегда держите при себе: он указывает на [color=cyan]диск ядерной аутентификации[/color].
+  Диск принадлежит [color=yellow]капитану[/color], который почти всегда носит его с собой. Следуйте за стрелкой пинпоинтера и [italic]любой ценой добудьте диск[/italic].
 
   <Box>
     <GuideEntityEmbed Entity="PinpointerNuclear"/>
     <GuideEntityEmbed Entity="NukeDisk"/>
   </Box>
 
-  ## Preparation
-  Each member in your squad has been given an [color=cyan]uplink[/color] to purchase everything you will need for the mission, similar to [textlink="traitors." link="Traitors"]
+  ## Подготовка
+  Каждый член отряда получает [color=cyan]аплинк[/color] для покупки снаряжения, как у [textlink="предателей" link="Traitors"].
 
   <Box>
-    <GuideEntityEmbed Entity="BaseUplinkRadio40TC" Caption="your uplink"/>
+    <GuideEntityEmbed Entity="BaseUplinkRadio40TC" Caption="Ваш аплинк"/>
   </Box>
 
-  You can purchase the same kinds of gear traitors can, but you have higher quality gear available to you and more telecrystals to spend.
+  Вам доступно обычное снаряжение предателей, а также более мощные предметы и больше телекристаллов.
   <Box>
-    <GuideEntityEmbed Entity="WeaponLightMachineGunL6" Caption="Weaponry"/>
-    <GuideEntityEmbed Entity="MagazineLightRifleBox" State="icon" Caption="Ammo"/>
-    <GuideEntityEmbed Entity="C4" Caption="Explosives"/>
-    <GuideEntityEmbed Entity="ClothingOuterHardsuitJuggernaut" Caption="Wearables"/>
-    <GuideEntityEmbed Entity="Stimpack" Caption="Chemicals"/>
+    <GuideEntityEmbed Entity="WeaponLightMachineGunL6" Caption="Оружие"/>
+    <GuideEntityEmbed Entity="MagazineLightRifleBox" State="icon" Caption="Боеприпасы"/>
+    <GuideEntityEmbed Entity="C4" Caption="Взрывчатка"/>
+    <GuideEntityEmbed Entity="ClothingOuterHardsuitJuggernaut" Caption="Экипировка"/>
+    <GuideEntityEmbed Entity="Stimpack" Caption="Химикаты"/>
   </Box>
   <Box>
-    <GuideEntityEmbed Entity="ChameleonProjector" Caption="Deception"/>
-    <GuideEntityEmbed Entity="Emag" Caption="Disruption"/>
-    <GuideEntityEmbed Entity="MacroBombImplanter" Caption="Implants"/>
-    <GuideEntityEmbed Entity="BorgChassisSyndicateAssault" Caption="Allies"/>
-    <GuideEntityEmbed Entity="ClothingEyesGlassesOutlawGlasses" Caption="Pointless"/>
+    <GuideEntityEmbed Entity="ChameleonProjector" Caption="Обман"/>
+    <GuideEntityEmbed Entity="Emag" Caption="Саботаж"/>
+    <GuideEntityEmbed Entity="MacroBombImplanter" Caption="Импланты"/>
+    <GuideEntityEmbed Entity="BorgChassisSyndicateAssault" Caption="Союзники"/>
+    <GuideEntityEmbed Entity="ClothingEyesGlassesOutlawGlasses" Caption="Безделушки"/>
   </Box>
 
-  You'll also have to choose if you want to [color=red]declare war[/color] or not. Doing so grants your team [bold]40 extra telecrystals each[/bold].
-  However, the crew will immediately know of your existence and will have plenty of time to prepare for your arrival.
+  Вам также предстоит решить, [color=red]объявлять ли войну[/color]. Это даст каждому оперативнику [bold]дополнительные 40 телекристаллов[/bold].
+  Однако экипаж сразу узнает о вашем существовании и успеет подготовиться.
 
-  The [bold]Commander[/bold] is the only person who can declare war. Make your choice quick, [italic]this is a limited-time offer![/italic]
+  Объявить войну может только [bold]командир[/bold]. Решайте быстро: [italic]предложение действует недолго![/italic]
   <Box>
     <GuideEntityEmbed Entity="NukeOpsDeclarationOfWar"/>
   </Box>
 
-  ## Getting to the Station
-  You've got the plan, you've got the gear. Now, execute.
+  ## Путь к станции
+  План готов, снаряжение собрано. Пора действовать.
 
-  Go with your other operatives to your [color=cyan]shuttle[/color].
-  Onboard, you'll find a folder with the [color=cyan]nuclear authentication code[/color].
-  Memorize the code, then [bold]check to see if the nuke ID matches the nuke on your shuttle.[/bold] If it doesn't, you'll be arming the station's nuke instead.
+  Вместе с командой отправляйтесь на [color=cyan]шаттл[/color].
+  Там вы найдёте папку с [color=cyan]кодом ядерной аутентификации[/color].
+  Запомните код и [bold]проверьте, совпадает ли идентификатор боеголовки в папке с идентификатором боеголовки на шаттле[/bold]. Если нет, вам придётся взвести станционную боеголовку.
 
-  The shuttle is equipped with an [color=cyan]IFF Computer[/color]. It allows you to hide from other ships and mass scanners when [italic]Show IFF[/italic] is toggled off.
+  На шаттле есть [color=cyan]консоль опознавания «свой — чужой»[/color]. Выключив параметр [italic]«Показывать опознавание»[/italic], вы скроетесь от других кораблей и сканеров массы.
 
-  When everyone is ready, FTL to the station and fly to it using the [color=cyan]jetpacks[/color] on the shuttle. Don't forget the code, your pinpointers, and the nuke if you're taking it.
+  Когда все будут готовы, совершите БСС-прыжок к станции и долетите до неё на [color=cyan]реактивных ранцах[/color] с шаттла. Не забудьте код, пинпоинтеры и боеголовку, если собираетесь её взять.
 
   <Box>
     <GuideEntityEmbed Entity="BoxFolderNuclearCodes"/>
@@ -85,41 +85,41 @@
     <GuideEntityEmbed Entity="JetpackBlack"/>
   </Box>
 
-  ## The Nuke & Arming Procedure
-  You've made it this far.  Finish the job.
+  ## Боеголовка и порядок взведения
+  Вы зашли так далеко. Доведите дело до конца.
 
-  - Obtain the [bold]nuclear authentication disk[/bold] and insert it into the nuke.
-  - Type in the [bold]nuclear authentication code[/bold] and press "[bold]E[/bold]" on the keypad to Enter.
-  - [bold]Anchor[/bold] the nuke on solid floor inside the station.
-  - [bold]To begin the detonation sequence, press [color=#EB2D3A]ARM[/color][/bold]. After 300 seconds, the nuke will explode.
-  - [bold]Defend the nuke from NT employees and cyborgs[/bold], even if it's at the cost of your lives! The mission requirements [italic]do not include your return[/italic].
+  - Добудьте [bold]диск ядерной аутентификации[/bold] и вставьте его в боеголовку.
+  - Введите [bold]код ядерной аутентификации[/bold] и нажмите на клавиатуре «[bold]E[/bold]» для подтверждения.
+  - [bold]Закрепите[/bold] боеголовку на прочном полу внутри станции.
+  - [bold]Для запуска отсчёта нажмите [color=#EB2D3A]ARM[/color][/bold]. Боеголовка взорвётся через 300 секунд.
+  - [bold]Защищайте боеголовку от сотрудников СССП и киборгов[/bold], даже ценой жизни! Условия задания [italic]не требуют вашего возвращения[/italic].
 
-  It takes 30 seconds to [bold]disarm[/bold] the nuke. Re-arming it is possible, but the chance of mission success drops if you allow the countdown to be interrupted.
-  Should the nuke be re-armed, the timer will continue from where it left off.
+  На [bold]обезвреживание[/bold] боеголовки требуется 30 секунд. Её можно взвести снова, но прерванный отсчёт снижает шансы на успех.
+  При повторном взведении отсчёт продолжится с того момента, на котором остановился.
 
   <Box>
-    <GuideEntityEmbed Entity="NuclearBomb" Caption="The Nuclear Fission Explosive"/>
+    <GuideEntityEmbed Entity="NuclearBomb" Caption="Ядерная боеголовка"/>
   </Box>
 
-  ## Winning Conditions
+  ## Условия победы
 
-  The [color=#00ff00]victor[/color] of the round is announced on the round end screen, as well as the scale of their victory.
+  На экране завершения раунда объявляются [color=#00ff00]победитель[/color] и степень его успеха.
 
-  [bold][color=red]Syndicate Major Victory![/color][/bold]
-  - The nuke detonates on the station.
-  - The crew escapes on evac, but the nuke is still armed.
-  - The nuke is armed and delivered to Central Command on the evac shuttle.
+  [bold][color=red]Крупная победа Синдиката![/color][/bold]
+  - Боеголовка взорвалась на станции.
+  - Экипаж эвакуировался, но боеголовка осталась взведённой.
+  - Взведённую боеголовку доставили в Генштаб на эвакуационном шаттле.
 
-  [bold][color=red]Syndicate Minor Victory[/color][/bold]
-  - At least one operative survives, and the crew escapes, leaving the disk behind.
+  [bold][color=red]Малая победа Синдиката[/color][/bold]
+  - Хотя бы один оперативник выжил, а экипаж эвакуировался, оставив диск.
 
-  [bold][color=#999999]Neutral Victory[/color][/bold]
-  - The nuke detonates off the station.
+  [bold][color=#999999]Ничья[/color][/bold]
+  - Боеголовка взорвалась вне станции.
 
-  [bold][color=green]Crew Minor Victory[/color][/bold]
-  - The crew escapes on evac with the disk and some operatives die.
+  [bold][color=green]Малая победа экипажа[/color][/bold]
+  - Экипаж эвакуировался с диском, а часть оперативников погибла.
 
-  [bold][color=green]Crew Major Victory![/color][/bold]
-  - All operatives die.
-  - The crew blow up the nuclear operative outpost with the nuke.
+  [bold][color=green]Крупная победа экипажа![/color][/bold]
+  - Все оперативники погибли.
+  - Экипаж взорвал базу ядерных оперативников с помощью боеголовки.
 </Document>
