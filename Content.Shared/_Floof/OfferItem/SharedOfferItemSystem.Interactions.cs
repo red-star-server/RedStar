@@ -27,14 +27,11 @@ public abstract partial class SharedOfferItemSystem
     }
 
     /// <summary>
-    ///     This sets IsInOfferMode to true, allowing the player to select whom to offer an item to with interaction.
+    /// This sets IsInOfferMode to true, allowing the player to select whom to offer an item to with interaction.
     /// </summary>
     private void SetInOfferMode(ICommonSession? offerer)
     {
-        if (offerer is not { } playerSession)
-            return;
-
-        if (playerSession.AttachedEntity is not { Valid: true } uid)
+        if (offerer?.AttachedEntity is not { Valid: true } uid)
             return;
 
         if (!Exists(uid))

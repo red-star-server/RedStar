@@ -20,7 +20,7 @@ public sealed class OfferItemIndicatorsOverlay : Overlay
 
     private readonly Color _mainColor = Color.White.WithAlpha(0.3f);
     private readonly Color _strokeColor = Color.Black.WithAlpha(0.5f);
-    private readonly float _scale = 0.6f;  // 1 is a little big
+    private const float _scale = 0.6f; // 1 is a little big
 
     public OfferItemIndicatorsOverlay(IInputManager input, IEntityManager entMan,
             IEyeManager eye, OfferItemSystem offerSys)
@@ -30,15 +30,12 @@ public sealed class OfferItemIndicatorsOverlay : Overlay
         _offer = offerSys;
 
         var spriteSys = entMan.EntitySysManager.GetEntitySystem<SpriteSystem>();
-        _sight = spriteSys.Frame0(new SpriteSpecifier.Rsi(new("/Textures/_Floof/Interface/Misc/give_item.rsi"), "give_item"));
+        _sight = spriteSys.Frame0(new SpriteSpecifier.Rsi(new ResPath("/Textures/_Floof/Interface/Misc/give_item.rsi"), "give_item"));
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
     {
-        if (!_offer.IsInOfferMode())
-            return false;
-
-        return base.BeforeDraw(in args);
+        return _offer.IsInOfferMode() && base.BeforeDraw(in args);
     }
 
     protected override void Draw(in OverlayDrawArgs args)
