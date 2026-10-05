@@ -1,54 +1,54 @@
 <Document>
-# The Captains and the Clowns
-This is a guide for editing your character's appearance. Make sure you read Character Creation first.
-Upon creating your character, you may be intimidated by your vast range of options.
+# Капитаны и клоуны
+Это руководство поможет настроить внешность персонажа. Сначала прочитайте страницу о создании персонажа.
+При создании персонажа выбор настроек может показаться слишком большим.
 
-It's okay to make your first character [color=#a4885c]randomized[/color] and roll with it, even experienced players do it.
-Making your first character doesn't have to be precise, either. You can [color=#a4885c]wing it[/color] and see what happens.
+Первого персонажа вполне можно сделать [color=#a4885c]случайным[/color] — так поступают даже опытные игроки.
+Необязательно сразу продумывать каждую деталь. Попробуйте [color=#a4885c]действовать по наитию[/color] и посмотреть, что получится.
 
-If you'd like to be [color=#a4885c]methodical[/color], though, creating a character is easy to do one step at a time.
+Если вы предпочитаете [color=#a4885c]всё продумать[/color], настройте персонажа шаг за шагом.
 
-## Choosing a Species
-Most species have minor differences, which you can read about under the [color=#a4885c]Species[/color] entry.
-However, you may find that it's easier to make your first character as a human, moth, dwarf or reptilian.
+## Выбор вида
+Большинство видов немного различаются между собой. Подробнее об этом написано в разделе [color=#a4885c]«Виды»[/color].
+Для первого персонажа может быть проще выбрать человека, ниану, дворфа или унатха.
 
-This shouldn't discourage you from getting creative with your character, though.
+Это не значит, что нужно отказываться от более необычных идей.
 
-This guide will assume you are creating a human, but the process is similar across all species.
+В примерах ниже предполагается, что вы создаёте человека, но для других видов процесс похож.
 
-## Minor Characteristics
-These include:
-- Age (18-29 for young, 30-59 for middle-aged, 60+ for old)
-- Sex (your sprite, as seen by toggling "Show clothing")
-- Pronouns (what the game will refer to you as)
-- Skin color (may be a slider or RGB depending on species)
-- Eye color (RGB)
-- Hair color (RGB)
+## Основные характеристики
+К ним относятся:
+- Возраст (18–29 лет — молодой, 30–59 — среднего возраста, 60 и старше — пожилой).
+- Пол (внешний вид спрайта можно посмотреть, отключив «Показывать одежду»).
+- Местоимения (как игра будет обращаться к персонажу).
+- Цвет кожи (ползунок или настройки RGB в зависимости от вида).
+- Цвет глаз (RGB).
+- Цвет волос (RGB).
 
-These are minor changes and have little effect on gameplay. This is what players will read when they [color=#a4885c]examine you[/color]. ("young man")
+Эти настройки почти не влияют на игру. Часть из них другие игроки увидят при [color=#a4885c]осмотре персонажа[/color] (например, «молодой мужчина»).
 
-## Hair and Facial Hair
-Again, you may be intimidated by the vast range of options. That's okay.
+## Волосы и растительность на лице
+Разнообразие причёсок тоже может ошеломить. Это нормально.
 
-[color=#a4885c]Take your time with it.[/color] You can skim or click through each of the options and find which one you like.
-Sometimes it's easier to set your desired hair color before looking at the options.
+[color=#a4885c]Не торопитесь.[/color] Просмотрите варианты и выберите тот, который нравится.
+Иногда проще сначала выбрать цвет волос, а уже потом искать подходящую причёску.
 
-If you really can't decide, some popular haircut options include Floorlength Bedhead, Modern, Business, CIA or simply bald.
-Alternatively, [color=#a4885c]randomize[/color] a separate character and see what kind of haircuts they're rocking with. Surprise yourself.
+Если решить трудно, попробуйте популярные варианты: длинные растрёпанные волосы, современную или деловую причёску, причёску агента или лысину.
+Можно также [color=#a4885c]создать случайного[/color] персонажа и посмотреть, какие причёски ему достанутся. Возможно, результат вас удивит.
 
-Don't feel obligated to use any of these, though.
+Выбирать что-либо из этого списка необязательно.
 
-## Markings
-Markings range from [color=#a4885c]scars and snouts[/color] to [color=#a4885c]tattoos and tails[/color].
-Think of them like [color=#a4885c]accessories[/color] that are a part of your body, for giving your character some extra flair and uniqueness. They cannot be changed during the round.
+## Черты внешности
+Они бывают самыми разными: от [color=#a4885c]шрамов и мордочек[/color] до [color=#a4885c]татуировок и хвостов[/color].
+Считайте их [color=#a4885c]частью внешнего облика[/color], которая придаёт персонажу индивидуальность. Во время раунда изменить выбранные черты нельзя.
 
-Some species have more marking options than others. Humans are more limited in terms of markings than moths or reptilians.
+У некоторых видов выбор шире. Например, человеку доступно меньше черт внешности, чем ниане или унатху.
 
-You can have a set number of markings in each '[color=#a4885c]category[/color]', as seen at the top. For example, reptilians can have one chest marking but two markings on the top of their heads.
-These are [color=#a4885c]cosmetic[/color] and have no effect on gameplay.
+В каждой [color=#a4885c]категории[/color] можно выбрать ограниченное число черт, указанное сверху. Например, унатх может иметь одну черту на груди, но две на верхней части головы.
+Это [color=#a4885c]косметические[/color] настройки, не влияющие на игру.
 
-## How to stand out
-Memorable characters are usually remembered for their personality, their deeds and their [color=#a4885c]robustness[/color], but that doesn't mean you have to be some sort of hotshot.
+## Как запомниться другим
+Персонажей обычно помнят за характер, поступки и [color=#a4885c]умение постоять за себя[/color]. Для этого необязательно быть выдающимся героем.
 
-Don't sweat having a big, flashy and memorable character. Make your own story that you'll be remembered for.
+Не переживайте, если персонаж не выглядит ярким и незабываемым. Создайте собственную историю — именно она может остаться в памяти других игроков.
 </Document>
