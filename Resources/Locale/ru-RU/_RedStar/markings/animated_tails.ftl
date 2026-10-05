@@ -1,0 +1,6 @@
+marking-CatTailAnimated = { marking-CatTail } (анимированный)
+marking-CatTailStripesAnimated = { marking-CatTailStripes } (анимированный)
+marking-SlimeCatTailAnimated = { marking-SlimeCatTail } (анимированный)
+marking-SlimeCatTailStripesAnimated = { marking-SlimeCatTailStripes } (анимированный)
+marking-HumanFoxTailAnimated = { marking-HumanFoxTail } (анимированный)
+marking-MilkyTailAnimated = { marking-MilkyTail } (анимированный)

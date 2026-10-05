@@ -35,4 +35,4 @@
         - !type:SkinColoring
   sprites:
   - sprite: Mobs/Customization/cat_parts.rsi
-    state: tail_cat_wag # RS14
+    state: tail_cat
