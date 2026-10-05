@@ -40,10 +40,16 @@ public abstract partial class SharedOfferItemSystem
         if (!Exists(uid))
             return;
 
-        if (!_actionBlocker.CanInteract(uid, null))
+        if (!_offerQuery.TryComp(uid, out var offerItem))
             return;
 
-        if (!TryComp<OfferItemComponent>(uid, out var offerItem))
+        if (offerItem.IsInOfferMode || offerItem.ReceivingFrom != null)
+        {
+            CancelOffer((uid, offerItem));
+            return;
+        }
+
+        if (!_actionBlocker.CanInteract(uid, null))
             return;
 
         if (!TryComp<HandsComponent>(uid, out var hands))
@@ -51,24 +57,6 @@ public abstract partial class SharedOfferItemSystem
 
         if (_hands.GetActiveHand((uid, hands)) is not { } activeHandName)
             return;
-
-        if (offerItem.IsInReceiveMode)
-        {
-            UnReceive(uid, offerItem);
-            return;
-        }
-
-        if (offerItem.IsInOfferMode || offerItem.ReceivingFrom != null)
-        {
-            if (offerItem.ReceivingFrom is { } receiver)
-            {
-                UnReceive(receiver, offererComp: offerItem);
-            }
-            else
-                UnOffer(uid, offerItem);
-
-            return;
-        }
 
         if (!_hands.TryGetHeldItem((uid, hands), activeHandName, out var heldItem))
         {

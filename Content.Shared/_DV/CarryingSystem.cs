@@ -335,8 +335,10 @@ public sealed partial class CarryingSystem : EntitySystem
     /// </summary>
     public bool TryTransferCarried(EntityUid oldCarrier, EntityUid newCarrier, Entity<CarriableComponent> carried)
     {
-        if (!TryComp<BeingCarriedComponent>(carried, out var beingCarried) ||
+        if (_timing.ApplyingState || TerminatingOrDeleted(carried) ||
+            !TryComp<BeingCarriedComponent>(carried, out var beingCarried) || beingCarried.Releasing ||
             beingCarried.Carrier != oldCarrier ||
+            !TryComp<CarryingComponent>(oldCarrier, out var carrying) || carrying.Carried != carried.Owner ||
             !CanCarry(newCarrier, carried, alreadyCarried: true))
             return false;
 

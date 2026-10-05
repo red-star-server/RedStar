@@ -550,7 +550,7 @@ public sealed partial class PullingSystem : EntitySystem
         _interaction.DoContactInteraction(pullableUid, pullerUid);
 
         // Use net entity so it's consistent across client and server.
-        pullableComp.PullJointId = $"pull-joint-{GetNetEntity(pullableUid)}";
+        pullableComp.PullJointId = $"pull-joint-{GetNetEntity(pullerUid)}-{GetNetEntity(pullableUid)}"; // RS14
 
         EnsureComp<ActivePullerComponent>(pullerUid);
         pullerComp.Pulling = pullableUid;

@@ -23,6 +23,9 @@ public abstract partial class SharedOfferItemSystem : EntitySystem
     [Dependency] private AlertsSystem _alertsSystem = default!;
     [Dependency] private CarryingSystem _carrying = default!;
     [Dependency] private PullingSystem _pulling = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private EntityQuery<OfferItemComponent> _offerQuery;
+    [Dependency] private EntityQuery<VirtualItemComponent> _virtualItemQuery;
 
     public override void Initialize()
     {
@@ -35,30 +38,25 @@ public abstract partial class SharedOfferItemSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<OfferItemComponent, HandsComponent>();
-        while (query.MoveNext(out var uid, out var offerItem, out var hands))
-        {
-            // If the mob no longer holds an item in the original offering hand, clear offering mode
-            if (offerItem.Hand != null &&
-                (!_hands.TryGetHeldItem((uid, hands), offerItem.Hand, out var held) || held != offerItem.Item))
-            {
-                if (offerItem.ReceivingFrom != null)
-                {
-                    UnReceive(offerItem.ReceivingFrom.Value, offererComp: offerItem);
-                    offerItem.IsInOfferMode = false;
-                    Dirty(uid, offerItem);
-                }
-                else
-                    UnOffer(uid, offerItem);
-            }
+        if (_net.IsClient)
+            return;
 
-            if (!offerItem.IsInReceiveMode)
+        var query = EntityQueryEnumerator<OfferItemComponent>();
+        while (query.MoveNext(out var uid, out var offerItem))
+        {
+            if (offerItem.ReceivingFrom is { } other &&
+                (!_offerQuery.TryComp(other, out var otherComp) || otherComp.ReceivingFrom != uid))
             {
-                _alertsSystem.ClearAlert(uid, offerItem.OfferAlert);
+                CancelOffer((uid, offerItem), showPopup: false);
                 continue;
             }
 
-            _alertsSystem.ShowAlert(uid, offerItem.OfferAlert);
+            // If the mob no longer holds an item in the original offering hand, clear offering mode
+            if (offerItem.Hand != null &&
+                (!_hands.TryGetHeldItem(uid, offerItem.Hand, out var held) || held != offerItem.Item))
+            {
+                CancelOffer((uid, offerItem));
+            }
         }
     }
 
@@ -75,7 +73,7 @@ public abstract partial class SharedOfferItemSystem : EntitySystem
         if (!_timing.IsFirstTimePredicted || _timing.ApplyingState || args.Handled)
             return;
 
-        if (!TryComp<OfferItemComponent>(args.User, out var offererComponent))
+        if (!_offerQuery.TryComp(args.User, out var offererComponent))
             return;
 
         args.Handled = CreateOffer(receiver, (args.User, offererComponent));
@@ -89,19 +87,22 @@ public abstract partial class SharedOfferItemSystem : EntitySystem
             return;
 
         var receiver = args.Target;
-        if (!TryComp<OfferItemComponent>(receiver, out var receiverComponent))
+        if (!_offerQuery.TryComp(receiver, out var receiverComponent))
             return;
 
         var offerer = args.User;
-        if (!TryComp<OfferItemComponent>(offerer, out var offererComponent) || offererComponent.Item == null)
+        if (!_offerQuery.TryComp(offerer, out var offererComponent) || offererComponent.Item != virtItem.Owner)
             return;
 
         // Since this is ranged, we must also check distance, because the interaction system wont check it for us in this case
         if (!Transform(offerer).Coordinates.TryDistance(EntityManager, _transform, Transform(receiver.Value).Coordinates, out var dst)
-            || dst > offererComponent.MaxOfferDistance)
+            || dst > offererComponent.MaxOfferDistance
+            || !_interaction.InRangeUnobstructed(offerer, receiver.Value, range: offererComponent.MaxOfferDistance))
             return;
 
-        args.Handled = CreateOffer((receiver.Value, receiverComponent), (offerer, offererComponent));
+        // VirtualItemSystem also handles this event; a failed offer must not clear its result.
+        if (CreateOffer((receiver.Value, receiverComponent), (offerer, offererComponent)))
+            args.Handled = true;
     }
 
     [SubscribeLocalEvent]
@@ -110,13 +111,14 @@ public abstract partial class SharedOfferItemSystem : EntitySystem
         if (_net.IsClient) // Client often mispredicts movement, we cant trust it here
             return;
 
-        if (ent.Comp.ReceivingFrom == null)
+        if (ent.Comp.ReceivingFrom is not { } other)
             return;
 
-        if (_transform.InRange(args.NewPosition, Transform(ent.Comp.ReceivingFrom.Value).Coordinates, ent.Comp.MaxOfferDistance))
+        if (TryComp(other, out TransformComponent? otherTransform) &&
+            _transform.InRange(args.NewPosition, otherTransform.Coordinates, ent.Comp.MaxOfferDistance))
             return;
 
-        UnOffer(ent, ent.Comp);
+        CancelOffer(ent);
     }
 
     [SubscribeLocalEvent]
@@ -126,6 +128,7 @@ public abstract partial class SharedOfferItemSystem : EntitySystem
             || args.PassedItem == args.RealItem // Means the entity is transferred NOT via carrying
             || args.RealItem is not { Valid: true } carried
             || ent.Comp.Carrier is not { Valid: true } oldCarrier
+            || oldCarrier != args.User
             || !TryComp<CarriableComponent>(carried, out var carriable))
             return;
 
@@ -138,6 +141,7 @@ public abstract partial class SharedOfferItemSystem : EntitySystem
         if (args.Handled
             || args.PassedItem == args.RealItem // Means the entity is transferred NOT via pulling
             || args.RealItem is not { Valid: true }
+            || HasComp<BeingCarriedComponent>(ent)
             || ent.Comp.Puller != args.User)
             return;
 
@@ -146,10 +150,9 @@ public abstract partial class SharedOfferItemSystem : EntitySystem
 
     #endregion
 
-    #region Offering / Recieving
+    #region Offering / Receiving
     /// <summary>
-    /// Attempts to create an offer. Expects offerer.Item to already be set to the offered item, offererComponent.InReceiveMode == true.
-    /// Will fail if offerer == receiver or if receiver already has a set TargetOrOfferer, and that person is not the current offerer
+    /// Offers the selected item to an idle recipient.
     /// </summary>
     private bool CreateOffer(Entity<OfferItemComponent> receiver, Entity<OfferItemComponent> offerer)
     {
@@ -160,8 +163,12 @@ public abstract partial class SharedOfferItemSystem : EntitySystem
             offererComponent.IsInReceiveMode || !offererComponent.IsInOfferMode || offererComponent.Item == null)
             return false;
 
+        if (!_hands.TryGetHeldItem(offerer.Owner, offererComponent.Hand, out var held) || held != offererComponent.Item)
+            return false;
+
         receiverComponent.IsInReceiveMode = true;
         receiverComponent.ReceivingFrom = offerer;
+        _alertsSystem.ShowAlert(receiver.Owner, receiverComponent.OfferAlert);
 
         Dirty(receiver, receiverComponent);
 
@@ -173,7 +180,7 @@ public abstract partial class SharedOfferItemSystem : EntitySystem
 
         _popup.PopupEntity(
             Loc.GetString("offer-item-try-give",
-                ("item", Identity.Entity(offererComponent.GetRealEntity(EntityManager), EntityManager)),
+                ("item", Identity.Entity(GetRealEntity(offererComponent.Item), EntityManager)),
                 ("target", Identity.Entity(receiver, EntityManager))),
             offerer,
             offerer);
@@ -181,7 +188,7 @@ public abstract partial class SharedOfferItemSystem : EntitySystem
         _popup.PopupEntity(
             Loc.GetString("offer-item-try-give-target",
                 ("user", Identity.Entity(receiverComponent.ReceivingFrom.Value, EntityManager)),
-                ("item", Identity.Entity(offererComponent.GetRealEntity(EntityManager), EntityManager))),
+                ("item", Identity.Entity(GetRealEntity(offererComponent.Item), EntityManager))),
             offerer,
             receiver,
             Popups.PopupType.Medium);
@@ -190,105 +197,60 @@ public abstract partial class SharedOfferItemSystem : EntitySystem
     }
 
 
-
     /// <summary>
-    /// Resets the <see cref="OfferItemComponent"/> of the user and the target
+    /// Cancels an offer and clears both participants' state.
     /// </summary>
-    protected void UnOffer(EntityUid thisEntity, OfferItemComponent offererComp)
+    private void CancelOffer(Entity<OfferItemComponent> ent, bool showPopup = true)
     {
-        if (offererComp.ReceivingFrom is { } otherEntity && TryComp<OfferItemComponent>(otherEntity, out var otherOfferer))
+        if (ent.Comp.ReceivingFrom is { } other &&
+            _offerQuery.TryComp(other, out var otherComp) && otherComp.ReceivingFrom == ent.Owner)
         {
-            // So this tries to figure out which of these entities do what...
-            // if A.OfferItemComponent.Item != null, then A is currently offering an item to A.OfferItemComponent.TargetOrOfferer
-            // If it is null, then it is ONLY being offered an item TO.
-            if (offererComp.Item != null && _net.IsServer)
+            var offerer = ent.Comp.IsInReceiveMode ? new Entity<OfferItemComponent>(other, otherComp) : ent;
+            var receiver = ent.Comp.IsInReceiveMode ? ent : new Entity<OfferItemComponent>(other, otherComp);
+            var realItem = GetRealEntity(offerer.Comp.Item);
+
+            if (showPopup && Exists(realItem))
             {
                 _popup.PopupEntity(
                     Loc.GetString("offer-item-no-give",
-                        ("item", Identity.Entity(offererComp.GetRealEntity(EntityManager), EntityManager)), // Floof - resolve virtual items
-                        ("target", Identity.Entity(otherEntity, EntityManager))),
-                    thisEntity,
-                    thisEntity);
+                        ("item", Identity.Entity(realItem, EntityManager)),
+                        ("target", Identity.Entity(receiver, EntityManager))),
+                    offerer, offerer);
                 _popup.PopupEntity(
                     Loc.GetString("offer-item-no-give-target",
-                        ("user", Identity.Entity(thisEntity, EntityManager)),
-                        ("item", Identity.Entity(offererComp.GetRealEntity(EntityManager), EntityManager))),
-                    thisEntity,
-                    otherEntity);
+                        ("user", Identity.Entity(offerer, EntityManager)),
+                        ("item", Identity.Entity(realItem, EntityManager))),
+                    offerer, receiver);
             }
 
-            else if (otherOfferer.Item != null && _net.IsServer)
-            {
-                _popup.PopupEntity(
-                    Loc.GetString("offer-item-no-give",
-                        ("item", Identity.Entity(otherOfferer.GetRealEntity(EntityManager), EntityManager)), // Floof - resolve virtual items
-                        ("target", Identity.Entity(thisEntity, EntityManager))),
-                    otherEntity,
-                    otherEntity);
-                _popup.PopupEntity(
-                    Loc.GetString("offer-item-no-give-target",
-                        ("user", Identity.Entity(otherEntity, EntityManager)),
-                        ("item", Identity.Entity(otherOfferer.GetRealEntity(EntityManager), EntityManager))),
-                    otherEntity,
-                    thisEntity);
-            }
-
-            otherOfferer.IsInOfferMode = false;
-            otherOfferer.IsInReceiveMode = false;
-            otherOfferer.Hand = null;
-            otherOfferer.ReceivingFrom = null;
-            otherOfferer.Item = null;
-
-            Dirty(otherEntity, otherOfferer);
+            ClearOffer((other, otherComp));
         }
 
-        offererComp.IsInOfferMode = false;
-        offererComp.IsInReceiveMode = false;
-        offererComp.Hand = null;
-        offererComp.ReceivingFrom = null;
-        offererComp.Item = null;
-
-        Dirty(thisEntity, offererComp);
+        ClearOffer(ent);
     }
 
-
-    /// <summary>
-    /// Cancels the transfer of the item
-    /// </summary>
-    protected void UnReceive(EntityUid receiver, OfferItemComponent? receiverComp = null, OfferItemComponent? offererComp = null)
+    private void ClearOffer(Entity<OfferItemComponent> ent)
     {
-        if (!Resolve(receiver, ref receiverComp)
-            || receiverComp.ReceivingFrom is not {} offerer
-            || !Resolve(offerer, ref offererComp))
-            return;
+        ent.Comp.IsInOfferMode = false;
+        ent.Comp.IsInReceiveMode = false;
+        ent.Comp.Hand = null;
+        ent.Comp.Item = null;
+        ent.Comp.ReceivingFrom = null;
+        _alertsSystem.ClearAlert(ent.Owner, ent.Comp.OfferAlert);
+        if (ent.Comp.LifeStage < ComponentLifeStage.Stopping)
+            Dirty(ent);
+    }
 
-        // If offererComp.Item != null, then they are actively offering to TargetOrOfferer
-        // Normally this method is called right after a transfer is done, but this part can be called from SetInOfferMode when the player presses F again to cancel an ongoing offer
-        if (offererComp.Item != null)
-        {
-            _popup.PopupEntity(
-                Loc.GetString("offer-item-no-give",
-                    ("item", Identity.Entity(offererComp.GetRealEntity(EntityManager), EntityManager)), // Floof - resolve virtual items
-                    ("target", Identity.Entity(receiver, EntityManager))),
-                offerer,
-                offerer);
-            _popup.PopupEntity(
-                Loc.GetString("offer-item-no-give-target",
-                    ("user", Identity.Entity(receiverComp.ReceivingFrom.Value, EntityManager)), // Floof - resolve virtual items
-                    ("item", Identity.Entity(offererComp.GetRealEntity(EntityManager), EntityManager))),
-                offerer,
-                receiver);
-        }
+    [SubscribeLocalEvent]
+    private void OnOfferShutdown(Entity<OfferItemComponent> ent, ref ComponentShutdown args)
+    {
+        if (_net.IsServer)
+            CancelOffer(ent, showPopup: false);
+    }
 
-        offererComp.ReceivingFrom = null;
-        receiverComp.ReceivingFrom = null;
-        offererComp.IsInOfferMode = false;
-        offererComp.Item = null;
-        offererComp.Hand = null;
-        receiverComp.IsInReceiveMode = false;
-
-        Dirty(offerer, offererComp);
-        Dirty(receiver, receiverComp);
+    private EntityUid GetRealEntity(EntityUid? item)
+    {
+        return _virtualItemQuery.TryComp(item, out var virtualItem) ? virtualItem.BlockingEntity : item ?? EntityUid.Invalid;
     }
 
     /// <summary>
@@ -299,54 +261,57 @@ public abstract partial class SharedOfferItemSystem : EntitySystem
         if (!_timing.IsFirstTimePredicted)
             return;
 
-        if (!Resolve(receiver, ref receiver.Comp))
+        if (!Resolve(receiver, ref receiver.Comp) || !receiver.Comp.IsInReceiveMode)
             return;
 
-        if (!TryComp<OfferItemComponent>(receiver.Comp.ReceivingFrom, out var offererComponent) ||
+        if (!_offerQuery.TryComp(receiver.Comp.ReceivingFrom, out var offererComponent) ||
             offererComponent.Hand == null ||
             receiver.Comp.ReceivingFrom is not {} sender ||
             !TryComp<HandsComponent>(receiver, out var hands))
             return;
 
         if (!_hands.TryGetHeldItem(sender, offererComponent.Hand, out var held) ||
-            held != offererComponent.Item)
+            held != offererComponent.Item || offererComponent.ReceivingFrom != receiver.Owner ||
+            !_transform.InRange(Transform(sender).Coordinates, Transform(receiver).Coordinates, offererComponent.MaxOfferDistance) ||
+            !_interaction.InRangeUnobstructed(sender, receiver.Owner, range: offererComponent.MaxOfferDistance))
         {
-            UnReceive(receiver, receiver.Comp, offererComponent);
+            CancelOffer((receiver, receiver.Comp));
             return;
         }
 
+        if (!_actionBlocker.CanInteract(receiver, sender) || !_actionBlocker.CanInteract(sender, receiver))
+            return;
+
         if (offererComponent.Item != null)
         {
-            // Floof - check if there's something else handling it first
-            var realItem = offererComponent.GetRealEntity(EntityManager);
+            var realItem = GetRealEntity(offererComponent.Item);
             var offeredItem = offererComponent.Item.Value;
             var isVirtualItem = HasComp<VirtualItemComponent>(offeredItem);
             var transferred = TryHandleExtendedTransfer(sender, receiver, offeredItem, realItem);
             if (!transferred &&
                 (isVirtualItem || !_hands.TryPickup(receiver, offeredItem, handsComp: hands)))
             {
-                _popup.PopupEntity(Loc.GetString("offer-item-full-hand"), receiver, receiver);
+                _popup.PopupEntity(Loc.GetString(isVirtualItem ? "offer-item-cannot-receive" : "offer-item-full-hand"), receiver, receiver);
                 return;
             }
 
             _popup.PopupEntity(
                 Loc.GetString("offer-item-give",
-                    ("item", Identity.Entity(realItem, EntityManager)), // FLoof - resolve virtual items
+                    ("item", Identity.Entity(realItem, EntityManager)),
                     ("target", Identity.Entity(receiver, EntityManager))),
                 sender,
                 sender);
             _popup.PopupEntity(
                 Loc.GetString("offer-item-give-other",
                     ("user", Identity.Entity(receiver.Comp.ReceivingFrom.Value, EntityManager)),
-                    ("item", Identity.Entity(realItem, EntityManager)), // FLoof - resolve virtual items
+                    ("item", Identity.Entity(realItem, EntityManager)),
                     ("target", Identity.Entity(receiver, EntityManager))),
                 sender,
                 Filter.PvsExcept(sender, entityManager: EntityManager),
                 true);
         }
 
-        offererComponent.Item = null;
-        UnReceive(receiver, receiver.Comp, offererComponent);
+        CancelOffer((receiver, receiver.Comp), showPopup: false);
     }
     #endregion
     /// <summary>
@@ -354,7 +319,7 @@ public abstract partial class SharedOfferItemSystem : EntitySystem
     /// </summary>
     protected bool IsInOfferMode(Entity<OfferItemComponent?> ent)
     {
-        return Resolve(ent, ref ent.Comp, false) && ent.Comp.IsInOfferMode;
+        return _offerQuery.Resolve(ent, ref ent.Comp, false) && ent.Comp.IsInOfferMode;
     }
 
     private bool TryHandleExtendedTransfer(EntityUid user, EntityUid target, EntityUid offeredItem, EntityUid realItem)
@@ -372,7 +337,7 @@ public abstract partial class SharedOfferItemSystem : EntitySystem
 }
 
 /// <summary>
-/// Raised on the entity that was transferred via item offering.
+/// Raised on the real entity to attempt transferring it through item offering.
 /// </summary>
 [ByRefEvent]
 public sealed class ItemTransferredEvent : HandledEntityEventArgs

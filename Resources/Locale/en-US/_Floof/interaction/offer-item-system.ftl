@@ -1,6 +1,7 @@
 ﻿offer-item-empty-hand = You don't have anything in your hand to give!
 
 offer-item-full-hand = Your hand isn't free to receive the item.
+offer-item-cannot-receive = You can't accept this offer right now.
 
 offer-item-try-give = You offer {THE($item)} to {$target}.
 offer-item-try-give-target = {CAPITALIZE(THE($user))} offers you {THE($item)}.
@@ -15,3 +16,5 @@ offer-item-no-give-target = {CAPITALIZE(THE($user))} is no longer offering {THE(
 
 alerts-offer-name = Accept Offer
 alerts-offer-desc = Click this alert to accept the item offered to you.
+
+ui-options-function-offer-item = Offer item
