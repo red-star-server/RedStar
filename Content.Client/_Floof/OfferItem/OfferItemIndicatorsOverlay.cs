@@ -11,7 +11,6 @@ namespace Content.Client._Floof.OfferItem;
 public sealed class OfferItemIndicatorsOverlay : Overlay
 {
     private readonly IInputManager _inputManager;
-    private readonly IEntityManager _entMan;
     private readonly IEyeManager _eye;
     private readonly OfferItemSystem _offer;
 
@@ -27,11 +26,10 @@ public sealed class OfferItemIndicatorsOverlay : Overlay
             IEyeManager eye, OfferItemSystem offerSys)
     {
         _inputManager = input;
-        _entMan = entMan;
         _eye = eye;
         _offer = offerSys;
 
-        var spriteSys = _entMan.EntitySysManager.GetEntitySystem<SpriteSystem>();
+        var spriteSys = entMan.EntitySysManager.GetEntitySystem<SpriteSystem>();
         _sight = spriteSys.Frame0(new SpriteSpecifier.Rsi(new("/Textures/_Floof/Interface/Misc/give_item.rsi"), "give_item"));
     }
 

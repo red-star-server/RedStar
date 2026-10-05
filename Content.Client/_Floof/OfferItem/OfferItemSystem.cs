@@ -5,12 +5,12 @@ using Robust.Client.Player;
 
 namespace Content.Client._Floof.OfferItem;
 
-public sealed class OfferItemSystem : SharedOfferItemSystem
+public sealed partial class OfferItemSystem : SharedOfferItemSystem
 {
-    [Dependency] private readonly IOverlayManager _overlayManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IInputManager _inputManager = default!;
-    [Dependency] private readonly IEyeManager _eye = default!;
+    [Dependency] private IOverlayManager _overlayManager = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IInputManager _inputManager = default!;
+    [Dependency] private IEyeManager _eye = default!;
 
     public override void Initialize()
     {
@@ -31,9 +31,6 @@ public sealed class OfferItemSystem : SharedOfferItemSystem
     {
         var entity = _playerManager.LocalEntity;
 
-        if (entity == null)
-            return false;
-
-        return IsInOfferMode(entity.Value);
+        return entity != null && IsInOfferMode(entity.Value);
     }
 }
