@@ -1,6 +1,6 @@
 - type: microwaveMealRecipe
   id: RecipePelmeni
-  name: pelmeni recipe
+  name: microwave-meal-recipe-pelmeni-name
   result: FoodPelmeniBowl
   time: 10
   reagents:

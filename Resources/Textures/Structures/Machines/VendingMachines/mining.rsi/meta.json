@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "taken from tgstation at source. Modified by Peptide90 to work with SS14. Broken state by Peptide based on off.",
+  "copyright": "taken from tgstation at source. Modified by Peptide90 to work with SS14. Broken state by Peptide based on off, resprited by @mishutka09 (discord:1152277579206774854)",
   "source": "https://github.com/tgstation/tgstation/commit/2b7f2c42f1bd57497052e8ef593d5e05ea45208e",
   "size": {
     "x": 32,
@@ -12,8 +12,12 @@
       "name": "normal-unshaded",
       "delays": [
         [
-          4.7,
-          0.1
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
         ]
       ]
     },
@@ -21,8 +25,12 @@
       "name": "deny-unshaded",
       "delays": [
         [
-          0.13,
-          0.13
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
         ]
       ]
     },

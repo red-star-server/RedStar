@@ -1,0 +1,79 @@
+- type: construction
+  parent: BaseFurniture
+  id: BannerRedRecipe
+  graph: BannerGraph
+  targetNode: bannerRed
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  parent: BaseFurniture
+  id: BannerBlueRecipe
+  graph: BannerGraph
+  targetNode: bannerBlue
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  parent: BaseFurniture
+  id: BannerGreenRecipe
+  graph: BannerGraph
+  targetNode: bannerGreen
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  parent: BaseFurniture
+  id: BannerYellowRecipe
+  graph: BannerGraph
+  targetNode: bannerYellow
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  parent: BaseFurniture
+  id: BannerNanotrasenRecipe
+  graph: BannerGraph
+  targetNode: bannerNanotrasen
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  parent: BaseFurniture
+  id: BannerCargoRecipe
+  graph: BannerGraph
+  targetNode: bannerCargo
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  parent: BaseFurniture
+  id: BannerEngineeringRecipe
+  graph: BannerGraph
+  targetNode: bannerEngineering
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  parent: BaseFurniture
+  id: BannerMedicalRecipe
+  graph: BannerGraph
+  targetNode: bannerMedical
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  parent: BaseFurniture
+  id: BannerScienceRecipe
+  graph: BannerGraph
+  targetNode: bannerScience
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  parent: BaseFurniture
+  id: BannerSecurityRecipe
+  graph: BannerGraph
+  targetNode: bannerSecurity
+  conditions:
+  - !type:TileNotBlocked

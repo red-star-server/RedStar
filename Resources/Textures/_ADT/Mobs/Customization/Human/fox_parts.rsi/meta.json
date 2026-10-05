@@ -8,6 +8,18 @@
     },
       "states": [
           {
+              "name": "tail_fox_stripes_prime",
+              "directions": 4
+          },
+          {
+              "name": "tail_fox_stripes_second",
+              "directions": 4
+          },
+          {
+              "name": "tail_fox_stripes_third",
+              "directions": 4
+          },
+          {
               "name": "tail_fox_wag_stripes_prime",
               "directions": 4,
               "delays": [

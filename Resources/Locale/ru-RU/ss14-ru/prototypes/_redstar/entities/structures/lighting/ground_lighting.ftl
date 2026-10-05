@@ -1,0 +1,11 @@
+ent-LightPostRoundSmall = { ent-LightPostSmall }
+    .desc = { ent-LightPostSmall.desc }
+    .suffix = Всегда запитанный
+ent-PoweredLightPostRoundSmallEmpty = { ent-PoweredLightPostSmallEmpty }
+    .desc = { ent-PoweredLightPostSmallEmpty.desc }
+    .suffix = Пустой
+ent-PoweredLightPostRoundSmall = { ent-PoweredLightPostSmall }
+    .desc = { ent-PoweredLightPostSmall.desc }
+ent-PoweredLEDLightPostRoundSmall = { ent-PoweredLEDLightPostSmall }
+    .desc = { ent-PoweredLEDLightPostSmall.desc }
+    .suffix = LED, Светодиод

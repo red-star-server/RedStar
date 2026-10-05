@@ -1,0 +1,18 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "taken from /tg/station at commit https://github.com/tgstation/tgstation/commit/02756c2bc2cf3000080d030955e994242bab39b5, holoclown made by brainfood1183 (github)",
+    "size": {
+        "x": 64,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "goliath",
+			"directions": 4
+        },
+        {
+            "name": "goliath_dead"
+        }
+    ]
+}

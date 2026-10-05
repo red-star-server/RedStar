@@ -1,0 +1,500 @@
+- type: entity
+  id: StatueAngel
+  parent: BaseTallStatue
+  name: statue of an angel
+  description: An angel-guardian who protects you from all troubles and misfortunes. Guardian-protector, and in the difficult hour of your life, he will help you
+    overcome difficulties, guardian!
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/angel.rsi
+    state: angel
+  - type: Construction
+    graph: DecorativeStatueGraph
+    node: statueAngel
+
+- type: entity
+  id: StatueLion
+  parent: BaseTallStatue
+  name: statue of a lion
+  description: On guard
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/lion.rsi
+    state: lion
+  - type: Construction
+    graph: DecorativeStatueGraph
+    node: statueLion
+
+- type: entity
+  id: StatueLenin
+  parent: BaseTallStatue
+  name: statue of Lenin
+  description: Great leader of the proletariat.
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/lenin.rsi
+    state: lenin
+  - type: Construction
+    graph: DecorativeStatueGraph
+    node: statueLenin
+
+- type: entity
+  id: StatueHadii
+  parent: BaseTallStatue
+  name: statue of Hadji Murat
+  description: Courage, honor, dignity and loyalty to one's word - these are the qualities of a hero.
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/hadii.rsi
+    state: hadii
+  - type: Construction
+    graph: DecorativeStatueGraph
+    node: statueHadii
+
+- type: entity
+  id: BustHelios
+  parent: BaseBust
+  name: bust of Helios
+  description: A sculpture in the form of the ancient Greek God of the Sun.
+  components:
+  - type: Sprite
+    state: helios
+  - type: Construction
+    graph: DecorativeStatueGraph
+    node: bustHelios
+
+- type: entity
+  id: BustLenin
+  parent: BaseBust
+  name: bust of Lenin
+  description: A bust of the creator of the Bolshevik Party and one of the organizers and leaders of the October Revolution of 1917 in Russia.
+  components:
+  - type: Sprite
+    state: lenin
+  - type: Construction
+    graph: DecorativeStatueGraph
+    node: bustLenin
+
+- type: entity
+  id: BustDarwin
+  parent: BaseBust
+  name: bust of Darwin
+  description: A prize was named after him!
+  components:
+  - type: Sprite
+    state: darwin
+  - type: Construction
+    graph: DecorativeStatueGraph
+    node: bustDarwin
+
+- type: entity
+  id: BustPompeii
+  parent: BaseBust
+  name: bust of Pompey
+  description: A sculpture in the form of Pompeia Plotina, daughter of Lucius Pompey.
+  components:
+  - type: Sprite
+    state: pompeii
+  - type: Construction
+    graph: DecorativeStatueGraph
+    node: bustPompeii
+
+- type: entity
+  abstract: true
+  parent: BaseStatue
+  id: BaseTallStatue
+  components:
+  - type: Sprite
+    noRot: true
+    offset: 0.0,0.5
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: -0.5,-0.5,0.5,1.5
+
+- type: entity
+  abstract: true
+  parent: BaseStatue
+  id: BaseBust
+  components:
+  - type: Sprite
+    noRot: true
+    offset: 0.0,0.5
+    sprite: _ADT/Structures/Decoration/Statues/busts.rsi
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: -0.3,-0.3,0.3,0.8
+
+- type: entity
+  abstract: true
+  parent: BaseStatue
+  id: BaseMarbleStatue
+  components:
+  - type: Sprite
+    noRot: true
+    offset: 0.0,0.5
+
+- type: entity
+  parent: BaseMarbleStatue
+  id: MarbleLady
+  name: beutiful marble lady
+  description: She's so pretty
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialMarble1:
+            min: 4
+            max: 6
+      - !type:DoActsBehavior
+        acts:
+        - Destruction
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+          params:
+            volume: -2
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marble_lady.rsi
+    state: marlady
+  - type: Construction
+    graph: DecorativeStatueGraph
+    node: marbleLady
+
+- type: entity
+  parent: MarbleLady
+  id: MarbleLadyFlower
+  name: marble lady in flowers
+  description: She's so pretty
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marblelady_flower.rsi
+    state: marlady_flowers
+  - type: Construction
+    graph: DecorativeStatueGraph
+    node: marbleLadyFlower
+
+- type: entity
+  parent: BaseMarbleStatue
+  id: MarblePillar
+  name: marble pillar
+  description: pillar out of marble
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/pillar_marble.rsi
+    state: pillar_marble
+
+- type: entity
+  parent: BaseMarbleStatue
+  id: MarbleStand
+  name: marble stand
+  description: stand for someone
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marble_stand.rsi
+    offset: 0.0,0.0
+    state: marstand
+    drawdepth: SmallObjects
+  - type: PlaceableSurface
+    isPlaceable: true
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialMarble1:
+            min: 3
+            max: 5
+      - !type:DoActsBehavior
+        acts:
+        - Destruction
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+          params:
+            volume: -2
+  - type: Construction
+    graph: DecorativeStatueGraph
+    node: marbleStand
+
+- type: entity
+  parent: BaseMarbleStatue
+  id: MarbleMan
+  name: marble man
+  description: he stands
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marbleman.rsi
+    offset: 0.0,0.0
+    state: marman
+  - type: Construction
+    graph: DecorativeStatueGraph
+    node: marbleMan
+
+- type: entity
+  parent: MarbleMan
+  id: MarbleManDamaged
+  name: marble man crack
+  description: he stands
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marblemandamage.rsi
+    offset: 0.0,0.0
+    state: marmandmg
+  - type: Construction
+    graph: DecorativeStatueGraph
+    node: marbleManDamaged
+
+- type: entity
+  parent: BaseMarbleStatue
+  id: MarblePeacemaker
+  name: Statue of Peacemaker
+  description: for the peace in world!
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/peacemaker.rsi
+    state: peacemaker
+  - type: Construction
+    graph: DecorativeStatueGraph
+    node: marblePeacemaker
+
+- type: entity
+  parent: BaseMarbleStatue
+  id: KnightMarble
+  name: marble knight
+  description: marble knight
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marble_knight.rsi
+    state: marble_knight
+  - type: Construction
+    graph: DecorativeStatueGraph
+    node: knightMarble
+
+- type: entity
+  parent: BaseMarbleStatue
+  id: HunterMarble
+  name: marble hunter
+  description: marble hunter
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marble_hunter.rsi
+    state: marble_hunter
+  - type: Construction
+    graph: DecorativeStatueGraph
+    node: hunterMarble
+
+- type: entity
+  parent: BaseMarbleStatue
+  id: MachineMarble
+  name: marble machine
+  description: marble machine
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marble_machine.rsi
+    state: marble_machine
+  - type: Construction
+    graph: DecorativeStatueGraph
+    node: machineMarble
+
+- type: entity
+  parent: BaseMarbleStatue
+  id: LegionaryMarble
+  name: marble legionary
+  description: marble legionary
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marble_legionary.rsi
+    state: marble_legionary
+  - type: Construction
+    graph: DecorativeStatueGraph
+    node: legionaryMarble
+
+- type: entity
+  parent: BaseMarbleStatue
+  id: BirdMarble
+  name: marble bird
+  description: marble bird
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marble_bird.rsi
+    state: marble_bird
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialMarble1:
+            min: 3
+            max: 4
+      - !type:DoActsBehavior
+        acts:
+        - Destruction
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+          params:
+            volume: -2
+  - type: Construction
+    graph: DecorativeStatueGraph
+    node: birdMarble
+
+- type: entity
+  parent: BaseMarbleStatue
+  id: CunningMarble
+  name: marble cunning
+  description: marble cunning
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marble_cunning.rsi
+    state: marble_cunning
+  - type: Construction
+    graph: DecorativeStatueGraph
+    node: cunningMarble
+
+- type: entity
+  parent: BaseMarbleStatue
+  id: ScientistMarble
+  name: marble scientist
+  description: marble scientist
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marble_scientist.rsi
+    state: marble_scientist
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialMarble1:
+            min: 4
+            max: 5
+      - !type:DoActsBehavior
+        acts:
+        - Destruction
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+          params:
+            volume: -2
+  - type: Construction
+    graph: DecorativeStatueGraph
+    node: scientistMarble
+
+- type: entity
+  parent: BaseMarbleStatue
+  id: EyeMarble
+  name: marble eye
+  description: marble eye
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marble_eye.rsi
+    state: marble_eye
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialMarble1:
+            min: 4
+            max: 5
+      - !type:DoActsBehavior
+        acts:
+        - Destruction
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+          params:
+            volume: -2
+  - type: Construction
+    graph: DecorativeStatueGraph
+    node: eyeMarble
+
+- type: entity
+  parent: BaseMarbleStatue
+  id: AncestorMarble
+  name: marble ancestor
+  description: marble ancestor
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marble_ancestor.rsi
+    state: marble_ancestor
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialMarble1:
+            min: 3
+            max: 5
+      - !type:DoActsBehavior
+        acts:
+        - Destruction
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+          params:
+            volume: -2
+  - type: Construction
+    graph: DecorativeStatueGraph
+    node: ancestorMarble
+
+- type: entity
+  parent: BaseMarbleStatue
+  id: PlafeimMarble
+  name: marble plafeim
+  description: marble plafeim
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marble_plafeim.rsi
+    state: marble_plafeim
+  - type: Construction
+    graph: DecorativeStatueGraph
+    node: plafeimMarble
+
+- type: entity
+  parent: BaseMarbleStatue
+  id: ThinkerMarble
+  name: marble thinker
+  description: marble thinker
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marble_thinker.rsi
+    state: marble_thinker
+
+- type: entity
+  parent: BaseMarbleStatue
+  id: ThinkerTwoMarble
+  name: marble thinker two
+  description: marble thinker two
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marble_thinker_two.rsi
+    state: marble_thinker_two
+
+- type: entity
+  parent: BaseMarbleStatue
+  id: HeroMarble
+  name: marble hero
+  description: marble hero
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Decoration/Statues/marble_hero.rsi
+    state: marble_hero

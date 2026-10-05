@@ -1,0 +1,193 @@
+- type: construction
+  parent: BaseStructureFullTile
+  id: SteelDarkSingleStairs
+  graph: StairsGraph
+  targetNode: steelDarkSingleStairs
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: SteelSingleStairs
+  graph: StairsGraph
+  targetNode: steelSingleStairs
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: SteelWhiteSingleStairs
+  graph: StairsGraph
+  targetNode: steelWhiteSingleStairs
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: WoodBlackSingleStairs
+  graph: StairsGraph
+  targetNode: woodBlackSingleStairs
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: WoodDarkSingleStairs
+  graph: StairsGraph
+  targetNode: woodDarkSingleStairs
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: WoodSingleStairs
+  graph: StairsGraph
+  targetNode: woodSingleStairs
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: WoodLightSingleStairs
+  graph: StairsGraph
+  targetNode: woodLightSingleStairs
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: WoodRedSingleStairs
+  graph: StairsGraph
+  targetNode: woodRedSingleStairs
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: MarbleLady
+  graph: DecorativeStatueGraph
+  targetNode: marbleLady
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: MarbleLadyFlower
+  graph: DecorativeStatueGraph
+  targetNode: marbleLadyFlower
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: MarbleStand
+  graph: DecorativeStatueGraph
+  targetNode: marbleStand
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: MarbleMan
+  graph: DecorativeStatueGraph
+  targetNode: marbleMan
+  canRotate: true
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: MarbleManDamaged
+  graph: DecorativeStatueGraph
+  targetNode: marbleManDamaged
+  canRotate: true
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: MarblePeacemaker
+  graph: DecorativeStatueGraph
+  targetNode: marblePeacemaker
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: MarbleKnight
+  graph: DecorativeStatueGraph
+  targetNode: knightMarble
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: MarbleHunter
+  graph: DecorativeStatueGraph
+  targetNode: hunterMarble
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: MarbleMachine
+  graph: DecorativeStatueGraph
+  targetNode: machineMarble
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: MarbleLegionary
+  graph: DecorativeStatueGraph
+  targetNode: legionaryMarble
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: MarbleBird
+  graph: DecorativeStatueGraph
+  targetNode: birdMarble
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: MarbleCunning
+  graph: DecorativeStatueGraph
+  targetNode: cunningMarble
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: MarbleScientist
+  graph: DecorativeStatueGraph
+  targetNode: scientistMarble
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: MarbleEye
+  graph: DecorativeStatueGraph
+  targetNode: eyeMarble
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: MarbleAncestor
+  graph: DecorativeStatueGraph
+  targetNode: ancestorMarble
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: MarblePlafeim
+  graph: DecorativeStatueGraph
+  targetNode: plafeimMarble
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: BustHelios
+  graph: DecorativeStatueGraph
+  targetNode: bustHelios
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: BustLenin
+  graph: DecorativeStatueGraph
+  targetNode: bustLenin
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: BustDarwin
+  graph: DecorativeStatueGraph
+  targetNode: bustDarwin
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: BustPompeii
+  graph: DecorativeStatueGraph
+  targetNode: bustPompeii
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: StatueAngel
+  graph: DecorativeStatueGraph
+  targetNode: statueAngel
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: StatueLion
+  graph: DecorativeStatueGraph
+  targetNode: statueLion
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: StatueLenin
+  graph: DecorativeStatueGraph
+  targetNode: statueLenin
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: StatueHadii
+  graph: DecorativeStatueGraph
+  targetNode: statueHadii

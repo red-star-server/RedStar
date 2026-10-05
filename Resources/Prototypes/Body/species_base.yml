@@ -11,6 +11,10 @@
   id: BaseSpeciesMob
   save: false
   components:
+  # RS14-start
+  - type: Carriable
+  - type: CanEscapeInventory
+  # RS14-end
   - type: DamageVisuals
     thresholds: [ 10, 20, 30, 50, 70, 100 ]
     targetLayers:
@@ -129,6 +133,7 @@
         type: HumanoidMarkingModifierBoundUserInterface
       enum.StrippingUiKey.Key:
         type: StrippableBoundUserInterface
+  - type: OfferItem # RS14
   - type: Puller
   - type: Speech
     speechSounds: Alto
@@ -138,6 +143,7 @@
   - type: Emoting
   - type: BodyEmotes
     soundsId: GeneralBodyEmotes
+  - type: EmoteAnimation # RS14
   - type: Grammar
     attributes:
       proper: true

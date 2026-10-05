@@ -295,6 +295,7 @@
   loadouts:
   - BartenderVest
   - BartenderApron
+  - BartenderCuteApron # RS14
   - BartenderWintercoat
 
 - type: loadoutGroup
@@ -337,6 +338,7 @@
   minLimit: 0
   loadouts:
   - ChefApron
+  - ChefCuteApron # RS14
   - ChefJacket
   - ChefWintercoat
 
@@ -717,6 +719,7 @@
   - QuartermasterTurtleneck
   - QuartermasterTurtleneckSkirt
   - QuartermasterFormalSuit
+  - QuartermasterFormalDress
 
 - type: loadoutGroup
   id: QuartermasterNeck

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by brainfood1183 (github)",
+  "copyright": "Made by brainfood1183 (github), resprited by @mishutka09 (discord:1152277579206774854)",
   "size": {
     "x": 32,
     "y": 32
@@ -11,10 +11,10 @@
           "name": "normal-unshaded",
           "delays": [
             [
-              2.5,
-              0.1,
-              3.4,
-              0.1
+              1.0,
+              1.0,
+              1.0,
+              1.0
             ]
           ]
         },
@@ -22,9 +22,10 @@
           "name": "deny-unshaded",
           "delays": [
             [
-              0.1,
-              0.1,
-              0.1
+              1.0,
+              1.0,
+              1.0,
+              1.0
             ]
           ]
         },

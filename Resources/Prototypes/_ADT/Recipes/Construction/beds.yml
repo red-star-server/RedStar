@@ -1,0 +1,15 @@
+- type: construction
+  parent: BaseFurniture
+  id: DoubleBedRecipe
+  graph: bed
+  targetNode: double_bed_complete
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  parent: BaseFurniture
+  id: DeckChairRecipe
+  graph: DeckChairGraph
+  targetNode: deckChair
+  conditions:
+  - !type:TileNotBlocked

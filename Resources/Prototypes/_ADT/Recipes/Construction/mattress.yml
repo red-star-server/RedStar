@@ -1,0 +1,31 @@
+- type: construction
+  parent: BaseFurniture
+  id: MattressRecipe
+  graph: MattressGraph
+  targetNode: mattress
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  parent: BaseFurniture
+  id: MattressCleanRecipe
+  graph: MattressGraph
+  targetNode: mattress_clean
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  parent: BaseFurniture
+  id: MattressCleanFullRecipe
+  graph: MattressGraph
+  targetNode: mattress_clean_full
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  parent: BaseFurniture
+  id: MattressFullRecipe
+  graph: MattressGraph
+  targetNode: mattress_full
+  conditions:
+  - !type:TileNotBlocked

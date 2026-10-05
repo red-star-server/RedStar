@@ -10,7 +10,7 @@
     size: Large
     sprite: Objects/Specific/Chemistry/jug.rsi
   - type: SolutionContainerVisuals
-    maxFillLevels: 6
+    maxFillLevels: 8 # RS14
     inHandsMaxFillLevels: 5
   - type: ExaminableSolution
     exactVolume: true # Chemistry item

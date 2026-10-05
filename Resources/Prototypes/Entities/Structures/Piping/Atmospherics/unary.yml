@@ -19,6 +19,7 @@
           nodeGroupID: Pipe
           pipeDirection: South
     - type: CollideOnAnchor
+    - type: SandboxCopyable
 
 - type: entity
   parent: [GasUnaryBase, AirSensorBase]
@@ -300,7 +301,7 @@
   name: freezer
   description: Cools gas in connected pipes.
   categories: !type:CreateVariants
-    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]  
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   placement:
     mode: AlignAtmosPipeLayers
   components:
@@ -310,10 +311,16 @@
       layers:
         - state: freezerOff
           map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+        # RS14-start
+        - state: freezer-Unshaded
+          shader: unshaded
+          map: ["freezing"]
+          visible: false
+        # RS14-end
         - state: freezerPanelOpen
           map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
         - sprite: !type:CreateVariants
-            values: 
+            values:
             - Structures/Piping/Atmospherics/thermomachine.rsi
             - Structures/Piping/Atmospherics/thermomachine_alt1.rsi
             - Structures/Piping/Atmospherics/thermomachine_alt2.rsi
@@ -322,7 +329,7 @@
           renderingStrategy: Default
     - type: AtmosPipeLayers
       pipeLayer: !type:CreateVariants
-        values: [ 0, 1, 2 ] 
+        values: [ 0, 1, 2 ]
       spriteLayersRsiPaths:
         enum.PipeVisualLayers.Pipe:
           Primary: Structures/Piping/Atmospherics/thermomachine.rsi
@@ -334,6 +341,11 @@
           enum.PowerDeviceVisualLayers.Powered:
             True: { state: freezerOn }
             False: { state: freezerOff }
+          # RS14-start
+          freezing:
+            True: { visible: true }
+            False: { visible: false }
+          # RS14-end
     - type: GasThermoMachine
       coefficientOfPerformance: -3.9
     - type: ApcPowerReceiver
@@ -343,7 +355,8 @@
     - type: DeviceNetwork
       prefix: device-address-prefix-freezer
     - type: StealTarget
-      stealGroup: FreezerHeater
+      stealGroup:
+      - FreezerHeater
 
 - type: entity
   parent: !type:CreateVariants
@@ -375,10 +388,16 @@
       layers:
         - state: heaterOff
           map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+        # RS14-start
+        - state: heater-Unshaded
+          shader: unshaded
+          map: ["heating"]
+          visible: false
+        # RS14-end
         - state: heaterPanelOpen
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
         - sprite: !type:CreateVariants
-            values: 
+            values:
             - Structures/Piping/Atmospherics/thermomachine.rsi
             - Structures/Piping/Atmospherics/thermomachine_alt1.rsi
             - Structures/Piping/Atmospherics/thermomachine_alt2.rsi
@@ -387,7 +406,7 @@
           renderingStrategy: Default
     - type: AtmosPipeLayers
       pipeLayer: !type:CreateVariants
-        values: [ 0, 1, 2 ] 
+        values: [ 0, 1, 2 ]
       spriteLayersRsiPaths:
         enum.PipeVisualLayers.Pipe:
           Primary: Structures/Piping/Atmospherics/thermomachine.rsi
@@ -399,6 +418,11 @@
           enum.PowerDeviceVisualLayers.Powered:
             True: { state: heaterOn }
             False: { state: heaterOff }
+          # RS14-start
+          heating:
+            True: { visible: true }
+            False: { visible: false }
+          # RS14-end
     - type: GasThermoMachine
       coefficientOfPerformance: 0.95
     - type: ApcPowerReceiver
@@ -408,7 +432,8 @@
     - type: DeviceNetwork
       prefix: device-address-prefix-heater
     - type: StealTarget
-      stealGroup: FreezerHeater
+      stealGroup:
+      - FreezerHeater
 
 - type: entity
   parent: !type:CreateVariants
@@ -551,4 +576,3 @@
   - type: GuideHelp
     guides:
     - GasCondensing
-

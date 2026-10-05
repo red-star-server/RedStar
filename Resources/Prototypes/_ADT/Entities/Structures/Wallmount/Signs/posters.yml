@@ -1,0 +1,376 @@
+- type: entity
+  abstract: true
+  parent: PosterBase
+  id: BaseDecorativePoster
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Wallmounts/posters.rsi
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterChih
+  name: Poster "Chih"
+  description: This picture depicts the deep meaning of the existence of all possible races of our vast observable universe. The personification of the disease process
+    gives reason to think about the meaning of our state of health (which generally does not exist).
+  components:
+  - type: Sprite
+    state: poster_adtchihposter
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterLegitTurnOnSensors
+  name: Turn on the sensors
+  description: A reminder from the paramedic to everyone at the station - turn on the sensors so that you are quickly found in case of trouble.
+  components:
+  - type: Sprite
+    state: poster_adtturnonsensors_legit
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterContrabandLustTayaran
+  name: Lusty Tayaran
+  description: A poster with tayaran women of attractive appearance and in a provocative suit. Tayarans can also be beautiful!
+  components:
+  - type: Sprite
+    state: poster_adtlusttayaran_contraband
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterContrabandLustUma
+  name: Lusty Uma
+  description: A poster with vulpcanine women of attractive appearance and in a provocative suit.
+  components:
+  - type: Sprite
+    state: poster_adtlustuma_contraband
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterContrabandLustArDeco
+  name: Tayaran ArDeco
+  description: A poster with tayaran women of attractive appearance and in ar deco suit.
+  components:
+  - type: Sprite
+    state: poster_adtlustardeco_contraband
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterContrabandLostParadise
+  name: Lost Paradise (contraband)
+  description: A contraband poster of the now-frozen band "Lost Paradise".
+  components:
+  - type: Sprite
+    state: lp_contraband
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterContrabandSlimeBarmaid
+  name: Slime barmaid
+  description: A poster depicting a slime in a barmaid outfit serving drinks at the bar.
+  components:
+  - type: Sprite
+    state: bar_contraband
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterContrabandHonkminator
+  name: Honkminator
+  description: A promotional poster for a sci-fi film about a clown-cyborg from the future who came to kill the young head of security.
+  components:
+  - type: Sprite
+    state: honkminator_contraband
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterContrabandHonkDance
+  name: Honk-Dance
+  description: A promotional poster advertising dance courses on the H.O.N.K. mech.
+  components:
+  - type: Sprite
+    state: honkdance_contraband
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterContrabandBorgBro
+  name: BroBorg
+  description: Innovative development! A borg that can chat and even smoke with you!
+  components:
+  - type: Sprite
+    state: borgbro_contraband
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterContrabandLadyRnd
+  name: Miss R&D
+  description: She's like a fire anomaly - a hot one!
+  components:
+  - type: Sprite
+    state: ladyrnd_contraband
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterLegitMissNT1
+  name: Miss NanoTrasen contest
+  description: An old poster advertising a beauty contest among station employees.
+  components:
+  - type: Sprite
+    state: missnt1_legit
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterLegitMissNT2
+  name: Miss NanoTrasen
+  description: An old poster advertising NanoTrasen.
+  components:
+  - type: Sprite
+    state: missnt2_legit
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterContrabandSkrellSinger
+  name: Skrell singer
+  description: A poster depicting singer La'li'a'vuzo Seyur'a, the most famous artist among skrell.
+  components:
+  - type: Sprite
+    state: skrell_contraband
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterContrabandSpaceNinja
+  name: Space ninja
+  description: A poster depicting a stealthy space ninja in action.
+  components:
+  - type: Sprite
+    state: ninja_contraband
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterCalendarNT
+  name: Calendar
+  description: A corporate NanoTrasen calendar. Looks very cheap.
+  components:
+  - type: Sprite
+    state: calendar_nt
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterContrabandAnime
+  name: End of Evangelion
+  description: A promotional poster for a Japanese drama with action about schoolchildren piloting giant bio-robots.
+  components:
+  - type: Sprite
+    state: anime_contraband
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterContrabandUnati
+  name: Lustful Unathi maiden
+  description: A promotional poster for a book series about an Unathi maid.
+  components:
+  - type: Sprite
+    state: unati_contraband
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterContrabandPinning
+  name: Pin the tail on Ian!
+  description: Tail not included.
+  components:
+  - type: Sprite
+    state: pinning_contraband
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterLegitObjection
+  name: OBJECTION
+  description: 'Your Honor: The first word was eaten by a cow. The first word is more expensive than the second.'
+  components:
+  - type: Sprite
+    state: objection_legit
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterContrabandGorlaxSanta
+  name: Happy New Year
+  description: A New Year poster congratulating all Syndicate agents on the New Year.
+  components:
+  - type: Sprite
+    state: gorlaxsanta_contraband
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterGerbBKF
+  name: gerb BKF
+  description: gerb BKF
+  suffix: USSP
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Wallmounts/poster_ussp.rsi
+    state: bkf
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterGerbKDV
+  name: gerb KDV
+  description: gerb KDV
+  suffix: USSP
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Wallmounts/poster_ussp.rsi
+    state: kdv
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterGerbKS
+  name: gerb KS
+  description: gerb KS
+  suffix: USSP
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Wallmounts/poster_ussp.rsi
+    state: ks
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterGerbUSSP
+  name: gerb USSP
+  description: gerb USSP
+  suffix: USSP
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Wallmounts/poster_ussp.rsi
+    state: ussp
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterGerbUSSP2
+  name: gerb USSP
+  description: gerb USSP
+  suffix: USSP
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Wallmounts/poster_ussp.rsi
+    state: ussp2
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterUSSPRHBZ
+  name: RHBZ poster
+  description: gerb USSP
+  suffix: USSP
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Wallmounts/poster_ussp.rsi
+    state: rhbz
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterUSSPKS
+  name: USSP KS
+  description: gerb USSP
+  suffix: USSP
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Wallmounts/poster_ussp.rsi
+    state: ks2
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterUSSPKDV
+  name: KDV poster
+  description: gerb USSP
+  suffix: USSP
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Wallmounts/poster_ussp.rsi
+    state: kdv2
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterUSSPLegit
+  name: USSP poster
+  description: An official USSP poster.
+  suffix: USSP
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Wallmounts/poster_ussp.rsi
+    state: ussp_legit
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterContrabandUmaHot
+  name: Uma`s poster 1
+  description: Uma`s poster 1
+  suffix: Sponsor, Uma
+  components:
+  - type: Sprite
+    state: poster_umahot_contraband
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterContrabandUmaPress
+  name: Uma`s poster 2
+  description: Uma`s poster 2
+  suffix: Sponsor, Uma
+  components:
+  - type: Sprite
+    state: poster_umapress_contraband
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterContrabandUmaSport
+  name: Uma`s poster 3
+  description: Uma`s poster 3
+  suffix: Sponsor, Uma
+  components:
+  - type: Sprite
+    state: poster_umasport_contraband
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterContrabandUmaAndAzalia
+  name: Uma`s poster 4
+  description: Uma`s poster 4
+  suffix: Sponsor, Uma
+  components:
+  - type: Sprite
+    state: poster_umaazalia_contraband
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterContrabandUmaRabbit
+  name: Uma`s poster 5
+  description: Uma`s poster 5
+  suffix: Sponsor, Uma
+  components:
+  - type: Sprite
+    state: poster_umarabbit_contraband
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterContrabandUmaOnBeach
+  name: Uma`s poster 6
+  description: Uma`s poster 6
+  suffix: Sponsor, Uma
+  components:
+  - type: Sprite
+    state: poster_umaonbeach_contraband
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterUnclePrazLegit
+  name: We need you!
+  suffix: DV
+  components:
+  - type: Sprite
+    state: poster_unclepraz_legit
+
+- type: entity
+  parent: BaseDecorativePoster
+  id: PosterStandard
+  name: Standard
+  description: 'An official NanoTrasen HR department poster. Above, the face of the Clown towers majestically, beneath which endless rows of station staff march methodically
+    in step, merging into a single mass. Below, under the inscription "HONK," is a strict list of disciplinary rules. The fine print at the very bottom reads: "Any
+    manifestation of unauthorized merriment is punishable by termination due to non-compliance with corporate interests"'
+  components:
+  - type: Sprite
+    state: standart

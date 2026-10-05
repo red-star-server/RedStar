@@ -1,0 +1,136 @@
+- type: constructionGraph
+  id: BannerGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: bannerRed
+      completed:
+      - !type:SnapToGrid
+        southRotation: true
+      steps:
+      - material: MetalRod
+        amount: 3
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+    - to: bannerBlue
+      completed:
+      - !type:SnapToGrid
+        southRotation: true
+      steps:
+      - material: MetalRod
+        amount: 3
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+    - to: bannerGreen
+      completed:
+      - !type:SnapToGrid
+        southRotation: true
+      steps:
+      - material: MetalRod
+        amount: 3
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+    - to: bannerYellow
+      completed:
+      - !type:SnapToGrid
+        southRotation: true
+      steps:
+      - material: MetalRod
+        amount: 3
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+    - to: bannerNanotrasen
+      completed:
+      - !type:SnapToGrid
+        southRotation: true
+      steps:
+      - material: MetalRod
+        amount: 3
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+    - to: bannerCargo
+      completed:
+      - !type:SnapToGrid
+        southRotation: true
+      steps:
+      - material: MetalRod
+        amount: 3
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+    - to: bannerEngineering
+      completed:
+      - !type:SnapToGrid
+        southRotation: true
+      steps:
+      - material: MetalRod
+        amount: 3
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+    - to: bannerMedical
+      completed:
+      - !type:SnapToGrid
+        southRotation: true
+      steps:
+      - material: MetalRod
+        amount: 3
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+    - to: bannerScience
+      completed:
+      - !type:SnapToGrid
+        southRotation: true
+      steps:
+      - material: MetalRod
+        amount: 3
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+    - to: bannerSecurity
+      completed:
+      - !type:SnapToGrid
+        southRotation: true
+      steps:
+      - material: MetalRod
+        amount: 3
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+  - node: bannerRed
+    entity: BannerRed
+    edges: []
+  - node: bannerBlue
+    entity: BannerBlue
+    edges: []
+  - node: bannerGreen
+    entity: BannerGreen
+    edges: []
+  - node: bannerYellow
+    entity: BannerYellow
+    edges: []
+  - node: bannerNanotrasen
+    entity: BannerNanotrasen
+    edges: []
+  - node: bannerCargo
+    entity: BannerCargo
+    edges: []
+  - node: bannerEngineering
+    entity: BannerEngineering
+    edges: []
+  - node: bannerMedical
+    entity: BannerMedical
+    edges: []
+  - node: bannerScience
+    entity: BannerScience
+    edges: []
+  - node: bannerSecurity
+    entity: BannerSecurity
+    edges: []

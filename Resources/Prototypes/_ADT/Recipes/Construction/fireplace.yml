@@ -1,0 +1,11 @@
+- type: construction
+  parent: BaseStructureFullTile
+  id: FireplaceWhite
+  graph: Fireplace
+  targetNode: fireplaceWhite
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: FireplaceWooden
+  graph: Fireplace
+  targetNode: fireplaceWooden

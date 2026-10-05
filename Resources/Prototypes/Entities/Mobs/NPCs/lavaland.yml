@@ -1,7 +1,7 @@
 - type: entity
   name: watcher
   id: MobWatcherBase
-  parent: [ SimpleSpaceMobBase, FlyingMobBase, BaseSlicingRefinable, BaseMobDestructible ]
+  parent: [ SimpleSpaceMobBase, FlyingMobBase, BaseSlicingRefinableButchering, BaseMobDestructible ]
   abstract: true
   description: It's like it's staring right through you.
   components:
@@ -13,13 +13,13 @@
       task: SimpleRangedHostileCompound
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/Aliens/Lavaland/watcher.rsi
+    sprite: _RedStar/Mobs/Aliens/Lavaland/watcher.rsi # RS14
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
-      state: base
-    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
-      state: unshaded
-      shader: unshaded
+      state: watcher # RS14
+    #- map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+    #  state: unshaded
+    #  shader: unshaded
   - type: Fixtures
     fixtures:
       fix1:
@@ -34,11 +34,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: base
-        BaseUnshaded: unshaded
+        Base: watcher # RS14
+        #BaseUnshaded: unshaded # RS14
       Dead:
-        Base: dead
-        BaseUnshaded: dead-unshaded
+        Base: watcher_dead # RS14
+        #BaseUnshaded: dead-unshaded # RS14
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -80,11 +80,11 @@
   - type: Sprite
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
-      state: base
-    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
-      state: unshaded
-      shader: unshaded
-      color: red
+      state: watcher
+    #- map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+    #  state: unshaded
+    #  shader: unshaded
+    #  color: red
   - type: PointLight
     radius: 1
     energy: 3
@@ -98,15 +98,21 @@
   - type: Sprite
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
-      state: base
-    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
-      state: unshaded
-      shader: unshaded
-      color: deepskyblue
+      state: watcher_icewing # RS14
+    #- map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ] # RS14
+    #  state: unshaded
+    #  shader: unshaded
+    #  color: deepskyblue
   - type: PointLight
     radius: 1
     energy: 3
     color: deepskyblue
+  - type: DamageStateVisuals # RS14
+    states:
+      Alive:
+        Base: watcher_icewing
+      Dead:
+        Base: watcher_icewing_dead
 
 - type: entity
   id: MobWatcherMagmawing
@@ -116,11 +122,11 @@
   - type: Sprite
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
-      state: base
-    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
-      state: unshaded
-      shader: unshaded
-      color: orangered
+      state: watcher_magmawing # RS14
+    #- map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ] # RS14
+    #  state: unshaded
+    #  shader: unshaded
+    #  color: orangered
   - type: PointLight
     radius: 1
     energy: 3
@@ -128,23 +134,29 @@
   - type: BatteryAmmoProvider
     proto: WatcherBoltMagmawing
     fireCost: 50
+  - type: DamageStateVisuals # RS14
+    states:
+      Alive:
+        Base: watcher_magmawing
+      Dead:
+        Base: watcher_magmawing_dead
 
-- type: entity
-  id: MobWatcherPride
-  parent: MobWatcherBase
-  name: pride watcher
-  suffix: Admeme
-  description: This rare subspecies only appears in June.
-  components:
-  - type: Sprite
-    layers:
-    - map: [ "enum.DamageStateVisualLayers.Base" ]
-      state: base
-    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
-      state: unshaded
-      shader: unshaded
-  - type: PointLight
-    radius: 1
-    energy: 3
-  - type: RgbLightController
-    layers: [ 1 ]
+#- type: entity
+#  id: MobWatcherPride
+#  parent: MobWatcherBase
+#  name: pride watcher
+#  suffix: Admeme
+#  description: This rare subspecies only appears in June.
+#  components:
+#  - type: Sprite
+#    layers:
+#    - map: [ "enum.DamageStateVisualLayers.Base" ]
+#      state: watcher # RS14
+#    #- map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ] # RS14
+#    #  state: unshaded
+#    #  shader: unshaded
+#  - type: PointLight
+#    radius: 1
+#    energy: 3
+#  - type: RgbLightController
+#    layers: [ 1 ]

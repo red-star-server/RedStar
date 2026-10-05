@@ -316,6 +316,12 @@
   - type: Appearance
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
+    # RS14-start
+    quickEquip: false
+    slots:
+    - Belt
+    - suitStorage
+    # RS14-end
   - type: Gun
     selectedMode: SemiAuto
     availableModes:
@@ -504,7 +510,7 @@
     fireCost: 100
   - type: MagazineVisuals
     magState: mag
-    steps: 5
+    steps: 6 # RS14
     zeroVisible: true
   - type: Appearance
 
@@ -532,7 +538,7 @@
   - type: Appearance
   - type: MagazineVisuals
     magState: mag
-    steps: 5
+    steps: 6 # RS14
     zeroVisible: true
   - type: StaticPrice
     price: 100
@@ -716,7 +722,8 @@
   - type: StaticPrice
     price: 750
   - type: StealTarget
-    stealGroup: WeaponAntiqueLaser
+    stealGroup:
+    - WeaponAntiqueLaser
   - type: SentienceTarget # I hope this is only the captain's gun
     flavorKind: station-event-random-sentience-flavor-inanimate
     weight: 0.0002 # 5,000 times less likely than 1 regular animal
@@ -926,7 +933,8 @@
     - HighRiskItem
     - Sidearm
   - type: StealTarget
-    stealGroup: WeaponEnergyMagnum
+    stealGroup:
+    - WeaponEnergyMagnum
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg

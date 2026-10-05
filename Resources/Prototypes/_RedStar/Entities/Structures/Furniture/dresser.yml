@@ -1,0 +1,60 @@
+- type: entity
+  parent: Dresser
+  id: DresserBox
+  suffix: Empty
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/dresser.rsi
+  - type: Construction
+    graph: WoodenStorage
+    node: dresserBox
+
+- type: entity
+  id: DresserBoxFilled
+  parent: DresserBox
+  suffix: Filled
+  components:
+  - type: EntityTableContainerFill #TODO: make these tables in any way consistent
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: DresserMainLootEntityTable
+        - !type:NestedSelector
+          tableId: DresserSecondLootEntityTable
+        - !type:NestedSelector
+          tableId: DresserThirdLootEntityTable
+
+- type: entity
+  id: FancyWardrobe
+  parent: Dresser
+  name: wardrobe
+  description: A large fancy wardrobe. Its in pretty good condition.
+  suffix: Empty
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/wardrobe.rsi
+    state: wardrobe
+  - type: Storage
+    grid:
+    - 0,0,6,7
+    maxItemSize: Large
+  - type: Construction
+    graph: WoodenStorage
+    node: fancyWardrobe
+
+- type: entity
+  id: FancyWardrobeFilled
+  parent: FancyWardrobe
+  suffix: Filled
+  components:
+  - type: EntityTableContainerFill #TODO: make these tables in any way consistent
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: DresserMainLootEntityTable
+        - !type:NestedSelector
+          tableId: DresserSecondLootEntityTable
+        - !type:NestedSelector
+          tableId: DresserThirdLootEntityTable

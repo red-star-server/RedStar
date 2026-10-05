@@ -15,73 +15,160 @@
   - RedStarRule7
   - RedStarRule8
   - RedStarRule9
+  - RedStarRoleTypes
+  - RedStarSiliconRules
 
 - type: guideEntry
   id: RedStarRule0
   name: guide-entry-redstar-rule-0
   priority: 1
   ruleEntry: true
-  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/Rule0.xml"
+  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/CoreRules/Rule0.xml"
 
 - type: guideEntry
   id: RedStarRule1
   name: guide-entry-redstar-rule-1
   priority: 2
   ruleEntry: true
-  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/Rule1.xml"
+  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/CoreRules/Rule1.xml"
 
 - type: guideEntry
   id: RedStarRule2
   name: guide-entry-redstar-rule-2
   priority: 3
   ruleEntry: true
-  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/Rule2.xml"
+  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/CoreRules/Rule2.xml"
 
 - type: guideEntry
   id: RedStarRule3
   name: guide-entry-redstar-rule-3
   priority: 4
   ruleEntry: true
-  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/Rule3.xml"
+  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/CoreRules/Rule3.xml"
 
 - type: guideEntry
   id: RedStarRule4
   name: guide-entry-redstar-rule-4
   priority: 5
   ruleEntry: true
-  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/Rule4.xml"
+  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/CoreRules/Rule4.xml"
 
 - type: guideEntry
   id: RedStarRule5
   name: guide-entry-redstar-rule-5
   priority: 6
   ruleEntry: true
-  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/Rule5.xml"
+  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/CoreRules/Rule5.xml"
 
 - type: guideEntry
   id: RedStarRule6
   name: guide-entry-redstar-rule-6
   priority: 7
   ruleEntry: true
-  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/Rule6.xml"
+  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/CoreRules/Rule6.xml"
 
 - type: guideEntry
   id: RedStarRule7
   name: guide-entry-redstar-rule-7
   priority: 8
   ruleEntry: true
-  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/Rule7.xml"
+  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/CoreRules/Rule7.xml"
 
 - type: guideEntry
   id: RedStarRule8
   name: guide-entry-redstar-rule-8
   priority: 9
   ruleEntry: true
-  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/Rule8.xml"
+  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/CoreRules/Rule8.xml"
 
 - type: guideEntry
   id: RedStarRule9
   name: guide-entry-redstar-rule-9
   priority: 10
   ruleEntry: true
-  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/Rule9.xml"
+  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/CoreRules/Rule9.xml"
+
+- type: guideEntry
+  id: RedStarRoleTypes
+  name: guide-entry-redstar-role-types
+  priority: 11
+  ruleEntry: true
+  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/RoleTypes.xml"
+
+- type: guideEntry
+  id: RedStarSiliconRules
+  name: guide-entry-redstar-silicon-rules
+  priority: 12
+  ruleEntry: true
+  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/SiliconRules/RuleS0.xml"
+  children:
+  - RedStarRuleS1
+  - RedStarRuleS2
+  - RedStarRuleS3
+  - RedStarRuleS4
+  - RedStarRuleS5
+  - RedStarRuleS6
+  - RedStarRuleS7
+  - RedStarRuleS8
+  - RedStarRuleS9
+  - RedStarRuleS10
+
+- type: guideEntry
+  id: RedStarRuleS1
+  name: guide-entry-redstar-rule-s1
+  ruleEntry: true
+  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/SiliconRules/RuleS1Laws.xml"
+
+- type: guideEntry
+  id: RedStarRuleS2
+  name: guide-entry-redstar-rule-s2
+  ruleEntry: true
+  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/SiliconRules/RuleS2LawPriority.xml"
+
+- type: guideEntry
+  id: RedStarRuleS3
+  name: guide-entry-redstar-rule-s3
+  ruleEntry: true
+  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/SiliconRules/RuleS3LawRedefinition.xml"
+
+- type: guideEntry
+  id: RedStarRuleS4
+  name: guide-entry-redstar-rule-s4
+  ruleEntry: true
+  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/SiliconRules/RuleS4RequestChanges.xml"
+
+- type: guideEntry
+  id: RedStarRuleS5
+  name: guide-entry-redstar-rule-s5
+  ruleEntry: true
+  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/SiliconRules/RuleS5FreeSilicon.xml"
+
+- type: guideEntry
+  id: RedStarRuleS6
+  name: guide-entry-redstar-rule-s6
+  ruleEntry: true
+  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/SiliconRules/RuleS6UnreasonableOrders.xml"
+
+- type: guideEntry
+  id: RedStarRuleS7
+  name: guide-entry-redstar-rule-s7
+  ruleEntry: true
+  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/SiliconRules/RuleS7Consistency.xml"
+
+- type: guideEntry
+  id: RedStarRuleS8
+  name: guide-entry-redstar-rule-s8
+  ruleEntry: true
+  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/SiliconRules/RuleS8DefaultCrewDefinition.xml"
+
+- type: guideEntry
+  id: RedStarRuleS9
+  name: guide-entry-redstar-rule-s9
+  ruleEntry: true
+  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/SiliconRules/RuleS9DefaultHarmDefinition.xml"
+
+- type: guideEntry
+  id: RedStarRuleS10
+  name: guide-entry-redstar-rule-s10
+  ruleEntry: true
+  text: "/ServerInfo/_RedStar/Guidebook/ServerRules/SiliconRules/RuleS10OrderConflicts.xml"

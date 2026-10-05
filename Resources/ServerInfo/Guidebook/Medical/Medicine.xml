@@ -1,8 +1,8 @@
 <Document>
 
-# Core Medications
+# Основные лекарства
 
-These medications are almost always useful to medbay in one way or another.
+Эти лекарства практически всегда пригодятся в медотделе.
 
 <GuideReagentEmbed Reagent="Bicaridine"/>
 <GuideReagentEmbed Reagent="Kelotane"/>
@@ -13,9 +13,9 @@ These medications are almost always useful to medbay in one way or another.
 <GuideReagentEmbed Reagent="DexalinPlus"/>
 <GuideReagentEmbed Reagent="Iron"/>
 
-# Specialty Medications
+# Специальные лекарства
 
-These medications tend to have specific use cases.
+Эти лекарства применяют в определённых ситуациях.
 
 <GuideReagentEmbed Reagent="Cryoxadone"/>
 <GuideReagentEmbed Reagent="Epinephrine"/>
@@ -27,9 +27,9 @@ These medications tend to have specific use cases.
 <GuideReagentEmbed Reagent="Ambuzol"/>
 <GuideReagentEmbed Reagent="Oculine"/>
 
-# All Medications
+# Все лекарства
 
-This is a list of -all- medications available, including ones previously listed.
+Ниже перечислены все доступные лекарства, включая уже упомянутые.
 
 <GuideReagentGroupEmbed Group="Medicine"/>
 

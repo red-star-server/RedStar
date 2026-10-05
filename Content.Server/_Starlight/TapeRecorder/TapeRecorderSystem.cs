@@ -1,0 +1,161 @@
+using Content.Server.Chat.Systems;
+using Content.Server.Hands.Systems;
+using Content.Shared.Chat;
+using Content.Shared.Paper;
+using Content.Shared.Speech;
+using Content.Shared._Starlight.TapeRecorder;
+using Content.Shared._Starlight.TapeRecorder.Components;
+using Content.Shared._Starlight.TapeRecorder.Events;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
+using System.Text;
+using System.Linq;
+using Content.Shared._Corvax.TTS.Components;
+using Content.Shared._Corvax.TTS.Events;
+using Content.Shared.Humanoid;
+using Content.Shared.Speech.Components;
+
+namespace Content.Server._Starlight.TapeRecorder;
+
+public sealed partial class TapeRecorderSystem : SharedTapeRecorderSystem
+{
+    [Dependency] private ChatSystem _chat = default!;
+    [Dependency] private HandsSystem _hands = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private PaperSystem _paper = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private ILocalizationManager _loc = default!;
+
+    [SubscribeLocalEvent]
+    private void OnCassetteMapInit(Entity<TapeCassetteComponent> ent, ref MapInitEvent args)
+    {
+        foreach (var message in ent.Comp.RecordedData)
+        {
+            if (message.Name is not null && _loc.TryGetString(message.Name, out var name))
+                message.Name = name;
+
+            if (_loc.TryGetString(message.Message, out var text))
+                message.Message = text;
+        }
+    }
+
+    /// <summary>
+    /// Given a time range, play all messages on a tape within said range, [start, end).
+    /// Split into this system as shared does not have ChatSystem access
+    /// </summary>
+    protected override void ReplayMessagesInSegment(Entity<TapeRecorderComponent> ent, TapeCassetteComponent tape, float segmentStart, float segmentEnd)
+    {
+        var voice = EnsureComp<VoiceOverrideComponent>(ent);
+        var speech = EnsureComp<SpeechComponent>(ent);
+        var tts = EnsureComp<TTSComponent>(ent);
+
+        foreach (var message in tape.RecordedData.OrderBy(x => x.Timestamp))
+        {
+            if (message.Timestamp < segmentStart || message.Timestamp >= segmentEnd)
+                continue;
+
+            //Change the voice to match the speaker
+            voice.NameOverride = message.Name ?? ent.Comp.DefaultName;
+            // TODO: mimic the exact string chosen when the message was recorded
+            var verb = message.Verb ?? SharedChatSystem.DefaultSpeechVerb;
+            speech.SpeechVerb = _proto.Index(verb);
+
+            // Set the TTS voice if one was recorded for this message
+            tts.VoicePrototypeId = message.VoiceId;
+
+            //Play the message
+            _chat.TrySendInGameICMessage(ent, message.Message, InGameICChatType.Speak, false);
+        }
+    }
+
+    /// <summary>
+    /// Whenever someone speaks within listening range, record it to tape
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnListen(Entity<TapeRecorderComponent> ent, ref ListenEvent args)
+    {
+        // mode should never be set when it isn't active but whatever
+        if (ent.Comp.Mode != TapeRecorderMode.Recording || !HasComp<ActiveTapeRecorderComponent>(ent))
+            return;
+
+        // No feedback loops
+        if (args.Source == ent.Owner)
+            return;
+
+        if (!TryGetTapeCassette(ent, out var cassette))
+            return;
+
+        // TODO: Handle "Someone" when whispering from far away, needs chat refactor
+
+        //Handle someone using a voice changer
+        var nameEv = new TransformSpeakerNameEvent(args.Source, Name(args.Source));
+        RaiseLocalEvent(args.Source, nameEv);
+
+        // Resolve the same voice as TTSSystem, including profile voices and voice masks.
+        string? voiceId = null;
+        if (TryComp<TTSComponent>(args.Source, out var ttsComp))
+            voiceId = ttsComp.VoicePrototypeId;
+
+        if (voiceId == null && TryComp<HumanoidProfileComponent>(args.Source, out var humanoid))
+            voiceId = humanoid.TTSVoice;
+
+        if (voiceId != null)
+        {
+            var voiceEv = new TransformSpeakerVoiceEvent(args.Source, voiceId);
+            RaiseLocalEvent(args.Source, voiceEv);
+            voiceId = voiceEv.VoiceId;
+        }
+
+        //Add a new entry to the tape
+        var verb = _chat.GetSpeechVerb(args.Source, args.Message);
+        var name = nameEv.VoiceName;
+        cassette.Comp.Buffer.Add(new TapeCassetteRecordedMessage(cassette.Comp.CurrentPosition, name, verb, args.Message, voiceId));
+    }
+
+    [SubscribeLocalEvent]
+    private void OnPrintMessage(Entity<TapeRecorderComponent> ent, ref PrintTapeRecorderMessage args)
+    {
+        var (_, comp) = ent;
+
+        if (comp.CooldownEndTime > _timing.CurTime)
+            return;
+
+        if (!TryGetTapeCassette(ent, out var cassette))
+            return;
+
+        var text = new StringBuilder();
+        var paper = Spawn(comp.PaperPrototype, Transform(ent).Coordinates);
+
+        // Re-recording an earlier section can append entries after later recordings.
+        var data = cassette.Comp.RecordedData.OrderBy(x => x.Timestamp);
+
+        // Looking if player's entity exists to give paper in its hand
+        var player = args.Actor;
+        if (Exists(player))
+            _hands.PickupOrDrop(player, paper, checkActionBlocker: false);
+
+        if (!TryComp<PaperComponent>(paper, out var paperComp))
+            return;
+
+        Audio.PlayPvs(comp.PrintSound, ent);
+
+        text.AppendLine(Loc.GetString("tape-recorder-print-start-text"));
+        text.AppendLine();
+        foreach (var message in data)
+        {
+            var name = message.Name ?? ent.Comp.DefaultName;
+            var time = TimeSpan.FromSeconds(message.Timestamp);
+
+            text.AppendLine(Loc.GetString("tape-recorder-print-message-text",
+                ("time", time.ToString(@"hh\:mm\:ss")),
+                ("source", name),
+                ("message", message.Message)));
+        }
+        text.AppendLine();
+        text.Append(Loc.GetString("tape-recorder-print-end-text"));
+
+        _paper.SetContent((paper, paperComp), text.ToString());
+
+        comp.CooldownEndTime = _timing.CurTime + comp.PrintCooldown;
+    }
+}

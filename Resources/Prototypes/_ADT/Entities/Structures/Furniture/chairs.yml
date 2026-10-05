@@ -1,0 +1,281 @@
+- type: entity
+  abstract: true
+  name: chair
+  id: BaseUpholsteredChair
+  parent:
+  - ChairBase
+  - StructureHealthFurniture
+  description: It looks comfy.
+  components:
+  - type: HealOnBuckle
+    damage:
+      types:
+        Poison: -0.1
+        Blunt: -0.1
+  - type: Strap
+    position: Down
+    rotation: 0
+
+- type: entity
+  name: pizzeria chair
+  id: ChairPizzeria
+  parent: BaseUpholsteredChair
+  description: It looks spooky.
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Furniture/Chairs/chairs.rsi
+    state: pizza_chair
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: chairPizzeria
+
+- type: entity
+  name: red chair
+  id: ChairRed
+  parent: BaseUpholsteredChair
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Furniture/Chairs/chairs.rsi
+    state: red_chair
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: chairRed
+
+- type: entity
+  name: white chair
+  id: ChairWhite
+  parent: BaseUpholsteredChair
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Furniture/Chairs/chairs.rsi
+    state: white_chair
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: chairWhite
+
+- type: entity
+  name: bar stool
+  id: ChairBarStool
+  parent: BaseUpholsteredChair
+  description: This is a chair.
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Furniture/Chairs/chairs.rsi
+    state: bar-stool
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: chairBarStool
+
+- type: entity
+  name: bar stool
+  id: ChairBarStool2
+  parent: BaseUpholsteredChair
+  description: This is a chair.
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Furniture/Chairs/chairs.rsi
+    state: bar-stool2
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: chairBarStool2
+
+- type: entity
+  name: comfy black chair
+  id: ChairComfyBlack
+  parent: BaseUpholsteredChair
+  description: This is a chair.
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Furniture/Chairs/chairs.rsi
+    state: comfy_black
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: chairComfyBlack
+
+- type: entity
+  name: comfy maroon chair
+  id: ChairComfyMaroon
+  parent: BaseUpholsteredChair
+  description: This is a chair.
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Furniture/Chairs/chairs.rsi
+    state: comfy_maroon
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: chairComfyMaroon
+
+- type: entity
+  name: comfy white chair
+  id: ChairComfyWhite
+  parent: BaseUpholsteredChair
+  description: This is a chair.
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Furniture/Chairs/chairs.rsi
+    state: comfy_white
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: chairComfyWhite
+
+- type: entity
+  name: king chair
+  id: ChairKing
+  parent: BaseUpholsteredChair
+  description: This is a chair.
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Furniture/Chairs/chairs.rsi
+    state: king
+  - type: StaticPrice
+    price: 300
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: chairKing
+
+- type: entity
+  name: rich chair
+  id: ChairRich
+  parent: BaseUpholsteredChair
+  description: This is a chair.
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Furniture/Chairs/chairs.rsi
+    state: rich
+  - type: StaticPrice
+    price: 260
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: chairRich
+
+- type: entity
+  name: rich white chair
+  id: ChairRichWhite
+  parent: BaseUpholsteredChair
+  description: This is a chair.
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Furniture/Chairs/chairs.rsi
+    state: rich_white
+  - type: StaticPrice
+    price: 260
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: chairRichWhite
+
+- type: entity
+  name: style chair
+  id: ChairStyle
+  parent: BaseUpholsteredChair
+  description: This is a chair.
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Furniture/Chairs/chairs.rsi
+    state: style
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: chairStyle
+
+- type: entity
+  name: wooden stool
+  id: ChairWoodenStool
+  parent: BaseUpholsteredChair
+  description: This is a chair.
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Furniture/Chairs/chairs.rsi
+    state: wooden-stool
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: chairWoodenStool
+
+- type: entity
+  name: wooden stool
+  id: ChairWoodenStool2
+  parent: BaseUpholsteredChair
+  description: This is a chair.
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Furniture/Chairs/chairs.rsi
+    state: wooden-stool2
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: chairWoodenStool2
+
+- type: entity
+  name: white armchair
+  id: ArmchairWhite
+  parent: BaseUpholsteredChair
+  description: It looks comfy.
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Furniture/Chairs/armchairs.rsi
+    state: white_armchair
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: armchairWhite
+
+- type: entity
+  name: white armchair
+  id: ArmchairWhite2
+  parent: BaseUpholsteredChair
+  description: It looks comfy.
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Furniture/Chairs/armchairs.rsi
+    state: white_armchair_02
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: armchairWhite2
+
+- type: entity
+  name: brown armchair
+  id: ArmchairBrown
+  parent: BaseUpholsteredChair
+  description: It looks comfy.
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Furniture/Chairs/armchairs.rsi
+    state: brown_armchair
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: armchairBrown
+
+- type: entity
+  name: brown armchair
+  id: ArmchairBrown2
+  parent: BaseUpholsteredChair
+  description: It looks comfy.
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Furniture/Chairs/armchairs.rsi
+    state: brown_armchair_02
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: armchairBrown2
+
+- type: entity
+  name: blue armchair
+  id: ArmchairBlue
+  parent: BaseUpholsteredChair
+  description: It looks comfy.
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Furniture/Chairs/armchairs.rsi
+    state: blue_armchair
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: armchairBlue
+
+- type: entity
+  name: blue armchair
+  id: ArmchairBlue2
+  parent: BaseUpholsteredChair
+  description: It looks comfy.
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Furniture/Chairs/armchairs.rsi
+    state: blue_armchair_02
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: armchairBlue2

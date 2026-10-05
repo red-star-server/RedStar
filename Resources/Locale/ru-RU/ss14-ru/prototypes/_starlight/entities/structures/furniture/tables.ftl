@@ -1,0 +1,14 @@
+ent-TableCounterRetroSteel = стальная стойка
+    .desc = Отличное место, чтобы поставить напиток.
+ent-TableCounterRetroWood = деревянная стойка
+    .desc = Отличное место, чтобы поставить напиток.
+ent-TableCounterRetroKitchen = кухонная стойка
+    .desc = { ent-TableCounterRetroSteel.desc }
+ent-TableCounterRetroSteelWood = стальная стойка с деревянной отделкой
+    .desc = { ent-TableCounterRetroSteel.desc }
+ent-TableCounterRetroWhiteOrange = бело-оранжевая стойка
+    .desc = { ent-TableCounterRetroSteel.desc }
+ent-TableCounterRetroWhiteTeal = бело-бирюзовая стойка
+    .desc = { ent-TableCounterRetroSteel.desc }
+ent-TableCounterRetroDiner = стойка закусочной
+    .desc = { ent-TableCounterRetroSteel.desc }

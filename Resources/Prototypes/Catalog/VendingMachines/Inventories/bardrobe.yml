@@ -12,6 +12,7 @@
     icon: { entity: ClothingOuterApronBar }
     startingInventory:
       ClothingOuterApronBar: 2
+      ClothingOuterApronCuteBar: 2 # RS14
       ClothingOuterWinterBar: 2
       ClothingOuterArmorBasicSlim: 2
       ClothingOuterVest: 2

@@ -1,0 +1,119 @@
+- type: construction
+  parent: BaseChair
+  id: ArmchairWhiteRecipe
+  graph: UpholsteredSeatGraph
+  targetNode: armchairWhite
+
+- type: construction
+  parent: BaseChair
+  id: ArmchairWhiteRecipe2
+  graph: UpholsteredSeatGraph
+  targetNode: armchairWhite2
+
+- type: construction
+  parent: BaseChair
+  id: ArmchairBrownRecipe
+  graph: UpholsteredSeatGraph
+  targetNode: armchairBrown
+
+- type: construction
+  parent: BaseChair
+  id: ArmchairBrownRecipe2
+  graph: UpholsteredSeatGraph
+  targetNode: armchairBrown2
+
+- type: construction
+  parent: BaseChair
+  id: ArmchairBlueRecipe
+  graph: UpholsteredSeatGraph
+  targetNode: armchairBlue
+
+- type: construction
+  parent: BaseChair
+  id: ArmchairBlueRecipe2
+  graph: UpholsteredSeatGraph
+  targetNode: armchairBlue2
+
+- type: construction
+  parent: BaseChair
+  id: ChairPizzeriaRecipe
+  graph: UpholsteredSeatGraph
+  targetNode: chairPizzeria
+
+- type: construction
+  parent: BaseChair
+  id: ChairWhiteRecipe
+  graph: UpholsteredSeatGraph
+  targetNode: chairWhite
+
+- type: construction
+  parent: BaseChair
+  id: ChairRedRecipe
+  graph: UpholsteredSeatGraph
+  targetNode: chairRed
+
+- type: construction
+  parent: BaseChair
+  id: ChairBarStoolRecipe
+  graph: UpholsteredSeatGraph
+  targetNode: chairBarStool
+
+- type: construction
+  parent: BaseChair
+  id: ChairBarStool2Recipe
+  graph: UpholsteredSeatGraph
+  targetNode: chairBarStool2
+
+- type: construction
+  parent: BaseChair
+  id: ChairComfyBlackRecipe
+  graph: UpholsteredSeatGraph
+  targetNode: chairComfyBlack
+
+- type: construction
+  parent: BaseChair
+  id: ChairComfyMaroonRecipe
+  graph: UpholsteredSeatGraph
+  targetNode: chairComfyMaroon
+
+- type: construction
+  parent: BaseChair
+  id: ChairComfyWhiteRecipe
+  graph: UpholsteredSeatGraph
+  targetNode: chairComfyWhite
+
+- type: construction
+  parent: BaseChair
+  id: ChairKingRecipe
+  graph: UpholsteredSeatGraph
+  targetNode: chairKing
+
+- type: construction
+  parent: BaseChair
+  id: ChairRichRecipe
+  graph: UpholsteredSeatGraph
+  targetNode: chairRich
+
+- type: construction
+  parent: BaseChair
+  id: ChairRichWhiteRecipe
+  graph: UpholsteredSeatGraph
+  targetNode: chairRichWhite
+
+- type: construction
+  parent: BaseChair
+  id: ChairStyleRecipe
+  graph: UpholsteredSeatGraph
+  targetNode: chairStyle
+
+- type: construction
+  parent: BaseChair
+  id: ChairWoodenStoolRecipe
+  graph: UpholsteredSeatGraph
+  targetNode: chairWoodenStool
+
+- type: construction
+  parent: BaseChair
+  id: ChairWoodenStool2Recipe
+  graph: UpholsteredSeatGraph
+  targetNode: chairWoodenStool2

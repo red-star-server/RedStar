@@ -1,0 +1,1074 @@
+- type: constructionGraph
+  id: UpholsteredSeatGraph
+  start: start
+  graph:
+  - node: start
+    actions:
+    - !type:DestroyEntity {}
+    edges:
+    - to: sofaCutBlackLeftSide
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaCutBlackMiddle
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaCutBlackRightSide
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaCutBlackLeftCorner
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaCutBlackRightCorner
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaCutComfyLeftSide
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaCutComfyMiddle
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaCutComfyRightSide
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaCutComfyLeftCorner
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaCutComfyRightCorner
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaCutDainerLeftSide
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaCutDainerMiddle
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaCutDainerRightSide
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaCutDainerLeftCorner
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaCutDainerRightCorner
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaWhiteLeftSide
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaWhiteRightSide
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaWhiteLeftSide2
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaWhiteRightSide2
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaWhiteMiddle
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaWhiteLeftCorner
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaWhiteRightCorner
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaBlueLeftSide
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaBlueRightSide
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaBlueLeftSide2
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaBlueRightSide2
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaBlueMiddle
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaBlueLeftCorner
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaBlueRightCorner
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaBrownLeftSide
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaBrownRightSide
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaBrownLeftSide2
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaBrownRightSide2
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaBrownMiddle
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaBrownLeftCorner
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaBrownRightCorner
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaOfficeBlackLeftSide
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaOfficeBlackRightSide
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaOfficeBlackMiddle
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaOfficeBlackLeftCorner
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaOfficeBlackRightCorner
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaOfficeWhiteLeftSide
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaOfficeWhiteRightSide
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaOfficeWhiteMiddle
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaOfficeWhiteLeftCorner
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: sofaOfficeWhiteRightCorner
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: armchairBlue
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: armchairBlue2
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: armchairWhite
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: armchairWhite2
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: armchairBrown
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: armchairBrown2
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: chairPizzeria
+      steps:
+      - material: WoodPlank
+        amount: 2
+        doAfter: 1
+    - to: chairRed
+      steps:
+      - material: WoodPlank
+        amount: 2
+        doAfter: 1
+    - to: chairWhite
+      steps:
+      - material: WoodPlank
+        amount: 2
+        doAfter: 1
+    - to: chairBarStool
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: chairBarStool2
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: chairComfyBlack
+      steps:
+      - material: WoodPlank
+        amount: 2
+        doAfter: 1
+    - to: chairComfyMaroon
+      steps:
+      - material: WoodPlank
+        amount: 2
+        doAfter: 1
+    - to: chairComfyWhite
+      steps:
+      - material: WoodPlank
+        amount: 2
+        doAfter: 1
+    - to: chairKing
+      steps:
+      - material: Gold
+        amount: 3
+        doAfter: 1
+      - material: Cloth
+        amount: 1
+        doAfter: 1
+    - to: chairRich
+      steps:
+      - material: Gold
+        amount: 3
+        doAfter: 1
+      - material: Cloth
+        amount: 1
+        doAfter: 1
+    - to: chairRichWhite
+      steps:
+      - material: Gold
+        amount: 3
+        doAfter: 1
+      - material: Cloth
+        amount: 1
+        doAfter: 1
+    - to: chairStyle
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: chairWoodenStool
+      steps:
+      - material: WoodPlank
+        amount: 2
+        doAfter: 1
+    - to: chairWoodenStool2
+      steps:
+      - material: WoodPlank
+        amount: 2
+        doAfter: 1
+  - node: sofaCutBlackLeftSide
+    entity: SofaCutBlackLeftSide
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaCutBlackMiddle
+    entity: SofaCutBlackMiddle
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaCutBlackRightSide
+    entity: SofaCutBlackRightSide
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaCutBlackLeftCorner
+    entity: SofaCutBlackLeftCorner
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaCutBlackRightCorner
+    entity: SofaCutBlackRightCorner
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaCutComfyLeftSide
+    entity: SofaCutComfyLeftSide
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaCutComfyMiddle
+    entity: SofaCutComfyMiddle
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaCutComfyRightSide
+    entity: SofaCutComfyRightSide
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaCutComfyLeftCorner
+    entity: SofaCutComfyLeftCorner
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaCutComfyRightCorner
+    entity: SofaCutComfyRightCorner
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaCutDainerLeftSide
+    entity: SofaCutDainerLeftSide
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaCutDainerMiddle
+    entity: SofaCutDainerMiddle
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaCutDainerRightSide
+    entity: SofaCutDainerRightSide
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaCutDainerLeftCorner
+    entity: SofaCutDainerLeftCorner
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaCutDainerRightCorner
+    entity: SofaCutDainerRightCorner
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaWhiteLeftSide
+    entity: SofaWhiteLeftSide
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaWhiteRightSide
+    entity: SofaWhiteRightSide
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaWhiteLeftSide2
+    entity: SofaWhiteLeftSide2
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaWhiteRightSide2
+    entity: SofaWhiteRightSide2
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaWhiteMiddle
+    entity: SofaWhiteMiddle
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaWhiteLeftCorner
+    entity: SofaWhiteLeftCorner
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaWhiteRightCorner
+    entity: SofaWhiteRightCorner
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaBlueLeftSide
+    entity: SofaBlueLeftSide
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaBlueRightSide
+    entity: SofaBlueRightSide
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaBlueLeftSide2
+    entity: SofaBlueLeftSide2
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaBlueRightSide2
+    entity: SofaBlueRightSide2
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaBlueMiddle
+    entity: SofaBlueMiddle
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaBlueLeftCorner
+    entity: SofaBlueLeftCorner
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaBlueRightCorner
+    entity: SofaBlueRightCorner
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaBrownLeftSide
+    entity: SofaBrownLeftSide
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaBrownRightSide
+    entity: SofaBrownRightSide
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaBrownLeftSide2
+    entity: SofaBrownLeftSide2
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaBrownRightSide2
+    entity: SofaBrownRightSide2
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaBrownMiddle
+    entity: SofaBrownMiddle
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaBrownLeftCorner
+    entity: SofaBrownLeftCorner
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaBrownRightCorner
+    entity: SofaBrownRightCorner
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaOfficeBlackLeftSide
+    entity: SofaOfficeBlackLeftSide
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaOfficeBlackRightSide
+    entity: SofaOfficeBlackRightSide
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaOfficeBlackMiddle
+    entity: SofaOfficeBlackMiddle
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaOfficeBlackLeftCorner
+    entity: SofaOfficeBlackLeftCorner
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaOfficeBlackRightCorner
+    entity: SofaOfficeBlackRightCorner
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaOfficeWhiteLeftSide
+    entity: SofaOfficeWhiteLeftSide
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaOfficeWhiteRightSide
+    entity: SofaOfficeWhiteRightSide
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaOfficeWhiteMiddle
+    entity: SofaOfficeWhiteMiddle
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaOfficeWhiteLeftCorner
+    entity: SofaOfficeWhiteLeftCorner
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: sofaOfficeWhiteRightCorner
+    entity: SofaOfficeWhiteRightCorner
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: armchairWhite
+    entity: ArmchairWhite
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: armchairWhite2
+    entity: ArmchairWhite2
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: armchairBrown
+    entity: ArmchairBrown
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: armchairBrown2
+    entity: ArmchairBrown2
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: armchairBlue
+    entity: ArmchairBlue
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: armchairBlue2
+    entity: ArmchairBlue2
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: chairPizzeria
+    entity: ChairPizzeria
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialWoodPlank1
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: chairRed
+    entity: ChairRed
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialWoodPlank1
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: chairWhite
+    entity: ChairWhite
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialWoodPlank1
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: chairBarStool
+    entity: ChairBarStool
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: chairBarStool2
+    entity: ChairBarStool2
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: chairComfyBlack
+    entity: ChairComfyBlack
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialWoodPlank1
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: chairComfyMaroon
+    entity: ChairComfyMaroon
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialWoodPlank1
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: chairComfyWhite
+    entity: ChairComfyWhite
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialWoodPlank1
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: chairKing
+    entity: ChairKing
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: IngotGold1
+        amount: 3
+      - !type:SpawnPrototype
+        prototype: MaterialCloth1
+        amount: 1
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: chairRich
+    entity: ChairRich
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: IngotGold1
+        amount: 3
+      - !type:SpawnPrototype
+        prototype: MaterialCloth1
+        amount: 1
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: chairRichWhite
+    entity: ChairRichWhite
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: IngotGold1
+        amount: 3
+      - !type:SpawnPrototype
+        prototype: MaterialCloth1
+        amount: 1
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: chairStyle
+    entity: ChairStyle
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: chairWoodenStool
+    entity: ChairWoodenStool
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialWoodPlank1
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: chairWoodenStool2
+    entity: ChairWoodenStool2
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialWoodPlank1
+      steps:
+      - tool: Screwing
+        doAfter: 2

@@ -77,6 +77,8 @@
   recipes:
   - FloorTileItemWhiteMarble
   - FloorTileItemDarkMarble
+  - FloorTileItemWhiteMarbleMono # RS14
+  - FloorTileItemDarkMarbleMono # RS14
 
 - type: latheRecipePack
   id: FloorShuttleTilesStatic

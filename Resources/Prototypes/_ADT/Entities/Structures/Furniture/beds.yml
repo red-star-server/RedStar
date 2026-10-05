@@ -1,0 +1,76 @@
+- type: entity
+  parent: Bed
+  id: DoubleBed
+  name: double bed
+  description: A large bed for two people. It can accommodate two people.
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Furniture/bed_double.rsi
+    state: bed_double
+  - type: Construction
+    graph: bed
+    node: double_bed_complete
+  - type: Appearance
+  - type: Strap
+    size: 200
+    buckleOffset: 0,-0.25
+
+- type: entity
+  parent: Mattress
+  id: MattressClean
+  name: clean mattress
+  description: A clean mattress for sleeping.
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Furniture/mattress.rsi
+    state: mattress_clean
+  - type: Construction
+    graph: MattressGraph
+    node: mattress_clean
+
+- type: entity
+  parent: Mattress
+  id: MattressCleanFull
+  name: clean mattress
+  description: A large clean mattress for two people.
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Furniture/mattress.rsi
+    state: mattress_clean_full
+  - type: Construction
+    graph: MattressGraph
+    node: mattress_clean_full
+  - type: Strap
+    size: 200
+    buckleOffset: 0,-0.25
+
+- type: entity
+  parent: Mattress
+  id: MattressFull
+  name: wide mattress
+  description: A large mattress for two people.
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Furniture/mattress.rsi
+    state: mattress_full
+  - type: Construction
+    graph: MattressGraph
+    node: mattress_full
+  - type: Strap
+    size: 200
+    buckleOffset: 0,-0.25
+
+- type: entity
+  parent: Bed
+  id: DeckChair
+  name: deckchair
+  description: A deckchair for the acquisition of an even tan under the light of the nearest star.
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Furniture/deckchair.rsi
+    state: deckchair
+  - type: Construction
+    graph: DeckChairGraph
+    node: deckChair
+  - type: Strap
+    buckleOffset: "0,-0.15"

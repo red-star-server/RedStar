@@ -1,65 +1,65 @@
 <Document>
-  # Cyborgs
-  Cyborgs are man-machine hybrids, purpose-built by the [textlink="robotics"  link="Robotics"] division of science for various duties across the station. Bound by strictly-followed [color=cyan]silicon laws[/color], they serve the crew unconditionally. [italic](Most of the time.)[italic]
+  # Киборги
+  Киборги — гибриды человека и машины, которых создают в [textlink="робототехнике"  link="Robotics"] научного отдела для разных задач на станции. Они подчиняются [color=cyan]законам синтетиков[/color] и служат экипажу. [italic](Чаще всего.)[/italic]
 
-  ## Basic Components
+  ## Основные компоненты
   <Box>
-    <GuideEntityEmbed Entity="CyborgEndoskeleton" Caption="Cyborg Endoskeleton"/>
-    <GuideEntityEmbed Entity="ExosuitFabricator" Caption="Exosuit Fabricator"/>
+    <GuideEntityEmbed Entity="CyborgEndoskeleton" Caption="Эндоскелет киборга"/>
+    <GuideEntityEmbed Entity="ExosuitFabricator" Caption="Фабрикатор экзокостюмов"/>
   </Box>
-  All cyborgs are built on an endoskeleton, which can be crafted at an [color=#a4885c]Exosuit Fabricator[/color]. Further assembly steps can be followed by [color=#a4885c]examining[/color] the endoskeleton. Once built, further upgrades like additional tools and a longer battery life can be unlocked with modules or improved power cells.
+  Основа каждого киборга — эндоскелет, который печатают в [color=#a4885c]фабрикаторе экзокостюмов[/color]. [color=#a4885c]Осмотрите[/color] эндоскелет, чтобы узнать следующие шаги сборки. Готового киборга можно улучшить дополнительными модулями и более ёмкими батареями.
 
-  Newly built cyborgs need a [color=#a4885c]brain[/color] able to interface with the electronic body. There are two main types, both of which are able to speak independently, should the chassis be decommissioned, exchanged, or otherwise suffer an unscheduled disassembly.
-  - The [color=#a4885c]Man-Machine Interface[/color] or MMI for short, is an apparatus able to facilitate communication between a biological brain and electronic components, enabling those suffering from major workplace accidents to continue serving their crew, long after their body is gone.
-  - The [color=#a4885c]Positronic Brain[/color] is an entirely artificial brain, capable of spontaneous neural activity. The time for the synthetic neurons to descramble can wildly vary, but they allow for the creation of cyborgs without having to extract a brain from a crew member.
+  Новому киборгу нужен [color=#a4885c]мозг[/color], способный управлять электронным телом. Есть два основных варианта. Оба могут говорить самостоятельно, даже если корпус киборга списан, заменён или разобран.
+  - [color=#a4885c]Интерфейс человек-машина[/color], или ИЧМ, соединяет биологический мозг с электроникой. Сотрудник, пострадавший при несчастном случае, сможет продолжить службу даже без прежнего тела.
+  - [color=#a4885c]Позитронный мозг[/color] полностью искусственный и способен к самостоятельной нейронной активности. Время формирования сознания может различаться. Он позволяет создать киборга без извлечения мозга у члена экипажа.
   <Box>
-    <GuideEntityEmbed Entity="MMIFilled" Caption="Man-Machine Interface"/>
-    <GuideEntityEmbed Entity="PositronicBrain" Caption="Positronic Brain"/>
+    <GuideEntityEmbed Entity="MMIFilled" Caption="Интерфейс человек-машина"/>
+    <GuideEntityEmbed Entity="PositronicBrain" Caption="Позитронный мозг"/>
   </Box>
-  Both brains can be fabricated without requiring any additional research.
+  Оба варианта можно изготовить без дополнительных исследований.
 
-  ## Cyborg types
-  Once created, a cyborg needs to specialize its chassis to a duty on the station. This determines what modules it starts with, which additional modules can be installed, and what [color=#a4885c]departmental radio channel[/color] it has access to. All cyborgs have access to the [color=#D381C9]Science[/color] and [color=green]station-wide[/color] radio channels. All cyborg types have [color=#a4885c]all-access[/color].
+  ## Типы киборгов
+  После сборки корпус киборга нужно специализировать под задачу. От этого зависят начальные и доступные дополнительные модули, а также [color=#a4885c]канал отдела[/color]. Все киборги имеют доступ к каналам [color=#D381C9]научного отдела[/color] и [color=green]станции[/color], а также [color=#a4885c]полный доступ[/color] на станции.
   <Box>
-    <GuideEntityEmbed Entity="BorgChassisGeneric" Caption="Generic"/>
-    <GuideEntityEmbed Entity="BorgChassisEngineer" Caption="Engineering"/>
-    <GuideEntityEmbed Entity="BorgChassisMining" Caption="Salvage"/>
-    <GuideEntityEmbed Entity="BorgChassisJanitor" Caption="Janitor"/>
-    <GuideEntityEmbed Entity="BorgChassisService" Caption="Service"/>
-    <GuideEntityEmbed Entity="BorgChassisMedical" Caption="Medical"/>
+    <GuideEntityEmbed Entity="BorgChassisGeneric" Caption="Обычный"/>
+    <GuideEntityEmbed Entity="BorgChassisEngineer" Caption="Инженерный"/>
+    <GuideEntityEmbed Entity="BorgChassisMining" Caption="Утилизаторский"/>
+    <GuideEntityEmbed Entity="BorgChassisJanitor" Caption="Уборщик"/>
+    <GuideEntityEmbed Entity="BorgChassisService" Caption="Сервисный"/>
+    <GuideEntityEmbed Entity="BorgChassisMedical" Caption="Медицинский"/>
   </Box>
   <Box>
-    [italic]Examples of various cyborg types[/italic]
+    [italic]Примеры типов киборгов[/italic]
   </Box>
-  Once a cyborg chassis has been specialized, it cannot be changed. To change types, a new chassis must be constructed. The brain, power cell, and any modules [italic](if they are compatible with the new chassis)[/italic] can be carried over from the old chassis if desired.
+  Специализацию корпуса изменить нельзя. Для смены типа понадобится новый корпус. Из старого можно перенести мозг, батарею и совместимые с новым корпусом модули.
 
-  ## Modules
+  ## Модули
   <Box>
-    <GuideEntityEmbed Entity="BorgModuleTool" Caption="Tool Cyborg Module"/>
+    <GuideEntityEmbed Entity="BorgModuleTool" Caption="Инструментальный модуль киборга"/>
   </Box>
-  Cyborgs do not have hands, and therefore cannot pick things up like most other players. Instead, their equipment is provided by various [color=#a4885c]modules[/color]. Every cyborg type starts with its own specific set of modules, but additional modules can be inserted as upgrades. These additional modules can be printed at the [color=#a4885c]Exosuit Fabricator[/color].
+  У киборгов нет рук, поэтому они не могут поднимать предметы как остальные. Их инструменты содержатся в [color=#a4885c]модулях[/color]. Каждый тип получает свой набор модулей при сборке; дополнительные можно напечатать в [color=#a4885c]фабрикаторе экзокостюмов[/color] и установить позднее.
 
-  [color=#a4885c]Generic[/color] modules add versatility. They can be fitted into any chassis, granting useful tools such as crowbars, GPS, and the ability to interact with cables. [bold]The generic cyborg chassis can fit up to five additional modules.[/bold]
+  [color=#a4885c]Универсальные[/color] модули подходят любому корпусу. Они дают, например, лом, GPS и возможность работать с кабелями. [bold]Обычный киборг может установить до пяти дополнительных модулей.[/bold]
   <Box>
-    <GuideEntityEmbed Entity="BorgModuleCable" Caption="Cable"/>
-    <GuideEntityEmbed Entity="BorgModuleFireExtinguisher" Caption="Fire Extinguisher"/>
+    <GuideEntityEmbed Entity="BorgModuleCable" Caption="Кабельный"/>
+    <GuideEntityEmbed Entity="BorgModuleFireExtinguisher" Caption="Огнетушитель"/>
   </Box>
   <Box>
-    [italic]Examples of generic modules[/italic]
+    [italic]Примеры универсальных модулей[/italic]
   </Box>
 
-  For more specific needs, [color=#a4885c]specialized[/color] modules are available, granting capabilities like scanning anomalies, constructing walls, reviving crew mates, or cleaning a space lube spill. These modules are typically colored with the same palette as the department [italic](or occupation)[/italic] they relate to. These modules [italic](with exception to [color=#D381C9]science[/color] modules, which can fit any chassis,)[/italic] can only be fitted in their associated borg chassis. [bold]The specialized borg chassis, being the engineering, janitorial, service, medical, and mining chassis, can fit up to three additional modules.[/bold]
+  [color=#a4885c]Специализированные[/color] модули позволяют сканировать аномалии, строить стены, оживлять членов экипажа или убирать разлитую космосмазку. Обычно их цвет соответствует отделу [italic](или профессии)[/italic]. Такие модули устанавливаются только в соответствующие корпуса; исключение — [color=#D381C9]научные[/color] модули, подходящие любому корпусу. [bold]Инженерный, уборочный, сервисный, медицинский и утилизаторский корпуса вмещают до трёх дополнительных модулей.[/bold]
   <Box>
-    <GuideEntityEmbed Entity="BorgModuleAnomaly" Caption="Anomaly"/>
-    <GuideEntityEmbed Entity="BorgModuleRCD" Caption="RCD"/>
-    <GuideEntityEmbed Entity="BorgModuleMining" Caption="Mining"/>
-    <GuideEntityEmbed Entity="BorgModuleCleaning" Caption="Cleaning"/>
-    <GuideEntityEmbed Entity="BorgModuleService" Caption="Service"/>
-    <GuideEntityEmbed Entity="BorgModuleChemical" Caption="Chemical"/>
+    <GuideEntityEmbed Entity="BorgModuleAnomaly" Caption="Аномалии"/>
+    <GuideEntityEmbed Entity="BorgModuleRCD" Caption="РСУ"/>
+    <GuideEntityEmbed Entity="BorgModuleMining" Caption="Добыча"/>
+    <GuideEntityEmbed Entity="BorgModuleCleaning" Caption="Уборка"/>
+    <GuideEntityEmbed Entity="BorgModuleService" Caption="Обслуживание"/>
+    <GuideEntityEmbed Entity="BorgModuleChemical" Caption="Химия"/>
   </Box>
   <Box>
-    [italic]Examples of specialized modules. Note the housing and circuit board colors.
+    [italic]Примеры специализированных модулей. Обратите внимание на цвета корпусов и плат.[/italic]
   </Box>
-  Additional modules with advanced or novel capabilities can be acquired through new [textlink="technologies"  link="Technologies"] researched by scientists.
+  Дополнительные модули с новыми возможностями открываются благодаря [textlink="технологиям"  link="Technologies"], изученным учёными.
 </Document>
 

@@ -1,0 +1,49 @@
+# Retro Counters
+- type: construction
+  parent: BaseTable
+  id: CounterRetroSteel
+  graph: CounterRetroSteel
+  targetNode: CounterRetroSteel
+  canRotate: true
+
+- type: construction
+  parent: BaseTable
+  id: CounterRetroWood
+  graph: CounterRetroWood
+  targetNode: CounterRetroWood
+  canRotate: true
+
+- type: construction
+  parent: BaseTable
+  id: CounterRetroKitchen
+  graph: CounterRetroKitchen
+  targetNode: CounterRetroKitchen
+  canRotate: true
+
+- type: construction
+  parent: BaseTable
+  id: CounterRetroSteelWood
+  graph: CounterRetroSteelWood
+  targetNode: CounterRetroSteelWood
+  canRotate: true
+
+- type: construction
+  parent: BaseTable
+  id: CounterRetroWhiteOrange
+  graph: CounterRetroWhiteOrange
+  targetNode: CounterRetroWhiteOrange
+  canRotate: true
+
+- type: construction
+  parent: BaseTable
+  id: CounterRetroWhiteTeal
+  graph: CounterRetroWhiteTeal
+  targetNode: CounterRetroWhiteTeal
+  canRotate: true
+
+- type: construction
+  parent: BaseTable
+  id: CounterRetroDiner
+  graph: CounterRetroDiner
+  targetNode: CounterRetroDiner
+  canRotate: true

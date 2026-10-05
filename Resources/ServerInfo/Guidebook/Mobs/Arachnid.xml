@@ -1,16 +1,16 @@
 <Document>
-  # Arachnids
+  # Арахниды
 
   <Box>
     <GuideEntityEmbed Entity="MobArachnid" Caption=""/>
   </Box>
 
-  They have two additional Pocket slots in their inventory. They can eat raw meat without any ill effects, but some foods like chocolate and onion poisons them.
-  They suffocate 50% faster, and their Blue Blood can't be metabolised from Iron, being based on Copper instead.
+  У них есть два дополнительных кармана. Они могут без вреда есть сырое мясо, но некоторые продукты, например шоколад и лук, для них ядовиты.
+  Они задыхаются на 50 % быстрее. Их голубая кровь основана на меди, поэтому железо не помогает её восстановить.
 
-  Their unarmed attacks deal Piercing damage instead of Blunt.
+  Их удары без оружия наносят колющий урон вместо тупого.
 
-  ## Sericulture
+  ## Шёлкопрядение
 
   <Box>
     <GuideEntityEmbed Entity="MaterialWebSilk" Caption=""/>
@@ -19,7 +19,7 @@
     <GuideEntityEmbed Entity="WallWeb" Caption=""/>
   </Box>
 
-  Arachnids can create Websilk at the cost of getting more hungry. They (and only they) can craft bundles of websilk into various items from clothing and shields to entire walls.
+  Арахниды могут производить паутинный шёлк, сильнее расходуя запасы пищи. Только они умеют создавать из мотков этого шёлка одежду, щиты и даже целые стены.
 
 
 </Document>

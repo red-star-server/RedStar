@@ -1,6 +1,6 @@
 ent-MobGiantSpiderGuard = паук-страж
     .desc = Более коренастый паук, который стоит на своём и перекрывает пути отступления паутиной.
-    .suffix = { ent-MobSpiderAnimated.suffix }
+    .suffix = { ent-MobSpiderBase.suffix }
 ent-SolutionVenomSpiderGuard = { ent-SolutionWeapon }
     .desc = { ent-SolutionWeapon.desc }
 ent-MobGiantSpiderGuardAngry = { ent-MobGiantSpiderGuard }

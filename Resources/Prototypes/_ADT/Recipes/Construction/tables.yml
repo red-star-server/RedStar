@@ -1,0 +1,59 @@
+- type: construction
+  parent: BaseTable
+  id: TableRoundPlasticRecipe
+  graph: FurnitureTableGraph
+  targetNode: tableRoundPlastic
+
+- type: construction
+  parent: BaseTable
+  id: TableRoundWoodRecipe
+  graph: FurnitureTableGraph
+  targetNode: tableRoundWood
+
+- type: construction
+  parent: BaseTable
+  id: TableRoundGlassRecipe
+  graph: FurnitureTableGraph
+  targetNode: tableRoundGlass
+
+- type: construction
+  parent: BaseTable
+  id: TableRoundGenericRecipe
+  graph: FurnitureTableGraph
+  targetNode: tableRoundGeneric
+
+- type: construction
+  parent: BaseTable
+  id: TableRoundCarpetRecipe
+  graph: FurnitureTableGraph
+  targetNode: tableRoundCarpet
+
+- type: construction
+  parent: BaseTable
+  id: TableRoundPlasmaRecipe
+  graph: FurnitureTableGraph
+  targetNode: tableRoundPlasma
+
+- type: construction
+  parent: BaseTable
+  id: TablePlasticRecipe
+  graph: FurnitureTableGraph
+  targetNode: tablePlastic
+
+- type: construction
+  parent: BaseTable
+  id: TableUraniumGlassRecipe
+  graph: FurnitureTableGraph
+  targetNode: tableUraniumGlass
+
+- type: construction
+  parent: BaseTable
+  id: TableReinforcedPlasmaGlassRecipe
+  graph: FurnitureTableGraph
+  targetNode: tableReinforcedPlasmaGlass
+
+- type: construction
+  parent: BaseTable
+  id: TableReinforcedUraniumGlassRecipe
+  graph: FurnitureTableGraph
+  targetNode: tableReinforcedUraniumGlass

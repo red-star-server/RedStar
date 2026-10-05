@@ -1,0 +1,143 @@
+- type: entity
+  id: TableCounterRetroSteel
+  parent: [ CounterBase, StructureHealthFurniture ]
+  name: retro steel counter
+  description: Looks like a good place to put a drink down.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Furniture/Tables/steel_counter.rsi
+  - type: Icon
+    sprite: _Starlight/Structures/Furniture/Tables/steel_counter.rsi
+  - type: IconSmooth
+    key: counterretrosteel
+  - type: Damageable
+    damageModifierSet: SteelMod
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 40
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -6
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 0
+            max: 1
+  - type: Construction
+    graph: CounterRetroSteel
+    node: CounterRetroSteel
+
+- type: entity
+  id: TableCounterRetroWood
+  parent: [ CounterBase, StructureHealthFurniture ]
+  name: retro wood counter
+  description: Looks like a good place to put a drink down.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Furniture/Tables/wood_counter.rsi
+  - type: Icon
+    sprite: _Starlight/Structures/Furniture/Tables/wood_counter.rsi
+  - type: IconSmooth
+    key: counterretrowood
+  - type: Damageable
+    damageModifierSet: WoodMod
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 40
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+          params:
+            volume: -4
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 0
+            max: 1
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepWood
+  - type: Construction
+    graph: CounterRetroWood
+    node: CounterRetroWood
+
+- type: entity
+  id: TableCounterRetroKitchen
+  parent: TableCounterRetroSteel
+  name: retro kitchen counter
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Furniture/Tables/kitchen_counter.rsi
+  - type: Icon
+    sprite: _Starlight/Structures/Furniture/Tables/kitchen_counter.rsi
+  - type: IconSmooth
+    key: counterretrokitchen
+  - type: Construction
+    graph: CounterRetroKitchen
+    node: CounterRetroKitchen
+
+- type: entity
+  id: TableCounterRetroSteelWood
+  parent: TableCounterRetroSteel
+  name: retro steel and wood counter
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Furniture/Tables/retro_counter_sw.rsi
+  - type: Icon
+    sprite: _Starlight/Structures/Furniture/Tables/retro_counter_sw.rsi
+  - type: IconSmooth
+    key: counterretrosteelwood
+  - type: Construction
+    graph: CounterRetroSteelWood
+    node: CounterRetroSteelWood
+
+- type: entity
+  id: TableCounterRetroWhiteOrange
+  parent: TableCounterRetroSteel
+  name: retro white and orange counter
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Furniture/Tables/retro_counter_wo.rsi
+  - type: Icon
+    sprite: _Starlight/Structures/Furniture/Tables/retro_counter_wo.rsi
+  - type: IconSmooth
+    key: counterretrowhiteorange
+  - type: Construction
+    graph: CounterRetroWhiteOrange
+    node: CounterRetroWhiteOrange
+
+- type: entity
+  id: TableCounterRetroWhiteTeal
+  parent: TableCounterRetroSteel
+  name: retro white and teal counter
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Furniture/Tables/retro_counter_wt.rsi
+  - type: Icon
+    sprite: _Starlight/Structures/Furniture/Tables/retro_counter_wt.rsi
+  - type: IconSmooth
+    key: counterretrowhiteteal
+  - type: Construction
+    graph: CounterRetroWhiteTeal
+    node: CounterRetroWhiteTeal
+
+- type: entity
+  id: TableCounterRetroDiner
+  parent: TableCounterRetroSteel
+  name: retro diner counter
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Furniture/Tables/diner_counter.rsi
+  - type: Icon
+    sprite: _Starlight/Structures/Furniture/Tables/diner_counter.rsi
+  - type: IconSmooth
+    key: counterretrodiner
+  - type: Construction
+    graph: CounterRetroDiner
+    node: CounterRetroDiner

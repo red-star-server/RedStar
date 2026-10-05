@@ -8,7 +8,7 @@
     },
     "states": [
       {
-        "name": "milky_tail",
+        "name": "milky_tail_wag",
         "directions": 4,
         "delays": [
             [0.25,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2],
@@ -18,7 +18,7 @@
         ]
       },
       {
-        "name": "milky_tail_secondary",
+        "name": "milky_tail_secondary_wag",
         "directions": 4,
         "delays": [
             [0.25,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2],
@@ -26,6 +26,14 @@
             [0.25,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2],
             [0.25,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2]
         ]
+     },
+     {
+        "name": "milky_tail",
+        "directions": 4
+     },
+     {
+        "name": "milky_tail_secondary",
+        "directions": 4
      },
      {
         "name": "milky_horns",

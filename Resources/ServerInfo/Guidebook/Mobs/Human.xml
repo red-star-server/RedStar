@@ -1,11 +1,11 @@
 <Document>
-  # Humans
+  # Люди
 
   <Box>
     <GuideEntityEmbed Entity="AppearanceHuman" Caption=""/>
   </Box>
 
-  Depending on who you ask, humans are either unremarkable or the universal standard to which everything else is compared.
-  They have no special mechanics or notable attributes.
+  Одни считают людей ничем не примечательными, другие — мерилом для сравнения со всеми остальными.
+  У них нет особых механик или выдающихся особенностей.
 
 </Document>

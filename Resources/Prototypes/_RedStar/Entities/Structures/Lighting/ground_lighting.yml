@@ -1,0 +1,31 @@
+- type: entity
+  parent: LightPostSmall
+  id: LightPostRoundSmall
+  suffix: Always Powered
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Lighting/LightPosts/small_light_post.rsi
+
+- type: entity
+  parent: PoweredLightPostSmallEmpty
+  id: PoweredLightPostRoundSmallEmpty
+  suffix: Empty
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Lighting/LightPosts/small_light_post.rsi
+
+- type: entity
+  parent: PoweredLightPostSmall
+  id: PoweredLightPostRoundSmall
+  suffix: ""
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Lighting/LightPosts/small_light_post.rsi
+
+- type: entity
+  parent: PoweredLEDLightPostSmall
+  id: PoweredLEDLightPostRoundSmall
+  suffix: LED
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Lighting/LightPosts/small_light_post.rsi

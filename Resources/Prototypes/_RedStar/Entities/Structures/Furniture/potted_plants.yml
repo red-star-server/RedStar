@@ -1,0 +1,55 @@
+- type: entity
+  id: PottedPlantAlt0
+  parent: PottedPlantBase
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/potted_plants.rsi
+    state: monkeyplant
+
+- type: entity
+  id: PottedPlantAlt1
+  parent: PottedPlantBase
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/potted_plants.rsi
+    state: plant-31
+
+- type: entity
+  id: PottedPlantAlt2
+  parent: PottedPlantBase
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/potted_plants.rsi
+    state: plant-32
+
+- type: entity
+  id: PottedPlantAlt3
+  parent: PottedPlantBase
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/potted_plants.rsi
+    state: plant-33
+
+- type: entity
+  id: PottedPlantAlt4
+  parent: PottedPlantBase
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/potted_plants.rsi
+    state: plant-34
+
+- type: entity
+  id: PottedPlantAlt5
+  parent: PottedPlantBase
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/potted_plants.rsi
+    state: plant-31-alternative
+
+- type: entity
+  id: PottedPlantAlt6
+  parent: PottedPlantBase
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/potted_plants.rsi
+    state: plant-34-alternative

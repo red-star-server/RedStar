@@ -1,0 +1,9 @@
+- type: latheRecipe
+  parent: BaseMarbleTileRecipe
+  id: FloorTileItemWhiteMarbleMono
+  result: FloorTileItemWhiteMarbleMono
+
+- type: latheRecipe
+  parent: BaseMarbleTileRecipe
+  id: FloorTileItemDarkMarbleMono
+  result: FloorTileItemDarkMarbleMono

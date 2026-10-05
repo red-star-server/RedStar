@@ -1,0 +1,67 @@
+﻿- type: pairedEmote
+  id: HighFive
+  approachOffset: 0.08
+  icon: _RedStar/Interface/Emotes/highfive.png
+  name: paired-emote-high-five-name
+  initiatorAnimation: PairedHighFiveInitiator
+  targetAnimation: PairedHighFiveTarget
+  range: 1.5
+  offerDuration: 5
+  attemptSelf: paired-emote-high-five-attempt-self
+  attemptTarget: paired-emote-high-five-attempt-target
+  success: paired-emote-high-five-success
+  sound: !type:SoundPathSpecifier
+    path: /Audio/Items/snap.ogg
+    params:
+      variation: 0.1
+
+- type: pairedEmote
+  id: FistBump
+  approachOffset: 0.05
+  icon: _RedStar/Interface/Emotes/fistbump.png
+  name: paired-emote-fist-bump-name
+  initiatorAnimation: PairedFistBumpInitiator
+  targetAnimation: PairedFistBumpTarget
+  range: 1.5
+  offerDuration: 5
+  attemptSelf: paired-emote-fist-bump-attempt-self
+  attemptTarget: paired-emote-fist-bump-attempt-target
+  success: paired-emote-fist-bump-success
+  sound: !type:SoundPathSpecifier
+    path: /Audio/_RedStar/Emotes/thud.ogg
+    params:
+      variation: 0.5
+
+- type: pairedEmote
+  id: Handshake
+  approachOffset: 0.1
+  icon: _RedStar/Interface/Emotes/handshake.png
+  name: paired-emote-handshake-name
+  initiatorAnimation: PairedHandshakeInitiator
+  targetAnimation: PairedHandshakeTarget
+  range: 1.5
+  offerDuration: 5
+  attemptSelf: paired-emote-handshake-attempt-self
+  attemptTarget: paired-emote-handshake-attempt-target
+  success: paired-emote-handshake-success
+  sound: !type:SoundPathSpecifier
+    path: /Audio/Effects/thudswoosh.ogg
+    params:
+      variation: 0.4
+
+- type: pairedEmote
+  id: Hug
+  approachOffset: 0.24
+  name: paired-emote-hug-name
+  icon: _RedStar/Interface/Emotes/hug.png
+  initiatorAnimation: PairedHugInitiator
+  targetAnimation: PairedHugTarget
+  range: 1.5
+  offerDuration: 5
+  attemptSelf: paired-emote-hug-attempt-self
+  attemptTarget: paired-emote-hug-attempt-target
+  success: paired-emote-hug-success
+  sound: !type:SoundPathSpecifier
+    path: /Audio/Effects/thudswoosh.ogg
+    params:
+      variation: 0.5

@@ -1,0 +1,181 @@
+- type: entity
+  abstract: true
+  parent: BaseFlag
+  id: BaseDecorativeFlag
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Wallmounts/flags.rsi
+
+- type: entity
+  parent: BaseDecorativeFlag
+  id: BlankFlagVertical
+  name: blank flag
+  description: Some piece of white cloth. Definitely not the flag of France.
+  components:
+  - type: Sprite
+    state: blank2_flag
+  - type: Construction
+    graph: DecorativeFlagGraph
+    node: blankFlagVertical
+
+- type: entity
+  parent: BaseDecorativeFlag
+  id: NTFlagVertical
+  name: Nanotrasen flag
+  description: Glory to NT! Wait, they really made a flag for a corporation?
+  components:
+  - type: Sprite
+    state: NT2_flag
+  - type: Construction
+    graph: DecorativeFlagGraph
+    node: nTFlagVertical
+
+- type: entity
+  parent: BaseDecorativeFlag
+  id: SyndieFlagVertical
+  name: syndicate flag
+  description: Smells bloody. Death to NT!
+  components:
+  - type: Sprite
+    state: syndie2_flag
+
+- type: entity
+  parent: BaseDecorativeFlag
+  id: PirateFlagVertical
+  name: pirate flag
+  description: Raise the jolly roger, scallywags!
+  components:
+  - type: Sprite
+    state: pirate2_flag
+
+- type: entity
+  parent: BaseDecorativeFlag
+  id: RastamanFlag
+  name: rastaman flag
+  description: Duuude, live with vibes, no worries!
+  components:
+  - type: Sprite
+    state: rastaman_flag
+  - type: Construction
+    graph: DecorativeFlagGraph
+    node: rastamanFlag
+
+- type: entity
+  parent: BaseDecorativeFlag
+  id: RomanFlag
+  name: roman flag
+  description: Ave Legion! Ave Caesar!
+  components:
+  - type: Sprite
+    state: roman_flag
+  - type: Construction
+    graph: DecorativeFlagGraph
+    node: romanFlag
+
+- type: entity
+  parent: BaseDecorativeFlag
+  id: USSPFlag
+  name: USSP flag
+  description: Flag of the Union of Soviet Socialist Planets. Proletarians of all planets, unite!
+  components:
+  - type: Sprite
+    state: ussp_flag
+  - type: Construction
+    graph: DecorativeFlagGraph
+    node: uSSPFlag
+
+- type: entity
+  parent: BaseDecorativeFlag
+  id: USSPFlagVertical
+  name: USSP flag
+  description: Flag of the Union of Soviet Socialist Planets. Proletarians of all planets, unite!
+  components:
+  - type: Sprite
+    state: ussp2_flag
+  - type: Construction
+    graph: DecorativeFlagGraph
+    node: uSSPFlagVertical
+
+- type: entity
+  parent: BaseDecorativeFlag
+  id: USSPFlagVertical2
+  name: USSP flag
+  description: Flag of the Union of Soviet Socialist Planets. Proletarians of all planets, unite!
+  components:
+  - type: Sprite
+    state: ussp3_flag
+  - type: Construction
+    graph: DecorativeFlagGraph
+    node: uSSPFlagVertical2
+
+- type: entity
+  parent: BaseDecorativeFlag
+  id: KMTFlag
+  name: KMT flag
+  description: Flag of the Confederate Worlds of Taurea. Freedom to all colonies from the federal yoke!
+  components:
+  - type: Sprite
+    state: kmt_flag
+  - type: Construction
+    graph: DecorativeFlagGraph
+    node: kMTFlag
+
+- type: entity
+  parent: BaseDecorativeFlag
+  id: KMTFlagVertical
+  name: KMT flag
+  description: Flag of the Confederate Worlds of Taurea. Freedom to all colonies from the federal yoke!
+  components:
+  - type: Sprite
+    state: kmt2_flag
+  - type: Construction
+    graph: DecorativeFlagGraph
+    node: kMTFlagVertical
+
+- type: entity
+  parent: BaseDecorativeFlag
+  id: TSFFlag
+  name: TSF flag
+  description: Flag of the Trans-Solar Federation. God save Democracy!
+  components:
+  - type: Sprite
+    state: tsf_flag
+  - type: Construction
+    graph: DecorativeFlagGraph
+    node: tSFFlag
+
+- type: entity
+  parent: BaseDecorativeFlag
+  id: TSFFlagVertical
+  name: TSF flag
+  description: Flag of the Trans-Solar Federation. God save Democracy!
+  components:
+  - type: Sprite
+    state: tsf2_flag
+  - type: Construction
+    graph: DecorativeFlagGraph
+    node: tSFFlagVertical
+
+- type: entity
+  parent: BaseDecorativeFlag
+  id: ElysiumFlag
+  name: Elysium flag
+  description: Flag of the Republic of Elysium, looks very neat and well-kept.
+  components:
+  - type: Sprite
+    state: elysium_flag
+  - type: Construction
+    graph: DecorativeFlagGraph
+    node: elysiumFlag
+
+- type: entity
+  parent: BaseDecorativeFlag
+  id: ElysiumFlagVertical
+  name: Elysium flag
+  description: Flag of the Republic of Elysium, looks very neat and well-kept.
+  components:
+  - type: Sprite
+    state: elysium2_flag
+  - type: Construction
+    graph: DecorativeFlagGraph
+    node: elysiumFlagVertical

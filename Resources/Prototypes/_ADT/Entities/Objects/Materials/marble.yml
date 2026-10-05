@@ -1,0 +1,42 @@
+- type: entity
+  id: MaterialMarble
+  parent: MaterialBase
+  name: marble
+  description: A slab of polished marble.
+  suffix: Full
+  components:
+  - type: Item
+    heldPrefix: marble
+    sprite: _ADT/Objects/Materials/marble.rsi
+  - type: Sprite
+    sprite: _ADT/Objects/Materials/marble.rsi
+    layers:
+    - state: icon
+      map: [ "base" ]
+  - type: Stack
+    count: 10
+    stackType: Marble
+    baseLayer: base
+    layerStates:
+    - icon
+    - marble2
+    - marble3
+  - type: PhysicalComposition
+    materialComposition:
+      Marble: 100
+
+- type: entity
+  parent: MaterialMarble
+  id: MaterialMarble1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: MaterialMarble
+  id: MaterialMarble5
+  suffix: 5
+  components:
+  - type: Stack
+    count: 5

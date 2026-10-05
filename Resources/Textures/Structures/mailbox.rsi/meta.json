@@ -14,7 +14,13 @@
       "name": "unlit"
     },
     {
-      "name": "contents"
+      "name": "contents",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
     }
   ]
 }

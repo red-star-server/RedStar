@@ -1,0 +1,110 @@
+- type: constructionGraph
+  id: DecorativeFlagGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: blankFlagVertical
+      steps:
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+    - to: nTFlagVertical
+      steps:
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+    - to: kMTFlag
+      steps:
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+    - to: kMTFlagVertical
+      steps:
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+    - to: elysiumFlag
+      steps:
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+    - to: elysiumFlagVertical
+      steps:
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+    - to: tSFFlag
+      steps:
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+    - to: tSFFlagVertical
+      steps:
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+    - to: uSSPFlag
+      steps:
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+    - to: uSSPFlagVertical
+      steps:
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+    - to: uSSPFlagVertical2
+      steps:
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+    - to: rastamanFlag
+      steps:
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+    - to: romanFlag
+      steps:
+      - material: Cloth
+        amount: 5
+        doAfter: 3
+  - node: blankFlagVertical
+    entity: BlankFlagVertical
+    edges: []
+  - node: nTFlagVertical
+    entity: NTFlagVertical
+    edges: []
+  - node: kMTFlag
+    entity: KMTFlag
+    edges: []
+  - node: kMTFlagVertical
+    entity: KMTFlagVertical
+    edges: []
+  - node: elysiumFlag
+    entity: ElysiumFlag
+    edges: []
+  - node: elysiumFlagVertical
+    entity: ElysiumFlagVertical
+    edges: []
+  - node: tSFFlag
+    entity: TSFFlag
+    edges: []
+  - node: tSFFlagVertical
+    entity: TSFFlagVertical
+    edges: []
+  - node: uSSPFlag
+    entity: USSPFlag
+    edges: []
+  - node: uSSPFlagVertical
+    entity: USSPFlagVertical
+    edges: []
+  - node: uSSPFlagVertical2
+    entity: USSPFlagVertical2
+    edges: []
+  - node: rastamanFlag
+    entity: RastamanFlag
+    edges: []
+  - node: romanFlag
+    entity: RomanFlag
+    edges: []

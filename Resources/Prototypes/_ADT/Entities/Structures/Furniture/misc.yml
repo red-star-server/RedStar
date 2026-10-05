@@ -1,0 +1,50 @@
+- type: entity
+  name: grandfather clock
+  id: ClockCabinet
+  parent: [BaseStructure, StructureHealthFurniture]
+  description: Tick. Tock. Tick. Tock.
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Furniture/clock_cabinet.rsi
+    layers:
+    - state: clock-off
+      map:
+      - enum.ToggleableVisuals.Layer
+    noRot: true
+  - type: Anchorable
+  - type: Rotatable
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: -0.3,-0.3,0.6,0.6
+        density: 190
+        mask:
+        - TableMask
+  - type: Appearance
+  - type: InteractionOutline
+  - type: ItemToggle
+    onActivate: true
+    predictable: true
+  - type: Clock
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
+          true:
+            state: clock-on
+          false:
+            state: clock-off
+  - type: Damageable
+    damageModifierSet: SteelStaticMod
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts:
+        - Destruction
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak

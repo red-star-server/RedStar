@@ -1,0 +1,169 @@
+﻿- type: emote
+  id: Flip
+  name: chat-emote-name-flip
+  category: Animations
+  animation: Flip
+  icon: _RedStar/Interface/Emotes/flip.png
+  whitelist:
+    components:
+    - EmoteAnimation
+  chatMessages:
+  - chat-emote-msg-flip
+  chatTriggers:
+  - сальто
+  - делает сальто
+  - сделал сальто
+  - сделала сальто
+  - flip
+  - flips
+  - does a flip
+
+- type: emote
+  id: Jump
+  name: chat-emote-name-jump
+  category: Animations
+  animation: Jump
+  icon: _RedStar/Interface/Emotes/jump.png
+  whitelist:
+    components:
+    - EmoteAnimation
+  chatMessages:
+  - chat-emote-msg-jump
+  chatTriggers:
+  - подпрыгивает
+  - подпрыгнул
+  - подпрыгнула
+  - прыгает
+  - jump
+  - jumps
+
+- type: emote
+  id: Spin
+  name: chat-emote-name-spin
+  category: Animations
+  animation: Spin
+  icon: _RedStar/Interface/Emotes/spin.png
+  whitelist:
+    components:
+    - EmoteAnimation
+  chatMessages:
+  - chat-emote-msg-spin
+  chatTriggers:
+  - кружится
+  - покружился
+  - покружилась
+  - крутится
+  - spin
+  - spins
+
+- type: emote
+  id: Dance
+  name: chat-emote-name-dance
+  category: Animations
+  animation: Dance
+  icon: _RedStar/Interface/Emotes/spin.png
+  whitelist:
+    components:
+    - EmoteAnimation
+  chatMessages:
+  - chat-emote-msg-dance
+  chatTriggers:
+  - танцует
+  - танцевать
+  - танцевал
+  - танцевала
+  - dance
+  - dances
+  - dancing
+
+- type: emote
+  id: Tremble
+  name: chat-emote-name-tremble
+  category: Animations
+  animation: Tremble
+  icon: _RedStar/Interface/Emotes/shiver.png
+  whitelist:
+    components:
+    - EmoteAnimation
+  chatMessages:
+  - chat-emote-msg-tremble
+  chatTriggers:
+  - дрожит
+  - задрожал
+  - задрожала
+  - tremble
+  - trembles
+  - trembling
+
+- type: emote
+  id: Shiver
+  name: chat-emote-name-shiver
+  category: Animations
+  animation: Shiver
+  icon: _RedStar/Interface/Emotes/shiver.png
+  whitelist:
+    components:
+    - EmoteAnimation
+  chatMessages:
+  - chat-emote-msg-shiver
+  chatTriggers:
+  - трясётся
+  - трясется
+  - затрясся
+  - затряслась
+  - shiver
+  - shivers
+  - shivering
+
+- type: emote
+  id: Shudder
+  name: chat-emote-name-shudder
+  category: Animations
+  animation: Shudder
+  icon: _RedStar/Interface/Emotes/shiver.png
+  whitelist:
+    components:
+    - EmoteAnimation
+  chatMessages:
+  - chat-emote-msg-shudder
+  chatTriggers:
+  - содрогается
+  - содрогнулся
+  - содрогнулась
+  - shudder
+  - shudders
+  - shuddering
+
+- type: emote
+  id: DanceFromTheFloor
+  name: chat-emote-name-dance-from-the-floor
+  category: Animations
+  animation: DanceFromTheFloor
+  icon: _RedStar/Interface/Emotes/flip.png
+  whitelist:
+    components:
+    - EmoteAnimation
+  chatMessages:
+  - chat-emote-msg-dance-from-the-floor
+  chatTriggers:
+  - танцует на полу
+  - танцевать на полу
+  - dance on the floor
+  - dances on the floor
+
+- type: emote
+  id: SpinningOnHead
+  name: chat-emote-name-spinning-on-head
+  category: Animations
+  animation: SpinningOnHead
+  icon: _RedStar/Interface/Emotes/spin.png
+  whitelist:
+    components:
+    - EmoteAnimation
+  chatMessages:
+  - chat-emote-msg-spinning-on-head
+  chatTriggers:
+  - крутится на голове
+  - вращается на голове
+  - spin on head
+  - spins on head

@@ -27,3 +27,9 @@
   id: UnderwearSocksBartender
   equipment:
     socks: ClothingUnderwearSocksBartender
+
+# Outer clothing
+- type: loadout
+  id: BartenderCuteApron
+  equipment:
+    outerClothing: ClothingOuterApronCuteBar

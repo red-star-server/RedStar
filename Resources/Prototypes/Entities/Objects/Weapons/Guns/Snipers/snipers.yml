@@ -143,6 +143,12 @@
     state: base
   - type: Clothing
     sprite: Objects/Weapons/Guns/Snipers/musket.rsi
+    # RS14-start
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+    # RS14-end
   - type: Gun
     selectedMode: SemiAuto
     availableModes:

@@ -1,40 +1,40 @@
 <Document>
-  # Criminal Records
-  The criminal records console is accessible in every station's security department, it serves the purpose of tracking and managing the criminal history and status of anybody part of the crew manifest.
+  # Криминальные записи
+  Консоль криминальных записей есть в отделе милиции каждой станции. С её помощью отслеживают историю правонарушений и текущий статус людей из списка экипажа.
 
   <Box>
   <GuideEntityEmbed Entity="ComputerCriminalRecords"/>
   </Box>
 
-  Anyone can open the console's UI, but only those with Security access can modify anything.
+  Открыть консоль может любой, но изменять записи могут только сотрудники с доступом милиции.
 
-  The UI is composed by the following elements:
-  - A search bar that has a filter next to it that lets you filter the crewmembers by their names, fingerprints or DNA.
+  В интерфейсе есть:
+  - Строка поиска с фильтром по имени, отпечаткам пальцев или ДНК.
 
-  - A list of all the crewmembers in the manifest, selecting one of the entries will make the criminal records of a crewmember appear. The list is filtered by the search bar so make sure it's empty if you want an overall overview!
+  - Список членов экипажа. Выберите человека, чтобы открыть его криминальную запись. Список зависит от поискового запроса: если хотите увидеть всех, очистите строку поиска.
 
-  - The criminal records themselves
+  - Сама криминальная запись.
 
-  - The filter button below the crew list can be used to show only wanted, detained, or paroled crew.
-  In the record section you can:
-    - See security-related information about a crewmember like their name, fingerprints and DNA.
+  - Фильтр под списком экипажа, позволяющий показать только разыскиваемых, арестованных или освобождённых по УДО.
+  В записи вы можете:
+    - Посмотреть имя, отпечатки пальцев и ДНК человека.
 
-    - Change the security status between [color=gray]None[/color], [color=yellow]Wanted[/color] and [color=red]Detained[/color]. When setting it to Wanted you will be asked to write a reason.
+    - Изменить статус на [color=gray]«Нет»[/color], [color=yellow]«Разыскивается»[/color] или [color=red]«Под арестом»[/color]. Если объявить человека в розыск, потребуется указать причину.
 
-    - If they are wanted, you can see the reason given below the status dropdown.
+    - Посмотреть причину розыска под списком статусов.
 
-    - Once someone has been arrested, update their status on the console so everyone knows they no longer need to be captured.
+    - После ареста обновить статус, чтобы остальные сотрудники знали: искать человека больше не нужно.
 
-    - After they've done their time, release them and update their status to None so nobody thinks they are an escaped convict.
+    - По окончании срока освободить человека и вернуть статус «Нет», чтобы его не приняли за беглого заключённого.
 
-    - Open the Crime History window to check or modify it.
+    - Открыть историю преступлений для просмотра или изменения.
 
-  The Crime History window lists someone's crimes and can be modified in multiple ways:
-    - Automatically, just by setting someone's status to arrested. The reason will be added to "ARRESTED:" so it's easy to see the automated entries.
+  В истории преступлений перечислены нарушения человека. Её можно изменять разными способами:
+    - Автоматически: при присвоении статуса «Под арестом» причина добавляется в историю с пометкой «АРЕСТОВАН».
 
-    - Adding a new line by clicking "Add" and writing something in the input box. When adding a record, remember to mention their crime and sentence, the console will automatically insert the shift's time so you don't need to!
+    - Нажать «Добавить» и вписать новую строку. Укажите преступление и наказание; время смены консоль добавит сама.
 
-    - Select a line of unwanted history and click "Delete" to remove it. Excellent for keeping records clean from the clown's stolen ID antics.
+    - Выбрать ненужную строку и нажать «Удалить». Полезно, если клоун опять оставил в базе записи с украденной ID-карты.
 
-  Now you can be the desk jockey you've always wanted to be.
+  Теперь вы можете заняться бумажной работой, о которой всегда мечтали.
 </Document>

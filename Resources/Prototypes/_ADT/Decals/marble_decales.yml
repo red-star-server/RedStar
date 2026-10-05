@@ -1,0 +1,132 @@
+﻿- type: decal
+  id: marBox
+  tags: ["marble"]
+  sprite:
+    sprite: _ADT/Decals/Marble/marble_decals.rsi
+    state: marble_box
+
+- type: decal
+  id: MarbleCornerNw
+  tags: ["marble"]
+  sprite:
+    sprite: _ADT/Decals/Marble/marble_decals.rsi
+    state: marble_corner_nw
+
+- type: decal
+  id: MarbleCornerNe
+  tags: ["marble"]
+  sprite:
+    sprite: _ADT/Decals/Marble/marble_decals.rsi
+    state: marble_corner_ne
+
+- type: decal
+  id: MarbleCornerSe
+  tags: ["marble"]
+  sprite:
+    sprite: _ADT/Decals/Marble/marble_decals.rsi
+    state: marble_corner_se
+
+- type: decal
+  id: MarbleCornerSw
+  tags: ["marble"]
+  sprite:
+    sprite: _ADT/Decals/Marble/marble_decals.rsi
+    state: marble_corner_sw
+
+- type: decal
+  id: MarbleEndE
+  tags: ["marble"]
+  sprite:
+    sprite: _ADT/Decals/Marble/marble_decals.rsi
+    state: marble_end_e
+
+- type: decal
+  id: MarbleEndS
+  tags: ["marble"]
+  sprite:
+    sprite: _ADT/Decals/Marble/marble_decals.rsi
+    state: marble_end_s
+
+- type: decal
+  id: MarbleEndN
+  tags: ["marble"]
+  sprite:
+    sprite: _ADT/Decals/Marble/marble_decals.rsi
+    state: marble_end_n
+
+- type: decal
+  id: MarbleEndW
+  tags: ["marble"]
+  sprite:
+    sprite: _ADT/Decals/Marble/marble_decals.rsi
+    state: marble_end_w
+
+- type: decal
+  id: MarbleInnerNe
+  tags: ["marble"]
+  sprite:
+    sprite: _ADT/Decals/Marble/marble_decals.rsi
+    state: marble_inner_ne
+
+- type: decal
+  id: MarbleInnerNw
+  tags: ["marble"]
+  sprite:
+    sprite: _ADT/Decals/Marble/marble_decals.rsi
+    state: marble_inner_nw
+
+- type: decal
+  id: MarbleInnerSe
+  tags: ["marble"]
+  sprite:
+    sprite: _ADT/Decals/Marble/marble_decals.rsi
+    state: marble_inner_se
+
+- type: decal
+  id: MarbleInnerSw
+  tags: ["marble"]
+  sprite:
+    sprite: _ADT/Decals/Marble/marble_decals.rsi
+    state: marble_inner_sw
+
+- type: decal
+  id: MarbleLineE
+  tags: ["marble"]
+  sprite:
+    sprite: _ADT/Decals/Marble/marble_decals.rsi
+    state: marble_line_e
+
+- type: decal
+  id: MarbleLineS
+  tags: ["marble"]
+  sprite:
+    sprite: _ADT/Decals/Marble/marble_decals.rsi
+    state: marble_line_s
+
+- type: decal
+  id: MarbleLineW
+  tags: ["marble"]
+  sprite:
+    sprite: _ADT/Decals/Marble/marble_decals.rsi
+    state: marble_line_w
+
+- type: decal
+  id: MarbleLineN
+  tags: ["marble"]
+  sprite:
+    sprite: _ADT/Decals/Marble/marble_decals.rsi
+    state: marble_line_n
+
+- type: decal
+  id: MarbleLineNwse
+  tags: ["marble"]
+  sprite:
+    sprite: _ADT/Decals/Marble/marble_decals.rsi
+    state: marble_line_nwse
+
+- type: decal
+  id: MarbleLineSwne
+  tags: ["marble"]
+  sprite:
+    sprite: _ADT/Decals/Marble/marble_decals.rsi
+    state: marble_line_swne

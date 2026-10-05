@@ -1,0 +1,47 @@
+- type: marking
+  id: CatTailAnimated
+  bodyPart: Tail
+  groupWhitelist: []
+  sprites:
+  - sprite: Mobs/Customization/cat_parts.rsi
+    state: tail_cat_wag
+
+- type: marking
+  id: SlimeCatTailAnimated
+  bodyPart: Tail
+  groupWhitelist: []
+  sprites:
+  - sprite: _Corvax/Mobs/Customization/slime_cat_parts.rsi
+    state: slime_tail_cat_wag
+
+- type: marking
+  id: SlimeCatTailStripesAnimated
+  bodyPart: Tail
+  groupWhitelist: []
+  sprites:
+  - sprite: _Corvax/Mobs/Customization/slime_cat_parts.rsi
+    state: slime_tail_cat_wag_stripes_prime
+  - sprite: _Corvax/Mobs/Customization/slime_cat_parts.rsi
+    state: slime_tail_cat_wag_stripes_second
+
+- type: marking
+  id: HumanFoxTailAnimated
+  bodyPart: Tail
+  groupWhitelist: []
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Human/fox_parts.rsi
+    state: tail_fox_wag_stripes_prime
+  - sprite: _ADT/Mobs/Customization/Human/fox_parts.rsi
+    state: tail_fox_wag_stripes_second
+  - sprite: _ADT/Mobs/Customization/Human/fox_parts.rsi
+    state: tail_fox_wag_stripes_third
+
+- type: marking
+  id: MilkyTailAnimated
+  bodyPart: Tail
+  groupWhitelist: []
+  sprites:
+  - sprite: _ADT/Mobs/Customization/Human/demon.rsi
+    state: milky_tail_wag
+  - sprite: _ADT/Mobs/Customization/Human/demon.rsi
+    state: milky_tail_secondary_wag

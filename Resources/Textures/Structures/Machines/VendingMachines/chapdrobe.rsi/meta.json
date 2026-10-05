@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a. Further modifications & derivate works under the same license.",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a. Further modifications & derivate works under the same license, resprited by @mishutka09 (discord:1152277579206774854)",
   "size": {
     "x": 32,
     "y": 32
@@ -11,9 +11,12 @@
       "name": "deny-unshaded",
       "delays": [
         [
-          0.25,
-          0.1,
-          0.1
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
         ]
       ]
     },
@@ -21,10 +24,12 @@
       "name": "normal-unshaded",
       "delays": [
         [
-          10,
-          0.1,
-          10,
-          0.1
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
         ]
       ]
     },

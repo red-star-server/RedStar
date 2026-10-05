@@ -1,12 +1,12 @@
 <Document>
-# Chemist
-Now you've done it. You picked the one job where -math- is mandatory. Grab your beaker, pull up a chair, and get cracking, it's time to cook up some chems.
+# Химик
+Вы выбрали профессию, где без расчётов не обойтись. Берите мензурку и приступайте к приготовлению реагентов.
 
-While chemists primarily make medications, there's a very wide variety of chemicals that can be made, all of which are showcased in the Chemicals entry of the Guidebook.
+Химики прежде всего готовят лекарства, но могут создавать и множество других веществ. Их список есть в разделе руководства «Химикаты».
 
-[textlink="Click here to see a complete list of chemicals." link="Chemicals"]
+[textlink="Посмотреть полный список химикатов." link="Chemicals"]
 
-## Equipment:
+## Оборудование
 
   <Box>
     <GuideEntityEmbed Entity="ChemDispenser"/>
@@ -22,25 +22,25 @@ While chemists primarily make medications, there's a very wide variety of chemic
     <GuideEntityEmbed Entity="PillCanister"/>
   </Box>
 
-## The Basics:
-Chemistry is fairly straightforward once you know what to expect. Here's a simple, step-by-step process on how to begin.
+## Основы
+Освоить химию проще, если начать с приготовления таблеток:
 
-- Grab a beaker, Pill Canister, and if desired, some Bottles.
-- Place the beaker in the Chemical Dispenser, and Pill Canister (or bottle) in the Chem Master.
-- Open the Chemical Dispenser UI, and make your mix. Recipes are in other sections of the guidebook.
-- Alt-click the dispenser to remove your beaker, and place it in the Chem Master.
-- Open the Chem Master UI. On the Input tab, move your mix into the buffer.
-- Move to the Output tab, customise your pill, and press the Create button.
-- Alt-click the Chem Master to get the pill bottle out. You may have to remove the beaker first.
-- Click on a table, crate, or another surface to empty the pill bottle if desired. Alternatively, store or empty it into another storage container.
+- Возьмите мензурку, баночку для таблеток и, при желании, бутылочки.
+- Установите мензурку в раздатчик химикатов, а баночку или бутылочку — в ХимМастер 4000.
+- Откройте интерфейс раздатчика и приготовьте смесь. Рецепты приведены в других разделах руководства.
+- Нажмите Alt и щёлкните по раздатчику, чтобы извлечь мензурку. Затем установите её в ХимМастер 4000.
+- В интерфейсе ХимМастера на вкладке «Ввод» переместите смесь в буфер.
+- Перейдите на вкладку «Вывод», настройте таблетки и нажмите «Создать».
+- Нажмите Alt и щёлкните по ХимМастеру, чтобы достать баночку с таблетками. Возможно, сначала придётся вынуть мензурку.
+- При необходимости высыпьте таблетки из баночки, нажав ею на стол, ящик или другую поверхность. Их также можно переложить в другой контейнер.
 
-That's it, you've made your first set of pills! Consider checking with Medical Doctors and other crew to see what else may be requested, refilling the medical kits in medbay storage, or just experimenting!
+Первые таблетки готовы! Узнайте у врачей и других сотрудников, что им требуется, пополните запас аптечек медотдела или поэкспериментируйте.
 
-You can also use the hand labeler to organize individual bottles or bags without using the Chem Master labeling system.
+Ручной этикетировщик позволяет подписывать бутылочки и сумки без системы маркировки ХимМастера.
 
-## Extra Content:
+## Дополнительно
 
-Speaking of experimentation, there are a few more toy you can use when it comes to chemistry. This job requires a lot of trial and error, but it was worth mentioning that these things exist! It's up to you to figure out what to make with them.
+Для экспериментов доступны и другие устройства. Химия требует проб и ошибок, поэтому попробуйте сами выяснить, что можно из них собрать.
 
   <Box>
     <GuideEntityEmbed Entity="ModularGrenade"/>

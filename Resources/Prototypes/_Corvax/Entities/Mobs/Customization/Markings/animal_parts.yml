@@ -74,6 +74,22 @@
       - !type:SkinColoring
   sprites:
   - sprite: _Corvax/Mobs/Customization/cat_parts.rsi
+    state: tail_cat_stripes_prime
+  - sprite: _Corvax/Mobs/Customization/cat_parts.rsi
+    state: tail_cat_stripes_second
+
+- type: marking
+  id: CatTailStripesAnimated
+  bodyPart: Tail
+  groupWhitelist: []
+  coloring:
+    default:
+      type: !type:CategoryColoring { category: Hair }
+      fallbackTypes:
+      - !type:CategoryColoring { category: FacialHair }
+      - !type:SkinColoring
+  sprites:
+  - sprite: _Corvax/Mobs/Customization/cat_parts.rsi
     state: tail_cat_wag_stripes_prime
   - sprite: _Corvax/Mobs/Customization/cat_parts.rsi
     state: tail_cat_wag_stripes_second
@@ -94,7 +110,7 @@
   groupWhitelist: [ Slime ]
   sprites:
   - sprite: _Corvax/Mobs/Customization/slime_cat_parts.rsi
-    state: slime_tail_cat_wag
+    state: slime_tail_cat
 
 - type: marking
   id: SlimeCatEarsStubby
@@ -132,9 +148,9 @@
   groupWhitelist: [ Slime ]
   sprites:
   - sprite: _Corvax/Mobs/Customization/slime_cat_parts.rsi
-    state: slime_tail_cat_wag_stripes_prime
+    state: slime_tail_cat_stripes_prime
   - sprite: _Corvax/Mobs/Customization/slime_cat_parts.rsi
-    state: slime_tail_cat_wag_stripes_second
+    state: slime_tail_cat_stripes_second
 
 - type: marking
   id: SlimeFoxEars

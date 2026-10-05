@@ -1,0 +1,400 @@
+- type: constructionGraph
+  id: DecorativeStatueGraph
+  start: start
+  graph:
+  - node: start
+    actions:
+    - !type:DestroyEntity {}
+    edges:
+    - to: marbleLady
+      steps:
+      - material: Marble
+        amount: 10
+        doAfter: 15
+    - to: marbleLadyFlower
+      steps:
+      - material: Marble
+        amount: 10
+        doAfter: 15
+      - tag: Flower
+        name: construction-graph-tag-flower
+        icon:
+          sprite: Objects/Specific/Hydroponics/poppy.rsi
+          state: produce
+    - to: marbleStand
+      steps:
+      - material: Marble
+        amount: 7
+        doAfter: 15
+    - to: marbleMan
+      steps:
+      - material: Marble
+        amount: 8
+        doAfter: 15
+    - to: marbleManDamaged
+      steps:
+      - material: Marble
+        amount: 8
+        doAfter: 15
+    - to: marblePeacemaker
+      steps:
+      - material: Marble
+        amount: 10
+        doAfter: 15
+    - to: knightMarble
+      steps:
+      - material: Marble
+        amount: 9
+        doAfter: 15
+    - to: hunterMarble
+      steps:
+      - material: Marble
+        amount: 9
+        doAfter: 15
+    - to: machineMarble
+      steps:
+      - material: Marble
+        amount: 9
+        doAfter: 15
+    - to: legionaryMarble
+      steps:
+      - material: Marble
+        amount: 9
+        doAfter: 15
+    - to: birdMarble
+      steps:
+      - material: Marble
+        amount: 6
+        doAfter: 15
+    - to: cunningMarble
+      steps:
+      - material: Marble
+        amount: 8
+        doAfter: 15
+    - to: scientistMarble
+      steps:
+      - material: Marble
+        amount: 7
+        doAfter: 15
+    - to: eyeMarble
+      steps:
+      - material: Marble
+        amount: 7
+        doAfter: 15
+    - to: ancestorMarble
+      steps:
+      - material: Marble
+        amount: 6
+        doAfter: 15
+    - to: plafeimMarble
+      steps:
+      - material: Marble
+        amount: 9
+        doAfter: 15
+    - to: statueLenin
+      steps:
+      - material: Marble
+        amount: 8
+        doAfter: 15
+    - to: statueAngel
+      steps:
+      - material: Marble
+        amount: 8
+        doAfter: 15
+    - to: statueHadii
+      steps:
+      - material: Marble
+        amount: 8
+        doAfter: 15
+    - to: statueLion
+      steps:
+      - material: Marble
+        amount: 8
+        doAfter: 15
+    - to: bustHelios
+      steps:
+      - material: Marble
+        amount: 8
+        doAfter: 15
+    - to: bustLenin
+      steps:
+      - material: Marble
+        amount: 8
+        doAfter: 15
+    - to: bustDarwin
+      steps:
+      - material: Marble
+        amount: 8
+        doAfter: 15
+    - to: bustPompeii
+      steps:
+      - material: Marble
+        amount: 8
+        doAfter: 15
+  - node: marbleLady
+    entity: MarbleLady
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialMarble1
+        amount: 7
+      steps:
+      - tool: Prying
+        doAfter: 10
+  - node: marbleLadyFlower
+    entity: MarbleLadyFlower
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialMarble1
+        amount: 7
+      - !type:SpawnPrototype
+        prototype: FoodPoppy
+        amount: 1
+      steps:
+      - tool: Prying
+        doAfter: 10
+  - node: marbleStand
+    entity: MarbleStand
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialMarble1
+        amount: 6
+      steps:
+      - tool: Prying
+        doAfter: 10
+  - node: marbleMan
+    entity: MarbleMan
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialMarble1
+        amount: 6
+      steps:
+      - tool: Prying
+        doAfter: 10
+  - node: marbleManDamaged
+    entity: MarbleManDamaged
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialMarble1
+        amount: 6
+      steps:
+      - tool: Prying
+        doAfter: 10
+  - node: marblePeacemaker
+    entity: MarblePeacemaker
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialMarble1
+        amount: 7
+      steps:
+      - tool: Prying
+        doAfter: 10
+  - node: knightMarble
+    entity: KnightMarble
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialMarble1
+        amount: 6
+      steps:
+      - tool: Prying
+        doAfter: 10
+  - node: hunterMarble
+    entity: HunterMarble
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialMarble1
+        amount: 6
+      steps:
+      - tool: Prying
+        doAfter: 10
+  - node: machineMarble
+    entity: MachineMarble
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialMarble1
+        amount: 6
+      steps:
+      - tool: Prying
+        doAfter: 10
+  - node: legionaryMarble
+    entity: LegionaryMarble
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialMarble1
+        amount: 6
+      steps:
+      - tool: Prying
+        doAfter: 10
+  - node: birdMarble
+    entity: BirdMarble
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialMarble1
+        amount: 4
+      steps:
+      - tool: Prying
+        doAfter: 10
+  - node: cunningMarble
+    entity: CunningMarble
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialMarble1
+        amount: 6
+      steps:
+      - tool: Prying
+        doAfter: 10
+  - node: scientistMarble
+    entity: ScientistMarble
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialMarble1
+        amount: 5
+      steps:
+      - tool: Prying
+        doAfter: 10
+  - node: eyeMarble
+    entity: EyeMarble
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialMarble1
+        amount: 5
+      steps:
+      - tool: Prying
+        doAfter: 10
+  - node: ancestorMarble
+    entity: AncestorMarble
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialMarble1
+        amount: 5
+      steps:
+      - tool: Prying
+        doAfter: 10
+  - node: plafeimMarble
+    entity: PlafeimMarble
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialMarble1
+        amount: 6
+      steps:
+      - tool: Prying
+        doAfter: 10
+  - node: statueLenin
+    entity: StatueLenin
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialMarble1
+        amount: 6
+      steps:
+      - tool: Prying
+        doAfter: 10
+  - node: statueAngel
+    entity: StatueAngel
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialMarble1
+        amount: 6
+      steps:
+      - tool: Prying
+        doAfter: 10
+  - node: statueHadii
+    entity: StatueHadii
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialMarble1
+        amount: 6
+      steps:
+      - tool: Prying
+        doAfter: 10
+  - node: statueLion
+    entity: StatueLion
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialMarble1
+        amount: 6
+      steps:
+      - tool: Prying
+        doAfter: 10
+  - node: bustHelios
+    entity: BustHelios
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialMarble1
+        amount: 6
+      steps:
+      - tool: Prying
+        doAfter: 10
+  - node: bustLenin
+    entity: BustLenin
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialMarble1
+        amount: 6
+      steps:
+      - tool: Prying
+        doAfter: 10
+  - node: bustDarwin
+    entity: BustDarwin
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialMarble1
+        amount: 6
+      steps:
+      - tool: Prying
+        doAfter: 10
+  - node: bustPompeii
+    entity: BustPompeii
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialMarble1
+        amount: 6
+      steps:
+      - tool: Prying
+        doAfter: 10

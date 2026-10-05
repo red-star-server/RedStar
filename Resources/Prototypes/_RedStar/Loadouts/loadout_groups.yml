@@ -231,6 +231,16 @@
   - UnderwearSocksCaptain
 
 - type: loadoutGroup
+  id: CaptainShoes
+  name: loadout-group-captain-shoes
+  loadouts:
+  - LacedShoes
+  - LeatherShoes
+  - BlackCommandHeels
+  - BlueCommandHeels
+  - RedCommandHeels
+
+- type: loadoutGroup
   id: HeadOfPersonnelUnderwear
   name: loadout-group-underwear
   minLimit: 3
@@ -240,6 +250,16 @@
   - UnderwearTopBraHeadOfPersonnel
   - UnderwearBottomPantiesHeadOfPersonnel
   - UnderwearSocksHeadOfPersonnel
+
+- type: loadoutGroup
+  id: HoPShoes
+  name: loadout-group-hop-shoes
+  loadouts:
+  - LacedShoes
+  - LeatherShoes
+  - BlackCommandHeels
+  - BlueCommandHeels
+  - RedCommandHeels
 
 # Law
 - type: loadoutGroup

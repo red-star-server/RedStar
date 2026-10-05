@@ -1,0 +1,116 @@
+- type: construction
+  parent: BaseFurniture
+  id: BlankFlagVerticalRecipe
+  graph: DecorativeFlagGraph
+  targetNode: blankFlagVertical
+  canBuildInImpassable: true
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  parent: BaseFurniture
+  id: NTFlagVerticalRecipe
+  graph: DecorativeFlagGraph
+  targetNode: nTFlagVertical
+  canBuildInImpassable: true
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  parent: BaseFurniture
+  id: KMTFlagRecipe
+  graph: DecorativeFlagGraph
+  targetNode: kMTFlag
+  canBuildInImpassable: true
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  parent: BaseFurniture
+  id: KMTFlagVerticalRecipe
+  graph: DecorativeFlagGraph
+  targetNode: kMTFlagVertical
+  canBuildInImpassable: true
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  parent: BaseFurniture
+  id: ElysiumFlagRecipe
+  graph: DecorativeFlagGraph
+  targetNode: elysiumFlag
+  canBuildInImpassable: true
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  parent: BaseFurniture
+  id: ElysiumFlagVerticalRecipe
+  graph: DecorativeFlagGraph
+  targetNode: elysiumFlagVertical
+  canBuildInImpassable: true
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  parent: BaseFurniture
+  id: TSFFlagRecipe
+  graph: DecorativeFlagGraph
+  targetNode: tSFFlag
+  canBuildInImpassable: true
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  parent: BaseFurniture
+  id: TSFFlagVerticalRecipe
+  graph: DecorativeFlagGraph
+  targetNode: tSFFlagVertical
+  canBuildInImpassable: true
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  parent: BaseFurniture
+  id: USSPFlagRecipe
+  graph: DecorativeFlagGraph
+  targetNode: uSSPFlag
+  canBuildInImpassable: true
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  parent: BaseFurniture
+  id: USSPFlagVerticalRecipe
+  graph: DecorativeFlagGraph
+  targetNode: uSSPFlagVertical
+  canBuildInImpassable: true
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  parent: BaseFurniture
+  id: USSPFlagVertical2Recipe
+  graph: DecorativeFlagGraph
+  targetNode: uSSPFlagVertical2
+  canBuildInImpassable: true
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  parent: BaseFurniture
+  id: RastamanFlagRecipe
+  graph: DecorativeFlagGraph
+  targetNode: rastamanFlag
+  canBuildInImpassable: true
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  parent: BaseFurniture
+  id: RomanFlagRecipe
+  graph: DecorativeFlagGraph
+  targetNode: romanFlag
+  canBuildInImpassable: true
+  conditions:
+  - !type:TileNotBlocked

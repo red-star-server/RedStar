@@ -13,11 +13,11 @@
         - !type:SkinColoring
   sprites:
   - sprite: _ADT/Mobs/Customization/Human/fox_parts.rsi
-    state: tail_fox_wag_stripes_prime
+    state: tail_fox_stripes_prime
   - sprite: _ADT/Mobs/Customization/Human/fox_parts.rsi
-    state: tail_fox_wag_stripes_second
+    state: tail_fox_stripes_second
   - sprite: _ADT/Mobs/Customization/Human/fox_parts.rsi
-    state: tail_fox_wag_stripes_third
+    state: tail_fox_stripes_third
 
 - type: marking
   id: MilkyTail

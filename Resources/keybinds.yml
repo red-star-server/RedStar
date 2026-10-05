@@ -520,6 +520,11 @@ binds:
   type: State
   key: MouseMiddle
   mod1: Shift
+# RS14-start
+- function: OfferItem
+  type: State
+  key: F
+# RS14-end
 - function: ArcadeUp
   type: State
   key: Up

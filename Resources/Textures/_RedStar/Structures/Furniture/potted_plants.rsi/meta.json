@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from TauCeti at https://github.com/TauCetiStation/TauCetiClassic/blob/HEAD/icons/obj/flora/plants.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "monkeyplant",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "plant-31"
+    },
+    {
+      "name": "plant-32"
+    },
+    {
+      "name": "plant-33"
+    },
+    {
+      "name": "plant-34"
+    },
+    {
+      "name": "plant-31-alternative"
+    },
+    {
+      "name": "plant-34-alternative"
+    }
+  ]
+}

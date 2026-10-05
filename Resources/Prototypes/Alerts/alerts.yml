@@ -27,6 +27,7 @@
     - alertType: Rooted
     - alertType: Pacified
     - alertType: Stealthy
+    - alertType: Offer # RS14
 
 - type: entity
   id: AlertSpriteView

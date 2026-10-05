@@ -1,37 +1,38 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/blob/2b969adc2dfd3e9621bf3597c5cbffeb3ac8c9f0/icons/obj/chemical.dmi. Modified by Ko4erga (discord)",
+  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/blob/2b969adc2dfd3e9621bf3597c5cbffeb3ac8c9f0/icons/obj/chemical.dmi and from /tg/ at https://github.com/tgstation/tgstation/blob/master/icons/obj/medical/chemical.dmi on 01/12/2024.",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "bottle"
-    },
-    {
-      "name": "inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "bottle-1"
-    },
-    {
-      "name": "bottle-2"
-    },
-    {
-      "name": "bottle-3"
-    },
-    {
-      "name": "bottle-4"
-    },
-    {
       "name": "bottle1"
+    },
+    {
+      "name": "bottle2"
+    },
+    {
+      "name": "bottle3"
+    },
+    {
+      "name": "bottle4"
+    },
+    {
+      "name": "bottle5"
+    },
+    {
+      "name": "bottle6"
+    },
+    {
+      "name": "bottle7"
+    },
+    {
+      "name": "bottle8"
+    },
+    {
+      "name": "bottle9"
     },
     {
       "name": "bottle10"
@@ -64,34 +65,24 @@
       "name": "bottle19"
     },
     {
-      "name": "bottle2"
-    },
-    {
       "name": "bottle20"
     },
     {
-      "name": "bottle3"
-    },
-    {
-      "name": "bottle4"
-    },
-    {
-      "name": "bottle5"
-    },
-    {
-      "name": "bottle6"
-    },
-    {
-      "name": "bottle7"
-    },
-    {
-      "name": "bottle8"
-    },
-    {
-      "name": "bottle9"
-    },
-    {
       "name": "lid_bottle"
+    },
+    {
+      "name": "bottle"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "bottle-1"
     },
     {
       "name": "bottle-1-1"
@@ -112,6 +103,9 @@
       "name": "bottle-1-6"
     },
     {
+      "name": "bottle-2"
+    },
+    {
       "name": "bottle-2-1"
     },
     {
@@ -130,6 +124,9 @@
       "name": "bottle-2-6"
     },
     {
+      "name": "bottle-3"
+    },
+    {
       "name": "bottle-3-1"
     },
     {
@@ -146,6 +143,9 @@
     },
     {
       "name": "bottle-3-6"
+    },
+    {
+      "name": "bottle-4"
     },
     {
       "name": "bottle-4-1"

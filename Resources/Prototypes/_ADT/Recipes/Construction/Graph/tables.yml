@@ -1,0 +1,239 @@
+- type: constructionGraph
+  id: FurnitureTableGraph
+  start: start
+  graph:
+  - node: start
+    actions:
+    - !type:DeleteEntity {}
+    edges:
+    - to: furnitureTableFrame
+      completed:
+      - !type:SnapToGrid
+        southRotation: true
+      steps:
+      - material: MetalRod
+        amount: 2
+        doAfter: 1
+    - to: tableRoundFrame
+      completed:
+      - !type:SnapToGrid
+        southRotation: true
+      steps:
+      - material: MetalRod
+        amount: 2
+        doAfter: 1
+    - to: tableRoundPlastic
+      completed:
+      - !type:SnapToGrid
+        southRotation: true
+      steps:
+      - material: Plastic
+        amount: 4
+        doAfter: 4
+    - to: tableRoundWood
+      completed:
+      - !type:SnapToGrid
+        southRotation: true
+      steps:
+      - material: WoodPlank
+        amount: 4
+        doAfter: 4
+    - to: tableRoundGlass
+      completed:
+      - !type:SnapToGrid
+        southRotation: true
+      steps:
+      - material: Glass
+        amount: 4
+        doAfter: 4
+  - node: furnitureTableFrame
+    entity: FurnitureTableFrame
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: PartRodMetal
+        amount: 2
+      steps:
+      - tool: Anchoring
+        doAfter: 1
+    - to: tablePlastic
+      steps:
+      - material: Plastic
+        amount: 1
+        doAfter: 1
+    - to: tableUraniumGlass
+      steps:
+      - material: UraniumGlass
+        amount: 1
+        doAfter: 1
+    - to: tableReinforcedPlasmaGlass
+      steps:
+      - material: ReinforcedPlasmaGlass
+        amount: 1
+        doAfter: 1
+    - to: tableReinforcedUraniumGlass
+      steps:
+      - material: ReinforcedUraniumGlass
+        amount: 1
+        doAfter: 1
+  - node: tableRoundFrame
+    entity: TableRoundFrame
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: PartRodMetal
+        amount: 2
+      steps:
+      - tool: Anchoring
+        doAfter: 1
+    - to: tableRoundPlastic
+      steps:
+      - material: Plastic
+        amount: 4
+        doAfter: 4
+    - to: tableRoundWood
+      steps:
+      - material: WoodPlank
+        amount: 4
+        doAfter: 4
+    - to: tableRoundGlass
+      steps:
+      - material: Glass
+        amount: 4
+        doAfter: 4
+    - to: tableRoundGeneric
+      steps:
+      - material: Steel
+        amount: 1
+        doAfter: 1
+    - to: tableRoundCarpet
+      steps:
+      - material: WoodPlank
+        amount: 1
+        doAfter: 1
+      - material: Cloth
+        amount: 1
+        doAfter: 1
+    - to: tableRoundPlasma
+      steps:
+      - material: PlasmaGlass
+        amount: 1
+        doAfter: 1
+  - node: tableRoundPlastic
+    entity: TableRoundPlastic
+    edges:
+    - to: tableRoundFrame
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetPlastic1
+        amount: 4
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Prying
+        doAfter: 4
+  - node: tableRoundWood
+    entity: TableRoundWood
+    edges:
+    - to: tableRoundFrame
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialWoodPlank1
+        amount: 4
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Prying
+        doAfter: 4
+  - node: tableRoundGlass
+    entity: TableRoundGlass
+    edges:
+    - to: tableRoundFrame
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetGlass1
+        amount: 4
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Prying
+        doAfter: 4
+  - node: tableRoundGeneric
+    entity: TableRoundGeneric
+    edges:
+    - to: tableRoundFrame
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 1
+      steps:
+      - tool: Anchoring
+        doAfter: 1
+  - node: tableRoundCarpet
+    entity: TableRoundCarpet
+    edges:
+    - to: tableRoundFrame
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialWoodPlank1
+        amount: 1
+      - !type:SpawnPrototype
+        prototype: MaterialCloth1
+        amount: 1
+      steps:
+      - tool: Anchoring
+        doAfter: 1
+  - node: tableRoundPlasma
+    entity: TableRoundPlasma
+    edges:
+    - to: tableRoundFrame
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetPGlass1
+        amount: 1
+      steps:
+      - tool: Anchoring
+        doAfter: 1
+  - node: tablePlastic
+    entity: TablePlastic
+    edges:
+    - to: furnitureTableFrame
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetPlastic1
+        amount: 1
+      steps:
+      - tool: Anchoring
+        doAfter: 1
+  - node: tableUraniumGlass
+    entity: TableUraniumGlass
+    edges:
+    - to: furnitureTableFrame
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetUGlass1
+        amount: 1
+      steps:
+      - tool: Anchoring
+        doAfter: 1
+  - node: tableReinforcedPlasmaGlass
+    entity: TableReinforcedPlasmaGlass
+    edges:
+    - to: furnitureTableFrame
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetRPGlass1
+        amount: 1
+      steps:
+      - tool: Anchoring
+        doAfter: 1
+  - node: tableReinforcedUraniumGlass
+    entity: TableReinforcedUraniumGlass
+    edges:
+    - to: furnitureTableFrame
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetRUGlass1
+        amount: 1
+      steps:
+      - tool: Anchoring
+        doAfter: 1

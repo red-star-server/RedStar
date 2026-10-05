@@ -1,0 +1,161 @@
+# White
+- type: construction
+  parent: BaseChair
+  id: BenchWhiteComfy
+  graph: BenchSL
+  targetNode: whiteComfBench
+
+- type: construction
+  parent: BaseChair
+  id: BenchComfyCorner
+  graph: BenchSL
+  targetNode: whiteComfBenchCorner
+
+- type: construction
+  parent: BaseChair
+  id: BenchComfyEndLeft
+  graph: BenchSL
+  targetNode: whiteComfBenchLeft
+
+- type: construction
+  parent: BaseChair
+  id: BenchComfyEndRight
+  graph: BenchSL
+  targetNode: whiteComfBenchRight
+
+- type: construction
+  parent: BaseChair
+  id: BenchComfyMiddle
+  graph: BenchSL
+  targetNode: whiteComfBenchMid
+  
+# Red
+- type: construction
+  parent: BaseChair
+  id: BenchRedComfyCorner
+  graph: BenchSL
+  targetNode: redComfBenchCorner
+
+- type: construction
+  parent: BaseChair
+  id: BenchRedComfyEndLeft
+  graph: BenchSL
+  targetNode: redComfBenchLeft
+
+- type: construction
+  parent: BaseChair
+  id: BenchRedComfyEndRight
+  graph: BenchSL
+  targetNode: redComfBenchRight
+
+- type: construction
+  parent: BaseChair
+  id: BenchRedComfyMiddle
+  graph: BenchSL
+  targetNode: redComfBenchMid
+  
+# Blue
+- type: construction
+  parent: BaseChair
+  id: BenchBlueComfyCorner
+  graph: BenchSL
+  targetNode: blueComfBenchCorner
+
+- type: construction
+  parent: BaseChair
+  id: BenchBlueComfyEndLeft
+  graph: BenchSL
+  targetNode: blueComfBenchLeft
+
+- type: construction
+  parent: BaseChair
+  id: BenchBlueComfyEndRight
+  graph: BenchSL
+  targetNode: blueComfBenchRight
+
+- type: construction
+  parent: BaseChair
+  id: BenchBlueComfyMiddle
+  graph: BenchSL
+  targetNode: blueComfBenchMid
+    
+# Gray
+- type: construction
+  parent: BaseChair
+  id: GrayComfBench
+  graph: BenchSL
+  targetNode: grayComfBench
+
+- type: construction
+  parent: BaseChair
+  id: BenchGrayComfyCorner
+  graph: BenchSL
+  targetNode: grayComfBenchCorner
+
+- type: construction
+  parent: BaseChair
+  id: BenchGrayComfyEndLeft
+  graph: BenchSL
+  targetNode: grayComfBenchLeft
+
+- type: construction
+  parent: BaseChair
+  id: BenchGrayComfyEndRight
+  graph: BenchSL
+  targetNode: grayComfBenchRight
+
+- type: construction
+  parent: BaseChair
+  id: BenchGrayComfyMiddle
+  graph: BenchSL
+  targetNode: grayComfBenchMid
+  
+# Green
+- type: construction
+  parent: BaseChair
+  id: BenchGreenComfy
+  graph: BenchSL
+  targetNode: greenComfBench
+
+- type: construction
+  parent: BaseChair
+  id: BenchGreenComfyCorner
+  graph: BenchSL
+  targetNode: greenComfBenchCorner
+
+- type: construction
+  parent: BaseChair
+  id: BenchGreenComfyEndLeft
+  graph: BenchSL
+  targetNode: greenComfBenchLeft
+
+- type: construction
+  parent: BaseChair
+  id: BenchGreenComfyEndRight
+  graph: BenchSL
+  targetNode: greenComfBenchRight
+
+- type: construction
+  parent: BaseChair
+  id: BenchGreenComfyMiddle
+  graph: BenchSL
+  targetNode: greenComfBenchMid
+  
+# Pews
+- type: construction
+  parent: BaseChair
+  id: PewEndLeft
+  graph: BenchSL
+  targetNode: pewLeft
+
+- type: construction
+  parent: BaseChair
+  id: PewMiddle
+  graph: BenchSL
+  targetNode: pewMid
+
+- type: construction
+  parent: BaseChair
+  id: PewEndRight
+  graph: BenchSL
+  targetNode: pewRight

@@ -20,7 +20,8 @@
         amount: 2
         defaultPrototype: Beaker
   - type: StealTarget
-    stealGroup: EngineeringTechFabCircuitboard
+    stealGroup:
+    - EngineeringTechFabCircuitboard
 
 - type: entity
   id: CargoTechFabCircuitboard
@@ -39,7 +40,8 @@
         amount: 2
         defaultPrototype: Beaker
   - type: StealTarget
-    stealGroup: CargoTechFabCircuitboard
+    stealGroup:
+    - CargoTechFabCircuitboard
 
 - type: entity
   id: ScienceTechFabCircuitboard
@@ -58,7 +60,8 @@
         amount: 2
         defaultPrototype: Beaker
   - type: StealTarget
-    stealGroup: ScienceTechFabCircuitboard
+    stealGroup:
+    - ScienceTechFabCircuitboard
 
 - type: entity
   id: ServiceTechFabCircuitboard
@@ -77,4 +80,5 @@
         amount: 2
         defaultPrototype: Beaker
   - type: StealTarget
-    stealGroup: ServiceTechFabCircuitboard
+    stealGroup:
+    - ServiceTechFabCircuitboard

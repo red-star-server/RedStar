@@ -1,0 +1,9 @@
+﻿- type: cargoProduct
+  id: MaterialMarble
+  icon:
+    sprite: _ADT/Objects/Materials/marble.rsi
+    state: marble3
+  product: CrateMaterialMarble
+  cost: 3500
+  category: cargoproduct-category-name-materials
+  group: market

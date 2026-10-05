@@ -1,0 +1,11 @@
+- type: construction
+  parent: BaseTable
+  id: DresserBox
+  graph: WoodenStorage
+  targetNode: dresserBox
+
+- type: construction
+  parent: BaseTable
+  id: FancyWardrobe
+  graph: WoodenStorage
+  targetNode: fancyWardrobe
