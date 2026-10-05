@@ -22,17 +22,3 @@
     stackRequirements:
       Manipulator: 1
       Glass: 5
-
-- type: entity
-  parent: BaseMachineCircuitboard
-  id: XenobiologySlimeProcessorMachineCircuitboard
-  name: slime processor machine board
-  description: A machine printed circuit board for a slime processor.
-  components:
-  - type: Sprite
-    state: science
-  - type: MachineBoard
-    prototype: XenobiologySlimeProcessor
-    stackRequirements:
-      Manipulator: 2
-      Glass: 1
