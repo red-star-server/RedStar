@@ -1,7 +1,7 @@
 - type: latheRecipe
   parent: [ BaseCircuitboardRecipe, BaseResearchMachineRecipeCategory ]
-  id: XenobiologyConsoleCircuitboard
-  result: XenobiologyConsoleCircuitboard
+  id: XenobiologyDatabaseConsoleCircuitboard
+  result: XenobiologyDatabaseConsoleCircuitboard
 
 - type: latheRecipe
   parent: [ BaseCircuitboardRecipe, BaseResearchMachineRecipeCategory ]

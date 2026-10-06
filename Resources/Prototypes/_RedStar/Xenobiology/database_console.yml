@@ -1,21 +1,21 @@
 - type: entity
   parent: BaseComputer
-  id: XenobiologyConsole
-  name: xenobiology console
-  description: Analyzes living slimes detected by linked cell scanners.
+  id: XenobiologyDatabaseConsole
+  name: xenobiology database console
+  description: Displays catalogued xenobiology research samples from a connected R&D server.
   components:
   - type: Computer
-    board: XenobiologyConsoleCircuitboard
-  - type: XenobiologyConsole
-  - type: DeviceLinkSource
-    ports: [ XenobiologyConsole ]
+    board: XenobiologyDatabaseConsoleCircuitboard
+  - type: ResearchClient
+  - type: XenobiologyDatabaseConsole
   - type: ActivatableUI
-    singleUser: true
-    key: enum.XenobiologyConsoleUiKey.Key
+    key: enum.XenobiologyDatabaseConsoleUiKey.Key
   - type: UserInterface
     interfaces:
-      enum.XenobiologyConsoleUiKey.Key:
-        type: XenobiologyConsoleBoundUserInterface
+      enum.XenobiologyDatabaseConsoleUiKey.Key:
+        type: XenobiologyDatabaseConsoleBoundUserInterface
+      enum.ResearchClientUiKey.Key:
+        type: ResearchClientBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: Sprite

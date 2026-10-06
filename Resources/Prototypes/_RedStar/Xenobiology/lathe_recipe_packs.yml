@@ -1,5 +1,5 @@
 - type: latheRecipePack
   id: XenobiologyBoards
   recipes:
-  - XenobiologyConsoleCircuitboard
+  - XenobiologyDatabaseConsoleCircuitboard
   - XenobiologySampleAnalyzerMachineCircuitboard

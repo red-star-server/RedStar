@@ -1,8 +1,10 @@
 using System.Linq;
 using Content.Server._RedStar.Xenobiology.Components;
+using Content.Server._RedStar.Xenobiology.Events;
 using Content.Server.Research.Systems;
 using Content.Shared._RedStar.Xenobiology.Components;
 using Content.Shared._RedStar.Xenobiology.Prototypes;
+using Content.Shared.Research.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server._RedStar.Xenobiology.Systems;
@@ -78,8 +80,17 @@ public sealed partial class XenobiologyResearchSystem : EntitySystem
             return false;
 
         reward = GetResearchReward(server, research);
-        database.DiscoveredSamples.Add(research.ID);
+        var discovered = database.DiscoveredSamples.Add(research.ID);
         _research.ModifyServerPoints(server.Owner, reward);
+        if (!discovered || !TryComp<ResearchServerComponent>(server.Owner, out var researchServer))
+            return true;
+
+        var ev = new XenobiologyResearchDatabaseChangedEvent();
+        foreach (var client in researchServer.Clients)
+        {
+            RaiseLocalEvent(client, ref ev);
+        }
+
         return true;
     }
 }

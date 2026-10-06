@@ -5,8 +5,8 @@
   description: Analyzes xenobiology samples for the connected R&D server.
   components:
   - type: Sprite
-    sprite: Structures/Machines/grinder.rsi
-    state: grinder_empty
+    sprite: _RedStar/Structures/Machines/sample_analyzer.rsi
+    state: icon
     snapCardinals: true
   - type: ApcPowerReceiver
     powerLoad: 100

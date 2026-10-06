@@ -2,11 +2,11 @@
   id: Xenobiology
   name: research-technology-xenobiology
   icon:
-    sprite: Structures/Machines/grinder.rsi
-    state: grinder_empty
+    sprite: _RedStar/Structures/Machines/sample_analyzer.rsi
+    state: icon
   discipline: Experimental
   tier: 1
   cost: 5000
   recipeUnlocks:
-  - XenobiologyConsoleCircuitboard
+  - XenobiologyDatabaseConsoleCircuitboard
   - XenobiologySampleAnalyzerMachineCircuitboard
