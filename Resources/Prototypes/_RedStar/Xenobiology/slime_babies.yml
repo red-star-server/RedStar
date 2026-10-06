@@ -3,13 +3,21 @@
   parent: BaseMobAdultSlimes
   abstract: true
   components:
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: baby
+    - sprite: _RedStar/Mobs/XenoSlimes/digesting.rsi
+      state: digesting_overlay
+      visible: false
+      map: ["enum.SlimeVisualLayers.Digesting"]
   - type: SlimeMutation
   - type: TimedMetamorphosis
     target: MobAdultSlimesBlue
     duration: 120s
   - type: HTN
     rootTask:
-      task: SlimeMainCompound
+      task: SlimeCombatCompound
   - type: NpcFactionMember
     factions:
     - SimpleNeutral
@@ -33,9 +41,6 @@
     target: MobAdultSlimesGray
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/gray.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: baby
 
 - type: entity
   id: MobBabySlimesOrange
@@ -46,9 +51,6 @@
     target: MobAdultSlimesOrange
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/orange.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: baby
 
 - type: entity
   id: MobBabySlimesPurple
@@ -59,9 +61,6 @@
     target: MobAdultSlimesPurple
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/purple.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: baby
 
 - type: entity
   id: MobBabySlimesBlue
@@ -72,9 +71,6 @@
     target: MobAdultSlimesBlue
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/blue.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: baby
 
 - type: entity
   id: MobBabySlimesMetal
@@ -85,9 +81,6 @@
     target: MobAdultSlimesMetal
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/metal.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: baby
 
 - type: entity
   id: MobBabySlimesYellow
@@ -98,9 +91,6 @@
     target: MobAdultSlimesYellow
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/yellow.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: baby
 
 - type: entity
   id: MobBabySlimesDarkPurple
@@ -111,9 +101,6 @@
     target: MobAdultSlimesDarkPurple
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/dark_purple.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: baby
 
 - type: entity
   id: MobBabySlimesDarkBlue
@@ -124,9 +111,6 @@
     target: MobAdultSlimesDarkBlue
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/dark_blue.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: baby
 
 - type: entity
   id: MobBabySlimesSilver
@@ -137,9 +121,6 @@
     target: MobAdultSlimesSilver
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/silver.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: baby
 
 - type: entity
   id: MobBabySlimesBluespace
@@ -150,9 +131,6 @@
     target: MobAdultSlimesBluespace
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/bluespace.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: baby
 
 - type: entity
   id: MobBabySlimesSepia
@@ -163,9 +141,6 @@
     target: MobAdultSlimesSepia
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/sepia.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: baby
 
 - type: entity
   id: MobBabySlimesCerulean
@@ -176,9 +151,6 @@
     target: MobAdultSlimesCerulean
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/cerulean.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: baby
 
 - type: entity
   id: MobBabySlimesPyrite
@@ -189,9 +161,6 @@
     target: MobAdultSlimesPyrite
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/pyrite.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: baby
 
 - type: entity
   id: MobBabySlimesRed
@@ -202,9 +171,6 @@
     target: MobAdultSlimesRed
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/red.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: baby
 
 - type: entity
   id: MobBabySlimesGreen
@@ -215,9 +181,6 @@
     target: MobAdultSlimesGreen
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/green.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: baby
 
 - type: entity
   id: MobBabySlimesPink
@@ -228,9 +191,6 @@
     target: MobAdultSlimesPink
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/pink.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: baby
 
 - type: entity
   id: MobBabySlimesGold
@@ -241,9 +201,6 @@
     target: MobAdultSlimesGold
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/gold.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: baby
 
 - type: entity
   id: MobBabySlimesOil
@@ -254,9 +211,6 @@
     target: MobAdultSlimesOil
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/oil.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: baby
 
 - type: entity
   id: MobBabySlimesBlack
@@ -267,9 +221,6 @@
     target: MobAdultSlimesBlack
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/black.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: baby
 
 - type: entity
   id: MobBabySlimesLightPink
@@ -280,9 +231,6 @@
     target: MobAdultSlimesLightPink
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/light_pink.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: baby
 
 - type: entity
   id: MobBabySlimesAdamantine
@@ -293,9 +241,6 @@
     target: MobAdultSlimesAdamantine
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/adamantine.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: baby
 
 - type: entity
   id: MobBabySlimesRainbow
@@ -306,6 +251,3 @@
     target: MobAdultSlimesRainbow
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/rainbow.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: baby

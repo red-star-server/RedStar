@@ -3,17 +3,13 @@ using Robust.Shared.Serialization;
 namespace Content.Shared._RedStar.Xenobiology.Slimes;
 
 [Serializable, NetSerializable]
-public enum SlimeTemperament : byte
+public enum SlimeVisuals : byte
 {
-    Calm,
-    Restless,
-    Aggressive
+    Digesting
 }
 
 [Serializable, NetSerializable]
-public enum SlimeCrowding : byte
+public enum SlimeVisualLayers : byte
 {
-    Low,
-    Crowded,
-    Severe
+    Digesting
 }

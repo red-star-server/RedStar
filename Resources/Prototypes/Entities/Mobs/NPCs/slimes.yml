@@ -8,9 +8,15 @@
   - type: Sprite
     drawdepth: Mobs
     sprite: _RedStar/Mobs/XenoSlimes/blue.rsi # RS14
+    # RS14-start
     layers:
-    - map: [ "enum.DamageStateVisualLayers.Base" ]
-      state: adult # RS14
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: adult
+    - sprite: _RedStar/Mobs/XenoSlimes/digesting.rsi
+      state: digesting_overlay
+      visible: false
+      map: ["enum.SlimeVisualLayers.Digesting"]
+    # RS14-end
   - type: Fixtures
     fixtures:
       fix1:
@@ -112,12 +118,15 @@
     satiations:
       Hunger:
         prototype: SlimeHunger # RS14
-  - type: SlimeHusbandry
   - type: Slime
-    damageOnEat:
-      types:
-        Piercing: 5
-    nutritionOnHit: 10
+  - type: SlimeDigestion
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.SlimeVisuals.Digesting:
+        enum.SlimeVisualLayers.Digesting:
+          True: { visible: true }
+          False: { visible: false }
   - type: TemperatureDamage
     coldDamage:
       types:
@@ -156,7 +165,7 @@
     - SimpleNeutral
   - type: HTN
     rootTask:
-      task: SlimeMainCompound # RS14
+      task: SlimeCombatCompound # RS14
   - type: NPCRetaliation
     attackMemoryLength: 10
   # RS14-start
@@ -233,9 +242,6 @@
   components:
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/green.rsi # RS14
-    layers:
-    - map: [ "enum.DamageStateVisualLayers.Base" ]
-      state: adult # RS14
   - type: DamageStateVisuals
     states:
       Alive:
@@ -275,9 +281,6 @@
   components:
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/yellow.rsi # RS14
-    layers:
-    - map: [ "enum.DamageStateVisualLayers.Base" ]
-      state: adult # RS14
   - type: DamageStateVisuals
     states:
       Alive:

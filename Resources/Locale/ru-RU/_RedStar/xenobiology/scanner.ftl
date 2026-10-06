@@ -3,14 +3,6 @@ slime-scanner-title = Сканер слаймов
 slime-scanner-target = Цель: {$name}
 slime-scanner-growth = Рост: {$value}
 slime-scanner-hunger = Голод: {$value}
-slime-scanner-temperament = Темперамент: {$value}
-slime-scanner-temperament-calm = Спокойный
-slime-scanner-temperament-restless = Беспокойный
-slime-scanner-temperament-aggressive = Агрессивный
-slime-scanner-crowding = Скученность: {$value}
-slime-scanner-crowding-low = Низкая
-slime-scanner-crowding-crowded = Высокая
-slime-scanner-crowding-severe = Критическая
 slime-scanner-mutation-chance = Шанс мутации: {$value}
 slime-scanner-potential-mutations = Возможные мутации: {$value}
 
@@ -20,10 +12,9 @@ slime-scan-stage-adult = Взрослый
 slime-scan-card-development = Развитие
 slime-scan-card-growth = Рост
 slime-scan-card-hunger = Голод
-slime-scan-card-condition = Состояние
-slime-scan-card-temperament = Темперамент
-slime-scan-card-crowding = Скученность
 slime-scan-card-genetics = Генетика
 slime-scan-card-mutation-chance = Шанс мутации
 slime-scan-card-potential-mutations = Возможные мутации
 slime-scan-card-awaiting-scan = Просканируйте слайма, чтобы увидеть результаты анализа.
+
+slime-consume-verb = Поглотить

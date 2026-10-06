@@ -1,6 +1,5 @@
 using Content.Server._RedStar.AnimalHusbandry;
 using Content.Server._RedStar.Xenobiology.Slimes.Components;
-using Content.Server._RedStar.Xenobiology.Slimes.Systems;
 using Content.Shared._RedStar.Xenobiology.Slimes;
 using Content.Shared._RedStar.Xenobiology.UI;
 using Content.Shared.Nutrition.AnimalHusbandry;
@@ -14,12 +13,10 @@ namespace Content.Server._RedStar.Xenobiology.Systems;
 public sealed partial class SlimeScanSystem : EntitySystem
 {
     [Dependency] private SatiationSystem _satiation = default!;
-    [Dependency] private SlimeHusbandrySystem _husbandry = default!;
     [Dependency] private IGameTiming _timing = default!;
 
     [Dependency] private EntityQuery<SlimeComponent> _slimeQuery;
     [Dependency] private EntityQuery<SatiationComponent> _satiationQuery;
-    [Dependency] private EntityQuery<SlimeHusbandryComponent> _husbandryQuery;
 
     public SlimeScanData? TryBuildSlimeScanData(Entity<SlimeComponent?> ent)
     {
@@ -61,18 +58,7 @@ public sealed partial class SlimeScanSystem : EntitySystem
             growth = Math.Clamp(1f - (float) ((end - _timing.CurTime) / reproductive.GestationDuration), 0f, 1f);
         }
 
-        var temperament = SlimeTemperament.Calm;
-        var crowding = SlimeCrowding.Low;
-        if (!_husbandryQuery.TryComp(uid, out var husbandry))
-        {
-            return new SlimeScanData(MetaData(uid).EntityName, growth, hunger, chance, mutations,
-                temperament, crowding, MetaData(uid).EntityPrototype?.ID, stage);
-        }
-
-        temperament = husbandry.Temperament;
-        crowding = _husbandry.GetCrowding((uid, husbandry));
-
         return new SlimeScanData(MetaData(uid).EntityName, growth, hunger, chance, mutations,
-            temperament, crowding, MetaData(uid).EntityPrototype?.ID, stage);
+            MetaData(uid).EntityPrototype?.ID, stage);
     }
 }

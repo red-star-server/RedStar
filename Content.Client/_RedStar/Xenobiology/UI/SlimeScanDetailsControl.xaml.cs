@@ -19,17 +19,11 @@ public sealed partial class SlimeScanDetailsControl : BoxContainer
 
     private EntProtoId[]? _displayedMutations;
     private static readonly Color Positive = Color.FromHex("#9FD6AD");
-    private static readonly Color Caution = Color.FromHex("#E8C980");
-    private static readonly Color Warning = Color.FromHex("#EC9C9C");
-    private readonly StyleBoxFlat _temperamentBadge = new() { BorderThickness = new Thickness(1) };
-    private readonly StyleBoxFlat _crowdingBadge = new() { BorderThickness = new Thickness(1) };
 
     public SlimeScanDetailsControl()
     {
         IoCManager.InjectDependencies(this);
         RobustXamlLoader.Load(this);
-        TemperamentBadge.PanelOverride = _temperamentBadge;
-        CrowdingBadge.PanelOverride = _crowdingBadge;
         GrowthBar.ForegroundStyleBoxOverride = new StyleBoxFlat { BackgroundColor = Positive.WithAlpha(0.7f) };
     }
 
@@ -55,24 +49,6 @@ public sealed partial class SlimeScanDetailsControl : BoxContainer
         GrowthValue.Text = data.Growth.ToString("P0");
         GrowthBar.Value = Math.Clamp(data.Growth, 0f, 1f);
         HungerValue.Text = data.Hunger?.ToString("0.#") ?? Loc.GetString("slime-scanner-none");
-        TemperamentValue.FullText = TemperamentName(data.Temperament);
-        var temperamentColor = data.Temperament switch
-        {
-            SlimeTemperament.Calm => Positive,
-            SlimeTemperament.Restless => Caution,
-            SlimeTemperament.Aggressive => Warning,
-            _ => Color.White
-        };
-        SetBadge(_temperamentBadge, TemperamentValue, temperamentColor);
-        CrowdingValue.FullText = CrowdingName(data.Crowding);
-        var crowdingColor = data.Crowding switch
-        {
-            SlimeCrowding.Low => Positive,
-            SlimeCrowding.Crowded => Caution,
-            SlimeCrowding.Severe => Warning,
-            _ => Color.White
-        };
-        SetBadge(_crowdingBadge, CrowdingValue, crowdingColor);
         MutationChanceValue.Text = data.MutationChance.ToString("P0");
 
         // Keep controls stable during periodic scans; rebuild only when the mutation list changes.
@@ -103,26 +79,4 @@ public sealed partial class SlimeScanDetailsControl : BoxContainer
 
     private string NameOf(EntProtoId id) => _prototypes.TryIndex(id, out var prototype) ? prototype.Name : id.Id;
 
-    private static void SetBadge(StyleBoxFlat badge, Label label, Color color)
-    {
-        badge.BackgroundColor = color.WithAlpha(0.1f);
-        badge.BorderColor = color.WithAlpha(0.35f);
-        label.FontColorOverride = color;
-    }
-
-    private static string TemperamentName(SlimeTemperament temperament) => Loc.GetString(temperament switch
-    {
-        SlimeTemperament.Calm => "slime-scanner-temperament-calm",
-        SlimeTemperament.Restless => "slime-scanner-temperament-restless",
-        SlimeTemperament.Aggressive => "slime-scanner-temperament-aggressive",
-        _ => "slime-scanner-none"
-    });
-
-    private static string CrowdingName(SlimeCrowding crowding) => Loc.GetString(crowding switch
-    {
-        SlimeCrowding.Low => "slime-scanner-crowding-low",
-        SlimeCrowding.Crowded => "slime-scanner-crowding-crowded",
-        SlimeCrowding.Severe => "slime-scanner-crowding-severe",
-        _ => "slime-scanner-none"
-    });
 }

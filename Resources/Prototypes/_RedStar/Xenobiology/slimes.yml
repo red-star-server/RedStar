@@ -38,9 +38,6 @@
       amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/gray.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: adult
 
 - type: entity
   name: orange slime
@@ -65,9 +62,6 @@
       amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/orange.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: adult
 
 - type: entity
   name: purple slime
@@ -92,9 +86,6 @@
       amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/purple.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: adult
 
 - type: entity
   name: metal slime
@@ -119,9 +110,6 @@
       amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/metal.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: adult
 
 - type: entity
   name: dark purple slime
@@ -146,9 +134,6 @@
       amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/dark_purple.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: adult
 
 - type: entity
   name: dark blue slime
@@ -173,9 +158,6 @@
       amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/dark_blue.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: adult
 
 - type: entity
   name: silver slime
@@ -200,9 +182,6 @@
       amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/silver.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: adult
 
 - type: entity
   name: bluespace slime
@@ -220,9 +199,6 @@
       amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/bluespace.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: adult
 
 - type: entity
   name: sepia slime
@@ -240,9 +216,6 @@
       amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/sepia.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: adult
 
 - type: entity
   name: cerulean slime
@@ -260,9 +233,6 @@
       amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/cerulean.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: adult
 
 - type: entity
   name: pyrite slime
@@ -280,9 +250,6 @@
       amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/pyrite.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: adult
 
 - type: entity
   name: red slime
@@ -303,9 +270,6 @@
       amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/red.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: adult
 
 - type: entity
   name: pink slime
@@ -326,9 +290,6 @@
       amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/pink.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: adult
 
 - type: entity
   name: gold slime
@@ -349,9 +310,6 @@
       amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/gold.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: adult
 
 - type: entity
   name: oil slime
@@ -369,9 +327,6 @@
       amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/oil.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: adult
 
 - type: entity
   name: black slime
@@ -389,9 +344,6 @@
       amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/black.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: adult
 
 - type: entity
   name: light pink slime
@@ -409,9 +361,6 @@
       amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/light_pink.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: adult
 
 - type: entity
   name: adamantine slime
@@ -429,9 +378,6 @@
       amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/adamantine.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: adult
 
 - type: entity
   name: rainbow slime
@@ -452,6 +398,3 @@
       amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/rainbow.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: adult

@@ -30,23 +30,6 @@
             <Label Name="HungerValue" />
         </BoxContainer>
         <controls:StripeBack>
-            <Label Text="{Loc 'slime-scan-card-condition'}" StyleClasses="LabelHeading" Align="Center" />
-        </controls:StripeBack>
-        <BoxContainer SeparationOverride="12">
-            <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="4">
-                <Label Text="{Loc 'slime-scan-card-temperament'}" StyleClasses="LabelSubText" />
-                <PanelContainer Name="TemperamentBadge">
-                    <ui:XenobiologyNameLabel Name="TemperamentValue" StyleClasses="LabelHeading" Margin="8 6" />
-                </PanelContainer>
-            </BoxContainer>
-            <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="4">
-                <Label Text="{Loc 'slime-scan-card-crowding'}" StyleClasses="LabelSubText" />
-                <PanelContainer Name="CrowdingBadge">
-                    <ui:XenobiologyNameLabel Name="CrowdingValue" StyleClasses="LabelHeading" Margin="8 6" />
-                </PanelContainer>
-            </BoxContainer>
-        </BoxContainer>
-        <controls:StripeBack>
             <Label Text="{Loc 'slime-scan-card-genetics'}" StyleClasses="LabelHeading" Align="Center" />
         </controls:StripeBack>
         <BoxContainer>
