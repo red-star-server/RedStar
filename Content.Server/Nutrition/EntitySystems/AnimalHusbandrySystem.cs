@@ -233,8 +233,6 @@ public sealed partial class AnimalHusbandrySystem : EntitySystem
             var resolve = new ResolveOffspringPrototypeEvent(spawn);
             RaiseLocalEvent(uid, ref resolve);
             var offspring = Spawn(resolve.Prototype, spawnPosition.Value.Offset(_random.NextVector2(0.3f)));
-            var spawned = new OffspringSpawnedEvent(offspring);
-            RaiseLocalEvent(uid, ref spawned);
             offspringSpawned.Add(offspring);
             // RS14-end
             if (component.MakeOffspringInfant)

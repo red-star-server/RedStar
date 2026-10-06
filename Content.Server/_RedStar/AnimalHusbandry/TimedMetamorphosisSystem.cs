@@ -56,8 +56,6 @@ public sealed partial class TimedMetamorphosisSystem : EntitySystem
                 _threshold.GetScaledDamage(uid, result, out var damage) && damage != null)
                 _damageable.SetDamage((result, damageable), damage);
 
-            var ev = new TimedMetamorphosisEvent(result);
-            RaiseLocalEvent(uid, ref ev);
             if (_mind.TryGetMind(uid, out var mindId, out var mind))
                 _mind.TransferTo(mindId, result, mind: mind);
 

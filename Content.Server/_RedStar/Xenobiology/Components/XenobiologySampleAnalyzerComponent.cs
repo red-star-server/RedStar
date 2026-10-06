@@ -17,8 +17,7 @@ public sealed partial class XenobiologySampleAnalyzerComponent : Component
     public EntityUid? ProcessingSample;
     public EntityUid? ProcessingServer;
     public TimeSpan? AnalysisEndTime;
-    public TimeSpan RemainingAnalysisTime;
     public TimeSpan NextUiUpdate;
-    public TimeSpan? CompleteUntil;
     public int? LastReward;
 }
+

@@ -36,7 +36,7 @@ public sealed partial class XenobiologySampleAnalyzerWindow : FancyWindow
             XenobiologySampleStatus.Empty => Loc.GetString("xenobiology-analyzer-sample-empty"),
             XenobiologySampleStatus.NoServer => Loc.GetString("xenobiology-analyzer-no-server"),
             XenobiologySampleStatus.Unpowered => Loc.GetString("xenobiology-analyzer-unpowered"),
-            XenobiologySampleStatus.Unmatched => Loc.GetString("xenobiology-analyzer-no-target"),
+            XenobiologySampleStatus.Researched => Loc.GetString("xenobiology-analyzer-researched"),
             XenobiologySampleStatus.Ready => Loc.GetString("xenobiology-analyzer-ready"),
             XenobiologySampleStatus.Processing => Loc.GetString("xenobiology-analyzer-processing"),
             XenobiologySampleStatus.Complete => Loc.GetString("xenobiology-analyzer-complete", ("points", state.Reward ?? 0)),
@@ -44,3 +44,4 @@ public sealed partial class XenobiologySampleAnalyzerWindow : FancyWindow
         };
     }
 }
+

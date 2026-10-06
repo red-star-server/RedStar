@@ -47,8 +47,8 @@ public sealed partial class XenobiologyDatabaseConsoleSystem : EntitySystem
         {
             foreach (var id in _xenobiology.GetDiscoveredSamples(serverUid))
             {
-                if (ProtoMan.TryIndex(id, out var research) && research.Sample.TryGet(out _, ProtoMan, Factory))
-                    entries.Add(new XenobiologyDatabaseEntry(research.Sample, research.Reward));
+                if (id.TryGet(out var sample, ProtoMan, Factory))
+                    entries.Add(new XenobiologyDatabaseEntry(id, Math.Max(0, sample.ResearchValue)));
             }
         }
 
@@ -62,3 +62,4 @@ public sealed partial class XenobiologyDatabaseConsoleSystem : EntitySystem
         _ui.SetUiState(ent.Owner, XenobiologyDatabaseConsoleUiKey.Key, state);
     }
 }
+

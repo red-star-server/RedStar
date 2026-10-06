@@ -31,7 +31,6 @@ public sealed partial class SlimeDigestionSystem : EntitySystem
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private SharedInteractionSystem _interaction = default!;
     [Dependency] private ActionBlockerSystem _blocker = default!;
-    [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private GibbingSystem _gibbing = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
@@ -48,7 +47,6 @@ public sealed partial class SlimeDigestionSystem : EntitySystem
     private void OnInit(Entity<SlimeDigestionComponent> ent, ref ComponentInit args)
     {
         ent.Comp.Stomach = _containers.EnsureContainer<ContainerSlot>(ent.Owner, SlimeDigestionComponent.ContainerId);
-        UpdateAppearance(ent);
     }
 
     [SubscribeLocalEvent]
@@ -128,7 +126,6 @@ public sealed partial class SlimeDigestionSystem : EntitySystem
             return;
 
         ent.Comp.NextDigestTime = _timing.CurTime + ent.Comp.DigestInterval;
-        UpdateAppearance(ent);
     }
 
     [SubscribeLocalEvent]
@@ -228,12 +225,5 @@ public sealed partial class SlimeDigestionSystem : EntitySystem
             _containers.Remove(victim, ent.Comp.Stomach, force: true);
 
         ent.Comp.NextDigestTime = TimeSpan.Zero;
-        UpdateAppearance(ent);
-    }
-
-    private void UpdateAppearance(Entity<SlimeDigestionComponent> ent)
-    {
-        if (!TerminatingOrDeleted(ent.Owner))
-            _appearance.SetData(ent.Owner, SlimeVisuals.Digesting, ent.Comp.Stomach?.ContainedEntity != null);
     }
 }

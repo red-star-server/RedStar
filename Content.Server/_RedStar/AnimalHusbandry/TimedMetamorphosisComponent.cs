@@ -19,9 +19,3 @@ public sealed partial class TimedMetamorphosisComponent : Component
     [AutoPausedField]
     public TimeSpan EndTime;
 }
-
-/// <summary>
-/// Raised on the source after its replacement is spawned, before its mind moves.
-/// </summary>
-[ByRefEvent]
-public record struct TimedMetamorphosisEvent(EntityUid Result);

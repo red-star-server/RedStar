@@ -1,4 +1,4 @@
-using Content.Shared._RedStar.Xenobiology.Prototypes;
+using Content.Shared._RedStar.Xenobiology.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server._RedStar.Xenobiology.Components;
@@ -10,8 +10,5 @@ namespace Content.Server._RedStar.Xenobiology.Components;
 public sealed partial class XenobiologyResearchDatabaseComponent : Component
 {
     [DataField]
-    public HashSet<ProtoId<XenobiologyResearchPrototype>> DiscoveredSamples = [];
-
-    [DataField]
-    public float RepeatRewardMultiplier = 0.2f;
+    public HashSet<EntProtoId<XenobiologySampleComponent>> DiscoveredSamples = [];
 }

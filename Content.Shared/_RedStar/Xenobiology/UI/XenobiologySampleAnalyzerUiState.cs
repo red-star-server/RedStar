@@ -14,7 +14,7 @@ public enum XenobiologySampleStatus : byte
     Empty,
     NoServer,
     Unpowered,
-    Unmatched,
+    Researched,
     Ready,
     Processing,
     Complete

@@ -26,7 +26,9 @@ public sealed partial class XenobiologySampleAnalyzerSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnInserted(Entity<XenobiologySampleAnalyzerComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
-        ent.Comp.CompleteUntil = null;
+        if (args.Container.ID != ent.Comp.SampleSlot)
+            return;
+
         ent.Comp.LastReward = null;
         UpdateState(ent);
     }
@@ -34,15 +36,21 @@ public sealed partial class XenobiologySampleAnalyzerSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnRemoved(Entity<XenobiologySampleAnalyzerComponent> ent, ref EntRemovedFromContainerMessage args)
     {
+        if (args.Container.ID != ent.Comp.SampleSlot)
+            return;
+
         if (ent.Comp.ProcessingSample == args.Entity)
             CancelAnalysis(ent.Comp);
 
+        ent.Comp.LastReward = null;
         UpdateState(ent);
     }
 
     [SubscribeLocalEvent]
     private void OnRegistrationChanged(Entity<XenobiologySampleAnalyzerComponent> ent, ref ResearchRegistrationChangedEvent args)
     {
+        CancelAnalysis(ent.Comp);
+        ent.Comp.LastReward = null;
         UpdateState(ent);
     }
 
@@ -62,14 +70,12 @@ public sealed partial class XenobiologySampleAnalyzerSystem : EntitySystem
             !TryGetSample(ent, out var sample, out var prototype) ||
             !_research.TryGetClientServer(ent.Owner, out var server, out _) ||
             !HasComp<XenobiologyResearchDatabaseComponent>(server.Value) ||
-            !_xenobiology.TryGetResearchPrototypeForSample(prototype, out _))
+            _xenobiology.IsDiscovered(server.Value, prototype))
             return;
 
         ent.Comp.ProcessingSample = sample;
         ent.Comp.ProcessingServer = server.Value;
-        ent.Comp.RemainingAnalysisTime = ent.Comp.AnalysisDuration;
         ent.Comp.AnalysisEndTime = _timing.CurTime + ent.Comp.AnalysisDuration;
-        ent.Comp.CompleteUntil = null;
         ent.Comp.LastReward = null;
         UpdateState(ent);
     }
@@ -77,16 +83,8 @@ public sealed partial class XenobiologySampleAnalyzerSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnPowerChanged(Entity<XenobiologySampleAnalyzerComponent> ent, ref PowerChangedEvent args)
     {
-        if (ent.Comp.ProcessingSample != null)
-        {
-            if (args.Powered && ent.Comp.AnalysisEndTime == null)
-                ent.Comp.AnalysisEndTime = _timing.CurTime + ent.Comp.RemainingAnalysisTime;
-            else if (!args.Powered && ent.Comp.AnalysisEndTime is { } endTime)
-            {
-                ent.Comp.RemainingAnalysisTime = TimeSpan.FromTicks(Math.Max(0, (endTime - _timing.CurTime).Ticks));
-                ent.Comp.AnalysisEndTime = null;
-            }
-        }
+        if (!args.Powered)
+            CancelAnalysis(ent.Comp);
 
         UpdateState(ent);
     }
@@ -100,7 +98,8 @@ public sealed partial class XenobiologySampleAnalyzerSystem : EntitySystem
         {
             if (analyzer.ProcessingSample is { } sample)
             {
-                if (analyzer.ProcessingServer is not { } processingServer ||
+                if (!this.IsPowered(uid, EntityManager) ||
+                    analyzer.ProcessingServer is not { } processingServer ||
                     !_research.TryGetClientServer(uid, out var server, out _) ||
                     server.Value != processingServer ||
                     !HasComp<XenobiologyResearchDatabaseComponent>(processingServer) ||
@@ -124,12 +123,6 @@ public sealed partial class XenobiologySampleAnalyzerSystem : EntitySystem
                 analyzer.NextUiUpdate = _timing.CurTime + TimeSpan.FromSeconds(0.2);
                 UpdateState((uid, analyzer));
             }
-            else if (analyzer.CompleteUntil is { } resetTime && _timing.CurTime >= resetTime)
-            {
-                analyzer.CompleteUntil = null;
-                analyzer.LastReward = null;
-                UpdateState((uid, analyzer));
-            }
         }
     }
 
@@ -145,9 +138,7 @@ public sealed partial class XenobiologySampleAnalyzerSystem : EntitySystem
 
         CancelAnalysis(ent.Comp);
         ent.Comp.LastReward = reward;
-        ent.Comp.CompleteUntil = _timing.CurTime + TimeSpan.FromSeconds(2);
         _audio.PlayPvs(ent.Comp.CompletionSound, ent.Owner);
-        QueueDel(sample);
         UpdateState(ent);
     }
 
@@ -156,7 +147,6 @@ public sealed partial class XenobiologySampleAnalyzerSystem : EntitySystem
         analyzer.ProcessingSample = null;
         analyzer.ProcessingServer = null;
         analyzer.AnalysisEndTime = null;
-        analyzer.RemainingAnalysisTime = TimeSpan.Zero;
     }
 
     private bool TryGetSample(Entity<XenobiologySampleAnalyzerComponent> ent,
@@ -184,19 +174,21 @@ public sealed partial class XenobiologySampleAnalyzerSystem : EntitySystem
         var hasServer = _research.TryGetClientServer(ent.Owner, out var server, out _) &&
                         HasComp<XenobiologyResearchDatabaseComponent>(server.Value);
         var processing = ent.Comp.ProcessingSample != null;
-        var status = processing ? XenobiologySampleStatus.Processing
-            : ent.Comp.CompleteUntil != null ? XenobiologySampleStatus.Complete
-            : !this.IsPowered(ent, EntityManager) ? XenobiologySampleStatus.Unpowered
+        var status = !this.IsPowered(ent, EntityManager) ? XenobiologySampleStatus.Unpowered
             : !hasServer ? XenobiologySampleStatus.NoServer
             : !hasSample ? XenobiologySampleStatus.Empty
-            : _xenobiology.TryGetResearchPrototypeForSample(prototype, out _) ? XenobiologySampleStatus.Ready
-            : XenobiologySampleStatus.Unmatched;
+            : processing ? XenobiologySampleStatus.Processing
+            : ent.Comp.LastReward != null ? XenobiologySampleStatus.Complete
+            : server is { } serverUid && _xenobiology.IsDiscovered(serverUid, prototype) ? XenobiologySampleStatus.Researched
+            : XenobiologySampleStatus.Ready;
         var remaining = ent.Comp.AnalysisEndTime is { } endTime
             ? endTime - _timing.CurTime
-            : ent.Comp.RemainingAnalysisTime;
+            : TimeSpan.Zero;
         var progress = processing && ent.Comp.AnalysisDuration > TimeSpan.Zero
             ? 1f - (float) (remaining.TotalSeconds / ent.Comp.AnalysisDuration.TotalSeconds)
-            : status == XenobiologySampleStatus.Complete ? 1f : 0f;
+            : status == XenobiologySampleStatus.Complete
+                ? 1f
+                : 0f;
         var state = new XenobiologySampleAnalyzerUiState(
             hasSample ? GetNetEntity(sample) : null,
             status,

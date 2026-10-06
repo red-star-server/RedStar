@@ -191,7 +191,6 @@
     spawned:
     - id: BluespaceSlimeExtract
       amount: 1
-  - type: SlimeMutation
   - type: Reproductive
     offspring:
     - id: MobBabySlimesBluespace
@@ -208,7 +207,6 @@
     spawned:
     - id: SepiaSlimeExtract
       amount: 1
-  - type: SlimeMutation
   - type: Reproductive
     offspring:
     - id: MobBabySlimesSepia
@@ -225,7 +223,6 @@
     spawned:
     - id: CeruleanSlimeExtract
       amount: 1
-  - type: SlimeMutation
   - type: Reproductive
     offspring:
     - id: MobBabySlimesCerulean
@@ -242,7 +239,6 @@
     spawned:
     - id: PyriteSlimeExtract
       amount: 1
-  - type: SlimeMutation
   - type: Reproductive
     offspring:
     - id: MobBabySlimesPyrite
@@ -319,7 +315,6 @@
     spawned:
     - id: OilSlimeExtract
       amount: 1
-  - type: SlimeMutation
   - type: Reproductive
     offspring:
     - id: MobBabySlimesOil
@@ -336,7 +331,6 @@
     spawned:
     - id: BlackSlimeExtract
       amount: 1
-  - type: SlimeMutation
   - type: Reproductive
     offspring:
     - id: MobBabySlimesBlack
@@ -353,7 +347,6 @@
     spawned:
     - id: LightPinkSlimeExtract
       amount: 1
-  - type: SlimeMutation
   - type: Reproductive
     offspring:
     - id: MobBabySlimesLightPink
@@ -370,7 +363,6 @@
     spawned:
     - id: AdamantineSlimeExtract
       amount: 1
-  - type: SlimeMutation
   - type: Reproductive
     offspring:
     - id: MobBabySlimesAdamantine
@@ -387,7 +379,6 @@
     spawned:
     - id: RainbowSlimeExtract
       amount: 1
-  - type: SlimeMutation
   - type: PointLight
     radius: 1
     energy: 1
