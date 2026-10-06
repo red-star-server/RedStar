@@ -31,10 +31,8 @@
       conditions:
       - !type:TemperatureCondition
         min: 310
-  - type: Reproductive
-    offspring:
-    - id: MobBabySlimesGray
-      amount: 2
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesGray
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/gray.rsi
 
@@ -55,10 +53,8 @@
       weight: 1
     - target: MobBabySlimesRed
       weight: 2
-  - type: Reproductive
-    offspring:
-    - id: MobBabySlimesOrange
-      amount: 2
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesOrange
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/orange.rsi
 
@@ -79,10 +75,8 @@
       weight: 1
     - target: MobBabySlimesGreen
       weight: 2
-  - type: Reproductive
-    offspring:
-    - id: MobBabySlimesPurple
-      amount: 2
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesPurple
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/purple.rsi
 
@@ -103,10 +97,8 @@
       weight: 1
     - target: MobBabySlimesGold
       weight: 2
-  - type: Reproductive
-    offspring:
-    - id: MobBabySlimesMetal
-      amount: 2
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesMetal
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/metal.rsi
 
@@ -127,10 +119,8 @@
       weight: 1
     - target: MobBabySlimesSepia
       weight: 2
-  - type: Reproductive
-    offspring:
-    - id: MobBabySlimesDarkPurple
-      amount: 2
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesDarkPurple
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/dark_purple.rsi
 
@@ -151,10 +141,8 @@
       weight: 1
     - target: MobBabySlimesCerulean
       weight: 2
-  - type: Reproductive
-    offspring:
-    - id: MobBabySlimesDarkBlue
-      amount: 2
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesDarkBlue
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/dark_blue.rsi
 
@@ -175,10 +163,8 @@
       weight: 1
     - target: MobBabySlimesPyrite
       weight: 2
-  - type: Reproductive
-    offspring:
-    - id: MobBabySlimesSilver
-      amount: 2
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesSilver
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/silver.rsi
 
@@ -191,10 +177,8 @@
     spawned:
     - id: BluespaceSlimeExtract
       amount: 1
-  - type: Reproductive
-    offspring:
-    - id: MobBabySlimesBluespace
-      amount: 2
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesBluespace
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/bluespace.rsi
 
@@ -207,10 +191,8 @@
     spawned:
     - id: SepiaSlimeExtract
       amount: 1
-  - type: Reproductive
-    offspring:
-    - id: MobBabySlimesSepia
-      amount: 2
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesSepia
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/sepia.rsi
 
@@ -223,10 +205,8 @@
     spawned:
     - id: CeruleanSlimeExtract
       amount: 1
-  - type: Reproductive
-    offspring:
-    - id: MobBabySlimesCerulean
-      amount: 2
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesCerulean
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/cerulean.rsi
 
@@ -239,10 +219,8 @@
     spawned:
     - id: PyriteSlimeExtract
       amount: 1
-  - type: Reproductive
-    offspring:
-    - id: MobBabySlimesPyrite
-      amount: 2
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesPyrite
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/pyrite.rsi
 
@@ -259,10 +237,8 @@
     mutations:
     - target: MobBabySlimesOil
       weight: 1
-  - type: Reproductive
-    offspring:
-    - id: MobBabySlimesRed
-      amount: 2
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesRed
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/red.rsi
 
@@ -279,10 +255,8 @@
     mutations:
     - target: MobBabySlimesLightPink
       weight: 1
-  - type: Reproductive
-    offspring:
-    - id: MobBabySlimesPink
-      amount: 2
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesPink
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/pink.rsi
 
@@ -299,10 +273,8 @@
     mutations:
     - target: MobBabySlimesAdamantine
       weight: 1
-  - type: Reproductive
-    offspring:
-    - id: MobBabySlimesGold
-      amount: 2
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesGold
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/gold.rsi
 
@@ -315,10 +287,8 @@
     spawned:
     - id: OilSlimeExtract
       amount: 1
-  - type: Reproductive
-    offspring:
-    - id: MobBabySlimesOil
-      amount: 2
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesOil
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/oil.rsi
 
@@ -331,10 +301,8 @@
     spawned:
     - id: BlackSlimeExtract
       amount: 1
-  - type: Reproductive
-    offspring:
-    - id: MobBabySlimesBlack
-      amount: 2
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesBlack
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/black.rsi
 
@@ -347,10 +315,8 @@
     spawned:
     - id: LightPinkSlimeExtract
       amount: 1
-  - type: Reproductive
-    offspring:
-    - id: MobBabySlimesLightPink
-      amount: 2
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesLightPink
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/light_pink.rsi
 
@@ -363,10 +329,8 @@
     spawned:
     - id: AdamantineSlimeExtract
       amount: 1
-  - type: Reproductive
-    offspring:
-    - id: MobBabySlimesAdamantine
-      amount: 2
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesAdamantine
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/adamantine.rsi
 
@@ -382,9 +346,7 @@
   - type: PointLight
     radius: 1
     energy: 1
-  - type: Reproductive
-    offspring:
-    - id: MobBabySlimesRainbow
-      amount: 2
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesRainbow
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/rainbow.rsi

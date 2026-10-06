@@ -21,7 +21,6 @@ public sealed partial class SlimeMitosisSystem : EntitySystem
     [Dependency] private SlimeMutationSystem _mutation = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
-    [Dependency] private EntityQuery<SlimeDigestionComponent> _digestionQuery;
     [Dependency] private EntityQuery<MobStateComponent> _mobQuery;
     [Dependency] private EntityQuery<SlimeMutationComponent> _mutationQuery;
 
@@ -34,7 +33,7 @@ public sealed partial class SlimeMitosisSystem : EntitySystem
         var query = EntityQueryEnumerator<SlimeMitosisComponent>();
         while (query.MoveNext(out var uid, out var mitosis))
         {
-            if (!_mobQuery.TryComp(uid, out var state) || state.CurrentState != MobState.Alive || IsFeeding(uid))
+            if (!_mobQuery.TryComp(uid, out var state) || state.CurrentState != MobState.Alive)
                 continue;
             if (mitosis.GestationEnd is { } end)
             {
@@ -42,21 +41,18 @@ public sealed partial class SlimeMitosisSystem : EntitySystem
                     Divide((uid, mitosis));
                 continue;
             }
-            if (_timing.CurTime < mitosis.NextAttempt || HasComp<InfantComponent>(uid))
+            if (_timing.CurTime < mitosis.NextAttempt || HasComp<InfantComponent>(uid) ||
+                !TryComp<SatiationComponent>(uid, out var satiation) ||
+                _satiation.GetValueOrNull((uid, satiation), SatiationSystem.Hunger) < mitosis.HungerPerBirth)
                 continue;
-            if (TryComp<SatiationComponent>(uid, out var satiation))
-                _satiation.ModifyValue((uid, satiation), SatiationSystem.Hunger, -mitosis.HungerPerBirth);
+            _satiation.ModifyValue((uid, satiation), SatiationSystem.Hunger, -mitosis.HungerPerBirth);
             mitosis.GestationEnd = _timing.CurTime + mitosis.GestationDuration;
         }
     }
 
-    private bool IsFeeding(EntityUid uid)
-        => _digestionQuery.TryComp(uid, out var digestion) &&
-           digestion.ConsumeDoAfter != null;
-
     private void Divide(Entity<SlimeMitosisComponent> ent)
     {
-        if (!_mutationQuery.TryComp(ent.Owner, out var mutation) || IsFeeding(ent.Owner) ||
+        if (!_mutationQuery.TryComp(ent.Owner, out var mutation) ||
             !_transform.TryGetMapOrGridCoordinates(ent.Owner, out var coordinates))
             return;
         for (var i = 0; i < ent.Comp.OffspringCount; i++)

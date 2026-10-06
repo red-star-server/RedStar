@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server._RedStar.AnimalHusbandry;
 using Content.Server._RedStar.Xenobiology.Slimes.Components;
 using Content.Shared._RedStar.Xenobiology.Slimes;
@@ -29,24 +28,22 @@ public sealed partial class SlimeScanSystem : EntitySystem
             hunger = _satiation.GetValueOrNull((uid, satiation), SatiationSystem.Hunger);
 
         var mutations = Array.Empty<SlimeMutationScanEntry>();
-        if (TryComp<SlimeMutationComponent>(uid, out var mutation) && mutation.Mutations.Count > 0)
+        if (TryComp<SlimeMutationComponent>(uid, out var mutation))
         {
-            var selected = mutation.Mutations
-                .Select((entry, index) => (entry, index))
-                .OrderByDescending(pair => pair.entry.RequiredProgress)
-                .First();
-            var route = selected.entry;
+            mutations = new SlimeMutationScanEntry[mutation.Mutations.Count];
+            for (var i = 0; i < mutation.Mutations.Count; i++)
             {
+                var route = mutation.Mutations[i];
                 var baby = route.Target;
                 var target = ProtoMan.TryIndex<EntityPrototype>(baby, out var prototype) &&
                                prototype.TryComp<TimedMetamorphosisComponent>(out var metamorphosis, Factory)
                     ? metamorphosis.Target
                     : baby;
                 var progress = route.RequiredProgress > 0 && float.IsFinite(route.RequiredProgress) &&
-                               selected.index < mutation.MutationProgress.Length && float.IsFinite(mutation.MutationProgress[selected.index])
-                    ? Math.Clamp(mutation.MutationProgress[selected.index] / route.RequiredProgress, 0f, 1f)
+                               i < mutation.MutationProgress.Length && float.IsFinite(mutation.MutationProgress[i])
+                    ? Math.Clamp(mutation.MutationProgress[i] / route.RequiredProgress, 0f, 1f)
                     : 0f;
-                mutations = [new SlimeMutationScanEntry(target, progress)];
+                mutations[i] = new SlimeMutationScanEntry(target, progress);
             }
         }
 
