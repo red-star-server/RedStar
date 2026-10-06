@@ -7,13 +7,6 @@
         proto: NearbyMeleeTargets
     - !type:HTNPrimitiveTask
       operator: !type:MoveToOperator
-        removeKeyOnFinish: false
-        rangeKey: MeleeRange
-    - !type:HTNPrimitiveTask
-      operator: !type:MeleeOperator
-        targetKey: Target
-    - !type:HTNPrimitiveTask
-      operator: !type:MoveToOperator
         pathfindInPlanning: false
         removeKeyOnFinish: false
         rangeKey: MeleeRange

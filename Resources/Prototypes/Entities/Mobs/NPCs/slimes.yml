@@ -235,6 +235,7 @@
         Blunt: 6
         Caustic: 1
         Poison: 4
+        Cellular: 1
   # RS14-start
   - type: Butcherable
     spawned:
@@ -271,6 +272,7 @@
       types:
         Blunt: 6
         Caustic: 4
+        Cellular: 1
   # RS14-start
   - type: Butcherable
     spawned:
