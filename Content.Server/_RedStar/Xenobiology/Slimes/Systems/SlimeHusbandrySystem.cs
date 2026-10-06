@@ -17,7 +17,7 @@ public sealed partial class SlimeHusbandrySystem : EntitySystem
 
     private const float UpdateInterval = 1.5f;
     private float _updateAccumulator;
-    private readonly HashSet<Entity<SlimeLifecycleComponent>> _nearby = [];
+    private readonly HashSet<Entity<SlimeComponent>> _nearby = [];
 
     public override void Update(float frameTime)
     {
@@ -28,7 +28,7 @@ public sealed partial class SlimeHusbandrySystem : EntitySystem
 
         _updateAccumulator = 0f;
 
-        var query = EntityQueryEnumerator<SlimeHusbandryComponent, SlimeLifecycleComponent, SatiationComponent, TransformComponent>();
+        var query = EntityQueryEnumerator<SlimeHusbandryComponent, SlimeComponent, SatiationComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var husbandry, out _, out var satiation, out var transform))
         {
             if (_mobState.IsDead(uid))

@@ -7,10 +7,10 @@
   components:
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/Aliens/slimes.rsi
+    sprite: _RedStar/Mobs/XenoSlimes/blue.rsi # RS14
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
-      state: blue_adult_slime
+      state: adult # RS14
   - type: Fixtures
     fixtures:
       fix1:
@@ -107,6 +107,31 @@
     allowedEmotes: ['Squish']
   - type: TypingIndicator
     proto: slime
+  # RS14-start
+  - type: Satiation
+    satiations:
+      Hunger:
+        prototype: XenobiologySlimeHunger
+  - type: SlimeHusbandry
+  - type: Slime
+    damageOnEat:
+      types:
+        Piercing: 5
+    nutritionOnHit: 10
+  - type: TemperatureDamage
+    coldDamage:
+      types:
+        Cold: 10.0
+  - type: Butcherable
+    butcherDelay: 20
+    spawned: []
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: adult
+      Dead:
+        Base: baby-dead
+  # RS14-end
 
 - type: entity
   abstract: true
@@ -134,6 +159,28 @@
       task: SimpleHostileCompound
   - type: NPCRetaliation
     attackMemoryLength: 10
+  # RS14-start
+  - type: SlimeMutation
+  - type: Reproductive
+    minBreedAttemptInterval: 00:01:30
+    maxBreedAttemptInterval: 00:02:00
+    breedChance: 0.5
+    capacity: 6
+    minHungerThreshold: Peckish
+    hungerPerBirth: 75
+    gestationDuration: 00:01:00
+    makeOffspringInfant: false
+    partnerWhitelist:
+      components:
+      - Slime
+    offspring:
+    - id: MobBabySlimesBlue
+      amount: 2
+  - type: ReproductivePartner
+  - type: HTN
+    rootTask:
+      task: SlimeMainCompound
+  # RS14-end
 
 - type: entity
   abstract: true
@@ -160,9 +207,21 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: blue_adult_slime
+        Base: adult # RS14
       Dead:
-        Base: blue_adult_slime_dead
+        Base: baby-dead # RS14
+  # RS14-start
+  - type: Butcherable
+    spawned:
+    - id: BlueSlimeExtract
+      amount: 1
+  - type: SlimeMutation
+    mutations:
+    - target: MobBabySlimesDarkBlue
+    - target: MobBabySlimesSilver
+    - target: MobBabySlimesPink
+      weight: 2
+  # RS14-end
 
 - type: entity
   parent: [ BaseAdultSlimesAngry, MobAdultSlimesBlue ]
@@ -176,21 +235,35 @@
   name: green slime
   components:
   - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/green.rsi # RS14
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
-      state: green_adult_slime
+      state: adult # RS14
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: green_adult_slime
+        Base: adult # RS14
       Dead:
-        Base: green_adult_slime_dead
+        Base: baby-dead # RS14
   - type: MeleeWeapon
     damage:
       types:
         Blunt: 6
         Caustic: 1
         Poison: 4
+  # RS14-start
+  - type: Butcherable
+    spawned:
+    - id: GreenSlimeExtract
+      amount: 1
+  - type: SlimeMutation
+    mutations:
+    - target: MobBabySlimesBlack
+  - type: Reproductive
+    offspring:
+    - id: MobBabySlimesGreen
+      amount: 2
+  # RS14-end
 
 - type: entity
   parent: [ BaseAdultSlimesAngry, MobAdultSlimesGreen ]
@@ -204,20 +277,37 @@
   name: yellow slime
   components:
   - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/yellow.rsi # RS14
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
-      state: yellow_adult_slime
+      state: adult # RS14
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: yellow_adult_slime
+        Base: adult # RS14
       Dead:
-        Base: yellow_adult_slime_dead
+        Base: baby-dead # RS14
   - type: MeleeWeapon
     damage:
       types:
         Blunt: 6
         Caustic: 4
+  # RS14-start
+  - type: Butcherable
+    spawned:
+    - id: YellowSlimeExtract
+      amount: 1
+  - type: SlimeMutation
+    mutations:
+    - target: MobBabySlimesOrange
+    - target: MobBabySlimesMetal
+    - target: MobBabySlimesBluespace
+      weight: 2
+  - type: Reproductive
+    offspring:
+    - id: MobBabySlimesYellow
+      amount: 2
+  # RS14-end
 
 - type: entity
   parent: [ BaseAdultSlimesAngry, MobAdultSlimesYellow ]

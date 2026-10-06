@@ -20,7 +20,7 @@ public sealed partial class SlimeScannerSystem : EntitySystem
     private static readonly SoundPathSpecifier ScannerSound = new("/Audio/Items/Medical/healthscanner.ogg");
 
     [SubscribeLocalEvent]
-    private void OnSlimeAfterInteractUsing(Entity<SlimeLifecycleComponent> entity, ref AfterInteractUsingEvent args)
+    private void OnSlimeAfterInteractUsing(Entity<SlimeComponent> entity, ref AfterInteractUsingEvent args)
         => TryStartScan(args);
 
     private void TryStartScan(AfterInteractUsingEvent args)

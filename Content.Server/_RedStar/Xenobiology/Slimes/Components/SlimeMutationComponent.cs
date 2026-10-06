@@ -1,48 +1,22 @@
-using Content.Shared._RedStar.Xenobiology.Slimes;
 using Content.Shared.EntityConditions;
 using Content.Shared.FixedPoint;
-using Content.Shared.Nutrition.Prototypes;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server._RedStar.Xenobiology.Slimes.Components;
 
 /// <summary>
-/// Per-slime growth state and lineage configuration. Growth accumulates over time while fed.
+/// Slime-specific mutation chance and environmental mutation routes.
 /// </summary>
 [RegisterComponent]
-public sealed partial class SlimeLifecycleComponent : Component
+public sealed partial class SlimeMutationComponent : Component
 {
-    [DataField]
-    public SlimeStage Stage = SlimeStage.Adult;
-
-    [DataField(required: true)]
-    public EntProtoId AdultPrototype;
-
-    [DataField(required: true)]
-    public EntProtoId BabyPrototype;
-
-    [DataField]
-    public float Growth;
-
     [DataField]
     public FixedPoint2 MutationChance = 0.25;
 
     [DataField]
-    public List<SlimeMutationEntry> Mutations = new();
+    public List<SlimeMutationEntry> Mutations = [];
 
     public float[] MutationProgress = [];
-
-    [DataField]
-    public float GrowthRate = 1f;
-
-    [DataField]
-    public float GrowthThreshold = 100f;
-
-    [DataField]
-    public SatiationValue RequiredSatiation = "Peckish";
-
-    [DataField]
-    public int OffspringCount = 2;
 
     [DataField]
     public float MutationVariance = 0.05f;

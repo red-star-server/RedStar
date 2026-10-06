@@ -1,511 +1,457 @@
 - type: entity
-  id: XenobiologySlimeBase
-  parent:
-  - MobRespirator
-  - MobAtmosStandard
-  - SimpleSpaceMobBase
-  abstract: true
-  description: I don't think you should be seeing this.
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: _RedStar/Mobs/XenoSlimes/gray.rsi
-    layers:
-    - state: adult
-  - type: Satiation
-    satiations:
-      Hunger:
-        prototype: XenobiologySlimeHunger
-  - type: SlimeHusbandry
-    overcrowdingRadius: 2.5
-    restlessThreshold: 3
-    aggressiveThreshold: 5
-    restlessBelow: Okay
-    aggressiveBelow: Starving
-    calmGrowthMultiplier: 1
-    restlessGrowthMultiplier: 0.5
-    aggressiveGrowthMultiplier: 0
-  - type: Butcherable
-    butcherDelay: 20
-    spawned: []
-  - type: Slime
-    damageOnEat:
-      types:
-        Piercing: 5
-    nutritionOnHit: 10
-  - type: HTN
-    rootTask:
-      task: SlimeMainCompound
-  - type: TemperatureDamage
-    coldDamage:
-      types:
-        Cold: 10.0
-
-- type: entity
-  name: gray xenobiology slime
-  id: XenobiologySlimeGray
-  parent: XenobiologySlimeBase
+  name: gray slime
+  id: MobAdultSlimesGray
+  parent: MobAdultSlimes
   components:
   - type: Butcherable
     spawned:
     - id: GraySlimeExtract
       amount: 1
-  - type: SlimeLifecycle
-    adultPrototype: XenobiologySlimeGray
-    babyPrototype: XenobiologySlimeGrayBaby
+  - type: SlimeMutation
     mutationChance: 0.25
     mutations:
-    - target: XenobiologySlimeOrange
+    - target: MobBabySlimesOrange
       weight: 1
       conditions:
       - !type:SatiationCondition
         satiationType: Hunger
         min: 140
-    - target: XenobiologySlimePurple
+    - target: MobBabySlimesPurple
       weight: 1
       conditions:
       - !type:SatiationCondition
         satiationType: Hunger
         max: 140
-    - target: XenobiologySlimeBlue
+    - target: MobBabySlimesBlue
       weight: 1
       conditions:
       - !type:TemperatureCondition
         max: 290
-    - target: XenobiologySlimeMetal
+    - target: MobBabySlimesMetal
       weight: 1
       conditions:
       - !type:TemperatureCondition
         min: 310
+  - type: Reproductive
+    offspring:
+    - id: MobBabySlimesGray
+      amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/gray.rsi
     layers:
-    - state: adult
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: adult
 
 - type: entity
-  name: orange xenobiology slime
-  id: XenobiologySlimeOrange
-  parent: XenobiologySlimeBase
+  name: orange slime
+  id: MobAdultSlimesOrange
+  parent: MobAdultSlimes
   components:
   - type: Butcherable
     spawned:
     - id: OrangeSlimeExtract
       amount: 1
-  - type: SlimeLifecycle
-    adultPrototype: XenobiologySlimeOrange
-    babyPrototype: XenobiologySlimeOrangeBaby
+  - type: SlimeMutation
     mutations:
-    - target: XenobiologySlimeYellow
+    - target: MobBabySlimesYellow
       weight: 1
-    - target: XenobiologySlimeDarkPurple
+    - target: MobBabySlimesDarkPurple
       weight: 1
-    - target: XenobiologySlimeRed
+    - target: MobBabySlimesRed
       weight: 2
+  - type: Reproductive
+    offspring:
+    - id: MobBabySlimesOrange
+      amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/orange.rsi
     layers:
-    - state: adult
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: adult
 
 - type: entity
-  name: purple xenobiology slime
-  id: XenobiologySlimePurple
-  parent: XenobiologySlimeBase
+  name: purple slime
+  id: MobAdultSlimesPurple
+  parent: MobAdultSlimes
   components:
   - type: Butcherable
     spawned:
     - id: PurpleSlimeExtract
       amount: 1
-  - type: SlimeLifecycle
-    adultPrototype: XenobiologySlimePurple
-    babyPrototype: XenobiologySlimePurpleBaby
+  - type: SlimeMutation
     mutations:
-    - target: XenobiologySlimeDarkPurple
+    - target: MobBabySlimesDarkPurple
       weight: 1
-    - target: XenobiologySlimeDarkBlue
+    - target: MobBabySlimesDarkBlue
       weight: 1
-    - target: XenobiologySlimeGreen
+    - target: MobBabySlimesGreen
       weight: 2
+  - type: Reproductive
+    offspring:
+    - id: MobBabySlimesPurple
+      amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/purple.rsi
     layers:
-    - state: adult
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: adult
 
 - type: entity
-  name: blue xenobiology slime
-  id: XenobiologySlimeBlue
-  parent: XenobiologySlimeBase
-  components:
-  - type: Butcherable
-    spawned:
-    - id: BlueSlimeExtract
-      amount: 1
-  - type: SlimeLifecycle
-    adultPrototype: XenobiologySlimeBlue
-    babyPrototype: XenobiologySlimeBlueBaby
-    mutations:
-    - target: XenobiologySlimeDarkBlue
-      weight: 1
-    - target: XenobiologySlimeSilver
-      weight: 1
-    - target: XenobiologySlimePink
-      weight: 2
-  - type: Sprite
-    sprite: _RedStar/Mobs/XenoSlimes/blue.rsi
-    layers:
-    - state: adult
-
-- type: entity
-  name: metal xenobiology slime
-  id: XenobiologySlimeMetal
-  parent: XenobiologySlimeBase
+  name: metal slime
+  id: MobAdultSlimesMetal
+  parent: MobAdultSlimes
   components:
   - type: Butcherable
     spawned:
     - id: MetalSlimeExtract
       amount: 1
-  - type: SlimeLifecycle
-    adultPrototype: XenobiologySlimeMetal
-    babyPrototype: XenobiologySlimeMetalBaby
+  - type: SlimeMutation
     mutations:
-    - target: XenobiologySlimeYellow
+    - target: MobBabySlimesYellow
       weight: 1
-    - target: XenobiologySlimeSilver
+    - target: MobBabySlimesSilver
       weight: 1
-    - target: XenobiologySlimeGold
+    - target: MobBabySlimesGold
       weight: 2
+  - type: Reproductive
+    offspring:
+    - id: MobBabySlimesMetal
+      amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/metal.rsi
     layers:
-    - state: adult
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: adult
 
 - type: entity
-  name: yellow xenobiology slime
-  id: XenobiologySlimeYellow
-  parent: XenobiologySlimeBase
-  components:
-  - type: Butcherable
-    spawned:
-    - id: YellowSlimeExtract
-      amount: 1
-  - type: SlimeLifecycle
-    adultPrototype: XenobiologySlimeYellow
-    babyPrototype: XenobiologySlimeYellowBaby
-    mutations:
-    - target: XenobiologySlimeOrange
-      weight: 1
-    - target: XenobiologySlimeMetal
-      weight: 1
-    - target: XenobiologySlimeBluespace
-      weight: 2
-  - type: Sprite
-    sprite: _RedStar/Mobs/XenoSlimes/yellow.rsi
-    layers:
-    - state: adult
-
-- type: entity
-  name: dark purple xenobiology slime
-  id: XenobiologySlimeDarkPurple
-  parent: XenobiologySlimeBase
+  name: dark purple slime
+  id: MobAdultSlimesDarkPurple
+  parent: MobAdultSlimes
   components:
   - type: Butcherable
     spawned:
     - id: DarkPurpleSlimeExtract
       amount: 1
-  - type: SlimeLifecycle
-    adultPrototype: XenobiologySlimeDarkPurple
-    babyPrototype: XenobiologySlimeDarkPurpleBaby
+  - type: SlimeMutation
     mutations:
-    - target: XenobiologySlimeOrange
+    - target: MobBabySlimesOrange
       weight: 1
-    - target: XenobiologySlimePurple
+    - target: MobBabySlimesPurple
       weight: 1
-    - target: XenobiologySlimeSepia
+    - target: MobBabySlimesSepia
       weight: 2
+  - type: Reproductive
+    offspring:
+    - id: MobBabySlimesDarkPurple
+      amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/dark_purple.rsi
     layers:
-    - state: adult
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: adult
 
 - type: entity
-  name: dark blue xenobiology slime
-  id: XenobiologySlimeDarkBlue
-  parent: XenobiologySlimeBase
+  name: dark blue slime
+  id: MobAdultSlimesDarkBlue
+  parent: MobAdultSlimes
   components:
   - type: Butcherable
     spawned:
     - id: DarkBlueSlimeExtract
       amount: 1
-  - type: SlimeLifecycle
-    adultPrototype: XenobiologySlimeDarkBlue
-    babyPrototype: XenobiologySlimeDarkBlueBaby
+  - type: SlimeMutation
     mutations:
-    - target: XenobiologySlimePurple
+    - target: MobBabySlimesPurple
       weight: 1
-    - target: XenobiologySlimeBlue
+    - target: MobBabySlimesBlue
       weight: 1
-    - target: XenobiologySlimeCerulean
+    - target: MobBabySlimesCerulean
       weight: 2
+  - type: Reproductive
+    offspring:
+    - id: MobBabySlimesDarkBlue
+      amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/dark_blue.rsi
     layers:
-    - state: adult
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: adult
 
 - type: entity
-  name: silver xenobiology slime
-  id: XenobiologySlimeSilver
-  parent: XenobiologySlimeBase
+  name: silver slime
+  id: MobAdultSlimesSilver
+  parent: MobAdultSlimes
   components:
   - type: Butcherable
     spawned:
     - id: SilverSlimeExtract
       amount: 1
-  - type: SlimeLifecycle
-    adultPrototype: XenobiologySlimeSilver
-    babyPrototype: XenobiologySlimeSilverBaby
+  - type: SlimeMutation
     mutations:
-    - target: XenobiologySlimeMetal
+    - target: MobBabySlimesMetal
       weight: 1
-    - target: XenobiologySlimeBlue
+    - target: MobBabySlimesBlue
       weight: 1
-    - target: XenobiologySlimePyrite
+    - target: MobBabySlimesPyrite
       weight: 2
+  - type: Reproductive
+    offspring:
+    - id: MobBabySlimesSilver
+      amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/silver.rsi
     layers:
-    - state: adult
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: adult
 
 - type: entity
-  name: bluespace xenobiology slime
-  id: XenobiologySlimeBluespace
-  parent: XenobiologySlimeBase
+  name: bluespace slime
+  id: MobAdultSlimesBluespace
+  parent: MobAdultSlimes
   components:
   - type: Butcherable
     spawned:
     - id: BluespaceSlimeExtract
       amount: 1
-  - type: SlimeLifecycle
-    adultPrototype: XenobiologySlimeBluespace
-    babyPrototype: XenobiologySlimeBluespaceBaby
+  - type: SlimeMutation
+  - type: Reproductive
+    offspring:
+    - id: MobBabySlimesBluespace
+      amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/bluespace.rsi
     layers:
-    - state: adult
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: adult
 
 - type: entity
-  name: sepia xenobiology slime
-  id: XenobiologySlimeSepia
-  parent: XenobiologySlimeBase
+  name: sepia slime
+  id: MobAdultSlimesSepia
+  parent: MobAdultSlimes
   components:
   - type: Butcherable
     spawned:
     - id: SepiaSlimeExtract
       amount: 1
-  - type: SlimeLifecycle
-    adultPrototype: XenobiologySlimeSepia
-    babyPrototype: XenobiologySlimeSepiaBaby
+  - type: SlimeMutation
+  - type: Reproductive
+    offspring:
+    - id: MobBabySlimesSepia
+      amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/sepia.rsi
     layers:
-    - state: adult
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: adult
 
 - type: entity
-  name: cerulean xenobiology slime
-  id: XenobiologySlimeCerulean
-  parent: XenobiologySlimeBase
+  name: cerulean slime
+  id: MobAdultSlimesCerulean
+  parent: MobAdultSlimes
   components:
   - type: Butcherable
     spawned:
     - id: CeruleanSlimeExtract
       amount: 1
-  - type: SlimeLifecycle
-    adultPrototype: XenobiologySlimeCerulean
-    babyPrototype: XenobiologySlimeCeruleanBaby
+  - type: SlimeMutation
+  - type: Reproductive
+    offspring:
+    - id: MobBabySlimesCerulean
+      amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/cerulean.rsi
     layers:
-    - state: adult
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: adult
 
 - type: entity
-  name: pyrite xenobiology slime
-  id: XenobiologySlimePyrite
-  parent: XenobiologySlimeBase
+  name: pyrite slime
+  id: MobAdultSlimesPyrite
+  parent: MobAdultSlimes
   components:
   - type: Butcherable
     spawned:
     - id: PyriteSlimeExtract
       amount: 1
-  - type: SlimeLifecycle
-    adultPrototype: XenobiologySlimePyrite
-    babyPrototype: XenobiologySlimePyriteBaby
+  - type: SlimeMutation
+  - type: Reproductive
+    offspring:
+    - id: MobBabySlimesPyrite
+      amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/pyrite.rsi
     layers:
-    - state: adult
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: adult
 
 - type: entity
-  name: red xenobiology slime
-  id: XenobiologySlimeRed
-  parent: XenobiologySlimeBase
+  name: red slime
+  id: MobAdultSlimesRed
+  parent: MobAdultSlimes
   components:
   - type: Butcherable
     spawned:
     - id: RedSlimeExtract
       amount: 1
-  - type: SlimeLifecycle
-    adultPrototype: XenobiologySlimeRed
-    babyPrototype: XenobiologySlimeRedBaby
+  - type: SlimeMutation
     mutations:
-    - target: XenobiologySlimeOil
+    - target: MobBabySlimesOil
       weight: 1
+  - type: Reproductive
+    offspring:
+    - id: MobBabySlimesRed
+      amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/red.rsi
     layers:
-    - state: adult
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: adult
 
 - type: entity
-  name: green xenobiology slime
-  id: XenobiologySlimeGreen
-  parent: XenobiologySlimeBase
-  components:
-  - type: Butcherable
-    spawned:
-    - id: GreenSlimeExtract
-      amount: 1
-  - type: SlimeLifecycle
-    adultPrototype: XenobiologySlimeGreen
-    babyPrototype: XenobiologySlimeGreenBaby
-    mutations:
-    - target: XenobiologySlimeBlack
-      weight: 1
-  - type: Sprite
-    sprite: _RedStar/Mobs/XenoSlimes/green.rsi
-    layers:
-    - state: adult
-
-- type: entity
-  name: pink xenobiology slime
-  id: XenobiologySlimePink
-  parent: XenobiologySlimeBase
+  name: pink slime
+  id: MobAdultSlimesPink
+  parent: MobAdultSlimes
   components:
   - type: Butcherable
     spawned:
     - id: PinkSlimeExtract
       amount: 1
-  - type: SlimeLifecycle
-    adultPrototype: XenobiologySlimePink
-    babyPrototype: XenobiologySlimePinkBaby
+  - type: SlimeMutation
     mutations:
-    - target: XenobiologySlimeLightPink
+    - target: MobBabySlimesLightPink
       weight: 1
+  - type: Reproductive
+    offspring:
+    - id: MobBabySlimesPink
+      amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/pink.rsi
     layers:
-    - state: adult
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: adult
 
 - type: entity
-  name: gold xenobiology slime
-  id: XenobiologySlimeGold
-  parent: XenobiologySlimeBase
+  name: gold slime
+  id: MobAdultSlimesGold
+  parent: MobAdultSlimes
   components:
   - type: Butcherable
     spawned:
     - id: GoldSlimeExtract
       amount: 1
-  - type: SlimeLifecycle
-    adultPrototype: XenobiologySlimeGold
-    babyPrototype: XenobiologySlimeGoldBaby
+  - type: SlimeMutation
     mutations:
-    - target: XenobiologySlimeAdamantine
+    - target: MobBabySlimesAdamantine
       weight: 1
+  - type: Reproductive
+    offspring:
+    - id: MobBabySlimesGold
+      amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/gold.rsi
     layers:
-    - state: adult
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: adult
 
 - type: entity
-  name: oil xenobiology slime
-  id: XenobiologySlimeOil
-  parent: XenobiologySlimeBase
+  name: oil slime
+  id: MobAdultSlimesOil
+  parent: MobAdultSlimes
   components:
   - type: Butcherable
     spawned:
     - id: OilSlimeExtract
       amount: 1
-  - type: SlimeLifecycle
-    adultPrototype: XenobiologySlimeOil
-    babyPrototype: XenobiologySlimeOilBaby
+  - type: SlimeMutation
+  - type: Reproductive
+    offspring:
+    - id: MobBabySlimesOil
+      amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/oil.rsi
     layers:
-    - state: adult
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: adult
 
 - type: entity
-  name: black xenobiology slime
-  id: XenobiologySlimeBlack
-  parent: XenobiologySlimeBase
+  name: black slime
+  id: MobAdultSlimesBlack
+  parent: MobAdultSlimes
   components:
   - type: Butcherable
     spawned:
     - id: BlackSlimeExtract
       amount: 1
-  - type: SlimeLifecycle
-    adultPrototype: XenobiologySlimeBlack
-    babyPrototype: XenobiologySlimeBlackBaby
+  - type: SlimeMutation
+  - type: Reproductive
+    offspring:
+    - id: MobBabySlimesBlack
+      amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/black.rsi
     layers:
-    - state: adult
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: adult
 
 - type: entity
-  name: light pink xenobiology slime
-  id: XenobiologySlimeLightPink
-  parent: XenobiologySlimeBase
+  name: light pink slime
+  id: MobAdultSlimesLightPink
+  parent: MobAdultSlimes
   components:
   - type: Butcherable
     spawned:
     - id: LightPinkSlimeExtract
       amount: 1
-  - type: SlimeLifecycle
-    adultPrototype: XenobiologySlimeLightPink
-    babyPrototype: XenobiologySlimeLightPinkBaby
+  - type: SlimeMutation
+  - type: Reproductive
+    offspring:
+    - id: MobBabySlimesLightPink
+      amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/light_pink.rsi
     layers:
-    - state: adult
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: adult
 
 - type: entity
-  name: adamantine xenobiology slime
-  id: XenobiologySlimeAdamantine
-  parent: XenobiologySlimeBase
+  name: adamantine slime
+  id: MobAdultSlimesAdamantine
+  parent: MobAdultSlimes
   components:
   - type: Butcherable
     spawned:
     - id: AdamantineSlimeExtract
       amount: 1
-  - type: SlimeLifecycle
-    adultPrototype: XenobiologySlimeAdamantine
-    babyPrototype: XenobiologySlimeAdamantineBaby
+  - type: SlimeMutation
+  - type: Reproductive
+    offspring:
+    - id: MobBabySlimesAdamantine
+      amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/adamantine.rsi
     layers:
-    - state: adult
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: adult
 
 - type: entity
-  name: rainbow xenobiology slime
-  id: XenobiologySlimeRainbow
-  parent: XenobiologySlimeBase
+  name: rainbow slime
+  id: MobAdultSlimesRainbow
+  parent: MobAdultSlimes
   components:
   - type: Butcherable
     spawned:
     - id: RainbowSlimeExtract
       amount: 1
-  - type: SlimeLifecycle
-    adultPrototype: XenobiologySlimeRainbow
-    babyPrototype: XenobiologySlimeRainbowBaby
+  - type: SlimeMutation
   - type: PointLight
     radius: 1
     energy: 1
+  - type: Reproductive
+    offspring:
+    - id: MobBabySlimesRainbow
+      amount: 2
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/rainbow.rsi
     layers:
-    - state: adult
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: adult

@@ -19,8 +19,6 @@
       - !type:KeyExistsPrecondition
         key: IdleTime
 
-    # Growth and splitting are driven by satiation over time in SlimeLifecycleSystem.
-
   - tasks:
     - !type:HTNCompoundTask
       task: SlimeEatCompound

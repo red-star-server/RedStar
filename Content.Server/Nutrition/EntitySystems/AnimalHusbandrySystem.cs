@@ -214,7 +214,13 @@ public sealed partial class AnimalHusbandrySystem : EntitySystem
         var spawns = EntitySpawnCollection.GetSpawns(component.Offspring, _random);
         foreach (var spawn in spawns)
         {
-            var offspring = Spawn(spawn, spawnPosition.Value.Offset(_random.NextVector2(0.3f)));
+            // RS14-start
+            var resolve = new ResolveOffspringPrototypeEvent(spawn);
+            RaiseLocalEvent(uid, ref resolve);
+            var offspring = Spawn(resolve.Prototype, spawnPosition.Value.Offset(_random.NextVector2(0.3f)));
+            var spawned = new OffspringSpawnedEvent(offspring);
+            RaiseLocalEvent(uid, ref spawned);
+            // RS14-end
             if (component.MakeOffspringInfant)
             {
                 var infant = AddComp<InfantComponent>(offspring);

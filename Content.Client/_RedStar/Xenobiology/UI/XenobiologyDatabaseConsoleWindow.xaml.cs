@@ -40,7 +40,7 @@ public sealed partial class XenobiologyDatabaseConsoleWindow : FancyWindow
             ? state.Entries.OrderBy(entry => NameOf(entry.Sample), StringComparer.CurrentCultureIgnoreCase)
                 .ThenBy(entry => entry.Sample.Id, StringComparer.Ordinal).ToArray()
             : [];
-        if (_selectedSample is not { } selected || !_entries.Any(entry => entry.Sample == selected))
+        if (_selectedSample is not { } selected || _entries.All(entry => entry.Sample != selected))
         {
             if (_entries.Length > 0)
                 _selectedSample = _entries[0].Sample;

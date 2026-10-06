@@ -1,309 +1,311 @@
-# Baby forms inherit their lineage appearance and behavior from adult prototypes.
+- type: entity
+  id: MobBabySlimes
+  parent: BaseMobAdultSlimes
+  abstract: true
+  components:
+  - type: SlimeMutation
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesBlue
+    duration: 00:02:00
+  - type: HTN
+    rootTask:
+      task: SlimeMainCompound
+  - type: NpcFactionMember
+    factions:
+    - SimpleNeutral
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      60: Dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: baby
+      Dead:
+        Base: baby-dead
 
 - type: entity
-  id: XenobiologySlimeGrayBaby
-  name: baby gray xenobiology slime
-  parent: XenobiologySlimeGray
+  id: MobBabySlimesGray
+  name: baby gray slime
+  parent: MobBabySlimes
   components:
-  - type: SlimeLifecycle
-    stage: Baby
-  - type: Butcherable
-    spawned: []
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesGray
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/gray.rsi
     layers:
-    - state: baby
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: baby
 
 - type: entity
-  id: XenobiologySlimeOrangeBaby
-  name: baby orange xenobiology slime
-  parent: XenobiologySlimeOrange
+  id: MobBabySlimesOrange
+  name: baby orange slime
+  parent: MobBabySlimes
   components:
-  - type: SlimeLifecycle
-    stage: Baby
-  - type: Butcherable
-    spawned: []
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesOrange
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/orange.rsi
     layers:
-    - state: baby
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: baby
 
 - type: entity
-  id: XenobiologySlimePurpleBaby
-  name: baby purple xenobiology slime
-  parent: XenobiologySlimePurple
+  id: MobBabySlimesPurple
+  name: baby purple slime
+  parent: MobBabySlimes
   components:
-  - type: SlimeLifecycle
-    stage: Baby
-  - type: Butcherable
-    spawned: []
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesPurple
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/purple.rsi
     layers:
-    - state: baby
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: baby
 
 - type: entity
-  id: XenobiologySlimeBlueBaby
-  name: baby blue xenobiology slime
-  parent: XenobiologySlimeBlue
+  id: MobBabySlimesBlue
+  name: baby blue slime
+  parent: MobBabySlimes
   components:
-  - type: SlimeLifecycle
-    stage: Baby
-  - type: Butcherable
-    spawned: []
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesBlue
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/blue.rsi
     layers:
-    - state: baby
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: baby
 
 - type: entity
-  id: XenobiologySlimeMetalBaby
-  name: baby metal xenobiology slime
-  parent: XenobiologySlimeMetal
+  id: MobBabySlimesMetal
+  name: baby metal slime
+  parent: MobBabySlimes
   components:
-  - type: SlimeLifecycle
-    stage: Baby
-  - type: Butcherable
-    spawned: []
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesMetal
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/metal.rsi
     layers:
-    - state: baby
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: baby
 
 - type: entity
-  id: XenobiologySlimeYellowBaby
-  name: baby yellow xenobiology slime
-  parent: XenobiologySlimeYellow
+  id: MobBabySlimesYellow
+  name: baby yellow slime
+  parent: MobBabySlimes
   components:
-  - type: SlimeLifecycle
-    stage: Baby
-  - type: Butcherable
-    spawned: []
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesYellow
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/yellow.rsi
     layers:
-    - state: baby
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: baby
 
 - type: entity
-  id: XenobiologySlimeDarkPurpleBaby
-  name: baby darkpurple xenobiology slime
-  parent: XenobiologySlimeDarkPurple
+  id: MobBabySlimesDarkPurple
+  name: baby darkpurple slime
+  parent: MobBabySlimes
   components:
-  - type: SlimeLifecycle
-    stage: Baby
-  - type: Butcherable
-    spawned: []
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesDarkPurple
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/dark_purple.rsi
     layers:
-    - state: baby
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: baby
 
 - type: entity
-  id: XenobiologySlimeDarkBlueBaby
-  name: baby darkblue xenobiology slime
-  parent: XenobiologySlimeDarkBlue
+  id: MobBabySlimesDarkBlue
+  name: baby darkblue slime
+  parent: MobBabySlimes
   components:
-  - type: SlimeLifecycle
-    stage: Baby
-  - type: Butcherable
-    spawned: []
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesDarkBlue
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/dark_blue.rsi
     layers:
-    - state: baby
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: baby
 
 - type: entity
-  id: XenobiologySlimeSilverBaby
-  name: baby silver xenobiology slime
-  parent: XenobiologySlimeSilver
+  id: MobBabySlimesSilver
+  name: baby silver slime
+  parent: MobBabySlimes
   components:
-  - type: SlimeLifecycle
-    stage: Baby
-  - type: Butcherable
-    spawned: []
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesSilver
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/silver.rsi
     layers:
-    - state: baby
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: baby
 
 - type: entity
-  id: XenobiologySlimeBluespaceBaby
-  name: baby bluespace xenobiology slime
-  parent: XenobiologySlimeBluespace
+  id: MobBabySlimesBluespace
+  name: baby bluespace slime
+  parent: MobBabySlimes
   components:
-  - type: SlimeLifecycle
-    stage: Baby
-  - type: Butcherable
-    spawned: []
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesBluespace
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/bluespace.rsi
     layers:
-    - state: baby
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: baby
 
 - type: entity
-  id: XenobiologySlimeSepiaBaby
-  name: baby sepia xenobiology slime
-  parent: XenobiologySlimeSepia
+  id: MobBabySlimesSepia
+  name: baby sepia slime
+  parent: MobBabySlimes
   components:
-  - type: SlimeLifecycle
-    stage: Baby
-  - type: Butcherable
-    spawned: []
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesSepia
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/sepia.rsi
     layers:
-    - state: baby
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: baby
 
 - type: entity
-  id: XenobiologySlimeCeruleanBaby
-  name: baby cerulean xenobiology slime
-  parent: XenobiologySlimeCerulean
+  id: MobBabySlimesCerulean
+  name: baby cerulean slime
+  parent: MobBabySlimes
   components:
-  - type: SlimeLifecycle
-    stage: Baby
-  - type: Butcherable
-    spawned: []
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesCerulean
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/cerulean.rsi
     layers:
-    - state: baby
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: baby
 
 - type: entity
-  id: XenobiologySlimePyriteBaby
-  name: baby pyrite xenobiology slime
-  parent: XenobiologySlimePyrite
+  id: MobBabySlimesPyrite
+  name: baby pyrite slime
+  parent: MobBabySlimes
   components:
-  - type: SlimeLifecycle
-    stage: Baby
-  - type: Butcherable
-    spawned: []
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesPyrite
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/pyrite.rsi
     layers:
-    - state: baby
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: baby
 
 - type: entity
-  id: XenobiologySlimeRedBaby
-  name: baby red xenobiology slime
-  parent: XenobiologySlimeRed
+  id: MobBabySlimesRed
+  name: baby red slime
+  parent: MobBabySlimes
   components:
-  - type: SlimeLifecycle
-    stage: Baby
-  - type: Butcherable
-    spawned: []
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesRed
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/red.rsi
     layers:
-    - state: baby
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: baby
 
 - type: entity
-  id: XenobiologySlimeGreenBaby
-  name: baby green xenobiology slime
-  parent: XenobiologySlimeGreen
+  id: MobBabySlimesGreen
+  name: baby green slime
+  parent: MobBabySlimes
   components:
-  - type: SlimeLifecycle
-    stage: Baby
-  - type: Butcherable
-    spawned: []
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesGreen
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/green.rsi
     layers:
-    - state: baby
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: baby
 
 - type: entity
-  id: XenobiologySlimePinkBaby
-  name: baby pink xenobiology slime
-  parent: XenobiologySlimePink
+  id: MobBabySlimesPink
+  name: baby pink slime
+  parent: MobBabySlimes
   components:
-  - type: SlimeLifecycle
-    stage: Baby
-  - type: Butcherable
-    spawned: []
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesPink
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/pink.rsi
     layers:
-    - state: baby
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: baby
 
 - type: entity
-  id: XenobiologySlimeGoldBaby
-  name: baby gold xenobiology slime
-  parent: XenobiologySlimeGold
+  id: MobBabySlimesGold
+  name: baby gold slime
+  parent: MobBabySlimes
   components:
-  - type: SlimeLifecycle
-    stage: Baby
-  - type: Butcherable
-    spawned: []
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesGold
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/gold.rsi
     layers:
-    - state: baby
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: baby
 
 - type: entity
-  id: XenobiologySlimeOilBaby
-  name: baby oil xenobiology slime
-  parent: XenobiologySlimeOil
+  id: MobBabySlimesOil
+  name: baby oil slime
+  parent: MobBabySlimes
   components:
-  - type: SlimeLifecycle
-    stage: Baby
-  - type: Butcherable
-    spawned: []
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesOil
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/oil.rsi
     layers:
-    - state: baby
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: baby
 
 - type: entity
-  id: XenobiologySlimeBlackBaby
-  name: baby black xenobiology slime
-  parent: XenobiologySlimeBlack
+  id: MobBabySlimesBlack
+  name: baby black slime
+  parent: MobBabySlimes
   components:
-  - type: SlimeLifecycle
-    stage: Baby
-  - type: Butcherable
-    spawned: []
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesBlack
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/black.rsi
     layers:
-    - state: baby
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: baby
 
 - type: entity
-  id: XenobiologySlimeLightPinkBaby
-  name: baby lightpink xenobiology slime
-  parent: XenobiologySlimeLightPink
+  id: MobBabySlimesLightPink
+  name: baby lightpink slime
+  parent: MobBabySlimes
   components:
-  - type: SlimeLifecycle
-    stage: Baby
-  - type: Butcherable
-    spawned: []
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesLightPink
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/light_pink.rsi
     layers:
-    - state: baby
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: baby
 
 - type: entity
-  id: XenobiologySlimeAdamantineBaby
-  name: baby adamantine xenobiology slime
-  parent: XenobiologySlimeAdamantine
+  id: MobBabySlimesAdamantine
+  name: baby adamantine slime
+  parent: MobBabySlimes
   components:
-  - type: SlimeLifecycle
-    stage: Baby
-  - type: Butcherable
-    spawned: []
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesAdamantine
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/adamantine.rsi
     layers:
-    - state: baby
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: baby
 
 - type: entity
-  id: XenobiologySlimeRainbowBaby
-  name: baby rainbow xenobiology slime
-  parent: XenobiologySlimeRainbow
+  id: MobBabySlimesRainbow
+  name: baby rainbow slime
+  parent: MobBabySlimes
   components:
-  - type: SlimeLifecycle
-    stage: Baby
-  - type: Butcherable
-    spawned: []
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesRainbow
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/rainbow.rsi
     layers:
-    - state: baby
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: baby
