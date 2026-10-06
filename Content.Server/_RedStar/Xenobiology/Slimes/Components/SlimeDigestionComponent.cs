@@ -1,23 +1,17 @@
-using Content.Shared._RedStar.Xenobiology.Slimes;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Content.Shared.Whitelist;
-using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server._RedStar.Xenobiology.Slimes.Components;
 
 /// <summary>
-/// Holds one incapacitated victim and gradually converts damage into nutrition.
+/// Controls short-range slime feeding through a timed bite.
 /// </summary>
-[RegisterComponent, AutoGenerateComponentPause]
+[RegisterComponent]
 public sealed partial class SlimeDigestionComponent : Component
 {
-    public const string ContainerId = SlimeDigestionVisualsComponent.ContainerId;
-
-    public ContainerSlot Stomach = default!;
     public DoAfterId? ConsumeDoAfter;
 
     [DataField]
@@ -33,9 +27,6 @@ public sealed partial class SlimeDigestionComponent : Component
     public FixedPoint2 NutritionPerTick = 10;
 
     [DataField]
-    public TimeSpan DigestInterval = TimeSpan.FromSeconds(2);
-
-    [DataField]
     public TimeSpan ConsumeDelay = TimeSpan.FromSeconds(1);
 
     [DataField]
@@ -46,7 +37,4 @@ public sealed partial class SlimeDigestionComponent : Component
 
     [DataField]
     public FixedPoint2 FullyDigestedCellularDamage = 200;
-
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
-    public TimeSpan NextDigestTime;
 }

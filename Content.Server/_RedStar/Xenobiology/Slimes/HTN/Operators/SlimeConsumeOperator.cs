@@ -46,9 +46,6 @@ public sealed partial class SlimeConsumeOperator : HTNOperator
             return HTNOperatorStatus.Failed;
 
         var target = coordinates.EntityId;
-        if (digestion.Stomach.ContainedEntity == target)
-            return HTNOperatorStatus.Finished;
-
         return _doAfter.IsRunning(digestion.ConsumeDoAfter) || _digestion.TryConsume((owner, digestion), target)
             ? HTNOperatorStatus.Continuing
             : HTNOperatorStatus.Failed;

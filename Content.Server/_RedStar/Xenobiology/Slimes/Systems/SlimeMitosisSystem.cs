@@ -52,7 +52,7 @@ public sealed partial class SlimeMitosisSystem : EntitySystem
 
     private bool IsFeeding(EntityUid uid)
         => _digestionQuery.TryComp(uid, out var digestion) &&
-           (digestion.Stomach.ContainedEntity != null || digestion.ConsumeDoAfter != null);
+           digestion.ConsumeDoAfter != null;
 
     private void Divide(Entity<SlimeMitosisComponent> ent)
     {

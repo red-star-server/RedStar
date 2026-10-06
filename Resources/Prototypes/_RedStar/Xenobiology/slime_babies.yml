@@ -7,14 +7,9 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: baby
-    - map: ["enum.SlimeVisualLayers.Digesting"]
-      visible: false
   - type: SlimeDigestion
     preyWhitelist:
       sizes: [Tiny, Small]
-  - type: SlimeDigestionVisuals
-    interiorSize: 0.4, 0.35
-    interiorOffset: 0, -0.15
   - type: TimedMetamorphosis
     target: MobAdultSlimesBlue
     duration: 120s

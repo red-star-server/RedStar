@@ -12,8 +12,6 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: adult
-    - map: ["enum.SlimeVisualLayers.Digesting"]
-      visible: false
     # RS14-end
   - type: Fixtures
     fixtures:
@@ -119,7 +117,6 @@
   - type: Slime
   - type: SlimeDigestion
   - type: Appearance
-  - type: SlimeDigestionVisuals
   - type: TemperatureDamage
     coldDamage:
       types:
