@@ -9,7 +9,9 @@ public readonly record struct SlimeScanData(
     string TargetName,
     float Growth,
     float? Hunger,
-    float MutationChance,
-    EntProtoId[] PotentialMutations,
+    SlimeMutationScanEntry[] Mutations,
     EntProtoId? Prototype,
     SlimeStage Stage);
+
+[Serializable, NetSerializable]
+public readonly record struct SlimeMutationScanEntry(EntProtoId Target, float Progress);

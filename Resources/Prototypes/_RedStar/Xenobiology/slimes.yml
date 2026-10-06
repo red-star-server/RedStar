@@ -8,7 +8,6 @@
     - id: GraySlimeExtract
       amount: 1
   - type: SlimeMutation
-    mutationChance: 0.25
     mutations:
     - target: MobBabySlimesOrange
       weight: 1

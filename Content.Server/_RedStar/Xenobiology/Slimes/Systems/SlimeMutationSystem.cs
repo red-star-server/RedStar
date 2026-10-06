@@ -1,7 +1,5 @@
-using Content.Server._RedStar.AnimalHusbandry;
 using Content.Server._RedStar.Xenobiology.Slimes.Components;
 using Content.Shared.EntityConditions;
-using Content.Shared.FixedPoint;
 using Content.Shared.Nutrition.AnimalHusbandry;
 using Robust.Shared.Random;
 
@@ -17,14 +15,11 @@ public sealed partial class SlimeMutationSystem : EntitySystem
 
     private const float UpdateInterval = 1f;
     private float _elapsed;
-    private readonly Dictionary<EntityUid, FixedPoint2> _offspringChance = new();
 
-    public override void Initialize()
+    [SubscribeLocalEvent]
+    private void OnInit(Entity<SlimeMutationComponent> ent, ref ComponentInit args)
     {
-        base.Initialize();
-        SubscribeLocalEvent<SlimeMutationComponent, ResolveOffspringPrototypeEvent>(OnResolveOffspring);
-        SubscribeLocalEvent<SlimeMutationComponent, OffspringSpawnedEvent>(OnOffspringSpawned);
-        SubscribeLocalEvent<SlimeMutationComponent, TimedMetamorphosisEvent>(OnMetamorphosis);
+        ent.Comp.MutationProgress = new float[ent.Comp.Mutations.Count];
     }
 
     public override void Update(float frameTime)
@@ -45,7 +40,8 @@ public sealed partial class SlimeMutationSystem : EntitySystem
             for (var i = 0; i < mutation.Mutations.Count; i++)
             {
                 var route = mutation.Mutations[i];
-                if (route.ProgressRate <= 0 || route.RequiredProgress <= 0 ||
+                if (route.ProgressRate <= 0 || !float.IsFinite(route.ProgressRate) ||
+                    route.RequiredProgress <= 0 || !float.IsFinite(route.RequiredProgress) ||
                     mutation.MutationProgress[i] >= route.RequiredProgress ||
                     !_conditions.TryConditions(uid, route.Conditions))
                     continue;
@@ -56,34 +52,29 @@ public sealed partial class SlimeMutationSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnResolveOffspring(Entity<SlimeMutationComponent> ent, ref ResolveOffspringPrototypeEvent args)
     {
         var mutation = ent.Comp;
         if (mutation.MutationProgress.Length != mutation.Mutations.Count)
             mutation.MutationProgress = new float[mutation.Mutations.Count];
 
-        var chance = ClampMutationChance(ent, FixedPoint2.New(mutation.MutationChance.Float() +
-            _random.NextFloat(-mutation.MutationVariance, mutation.MutationVariance)));
-        _offspringChance[ent.Owner] = chance;
-        if (!_random.Prob(chance.Float()))
-            return;
-
         var total = 0f;
         for (var i = 0; i < mutation.Mutations.Count; i++)
         {
             var route = mutation.Mutations[i];
-            if (route.Weight > 0 && mutation.MutationProgress[i] >= route.RequiredProgress)
+            if (IsEligible(route, mutation.MutationProgress[i]))
                 total += route.Weight;
         }
 
-        if (total <= 0)
+        if (total <= 0 || !float.IsFinite(total))
             return;
 
         var roll = _random.NextFloat() * total;
         for (var i = 0; i < mutation.Mutations.Count; i++)
         {
             var route = mutation.Mutations[i];
-            if (route.Weight <= 0 || mutation.MutationProgress[i] < route.RequiredProgress)
+            if (!IsEligible(route, mutation.MutationProgress[i]))
                 continue;
 
             roll -= route.Weight;
@@ -95,38 +86,9 @@ public sealed partial class SlimeMutationSystem : EntitySystem
         }
     }
 
-    private void OnOffspringSpawned(Entity<SlimeMutationComponent> ent, ref OffspringSpawnedEvent args)
-    {
-        if (!_offspringChance.Remove(ent.Owner, out var chance) ||
-            !TryComp<SlimeMutationComponent>(args.Offspring, out var child))
-            return;
-
-        SetMutationChanceUnchecked((args.Offspring, child), chance);
-    }
-
-    private void OnMetamorphosis(Entity<SlimeMutationComponent> ent, ref TimedMetamorphosisEvent args)
-    {
-        if (TryComp<SlimeMutationComponent>(args.Result, out var adult))
-            SetMutationChance((args.Result, adult), ent.Comp.MutationChance);
-    }
-
-    public FixedPoint2 ClampMutationChance(Entity<SlimeMutationComponent> slime, FixedPoint2 chance)
-        => FixedPoint2.Clamp(chance,
-            FixedPoint2.New(slime.Comp.MinimumMutationChance),
-            FixedPoint2.New(slime.Comp.MaximumMutationChance));
-
-    public bool SetMutationChance(Entity<SlimeMutationComponent> slime, FixedPoint2 chance)
-        => SetMutationChanceUnchecked(slime, ClampMutationChance(slime, chance));
-
-    public bool SetMutationChanceUnchecked(Entity<SlimeMutationComponent> slime, FixedPoint2 chance)
-    {
-        if (chance == slime.Comp.MutationChance)
-            return false;
-
-        slime.Comp.MutationChance = chance;
-        return true;
-    }
-
-    public bool ModifyMutationChance(Entity<SlimeMutationComponent> slime, FixedPoint2 amount)
-        => SetMutationChance(slime, slime.Comp.MutationChance + amount);
+    private static bool IsEligible(SlimeMutationEntry route, float progress)
+        => route.Weight > 0 && float.IsFinite(route.Weight) &&
+           route.ProgressRate > 0 && float.IsFinite(route.ProgressRate) &&
+           route.RequiredProgress > 0 && float.IsFinite(route.RequiredProgress) &&
+           progress >= route.RequiredProgress;
 }

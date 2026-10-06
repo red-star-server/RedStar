@@ -28,19 +28,23 @@ public sealed partial class SlimeScanSystem : EntitySystem
         if (_satiationQuery.TryComp(uid, out var satiation))
             hunger = _satiation.GetValueOrNull((uid, satiation), SatiationSystem.Hunger);
 
-        var mutations = Array.Empty<EntProtoId>();
-        var chance = 0f;
+        var mutations = Array.Empty<SlimeMutationScanEntry>();
         if (TryComp<SlimeMutationComponent>(uid, out var mutation))
         {
-            chance = mutation.MutationChance.Float();
-            mutations = new EntProtoId[mutation.Mutations.Count];
+            mutations = new SlimeMutationScanEntry[mutation.Mutations.Count];
             for (var i = 0; i < mutations.Length; i++)
             {
-                var baby = mutation.Mutations[i].Target;
-                mutations[i] = ProtoMan.TryIndex<EntityPrototype>(baby, out var prototype) &&
+                var route = mutation.Mutations[i];
+                var baby = route.Target;
+                var target = ProtoMan.TryIndex<EntityPrototype>(baby, out var prototype) &&
                                prototype.TryComp<TimedMetamorphosisComponent>(out var metamorphosis, Factory)
                     ? metamorphosis.Target
                     : baby;
+                var progress = route.RequiredProgress > 0 && float.IsFinite(route.RequiredProgress) &&
+                               i < mutation.MutationProgress.Length && float.IsFinite(mutation.MutationProgress[i])
+                    ? Math.Clamp(mutation.MutationProgress[i] / route.RequiredProgress, 0f, 1f)
+                    : 0f;
+                mutations[i] = new SlimeMutationScanEntry(target, progress);
             }
         }
 
@@ -58,7 +62,7 @@ public sealed partial class SlimeScanSystem : EntitySystem
             growth = Math.Clamp(1f - (float) ((end - _timing.CurTime) / reproductive.GestationDuration), 0f, 1f);
         }
 
-        return new SlimeScanData(MetaData(uid).EntityName, growth, hunger, chance, mutations,
+        return new SlimeScanData(MetaData(uid).EntityName, growth, hunger, mutations,
             MetaData(uid).EntityPrototype?.ID, stage);
     }
 }

@@ -15,7 +15,6 @@
   - type: SlimeDigestionVisuals
     interiorSize: [0.4, 0.35]
     interiorOffset: [0, -0.15]
-  - type: SlimeMutation
   - type: TimedMetamorphosis
     target: MobAdultSlimesBlue
     duration: 120s

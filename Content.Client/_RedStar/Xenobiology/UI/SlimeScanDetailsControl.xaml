@@ -32,10 +32,6 @@
         <controls:StripeBack>
             <Label Text="{Loc 'slime-scan-card-genetics'}" StyleClasses="LabelHeading" Align="Center" />
         </controls:StripeBack>
-        <BoxContainer>
-            <Label Text="{Loc 'slime-scan-card-mutation-chance'}" HorizontalExpand="True" />
-            <Label Name="MutationChanceValue" StyleClasses="LabelHeading" />
-        </BoxContainer>
         <Label Text="{Loc 'slime-scan-card-potential-mutations'}" StyleClasses="LabelSubText" />
         <BoxContainer Name="MutationList" Orientation="Vertical" SeparationOverride="4" />
     </BoxContainer>

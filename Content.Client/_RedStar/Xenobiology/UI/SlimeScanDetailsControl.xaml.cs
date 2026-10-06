@@ -18,6 +18,7 @@ public sealed partial class SlimeScanDetailsControl : BoxContainer
     [Dependency] private IEntitySystemManager _systems = default!;
 
     private EntProtoId[]? _displayedMutations;
+    private readonly List<Label> _mutationProgressLabels = [];
     private static readonly Color Positive = Color.FromHex("#9FD6AD");
 
     public SlimeScanDetailsControl()
@@ -49,34 +50,43 @@ public sealed partial class SlimeScanDetailsControl : BoxContainer
         GrowthValue.Text = data.Growth.ToString("P0");
         GrowthBar.Value = Math.Clamp(data.Growth, 0f, 1f);
         HungerValue.Text = data.Hunger?.ToString("0.#") ?? Loc.GetString("slime-scanner-none");
-        MutationChanceValue.Text = data.MutationChance.ToString("P0");
 
-        // Keep controls stable during periodic scans; rebuild only when the mutation list changes.
-        if (_displayedMutations != null && _displayedMutations.SequenceEqual(data.PotentialMutations))
+        // Keep controls stable while readiness changes during periodic scans.
+        if (_displayedMutations != null && _displayedMutations.SequenceEqual(data.Mutations.Select(entry => entry.Target)))
+        {
+            for (var i = 0; i < data.Mutations.Length; i++)
+            {
+                _mutationProgressLabels[i].Text = data.Mutations[i].Progress.ToString("P0");
+            }
+
             return;
+        }
 
         MutationList.RemoveAllChildren();
-        _displayedMutations = data.PotentialMutations.ToArray();
-        if (data.PotentialMutations.Length == 0)
+        _mutationProgressLabels.Clear();
+        _displayedMutations = data.Mutations.Select(entry => entry.Target).ToArray();
+        if (data.Mutations.Length == 0)
         {
             MutationList.AddChild(new Label { Text = Loc.GetString("slime-scanner-none"), StyleClasses = { "LabelSubText" } });
             return;
         }
 
-        foreach (var id in data.PotentialMutations)
+        foreach (var mutation in data.Mutations)
         {
             var row = new BoxContainer { HorizontalExpand = true, SeparationOverride = 8 };
             row.AddChild(new TextureRect
             {
-                Texture = _systems.GetEntitySystem<SpriteSystem>().GetPrototypeIcon(id.Id).Default,
+                Texture = _systems.GetEntitySystem<SpriteSystem>().GetPrototypeIcon(mutation.Target.Id).Default,
                 SetSize = new Vector2(24, 24),
                 Stretch = TextureRect.StretchMode.KeepAspectCentered
             });
-            row.AddChild(new XenobiologyNameLabel { FullText = NameOf(id) });
+            row.AddChild(new XenobiologyNameLabel { FullText = NameOf(mutation.Target), HorizontalExpand = true });
+            var readiness = new Label { Text = mutation.Progress.ToString("P0") };
+            _mutationProgressLabels.Add(readiness);
+            row.AddChild(readiness);
             MutationList.AddChild(row);
         }
     }
 
     private string NameOf(EntProtoId id) => _prototypes.TryIndex(id, out var prototype) ? prototype.Name : id.Id;
-
 }
