@@ -52,8 +52,7 @@ public sealed partial class SlimeMutationSystem : EntitySystem
         }
     }
 
-    [SubscribeLocalEvent]
-    private void OnResolveOffspring(Entity<SlimeMutationComponent> ent, ref ResolveOffspringPrototypeEvent args)
+    public string ResolveOffspring(Entity<SlimeMutationComponent> ent, string prototype)
     {
         var mutation = ent.Comp;
         if (mutation.MutationProgress.Length != mutation.Mutations.Count)
@@ -68,7 +67,7 @@ public sealed partial class SlimeMutationSystem : EntitySystem
         }
 
         if (total <= 0 || !float.IsFinite(total))
-            return;
+            return prototype;
 
         var roll = _random.NextFloat() * total;
         for (var i = 0; i < mutation.Mutations.Count; i++)
@@ -81,9 +80,10 @@ public sealed partial class SlimeMutationSystem : EntitySystem
             if (roll >= 0)
                 continue;
 
-            args.Prototype = route.Target.Id;
-            return;
+            return route.Target.Id;
         }
+
+        return prototype;
     }
 
     private static bool IsEligible(SlimeMutationEntry route, float progress)

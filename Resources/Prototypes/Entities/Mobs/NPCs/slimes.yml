@@ -164,14 +164,13 @@
   # RS14-start
   - type: SlimeMutation
   - type: SlimeMitosis
-  - type: Reproductive
-    minBreedAttemptInterval: 90s
-    maxBreedAttemptInterval: 120s
-    breedChance: 0.5
-    capacity: 6
-    minHungerThreshold: Peckish
-    hungerPerBirth: 75
+    minInterval: 90s
+    maxInterval: 120s
     gestationDuration: 60s
+    hungerPerBirth: 75
+    offspringCount: 2
+  - type: Reproductive
+    capacity: 6
     makeOffspringInfant: false
     partnerWhitelist:
       components:
@@ -179,7 +178,6 @@
     offspring:
     - id: MobBabySlimesBlue
       amount: 2
-  - type: ReproductivePartner
   # RS14-end
 
 - type: entity
