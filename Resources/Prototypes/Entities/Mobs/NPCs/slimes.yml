@@ -169,15 +169,7 @@
     gestationDuration: 60s
     hungerPerBirth: 75
     offspringCount: 2
-  - type: Reproductive
-    capacity: 6
-    makeOffspringInfant: false
-    partnerWhitelist:
-      components:
-      - Slime
-    offspring:
-    - id: MobBabySlimesBlue
-      amount: 2
+    offspringPrototype: MobBabySlimesBlue
   # RS14-end
 
 - type: entity
@@ -254,10 +246,8 @@
   - type: SlimeMutation
     mutations:
     - target: MobBabySlimesBlack
-  - type: Reproductive
-    offspring:
-    - id: MobBabySlimesGreen
-      amount: 2
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesGreen
   # RS14-end
 
 - type: entity
@@ -295,10 +285,8 @@
     - target: MobBabySlimesMetal
     - target: MobBabySlimesBluespace
       weight: 2
-  - type: Reproductive
-    offspring:
-    - id: MobBabySlimesYellow
-      amount: 2
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesYellow
   # RS14-end
 
 - type: entity

@@ -1,3 +1,5 @@
+using Robust.Shared.Prototypes;
+
 namespace Content.Server._RedStar.Xenobiology.Slimes.Components;
 
 /// <summary>
@@ -6,6 +8,9 @@ namespace Content.Server._RedStar.Xenobiology.Slimes.Components;
 [RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class SlimeMitosisComponent : Component
 {
+    [DataField(required: true)]
+    public EntProtoId OffspringPrototype;
+
     [DataField]
     public TimeSpan MinInterval = TimeSpan.FromSeconds(90);
 

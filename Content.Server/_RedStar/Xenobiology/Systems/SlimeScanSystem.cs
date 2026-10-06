@@ -2,7 +2,6 @@ using Content.Server._RedStar.AnimalHusbandry;
 using Content.Server._RedStar.Xenobiology.Slimes.Components;
 using Content.Shared._RedStar.Xenobiology.Slimes;
 using Content.Shared._RedStar.Xenobiology.UI;
-using Content.Shared.Nutrition.AnimalHusbandry;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.Prototypes;
@@ -56,10 +55,10 @@ public sealed partial class SlimeScanSystem : EntitySystem
             if (maturing.Duration > TimeSpan.Zero)
                 growth = Math.Clamp(1f - (float) ((maturing.EndTime - _timing.CurTime) / maturing.Duration), 0f, 1f);
         }
-        else if (TryComp<ReproductiveComponent>(uid, out var reproductive) &&
-                 reproductive.GestationEndTime is { } end && reproductive.GestationDuration > TimeSpan.Zero)
+        else if (TryComp<SlimeMitosisComponent>(uid, out var mitosis) &&
+                 mitosis.GestationEnd is { } end && mitosis.GestationDuration > TimeSpan.Zero)
         {
-            growth = Math.Clamp(1f - (float) ((end - _timing.CurTime) / reproductive.GestationDuration), 0f, 1f);
+            growth = Math.Clamp(1f - (float) ((end - _timing.CurTime) / mitosis.GestationDuration), 0f, 1f);
         }
 
         return new SlimeScanData(MetaData(uid).EntityName, growth, hunger, mutations,

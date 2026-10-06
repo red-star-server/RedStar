@@ -23,7 +23,6 @@ public sealed partial class SlimeMitosisSystem : EntitySystem
 
     [Dependency] private EntityQuery<SlimeDigestionComponent> _digestionQuery;
     [Dependency] private EntityQuery<MobStateComponent> _mobQuery;
-    [Dependency] private EntityQuery<ReproductiveComponent> _reproductiveQuery;
     [Dependency] private EntityQuery<SlimeMutationComponent> _mutationQuery;
 
     [SubscribeLocalEvent]
@@ -43,8 +42,7 @@ public sealed partial class SlimeMitosisSystem : EntitySystem
                     Divide((uid, mitosis));
                 continue;
             }
-            if (_timing.CurTime < mitosis.NextAttempt || !_reproductiveQuery.TryComp(uid, out var reproductive) ||
-                reproductive.Gestating || HasComp<InfantComponent>(uid))
+            if (_timing.CurTime < mitosis.NextAttempt || HasComp<InfantComponent>(uid))
                 continue;
             if (TryComp<SatiationComponent>(uid, out var satiation))
                 _satiation.ModifyValue((uid, satiation), SatiationSystem.Hunger, -mitosis.HungerPerBirth);
@@ -58,9 +56,7 @@ public sealed partial class SlimeMitosisSystem : EntitySystem
 
     private void Divide(Entity<SlimeMitosisComponent> ent)
     {
-        if (!_reproductiveQuery.TryComp(ent.Owner, out var reproductive) ||
-            reproductive.Offspring.Count == 0 || !_mutationQuery.TryComp(ent.Owner, out var mutation) || IsFeeding(ent.Owner) ||
-            reproductive.Offspring[0].PrototypeId is not { } basePrototype ||
+        if (!_mutationQuery.TryComp(ent.Owner, out var mutation) || IsFeeding(ent.Owner) ||
             !_transform.TryGetMapOrGridCoordinates(ent.Owner, out var coordinates))
             return;
         for (var i = 0; i < ent.Comp.OffspringCount; i++)
@@ -68,7 +64,7 @@ public sealed partial class SlimeMitosisSystem : EntitySystem
             var childCoordinates = new EntityCoordinates(
                 coordinates.Value.EntityId,
                 coordinates.Value.Position + _random.NextVector2(0.3f));
-            Spawn(_mutation.ResolveOffspring((ent.Owner, mutation), basePrototype), childCoordinates);
+            Spawn(_mutation.ResolveOffspring((ent.Owner, mutation), ent.Comp.OffspringPrototype), childCoordinates);
         }
 
         QueueDel(ent.Owner);

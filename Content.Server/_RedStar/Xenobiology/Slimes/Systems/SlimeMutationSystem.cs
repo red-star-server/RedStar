@@ -1,6 +1,5 @@
 using Content.Server._RedStar.Xenobiology.Slimes.Components;
 using Content.Shared.EntityConditions;
-using Content.Shared.Nutrition.AnimalHusbandry;
 using Robust.Shared.Random;
 
 namespace Content.Server._RedStar.Xenobiology.Slimes.Systems;
@@ -31,8 +30,8 @@ public sealed partial class SlimeMutationSystem : EntitySystem
 
         var elapsed = _elapsed;
         _elapsed = 0f;
-        var query = EntityQueryEnumerator<SlimeMutationComponent, ReproductiveComponent>();
-        while (query.MoveNext(out var uid, out var mutation, out _))
+        var query = EntityQueryEnumerator<SlimeMutationComponent>();
+        while (query.MoveNext(out var uid, out var mutation))
         {
             if (mutation.MutationProgress.Length != mutation.Mutations.Count)
                 mutation.MutationProgress = new float[mutation.Mutations.Count];
