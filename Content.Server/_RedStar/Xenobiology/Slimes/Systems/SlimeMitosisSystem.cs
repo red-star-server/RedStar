@@ -22,7 +22,6 @@ public sealed partial class SlimeMitosisSystem : EntitySystem
     [Dependency] private SharedTransformSystem _transform = default!;
 
     [Dependency] private EntityQuery<MobStateComponent> _mobQuery;
-    [Dependency] private EntityQuery<SlimeMutationComponent> _mutationQuery;
 
     [SubscribeLocalEvent]
     private void OnMapInit(Entity<SlimeMitosisComponent> ent, ref MapInitEvent args)
@@ -52,15 +51,18 @@ public sealed partial class SlimeMitosisSystem : EntitySystem
 
     private void Divide(Entity<SlimeMitosisComponent> ent)
     {
-        if (!_mutationQuery.TryComp(ent.Owner, out var mutation) ||
-            !_transform.TryGetMapOrGridCoordinates(ent.Owner, out var coordinates))
+        if (!_transform.TryGetMapOrGridCoordinates(ent.Owner, out var coordinates))
             return;
         for (var i = 0; i < ent.Comp.OffspringCount; i++)
         {
             var childCoordinates = new EntityCoordinates(
                 coordinates.Value.EntityId,
                 coordinates.Value.Position + _random.NextVector2(0.3f));
-            Spawn(_mutation.ResolveOffspring((ent.Owner, mutation), ent.Comp.OffspringPrototype), childCoordinates);
+            var offspring = ent.Comp.OffspringPrototype;
+            if (TryComp<SlimeMutationComponent>(ent.Owner, out var mutation))
+                offspring = _mutation.ResolveOffspring((ent.Owner, mutation), offspring);
+
+            Spawn(offspring, childCoordinates);
         }
 
         QueueDel(ent.Owner);
