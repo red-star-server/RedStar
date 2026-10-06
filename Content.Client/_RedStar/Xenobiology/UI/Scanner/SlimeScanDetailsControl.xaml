@@ -1,6 +1,6 @@
-<ui:SlimeScanDetailsControl xmlns="https://spacestation14.io"
+<scanner:SlimeScanDetailsControl xmlns="https://spacestation14.io"
                             xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                            xmlns:ui="clr-namespace:Content.Client._RedStar.Xenobiology.UI"
+                            xmlns:scanner="clr-namespace:Content.Client._RedStar.Xenobiology.UI.Scanner"
                             Orientation="Vertical" HorizontalExpand="True">
     <RichTextLabel Name="Placeholder" StyleClasses="LabelSubText" Margin="4 12" />
     <BoxContainer Name="Card" Orientation="Vertical" SeparationOverride="10" Visible="False">
@@ -35,4 +35,4 @@
         <Label Text="{Loc 'slime-scan-card-potential-mutations'}" StyleClasses="LabelSubText" />
         <BoxContainer Name="MutationList" Orientation="Vertical" SeparationOverride="4" />
     </BoxContainer>
-</ui:SlimeScanDetailsControl>
+</scanner:SlimeScanDetailsControl>

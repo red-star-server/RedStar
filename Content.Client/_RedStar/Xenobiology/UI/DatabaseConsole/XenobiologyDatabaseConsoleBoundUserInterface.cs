@@ -1,7 +1,7 @@
 using Content.Shared._RedStar.Xenobiology.UI;
 using Robust.Client.UserInterface;
 
-namespace Content.Client._RedStar.Xenobiology.UI;
+namespace Content.Client._RedStar.Xenobiology.UI.DatabaseConsole;
 
 public sealed class XenobiologyDatabaseConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {

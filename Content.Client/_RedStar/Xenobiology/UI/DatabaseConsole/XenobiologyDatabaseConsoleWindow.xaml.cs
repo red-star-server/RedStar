@@ -9,7 +9,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client._RedStar.Xenobiology.UI;
+namespace Content.Client._RedStar.Xenobiology.UI.DatabaseConsole;
 
 [GenerateTypedNameReferences]
 public sealed partial class XenobiologyDatabaseConsoleWindow : FancyWindow

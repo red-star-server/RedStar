@@ -1,5 +1,5 @@
-<ui:XenobiologySampleAnalyzerWindow xmlns="https://spacestation14.io"
-                                    xmlns:ui="clr-namespace:Content.Client._RedStar.Xenobiology.UI"
+<sampleAnalyzer:XenobiologySampleAnalyzerWindow xmlns="https://spacestation14.io"
+                                                xmlns:sampleAnalyzer="clr-namespace:Content.Client._RedStar.Xenobiology.UI.SampleAnalyzer"
                                     Title="{Loc 'xenobiology-analyzer-title'}" MinSize="260 270" SetSize="300 300">
     <BoxContainer Orientation="Vertical" Margin="14" SeparationOverride="12">
         <PanelContainer StyleClasses="PanelDeep" HorizontalAlignment="Center" SetSize="96 96">
@@ -9,4 +9,4 @@
         <Label Name="StatusLabel" StyleClasses="LabelSubText" Align="Center" HorizontalExpand="True" />
         <Button Name="AnalyzeButton" Text="{Loc 'xenobiology-analyzer-analyze-verb'}" MinHeight="36" Disabled="True" HorizontalExpand="True" />
     </BoxContainer>
-</ui:XenobiologySampleAnalyzerWindow>
+</sampleAnalyzer:XenobiologySampleAnalyzerWindow>

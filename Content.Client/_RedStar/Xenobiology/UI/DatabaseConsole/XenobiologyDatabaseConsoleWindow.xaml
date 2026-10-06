@@ -1,5 +1,5 @@
-<ui:XenobiologyDatabaseConsoleWindow xmlns="https://spacestation14.io"
-                                      xmlns:ui="clr-namespace:Content.Client._RedStar.Xenobiology.UI"
+<databaseConsole:XenobiologyDatabaseConsoleWindow xmlns="https://spacestation14.io"
+                                                  xmlns:databaseConsole="clr-namespace:Content.Client._RedStar.Xenobiology.UI.DatabaseConsole"
                                       Title="{Loc 'xenobiology-database-title'}" MinSize="620 420" SetSize="700 500">
     <BoxContainer Orientation="Vertical" Margin="12" SeparationOverride="10">
         <Label Name="ConnectionStatus" StyleClasses="LabelSubText" />
@@ -22,4 +22,4 @@
             </PanelContainer>
         </BoxContainer>
     </BoxContainer>
-</ui:XenobiologyDatabaseConsoleWindow>
+</databaseConsole:XenobiologyDatabaseConsoleWindow>
