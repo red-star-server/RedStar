@@ -12,10 +12,8 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: adult
-    - sprite: _RedStar/Mobs/XenoSlimes/digesting.rsi
-      state: digesting_overlay
+    - map: ["enum.SlimeVisualLayers.Digesting"]
       visible: false
-      map: ["enum.SlimeVisualLayers.Digesting"]
     # RS14-end
   - type: Fixtures
     fixtures:
@@ -121,12 +119,7 @@
   - type: Slime
   - type: SlimeDigestion
   - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.SlimeVisuals.Digesting:
-        enum.SlimeVisualLayers.Digesting:
-          True: { visible: true }
-          False: { visible: false }
+  - type: SlimeDigestionVisuals
   - type: TemperatureDamage
     coldDamage:
       types:
@@ -170,6 +163,7 @@
     attackMemoryLength: 10
   # RS14-start
   - type: SlimeMutation
+  - type: SlimeMitosis
   - type: Reproductive
     minBreedAttemptInterval: 90s
     maxBreedAttemptInterval: 120s

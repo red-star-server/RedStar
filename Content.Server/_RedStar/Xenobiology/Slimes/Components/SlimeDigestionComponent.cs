@@ -1,7 +1,9 @@
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
+using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server._RedStar.Xenobiology.Slimes.Components;
@@ -18,7 +20,13 @@ public sealed partial class SlimeDigestionComponent : Component
     public DoAfterId? ConsumeDoAfter;
 
     [DataField]
-    public DamageSpecifier DigestDamage = new() { DamageDict = new() { ["Caustic"] = 5 } };
+    public EntProtoId ConsumeAction = "ActionSlimeConsume";
+
+    [DataField]
+    public EntityUid? ConsumeActionEntity;
+
+    [DataField]
+    public DamageSpecifier DigestDamage = new() { DamageDict = new() { ["Cellular"] = 2 } };
 
     [DataField]
     public FixedPoint2 NutritionPerTick = 10;
@@ -31,6 +39,12 @@ public sealed partial class SlimeDigestionComponent : Component
 
     [DataField]
     public float ConsumeRange = 1.5f;
+
+    [DataField]
+    public EntityWhitelist? PreyWhitelist;
+
+    [DataField]
+    public FixedPoint2 FullyDigestedCellularDamage = 200;
 
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan NextDigestTime;

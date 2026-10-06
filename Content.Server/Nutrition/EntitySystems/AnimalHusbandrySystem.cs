@@ -158,6 +158,13 @@ public sealed partial class AnimalHusbandrySystem : EntitySystem
         if (_mobState.IsIncapacitated(uid))
             return false;
 
+        // RS14-start
+        var attempt = new ReproductionAttemptEvent();
+        RaiseLocalEvent(uid, attempt);
+        if (attempt.Cancelled)
+            return false;
+        // RS14-end
+
         // If no satiations, no limit to reproduction
         if (!TryComp<SatiationComponent>(uid, out var satiation))
             return true;
@@ -204,6 +211,13 @@ public sealed partial class AnimalHusbandrySystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
+        // RS14-start
+        var attempt = new BirthAttemptEvent();
+        RaiseLocalEvent(uid, attempt);
+        if (attempt.Cancelled)
+            return;
+        // RS14-end
+
         // this is kinda wack but it's the only sound associated with most animals
         if (TryComp<InteractionPopupComponent>(uid, out var interactionPopup))
             _audio.PlayPvs(interactionPopup.InteractSuccessSound, uid);
@@ -212,6 +226,7 @@ public sealed partial class AnimalHusbandrySystem : EntitySystem
             return;
 
         var spawns = EntitySpawnCollection.GetSpawns(component.Offspring, _random);
+        var offspringSpawned = new List<EntityUid>(); // RS14
         foreach (var spawn in spawns)
         {
             // RS14-start
@@ -220,6 +235,7 @@ public sealed partial class AnimalHusbandrySystem : EntitySystem
             var offspring = Spawn(resolve.Prototype, spawnPosition.Value.Offset(_random.NextVector2(0.3f)));
             var spawned = new OffspringSpawnedEvent(offspring);
             RaiseLocalEvent(uid, ref spawned);
+            offspringSpawned.Add(offspring);
             // RS14-end
             if (component.MakeOffspringInfant)
             {
@@ -236,6 +252,10 @@ public sealed partial class AnimalHusbandrySystem : EntitySystem
 
         component.Gestating = false;
         component.GestationEndTime = null;
+        // RS14-start
+        var completed = new BirthCompletedEvent(offspringSpawned);
+        RaiseLocalEvent(uid, ref completed);
+        // RS14-end
     }
 
     public override void Update(float frameTime)

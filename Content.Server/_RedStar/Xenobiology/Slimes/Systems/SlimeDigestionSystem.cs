@@ -1,10 +1,13 @@
 using Content.Server._RedStar.Xenobiology.Slimes.Components;
+using Content.Server.NPC.Components;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Actions;
 using Content.Shared._RedStar.Xenobiology.Slimes;
 using Content.Shared._RedStar.Xenobiology.Slimes.Events;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
+using Content.Shared.Gibbing;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs;
@@ -12,6 +15,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Verbs;
+using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 
@@ -24,10 +28,13 @@ public sealed partial class SlimeDigestionSystem : EntitySystem
 {
     [Dependency] private SharedContainerSystem _containers = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private SharedInteractionSystem _interaction = default!;
     [Dependency] private ActionBlockerSystem _blocker = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private GibbingSystem _gibbing = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private SatiationSystem _satiation = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private EntityQuery<SlimeDigestionComponent> _digestionQuery;
@@ -35,6 +42,7 @@ public sealed partial class SlimeDigestionSystem : EntitySystem
     [Dependency] private EntityQuery<MobStateComponent> _mobQuery;
     [Dependency] private EntityQuery<InjurableComponent> _injurableQuery;
     [Dependency] private EntityQuery<DamageableComponent> _damageableQuery;
+    [Dependency] private EntityQuery<NPCMeleeCombatComponent> _meleeQuery;
 
     [SubscribeLocalEvent]
     private void OnInit(Entity<SlimeDigestionComponent> ent, ref ComponentInit args)
@@ -43,14 +51,26 @@ public sealed partial class SlimeDigestionSystem : EntitySystem
         UpdateAppearance(ent);
     }
 
-    public bool CanConsume(Entity<SlimeDigestionComponent?> ent, EntityUid target)
+    [SubscribeLocalEvent]
+    private void OnMapInit(Entity<SlimeDigestionComponent> ent, ref MapInitEvent args)
+        => _actions.AddAction(ent.Owner, ref ent.Comp.ConsumeActionEntity, ent.Comp.ConsumeAction);
+
+    [SubscribeLocalEvent]
+    private void OnConsumeAction(Entity<SlimeDigestionComponent> ent, ref SlimeConsumeActionEvent args)
+    {
+        if (!args.Handled)
+            args.Handled = TryConsume(ent.AsNullable(), args.Target);
+    }
+
+    public bool CanConsume(Entity<SlimeDigestionComponent?> ent, EntityUid target, bool checkRange = true)
     {
         return _digestionQuery.Resolve(ent, ref ent.Comp, false) &&
                !TerminatingOrDeleted(ent.Owner) && !TerminatingOrDeleted(target) &&
                _mobQuery.TryComp(ent.Owner, out var slimeState) && slimeState.CurrentState == MobState.Alive &&
-               IsConsumableVictim(target) && ent.Comp.Stomach.ContainedEntity == null &&
+               IsConsumableVictim(target) && _whitelist.IsWhitelistPass(ent.Comp.PreyWhitelist, target) &&
+               ent.Comp.Stomach.ContainedEntity == null &&
                _blocker.CanInteract(ent.Owner, target) &&
-               _interaction.InRangeUnobstructed(ent.Owner, target, range: ent.Comp.ConsumeRange) &&
+               (!checkRange || _interaction.InRangeUnobstructed(ent.Owner, target, range: ent.Comp.ConsumeRange)) &&
                _containers.CanInsert(target, ent.Comp.Stomach);
     }
 
@@ -107,7 +127,7 @@ public sealed partial class SlimeDigestionSystem : EntitySystem
     private void OnAttack(Entity<SlimeDigestionComponent> ent, ref AttackAttemptEvent args)
     {
         if (_doAfter.IsRunning(ent.Comp.ConsumeDoAfter) ||
-            args.Target is { } target && TryConsume(ent.AsNullable(), target))
+            _meleeQuery.HasComp(ent.Owner) && args.Target is { } target && CanConsume(ent.AsNullable(), target))
             args.Cancel();
     }
 
@@ -136,7 +156,8 @@ public sealed partial class SlimeDigestionSystem : EntitySystem
 
             if (!_mobQuery.TryComp(uid, out var slimeState) || slimeState.CurrentState != MobState.Alive ||
                 TerminatingOrDeleted(victim) || !_mobQuery.TryComp(victim, out var victimState) ||
-                victimState.CurrentState != MobState.Critical || !_damageableQuery.HasComp(victim))
+                victimState.CurrentState is not (MobState.Critical or MobState.Dead) || !_damageableQuery.HasComp(victim) ||
+                !_injurableQuery.TryComp(victim, out var injurable) || injurable.DamageContainer != "Biological")
             {
                 Release((uid, digestion));
                 continue;
@@ -150,8 +171,14 @@ public sealed partial class SlimeDigestionSystem : EntitySystem
                 actual.AnyPositive() && TryComp<SatiationComponent>(uid, out var satiation))
                 _satiation.ModifyValue((uid, satiation), SatiationSystem.Hunger, digestion.NutritionPerTick.Float());
 
-            if (victimState.CurrentState == MobState.Dead)
-                Release((uid, digestion));
+            if (victimState.CurrentState != MobState.Dead ||
+                _damageable.GetPositiveDamage((victim, _damageableQuery.Comp(victim))).DamageDict
+                    .GetValueOrDefault("Cellular") <
+                digestion.FullyDigestedCellularDamage)
+                continue;
+
+            Release((uid, digestion));
+            _gibbing.Gib(victim);
         }
     }
 
@@ -168,7 +195,10 @@ public sealed partial class SlimeDigestionSystem : EntitySystem
 
     [SubscribeLocalEvent]
     private void OnShutdown(Entity<SlimeDigestionComponent> ent, ref ComponentShutdown args)
-        => Release(ent);
+    {
+        Release(ent);
+        _actions.RemoveAction(ent.Comp.ConsumeActionEntity);
+    }
 
     [SubscribeLocalEvent]
     private void OnRemoved(Entity<SlimeDigestionComponent> ent, ref EntRemovedFromContainerMessage args)

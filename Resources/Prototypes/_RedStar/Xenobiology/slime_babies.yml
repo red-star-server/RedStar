@@ -7,10 +7,14 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: baby
-    - sprite: _RedStar/Mobs/XenoSlimes/digesting.rsi
-      state: digesting_overlay
+    - map: ["enum.SlimeVisualLayers.Digesting"]
       visible: false
-      map: ["enum.SlimeVisualLayers.Digesting"]
+  - type: SlimeDigestion
+    preyWhitelist:
+      sizes: [Tiny, Small]
+  - type: SlimeDigestionVisuals
+    interiorSize: [0.4, 0.35]
+    interiorOffset: [0, -0.15]
   - type: SlimeMutation
   - type: TimedMetamorphosis
     target: MobAdultSlimesBlue

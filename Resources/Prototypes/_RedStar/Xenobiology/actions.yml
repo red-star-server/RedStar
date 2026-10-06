@@ -1,0 +1,25 @@
+- type: entity
+  parent: BaseAction
+  id: ActionSlimeConsume
+  name: Consume
+  description: Swallow an incapacitated creature and slowly digest it. Moving interrupts swallowing.
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    priority: 1
+  - type: Sprite
+    sprite: Interface/Actions/devour.rsi
+    layers:
+    - state: icon
+      map: ["enum.ActionVisuals.Icon"]
+    - state: icon-on
+      map: ["enum.ActionVisuals.IconToggled"]
+      visible: false
+  - type: TargetAction
+    range: 1.5
+  - type: EntityTargetAction
+    canTargetSelf: false
+    whitelist:
+      components:
+      - MobState
+    event: !type:SlimeConsumeActionEvent
