@@ -52,7 +52,7 @@ public sealed partial class XenobiologyScannerSystem : EntitySystem
             return false;
 
         var scanEvent = new XenobiologyScanEvent(target, MetaData(target).EntityName, MetaData(target).EntityPrototype?.ID);
-        RaiseLocalEvent(target, ref scanEvent);
+        RaiseLocalEvent(target, scanEvent);
         var scan = scanEvent.Build();
 
         if (!_ui.HasUi(uiOwner, XenobiologyScannerUiKey.Key))
