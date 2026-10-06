@@ -6,8 +6,17 @@
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Machines/sample_analyzer.rsi
-    state: icon
     snapCardinals: true
+    layers:
+    - state: icon
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { state: display }
+          False: { state: icon }
   - type: ApcPowerReceiver
     powerLoad: 100
   - type: ExtensionCableReceiver
