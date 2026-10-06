@@ -42,7 +42,7 @@ public sealed partial class SlimeScanDetailsControl : BoxContainer
         if (scan is not { } data)
             return;
 
-        SpecimenName.FullText = data.TargetName;
+        SpecimenName.Text = data.TargetName;
         StageValue.Text = Loc.GetString(data.Stage == SlimeStage.Baby ? "slime-scan-stage-baby" : "slime-scan-stage-adult");
         PortraitIcon.Texture = data.Prototype is { } prototype
             ? _systems.GetEntitySystem<SpriteSystem>().GetPrototypeIcon(prototype.Id).Default
@@ -80,7 +80,7 @@ public sealed partial class SlimeScanDetailsControl : BoxContainer
                 SetSize = new Vector2(24, 24),
                 Stretch = TextureRect.StretchMode.KeepAspectCentered
             });
-            row.AddChild(new XenobiologyNameLabel { FullText = NameOf(mutation.Target), HorizontalExpand = true });
+            row.AddChild(new Label { Text = NameOf(mutation.Target), HorizontalExpand = true, ClipText = true });
             var readiness = new Label { Text = mutation.Progress.ToString("P0") };
             _mutationProgressLabels.Add(readiness);
             row.AddChild(readiness);
