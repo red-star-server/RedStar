@@ -6,7 +6,7 @@
   - type: SlimeMutation
   - type: TimedMetamorphosis
     target: MobAdultSlimesBlue
-    duration: 00:02:00
+    duration: 120s
   - type: HTN
     rootTask:
       task: SlimeMainCompound

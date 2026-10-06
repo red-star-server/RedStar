@@ -1,6 +1,6 @@
 - type: entity
   name: Gray Xenobiology Slime Spawner
-  id: SpawnGrayXenobiologySlime
+  id: SpawnMobAdultSlimesGray
   parent: MarkerBase
   components:
   - type: Sprite

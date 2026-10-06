@@ -13,7 +13,6 @@ public sealed partial class SlimeHusbandrySystem : EntitySystem
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private SatiationSystem _satiation = default!;
     [Dependency] private SharedContainerSystem _containers = default!;
-    [Dependency] private EntityQuery<SlimeHusbandryComponent> _husbandryQuery;
 
     private const float UpdateInterval = 1.5f;
     private float _updateAccumulator;
@@ -70,20 +69,6 @@ public sealed partial class SlimeHusbandrySystem : EntitySystem
         }
 
         return count;
-    }
-
-    public float GetGrowthMultiplier(Entity<SlimeHusbandryComponent?> ent)
-    {
-        if (!_husbandryQuery.Resolve(ent, ref ent.Comp, false) || ent.Comp is not { } husbandry)
-            return 1f;
-
-        return husbandry.Temperament switch
-        {
-            SlimeTemperament.Calm => husbandry.CalmGrowthMultiplier,
-            SlimeTemperament.Restless => husbandry.RestlessGrowthMultiplier,
-            SlimeTemperament.Aggressive => husbandry.AggressiveGrowthMultiplier,
-            _ => 1f
-        };
     }
 
     public SlimeCrowding GetCrowding(Entity<SlimeHusbandryComponent> ent)

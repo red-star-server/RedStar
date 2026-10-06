@@ -24,15 +24,6 @@ public sealed partial class SlimeHusbandryComponent : Component
     [DataField]
     public SatiationValue AggressiveBelow = "Starving";
 
-    [DataField]
-    public float CalmGrowthMultiplier = 1f;
-
-    [DataField]
-    public float RestlessGrowthMultiplier = 0.5f;
-
-    [DataField]
-    public float AggressiveGrowthMultiplier;
-
     public int NearbySlimes;
 
     public SlimeTemperament Temperament;

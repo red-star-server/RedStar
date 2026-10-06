@@ -1,2 +1,2 @@
-ent-SpawnGrayXenobiologySlime = спавнер серого слайма ксенобиологии
+ent-SpawnMobAdultSlimesGray = спавнер серого слайма ксенобиологии
     .desc = { ent-MarkerBase.desc }

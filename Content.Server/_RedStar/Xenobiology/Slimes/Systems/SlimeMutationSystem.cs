@@ -17,6 +17,7 @@ public sealed partial class SlimeMutationSystem : EntitySystem
 
     private const float UpdateInterval = 1f;
     private float _elapsed;
+    private readonly Dictionary<EntityUid, FixedPoint2> _offspringChance = new();
 
     public override void Initialize()
     {
@@ -61,7 +62,10 @@ public sealed partial class SlimeMutationSystem : EntitySystem
         if (mutation.MutationProgress.Length != mutation.Mutations.Count)
             mutation.MutationProgress = new float[mutation.Mutations.Count];
 
-        if (!_random.Prob(mutation.MutationChance.Float()))
+        var chance = ClampMutationChance(ent, FixedPoint2.New(mutation.MutationChance.Float() +
+            _random.NextFloat(-mutation.MutationVariance, mutation.MutationVariance)));
+        _offspringChance[ent.Owner] = chance;
+        if (!_random.Prob(chance.Float()))
             return;
 
         var total = 0f;
@@ -93,13 +97,11 @@ public sealed partial class SlimeMutationSystem : EntitySystem
 
     private void OnOffspringSpawned(Entity<SlimeMutationComponent> ent, ref OffspringSpawnedEvent args)
     {
-        if (!TryComp<SlimeMutationComponent>(args.Offspring, out var child))
+        if (!_offspringChance.Remove(ent.Owner, out var chance) ||
+            !TryComp<SlimeMutationComponent>(args.Offspring, out var child))
             return;
 
-        var chance = ent.Comp.MutationChance.Float() +
-                     _random.NextFloat(-ent.Comp.MutationVariance, ent.Comp.MutationVariance);
-        SetMutationChanceUnchecked((args.Offspring, child),
-            ClampMutationChance(ent, FixedPoint2.New(chance)));
+        SetMutationChanceUnchecked((args.Offspring, child), chance);
     }
 
     private void OnMetamorphosis(Entity<SlimeMutationComponent> ent, ref TimedMetamorphosisEvent args)

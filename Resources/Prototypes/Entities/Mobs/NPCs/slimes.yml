@@ -111,7 +111,7 @@
   - type: Satiation
     satiations:
       Hunger:
-        prototype: XenobiologySlimeHunger
+        prototype: SlimeHunger # RS14
   - type: SlimeHusbandry
   - type: Slime
     damageOnEat:
@@ -162,13 +162,13 @@
   # RS14-start
   - type: SlimeMutation
   - type: Reproductive
-    minBreedAttemptInterval: 00:01:30
-    maxBreedAttemptInterval: 00:02:00
+    minBreedAttemptInterval: 90s
+    maxBreedAttemptInterval: 120s
     breedChance: 0.5
     capacity: 6
     minHungerThreshold: Peckish
     hungerPerBirth: 75
-    gestationDuration: 00:01:00
+    gestationDuration: 60s
     makeOffspringInfant: false
     partnerWhitelist:
       components:

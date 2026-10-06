@@ -6,7 +6,7 @@
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Tables/slime_optable.rsi
-    state: operating_table
+    state: table-slime
     noRot: true
   - type: Icon
     sprite: _RedStar/Structures/Furniture/Tables/slime_optable.rsi
