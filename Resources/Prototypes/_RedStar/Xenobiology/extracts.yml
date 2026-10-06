@@ -6,7 +6,6 @@
   - type: Item
     size: Tiny
   - type: XenobiologySample
-  - type: SlimeExtract
 
 - type: entity
   parent: BaseSlimeExtract
