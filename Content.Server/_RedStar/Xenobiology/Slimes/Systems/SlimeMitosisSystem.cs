@@ -6,7 +6,6 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
-using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
 namespace Content.Server._RedStar.Xenobiology.Slimes.Systems;
