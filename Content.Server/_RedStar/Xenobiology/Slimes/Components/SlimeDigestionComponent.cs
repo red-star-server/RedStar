@@ -1,3 +1,4 @@
+using Content.Shared._RedStar.Xenobiology.Slimes;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
@@ -14,7 +15,7 @@ namespace Content.Server._RedStar.Xenobiology.Slimes.Components;
 [RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class SlimeDigestionComponent : Component
 {
-    public const string ContainerId = "slime-stomach";
+    public const string ContainerId = SlimeDigestionVisualsComponent.ContainerId;
 
     public ContainerSlot Stomach = default!;
     public DoAfterId? ConsumeDoAfter;

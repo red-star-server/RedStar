@@ -67,7 +67,7 @@ public sealed partial class SlimeDigestionSystem : EntitySystem
         return _digestionQuery.Resolve(ent, ref ent.Comp, false) &&
                !TerminatingOrDeleted(ent.Owner) && !TerminatingOrDeleted(target) &&
                _mobQuery.TryComp(ent.Owner, out var slimeState) && slimeState.CurrentState == MobState.Alive &&
-               IsConsumableVictim(target) && _whitelist.IsWhitelistPass(ent.Comp.PreyWhitelist, target) &&
+               IsConsumableVictim(target) && _whitelist.IsWhitelistPassOrNull(ent.Comp.PreyWhitelist, target) &&
                ent.Comp.Stomach.ContainedEntity == null &&
                _blocker.CanInteract(ent.Owner, target) &&
                (!checkRange || _interaction.InRangeUnobstructed(ent.Owner, target, range: ent.Comp.ConsumeRange)) &&
@@ -77,7 +77,7 @@ public sealed partial class SlimeDigestionSystem : EntitySystem
     public bool IsConsumableVictim(EntityUid target)
     {
         return !TerminatingOrDeleted(target) &&
-               _mobQuery.TryComp(target, out var state) && state.CurrentState == MobState.Critical &&
+               _mobQuery.TryComp(target, out var state) && state.CurrentState is MobState.Critical or MobState.Dead &&
                !_slimeQuery.HasComp(target) && _damageableQuery.HasComp(target) &&
                _injurableQuery.TryComp(target, out var injurable) && injurable.DamageContainer == "Biological" &&
                !_containers.IsEntityInContainer(target);
@@ -119,6 +119,14 @@ public sealed partial class SlimeDigestionSystem : EntitySystem
             return;
 
         args.Handled = true;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnInserted(Entity<SlimeDigestionComponent> ent, ref EntInsertedIntoContainerMessage args)
+    {
+        if (args.Container != ent.Comp.Stomach)
+            return;
+
         ent.Comp.NextDigestTime = _timing.CurTime + ent.Comp.DigestInterval;
         UpdateAppearance(ent);
     }
@@ -172,7 +180,9 @@ public sealed partial class SlimeDigestionSystem : EntitySystem
                 _satiation.ModifyValue((uid, satiation), SatiationSystem.Hunger, digestion.NutritionPerTick.Float());
 
             if (victimState.CurrentState != MobState.Dead ||
-                _damageable.GetPositiveDamage((victim, _damageableQuery.Comp(victim))).DamageDict
+                digestion.Stomach.ContainedEntity != victim || TerminatingOrDeleted(victim) ||
+                !_damageableQuery.TryComp(victim, out var damageable) ||
+                _damageable.GetPositiveDamage((victim, damageable)).DamageDict
                     .GetValueOrDefault("Cellular") <
                 digestion.FullyDigestedCellularDamage)
                 continue;

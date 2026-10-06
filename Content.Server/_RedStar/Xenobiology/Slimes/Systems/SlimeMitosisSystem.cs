@@ -1,5 +1,7 @@
 using Content.Server._RedStar.Xenobiology.Slimes.Components;
 using Content.Shared.DoAfter;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Nutrition.AnimalHusbandry;
 
 namespace Content.Server._RedStar.Xenobiology.Slimes.Systems;
@@ -11,6 +13,7 @@ public sealed partial class SlimeMitosisSystem : EntitySystem
 {
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private EntityQuery<SlimeDigestionComponent> _digestionQuery;
+    [Dependency] private EntityQuery<MobStateComponent> _mobQuery;
 
     private bool IsFeeding(EntityUid uid)
     {
@@ -21,14 +24,14 @@ public sealed partial class SlimeMitosisSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnReproductionAttempt(Entity<SlimeMitosisComponent> ent, ref ReproductionAttemptEvent args)
     {
-        if (IsFeeding(ent.Owner))
+        if (IsFeeding(ent.Owner) || !_mobQuery.TryComp(ent.Owner, out var state) || state.CurrentState != MobState.Alive)
             args.Cancel();
     }
 
     [SubscribeLocalEvent]
     private void OnBirthAttempt(Entity<SlimeMitosisComponent> ent, ref BirthAttemptEvent args)
     {
-        if (IsFeeding(ent.Owner))
+        if (IsFeeding(ent.Owner) || !_mobQuery.TryComp(ent.Owner, out var state) || state.CurrentState != MobState.Alive)
             args.Cancel();
     }
 

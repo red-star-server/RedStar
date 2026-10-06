@@ -10,5 +10,5 @@
     noRot: true
   - type: Icon
     sprite: _RedStar/Structures/Furniture/Tables/slime_optable.rsi
-    state: table_slime
+    state: table-slime
   - type: AmbientMusicMarkerMedical

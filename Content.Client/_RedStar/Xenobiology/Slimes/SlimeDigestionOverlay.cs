@@ -13,6 +13,8 @@ namespace Content.Client._RedStar.Xenobiology.Slimes;
 public sealed partial class SlimeDigestionOverlay : Overlay
 {
     [Dependency] private IClyde _clyde = default!;
+    [Dependency] private ILogManager _logManager = default!;
+    private readonly ISawmill _log;
     private readonly IEntityManager _entities;
     private readonly SpriteSystem _sprites;
     private readonly SharedContainerSystem _containers;
@@ -25,6 +27,7 @@ public sealed partial class SlimeDigestionOverlay : Overlay
     public SlimeDigestionOverlay(IEntityManager entities)
     {
         IoCManager.InjectDependencies(this);
+        _log = _logManager.GetSawmill("slime-digestion");
         _entities = entities;
         _sprites = entities.System<SpriteSystem>();
         _containers = entities.System<SharedContainerSystem>();
@@ -51,11 +54,11 @@ public sealed partial class SlimeDigestionOverlay : Overlay
             {
                 _sprites.LayerSetVisible((uid, slimeSprite), layer, false);
                 if (_unsupported.Add(uid))
-                    Logger.Error($"Slime digestion cannot display {victim}: the contained entity has no SpriteComponent.");
+                    _log.Error($"Slime digestion cannot display {victim}: the contained entity has no SpriteComponent.");
                 continue;
             }
 
-            var bounds = _sprites.GetLocalBounds((victim, sprite));
+            var bounds = new Box2Rotated(_sprites.GetLocalBounds((victim, sprite)), sprite.Rotation).CalcBoundingBox();
             if (bounds.Width <= 0 || bounds.Height <= 0)
                 continue;
 
@@ -70,7 +73,7 @@ public sealed partial class SlimeDigestionOverlay : Overlay
 
             var scale = MathF.Min(visuals.InteriorSize.X / bounds.Width, visuals.InteriorSize.Y / bounds.Height);
             var center = bounds.Center + sprite.Offset;
-            var position = new Vector2(16) - center * scale * EyeManager.PixelsPerMeter;
+            var position = new Vector2(16) + new Vector2(-center.X, center.Y) * scale * EyeManager.PixelsPerMeter;
             var handle = args.RenderHandle;
             handle.RenderInRenderTarget(target, () =>
                 handle.DrawEntity(victim, position, new Vector2(scale), Angle.Zero, Angle.Zero,
