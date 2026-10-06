@@ -156,7 +156,7 @@
     - SimpleNeutral
   - type: HTN
     rootTask:
-      task: SimpleHostileCompound
+      task: SlimeMainCompound # RS14
   - type: NPCRetaliation
     attackMemoryLength: 10
   # RS14-start
@@ -177,9 +177,6 @@
     - id: MobBabySlimesBlue
       amount: 2
   - type: ReproductivePartner
-  - type: HTN
-    rootTask:
-      task: SlimeMainCompound
   # RS14-end
 
 - type: entity
