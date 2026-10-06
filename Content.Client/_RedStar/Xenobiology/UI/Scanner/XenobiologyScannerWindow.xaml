@@ -1,0 +1,44 @@
+<scanner:XenobiologyScannerWindow xmlns="https://spacestation14.io"
+                            xmlns:scanner="clr-namespace:Content.Client._RedStar.Xenobiology.UI.Scanner"
+                            xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                       MinSize="360 420" SetSize="420 540">
+    <PanelContainer StyleClasses="PanelDeep" Margin="12">
+        <ScrollContainer HScrollEnabled="False" Margin="14">
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="10">
+                <RichTextLabel Name="Placeholder" StyleClasses="LabelSubText" Margin="4 12" />
+                <BoxContainer Name="Card" Orientation="Vertical" SeparationOverride="10" Visible="False">
+                    <BoxContainer SeparationOverride="12">
+                        <PanelContainer Name="PortraitPanel" StyleClasses="PanelDeep" Visible="False">
+                            <Control SetSize="88 88">
+                                <SpriteView Name="Portrait" SetSize="72 72" Margin="8" Stretch="Fill" />
+                                <TextureRect Name="PortraitIcon" SetSize="72 72" Margin="8" Stretch="KeepAspectCentered" Visible="False" />
+                            </Control>
+                        </PanelContainer>
+                        <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalAlignment="Center" SeparationOverride="4">
+                            <Label Text="{Loc 'slime-scan-card-specimen'}" StyleClasses="LabelSubText" />
+                            <Label Name="SpecimenName" StyleClasses="LabelHeading" ClipText="True" />
+                            <Label Name="StageValue" StyleClasses="LabelSubText" />
+                        </BoxContainer>
+                    </BoxContainer>
+                    <controls:StripeBack>
+                        <Label Text="{Loc 'slime-scan-card-development'}" StyleClasses="LabelHeading" Align="Center" />
+                    </controls:StripeBack>
+                    <BoxContainer>
+                        <Label Text="{Loc 'slime-scan-card-growth'}" HorizontalExpand="True" />
+                        <Label Name="GrowthValue" StyleClasses="LabelHeading" />
+                    </BoxContainer>
+                    <ProgressBar Name="GrowthBar" MinValue="0" MaxValue="1" MinHeight="16" HorizontalExpand="True" />
+                    <BoxContainer Name="HungerSection">
+                        <Label Text="{Loc 'slime-scan-card-hunger'}" HorizontalExpand="True" />
+                        <Label Name="HungerValue" />
+                    </BoxContainer>
+                    <controls:StripeBack>
+                        <Label Text="{Loc 'slime-scan-card-genetics'}" StyleClasses="LabelHeading" Align="Center" />
+                    </controls:StripeBack>
+                    <Label Text="{Loc 'slime-scan-card-potential-mutations'}" StyleClasses="LabelSubText" />
+                    <BoxContainer Name="MutationList" Orientation="Vertical" SeparationOverride="4" />
+                </BoxContainer>
+            </BoxContainer>
+        </ScrollContainer>
+    </PanelContainer>
+</scanner:XenobiologyScannerWindow>

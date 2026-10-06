@@ -1,2 +1,2 @@
-ent-HandheldSlimeScanner = ручной сканер слаймов
+ent-HandheldSlimeScanner = ручной сканер ксенобиологии
     .desc = Ручной сканер для сбора информации о слаймах.

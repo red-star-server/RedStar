@@ -3,15 +3,15 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client._RedStar.Xenobiology.UI.Scanner;
 
-public sealed class SlimeScannerBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
+public sealed class XenobiologyScannerBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
-    private SlimeScannerWindow? _window;
-    private SlimeScannerScannedMessage? _pending;
+    private XenobiologyScannerWindow? _window;
+    private XenobiologyScannerScannedMessage? _pending;
 
     protected override void Open()
     {
         base.Open();
-        _window = this.CreateWindow<SlimeScannerWindow>();
+        _window = this.CreateWindow<XenobiologyScannerWindow>();
         if (_pending is not { } message)
             return;
 
@@ -21,7 +21,7 @@ public sealed class SlimeScannerBoundUserInterface(EntityUid owner, Enum uiKey) 
 
     protected override void ReceiveMessage(BoundUserInterfaceMessage message)
     {
-        if (message is not SlimeScannerScannedMessage scanned)
+        if (message is not XenobiologyScannerScannedMessage scanned)
             return;
 
         if (_window is { } window)

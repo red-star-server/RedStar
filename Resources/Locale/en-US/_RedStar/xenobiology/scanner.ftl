@@ -1,5 +1,5 @@
 slime-scanner-none = None
-slime-scanner-title = Slime scanner
+slime-scanner-title = Xenobiology scanner
 slime-scanner-target = Target: {$name}
 slime-scanner-growth = Growth: {$value}
 slime-scanner-hunger = Hunger: {$value}

@@ -115,6 +115,7 @@
       Hunger:
         prototype: SlimeHunger # RS14
   - type: Slime
+  - type: XenobiologyScannable
   - type: SlimeDigestion
   - type: Appearance
   - type: TemperatureDamage

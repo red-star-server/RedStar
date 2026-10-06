@@ -4,4 +4,4 @@ using Robust.Shared.Serialization;
 namespace Content.Shared._RedStar.Xenobiology.Events;
 
 [Serializable, NetSerializable]
-public sealed partial class SlimeScannerDoAfterEvent : SimpleDoAfterEvent;
+public sealed partial class XenobiologyScannerDoAfterEvent : SimpleDoAfterEvent;
