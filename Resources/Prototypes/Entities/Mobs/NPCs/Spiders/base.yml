@@ -97,6 +97,15 @@
         Heat: -0.03
         Cold: -0.03
         Shock: -0.03
+  # RS14-start
+  - type: CellTraitSource
+    traits:
+    - Regeneration
+    - NightVision
+    - NoSlip
+    - Venomous
+    - WebSpinning
+  # RS14-end
 
 - type: entity
   parent: [SolutionWeapon, SolutionTiny]

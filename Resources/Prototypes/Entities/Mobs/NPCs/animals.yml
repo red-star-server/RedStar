@@ -276,6 +276,10 @@
     insufficientSatiationPopup: action-popup-lay-egg-too-hungry
     userPopup: action-popup-lay-egg-user
     othersPopup: action-popup-lay-egg-others
+  # RS14-start
+  - type: CellTraitSource
+    traits: [ EggLayer ]
+  # RS14-end
   - type: SatiationProduction
     delay: 60
     delayMax: 120
@@ -745,6 +749,10 @@
     insufficientSatiationPopup: action-popup-lay-egg-too-hungry
     userPopup: action-popup-lay-egg-user
     othersPopup: action-popup-lay-egg-others
+  # RS14-start
+  - type: CellTraitSource
+    traits: [ EggLayer ]
+  # RS14-end
   - type: SatiationProduction
     delay: 60
     delayMax: 120
@@ -945,6 +953,10 @@
     verbText: udder-system-verb-milk
     emptyMessage: udder-system-dry
     successMessage: udder-system-success
+  # RS14-start
+  - type: CellTraitSource
+    traits: [ Lactation ]
+  # RS14-end
   - type: ToolRefinable
     refineResult:
     - id: FoodMeat
@@ -1118,6 +1130,10 @@
     verbText: udder-system-verb-milk
     emptyMessage: udder-system-dry
     successMessage: udder-system-success
+  # RS14-start
+  - type: CellTraitSource
+    traits: [ Lactation, Bleating ]
+  # RS14-end
   - type: Edible
     destroyOnEmpty: false
     solution: wool
@@ -1262,6 +1278,10 @@
     verbText: udder-system-verb-milk
     emptyMessage: udder-system-dry
     successMessage: udder-system-success
+  # RS14-start
+  - type: CellTraitSource
+    traits: [ Lactation, Bleating ]
+  # RS14-end
   - type: Shearable
     targetSolutionName: wool
     shearedProductId: MaterialCotton1 # Cotton is spawned because there is no wool item.
@@ -2235,6 +2255,10 @@
   - type: RadiationSource
     intensity: 0.5
     slope: 0.3
+  # RS14-start
+  - type: CellTraitSource
+    traits: [ NightVision, Radiation ]
+  # RS14-end
   - type: Bloodstream
     bloodReferenceSolution:
       reagents:
@@ -2484,6 +2508,10 @@
   - type: RadioVocalizer
   - type: ParrotListener
   - type: ParrotMemory
+  # RS14-start
+  - type: CellTraitSource
+    traits: [ ParrotSpeech ]
+  # RS14-end
   - type: Inventory
     templateId: parrot
     speciesId: parrot
@@ -2910,6 +2938,10 @@
     rootTask:
       task: RuminantHostileCompound
   - type: MessyDrinker
+  # RS14-start
+  - type: CellTraitSource
+    traits: [ MessyDrinker ]
+  # RS14-end
   - type: Tag
     tags:
     - VimPilot
@@ -2978,6 +3010,10 @@
   - type: MobPrice
     price: 200
   - type: MessyDrinker
+  # RS14-start
+  - type: CellTraitSource
+    traits: [ MessyDrinker ]
+  # RS14-end
   # TODO: Fix the sprite offset
   #- type: CreamPied
   #  sprite:
@@ -3754,6 +3790,10 @@
     reformTime: 10
     popupText: diona-reform-attempt
     reformPrototype: MobDionaReformed
+  # RS14-start
+  - type: CellTraitSource
+    traits: [ Reform ]
+  # RS14-end
   - type: TTS # Corvax-TTS
     #voice: Omu
     voice: Baya

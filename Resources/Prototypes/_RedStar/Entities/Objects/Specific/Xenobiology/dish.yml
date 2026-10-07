@@ -1,0 +1,160 @@
+- type: entity
+  parent: BaseItem
+  id: PetriDish
+  name: petri dish
+  description: This makes you feel well-cultured.
+  components:
+  - type: Tag
+    tags:
+    - Dish
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.CellContainerVisuals.DishVisibility:
+        enum.CellContainerVisuals.DishLayer:
+          True:
+            visible: true
+          False:
+            visible: false
+  - type: Sprite
+    sprite: _RedStar/Objects/Specific/Xenobiology/petri_dish.rsi
+    layers:
+    - state: icon-back
+    - map: [ "enum.CellContainerVisuals.DishLayer" ]
+      state: cells
+      visible: false
+    - state: icon
+  - type: Item
+    sprite: _RedStar/Objects/Specific/Xenobiology/petri_dish.rsi
+  - type: CellContainer
+    allowCollection: false
+    toolsTransferWhitelist:
+      components:
+      - CellCollector
+  - type: CellContainerVisuals
+
+- type: entity
+  parent: PetriDish
+  id: PetriDishMurine
+  suffix: Murine
+  components:
+  - type: CellGeneration
+    cells:
+    - Murine
+
+- type: entity
+  parent: PetriDish
+  id: PetriDishGalliform
+  suffix: Galliform
+  components:
+  - type: CellGeneration
+    cells:
+    - Galliform
+
+- type: entity
+  parent: PetriDish
+  id: PetriDishBovine
+  suffix: Bovine
+  components:
+  - type: CellGeneration
+    cells:
+    - Bovine
+
+- type: entity
+  parent: PetriDish
+  id: PetriDishFeliform
+  suffix: Feliform
+  components:
+  - type: CellGeneration
+    cells:
+    - Feliform
+
+- type: entity
+  parent: PetriDish
+  id: PetriDishCanid
+  suffix: Canid
+  components:
+  - type: CellGeneration
+    cells:
+    - Canid
+
+- type: entity
+  parent: PetriDish
+  id: PetriDishUrsine
+  suffix: Ursine
+  components:
+  - type: CellGeneration
+    cells:
+    - Ursine
+
+- type: entity
+  parent: PetriDish
+  id: PetriDishCyprinid
+  suffix: Cyprinid
+  components:
+  - type: CellGeneration
+    cells:
+    - Cyprinid
+
+- type: entity
+  parent: PetriDish
+  id: PetriDishCartilaginousCyprinid
+  suffix: Cartilaginous Cyprinid
+  components:
+  - type: CellGeneration
+    cells:
+    - CartilaginousCyprinid
+
+- type: entity
+  parent: PetriDish
+  id: PetriDishOphidic
+  suffix: Ophidic
+  components:
+  - type: CellGeneration
+    cells:
+    - Ophidic
+
+- type: entity
+  parent: PetriDish
+  id: PetriDishAnura
+  suffix: Anura
+  components:
+  - type: CellGeneration
+    cells:
+    - Anura
+
+- type: entity
+  parent: PetriDish
+  id: PetriDishCaudata
+  suffix: Caudata
+  components:
+  - type: CellGeneration
+    cells:
+    - Caudata
+
+- type: entity
+  parent: PetriDish
+  id: PetriDishAtypical
+  suffix: Atypical
+  components:
+  - type: CellGeneration
+    cells:
+    - Atypical
+
+- type: entity
+  parent: PetriDish
+  id: PetriDishAphid
+  suffix: Aphid
+  components:
+  - type: CellGeneration
+    cells:
+    - Aphid
+
+- type: entity
+  parent: PetriDish
+  id: PetriDishPseudoarachnoid
+  suffix: Pseudoarachnoid
+  components:
+  - type: CellGeneration
+    cells:
+    - Pseudoarachnoid
