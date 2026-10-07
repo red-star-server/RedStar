@@ -29,11 +29,11 @@ loadout-group-captain-neck = Капитан, шея
 loadout-group-captain-backpack = Капитан, рюкзак
 loadout-group-captain-outerclothing = Капитан, верхняя одежда
 
-loadout-group-hop-head = Глава персонала, голова
-loadout-group-hop-jumpsuit = Глава персонала, комбинезон
-loadout-group-hop-neck = Глава персонала, шея
-loadout-group-hop-backpack = Глава персонала, рюкзак
-loadout-group-hop-outerclothing = Глава персонала, верхняя одежда
+loadout-group-hop-head = Начальник отдела кадров, голова
+loadout-group-hop-jumpsuit = Начальник отдела кадров, комбинезон
+loadout-group-hop-neck = Начальник отдела кадров, шея
+loadout-group-hop-backpack = Начальник отдела кадров, рюкзак
+loadout-group-hop-outerclothing = Начальник отдела кадров, верхняя одежда
 
 # Civilian
 loadout-group-passenger-jumpsuit = Пассажир, комбинезон

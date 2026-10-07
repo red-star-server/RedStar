@@ -5,7 +5,7 @@ station-beacon-bridge = Мостик
 station-beacon-vault = Хранилище
 station-beacon-gateway = Врата
 station-beacon-captain = Капитан
-station-beacon-hop = Кабинет ГП
+station-beacon-hop = Кабинет НОК
 
 station-beacon-security = Милиция
 station-beacon-brig = Бриг

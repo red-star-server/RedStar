@@ -4,7 +4,7 @@ objective-condition-steal-title = Украдите { $itemName }, владеле
 objective-condition-steal-description = Нам нужно, чтобы вы украли { $itemName }. Не попадитесь.
 
 objective-condition-steal-station = станция
-objective-condition-steal-Ian = корги главы персонала
+objective-condition-steal-Ian = корги начальника отдела кадров
 
 objective-condition-thief-description = { CAPITALIZE($itemName) } станет отличным пополнением моей коллекции!
 objective-condition-thief-animal-description = { CAPITALIZE($itemName) } станет отличным пополнением моей коллекции! Главное — живым.

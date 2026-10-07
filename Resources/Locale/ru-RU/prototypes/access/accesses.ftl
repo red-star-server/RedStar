@@ -1,6 +1,6 @@
 id-card-access-level-command = Командование
 id-card-access-level-captain = Капитан
-id-card-access-level-head-of-personnel = Глава персонала
+id-card-access-level-head-of-personnel = Начальник отдела кадров
 id-card-access-level-cryogenics = Криогеника
 id-card-access-level-emergency-shuttle-repeal = Э.Шаттл Отозвать Все
 
