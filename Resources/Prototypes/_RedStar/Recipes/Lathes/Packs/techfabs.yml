@@ -8,6 +8,19 @@
   - CircuitImprinterMachineCircuitboard
 
 - type: latheRecipePack
+  id: XenobiologyBoardsStatic
+  recipes:
+  - CellSequencerCircuitboard
+  - CellularFusionCircuitboard
+  - MutagenicCellInjectorCircuitboard
+
+- type: latheRecipePack
+  id: XenobiologyToolsStatic
+  recipes:
+  - BiopsyTool
+  - PetriDish
+
+- type: latheRecipePack
   id: MiningToolsStatic
   recipes:
   - Fulton

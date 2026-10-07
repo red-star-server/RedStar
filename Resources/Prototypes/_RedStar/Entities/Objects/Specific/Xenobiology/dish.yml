@@ -143,18 +143,45 @@
 
 - type: entity
   parent: PetriDish
-  id: PetriDishAphid
-  suffix: Aphid
-  components:
-  - type: CellGeneration
-    cells:
-    - Aphid
-
-- type: entity
-  parent: PetriDish
   id: PetriDishPseudoarachnoid
   suffix: Pseudoarachnoid
   components:
   - type: CellGeneration
     cells:
     - Pseudoarachnoid
+
+- type: entity
+  parent: PetriDish
+  id: PetriDishPsittacine
+  suffix: Psittacine
+  components:
+  - type: CellGeneration
+    cells:
+    - Psittacine
+
+- type: entity
+  parent: PetriDish
+  id: PetriDishBasilisk
+  suffix: Basilisk
+  components:
+  - type: CellGeneration
+    cells:
+    - Basilisk
+
+- type: entity
+  parent: PetriDish
+  id: PetriDishCaprine
+  suffix: Caprine
+  components:
+  - type: CellGeneration
+    cells:
+    - Caprine
+
+- type: entity
+  parent: PetriDish
+  id: PetriDishOvine
+  suffix: Ovine
+  components:
+  - type: CellGeneration
+    cells:
+    - Ovine
