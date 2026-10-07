@@ -36,16 +36,6 @@
     - ForceFixRotations
 
 - type: entity
-  id: FurnitureTableFrame
-  parent: TableFrame
-  name: table frame
-  description: Pieces of metal that make the frame of a table.
-  components:
-  - type: Construction
-    graph: FurnitureTableGraph
-    node: furnitureTableFrame
-
-- type: entity
   id: TableRoundPlastic
   parent: BaseRoundTable
   name: plastic round table
@@ -298,15 +288,19 @@
             min: 1
             max: 1
       - !type:ChangeConstructionNodeBehavior
-        node: furnitureTableFrame
+        node: TableFrame
       - !type:DoActsBehavior
         acts:
         - Destruction
   - type: IconSmooth
     key: plastictable
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ plastictable ]
+      base: state_
   - type: Construction
-    graph: FurnitureTableGraph
-    node: tablePlastic
+    graph: Table
+    node: TablePlastic
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepTile
@@ -354,15 +348,19 @@
             min: 1
             max: 1
       - !type:ChangeConstructionNodeBehavior
-        node: furnitureTableFrame
+        node: TableFrame
       - !type:DoActsBehavior
         acts:
         - Destruction
   - type: IconSmooth
     key: uraniumglasstable
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ uraniumglasstable ]
+      base: state_
   - type: Construction
-    graph: FurnitureTableGraph
-    node: tableUraniumGlass
+    graph: Table
+    node: TableUraniumGlass
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepTile
@@ -405,7 +403,7 @@
         sound:
           collection: GlassBreak
       - !type:ChangeConstructionNodeBehavior
-        node: furnitureTableFrame
+        node: TableFrame
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlassPlasma:
@@ -419,9 +417,13 @@
         - Destruction
   - type: IconSmooth
     key: reinforcedplasmaglasstable
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ reinforcedplasmaglasstable ]
+      base: state_
   - type: Construction
-    graph: FurnitureTableGraph
-    node: tableReinforcedPlasmaGlass
+    graph: Table
+    node: TableReinforcedPlasmaGlass
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepTile
@@ -464,7 +466,7 @@
         sound:
           collection: GlassBreak
       - !type:ChangeConstructionNodeBehavior
-        node: furnitureTableFrame
+        node: TableFrame
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlassUranium:
@@ -478,9 +480,13 @@
         - Destruction
   - type: IconSmooth
     key: reinforceduraniumglasstable
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ reinforceduraniumglasstable ]
+      base: state_
   - type: Construction
-    graph: FurnitureTableGraph
-    node: tableReinforcedUraniumGlass
+    graph: Table
+    node: TableReinforcedUraniumGlass
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepTile

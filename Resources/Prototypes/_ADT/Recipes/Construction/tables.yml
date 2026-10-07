@@ -37,23 +37,23 @@
 - type: construction
   parent: BaseTable
   id: TablePlasticRecipe
-  graph: FurnitureTableGraph
-  targetNode: tablePlastic
+  graph: Table
+  targetNode: TablePlastic
 
 - type: construction
   parent: BaseTable
   id: TableUraniumGlassRecipe
-  graph: FurnitureTableGraph
-  targetNode: tableUraniumGlass
+  graph: Table
+  targetNode: TableUraniumGlass
 
 - type: construction
   parent: BaseTable
   id: TableReinforcedPlasmaGlassRecipe
-  graph: FurnitureTableGraph
-  targetNode: tableReinforcedPlasmaGlass
+  graph: Table
+  targetNode: TableReinforcedPlasmaGlass
 
 - type: construction
   parent: BaseTable
   id: TableReinforcedUraniumGlassRecipe
-  graph: FurnitureTableGraph
-  targetNode: tableReinforcedUraniumGlass
+  graph: Table
+  targetNode: TableReinforcedUraniumGlass

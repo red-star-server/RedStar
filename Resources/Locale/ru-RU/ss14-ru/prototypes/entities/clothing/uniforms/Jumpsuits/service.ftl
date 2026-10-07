@@ -57,3 +57,5 @@ ent-ClothingUniformJumpsuitLawyerGood = хороший адвокатский к
     .desc = Кричащий костюм, идеально подходящий УГОЛОВНОМУ адвокату!
 ent-ClothingUniformOveralls = комбинезон на лямках
     .desc = Отлично подходит для работы на открытом воздухе.
+ent-ClothingUniformJumpsuitVirtualIce = наряд ледяного певца
+    .desc = Эту рубашку без рукавов сшили на заказ для Таро Ямады — для выступлений и тренировок.

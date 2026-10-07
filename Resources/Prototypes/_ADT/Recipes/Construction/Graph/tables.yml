@@ -6,14 +6,6 @@
     actions:
     - !type:DeleteEntity {}
     edges:
-    - to: furnitureTableFrame
-      completed:
-      - !type:SnapToGrid
-        southRotation: true
-      steps:
-      - material: MetalRod
-        amount: 2
-        doAfter: 1
     - to: tableRoundFrame
       completed:
       - !type:SnapToGrid
@@ -46,37 +38,6 @@
       - material: Glass
         amount: 4
         doAfter: 4
-  - node: furnitureTableFrame
-    entity: FurnitureTableFrame
-    edges:
-    - to: start
-      completed:
-      - !type:SpawnPrototype
-        prototype: PartRodMetal
-        amount: 2
-      steps:
-      - tool: Anchoring
-        doAfter: 1
-    - to: tablePlastic
-      steps:
-      - material: Plastic
-        amount: 1
-        doAfter: 1
-    - to: tableUraniumGlass
-      steps:
-      - material: UraniumGlass
-        amount: 1
-        doAfter: 1
-    - to: tableReinforcedPlasmaGlass
-      steps:
-      - material: ReinforcedPlasmaGlass
-        amount: 1
-        doAfter: 1
-    - to: tableReinforcedUraniumGlass
-      steps:
-      - material: ReinforcedUraniumGlass
-        amount: 1
-        doAfter: 1
   - node: tableRoundFrame
     entity: TableRoundFrame
     edges:
@@ -189,50 +150,6 @@
       completed:
       - !type:SpawnPrototype
         prototype: SheetPGlass1
-        amount: 1
-      steps:
-      - tool: Anchoring
-        doAfter: 1
-  - node: tablePlastic
-    entity: TablePlastic
-    edges:
-    - to: furnitureTableFrame
-      completed:
-      - !type:SpawnPrototype
-        prototype: SheetPlastic1
-        amount: 1
-      steps:
-      - tool: Anchoring
-        doAfter: 1
-  - node: tableUraniumGlass
-    entity: TableUraniumGlass
-    edges:
-    - to: furnitureTableFrame
-      completed:
-      - !type:SpawnPrototype
-        prototype: SheetUGlass1
-        amount: 1
-      steps:
-      - tool: Anchoring
-        doAfter: 1
-  - node: tableReinforcedPlasmaGlass
-    entity: TableReinforcedPlasmaGlass
-    edges:
-    - to: furnitureTableFrame
-      completed:
-      - !type:SpawnPrototype
-        prototype: SheetRPGlass1
-        amount: 1
-      steps:
-      - tool: Anchoring
-        doAfter: 1
-  - node: tableReinforcedUraniumGlass
-    entity: TableReinforcedUraniumGlass
-    edges:
-    - to: furnitureTableFrame
-      completed:
-      - !type:SpawnPrototype
-        prototype: SheetRUGlass1
         amount: 1
       steps:
       - tool: Anchoring
