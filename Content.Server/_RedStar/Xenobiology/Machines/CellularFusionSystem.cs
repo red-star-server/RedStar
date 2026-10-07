@@ -36,6 +36,12 @@ public sealed partial class CellularFusionSystem : EntitySystem
     private Dictionary<string, ProtoId<CellTraitPrototype>>? _mutationRecipes;
 
     [SubscribeLocalEvent]
+    private void OnGetMaterialWhitelist(Entity<CellularFusionComponent> ent, ref GetMaterialWhitelistEvent args)
+    {
+        args.Whitelist.Add(ent.Comp.RequiredMaterial);
+    }
+
+    [SubscribeLocalEvent]
     private void OnConnectionChanged(Entity<CellularFusionComponent> ent, ref ResearchRegistrationChangedEvent args)
     {
         UpdateConnection(ent);
