@@ -13,7 +13,7 @@
                     Margin="0 0 0 4" />
             <PanelContainer Margin="0 0 0 4" StyleClasses="LowDivider" />
             <PanelContainer StyleClasses="PanelDark" HorizontalExpand="True" Margin="0 0 0 4">
-                <Label StyleClasses="LabelHeading" Text="{Loc 'lathe-menu-materials-title'}" Margin="8 4 8 4" />
+                <Label StyleClasses="LabelHeading" Text="{Loc 'lathe-menu-materials-title'}" Margin="8 4 8 4" HorizontalExpand="True" Align="Center" />
             </PanelContainer>
             <PanelContainer StyleClasses="PanelInsetDeep" VerticalExpand="True" HorizontalExpand="True">
                 <materials:MaterialStorageControl Name="MaterialsList" />
@@ -23,7 +23,7 @@
         <!-- First sample -->
         <BoxContainer Margin="8" MinWidth="210" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
             <PanelContainer StyleClasses="PanelDark" HorizontalExpand="True">
-                <Label StyleClasses="LabelHeading" Text="{Loc 'cellular-fusion-menu-cell-a-label'}" Margin="8 4 8 4" />
+                <Label StyleClasses="LabelHeading" Text="{Loc 'cellular-fusion-menu-cell-a-label'}" Margin="8 4 8 4" HorizontalExpand="True" Align="Center" />
             </PanelContainer>
             <PanelContainer Margin="0 4 0 0" StyleClasses="PanelInsetDeep" VerticalExpand="True" HorizontalExpand="True">
                 <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
@@ -35,7 +35,7 @@
         <!-- Info panel -->
         <BoxContainer Margin="8" MinWidth="250" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
             <PanelContainer StyleClasses="PanelDark" HorizontalExpand="True">
-                <Label StyleClasses="LabelHeading" Text="{Loc 'cellular-fusion-menu-preview-label'}" Margin="8 4 8 4" />
+                <Label StyleClasses="LabelHeading" Text="{Loc 'cellular-fusion-menu-preview-label'}" Margin="8 4 8 4" HorizontalExpand="True" Align="Center" />
             </PanelContainer>
             <Control MinHeight="4" />
             <PanelContainer StyleClasses="PanelInsetDeep" HorizontalExpand="True" VerticalExpand="True">
@@ -57,7 +57,7 @@
         <!-- Second sample -->
         <BoxContainer Margin="8" MinWidth="210" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
             <PanelContainer StyleClasses="PanelDark" HorizontalExpand="True">
-                <Label StyleClasses="LabelHeading" Text="{Loc 'cellular-fusion-menu-cell-b-label'}" Margin="8 4 8 4" />
+                <Label StyleClasses="LabelHeading" Text="{Loc 'cellular-fusion-menu-cell-b-label'}" Margin="8 4 8 4" HorizontalExpand="True" Align="Center" />
             </PanelContainer>
             <PanelContainer Margin="0 4 0 0" StyleClasses="PanelInsetDeep" VerticalExpand="True" HorizontalExpand="True">
                 <ScrollContainer VerticalExpand="True" HorizontalExpand="True">

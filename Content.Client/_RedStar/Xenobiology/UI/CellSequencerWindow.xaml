@@ -23,7 +23,7 @@
                     Margin="0 0 0 4" />
             <PanelContainer Margin="0 0 0 4" StyleClasses="LowDivider" />
             <PanelContainer StyleClasses="PanelDark" HorizontalExpand="True" Margin="0 0 0 4">
-                <Label StyleClasses="LabelHeading" Text="{Loc 'lathe-menu-materials-title'}" Margin="8 4 8 4" />
+                <Label StyleClasses="LabelHeading" Text="{Loc 'lathe-menu-materials-title'}" Margin="8 4 8 4" HorizontalExpand="True" Align="Center" />
             </PanelContainer>
             <PanelContainer StyleClasses="PanelInsetDeep" VerticalExpand="True" HorizontalExpand="True">
                 <materials:MaterialStorageControl Name="MaterialsList" />
@@ -33,7 +33,7 @@
         <!-- Cell lists -->
         <BoxContainer Margin="8" MinWidth="240" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
             <PanelContainer StyleClasses="PanelDark" HorizontalExpand="True">
-                <Label StyleClasses="LabelHeading" Text="{Loc 'cell-sequencer-menu-inside-label'}" Margin="8 4 8 4" />
+                <Label StyleClasses="LabelHeading" Text="{Loc 'cell-sequencer-menu-inside-label'}" Margin="8 4 8 4" HorizontalExpand="True" Align="Center" />
             </PanelContainer>
             <PanelContainer Margin="0 4 0 8" StyleClasses="PanelInsetDeep" VerticalExpand="True" HorizontalExpand="True">
                 <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
@@ -41,7 +41,7 @@
                 </ScrollContainer>
             </PanelContainer>
             <PanelContainer StyleClasses="PanelDark" HorizontalExpand="True">
-                <Label StyleClasses="LabelHeading" Text="{Loc 'cell-sequencer-menu-remote-label'}" Margin="8 4 8 4" />
+                <Label StyleClasses="LabelHeading" Text="{Loc 'cell-sequencer-menu-remote-label'}" Margin="8 4 8 4" HorizontalExpand="True" Align="Center" />
             </PanelContainer>
             <PanelContainer Margin="0 4 0 0" StyleClasses="PanelInsetDeep" VerticalExpand="True" HorizontalExpand="True">
                 <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
@@ -53,7 +53,7 @@
         <!-- Info panel -->
         <BoxContainer Margin="8" MinWidth="230" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
             <PanelContainer StyleClasses="PanelDark" HorizontalExpand="True">
-                <Label StyleClasses="LabelHeading" Text="{Loc 'cell-sequencer-menu-info-label'}" Margin="8 4 8 4" />
+                <Label StyleClasses="LabelHeading" Text="{Loc 'cell-sequencer-menu-info-label'}" Margin="8 4 8 4" HorizontalExpand="True" Align="Center" />
             </PanelContainer>
             <Control MinHeight="4" />
             <PanelContainer StyleClasses="PanelInsetDeep" HorizontalExpand="True" VerticalExpand="True">
