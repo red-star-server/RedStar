@@ -1,0 +1,9 @@
+ent-CellSequencerCircuitboard = плата анализатора клеток
+    .desc = { ent-BaseMachineCircuitboard.desc }
+    .suffix = { ent-BaseMachineCircuitboard.suffix }
+ent-CellularFusionCircuitboard = плата установки клеточного слияния
+    .desc = { ent-BaseMachineCircuitboard.desc }
+    .suffix = { ent-BaseMachineCircuitboard.suffix }
+ent-MutagenicCellInjectorCircuitboard = плата мутагенного инжектора
+    .desc = { ent-BaseMachineCircuitboard.desc }
+    .suffix = { ent-BaseMachineCircuitboard.suffix }

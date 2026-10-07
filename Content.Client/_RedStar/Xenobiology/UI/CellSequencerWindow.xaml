@@ -1,0 +1,65 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:materials="clr-namespace:Content.Client.Materials.UI"
+    xmlns:xenobio="clr-namespace:Content.Client._RedStar.Xenobiology.UI"
+    Title="{Loc 'cell-sequencer-menu-title'}"
+    MinSize="1030 440">
+    <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
+        <!-- Nav panel -->
+        <BoxContainer Margin="8" MinWidth="330" Orientation="Vertical" VerticalExpand="True">
+            <Button Name="ServerButton" Text="{Loc 'research-console-menu-server-selection-button'}" Margin="0 0 0 4" />
+            <PanelContainer Margin="0 0 0 4" StyleClasses="LowDivider" />
+            <Button Name="AddButton"
+                    Text="{Loc 'cell-sequencer-menu-add-button'}"
+                    ToolTip="{Loc 'cell-sequencer-menu-add-tooltip-info'}"
+                    Margin="0 0 0 4" />
+            <Button Name="RemoveButton"
+                    Text="{Loc 'cell-sequencer-menu-remove-button'}"
+                    ToolTip="{Loc 'cell-sequencer-menu-remove-tooltip-info'}"
+                    Margin="0 0 0 4" />
+            <Button Name="ReplaceButton"
+                    Text="{Loc 'cell-sequencer-menu-replace-button'}"
+                    ToolTip="{Loc 'cell-sequencer-menu-replace-tooltip-info'}"
+                    Margin="0 0 0 4" />
+            <PanelContainer Margin="0 0 0 4" StyleClasses="LowDivider" />
+            <PanelContainer StyleClasses="PanelDark" HorizontalExpand="True" Margin="0 0 0 4">
+                <Label StyleClasses="LabelHeading" Text="{Loc 'lathe-menu-materials-title'}" Margin="8 4 8 4" />
+            </PanelContainer>
+            <PanelContainer StyleClasses="PanelInsetDeep" VerticalExpand="True" HorizontalExpand="True">
+                <materials:MaterialStorageControl Name="MaterialsList" />
+            </PanelContainer>
+        </BoxContainer>
+        <PanelContainer Margin="4 0" StyleClasses="LowDivider" />
+        <!-- Cell lists -->
+        <BoxContainer Margin="8" MinWidth="240" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
+            <PanelContainer StyleClasses="PanelDark" HorizontalExpand="True">
+                <Label StyleClasses="LabelHeading" Text="{Loc 'cell-sequencer-menu-inside-label'}" Margin="8 4 8 4" />
+            </PanelContainer>
+            <PanelContainer Margin="0 4 0 8" StyleClasses="PanelInsetDeep" VerticalExpand="True" HorizontalExpand="True">
+                <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
+                    <BoxContainer Name="InsideCellContainer" Margin="8" Orientation="Vertical" HorizontalExpand="True" />
+                </ScrollContainer>
+            </PanelContainer>
+            <PanelContainer StyleClasses="PanelDark" HorizontalExpand="True">
+                <Label StyleClasses="LabelHeading" Text="{Loc 'cell-sequencer-menu-remote-label'}" Margin="8 4 8 4" />
+            </PanelContainer>
+            <PanelContainer Margin="0 4 0 0" StyleClasses="PanelInsetDeep" VerticalExpand="True" HorizontalExpand="True">
+                <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
+                    <BoxContainer Name="RemoteCellContainer" Margin="8" Orientation="Vertical" HorizontalExpand="True" />
+                </ScrollContainer>
+            </PanelContainer>
+        </BoxContainer>
+        <PanelContainer Margin="4 0" StyleClasses="LowDivider" />
+        <!-- Info panel -->
+        <BoxContainer Margin="8" MinWidth="230" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
+            <PanelContainer StyleClasses="PanelDark" HorizontalExpand="True">
+                <Label StyleClasses="LabelHeading" Text="{Loc 'cell-sequencer-menu-info-label'}" Margin="8 4 8 4" />
+            </PanelContainer>
+            <Control MinHeight="4" />
+            <PanelContainer StyleClasses="PanelInsetDeep" HorizontalExpand="True" VerticalExpand="True">
+                <Label Name="NoSelectedLabel" Text="{Loc 'cell-sequencer-menu-no-selected-label'}" Align="Center"/>
+                <xenobio:CellInfoControl Name="CellInfo" Margin="10" Visible="False" />
+            </PanelContainer>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>
