@@ -38805,8 +38805,6 @@ entities:
       deviceLists:
       - 12881
       - 3462
-      configurators:
-      - invalid
   - uid: 3159
     components:
     - type: Transform
@@ -38817,8 +38815,6 @@ entities:
       deviceLists:
       - 12881
       - 3462
-      configurators:
-      - invalid
   - uid: 3160
     components:
     - type: Transform
@@ -38835,8 +38831,6 @@ entities:
       deviceLists:
       - 12881
       - 3462
-      configurators:
-      - invalid
   - uid: 3163
     components:
     - type: Transform
@@ -39529,8 +39523,6 @@ entities:
       deviceLists:
       - 12881
       - 3462
-      configurators:
-      - invalid
   - uid: 11687
     components:
     - type: Transform
@@ -52922,8 +52914,6 @@ entities:
       deviceLists:
       - 12881
       - 3462
-      configurators:
-      - invalid
     - type: AtmosPipeColor
       color: '#0000FFFF'
   - uid: 11083
@@ -53756,8 +53746,6 @@ entities:
       deviceLists:
       - 12881
       - 3462
-      configurators:
-      - invalid
     - type: AtmosPipeColor
       color: '#FF0000FF'
   - uid: 11085
