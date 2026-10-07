@@ -66,7 +66,7 @@ public sealed partial class CellSystem : SharedCellSystem
             ? CellCollectorDirection.Collection
             : CellCollectorDirection.Transfer;
 
-        if (!CollectorInteractValidate(ent, (args.Target.Value, containerComponent), direction))
+        if (!CollectorInteractValidate(ent, (args.Target.Value, containerComponent), direction, args.User))
             return;
 
         var doAfterArgs = new DoAfterArgs(EntityManager, args.User, ent.Comp.Delay, new CellCollectorDoAfter(direction), ent, target: args.Target, used: ent)
@@ -91,7 +91,7 @@ public sealed partial class CellSystem : SharedCellSystem
         if (args.Handled || args.Cancelled || args.Target is null)
             return;
 
-        if (!CollectorInteractValidate(ent, args.Target.Value, args.Direction))
+        if (!CollectorInteractValidate(ent, args.Target.Value, args.Direction, args.Args.User))
             return;
 
         switch (args.Direction)
@@ -106,18 +106,17 @@ public sealed partial class CellSystem : SharedCellSystem
                     CopyCells(ent.Owner, (args.Target.Value, targetComp));
                 }
 
-                _popup.PopupEntity(Loc.GetString("cell-collector-collected"), ent);
+                _popup.PopupEntity(Loc.GetString("cell-collector-collected"), ent, args.Args.User);
 
                 if (ent.Comp.Damage is not null)
                     _damageable.TryChangeDamage(args.Target.Value, ent.Comp.Damage);
 
-                ent.Comp.Usages--;
                 break;
 
             case CellCollectorDirection.Transfer:
                 MoveCells(ent.Owner, args.Target.Value);
 
-                _popup.PopupEntity(Loc.GetString("cell-collector-transfer"), ent);
+                _popup.PopupEntity(Loc.GetString("cell-collector-transfer"), ent, args.Args.User);
                 break;
 
             default:
@@ -193,13 +192,14 @@ public sealed partial class CellSystem : SharedCellSystem
     }
 
     /// <summary>
-    /// Validates a collector interaction. For collection: checks collector has space, usages left,
+    /// Validates a collector interaction. For collection: checks collector has space
     /// and target allows collection. For transfer: checks whitelist and that collector has cells.
     /// Shows popups on failure when <paramref name="popup"/> is true.
     /// </summary>
     private bool CollectorInteractValidate(Entity<CellCollectorComponent, CellContainerComponent?> ent,
         Entity<CellContainerComponent?> target,
         CellCollectorDirection direction,
+        EntityUid user,
         bool popup = true)
     {
         if (!Resolve(ent, ref ent.Comp2))
@@ -215,16 +215,7 @@ public sealed partial class CellSystem : SharedCellSystem
                     if (!popup)
                         return false;
 
-                    _popup.PopupEntity(Loc.GetString("cell-collector-full"), ent, PopupType.SmallCaution);
-                    return false;
-                }
-
-                if (ent.Comp1.Usages == 0)
-                {
-                    if (!popup)
-                        return false;
-
-                    _popup.PopupEntity(Loc.GetString("cell-collector-already-used"), ent, PopupType.SmallCaution);
+                    _popup.PopupEntity(Loc.GetString("cell-collector-full"), ent, user, PopupType.SmallCaution);
                     return false;
                 }
 
@@ -234,7 +225,7 @@ public sealed partial class CellSystem : SharedCellSystem
                     if (!popup)
                         return false;
 
-                    _popup.PopupEntity(Loc.GetString("cell-collector-target-cant-collected"), ent, PopupType.SmallCaution);
+                    _popup.PopupEntity(Loc.GetString("cell-collector-target-cant-collected"), ent, user, PopupType.SmallCaution);
                     return false;
                 }
                 break;
@@ -251,7 +242,7 @@ public sealed partial class CellSystem : SharedCellSystem
                     if (!popup)
                         return false;
 
-                    _popup.PopupEntity(Loc.GetString("cell-collector-empty"), ent, PopupType.SmallCaution);
+                    _popup.PopupEntity(Loc.GetString("cell-collector-empty"), ent, user, PopupType.SmallCaution);
                     return false;
                 }
                 break;
