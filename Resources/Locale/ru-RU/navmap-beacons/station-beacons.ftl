@@ -40,7 +40,7 @@ station-beacon-anomaly-gen = Аномалистика
 station-beacon-supply = Отдел снабжения
 station-beacon-cargo = Карго
 station-beacon-cargo-bay = Док снабжения
-station-beacon-qm = Кабинет КМ
+station-beacon-qm = Кабинет Завхоза
 station-beacon-salvage = Утилизаторская
 
 station-beacon-engineering = Инженерный отдел

@@ -1,8 +1,8 @@
 ent-ClothingUniformJumpskirtCargo = юбка-комбинезон грузчика
     .desc = Прочная юбка-комбинезон, выдаваемая сотрудникам отдела снабжения.
-ent-ClothingUniformJumpskirtQM = юбка-комбинезон квартирмейстера
+ent-ClothingUniformJumpskirtQM = юбка-комбинезон заведующего хозяйством
     .desc = Что Браун может сделать для вас?
-ent-ClothingUniformJumpskirtQMTurtleneck = юбка-водолазка квартирмейстера
+ent-ClothingUniformJumpskirtQMTurtleneck = юбка-водолазка заведующего хозяйством
     .desc = Строгая водолазка, предназначенная для суровых условий работы в сфере снабжения.
-ent-ClothingUniformJumpskirtQMFormalDress = парадное платье квартирмейстера
-    .desc = Вдохновлено формой военных квартирмейстеров прошлого. Идеальный наряд для снабжения торжественного мероприятия.
+ent-ClothingUniformJumpskirtQMFormalDress = парадное платье заведующего хозяйством
+    .desc = Вдохновлено формой заведующих хозяйством прошлого. Идеальный наряд для снабжения торжественного мероприятия.
