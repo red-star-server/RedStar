@@ -71,7 +71,7 @@ namespace Content.IntegrationTests.Tests
             {"/Maps/Shuttles/ShuttleEvent/instigator.yml", ["ShuttleGunFriendship"]},
             // RS14-start
             {"/Maps/_RedStar/awesome.yml", ["ClothingHeadHatCatEars", "BoxFolderCentCom"]},
-            {"/Maps/_RedStar/cluster.yml", ["RubberStampMime"]},
+            // {"/Maps/_RedStar/cluster.yml", ["RubberStampMime"]},
             // {"/Maps/_RedStar/omega.yml", ["RubberStampSyndicate", "RubberStampMime"]},
             {"/Maps/_RedStar/silly.yml", ["RubberStampSyndicate"]}
             // RS14-end
