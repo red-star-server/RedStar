@@ -11,3 +11,35 @@
   completetime: 0
   materials:
     RawRedSpaceCrystal: 100
+
+- type: latheRecipe
+  id: SheetTitanium1
+  result: SheetTitanium1
+  completetime: 0
+  materials:
+    RawTitanium: 100
+
+- type: latheRecipe
+  id: SheetPlastitanium1
+  result: SheetPlastitanium1
+  completetime: 0
+  materials:
+    RawTitanium: 100
+    RawPlasma: 100
+
+- type: latheRecipe
+  id: SheetTitaniumGlass1
+  result: SheetTitaniumGlass1
+  completetime: 0
+  materials:
+    RawQuartz: 100
+    RawTitanium: 50
+
+- type: latheRecipe
+  id: SheetPlastitaniumGlass1
+  result: SheetPlastitaniumGlass1
+  completetime: 0
+  materials:
+    RawQuartz: 100
+    RawTitanium: 50
+    RawPlasma: 50

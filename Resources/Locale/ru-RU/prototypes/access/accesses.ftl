@@ -1,6 +1,6 @@
 id-card-access-level-command = Командование
 id-card-access-level-captain = Капитан
-id-card-access-level-head-of-personnel = Глава персонала
+id-card-access-level-head-of-personnel = Начальник отдела кадров
 id-card-access-level-cryogenics = Криогеника
 id-card-access-level-emergency-shuttle-repeal = Э.Шаттл Отозвать Все
 
@@ -24,7 +24,7 @@ id-card-access-level-medical = Медицинский
 id-card-access-level-chemistry = Химия
 id-card-access-level-paramedic = Парамедик
 
-id-card-access-level-quartermaster = Квартирмейстер
+id-card-access-level-quartermaster = Заведующий хозяйством
 id-card-access-level-cargo = Снабжение
 id-card-access-level-salvage = Утилизаторский
 

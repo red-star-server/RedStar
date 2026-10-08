@@ -94,6 +94,29 @@
               amount: 1
               doAfter: 1
 
+        # RS14-start
+        - to: TablePlastic
+          steps:
+            - material: Plastic
+              amount: 1
+              doAfter: 1
+        - to: TableUraniumGlass
+          steps:
+            - material: UraniumGlass
+              amount: 1
+              doAfter: 1
+        - to: TableReinforcedPlasmaGlass
+          steps:
+            - material: ReinforcedPlasmaGlass
+              amount: 1
+              doAfter: 1
+        - to: TableReinforcedUraniumGlass
+          steps:
+            - material: ReinforcedUraniumGlass
+              amount: 1
+              doAfter: 1
+        # RS14-end
+
 
     - node: CounterWoodFrame
       entity: CounterWoodFrame
@@ -451,3 +474,53 @@
         steps:
         - tool: Anchoring
           doAfter: 1
+
+    # RS14-start
+    - node: TablePlastic
+      entity: TablePlastic
+      edges:
+        - to: TableFrame
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPlastic1
+              amount: 1
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+
+    - node: TableUraniumGlass
+      entity: TableUraniumGlass
+      edges:
+        - to: TableFrame
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetUGlass1
+              amount: 1
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+
+    - node: TableReinforcedPlasmaGlass
+      entity: TableReinforcedPlasmaGlass
+      edges:
+        - to: TableFrame
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetRPGlass1
+              amount: 1
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+
+    - node: TableReinforcedUraniumGlass
+      entity: TableReinforcedUraniumGlass
+      edges:
+        - to: TableFrame
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetRUGlass1
+              amount: 1
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+    # RS14-end

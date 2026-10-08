@@ -1,0 +1,17 @@
+cell-Murine-name = мышиная клетка
+cell-Galliform-name = куриная клетка
+cell-Bovine-name = коровья клетка
+cell-Feliform-name = кошачья клетка
+cell-Canid-name = собачья клетка
+cell-Ursine-name = медвежья клетка
+cell-Cyprinid-name = клетка карповой рыбы
+cell-CartilaginousCyprinid-name = клетка хрящевой рыбы
+cell-Ophidic-name = змеиная клетка
+cell-Anura-name = лягушачья клетка
+cell-Caudata-name = клетка хвостатой амфибии
+cell-Atypical-name = атипичная клетка
+cell-Pseudoarachnoid-name = клетка псевдопаукообразного
+cell-Psittacine-name = попугайская клетка
+cell-Basilisk-name = клетка василиска
+cell-Caprine-name = козья клетка
+cell-Ovine-name = овечья клетка

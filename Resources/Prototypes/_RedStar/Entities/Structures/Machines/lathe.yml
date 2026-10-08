@@ -159,6 +159,8 @@
     - ElectronicsStatic
     - SurgeryStatic
     - ScienceBoardsStatic
+    - XenobiologyBoardsStatic
+    - XenobiologyToolsStatic
     - ScienceExplosives
     dynamicPacks:
     - ScienceEquipment

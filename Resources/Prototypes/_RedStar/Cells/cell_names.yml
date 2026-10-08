@@ -1,0 +1,11 @@
+- type: localizedDataset
+  id: CellPrefixes
+  values:
+    prefix: cell-prefix-
+    count: 25
+
+- type: localizedDataset
+  id: CellSuffixes
+  values:
+    prefix: cell-suffix-
+    count: 25

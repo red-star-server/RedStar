@@ -21,3 +21,11 @@
   count: 2
   minGroupSize: 1
   maxGroupSize: 2
+
+- type: oreDunGen
+  id: OreTitanium
+  replacement: AsteroidRock
+  entity: AsteroidRockTitanium
+  count: 4
+  minGroupSize: 2
+  maxGroupSize: 4

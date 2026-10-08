@@ -427,6 +427,10 @@
     reflectProb: 1
     reflects:
     - Energy
+  # RS14-start
+  - type: CellTraitSource
+    traits: [ Reflection ]
+  # RS14-end
   - type: ToolRefinable
     refineResult:
     - id: DiamondOre1

@@ -111,7 +111,7 @@
   id: PowerDrill
   result: PowerDrill
   materials:
-    Steel: 600
+    Titanium: 600 # RS14
     Plastic: 200
 
 - type: latheRecipe
@@ -191,7 +191,7 @@
   result: WelderExperimental
   completetime: 6
   materials:
-    Steel: 800
+    Titanium: 800 # RS14
     Plasma: 200
 
 - type: latheRecipe
@@ -200,7 +200,7 @@
   result: JawsOfLife
   completetime: 6
   materials:
-    Steel: 1000
+    Titanium: 1000 # RS14
     Glass: 500
     Plasma: 300
     Gold: 50

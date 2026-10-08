@@ -9,4 +9,4 @@ loadout-group-brigmedic-shoes = Бригмедик, обувь
 
 # Command
 loadout-group-captain-shoes = Капитан, обувь
-loadout-group-hop-shoes = Глава Персонала, обувь
+loadout-group-hop-shoes = Начальник отдела кадров, обувь

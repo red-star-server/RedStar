@@ -1,0 +1,132 @@
+- type: cell
+  id: Murine
+  name: cell-Murine-name
+  color: "#494546"
+  stability: 1
+  traits:
+  - NightVision
+
+- type: cell
+  id: Galliform
+  name: cell-Galliform-name
+  color: "#C2B280"
+  stability: 0.97
+  traits:
+  - EggLayer
+
+- type: cell
+  id: Bovine
+  name: cell-Bovine-name
+  color: "#7F5B3E"
+  stability: 0.95
+  traits:
+  - Lactation
+
+- type: cell
+  id: Feliform
+  name: cell-Feliform-name
+  color: "#A0522D"
+  stability: 0.92
+  traits:
+  - OwO
+
+- type: cell
+  id: Canid
+  name: cell-Canid-name
+  color: "#D2691E"
+  traits:
+  - MessyDrinker
+
+- type: cell
+  id: Ursine
+  name: cell-Ursine-name
+  color: "#8B4513"
+  traits:
+  - NightVision
+
+- type: cell
+  id: Cyprinid
+  name: cell-Cyprinid-name
+  color: "#4682B4"
+  stability: 0.84
+  traits:
+  - NightVision
+
+- type: cell
+  id: CartilaginousCyprinid
+  name: cell-CartilaginousCyprinid-name
+  color: "#5F9EA0"
+  stability: 0.8
+  traits:
+  - NightVision
+
+- type: cell
+  id: Ophidic
+  name: cell-Ophidic-name
+  color: "#556B2F"
+  traits:
+  - Invisibility
+  - NightVision
+  - Venomous
+
+- type: cell
+  id: Anura
+  name: cell-Anura-name
+  color: "#ADFF2F"
+
+- type: cell
+  id: Caudata
+  name: cell-Caudata-name
+  color: "#32CD32"
+  traits:
+  - Regeneration
+
+- type: cell
+  id: Atypical
+  name: cell-Atypical-name
+  color: "#FFD700"
+  traits:
+  - Radiation
+
+- type: cell
+  id: Pseudoarachnoid
+  name: cell-Pseudoarachnoid-name
+  color: "#DDA0DD"
+  stability: 0.81
+  traits:
+  - Regeneration
+  - NightVision
+  - NoSlip
+  - Venomous
+  - WebSpinning
+
+- type: cell
+  id: Psittacine
+  name: cell-Psittacine-name
+  color: "#38B85A"
+  traits:
+  - ParrotSpeech
+
+- type: cell
+  id: Basilisk
+  name: cell-Basilisk-name
+  color: "#726D9A"
+  stability: 0.8
+  traits:
+  - Reflection
+
+- type: cell
+  id: Caprine
+  name: cell-Caprine-name
+  color: "#A58B68"
+  traits:
+  - Lactation
+  - Bleating
+
+- type: cell
+  id: Ovine
+  name: cell-Ovine-name
+  color: "#E8E2D2"
+  traits:
+  - Lactation
+  - Bleating

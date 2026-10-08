@@ -1,0 +1,6 @@
+- type: stack
+  parent: BaseSheetStack
+  id: TitaniumRod
+  name: stack-titanium-rods
+  icon: { sprite: _RedStar/Objects/Materials/parts.rsi, state: shuttlerods }
+  spawn: PartRodTitanium1

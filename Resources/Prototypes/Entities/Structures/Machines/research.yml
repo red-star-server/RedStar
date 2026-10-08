@@ -23,6 +23,7 @@
     color: "#b211b2"
   - type: LitOnPowered
   - type: ResearchServer
+  - type: XenobiologyDatabase # RS14
   - type: XenobiologyResearchDatabase # RS14
   - type: TechnologyDatabase
     supportedDisciplines:

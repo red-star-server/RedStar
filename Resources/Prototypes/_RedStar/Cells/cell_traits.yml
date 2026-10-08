@@ -1,0 +1,252 @@
+- type: cellTrait
+  id: Pacifism
+  name: cell-trait-Pacifism-name
+  color: "#b4e514"
+  effects:
+  - !type:AddComponents
+    components:
+    - type: Pacified
+
+- type: cellTrait
+  id: OwO
+  name: cell-trait-OwO-name
+  color: "#ff66aa"
+  effects:
+  - !type:AddComponents
+    components:
+    - type: OwOAccent
+
+- type: cellTrait
+  id: NightVision
+  fusionIngredient: true
+  name: cell-trait-NightVision-name
+  color: "#44cc44"
+  effects:
+  - !type:AddComponents
+    components:
+    - type: NightVision
+
+- type: cellTrait
+  id: EggLayer
+  fusionIngredient: true
+  name: cell-trait-EggLayer-name
+  color: "#f5e7ba"
+  effects:
+  - !type:AddComponents
+    components:
+    - type: EntityProducerAction
+      insufficientSatiationPopup: action-popup-lay-egg-too-hungry
+      userPopup: action-popup-lay-egg-user
+      othersPopup: action-popup-lay-egg-others
+    - type: SatiationProduction
+      delay: 60
+      delayMax: 120
+      satiationUsage: 60
+      minimumSatiation: 60
+      automaticForPlayers: false
+    - type: EntityProducer
+      table:
+        id: FoodEgg
+    - type: ActionGrant
+      actions:
+      - ActionAnimalLayEgg
+
+- type: cellTrait
+  id: Lactation
+  fusionIngredient: true
+  name: cell-trait-Lactation-name
+  color: "#fff7dc"
+  effects:
+  - !type:ContainedSolutionEffect
+    prototype: SolutionUdder
+    solutionName: udder
+  - !type:AddComponents
+    components:
+    - type: HarvestableSolution
+      solutionName: udder
+      verbText: udder-system-verb-milk
+      emptyMessage: udder-system-dry
+      successMessage: udder-system-success
+
+- type: cellTrait
+  id: Venomous
+  fusionIngredient: true
+  name: cell-trait-Venomous-name
+  color: "#88dd44"
+  effects:
+  - !type:ContainedSolutionEffect
+    prototype: SolutionVenomSpider
+    solutionName: melee
+  - !type:AddComponents
+    components:
+    - type: MeleeChemicalInjector
+      transferAmount: 1
+      solution: melee
+
+- type: cellTrait
+  id: WebSpinning
+  fusionIngredient: true
+  name: cell-trait-WebSpinning-name
+  color: "#eeeeee"
+  effects:
+  - !type:AddComponents
+    components:
+    - type: Spider
+
+- type: cellTrait
+  id: Regeneration
+  fusionIngredient: true
+  name: cell-trait-Regeneration-name
+  color: "#44ff88"
+  effects:
+  - !type:AddComponents
+    components:
+    - type: PassiveDamage
+      interval: 3s
+      allowedStates:
+      - Alive
+      damage:
+        types:
+          Blunt: -0.25
+          Slash: -0.25
+          Piercing: -0.25
+          Heat: -0.25
+          Shock: -0.25
+          Cold: -0.25
+          Caustic: -0.25
+
+- type: cellTrait
+  id: NoSlip
+  fusionIngredient: true
+  name: cell-trait-NoSlip-name
+  color: "#4488ff"
+  effects:
+  - !type:AddComponents
+    components:
+    - type: NoSlip
+
+- type: cellTrait
+  id: Reflection
+  fusionIngredient: true
+  name: cell-trait-Reflection-name
+  color: "#ffdd44"
+  effects:
+  - !type:AddComponents
+    components:
+    - type: Reflect
+      reflectProb: 0.5
+
+- type: cellTrait
+  id: Invisibility
+  fusionIngredient: true
+  name: cell-trait-Invisibility-name
+  color: "#aaddff"
+  effects:
+  - !type:AddComponents
+    components:
+    - type: Stealth
+    - type: StealthOnMove
+
+- type: cellTrait
+  id: Radiation
+  fusionIngredient: true
+  name: cell-trait-Radiation-name
+  color: "#88ff00"
+  effects:
+  - !type:AddComponents
+    components:
+    - type: RadiationSource
+
+- type: cellTrait
+  id: Reform
+  fusionIngredient: true
+  name: cell-trait-Reform-name
+  color: "#cc44ff"
+  effects:
+  - !type:AddComponents
+    components:
+    - type: Reform
+      actionPrototype: DionaReformAction
+      reformTime: 10
+      popupText: diona-reform-attempt
+      reformPrototype: MobDionaReformed
+
+- type: cellTrait
+  id: MessyDrinker
+  fusionIngredient: true
+  name: cell-trait-MessyDrinker-name
+  color: "#bb7744"
+  effects:
+  - !type:AddComponents
+    components:
+    - type: MessyDrinker
+
+- type: cellTrait
+  id: ParrotSpeech
+  fusionIngredient: true
+  name: cell-trait-ParrotSpeech-name
+  color: "#ff4444"
+  effects:
+  - !type:AddComponents
+    components:
+    - type: ActiveListener
+    - type: ParrotMemory
+    - type: ParrotListener
+    - type: Vocalizer
+
+- type: cellTrait
+  id: Bleating
+  fusionIngredient: true
+  name: cell-trait-Bleating-name
+  color: "#ddddaa"
+  effects:
+  - !type:AddComponents
+    components:
+    - type: BleatingAccent
+
+# Mutation-only traits (obtained through fusion).
+- type: cellTrait
+  id: ToxicMutation
+  fusionMutation: true
+  name: cell-trait-ToxicMutation-name
+  color: "#66ff00"
+  effects:
+  - !type:AddComponents
+    components:
+    - type: DamageContacts
+      damage:
+        types:
+          Poison: 1
+
+- type: cellTrait
+  id: BioLuminescentMutation
+  fusionMutation: true
+  name: cell-trait-BioLuminescentMutation-name
+  color: "#44ddff"
+  effects:
+  - !type:Glow
+    color: "#44ddff"
+    radius: 2
+
+- type: cellTrait
+  id: VolatileMutation
+  fusionMutation: true
+  name: cell-trait-VolatileMutation-name
+  color: "#ff4400"
+  effects:
+  - !type:AddComponents
+    components:
+    - type: TriggerOnMobstateChange
+      keyOut: xenobiology-volatile
+      mobState:
+      - Dead
+    - type: ExplodeOnTrigger
+      keysIn:
+      - xenobiology-volatile
+    - type: Explosive
+      explosionType: Default
+      totalIntensity: 10
+      intensitySlope: 5
+      maxIntensity: 20
+      canCreateVacuum: false
+      deleteAfterExplosion: false

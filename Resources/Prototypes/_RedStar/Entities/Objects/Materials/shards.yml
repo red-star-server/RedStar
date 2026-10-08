@@ -1,0 +1,39 @@
+- type: entity
+  parent: ShardBase
+  id: ShardGlassTitanium
+  name: titanium glass shard
+  description: A sharp fragment of titanium glass.
+  components:
+  - type: Sprite
+    color: "#6d7074"
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 4.5
+  - type: ToolRefinable
+    refineResult:
+    - id: SheetTitaniumGlass1
+  - type: DamageOnTrigger
+    damage:
+      types:
+        Piercing: 5.5
+
+- type: entity
+  parent: ShardBase
+  id: ShardGlassPlastitanium
+  name: plastitanium glass shard
+  description: A sharp fragment of plastitanium glass.
+  components:
+  - type: Sprite
+    color: "#5e6574"
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 4.5
+  - type: ToolRefinable
+    refineResult:
+    - id: SheetPlastitaniumGlass1
+  - type: DamageOnTrigger
+    damage:
+      types:
+        Piercing: 5.5

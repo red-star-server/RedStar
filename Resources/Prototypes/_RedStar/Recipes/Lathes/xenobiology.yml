@@ -1,0 +1,32 @@
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseResearchMachineRecipeCategory ]
+  id: CellSequencerCircuitboard
+  result: CellSequencerCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseResearchMachineRecipeCategory ]
+  id: CellularFusionCircuitboard
+  result: CellularFusionCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseResearchMachineRecipeCategory ]
+  id: MutagenicCellInjectorCircuitboard
+  result: MutagenicCellInjectorCircuitboard
+
+- type: latheRecipe
+  parent: BaseToolRecipe
+  id: BiopsyTool
+  result: BiopsyTool
+  categories:
+  - Tools
+  - Research
+
+- type: latheRecipe
+  id: PetriDish
+  result: PetriDish
+  categories:
+  - Tools
+  - Research
+  completetime: 2
+  materials:
+    Glass: 200

@@ -1,0 +1,33 @@
+- type: construction
+  parent: Girder
+  id: PlastitaniumWall
+  targetNode: plastitaniumWall
+
+- type: construction
+  parent: Girder
+  id: DiagonalPlastitaniumWall
+  name: construction-recipe-diagonal-plastitanium-wall
+  targetNode: diagonalPlastitaniumWall
+  canRotate: true
+
+- type: construction
+  parent: BaseWindow
+  id: TitaniumWindow
+  targetNode: titaniumWindow
+
+- type: construction
+  parent: BaseWindowDiagonal
+  id: TitaniumWindowDiagonal
+  name: construction-recipe-titanium-window-diagonal
+  targetNode: titaniumWindowDiagonal
+
+- type: construction
+  parent: BaseWindow
+  id: PlastitaniumWindow
+  targetNode: plastitaniumWindow
+
+- type: construction
+  parent: BaseWindowDiagonal
+  id: PlastitaniumWindowDiagonal
+  name: construction-recipe-plastitanium-window-diagonal
+  targetNode: plastitaniumWindowDiagonal

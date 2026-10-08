@@ -1,0 +1,29 @@
+- type: entity
+  id: CellSequencerCircuitboard
+  parent: BaseMachineCircuitboard
+  name: cell sequencer machine board
+  components:
+  - type: MachineBoard
+    prototype: CellSequencer
+    stackRequirements:
+      Manipulator: 2
+
+- type: entity
+  id: CellularFusionCircuitboard
+  parent: BaseMachineCircuitboard
+  name: cellular fusion machine board
+  components:
+  - type: MachineBoard
+    prototype: CellularFusion
+    stackRequirements:
+      Manipulator: 2
+
+- type: entity
+  id: MutagenicCellInjectorCircuitboard
+  parent: BaseMachineCircuitboard
+  name: mutagenic cell injector machine board
+  components:
+  - type: MachineBoard
+    prototype: MutagenicCellInjector
+    stackRequirements:
+      Manipulator: 2

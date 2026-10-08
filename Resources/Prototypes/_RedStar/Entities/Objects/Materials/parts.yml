@@ -1,0 +1,58 @@
+- type: entity
+  parent: PartBase
+  id: PartRodTitanium
+  name: titanium rod
+  suffix: Full
+  components:
+  - type: PhysicalComposition
+    materialComposition:
+      Titanium: 50
+  - type: Stack
+    stackType: TitaniumRod
+    baseLayer: base
+    layerStates:
+    - shuttlerods
+    - shuttlerods-2
+    - shuttlerods-3
+    - shuttlerods-4
+    - shuttlerods-5
+  - type: Sprite
+    sprite: _RedStar/Objects/Materials/parts.rsi
+    state: shuttlerods-5
+    layers:
+    - state: shuttlerods-5
+      map: ["base"]
+  - type: Item
+    sprite: _RedStar/Objects/Materials/parts.rsi
+    heldPrefix: shuttlerods
+  - type: Construction
+    graph: TitaniumRod
+    node: TitaniumRod
+  - type: FloorTile
+    outputs:
+    - Lattice
+    - FloorReinforced
+  - type: StaticPrice
+    price: 0
+  - type: StackPrice
+    price: 7.5
+
+- type: entity
+  parent: PartRodTitanium
+  id: PartRodTitanium10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: shuttlerods
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: PartRodTitanium
+  id: PartRodTitanium1
+  suffix: Single
+  components:
+  - type: Sprite
+    state: shuttlerods
+  - type: Stack
+    count: 1

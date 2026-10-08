@@ -403,6 +403,8 @@ ui-options-chat-window-opacity = Непрозрачность окна чата
 ui-options-speech-bubble-text-opacity = Непрозрачность текста речевого пузыря
 ui-options-speech-bubble-speaker-opacity = Непрозрачность диктора речевого пузыря
 ui-options-speech-bubble-background-opacity = Непрозрачность фона речевого пузыря
+ui-options-chat-preview = Показывать облачка предварительного просмотра при наборе сообщения
+ui-options-preview-bubble-background-opacity = Непрозрачность фона облачка предварительного просмотра
 ui-options-vacuum-overlay-intensity = Интенсивность эффекта вакуума
 
 ui-options-censor-nudity = Цензура обнажённых персонажей

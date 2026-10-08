@@ -9,3 +9,9 @@
   oreEntity: RawRedSpaceCrystalOre1
   minOreYield: 1
   maxOreYield: 2
+
+- type: ore
+  id: OreTitanium
+  oreEntity: RawTitaniumOre1
+  minOreYield: 1
+  maxOreYield: 3

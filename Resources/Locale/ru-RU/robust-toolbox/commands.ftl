@@ -540,6 +540,33 @@ cmd-net_watchent-help = Использование: { $command } <0|EntityUid>
 cmd-net_draw_interp-desc = Переключает отладочную отрисовку сетевой интерполяции.
 cmd-net_draw_interp-help = Использование: { $command } <0|EntityUid>
 
+cmd-renderlerp-desc = Включает отладочное отображение интерполяции при отрисовке.
+cmd-renderlerp-help = Использование: { $command } [0|all|self|EntityUid]
+cmd-renderlerp-enabled = Отображение интерполяции при отрисовке включено.
+cmd-renderlerp-disabled = Отображение интерполяции при отрисовке выключено.
+cmd-renderlerp-enabled-all = Отображение интерполяции включено для всех сущностей.
+cmd-renderlerp-enabled-entity = Отображение интерполяции включено для сущности { $entity }.
+cmd-renderlerp-error-no-entity = Нет управляемой сущности.
+cmd-renderlerp-type-network = Сетевая интерполяция
+cmd-renderlerp-type-prediction = Интерполяция предсказания
+cmd-renderlerp-type-correction = Коррекция предсказания
+cmd-renderlerp-correction-active = активна
+cmd-renderlerp-correction-inactive = неактивна
+cmd-renderlerp-overlay =
+    { $entity } { $type } a={ $alpha }
+    коррекция: { $correction } ошибка { $errorX },{ $errorY }, { $errorRotation }°
+    симуляция { $simulation } отрисовка { $rendered }
+    источник { $source } цель { $target }
+    родитель { $parent } координаты { $coordinates }
+    пространства { $sourceSpace }->{ $targetSpace } a={ $spaceAlpha }
+cmd-renderlerp-overlay-pose = ({ $x },{ $y },{ $rotation }°)
+
+cmd-net_mispredict-desc = Применяет локальное смещение, не отправляя его на сервер, для проверки плавности коррекции предсказания.
+cmd-net_mispredict-help = Использование: { $command } [active] [<x> <y> [угол поворота в градусах]]
+cmd-net_mispredict-error-no-transform = Нет управляемой сущности с компонентом Transform.
+cmd-net_mispredict-moved = Локальная сущность { $entity } смещена на ({ $x }, { $y }) и повёрнута на { $rotation } градусов без уведомления сервера.
+
+
 cmd-vram-desc = Отображает статистику использования видеопамяти игрой.
 cmd-vram-help = Использование: { $command }
 

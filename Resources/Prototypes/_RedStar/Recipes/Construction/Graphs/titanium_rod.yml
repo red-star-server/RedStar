@@ -1,0 +1,16 @@
+- type: constructionGraph
+  id: TitaniumRod
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: TitaniumRod
+      completed:
+      - !type:SetStackCount
+        amount: 2
+      steps:
+      - material: Titanium
+        amount: 1
+
+  - node: TitaniumRod
+    entity: PartRodTitanium
