@@ -59,3 +59,29 @@
   components:
   - type: Stack
     count: 1
+
+- type: entity
+  parent: OreBase
+  id: RawTitaniumOre
+  name: titanium ore
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: RawTitaniumOre
+  - type: Sprite
+    sprite: _RedStar/Objects/Materials/ore.rsi
+    state: titanium
+  - type: PhysicalComposition
+    materialComposition:
+      RawTitanium: 100
+  - type: Item
+    sprite: _RedStar/Objects/Materials/ore.rsi
+    heldPrefix: titanium
+
+- type: entity
+  parent: RawTitaniumOre
+  id: RawTitaniumOre1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1

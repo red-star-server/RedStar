@@ -8,6 +8,9 @@
     },
     "states": [
         {
+            "name": "rock_titanium"
+        },
+        {
             "name": "rock_bluespace_crystal"
         },
         {

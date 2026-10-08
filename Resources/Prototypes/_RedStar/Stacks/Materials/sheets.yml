@@ -1,0 +1,20 @@
+- type: stack
+  parent: BaseSheetStack
+  id: Plastitanium
+  name: stack-plastitanium
+  icon: { sprite: _RedStar/Objects/Materials/metal.rsi, state: plastitanium }
+  spawn: SheetPlastitanium1
+
+- type: stack
+  parent: BaseSheetStack
+  id: TitaniumGlass
+  name: stack-titaniumglass
+  icon: { sprite: _RedStar/Objects/Materials/glass.rsi, state: titaniumglass }
+  spawn: SheetTitaniumGlass1
+
+- type: stack
+  parent: BaseSheetStack
+  id: PlastitaniumGlass
+  name: stack-plastitaniumglass
+  icon: { sprite: _RedStar/Objects/Materials/glass.rsi, state: plastitaniumglass }
+  spawn: SheetPlastitaniumGlass1

@@ -11,6 +11,10 @@
   - IngotSilver1
   - MaterialBananium1
   - MaterialDiamond
+  # RS14-start
+  - SheetTitanium1
+  - SheetTitaniumGlass1
+  # RS14-end
 
 - type: latheRecipePack
   id: RGlassSmelting
@@ -25,3 +29,7 @@
   - SheetPlasteel1
   - SheetUGlass1
   - SheetRUGlass1
+  # RS14-start
+  - SheetPlastitanium1
+  - SheetPlastitaniumGlass1
+  # RS14-end

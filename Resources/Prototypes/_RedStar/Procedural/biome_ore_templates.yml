@@ -12,6 +12,19 @@
   radius: 4
 
 - type: biomeMarkerLayer
+  id: OreTitanium
+  entityMask:
+    AsteroidRock: AsteroidRockTitanium
+    WallRock: WallRockTitanium
+    WallRockChromite: WallRockChromiteTitanium
+    WallRockSand: WallRockSandTitanium
+    WallRockSnow: WallRockSnowTitanium
+  maxCount: 5
+  minGroupSize: 2
+  maxGroupSize: 4
+  radius: 4
+
+- type: biomeMarkerLayer
   id: OreRedSpaceCrystal
   entityMask:
     AsteroidRock: AsteroidRockRedSpaceCrystal

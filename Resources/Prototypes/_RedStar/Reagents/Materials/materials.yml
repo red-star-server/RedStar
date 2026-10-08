@@ -8,6 +8,15 @@
   price: 0.1175
 
 - type: material
+  id: Titanium
+  stackEntity: SheetTitanium1
+  name: materials-titanium
+  unit: materials-unit-sheet
+  icon: { sprite: _RedStar/Objects/Materials/metal.rsi, state: titanium }
+  color: "#bfbfbf"
+  price: 0.1175
+
+- type: material
   id: RedSpaceCrystal
   stackEntity: MaterialRedSpaceCrystal1
   name: materials-redspace-crystal

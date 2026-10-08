@@ -8,6 +8,17 @@
   },
   "states": [
     {
+      "name": "titanium"
+    },
+    {
+      "name": "titanium-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "titanium-inhand-right",
+      "directions": 4
+    },
+    {
       "name": "bluespace_crystal"
     },
     {
