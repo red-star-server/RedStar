@@ -1,12 +1,12 @@
 ﻿- type: entity
-  id: PlastitaniumWindowPlain
+  id: TitaniumWindow
   parent: PlastitaniumWindow
-  name: plastitanium window
+  name: titanium window
   components:
   - type: Sprite
-    sprite: _RedStar/Structures/Windows/window-plastitanium.rsi
+    sprite: _RedStar/Structures/Windows/window-titanium.rsi
   - type: Icon
-    sprite: _RedStar/Structures/Windows/window-plastitanium.rsi
+    sprite: _RedStar/Structures/Windows/window-titanium.rsi
     state: full
   - type: IconSmooth
     key: windows
@@ -33,14 +33,14 @@
             max: 2
 
 - type: entity
-  id: PlastitaniumWindowDiagonalPlain
+  id: TitaniumWindowDiagonalPlain
   parent: PlastitaniumWindowDiagonal
-  name: plastitanium window
+  name: titanium window
   components:
   - type: Sprite
-    sprite: _RedStar/Structures/Windows/window-diagonal-plastitanium.rsi
+    sprite: _RedStar/Structures/Windows/window-diagonal-titanium.rsi
   - type: Icon
-    sprite: _RedStar/Structures/Windows/window-diagonal-plastitanium.rsi
+    sprite: _RedStar/Structures/Windows/window-diagonal-titanium.rsi
     state: state0
   - type: Destructible
     thresholds:

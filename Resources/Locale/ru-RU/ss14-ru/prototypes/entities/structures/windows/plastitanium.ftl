@@ -1,19 +1,18 @@
-
-ent-PlastitaniumWindowBase = укреплённое пластитановое окно
+ent-PlastitaniumWindowBase = пластитановое окно
     .desc = Смотри, не заляпай.
-ent-PlastitaniumWindowSquareBase = укреплённое пластитановое окно
+ent-PlastitaniumWindowSquareBase = пластитановое окно
     .desc = { ent-PlastitaniumWindowBase.desc }
-ent-PlastitaniumWindowIndestructible = укреплённое пластитановое окно
+ent-PlastitaniumWindowIndestructible = пластитановое окно
     .desc = { ent-PlastitaniumWindowSquareBase.desc }
     .suffix = Неразрушимое
-ent-PlastitaniumWindow = укреплённое пластитановое окно
+ent-PlastitaniumWindow = пластитановое окно
     .desc = { ent-PlastitaniumWindowSquareBase.desc }
-ent-PlastitaniumWindowDiagonalBase = укреплённое пластитановое окно
+ent-PlastitaniumWindowDiagonalBase = пластитановое окно
     .desc = { ent-PlastitaniumWindowBase.desc }
     .suffix = Дигональ
-ent-PlastitaniumWindowDiagonalIndestructible = укреплённое пластитановое окно
+ent-PlastitaniumWindowDiagonalIndestructible = пластитановое окно
     .desc = { ent-PlastitaniumWindowDiagonalBase.desc }
     .suffix = Дигональ, Неразрушимое
-ent-PlastitaniumWindowDiagonal = укреплённое пластитановое окно
+ent-PlastitaniumWindowDiagonal = пластитановое окно
     .desc = { ent-PlastitaniumWindowDiagonalBase.desc }
     .suffix = Дигональ
