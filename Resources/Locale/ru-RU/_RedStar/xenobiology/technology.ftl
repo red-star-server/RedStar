@@ -1,1 +1,0 @@
-research-technology-xenobiology = Ксенобиология

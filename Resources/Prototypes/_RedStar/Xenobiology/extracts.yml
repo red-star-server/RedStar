@@ -5,15 +5,12 @@
   components:
   - type: Item
     size: Tiny
-  - type: XenobiologySample
 
 - type: entity
   parent: BaseSlimeExtract
   id: GraySlimeExtract
   name: gray slime extract
   components:
-  - type: XenobiologySample
-    researchValue: 500
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/gray.rsi
     state: extract
@@ -23,8 +20,6 @@
   id: OrangeSlimeExtract
   name: orange slime extract
   components:
-  - type: XenobiologySample
-    researchValue: 750
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/orange.rsi
     state: extract
@@ -43,8 +38,6 @@
   id: PurpleSlimeExtract
   name: purple slime extract
   components:
-  - type: XenobiologySample
-    researchValue: 750
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/purple.rsi
     state: extract
@@ -63,8 +56,6 @@
   id: BlueSlimeExtract
   name: blue slime extract
   components:
-  - type: XenobiologySample
-    researchValue: 750
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/blue.rsi
     state: extract
@@ -83,8 +74,6 @@
   id: MetalSlimeExtract
   name: metal slime extract
   components:
-  - type: XenobiologySample
-    researchValue: 1000
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/metal.rsi
     state: extract
@@ -97,8 +86,6 @@
   id: YellowSlimeExtract
   name: yellow slime extract
   components:
-  - type: XenobiologySample
-    researchValue: 1250
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/yellow.rsi
     state: extract
@@ -108,8 +95,6 @@
   id: DarkPurpleSlimeExtract
   name: dark purple slime extract
   components:
-  - type: XenobiologySample
-    researchValue: 1250
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/dark_purple.rsi
     state: extract
@@ -119,8 +104,6 @@
   id: DarkBlueSlimeExtract
   name: dark blue slime extract
   components:
-  - type: XenobiologySample
-    researchValue: 1250
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/dark_blue.rsi
     state: extract
@@ -130,8 +113,6 @@
   id: SilverSlimeExtract
   name: silver slime extract
   components:
-  - type: XenobiologySample
-    researchValue: 1250
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/silver.rsi
     state: extract
@@ -141,8 +122,6 @@
   id: BluespaceSlimeExtract
   name: bluespace slime extract
   components:
-  - type: XenobiologySample
-    researchValue: 1750
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/bluespace.rsi
     state: extract
@@ -152,8 +131,6 @@
   id: SepiaSlimeExtract
   name: sepia slime extract
   components:
-  - type: XenobiologySample
-    researchValue: 1750
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/sepia.rsi
     state: extract
@@ -163,8 +140,6 @@
   id: CeruleanSlimeExtract
   name: cerulean slime extract
   components:
-  - type: XenobiologySample
-    researchValue: 1750
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/cerulean.rsi
     state: extract
@@ -174,8 +149,6 @@
   id: PyriteSlimeExtract
   name: pyrite slime extract
   components:
-  - type: XenobiologySample
-    researchValue: 1750
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/pyrite.rsi
     state: extract
@@ -185,8 +158,6 @@
   id: RedSlimeExtract
   name: red slime extract
   components:
-  - type: XenobiologySample
-    researchValue: 1250
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/red.rsi
     state: extract
@@ -196,8 +167,6 @@
   id: GreenSlimeExtract
   name: green slime extract
   components:
-  - type: XenobiologySample
-    researchValue: 1250
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/green.rsi
     state: extract
@@ -207,8 +176,6 @@
   id: PinkSlimeExtract
   name: pink slime extract
   components:
-  - type: XenobiologySample
-    researchValue: 1250
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/pink.rsi
     state: extract
@@ -218,8 +185,6 @@
   id: GoldSlimeExtract
   name: gold slime extract
   components:
-  - type: XenobiologySample
-    researchValue: 1250
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/gold.rsi
     state: extract
@@ -229,8 +194,6 @@
   id: OilSlimeExtract
   name: oil slime extract
   components:
-  - type: XenobiologySample
-    researchValue: 1750
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/oil.rsi
     state: extract
@@ -240,8 +203,6 @@
   id: BlackSlimeExtract
   name: black slime extract
   components:
-  - type: XenobiologySample
-    researchValue: 1750
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/black.rsi
     state: extract
@@ -251,8 +212,6 @@
   id: LightPinkSlimeExtract
   name: light pink slime extract
   components:
-  - type: XenobiologySample
-    researchValue: 1750
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/light_pink.rsi
     state: extract
@@ -262,8 +221,6 @@
   id: AdamantineSlimeExtract
   name: adamantine slime extract
   components:
-  - type: XenobiologySample
-    researchValue: 1750
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/adamantine.rsi
     state: extract
@@ -273,8 +230,6 @@
   id: RainbowSlimeExtract
   name: rainbow slime extract
   components:
-  - type: XenobiologySample
-    researchValue: 3000
   - type: Sprite
     sprite: _RedStar/Mobs/XenoSlimes/rainbow.rsi
     state: extract
