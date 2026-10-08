@@ -14,6 +14,7 @@
     OreDiamond: 0.6
     OreBlueSpaceCrystal: 0.3
     OreRedSpaceCrystal: 0.3
+    OreTitanium: 0.6
     # RS14-end
 
 - type: oreDunGen

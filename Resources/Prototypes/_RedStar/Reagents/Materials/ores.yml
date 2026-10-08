@@ -8,6 +8,15 @@
   price: 5
 
 - type: material
+  id: RawTitanium
+  stackEntity: RawTitaniumOre1
+  name: materials-raw-titanium
+  unit: materials-unit-piece
+  icon: { sprite: _RedStar/Objects/Materials/ore.rsi, state: titanium }
+  color: "#6d7e8e"
+  price: 5
+
+- type: material
   id: RawRedSpaceCrystal
   stackEntity: RawRedSpaceCrystalOre1
   name: materials-raw-redspace-crystal

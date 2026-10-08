@@ -238,7 +238,7 @@
   id: WeaponAdvancedLaser
   result: WeaponAdvancedLaser
   materials:
-    Steel: 1500
+    Titanium: 1500 # RS14
     Glass: 1000
     Gold: 500
     Uranium: 300
@@ -267,7 +267,7 @@
   id: WeaponTemperatureGun
   result: WeaponTemperatureGun
   materials:
-    Steel: 2000
+    Titanium: 2000 # RS14
     Glass: 500
     Plastic: 500
     Gold: 500

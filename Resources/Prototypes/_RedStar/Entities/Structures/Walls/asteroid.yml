@@ -1,3 +1,4 @@
+# Bluespace
 - type: entity
   abstract: true
   id: BaseVeinBlueSpaceCrystal
@@ -45,6 +46,7 @@
       WallRockSand: WallRockSandBlueSpaceCrystal
       WallRockSnow: WallRockSnowBlueSpaceCrystal
 
+# Redspace
 - type: entity
   abstract: true
   id: BaseVeinRedSpaceCrystal
@@ -91,3 +93,51 @@
       WallRockChromite: WallRockChromiteRedSpaceCrystal
       WallRockSand: WallRockSandRedSpaceCrystal
       WallRockSnow: WallRockSnowRedSpaceCrystal
+
+# Titanium
+- type: entity
+  abstract: true
+  id: BaseVeinTitanium
+  suffix: Titanium
+  description: An ore vein rich with titanium.
+  components:
+  - type: OreVein
+    oreChance: 1.0
+    currentOre: OreTitanium
+  - type: Sprite
+    layers:
+    - state: rock_titanium
+      sprite: _RedStar/Structures/Walls/stone-ore.rsi
+      visible: false
+      map: [ "enum.MiningScannerVisualLayers.Overlay" ]
+
+- type: entity
+  parent: [ BaseVeinTitanium, AsteroidRock ]
+  id: AsteroidRockTitanium
+
+- type: entity
+  parent: [ BaseVeinTitanium, IronRock ]
+  id: IronRockTitanium
+
+- type: entity
+  parent: [ BaseVeinTitanium, WallRockSnow ]
+  id: WallRockSnowTitanium
+
+- type: entity
+  parent: [ BaseVeinTitanium, WallRockSand ]
+  id: WallRockSandTitanium
+
+- type: entity
+  parent: [ BaseVeinTitanium, WallRockChromite ]
+  id: WallRockChromiteTitanium
+
+- type: entity
+  parent: [ BaseVeinTitanium, WallRock ]
+  id: WallRockTitanium
+  components:
+  - type: EntityRemap
+    mask:
+      AsteroidRock: AsteroidRockTitanium
+      WallRockChromite: WallRockChromiteTitanium
+      WallRockSand: WallRockSandTitanium
+      WallRockSnow: WallRockSnowTitanium

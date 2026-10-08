@@ -40,6 +40,20 @@
               amount: 2
               doAfter: 3
 
+        # RS14-start
+        - to: titaniumWindowDiagonal
+          steps:
+            - material: TitaniumGlass
+              amount: 2
+              doAfter: 3
+
+        - to: plastitaniumWindowDiagonal
+          steps:
+            - material: PlastitaniumGlass
+              amount: 2
+              doAfter: 4
+        # RS14-end
+
     - node: windowDiagonal
       entity: WindowDiagonal
       edges:
@@ -161,3 +175,51 @@
               doAfter: 2
             - tool: Anchoring
               doAfter: 3
+
+    # RS14-start
+    - node: titaniumWindowDiagonal
+      entity: TitaniumWindowDiagonalPlain
+      edges:
+        - to: start
+          completed:
+            - !type:GivePrototype
+              prototype: SheetTitaniumGlass1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Welding
+              doAfter: 5
+            - tool: Screwing
+              doAfter: 2
+            - tool: Prying
+              doAfter: 2
+
+    - node: plastitaniumWindowDiagonal
+      entity: PlastitaniumWindowDiagonal
+      edges:
+        - to: start
+          completed:
+            - !type:GivePrototype
+              prototype: SheetPlastitaniumGlass1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Welding
+              doAfter: 8
+            - tool: Screwing
+              doAfter: 3
+            - tool: Cutting
+              doAfter: 3
+            - tool: Prying
+              doAfter: 4
+            - tool: Welding
+              doAfter: 7
+            - tool: Screwing
+              doAfter: 3
+            - tool: Prying
+              doAfter: 4
+            - tool: Welding
+              doAfter: 6
+            - tool: Anchoring
+              doAfter: 3
+    # RS14-end

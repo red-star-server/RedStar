@@ -1,0 +1,26 @@
+- type: material
+  id: Plastitanium
+  stackEntity: SheetPlastitanium1
+  name: materials-plastitanium
+  unit: materials-unit-sheet
+  icon: { sprite: _RedStar/Objects/Materials/metal.rsi, state: plastitanium }
+  color: "#4f4f52"
+  price: 0.1175
+
+- type: material
+  id: TitaniumGlass
+  stackEntity: SheetTitaniumGlass1
+  name: materials-titaniumglass
+  unit: materials-unit-sheet
+  icon: { sprite: _RedStar/Objects/Materials/glass.rsi, state: titaniumglass }
+  color: "#6d7074"
+  price: 0.1175
+
+- type: material
+  id: PlastitaniumGlass
+  stackEntity: SheetPlastitaniumGlass1
+  name: materials-plastitaniumglass
+  unit: materials-unit-sheet
+  icon: { sprite: _RedStar/Objects/Materials/glass.rsi, state: plastitaniumglass }
+  color: "#5e6574"
+  price: 0.1175

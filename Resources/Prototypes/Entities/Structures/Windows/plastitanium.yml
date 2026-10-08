@@ -100,6 +100,11 @@
   id: PlastitaniumWindow
   name: plastitanium window
   components:
+  # RS14-start
+  - type: Construction
+    graph: Window
+    node: plastitaniumWindow
+  # RS14-end
   - type: Destructible
     thresholds:
     - trigger:
@@ -111,12 +116,11 @@
           collection: WindowShatter
       - !type:SpawnEntitiesBehavior
         spawn:
-          ShardGlassReinforced:
+          # RS14-start
+          ShardGlassPlastitanium:
             min: 1
             max: 2
-          PartRodMetal:
-            min: 1
-            max: 2
+          # RS14-end
   - type: DamageVisuals
     thresholds: [5, 10, 20]
     damageDivisor: 20
@@ -191,6 +195,11 @@
   parent: [ PlastitaniumWindowDiagonalBase, StructureHealthBarrierStrong ]
   suffix: diagonal
   components:
+  # RS14-start
+  - type: Construction
+    graph: WindowDiagonal
+    node: plastitaniumWindowDiagonal
+  # RS14-end
   - type: Destructible
     thresholds:
     - trigger:
@@ -202,12 +211,11 @@
           collection: WindowShatter
       - !type:SpawnEntitiesBehavior
         spawn:
-          ShardGlassReinforced:
+          # RS14-start
+          ShardGlassPlastitanium:
             min: 1
             max: 2
-          PartRodMetal:
-            min: 1
-            max: 2
+          # RS14-end
   - type: DamageVisuals
     thresholds: [5, 10, 20]
     damageDivisor: 20

@@ -11,3 +11,10 @@
   name: stack-redspace-crystal-ore
   icon: { sprite: _RedStar/Objects/Materials/ore.rsi, state: redspace_crystal }
   spawn: RawRedSpaceCrystalOre1
+
+- type: stack
+  parent: BaseMediumStack
+  id: RawTitaniumOre
+  name: stack-titanium-ore
+  icon: { sprite: _RedStar/Objects/Materials/ore.rsi, state: titanium }
+  spawn: RawTitaniumOre1

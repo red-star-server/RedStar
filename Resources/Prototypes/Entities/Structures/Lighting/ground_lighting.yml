@@ -32,7 +32,7 @@
         - BulletImpassable
   - type: PointLight
     radius: 10
-    energy: 0.8
+    energy: 0.6 # RS14
     softness: 1.5 # RS14
     color: "#FFD6B3" # RS14
   - type: Anchorable
@@ -131,7 +131,7 @@
   - type: PointLight
     enabled: true
     radius: 15
-    energy: 1
+    energy: 0.75 # RS14
     softness: 0.9
     color: "#EEEEFF"
   - type: PoweredLight

@@ -10,8 +10,5 @@ public sealed partial class CellCollectorComponent : Component
     public TimeSpan Delay = TimeSpan.FromSeconds(4f);
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public int Usages = 1;
-
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public DamageSpecifier? Damage;
 }

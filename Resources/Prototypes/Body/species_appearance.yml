@@ -6,6 +6,10 @@
     layers:
     # Torso
     - map: [ "enum.HumanoidVisualLayers.Chest" ]
+    # RS14-start
+    - map: [ "underwearb" ]
+    - map: [ "underweart" ]
+    # RS14-end
 
     # Head
     - map: [ "enum.HumanoidVisualLayers.Head" ]
@@ -23,18 +27,14 @@
     # Underwear & clothing
     #- map: [ "enum.HumanoidVisualLayers.UndergarmentBottom" ] # RS14
     #- map: [ "enum.HumanoidVisualLayers.UndergarmentTop" ] # RS14
+    - map: ["jumpsuit"] # RS14
 
     # Extremities
     - map: ["enum.HumanoidVisualLayers.LFoot"]
     - map: ["enum.HumanoidVisualLayers.RFoot"]
+    - map: [ "socks" ] # RS14
     - map: ["enum.HumanoidVisualLayers.LHand"]
     - map: ["enum.HumanoidVisualLayers.RHand"]
-
-    # Equipped underwear
-    - map: [ "socks" ] # RS14
-    - map: [ "underwearb" ] # RS14
-    - map: [ "underweart" ] # RS14
-    - map: ["jumpsuit"] # RS14
 
     # Stuff that goes over the body but below equipment
     - map: ["enum.HumanoidVisualLayers.Overlay"]

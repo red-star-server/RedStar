@@ -249,12 +249,12 @@
           conditions:
             - !type:EntityAnchored { }
           steps:
-            - material: MetalRod
+            - material: TitaniumRod # RS14
               amount: 4
               doAfter: 1
             - tool: Screwing
               doAfter: 2
-            - material: Plasteel
+            - material: Plastitanium # RS14
               amount: 2
               doAfter: 1
 
@@ -262,14 +262,35 @@
           conditions:
             - !type:EntityAnchored { }
           steps:
-            - material: Steel
+            - material: Titanium # RS14
               amount: 1
               doAfter: 1
             - tool: Welding
               doAfter: 4
-            - material: Plasteel
+            - material: Plastitanium # RS14
               amount: 1
               doAfter: 1
+
+        # RS14-start
+        - to: plastitaniumWall
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Plastitanium
+              amount: 2
+              doAfter: 2
+
+        - to: diagonalPlastitaniumWall
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Plastitanium
+              amount: 2
+              doAfter: 2
+        # RS14-end
 
         - to: girder
           completed:
@@ -394,10 +415,10 @@
         - to: reinforcedGirder
           completed:
             - !type:SpawnPrototype
-              prototype: SheetPlasteel1
+              prototype: SheetPlastitanium1 # RS14
               amount: 2
             - !type:SpawnPrototype
-              prototype: PartRodMetal1
+              prototype: PartRodTitanium1 # RS14
               amount: 4
           steps:
             - tool: Welding
@@ -451,17 +472,18 @@
         - to: reinforcedGirder
           completed:
             - !type:SpawnPrototype
-              prototype: SheetPlasteel1
+              prototype: SheetPlastitanium1 # RS14
               amount: 1
-            - !type:SpawnPrototype
-              prototype: SheetSteel1
-              amount: 1
+            - !type:SpawnPrototype # RS14
+              prototype: SheetTitanium1 # RS14
+              amount: 1 # RS14
           steps:
           #To-Do: Add deconstruct visuals
             - tool: Welding
               doAfter: 5
             - tool: Cutting
               doAfter: 1
+
             - tool: Screwing
               doAfter: 1
             - tool: Welding
@@ -478,6 +500,52 @@
               doAfter: 1
             - tool: Cutting
               doAfter: 1
+
+    # RS14-start
+    - node: plastitaniumWall
+      entity: WallPlastitanium
+      edges:
+        - to: reinforcedGirder
+          completed:
+            - !type:GivePrototype
+              prototype: SheetPlastitanium1
+              amount: 2
+          steps: &PlastitaniumWallDeconstructionSteps
+            - tool: Welding
+              doAfter: 12
+            - tool: Cutting
+              doAfter: 3
+            - tool: Screwing
+              doAfter: 3
+            - tool: Prying
+              doAfter: 4
+            - tool: Welding
+              doAfter: 8
+            - tool: Anchoring
+              doAfter: 3
+            - tool: Cutting
+              doAfter: 3
+            - tool: Screwing
+              doAfter: 3
+            - tool: Welding
+              doAfter: 8
+            - tool: Prying
+              doAfter: 4
+            - tool: Anchoring
+              doAfter: 2
+            - tool: Welding
+              doAfter: 5
+
+    - node: diagonalPlastitaniumWall
+      entity: WallPlastitaniumDiagonal
+      edges:
+        - to: reinforcedGirder
+          completed:
+            - !type:GivePrototype
+              prototype: SheetPlastitanium1
+              amount: 2
+          steps: *PlastitaniumWallDeconstructionSteps
+    # RS14-end
 
     - node: wallrust
       entity: WallSolidRust

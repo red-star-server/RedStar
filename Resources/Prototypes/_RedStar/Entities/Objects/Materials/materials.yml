@@ -73,3 +73,40 @@
   components:
   - type: Stack
     count: 1
+
+- type: entity
+  parent: SheetMetalBase
+  id: SheetTitanium
+  name: titanium
+  description: A lightweight, strong metal refined from titanium ore.
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: Titanium
+    baseLayer: base
+    layerStates:
+    - titanium
+    - titanium_2
+    - titanium_3
+  - type: Sprite
+    sprite: _RedStar/Objects/Materials/metal.rsi
+    state: titanium_3
+    layers:
+    - state: titanium_3
+      map: ["base"]
+  - type: Item
+    sprite: _RedStar/Objects/Materials/metal.rsi
+    heldPrefix: titanium
+  - type: PhysicalComposition
+    materialComposition:
+      Titanium: 100
+
+- type: entity
+  parent: SheetTitanium
+  id: SheetTitanium1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1
+  - type: Sprite
+    state: titanium

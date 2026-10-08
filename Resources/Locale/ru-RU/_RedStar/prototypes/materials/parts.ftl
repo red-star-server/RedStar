@@ -1,0 +1,9 @@
+ent-PartRodTitanium = титановый стержень
+    .desc = Прочный стержень из титана для обшивки шаттла.
+    .suffix = Полный
+ent-PartRodTitanium10 = { ent-PartRodTitanium }
+    .desc = { ent-PartRodTitanium.desc }
+    .suffix = 10
+ent-PartRodTitanium1 = { ent-PartRodTitanium }
+    .desc = { ent-PartRodTitanium.desc }
+    .suffix = Один

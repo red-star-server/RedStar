@@ -24,6 +24,12 @@ public sealed partial class CellSequencerSystem : EntitySystem
     [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
 
     [SubscribeLocalEvent]
+    private void OnGetMaterialWhitelist(Entity<CellSequencerComponent> ent, ref GetMaterialWhitelistEvent args)
+    {
+        args.Whitelist.Add(ent.Comp.RequiredMaterial);
+    }
+
+    [SubscribeLocalEvent]
     private void OnOpened(Entity<CellSequencerComponent> ent, ref AfterActivatableUIOpenEvent args)
     {
         UpdateUI(ent);
