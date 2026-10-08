@@ -5,6 +5,7 @@ using Content.Server.Popups;
 using Content.Shared.Dataset;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Damage.Systems;
+using Content.Shared.Damage.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -99,7 +100,15 @@ public sealed partial class CellSystem : SharedCellSystem
             case CellCollectorDirection.Collection:
                 if (IsBiologicalSampleSource(args.Target.Value))
                 {
-                    AddCell(ent.Owner, GetOrCreateNativeSample(args.Target.Value));
+                    var source = args.Target.Value;
+                    var damage = GetCellularDamage(source);
+                    var native = GetOrCreateNativeSample(source);
+                    var stability = native.Stability * (1f - 0.5f * Math.Clamp(damage, 0f, 120f) / 100f);
+                    AddCell(ent.Owner, new Cell(native.PrototypeId, native.Color, native.Name,
+                        stability, native.Cost, native.Traits));
+
+                    if (ent.Comp.Damage is not null)
+                        _damageable.TryChangeDamage(source, ent.Comp.Damage);
                 }
                 else if (TryComp<CellContainerComponent>(args.Target.Value, out var targetComp))
                 {
@@ -107,9 +116,6 @@ public sealed partial class CellSystem : SharedCellSystem
                 }
 
                 _popup.PopupEntity(Loc.GetString("cell-collector-collected"), ent, args.Args.User);
-
-                if (ent.Comp.Damage is not null)
-                    _damageable.TryChangeDamage(args.Target.Value, ent.Comp.Damage);
 
                 break;
 
@@ -135,6 +141,15 @@ public sealed partial class CellSystem : SharedCellSystem
         return HasComp<BloodstreamComponent>(source) ||
             HasComp<CellTraitSourceComponent>(source) ||
             HasComp<NativeCellGenomeComponent>(source);
+    }
+
+    private float GetCellularDamage(EntityUid source)
+    {
+        if (!TryComp<DamageableComponent>(source, out var damageable) ||
+            !_damageable.GetPositiveDamage((source, damageable)).DamageDict.TryGetValue("Cellular", out var damage))
+            return 0f;
+
+        return (float) damage;
     }
 
     /// <summary>
@@ -220,6 +235,12 @@ public sealed partial class CellSystem : SharedCellSystem
                 }
 
                 var biological = IsBiologicalSampleSource(target.Owner);
+                if (biological && GetCellularDamage(target.Owner) >= 120f)
+                {
+                    if (popup)
+                        _popup.PopupEntity(Loc.GetString("cell-collector-sample-damaged"), ent, user, PopupType.SmallCaution);
+                    return false;
+                }
                 if (!biological && (target.Comp is not { AllowCollection: true }))
                 {
                     if (!popup)

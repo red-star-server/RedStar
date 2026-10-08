@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server._RedStar.Xenobiology.Components;
 using Content.Server._RedStar.Xenobiology.Events;
 using Content.Server.Power.EntitySystems;
@@ -58,6 +59,9 @@ public sealed partial class XenobiologyDatabaseSystem : EntitySystem
         {
             return false;
         }
+
+        if (database.Value.Comp.Cells.Any(entry => entry.Cell == cell))
+            return false;
 
         var nextId = database.Value.Comp.NextCellId++;
         database.Value.Comp.Cells.Add(new CellEntry(nextId, cell));

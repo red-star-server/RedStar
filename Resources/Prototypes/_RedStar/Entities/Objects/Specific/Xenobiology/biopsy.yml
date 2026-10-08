@@ -25,6 +25,7 @@
       types:
         Blunt: 2
         Bloodloss: 5
+        Cellular: 10
   - type: CellContainer
     allowTransfer: false
     allowCollection: false
