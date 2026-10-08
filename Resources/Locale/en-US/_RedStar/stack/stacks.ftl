@@ -25,3 +25,7 @@ stack-plastitaniumglass = { $amount ->
     [1] plastitanium glass sheet
     *[other] plastitanium glass sheets
 }
+stack-titanium-rods = { $amount ->
+    [1] titanium rod
+    *[other] titanium rods
+}

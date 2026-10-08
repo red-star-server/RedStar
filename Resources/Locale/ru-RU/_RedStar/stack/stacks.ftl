@@ -31,3 +31,8 @@ stack-plastitaniumglass = { $amount ->
     [few] листа пластитанового стекла
     *[other] листов пластитанового стекла
 }
+stack-titanium-rods = { $amount ->
+    [1] титановый стержень
+    [few] титановых стержня
+    *[other] титановых стержней
+}

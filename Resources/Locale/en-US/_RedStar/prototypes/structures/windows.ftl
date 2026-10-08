@@ -1,5 +1,5 @@
-﻿ent-PlastitaniumWindowPlain = plastitanium window
-    .desc = { ent-PlastitaniumWindow.desc }
-ent-PlastitaniumWindowDiagonalPlain = plastitanium window
-    .desc = { ent-PlastitaniumWindowDiagonal.desc }
+﻿ent-TitaniumWindow = titanium window
+    .desc = A strong window made from titanium glass.
+ent-TitaniumWindowDiagonalPlain = titanium window
+    .desc = { ent-TitaniumWindow.desc }
     .suffix = diagonal

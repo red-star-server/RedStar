@@ -1,5 +1,5 @@
-﻿ent-TitaniumWindowPlain = титановое окно
-    .desc = { ent-PlastitaniumWindow.desc }
+﻿ent-TitaniumWindow = титановое окно
+    .desc = Прочное окно из титанового стекла.
 ent-TitaniumWindowDiagonalPlain = титановое окно
-    .desc = { ent-PlastitaniumWindowDiagonal.desc }
+    .desc = { ent-TitaniumWindow.desc }
     .suffix = Диагональ

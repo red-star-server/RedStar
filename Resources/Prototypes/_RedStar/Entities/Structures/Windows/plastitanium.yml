@@ -3,6 +3,9 @@
   parent: PlastitaniumWindow
   name: titanium window
   components:
+  - type: Construction
+    graph: Window
+    node: titaniumWindow
   - type: Sprite
     sprite: _RedStar/Structures/Windows/window-titanium.rsi
   - type: Icon
@@ -25,10 +28,7 @@
           collection: WindowShatter
       - !type:SpawnEntitiesBehavior
         spawn:
-          ShardGlassReinforced:
-            min: 1
-            max: 2
-          PartRodMetal:
+          ShardGlassTitanium:
             min: 1
             max: 2
 
@@ -37,6 +37,9 @@
   parent: PlastitaniumWindowDiagonal
   name: titanium window
   components:
+  - type: Construction
+    graph: WindowDiagonal
+    node: titaniumWindowDiagonal
   - type: Sprite
     sprite: _RedStar/Structures/Windows/window-diagonal-titanium.rsi
   - type: Icon
@@ -53,9 +56,6 @@
           collection: WindowShatter
       - !type:SpawnEntitiesBehavior
         spawn:
-          ShardGlassReinforced:
-            min: 1
-            max: 2
-          PartRodMetal:
+          ShardGlassTitanium:
             min: 1
             max: 2
