@@ -101,7 +101,7 @@
   - type: LightBulb
     bulb: Bulb
     color: "#FFD1A3" # 4000K color temp
-    lightEnergy: 1.0
+    lightEnergy: 0.85 # RS14
     lightRadius: 6
     lightSoftness: 1.5 # RS14
     shortName: comp-light-bulb-incandescent
@@ -119,7 +119,7 @@
   - type: LightBulb
     bulb: Bulb
     color: "#EEEEFF"
-    lightEnergy: 1
+    lightEnergy: 0.75 # RS14
     lightRadius: 8
     lightSoftness: 1
     BurningTemperature: 350 #LEDs are colder than incandescent bulbs
@@ -157,7 +157,7 @@
   - type: LightBulb
     bulb: Bulb
     color: "#ff9833" # 2200k color temp
-    lightEnergy: 1
+    lightEnergy: 0.85 # RS14
     lightRadius: 6
     lightSoftness: 3
     shortName: comp-light-bulb-warm
@@ -220,7 +220,7 @@
   components:
   - type: LightBulb
     color: "#FFD6B3" # 5000K color temp # RS14
-    lightEnergy: 0.8
+    lightEnergy: 0.6 # RS14
     lightRadius: 10
     lightSoftness: 1.5 # RS14
     PowerUse: 25
@@ -258,7 +258,7 @@
   components:
   - type: LightBulb
     color: "#EEEEFF"
-    lightEnergy: 1
+    lightEnergy: 0.75 # RS14
     lightRadius: 15
     lightSoftness: 0.9
     BurningTemperature: 350
