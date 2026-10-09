@@ -1,0 +1,25 @@
+light_mode unshaded;
+
+uniform sampler2D SCREEN_TEXTURE;
+uniform sampler2D LIGHT_TEXTURE;
+
+void fragment() {
+    highp vec2 screen_uv = FRAGCOORD.xy * SCREEN_PIXEL_SIZE;
+    lowp vec4 scene = zTextureSpec(SCREEN_TEXTURE, screen_uv);
+    highp vec3 illumination = zTextureSpec(LIGHT_TEXTURE, screen_uv).rgb;
+
+    highp float peak = max(max(illumination.r, illumination.g), illumination.b);
+    highp float highlight = smoothstep(0.35, 1.05, peak);
+    highlight *= highlight;
+
+    highp float scene_level = dot(scene.rgb, vec3(0.2126, 0.7152, 0.0722));
+    highp float highlight_headroom = 1.0 - 0.35 * smoothstep(0.40, 0.80, scene_level);
+
+    // Accentuate strong local light without washing out already bright surfaces.
+    lowp vec3 lift = clamp(illumination, 0.0, 1.0) * (0.156 * highlight * highlight_headroom);
+    // The scene is already lit by the engine. Grade its shadows with the same
+    // light colors, but cap the grade so high-energy fixtures cannot amplify it.
+    highp float shadow_gain = min(pow(max(peak, 0.04), -0.15), 1.40);
+    highp vec3 light_tone = min(illumination * shadow_gain, vec3(1.0));
+    COLOR = vec4((scene.rgb + lift * (vec3(1.0) - scene.rgb)) * light_tone, scene.a);
+}

@@ -32,9 +32,14 @@
         - BulletImpassable
   - type: PointLight
     radius: 10
-    energy: 0.6 # RS14
+    energy: 0.8
     softness: 1.5 # RS14
     color: "#FFD6B3" # RS14
+  # RS14-start
+  - type: BloomLight
+    mask: { sprite: "_RedStar/Effects/LightMasks/64.rsi", state: light_circle }
+    maskOffset: 0, 0.05
+  # RS14-end
   - type: Anchorable
   - type: InteractionOutline
   - type: Destructible
@@ -131,7 +136,7 @@
   - type: PointLight
     enabled: true
     radius: 15
-    energy: 0.75 # RS14
+    energy: 1
     softness: 0.9
     color: "#EEEEFF"
   - type: PoweredLight

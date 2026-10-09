@@ -32,9 +32,10 @@
       shader: unshaded
   - type: PointLight
     color: "#FFD6B3" # 5000K color temp # RS14
-    energy: 0.6 # RS14
+    energy: 0.8
     radius: 10
     softness: 1.5 # RS14
+  - type: BloomLight # RS14
 #    offset: "0, 0.25"
   - type: RCDDeconstructable
     cost: 4
@@ -177,7 +178,7 @@
     hasLampOnSpawn: LedLightTube
   - type: PointLight
     radius: 15
-    energy: 0.75 # RS14
+    energy: 1
     softness: 0.9
     color: "#EEEEFF"
   - type: DamageOnInteract
@@ -193,7 +194,7 @@
   components:
   - type: PointLight
     radius: 15
-    energy: 0.75 # RS14
+    energy: 1
     softness: 0.9
     color: "#EEEEFF"
 
@@ -207,7 +208,7 @@
     hasLampOnSpawn: ExteriorLightTube
   - type: PointLight
     radius: 12
-    energy: 4.5
+    energy: 1.5 # RS14
     softness: 0.5
     color: "#B4FCF0"
   - type: DamageOnInteract
@@ -223,7 +224,7 @@
   components:
   - type: PointLight
     radius: 12
-    energy: 4.5
+    energy: 1.5 # RS14
     softness: 0.5
     color: "#B4FCF0"
 
@@ -237,7 +238,7 @@
     hasLampOnSpawn: SodiumLightTube
   - type: PointLight
     radius: 10
-    energy: 4
+    energy: 1.5 # RS14
     softness: 0.5
     color: "#FFAF38"
 
@@ -248,7 +249,7 @@
   components:
   - type: PointLight
     radius: 10
-    energy: 4
+    energy: 1.5 # RS14
     softness: 0.5
     color: "#FFAF38"
 
@@ -260,6 +261,12 @@
   suffix: Always Powered
   description: "An always powered light."
   components:
+    # RS14-start
+    - type: BloomLight
+      mask: { sprite: "_RedStar/Effects/LightMasks/64.rsi", state: light_point }
+      maskOffset: 0, 0.45
+      maskOpacity: 1
+    # RS14-end
     - type: AmbientSound
       volume: -15
       range: 2
@@ -270,7 +277,7 @@
       state: base
     - type: PointLight
       color: "#FFD1A3"
-      energy: 0.85 # RS14
+      energy: 1.0
       radius: 6
       softness: 1.5 # RS14
       enabled: true
@@ -355,7 +362,7 @@
   - type: PointLight
     enabled: true
     radius: 8
-    energy: 0.75 # RS14
+    energy: 1
     softness: 1
     color: "#EEEEFF"
   - type: PoweredLight
@@ -387,7 +394,7 @@
   - type: PointLight
     enabled: true
     radius: 6
-    energy: 0.85 # RS14
+    energy: 1
     softness: 3
     color: "#FF9833"
   - type: PoweredLight

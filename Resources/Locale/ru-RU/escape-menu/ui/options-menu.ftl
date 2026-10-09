@@ -109,6 +109,9 @@ ui-options-vp-vertical-fit-tooltip = Когда функция включена,
 ui-options-vp-low-res = Изображение низкого разрешения
 ui-options-parallax-low-quality = Низкокачественный параллакс (фон)
 ui-options-ambient-occlusion = Отображать окружающее затенение
+## RS14-start
+ui-options-light-atmosphere = Атмосферное освещение
+## RS14-end
 ui-options-fps-counter = Показать счётчик FPS
 ui-options-vp-width = Ширина окна игры:
 ui-options-hud-layout = Тип HUD:
