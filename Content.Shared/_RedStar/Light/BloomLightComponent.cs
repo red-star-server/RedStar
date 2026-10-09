@@ -20,11 +20,8 @@ public sealed partial class BloomLightComponent : Component, IComponentTreeEntry
     [DataField]
     public float MaskOpacity = 0.25f;
 
-    [DataField]
-    public bool Enabled = true;
-
     public EntityUid? TreeUid { get; set; }
     public DynamicTree<ComponentTreeEntry<BloomLightComponent>>? Tree { get; set; }
-    public bool AddToTree => Enabled;
+    public bool AddToTree => true;
     public bool TreeUpdateQueued { get; set; }
 }

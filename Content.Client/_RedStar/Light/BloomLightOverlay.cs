@@ -47,7 +47,7 @@ public sealed class BloomLightOverlay : Overlay
     {
         _visible.Clear();
         var state = new QueryState(this);
-        _tree.QueryAabb(ref state, Collect, args.MapId, args.WorldAABB.Enlarged(4f));
+        _tree.QueryAabb(ref state, Collect, args.MapId, args.WorldAABB);
         return _visible.Count > 0;
     }
 
