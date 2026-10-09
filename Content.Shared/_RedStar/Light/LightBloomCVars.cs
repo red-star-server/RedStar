@@ -10,7 +10,4 @@ public static class LightBloomCVars
 
     public static readonly CVarDef<float> BloomStrength =
         CVarDef.Create("light.bloom_strength", 0.7f, CVar.CLIENTONLY | CVar.ARCHIVE);
-
-    public static readonly CVarDef<bool> BloomCones =
-        CVarDef.Create("light.bloom_cones", true, CVar.CLIENTONLY | CVar.ARCHIVE);
 }

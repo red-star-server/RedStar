@@ -26,8 +26,6 @@ public sealed class BloomLightOverlay : Overlay
     private readonly List<LightToDraw> _visible = [];
 
     public float Strength = 0.7f;
-    public bool Cones = true;
-
     public override OverlaySpace Space => OverlaySpace.WorldSpaceEntities;
     public override bool RequestScreenTexture => true;
 
@@ -70,10 +68,7 @@ public sealed class BloomLightOverlay : Overlay
         foreach (var light in _visible)
         {
             handle.SetTransform(light.Matrix);
-            if (Cones && light.Cone != null)
-                DrawMask(handle, light.Cone, light.ConeOffset, light.Color, 0.55f);
-
-            DrawMask(handle, light.Point, light.PointOffset, light.Color, 1f);
+            DrawMask(handle, light.Mask, light.Offset, light.Color, light.Emission);
         }
 
         handle.UseShader(null);
@@ -105,14 +100,15 @@ public sealed class BloomLightOverlay : Overlay
 
         var bloom = entry.Component;
         var (_, _, matrix) = overlay._transforms.GetWorldPositionRotationMatrix(entry.Transform);
-        var cone = bloom.ShowCone ? overlay.GetTexture(bloom.ConeMask) : null;
+        var mask = overlay.GetTexture(bloom.Mask);
+        // Scale the halo by emitted light, using the standard wall light as the reference.
+        var emission = Math.Clamp(point.Energy * point.Radius * point.Radius / 60f, 0f, 1f);
         overlay._visible.Add(new LightToDraw(
             matrix,
-            overlay.GetTexture(bloom.PointMask),
-            cone,
-            bloom.PointOffset,
-            bloom.ConeOffset,
-            point.Color));
+            mask,
+            bloom.MaskOffset,
+            point.Color,
+            emission));
         return true;
     }
 
@@ -126,9 +122,8 @@ public sealed class BloomLightOverlay : Overlay
 
     private readonly record struct LightToDraw(
         Matrix3x2 Matrix,
-        Texture Point,
-        Texture? Cone,
-        Vector2 PointOffset,
-        Vector2 ConeOffset,
-        Color Color);
+        Texture Mask,
+        Vector2 Offset,
+        Color Color,
+        float Emission);
 }

@@ -12,19 +12,10 @@ namespace Content.Shared.Light;
 public sealed partial class BloomLightComponent : Component, IComponentTreeEntry<BloomLightComponent>
 {
     [DataField]
-    public SpriteSpecifier PointMask = new SpriteSpecifier.Rsi(new ResPath("_RedStar/Effects/LightMasks/64.rsi"), "light_point");
+    public SpriteSpecifier Mask = new SpriteSpecifier.Rsi(new ResPath("_RedStar/Effects/LightMasks/128.rsi"), "light_cone");
 
     [DataField]
-    public SpriteSpecifier ConeMask = new SpriteSpecifier.Rsi(new ResPath("_RedStar/Effects/LightMasks/128.rsi"), "light_cone");
-
-    [DataField]
-    public Vector2 PointOffset = new(0f, 0.45f);
-
-    [DataField]
-    public Vector2 ConeOffset = new(0f, -0.2f);
-
-    [DataField]
-    public bool ShowCone = true;
+    public Vector2 MaskOffset = new(0f, -0.2f);
 
     [DataField]
     public bool Enabled = true;

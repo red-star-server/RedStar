@@ -111,7 +111,6 @@ ui-options-parallax-low-quality = Low-quality Parallax (background)
 ui-options-ambient-occlusion = Show Ambient Occlusion
 ## RS14-start
 ui-options-light-bloom = Atmospheric light bloom
-ui-options-light-bloom-cones = Light cones
 ui-options-light-bloom-strength = Bloom strength
 ## RS14-end
 ui-options-fps-counter = Show FPS counter

@@ -17,7 +17,6 @@ public sealed partial class BloomLightSystem : EntitySystem
 
     private BloomLightOverlay? _overlay;
     private float _strength = 0.7f;
-    private bool _cones = true;
 
     public override void Initialize()
     {
@@ -26,12 +25,6 @@ public sealed partial class BloomLightSystem : EntitySystem
         {
             _strength = Math.Clamp(value, 0f, 1f);
             _overlay?.Strength = _strength;
-        }, true);
-        Subs.CVar(_config, LightBloomCVars.BloomCones, value =>
-        {
-            _cones = value;
-            if (_overlay != null)
-                _overlay.Cones = value;
         }, true);
         Subs.CVar(_config, LightBloomCVars.BloomEnabled, SetEnabled, true);
     }
@@ -60,7 +53,6 @@ public sealed partial class BloomLightSystem : EntitySystem
             _prototypes)
         {
             Strength = _strength,
-            Cones = _cones,
         };
         _overlays.AddOverlay(_overlay);
     }

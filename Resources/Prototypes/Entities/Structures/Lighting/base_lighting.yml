@@ -261,6 +261,11 @@
   suffix: Always Powered
   description: "An always powered light."
   components:
+    # RS14-start
+    - type: BloomLight
+      mask: { sprite: "_RedStar/Effects/LightMasks/64.rsi", state: light_point }
+      maskOffset: 0, 0.45
+    # RS14-end
     - type: AmbientSound
       volume: -15
       range: 2
