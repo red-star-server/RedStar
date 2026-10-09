@@ -18,7 +18,7 @@ public sealed partial class BloomLightComponent : Component, IComponentTreeEntry
     public Vector2 MaskOffset = new(0f, -0.2f);
 
     [DataField]
-    public float MaskOpacity = 0.25f;
+    public float MaskOpacity = 0.15f;
 
     public EntityUid? TreeUid { get; set; }
     public DynamicTree<ComponentTreeEntry<BloomLightComponent>>? Tree { get; set; }
