@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Light;
 using Robust.Shared.ComponentTrees;
 using Robust.Shared.Physics;
 

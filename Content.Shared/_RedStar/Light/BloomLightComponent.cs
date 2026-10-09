@@ -3,7 +3,7 @@ using Robust.Shared.ComponentTrees;
 using Robust.Shared.Physics;
 using Robust.Shared.Utility;
 
-namespace Content.Client.Light;
+namespace Content.Shared.Light;
 
 /// <summary>
 /// Client-side halo masks for a fixture's point light.
