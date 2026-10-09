@@ -1,4 +1,0 @@
-- type: shader
-  id: LightBloom
-  kind: source
-  path: "/Textures/_RedStar/Shaders/light_bloom.swsl"
