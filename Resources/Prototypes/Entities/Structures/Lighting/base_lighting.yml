@@ -35,6 +35,7 @@
     energy: 0.6 # RS14
     radius: 10
     softness: 1.5 # RS14
+  - type: BloomLight # RS14
 #    offset: "0, 0.25"
   - type: RCDDeconstructable
     cost: 4

@@ -24,6 +24,11 @@
                 <CheckBox Name="ViewportLowResCheckBox" Text="{Loc 'ui-options-vp-low-res'}" />
                 <CheckBox Name="ParallaxLowQualityCheckBox" Text="{Loc 'ui-options-parallax-low-quality'}" />
                 <CheckBox Name="AmbientOcclusionCheckBox" Text="{Loc 'ui-options-ambient-occlusion'}" />
+                <!-- RS14-start -->
+                <CheckBox Name="LightBloomCheckBox" Text="{Loc 'ui-options-light-bloom'}" />
+                <CheckBox Name="LightBloomConesCheckBox" Text="{Loc 'ui-options-light-bloom-cones'}" />
+                <ui:OptionSlider Name="LightBloomStrengthSlider" Title="{Loc 'ui-options-light-bloom-strength'}" />
+                <!-- RS14-end -->
                 <ui:OptionSlider Name="SharpnessSlider" Title="{Loc 'ui-options-sharpness'}" />
 
                 <!-- Interface -->
