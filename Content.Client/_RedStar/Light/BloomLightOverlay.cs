@@ -26,6 +26,7 @@ public sealed class BloomLightOverlay : Overlay
     private readonly List<LightToDraw> _visible = [];
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceEntities;
+    public override bool RequestScreenTexture => true;
 
     public BloomLightOverlay(
         BloomLightTreeSystem tree,
@@ -52,7 +53,11 @@ public sealed class BloomLightOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
+        if (ScreenTexture == null)
+            return;
+
         var handle = args.WorldHandle;
+        _shader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
         handle.UseShader(_shader);
 
         foreach (var light in _visible)
