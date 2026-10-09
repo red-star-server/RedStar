@@ -27,6 +27,8 @@ public sealed partial class GraphicsTab : Control
         // RS14-start
         Control.AddOptionCheckBox(LightBloomCVars.BloomEnabled, LightBloomCheckBox);
         Control.AddOptionPercentSlider(LightBloomCVars.BloomStrength, LightBloomStrengthSlider);
+        Control.AddOptionCheckBox(LightAtmosphereCVars.Enabled, LightAtmosphereCheckBox);
+        Control.AddOptionPercentSlider(LightAtmosphereCVars.Strength, LightAtmosphereStrengthSlider);
         // RS14-end
         Control.AddOption(new OptionFullscreen(Control, _cfg, FullscreenCheckBox));
         Control.AddOption(new OptionLightingQuality(Control, _cfg, DropDownLightingQuality));

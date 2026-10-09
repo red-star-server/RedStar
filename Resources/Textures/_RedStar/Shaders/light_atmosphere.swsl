@@ -1,0 +1,16 @@
+uniform sampler2D SCREEN_TEXTURE;
+uniform sampler2D LIGHT_TEXTURE;
+uniform lowp float strength;
+
+void fragment() {
+    lowp vec2 screen_uv = FRAGCOORD.xy * SCREEN_PIXEL_SIZE;
+    lowp vec4 scene = zTextureSpec(SCREEN_TEXTURE, screen_uv);
+    lowp vec3 illumination = clamp(zTextureSpec(LIGHT_TEXTURE, screen_uv).rgb, 0.0, 1.0);
+
+    lowp float light_level = max(max(illumination.r, illumination.g), illumination.b);
+    lowp float response = smoothstep(0.08, 0.75, light_level);
+
+    // Colored light lifts surfaces while the headroom keeps highlights from clipping.
+    lowp vec3 lift = illumination * (0.32 * strength * response);
+    COLOR = vec4(scene.rgb + lift * (vec3(1.0) - scene.rgb), scene.a);
+}

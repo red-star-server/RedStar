@@ -112,6 +112,8 @@ ui-options-ambient-occlusion = Отображать окружающее зат�
 ## RS14-start
 ui-options-light-bloom = Атмосферное свечение ламп
 ui-options-light-bloom-strength = Сила свечения
+ui-options-light-atmosphere = Атмосферная обработка света
+ui-options-light-atmosphere-strength = Сила обработки света
 ## RS14-end
 ui-options-fps-counter = Показать счётчик FPS
 ui-options-vp-width = Ширина окна игры:
