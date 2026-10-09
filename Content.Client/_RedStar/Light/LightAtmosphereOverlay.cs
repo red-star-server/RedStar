@@ -29,7 +29,6 @@ public sealed class LightAtmosphereOverlay(IPrototypeManager prototypes) : Overl
         var handle = args.WorldHandle;
         _shader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
         _shader.SetParameter("LIGHT_TEXTURE", args.Viewport.LightRenderTarget.Texture);
-        _shader.SetParameter("zoom", args.Viewport.Eye!.Zoom.X);
         handle.UseShader(_shader);
         handle.DrawRect(args.WorldBounds, Color.White);
         handle.UseShader(null);

@@ -38,6 +38,7 @@
   # RS14-start
   - type: BloomLight
     mask: { sprite: "_RedStar/Effects/LightMasks/64.rsi", state: light_circle }
+    maskOffset: 0, 0.05
   # RS14-end
   - type: Anchorable
   - type: InteractionOutline
