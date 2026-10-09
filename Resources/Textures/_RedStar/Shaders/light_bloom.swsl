@@ -5,7 +5,7 @@ void fragment() {
 
     lowp float light_level = max(max(lightSample.r, lightSample.g), lightSample.b);
     lowp float visibility = smoothstep(0.12, 0.85, light_level);
-    lowp float alpha = mask.a * 0.60 * visibility;
+    lowp float alpha = mask.a * 0.38 * visibility;
     lowp vec3 warmth = vec3(1.0, 0.91, 0.76);
 
     COLOR = vec4(mix(mask.rgb, warmth, 0.16), alpha);
