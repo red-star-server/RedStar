@@ -35,11 +35,7 @@
     energy: 0.8
     radius: 10
     softness: 1.5 # RS14
-  # RS14-start
-  - type: BloomLight
-    haloMask: { sprite: "_RedStar/Effects/LightMasks/64.rsi", state: light_point }
-    haloOffset: 0, 0.45
-  # RS14-end
+  - type: BloomLight # RS14
 #    offset: "0, 0.25"
   - type: RCDDeconstructable
     cost: 4
@@ -269,7 +265,7 @@
     - type: BloomLight
       mask: { sprite: "_RedStar/Effects/LightMasks/64.rsi", state: light_point }
       maskOffset: 0, 0.45
-      haloMask: null
+      maskOpacity: 1
     # RS14-end
     - type: AmbientSound
       volume: -15

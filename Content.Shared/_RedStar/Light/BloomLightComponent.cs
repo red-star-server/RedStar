@@ -6,7 +6,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Light;
 
 /// <summary>
-/// Client-side halo masks for a fixture's point light.
+/// Client-side mask for a fixture's point light.
 /// </summary>
 [RegisterComponent]
 public sealed partial class BloomLightComponent : Component, IComponentTreeEntry<BloomLightComponent>
@@ -18,10 +18,7 @@ public sealed partial class BloomLightComponent : Component, IComponentTreeEntry
     public Vector2 MaskOffset = new(0f, -0.2f);
 
     [DataField]
-    public SpriteSpecifier? HaloMask;
-
-    [DataField]
-    public Vector2 HaloOffset;
+    public float MaskOpacity = 0.25f;
 
     [DataField]
     public bool Enabled = true;

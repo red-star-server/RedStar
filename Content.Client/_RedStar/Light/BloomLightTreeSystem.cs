@@ -20,13 +20,6 @@ public sealed partial class BloomLightTreeSystem : ComponentTreeSystem<BloomLigh
         var texture = _sprites.Frame0(entry.Component.Mask);
         var size = new Vector2(texture.Width, texture.Height) / EyeManager.PixelsPerMeter;
         var radius = size.Length() / 2f + entry.Component.MaskOffset.Length();
-        if (entry.Component.HaloMask is { } halo)
-        {
-            var haloTexture = _sprites.Frame0(halo);
-            var haloSize = new Vector2(haloTexture.Width, haloTexture.Height) / EyeManager.PixelsPerMeter;
-            radius = Math.Max(radius, haloSize.Length() / 2f + entry.Component.HaloOffset.Length());
-        }
-
         var half = new Vector2(radius);
         return new Box2(pos - half, pos + half);
     }

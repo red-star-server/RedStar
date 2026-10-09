@@ -10,7 +10,7 @@ using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 namespace Content.Client.Light;
 
 /// <summary>
-/// Draws fixture halos over the lit world. The engine light map shades the masks with the world.
+/// Draws one fixture mask over the lit world. The engine light map shades it with the world.
 /// </summary>
 public sealed class BloomLightOverlay : Overlay
 {
@@ -50,15 +50,7 @@ public sealed class BloomLightOverlay : Overlay
         foreach (var light in _visible)
         {
             handle.SetTransform(light.Matrix);
-            if (light.HaloMask is { } halo)
-            {
-                DrawMask(handle, light.Mask, light.Offset, light.Color.WithAlpha(light.Color.A * 0.25f));
-                DrawMask(handle, halo, light.HaloOffset, light.Color);
-            }
-            else
-            {
-                DrawMask(handle, light.Mask, light.Offset, light.Color);
-            }
+            DrawMask(handle, light.Mask, light.Offset, light.Color.WithAlpha(light.Color.A * light.Opacity));
         }
 
         handle.SetTransform(Matrix3x2.Identity);
@@ -93,9 +85,8 @@ public sealed class BloomLightOverlay : Overlay
             matrix,
             mask,
             bloom.MaskOffset,
-            bloom.HaloMask is { } halo ? overlay.GetTexture(halo) : null,
-            bloom.HaloOffset,
-            point.Color));
+            point.Color,
+            bloom.MaskOpacity));
         return true;
     }
 
@@ -105,7 +96,6 @@ public sealed class BloomLightOverlay : Overlay
         Matrix3x2 Matrix,
         Texture Mask,
         Vector2 Offset,
-        Texture? HaloMask,
-        Vector2 HaloOffset,
-        Color Color);
+        Color Color,
+        float Opacity);
 }
