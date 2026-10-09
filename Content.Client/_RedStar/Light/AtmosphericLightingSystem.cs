@@ -6,16 +6,18 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Light;
 
-public sealed partial class BloomLightSystem : EntitySystem
+public sealed partial class AtmosphericLightingSystem : EntitySystem
 {
     [Dependency] private IConfigurationManager _config = default!;
     [Dependency] private IOverlayManager _overlays = default!;
+    [Dependency] private IPrototypeManager _prototypes = default!;
     [Dependency] private BloomLightTreeSystem _tree = default!;
     [Dependency] private SpriteSystem _sprites = default!;
     [Dependency] private TransformSystem _transforms = default!;
-    [Dependency] private IPrototypeManager _prototypes = default!;
 
-    private BloomLightOverlay? _overlay;
+    private LightAtmosphereOverlay? _atmosphere;
+    private BloomLightOverlay? _bloom;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -26,25 +28,35 @@ public sealed partial class BloomLightSystem : EntitySystem
     {
         if (!enabled)
         {
-            if (_overlay == null)
+            if (_bloom != null)
+            {
+                _overlays.RemoveOverlay(_bloom);
+                _bloom.Dispose();
+                _bloom = null;
+            }
+
+            if (_atmosphere == null)
                 return;
 
-            _overlays.RemoveOverlay(_overlay);
-            _overlay.Dispose();
-            _overlay = null;
+            _overlays.RemoveOverlay(_atmosphere);
+            _atmosphere.Dispose();
+            _atmosphere = null;
+
             return;
         }
 
-        if (_overlay != null)
+        if (_atmosphere != null)
             return;
 
-        _overlay = new BloomLightOverlay(
+        _atmosphere = new LightAtmosphereOverlay(_prototypes);
+        _bloom = new BloomLightOverlay(
             _tree,
             GetEntityQuery<PointLightComponent>(),
             _sprites,
             _transforms,
             _prototypes);
-        _overlays.AddOverlay(_overlay);
+        _overlays.AddOverlay(_atmosphere);
+        _overlays.AddOverlay(_bloom);
     }
 
     public override void Shutdown()
