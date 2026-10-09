@@ -16,7 +16,15 @@ void fragment() {
     highp float focus = 1.0 - smoothstep(220.0 / zoom, 600.0 / zoom, distance);
     highp float weight = highlight * mix(0.25, 1.0, focus);
 
-    // Accentuate strong local light without lifting the ambient floor.
-    lowp vec3 lift = clamp(illumination, 0.0, 1.0) * (0.24 * weight);
+    highp float scene_level = dot(scene.rgb, vec3(0.2126, 0.7152, 0.0722));
+    highp float highlight_headroom = 1.0 - 0.35 * smoothstep(0.40, 0.80, scene_level);
+
+    // Accentuate strong local light without washing out already bright surfaces.
+    lowp vec3 lift = clamp(illumination, 0.0, 1.0) * (0.24 * weight * highlight_headroom);
     COLOR = vec4(scene.rgb + lift * (vec3(1.0) - scene.rgb), scene.a);
+
+    // The engine applies its light map again after fragment(). Shape that second pass
+    // with one scalar to keep colored lights saturated and lift only the deepest midtones.
+    highp float light_level = max(max(lightSample.r, lightSample.g), lightSample.b);
+    lightSample *= min(pow(max(light_level, 0.04), -0.15), 1.40);
 }

@@ -26,7 +26,6 @@ public sealed class BloomLightOverlay : Overlay
     private readonly List<LightToDraw> _visible = [];
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceEntities;
-    public override bool RequestScreenTexture => true;
 
     public BloomLightOverlay(
         BloomLightTreeSystem tree,
@@ -53,11 +52,7 @@ public sealed class BloomLightOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        if (ScreenTexture == null)
-            return;
-
         var handle = args.WorldHandle;
-        _shader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
         handle.UseShader(_shader);
 
         foreach (var light in _visible)
@@ -72,11 +67,10 @@ public sealed class BloomLightOverlay : Overlay
         handle.SetTransform(Matrix3x2.Identity);
     }
 
-    private void DrawMask(DrawingHandleWorld handle, Texture texture, Vector2 offset, Color color, float maskStrength)
+    private static void DrawMask(DrawingHandleWorld handle, Texture texture, Vector2 offset, Color color, float maskStrength)
     {
-        _shader.SetParameter("mask_strength", maskStrength);
         var size = new Vector2(texture.Width, texture.Height) / EyeManager.PixelsPerMeter;
-        handle.DrawTexture(texture, offset - size / 2f, color);
+        handle.DrawTexture(texture, offset - size / 2f, color.WithAlpha(color.A * maskStrength));
     }
 
     private Texture GetTexture(SpriteSpecifier sprite)
