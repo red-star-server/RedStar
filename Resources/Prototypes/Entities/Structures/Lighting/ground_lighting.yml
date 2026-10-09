@@ -35,6 +35,10 @@
     energy: 0.8
     softness: 1.5 # RS14
     color: "#FFD6B3" # RS14
+  # RS14-start
+  - type: BloomLight
+    mask: { sprite: "_RedStar/Effects/LightMasks/64.rsi", state: light_circle }
+  # RS14-end
   - type: Anchorable
   - type: InteractionOutline
   - type: Destructible
