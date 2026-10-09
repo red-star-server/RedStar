@@ -59,7 +59,7 @@ job-name-no-id = нет ID
 job-name-prisoner = заключённый
 job-name-roboticist = робототехник
 job-name-unknown = неизвестно
-job-name-sus = Sus
+job-name-sus = Подозрительный
 job-name-virologist = вирусолог
 job-name-zookeeper = зоотехник
 

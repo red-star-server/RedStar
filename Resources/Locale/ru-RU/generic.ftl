@@ -23,4 +23,4 @@ generic-disabled = Отключено
 
 generic-no-access = Недостаточно доступа.
 
-character-limit-label = {$count}/{$max}
+character-limit-label = { $count }/{ $max }

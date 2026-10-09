@@ -40,3 +40,5 @@ ent-StatusEffectForcedItemMaid = принудительный костюм го�
     .desc = { ent-MobStatusEffectDebuff.desc }
 ent-StatusEffectForcedItemArmblade = принудительная рука-клинок
     .desc = { ent-MobStatusEffectDebuff.desc }
+ent-StatusEffectHorrorFormArmblades = принудительные руки-клинки
+    .desc = { ent-MobStatusEffectDebuff.desc }

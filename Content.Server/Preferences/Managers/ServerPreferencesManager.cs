@@ -8,6 +8,7 @@ using Content.Server.Database;
 using Content.Shared._Corvax.TTS;
 using Content.Shared._Sirena.Humanoid;
 using Content.Shared.Body;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.CCVar;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Humanoid;
@@ -126,7 +127,7 @@ namespace Content.Server.Preferences.Managers
             // Corvax-TTS-end
 
             var voice = profile.Voice ?? speciesPrototype.DefaultSoundsBySex[(int)sex];
-            if (!_prototypeManager.HasIndex(voice))
+            if (!_prototypeManager.HasIndex<EmoteSoundsPrototype>(voice))
                 voice = speciesPrototype.DefaultSoundsBySex[(int)sex];
 
             if (profile.OrganMarkings?.RootElement is { } element)

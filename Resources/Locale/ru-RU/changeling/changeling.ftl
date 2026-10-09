@@ -55,6 +55,7 @@ changeling-takeover-doafter = [color=red]{ CAPITALIZE(SUBJECT($user)) } заби
 
 # stings
 changeling-sting-success = Мы незаметно жалим { THE($target) }!
+changeling-sting-hemotoxin = Вы чувствуете резкую боль в груди!
 
 # mindshield
 changeling-fake-mindshield-enabled = Мы излучаем сигналы, имитирующие защиту разума.
@@ -68,3 +69,10 @@ changeling-action-fail-generic = Мы не можем сделать это пр
 changeling-paused-map-name = Карта хранения личностей генокрада
 changeling-cocoon-success = Мы запечатываем { $target } в плотяную гробницу.
 changeling-cocoon-doafter = [color=red]{ CAPITALIZE(SUBJECT($user)) } покрывает { $target } плотяной массой![/color]
+
+# horror transformation
+changeling-horror-alert-time-name = Оставшееся время
+changeling-horror-alert-time-desc = Когда счётчик достигнет нуля, наши силы иссякнут.
+changeling-horror-force-transform-self = Наши силы иссякли, и мы больше не можем поддерживать эту форму.
+changeling-horror-force-transform-others = Плоть { $user } быстро сморщивается и отмирает.
+changeling-horror-transform-fail = У нас недостаточно запасённой ДНК, чтобы раскрыть свою истинную форму.
