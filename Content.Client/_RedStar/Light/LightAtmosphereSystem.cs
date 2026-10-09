@@ -12,19 +12,9 @@ public sealed partial class LightAtmosphereSystem : EntitySystem
     [Dependency] private IPrototypeManager _prototypes = default!;
 
     private LightAtmosphereOverlay? _overlay;
-    private float _strength = 0.55f;
-
     public override void Initialize()
     {
         base.Initialize();
-
-        Subs.CVar(_config, LightAtmosphereCVars.Strength, value =>
-        {
-            _strength = Math.Clamp(value, 0f, 1f);
-            if (_overlay != null)
-                _overlay.Strength = _strength;
-        }, true);
-
         Subs.CVar(_config, LightAtmosphereCVars.Enabled, SetEnabled, true);
     }
 
@@ -44,7 +34,7 @@ public sealed partial class LightAtmosphereSystem : EntitySystem
         if (_overlay != null)
             return;
 
-        _overlay = new LightAtmosphereOverlay(_prototypes) { Strength = _strength };
+        _overlay = new LightAtmosphereOverlay(_prototypes);
         _overlays.AddOverlay(_overlay);
     }
 

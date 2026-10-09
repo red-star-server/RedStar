@@ -18,6 +18,12 @@ public sealed partial class BloomLightComponent : Component, IComponentTreeEntry
     public Vector2 MaskOffset = new(0f, -0.2f);
 
     [DataField]
+    public SpriteSpecifier? HaloMask;
+
+    [DataField]
+    public Vector2 HaloOffset;
+
+    [DataField]
     public bool Enabled = true;
 
     public EntityUid? TreeUid { get; set; }

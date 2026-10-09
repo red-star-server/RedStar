@@ -16,17 +16,10 @@ public sealed partial class BloomLightSystem : EntitySystem
     [Dependency] private TransformSystem _transforms = default!;
 
     private BloomLightOverlay? _overlay;
-    private float _strength = 0.7f;
-
     public override void Initialize()
     {
         base.Initialize();
-        Subs.CVar(_config, LightBloomCVars.BloomStrength, value =>
-        {
-            _strength = Math.Clamp(value, 0f, 1f);
-            _overlay?.Strength = _strength;
-        }, true);
-        Subs.CVar(_config, LightBloomCVars.BloomEnabled, SetEnabled, true);
+        Subs.CVar(_config, LightAtmosphereCVars.Enabled, SetEnabled, true);
     }
 
     private void SetEnabled(bool enabled)
@@ -50,10 +43,7 @@ public sealed partial class BloomLightSystem : EntitySystem
             GetEntityQuery<PointLightComponent>(),
             _sprites,
             _transforms,
-            _prototypes)
-        {
-            Strength = _strength,
-        };
+            _prototypes);
         _overlays.AddOverlay(_overlay);
     }
 

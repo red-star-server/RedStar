@@ -1,5 +1,4 @@
 uniform sampler2D SCREEN_TEXTURE;
-uniform lowp float strength;
 uniform lowp float mask_strength;
 
 void fragment() {
@@ -11,7 +10,7 @@ void fragment() {
     lowp vec3 background = zTextureSpec(SCREEN_TEXTURE, screen_uv).rgb;
     lowp float luminance = dot(background, vec3(0.2126, 0.7152, 0.0722));
     lowp float visibility = mix(0.22, 1.0, smoothstep(0.015, 0.22, luminance));
-    lowp float alpha = mask.a * strength * mask_strength * visibility;
+    lowp float alpha = mask.a * mask_strength * visibility;
     lowp vec3 warmth = vec3(1.0, 0.91, 0.76);
 
     COLOR = vec4(mix(mask.rgb, warmth, 0.16), alpha);

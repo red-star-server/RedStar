@@ -1,6 +1,5 @@
 uniform sampler2D SCREEN_TEXTURE;
 uniform sampler2D LIGHT_TEXTURE;
-uniform lowp float strength;
 uniform highp float zoom;
 
 void fragment() {
@@ -18,6 +17,6 @@ void fragment() {
     highp float weight = highlight * mix(0.25, 1.0, focus);
 
     // Accentuate strong local light without lifting the ambient floor.
-    lowp vec3 lift = clamp(illumination, 0.0, 1.0) * (0.24 * strength * weight);
+    lowp vec3 lift = clamp(illumination, 0.0, 1.0) * (0.24 * weight);
     COLOR = vec4(scene.rgb + lift * (vec3(1.0) - scene.rgb), scene.a);
 }

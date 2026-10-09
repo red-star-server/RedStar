@@ -11,7 +11,7 @@ using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 namespace Content.Client.Light;
 
 /// <summary>
-/// Draws fixture halos over the lit world. The shader uses the screen image to soften halos in darkness.
+/// Draws fixture halos over the lit world. The engine light map shades the masks with the world.
 /// </summary>
 public sealed class BloomLightOverlay : Overlay
 {
@@ -25,7 +25,6 @@ public sealed class BloomLightOverlay : Overlay
     private readonly Dictionary<SpriteSpecifier, Texture> _textures = [];
     private readonly List<LightToDraw> _visible = [];
 
-    public float Strength = 0.7f;
     public override OverlaySpace Space => OverlaySpace.WorldSpaceEntities;
     public override bool RequestScreenTexture => true;
 
@@ -47,9 +46,6 @@ public sealed class BloomLightOverlay : Overlay
     protected override bool BeforeDraw(in OverlayDrawArgs args)
     {
         _visible.Clear();
-        if (Strength <= 0f)
-            return false;
-
         var state = new QueryState(this);
         _tree.QueryAabb(ref state, Collect, args.MapId, args.WorldAABB.Enlarged(4f));
         return _visible.Count > 0;
@@ -62,13 +58,14 @@ public sealed class BloomLightOverlay : Overlay
 
         var handle = args.WorldHandle;
         _shader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
-        _shader.SetParameter("strength", Strength);
         handle.UseShader(_shader);
 
         foreach (var light in _visible)
         {
             handle.SetTransform(light.Matrix);
             DrawMask(handle, light.Mask, light.Offset, light.Color, light.Emission);
+            if (light.HaloMask != null)
+                DrawMask(handle, light.HaloMask, light.HaloOffset, light.Color, light.Emission * 0.45f);
         }
 
         handle.UseShader(null);
@@ -107,6 +104,8 @@ public sealed class BloomLightOverlay : Overlay
             matrix,
             mask,
             bloom.MaskOffset,
+            bloom.HaloMask is { } halo ? overlay.GetTexture(halo) : null,
+            bloom.HaloOffset,
             point.Color,
             emission));
         return true;
@@ -124,6 +123,8 @@ public sealed class BloomLightOverlay : Overlay
         Matrix3x2 Matrix,
         Texture Mask,
         Vector2 Offset,
+        Texture? HaloMask,
+        Vector2 HaloOffset,
         Color Color,
         float Emission);
 }

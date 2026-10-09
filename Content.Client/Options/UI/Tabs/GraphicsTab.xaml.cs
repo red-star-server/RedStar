@@ -24,12 +24,7 @@ public sealed partial class GraphicsTab : Control
         var vSync = Control.AddOptionCheckBox(CVars.DisplayVSync, VSyncCheckBox);
         Control.AddOption(new OptionSliderIntInput(Control, _cfg, CVars.DisplayMaxFPS, MaxFpsInput, 0, 500));
         Control.AddOptionCheckBox(CCVars.AmbientOcclusion, AmbientOcclusionCheckBox);
-        // RS14-start
-        Control.AddOptionCheckBox(LightBloomCVars.BloomEnabled, LightBloomCheckBox);
-        Control.AddOptionPercentSlider(LightBloomCVars.BloomStrength, LightBloomStrengthSlider);
-        Control.AddOptionCheckBox(LightAtmosphereCVars.Enabled, LightAtmosphereCheckBox);
-        Control.AddOptionPercentSlider(LightAtmosphereCVars.Strength, LightAtmosphereStrengthSlider);
-        // RS14-end
+        Control.AddOptionCheckBox(LightAtmosphereCVars.Enabled, LightAtmosphereCheckBox); // RS14
         Control.AddOption(new OptionFullscreen(Control, _cfg, FullscreenCheckBox));
         Control.AddOption(new OptionLightingQuality(Control, _cfg, DropDownLightingQuality));
 

@@ -110,10 +110,7 @@ ui-options-vp-low-res = Low-resolution viewport
 ui-options-parallax-low-quality = Low-quality Parallax (background)
 ui-options-ambient-occlusion = Show Ambient Occlusion
 ## RS14-start
-ui-options-light-bloom = Atmospheric light bloom
-ui-options-light-bloom-strength = Bloom strength
-ui-options-light-atmosphere = Atmospheric light processing
-ui-options-light-atmosphere-strength = Light processing strength
+ui-options-light-atmosphere = Atmospheric lighting
 ## RS14-end
 ui-options-fps-counter = Show FPS counter
 ui-options-vp-width = Viewport width:
