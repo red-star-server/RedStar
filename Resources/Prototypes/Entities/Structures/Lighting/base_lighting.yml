@@ -212,7 +212,7 @@
     hasLampOnSpawn: ExteriorLightTube
   - type: PointLight
     radius: 12
-    energy: 4.5
+    energy: 1.5 # RS14
     softness: 0.5
     color: "#B4FCF0"
   - type: DamageOnInteract
@@ -228,7 +228,7 @@
   components:
   - type: PointLight
     radius: 12
-    energy: 4.5
+    energy: 1.5 # RS14
     softness: 0.5
     color: "#B4FCF0"
 
