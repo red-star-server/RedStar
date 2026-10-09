@@ -5,8 +5,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Light;
 
 /// <summary>
-/// Accentuates strong local lighting. The engine applies its light map to the sampled scene again,
-/// preserving the deeper shadows of the atmospheric pass.
+/// Accentuates strong local lighting and shapes shadows from the engine's light map.
 /// </summary>
 public sealed class LightAtmosphereOverlay(IPrototypeManager prototypes) : Overlay
 {

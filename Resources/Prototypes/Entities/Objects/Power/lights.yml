@@ -288,7 +288,7 @@
   components:
   - type: LightBulb
     color: "#FFAF38"
-    lightEnergy: 4
+    lightEnergy: 1.5 # RS14
     lightRadius: 10
     lightSoftness: 0.5
     BurningTemperature: 350

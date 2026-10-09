@@ -242,7 +242,7 @@
     hasLampOnSpawn: SodiumLightTube
   - type: PointLight
     radius: 10
-    energy: 4
+    energy: 1.5 # RS14
     softness: 0.5
     color: "#FFAF38"
 
@@ -253,7 +253,7 @@
   components:
   - type: PointLight
     radius: 10
-    energy: 4
+    energy: 1.5 # RS14
     softness: 0.5
     color: "#FFAF38"
 

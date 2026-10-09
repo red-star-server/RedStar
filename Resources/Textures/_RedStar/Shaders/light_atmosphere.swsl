@@ -1,3 +1,5 @@
+light_mode unshaded;
+
 uniform sampler2D SCREEN_TEXTURE;
 uniform sampler2D LIGHT_TEXTURE;
 uniform highp float zoom;
@@ -21,10 +23,9 @@ void fragment() {
 
     // Accentuate strong local light without washing out already bright surfaces.
     lowp vec3 lift = clamp(illumination, 0.0, 1.0) * (0.24 * weight * highlight_headroom);
-    COLOR = vec4(scene.rgb + lift * (vec3(1.0) - scene.rgb), scene.a);
-
-    // The engine applies its light map again after fragment(). Shape that second pass
-    // with one scalar to keep colored lights saturated and lift only the deepest midtones.
-    highp float light_level = max(max(lightSample.r, lightSample.g), lightSample.b);
-    lightSample *= min(pow(max(light_level, 0.04), -0.15), 1.40);
+    // The scene is already lit by the engine. Grade its shadows with the same
+    // light colors, but cap the grade so high-energy fixtures cannot amplify it.
+    highp float shadow_gain = min(pow(max(peak, 0.04), -0.15), 1.40);
+    highp vec3 light_tone = min(illumination * shadow_gain, vec3(1.0));
+    COLOR = vec4((scene.rgb + lift * (vec3(1.0) - scene.rgb)) * light_tone, scene.a);
 }
