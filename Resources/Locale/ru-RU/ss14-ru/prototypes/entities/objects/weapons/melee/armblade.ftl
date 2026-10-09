@@ -3,3 +3,6 @@ ent-Armblade = рука-клинок
 ent-ArmbladeDull = { ent-Armblade }
     .desc = { ent-Armblade.desc }
     .suffix = Затупленная
+ent-ArmbladeHorror = { ent-Armblade }
+    .desc = { ent-Armblade.desc }
+    .suffix = Чудовище

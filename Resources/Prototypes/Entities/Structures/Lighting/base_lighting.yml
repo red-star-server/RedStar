@@ -127,7 +127,7 @@
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: SmartLight
-  - type: WirelessNetworkConnection
+  - type: WirelessNetwork
     range: 200
   - type: DeviceLinkSink
     ports:
@@ -265,7 +265,7 @@
     - type: BloomLight
       mask: { sprite: "_RedStar/Effects/LightMasks/64.rsi", state: light_point }
       maskOffset: 0, 0.45
-      maskOpacity: 0.5
+      maskOpacity: 0.1
     # RS14-end
     - type: AmbientSound
       volume: -15
@@ -331,7 +331,7 @@
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: SmartLight
-  - type: WirelessNetworkConnection
+  - type: WirelessNetwork
     range: 200
   - type: Appearance
   - type: PoweredLightVisuals

@@ -1,7 +1,5 @@
 ent-BaseRoundTable = { ent-BaseStructure }
     .desc = { ent-BaseStructure.desc }
-ent-FurnitureTableFrame = каркас стола
-    .desc = Металлическая основа для столешницы.
 ent-TableRoundPlastic = круглый пластиковый стол
     .desc = Берегите его от огня: пластик легко воспламеняется.
 ent-TableRoundWood = круглый деревянный стол
@@ -24,3 +22,5 @@ ent-TableReinforcedPlasmaGlass = стол из укреплённого плаз
     .desc = Прочная столешница из укреплённого плазменного стекла на четырёх ножках.
 ent-TableReinforcedUraniumGlass = стол из укреплённого уранового стекла
     .desc = Прочная столешница из укреплённого уранового стекла на четырёх ножках. Радиоактивна!
+ent-FurnitureTableFrame = каркас стола
+    .desc = Металлическая основа для столешницы.
