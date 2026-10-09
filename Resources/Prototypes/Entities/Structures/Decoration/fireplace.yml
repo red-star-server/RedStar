@@ -35,11 +35,6 @@
     radius: 3
     energy: 3
     color: "#FF6F00"
-  # RS14-start
-  - type: BloomLight
-    mask: { sprite: "_RedStar/Effects/LightMasks/64.rsi", state: light_point }
-    maskOffset: 0, 0
-  # RS14-end
   - type: Damageable
     damageModifierSet: RockMod
   - type: Destructible
