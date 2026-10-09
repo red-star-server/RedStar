@@ -1,0 +1,20 @@
+uniform sampler2D SCREEN_TEXTURE;
+
+void fragment() {
+    lowp vec4 mask = zTexture(UV);
+    if (mask.a <= 0.001)
+        discard;
+
+    highp vec2 pixel = TEXTURE_PIXEL_SIZE;
+    lowp float alpha = mask.a * 0.6;
+    alpha += zTexture(UV + vec2(pixel.x, 0.0)).a * 0.1;
+    alpha += zTexture(UV - vec2(pixel.x, 0.0)).a * 0.1;
+    alpha += zTexture(UV + vec2(0.0, pixel.y)).a * 0.1;
+    alpha += zTexture(UV - vec2(0.0, pixel.y)).a * 0.1;
+
+    lowp vec3 scene = zTextureSpec(SCREEN_TEXTURE, FRAGCOORD.xy * SCREEN_PIXEL_SIZE).rgb;
+    lowp float luminance = dot(scene, vec3(0.2126, 0.7152, 0.0722));
+    lowp float headroom = 1.0 - 0.4 * smoothstep(0.55, 0.9, luminance);
+
+    COLOR = vec4(mask.rgb, alpha * headroom);
+}

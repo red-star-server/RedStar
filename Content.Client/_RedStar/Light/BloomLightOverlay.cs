@@ -4,6 +4,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Physics;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
@@ -14,25 +15,31 @@ namespace Content.Client.Light;
 /// </summary>
 public sealed class BloomLightOverlay : Overlay
 {
+    private static readonly ProtoId<ShaderPrototype> ShaderId = "BloomLightMask";
+
     private readonly BloomLightTreeSystem _tree;
     private readonly EntityQuery<PointLightComponent> _lights;
     private readonly SpriteSystem _sprites;
     private readonly TransformSystem _transforms;
+    private readonly ShaderInstance _shader;
     private readonly Dictionary<SpriteSpecifier, Texture> _textures = [];
     private readonly List<LightToDraw> _visible = [];
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceEntities;
+    public override bool RequestScreenTexture => true;
 
     public BloomLightOverlay(
         BloomLightTreeSystem tree,
         EntityQuery<PointLightComponent> lights,
         SpriteSystem sprites,
-        TransformSystem transforms)
+        TransformSystem transforms,
+        IPrototypeManager prototypes)
     {
         _tree = tree;
         _lights = lights;
         _sprites = sprites;
         _transforms = transforms;
+        _shader = prototypes.Index(ShaderId).InstanceUnique();
         ZIndex = (int) DrawDepth.Effects;
     }
 
@@ -46,14 +53,26 @@ public sealed class BloomLightOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
+        if (ScreenTexture == null)
+            return;
+
         var handle = args.WorldHandle;
+        _shader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
+        handle.UseShader(_shader);
         foreach (var light in _visible)
         {
             handle.SetTransform(light.Matrix);
             DrawMask(handle, light.Mask, light.Offset, light.Color.WithAlpha(light.Color.A * light.Opacity));
         }
 
+        handle.UseShader(null);
         handle.SetTransform(Matrix3x2.Identity);
+    }
+
+    protected override void DisposeBehavior()
+    {
+        _shader.Dispose();
+        base.DisposeBehavior();
     }
 
     private static void DrawMask(DrawingHandleWorld handle, Texture texture, Vector2 offset, Color color)

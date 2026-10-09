@@ -2,6 +2,7 @@ using Content.Shared.Light;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Configuration;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Light;
 
@@ -12,6 +13,7 @@ public sealed partial class BloomLightSystem : EntitySystem
     [Dependency] private BloomLightTreeSystem _tree = default!;
     [Dependency] private SpriteSystem _sprites = default!;
     [Dependency] private TransformSystem _transforms = default!;
+    [Dependency] private IPrototypeManager _prototypes = default!;
 
     private BloomLightOverlay? _overlay;
     public override void Initialize()
@@ -40,7 +42,8 @@ public sealed partial class BloomLightSystem : EntitySystem
             _tree,
             GetEntityQuery<PointLightComponent>(),
             _sprites,
-            _transforms);
+            _transforms,
+            _prototypes);
         _overlays.AddOverlay(_overlay);
     }
 
