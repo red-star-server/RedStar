@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Light;
 
 /// <summary>
-/// Lifts illuminated surfaces using the color of the local light buffer.
+/// Accentuates strong local lighting using the color of the light buffer.
 /// </summary>
 public sealed class LightAtmosphereOverlay(IPrototypeManager prototypes) : Overlay
 {
@@ -15,7 +15,7 @@ public sealed class LightAtmosphereOverlay(IPrototypeManager prototypes) : Overl
 
     public float Strength = 0.55f;
 
-    public override OverlaySpace Space => OverlaySpace.WorldSpace;
+    public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowEntities;
     public override bool RequestScreenTexture => true;
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
@@ -32,6 +32,7 @@ public sealed class LightAtmosphereOverlay(IPrototypeManager prototypes) : Overl
         _shader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
         _shader.SetParameter("LIGHT_TEXTURE", args.Viewport.LightRenderTarget.Texture);
         _shader.SetParameter("strength", Strength);
+        _shader.SetParameter("zoom", args.Viewport.Eye!.Zoom.X);
         handle.UseShader(_shader);
         handle.DrawRect(args.WorldBounds, Color.White);
         handle.UseShader(null);

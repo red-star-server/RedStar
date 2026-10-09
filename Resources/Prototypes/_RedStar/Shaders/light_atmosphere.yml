@@ -1,0 +1,4 @@
+- type: shader
+  id: LightAtmosphere
+  kind: source
+  path: "/Textures/_RedStar/Shaders/light_atmosphere.swsl"

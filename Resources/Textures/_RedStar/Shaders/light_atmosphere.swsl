@@ -1,16 +1,23 @@
 uniform sampler2D SCREEN_TEXTURE;
 uniform sampler2D LIGHT_TEXTURE;
 uniform lowp float strength;
+uniform highp float zoom;
 
 void fragment() {
-    lowp vec2 screen_uv = FRAGCOORD.xy * SCREEN_PIXEL_SIZE;
+    highp vec2 screen_uv = FRAGCOORD.xy * SCREEN_PIXEL_SIZE;
     lowp vec4 scene = zTextureSpec(SCREEN_TEXTURE, screen_uv);
-    lowp vec3 illumination = clamp(zTextureSpec(LIGHT_TEXTURE, screen_uv).rgb, 0.0, 1.0);
+    highp vec3 illumination = zTextureSpec(LIGHT_TEXTURE, screen_uv).rgb;
 
-    lowp float light_level = max(max(illumination.r, illumination.g), illumination.b);
-    lowp float response = smoothstep(0.08, 0.75, light_level);
+    highp float peak = max(max(illumination.r, illumination.g), illumination.b);
+    highp float highlight = smoothstep(0.35, 1.05, peak);
+    highlight *= highlight;
 
-    // Colored light lifts surfaces while the headroom keeps highlights from clipping.
-    lowp vec3 lift = illumination * (0.32 * strength * response);
+    highp vec2 viewport_center = 0.5 / SCREEN_PIXEL_SIZE;
+    highp float distance = length(FRAGCOORD.xy - viewport_center);
+    highp float focus = 1.0 - smoothstep(220.0 / zoom, 600.0 / zoom, distance);
+    highp float weight = highlight * mix(0.25, 1.0, focus);
+
+    // Accentuate strong local light without lifting the ambient floor.
+    lowp vec3 lift = clamp(illumination, 0.0, 1.0) * (0.24 * strength * weight);
     COLOR = vec4(scene.rgb + lift * (vec3(1.0) - scene.rgb), scene.a);
 }
