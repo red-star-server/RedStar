@@ -1,7 +1,7 @@
 # General
 vending-machine-category-all = Все
 
-# Clothing & accessories
+# Clothing
 vending-machine-category-clothing = Одежда
 vending-machine-category-uniforms = Униформа
 vending-machine-category-outerwear = Верхняя одежда
@@ -13,7 +13,18 @@ vending-machine-category-accessories = Аксессуары
 vending-machine-category-bags = Сумки
 vending-machine-category-pins = Значки
 
-# Food & kitchen
+# Food
+vending-machine-category-food = Еда
+vending-machine-category-snacks = Закуски
+
+# Drinks
+vending-machine-category-hot-drinks = Горячие напитки
+vending-machine-category-soft-drinks = Безалкогольные напитки
+vending-machine-category-beer-and-wine = Пиво и вино
+vending-machine-category-spirits = Крепкий алкоголь
+vending-machine-category-bar-supplies = Барные принадлежности
+
+# Kitchen
 vending-machine-category-fresh-ingredients = Свежие ингредиенты
 vending-machine-category-dry-ingredients = Сухие ингредиенты
 vending-machine-category-condiments = Приправы
@@ -21,12 +32,6 @@ vending-machine-category-cutlery = Столовые приборы
 vending-machine-category-tableware = Посуда
 vending-machine-category-drinkware = Посуда для напитков
 vending-machine-category-kitchen-tools = Кухонные принадлежности
-
-# Drinks
-vending-machine-category-soft-drinks = Безалкогольные напитки
-vending-machine-category-beer-and-wine = Пиво и вино
-vending-machine-category-spirits = Крепкий алкоголь
-vending-machine-category-bar-supplies = Барные принадлежности
 
 # Botanical
 vending-machine-category-fruit-seeds = Семена фруктов
@@ -47,6 +52,7 @@ vending-machine-category-protective-equipment = Защитное снаряже�
 vending-machine-category-restraints = Средства фиксации
 vending-machine-category-shields = Щиты
 vending-machine-category-grenades = Гранаты
+vending-machine-category-ammunition = Боеприпасы
 
 # Engineering
 vending-machine-category-tools = Инструменты
