@@ -61,7 +61,7 @@ public sealed partial class ThermobathMenu : FancyWindow
         };
         CoolingIndicator.PanelOverride = _coolingIndicatorStyle;
 
-        PowerButton.StateChanged += enabled => OnPowerChanged?.Invoke(enabled);
+        PowerButton.OnToggled += args => OnPowerChanged?.Invoke(args.Pressed);
 
         _setpointInput.IsValid = float.IsFinite;
         _setpointInput.OnValueChanged += OnSetpointInputChanged;
@@ -83,7 +83,7 @@ public sealed partial class ThermobathMenu : FancyWindow
         UpdateStatusIndicators();
     }
 
-    public void SetPowerSwitchState(bool enabled) => PowerButton.IsOn = enabled;
+    public void SetPowerSwitchState(bool enabled) => PowerButton.Pressed = enabled;
 
     public void SetTemperatureLimits(float min, float max)
     {
