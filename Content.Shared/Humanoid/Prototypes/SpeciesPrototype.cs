@@ -122,6 +122,29 @@ public sealed partial class SpeciesPrototype : IPrototype
     /// </summary>
     [DataField]
     public int MaxAge = 120;
+
+    // RS14-start
+    [DataField]
+    public System.Numerics.Vector2 BaseScale = new(1f, 1f);
+
+    [DataField]
+    public float MinHeight = 0.8f;
+
+    [DataField]
+    public float MaxHeight = 1.2f;
+
+    [DataField]
+    public float DefaultHeight = 1f;
+
+    [DataField]
+    public float DefaultWidth = 1f;
+
+    [DataField]
+    public bool ScaleWidth = true;
+
+    [DataField]
+    public bool ScaleHeight = true;
+    // RS14-end
 }
 
 public enum SpeciesNaming : byte
