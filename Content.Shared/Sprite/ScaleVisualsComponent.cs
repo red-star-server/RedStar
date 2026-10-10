@@ -24,4 +24,15 @@ public sealed partial class ScaleVisualsComponent : Component
     [DataField]
     [ViewVariables]
     public Vector2? OriginalScale;
+
+    // RS14-start
+    [DataField, AutoNetworkedField]
+    public Vector2 SpeciesScale = Vector2.One;
+
+    [DataField, AutoNetworkedField]
+    public Vector2 ProfileScale = Vector2.One;
+
+    [DataField, AutoNetworkedField]
+    public Vector2 ComputedScale = Vector2.One;
+    // RS14-end
 }

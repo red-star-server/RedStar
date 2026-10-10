@@ -1,4 +1,6 @@
 using System.Linq;
+using Content.Client._CD.Records.UI; // RS14
+using Content.Shared._CD.Body.Systems; // RS14
 using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Guidebook;
@@ -222,8 +224,29 @@ public sealed partial class HumanoidProfileEditor
         UpdateVoiceControls();
         UpdateTTSVoicesControls(); // Corvax-TTS
         UpdateSpeciesGuidebookIcon();
+        UpdateHeightControls(); // RS14
         ReloadPreview();
     }
+
+    // RS14-start
+    private void SetProfileHeight(float height)
+    {
+        Profile = Profile?.WithHeight(height);
+        ReloadProfilePreview();
+    }
+
+    private void UpdateHeightControls()
+    {
+        if (Profile is null)
+            return;
+
+        var species = _prototypeManager.Index(Profile.Species);
+        var percent = (Profile.Height - species.MinHeight) / (species.MaxHeight - species.MinHeight);
+        CDHeightSlider.Value = percent;
+        CDHeightLabel.Text = UnitConversion.GetMetricAndImperialDisplayFromScale(Profile.Height * species.BaseScale.Y);
+        CDPullSpeedReductionLabel.Text = SmallCharacterSystem.GetPullSpeedPenaltyDisplayFromScale(Profile.Height);
+    }
+    // RS14-end
 
     private void SetAge(int newAge)
     {

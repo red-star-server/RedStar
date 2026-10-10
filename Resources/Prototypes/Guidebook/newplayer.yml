@@ -32,6 +32,7 @@
   children:
   - YourFirstCharacter
   - Species
+  - Records # RS14
 
 - type: guideEntry
   id: YourFirstCharacter

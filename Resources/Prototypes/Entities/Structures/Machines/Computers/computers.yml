@@ -356,6 +356,16 @@
     color: "#1f8c28"
   - type: Computer
     board: MedicalRecordsComputerCircuitboard
+  # RS14-start
+  - type: CharacterRecordConsole
+    consoleType: Medical
+  - type: UserInterface
+    interfaces:
+      enum.CharacterRecordConsoleKey.Key:
+        type: CharacterRecordConsoleBoundUserInterface
+  - type: ActivatableUI
+    key: enum.CharacterRecordConsoleKey.Key
+  # RS14-end
   - type: AmbientMusicMarkerMedical
 
 - type: entity
@@ -367,12 +377,16 @@
   - type: CriminalRecordsConsole
   - type: UserInterface
     interfaces:
-      enum.CriminalRecordsConsoleKey.Key:
-        type: CriminalRecordsConsoleBoundUserInterface
+      enum.CharacterRecordConsoleKey.Key: # RS14
+        type: CharacterRecordConsoleBoundUserInterface # RS14
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: ActivatableUI
-    key: enum.CriminalRecordsConsoleKey.Key
+    key: enum.CharacterRecordConsoleKey.Key # RS14
+  # RS14-start
+  - type: CharacterRecordConsole
+    consoleType: Security
+  # RS14-end
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
@@ -406,12 +420,16 @@
   - type: GeneralStationRecordConsole
   - type: UserInterface
     interfaces:
-        enum.GeneralStationRecordConsoleKey.Key:
-          type: GeneralStationRecordConsoleBoundUserInterface
+        enum.CharacterRecordConsoleKey.Key: # RS14
+          type: CharacterRecordConsoleBoundUserInterface # RS14
         enum.WiresUiKey.Key:
           type: WiresBoundUserInterface
   - type: ActivatableUI
-    key: enum.GeneralStationRecordConsoleKey.Key
+    key: enum.CharacterRecordConsoleKey.Key # RS14
+  # RS14-start
+  - type: CharacterRecordConsole
+    consoleType: Employment
+  # RS14-end
   - type: PointLight
     radius: 1.5
     energy: 4.0

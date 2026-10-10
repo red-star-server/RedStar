@@ -11,21 +11,18 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server._CD.Records.Consoles;
 
-public sealed class CharacterRecordConsoleSystem : EntitySystem
+public sealed partial class CharacterRecordConsoleSystem : EntitySystem
 {
-    [Dependency] private readonly CharacterRecordsSystem _characterRecords = default!;
-    [Dependency] private readonly CriminalRecordsConsoleSystem _criminalRecordsConsole = default!; // DeltaV - i hate this, forward to criminal records console
-    [Dependency] private readonly IEntityManager _entity = default!;
-    [Dependency] private readonly StationRecordsSystem _records = default!;
-    [Dependency] private readonly StationSystem _station = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private CharacterRecordsSystem _characterRecords = default!;
+    [Dependency] private CriminalRecordsConsoleSystem _criminalRecordsConsole = default!;
+    [Dependency] private IEntityManager _entity = default!;
+    [Dependency] private StationRecordsSystem _records = default!;
+    [Dependency] private StationSystem _station = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-
-        SubscribeLocalEvent<CharacterRecordConsoleComponent, CharacterRecordsModifiedEvent>((uid, component, _) =>
-            UpdateUi(uid, component));
 
         Subs.BuiEvents<CharacterRecordConsoleComponent>(CharacterRecordConsoleKey.Key,
             subr =>
@@ -38,6 +35,12 @@ public sealed class CharacterRecordConsoleSystem : EntitySystem
                 subr.Event<CriminalRecordChangeStatus>(OnCriminalRecordChangeStatus);
                 // End DeltaV - i hate this, forward to criminal records console
             });
+    }
+
+    [SubscribeLocalEvent]
+    private void OnRecordsModified(Entity<CharacterRecordConsoleComponent> ent, ref CharacterRecordsModifiedEvent args)
+    {
+        UpdateUi(ent);
     }
 
     private void OnFilterApplied(Entity<CharacterRecordConsoleComponent> ent, ref CharacterRecordsConsoleFilterMsg msg)

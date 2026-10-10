@@ -1,7 +1,9 @@
+using System.Numerics; // RS14
 using Content.Shared.Examine;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Preferences;
+using Content.Shared.Sprite; // RS14
 using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Prototypes;
 
@@ -10,6 +12,7 @@ namespace Content.Shared.Humanoid;
 public sealed partial class HumanoidProfileSystem : EntitySystem
 {
     [Dependency] private GrammarSystem _grammar = default!;
+    [Dependency] private SharedScaleVisualsSystem _scale = default!; // RS14
 
     public override void Initialize()
     {
@@ -25,6 +28,7 @@ public sealed partial class HumanoidProfileSystem : EntitySystem
 
         ent.Comp.Gender = profile.Gender;
         ent.Comp.Age = profile.Age;
+        ent.Comp.Height = profile.Height; // RS14
         ent.Comp.Species = profile.Species;
         ent.Comp.Voice = profile.Voice;
         ent.Comp.Sex = profile.Sex;
@@ -38,6 +42,13 @@ public sealed partial class HumanoidProfileSystem : EntitySystem
         {
             _grammar.SetGender((ent, grammar), profile.Gender);
         }
+
+        // RS14-start
+        var scale = Vector2.One;
+        if (TryComp<ScaleVisualsComponent>(ent, out var visuals) && visuals.OriginalScale is { } original)
+            scale = original;
+        _scale.SetSpriteScale(ent, scale);
+        // RS14-end
     }
 
     private void OnExamined(Entity<HumanoidProfileComponent> ent, ref ExaminedEvent args)

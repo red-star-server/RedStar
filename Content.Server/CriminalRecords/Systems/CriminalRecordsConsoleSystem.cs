@@ -57,7 +57,7 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
         UpdateUserInterface(ent);
     }
 
-    private void OnKeySelected(Entity<CriminalRecordsConsoleComponent> ent, ref SelectStationRecord msg)
+    public void OnKeySelected(Entity<CriminalRecordsConsoleComponent> ent, ref SelectStationRecord msg) // RS14
     {
         // no concern of sus client since record retrieval will fail if invalid id is given
         ent.Comp.ActiveKey = msg.SelectedKey;
@@ -80,7 +80,7 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
         }
     }
 
-    private void OnChangeStatus(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordChangeStatus msg)
+    public void OnChangeStatus(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordChangeStatus msg) // RS14
     {
         // prevent malf client violating wanted/reason nullability
         if (msg.Status == SecurityStatus.Wanted != (msg.Reason != null) &&

@@ -5,6 +5,7 @@ using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Sprite;
 using Content.Shared.CCVar;
 using Content.Shared._CD.Records; // RS14
+using Content.Shared._CD.Body.Systems; // RS14
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
@@ -160,6 +161,17 @@ namespace Content.Client.Lobby.UI
             _recordsTab = new RecordEditorGui(UpdateProfileRecords);
             TabContainer.AddChild(_recordsTab);
             TabContainer.SetTabTitle(TabContainer.ChildCount - 1, Loc.GetString("humanoid-profile-editor-cd-records-tab"));
+            CDHeightSlider.OnValueChanged += _ =>
+            {
+                if (Profile is null)
+                    return;
+
+                var species = _prototypeManager.Index(Profile.Species);
+                var height = MathF.Round(MathHelper.Lerp(species.MinHeight, species.MaxHeight, CDHeightSlider.Value), 2);
+                CDHeightLabel.Text = UnitConversion.GetMetricAndImperialDisplayFromScale(height * species.BaseScale.Y);
+                CDPullSpeedReductionLabel.Text = SmallCharacterSystem.GetPullSpeedPenaltyDisplayFromScale(height);
+                SetProfileHeight(height);
+            };
             // RS14-end
 
             #region Sex
@@ -210,6 +222,7 @@ namespace Content.Client.Lobby.UI
             #endregion Gender
 
             RefreshSpecies();
+            UpdateHeightControls(); // RS14
 
             SpeciesButton.OnItemSelected += args =>
             {

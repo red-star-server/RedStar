@@ -1,4 +1,7 @@
 using System.Numerics;
+using Content.Shared.Humanoid; // RS14
+using Content.Shared.Humanoid.Prototypes; // RS14
+using Robust.Shared.Prototypes; // RS14
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Sprite;
@@ -6,6 +9,7 @@ namespace Content.Shared.Sprite;
 public abstract partial class SharedScaleVisualsSystem : EntitySystem
 {
     [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private IPrototypeManager _proto = default!; // RS14
 
     public override void Initialize()
     {
@@ -39,6 +43,15 @@ public abstract partial class SharedScaleVisualsSystem : EntitySystem
     {
         var comp = EnsureComp<ScaleVisualsComponent>(uid);
         comp.Scale = scale;
+        // RS14-start
+        if (TryComp<HumanoidProfileComponent>(uid, out var profile))
+        {
+            comp.SpeciesScale = _proto.Index(profile.Species).BaseScale;
+            comp.ProfileScale = new Vector2(profile.Height, profile.Height);
+            scale *= comp.SpeciesScale * comp.ProfileScale;
+        }
+        comp.ComputedScale = scale;
+        // RS14-end
         Dirty(uid, comp);
 
         var appearanceComponent = EnsureComp<AppearanceComponent>(uid);
