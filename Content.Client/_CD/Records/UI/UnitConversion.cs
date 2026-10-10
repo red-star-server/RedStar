@@ -3,28 +3,22 @@ namespace Content.Client._CD.Records.UI;
 public static class UnitConversion
 {
     /// <summary>
-    /// DeltaV - The average height of a human in centimeters. According to the US CDC, its
-    /// 171 for men and 160 for women. So average of that is ~165cm.
-    /// 
-    /// Just kidding, we're going with EE's arbitrary standard of 175cm.
+    /// Reference height in centimeters for a character with visual scale 1.
     /// </summary>
-    private const int AVERAGE_HEIGHT_CM = 175;
+    private const int AverageHeightCm = 175;
 
     /// <summary>
-    /// DeltaV - 1.0 scale is considered average for humans, so a scale of 1 will be 175cm.
-    /// Ensure that scale also includes the base species height AND the user-defined height.
+    /// The input includes the species scale and the character's chosen height.
     /// </summary>
     /// <param name="scale"></param>
     /// <returns></returns>
     private static int GetMetricHeightFromScale(float scale = 1)
     {
-        // cast as int because we don't care about decimal
-        return (int)Math.Max(scale * AVERAGE_HEIGHT_CM, 1); // can't be shorter than 1cm I guess
+        return (int)Math.Max(scale * AverageHeightCm, 1);
     }
 
     /// <summary>
-    /// DeltaV - Gets nicely formatted string that contains both metric and imperial measurements.
-    /// With a scale of 1, it should look like... 175cm (5' 9")
+    /// Formats a scaled height in metric and imperial units.
     /// </summary>
     /// <param name="scale"></param>
     /// <returns></returns>

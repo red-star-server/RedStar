@@ -1,5 +1,6 @@
 using Content.Shared.Security;
 using Content.Shared.StationRecords;
+using Content.Shared.Humanoid;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared._CD.Records;
@@ -40,7 +41,9 @@ public sealed class CharacterRecordConsoleState : BoundUserInterfaceState
     /// <summary>
     /// The contents of the selected record
     /// </summary>
-    public FullCharacterRecords? SelectedRecord { get; set; } = null;
+    public GeneralStationRecord? SelectedGeneralRecord { get; set; }
+    public PlayerProvidedCharacterRecords? SelectedDetails { get; set; }
+    public Sex? SelectedSex { get; set; }
 
     public StationRecordsFilter? Filter { get; set; } = null;
 

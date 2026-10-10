@@ -26,6 +26,8 @@ public sealed partial class RecordEditorEntrySelector : Control
 
         AddButton.OnPressed += _ =>
         {
+            if (_entries.Count >= PlayerProvidedCharacterRecords.MaxEntriesPerSection)
+                return;
             _editIdx = _entries.Count;
             _editPopup.SetContents(new PlayerProvidedCharacterRecords.RecordEntry("", "", ""));
             _editPopup.Open();
@@ -57,6 +59,7 @@ public sealed partial class RecordEditorEntrySelector : Control
             var idx = EntrySelector.IndexOf(EntrySelector.GetSelected().First());
             EntrySelector.RemoveAt(idx);
             _entries.RemoveAt(idx);
+            AddButton.Disabled = false;
             _editPopup.Close();
             OnUpdateEntries?.Invoke(new RecordEditorEntryUpdateArgs(new(_entries)));
         };
@@ -91,9 +94,12 @@ public sealed partial class RecordEditorEntrySelector : Control
         {
             if (_editIdx >= _entries.Count)
             {
+                if (_entries.Count >= PlayerProvidedCharacterRecords.MaxEntriesPerSection)
+                    return;
                 var rec = _editPopup.GetContents();
                 _entries.Add(rec);
                 EntrySelector.AddItem(rec.Title);
+                AddButton.Disabled = _entries.Count >= PlayerProvidedCharacterRecords.MaxEntriesPerSection;
             }
             else
             {
@@ -118,6 +124,7 @@ public sealed partial class RecordEditorEntrySelector : Control
     private void RefreshSelector()
     {
         EntrySelector.Clear();
+        AddButton.Disabled = _entries.Count >= PlayerProvidedCharacterRecords.MaxEntriesPerSection;
         foreach (var entry in _entries)
         {
             EntrySelector.AddItem(entry.Title);

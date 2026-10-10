@@ -49,7 +49,7 @@
                                 <Control HorizontalExpand="True" />
                                 <Label Name="RecordContainerSpecies" Align="Right" />
                             </BoxContainer>
-                            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                            <BoxContainer Name="RecordContainerWeightRow" Orientation="Horizontal" HorizontalExpand="True">
                                 <Label Text="{Loc 'humanoid-profile-editor-cd-records-weight'}"/>
                                 <Control HorizontalExpand="True" />
                                 <Label Name="RecordContainerWeight" Align="Right"/>

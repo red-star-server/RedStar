@@ -89,11 +89,6 @@
                                     <Label Name="CDHeightLabel" />
                                     <Slider Name="CDHeightSlider" HorizontalAlignment="Right" SetWidth="300" MinValue="0.0" MaxValue="1.0" />
                                 </BoxContainer>
-                                <BoxContainer HorizontalExpand="True">
-                                    <Label Text="{Loc 'humanoid-profile-editor-height-pull-speed-penalty-label'}" />
-                                    <Control HorizontalExpand="True" />
-                                    <Label Name="CDPullSpeedReductionLabel" />
-                                </BoxContainer>
                                 <!-- RS14-end -->
                                 <!-- Sex -->
                                 <BoxContainer HorizontalExpand="True">

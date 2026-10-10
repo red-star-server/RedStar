@@ -1,28 +1,24 @@
 using System.Linq;
-using System.Text.Json.Serialization;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared._CD.Records;
 
 /// <summary>
-/// Contains Cosmatic Drift records that can be changed in the character editor. This is stored on the character's profile.
+/// Player-written background details stored in a character profile.
 /// </summary>
 [DataDefinition]
 [Serializable, NetSerializable]
 public sealed partial class PlayerProvidedCharacterRecords
 {
     public const int TextMedLen = 64;
-    public const int TextVeryLargeLen = 8192; //DeltaV
+    public const int TextVeryLargeLen = 2048;
+    public const int MaxEntriesPerSection = 16;
 
     /* Basic info */
 
     // Additional data is fetched from the Profile
 
     // All
-    [DataField]
-    public int Height { get; private set; }
-    public const int MaxHeight = 800;
-
     [DataField]
     public int Weight { get; private set; }
     public const int MaxWeight = 300;
@@ -48,11 +44,11 @@ public sealed partial class PlayerProvidedCharacterRecords
     // history, prescriptions, etc. would be a record below
 
     // "incidents"
-    [DataField, JsonIgnore]
+    [DataField]
     public List<RecordEntry> MedicalEntries { get; private set; }
-    [DataField, JsonIgnore]
+    [DataField]
     public List<RecordEntry> SecurityEntries { get; private set; }
-    [DataField, JsonIgnore]
+    [DataField]
     public List<RecordEntry> EmploymentEntries { get; private set; }
 
     [DataDefinition]
@@ -95,7 +91,7 @@ public sealed partial class PlayerProvidedCharacterRecords
 
     public PlayerProvidedCharacterRecords(
         bool hasWorkAuthorization,
-        int height, int weight,
+        int weight,
         string emergencyContactName,
         string identifyingFeatures,
         string allergies, string drugAllergies,
@@ -103,7 +99,6 @@ public sealed partial class PlayerProvidedCharacterRecords
         List<RecordEntry> medicalEntries, List<RecordEntry> securityEntries, List<RecordEntry> employmentEntries)
     {
         HasWorkAuthorization = hasWorkAuthorization;
-        Height = height;
         Weight = weight;
         EmergencyContactName = emergencyContactName;
         IdentifyingFeatures = identifyingFeatures;
@@ -117,7 +112,6 @@ public sealed partial class PlayerProvidedCharacterRecords
 
     public PlayerProvidedCharacterRecords(PlayerProvidedCharacterRecords other)
     {
-        Height = other.Height;
         Weight = other.Weight;
         EmergencyContactName = other.EmergencyContactName;
         HasWorkAuthorization = other.HasWorkAuthorization;
@@ -134,7 +128,7 @@ public sealed partial class PlayerProvidedCharacterRecords
     {
         return new PlayerProvidedCharacterRecords(
             hasWorkAuthorization: true,
-            height: 170, weight: 70,
+            weight: 70,
             emergencyContactName: "",
             identifyingFeatures: "",
             allergies: "None",
@@ -148,9 +142,7 @@ public sealed partial class PlayerProvidedCharacterRecords
 
     public bool MemberwiseEquals(PlayerProvidedCharacterRecords other)
     {
-        // This is ugly but is only used for integration tests.
-        var test = Height == other.Height
-                   && Weight == other.Weight
+        var test = Weight == other.Weight
                    && EmergencyContactName == other.EmergencyContactName
                    && HasWorkAuthorization == other.HasWorkAuthorization
                    && IdentifyingFeatures == other.IdentifyingFeatures
@@ -181,8 +173,10 @@ public sealed partial class PlayerProvidedCharacterRecords
         return true;
     }
 
-    private static string ClampString(string str, int maxLen)
+    private static string ClampString(string? str, int maxLen)
     {
+        if (str == null)
+            return string.Empty;
         if (str.Length > maxLen)
         {
             return str[..maxLen];
@@ -192,6 +186,8 @@ public sealed partial class PlayerProvidedCharacterRecords
 
     private static void EnsureValidEntries(List<RecordEntry> entries)
     {
+        if (entries.Count > MaxEntriesPerSection)
+            entries.RemoveRange(MaxEntriesPerSection, entries.Count - MaxEntriesPerSection);
         foreach (var entry in entries)
         {
             entry.EnsureValid();
@@ -203,7 +199,9 @@ public sealed partial class PlayerProvidedCharacterRecords
     /// </summary>
     public void EnsureValid()
     {
-        Height = Math.Clamp(Height, 0, MaxHeight);
+        EmploymentEntries ??= [];
+        MedicalEntries ??= [];
+        SecurityEntries ??= [];
         Weight = Math.Clamp(Weight, 0, MaxWeight);
         EmergencyContactName =
             ClampString(EmergencyContactName, TextMedLen);
@@ -215,10 +213,6 @@ public sealed partial class PlayerProvidedCharacterRecords
         EnsureValidEntries(EmploymentEntries);
         EnsureValidEntries(MedicalEntries);
         EnsureValidEntries(SecurityEntries);
-    }
-    public PlayerProvidedCharacterRecords WithHeight(int height)
-    {
-        return new(this) { Height = height };
     }
     public PlayerProvidedCharacterRecords WithWeight(int weight)
     {

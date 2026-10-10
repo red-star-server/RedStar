@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Client._CD.Records.UI; // RS14
-using Content.Shared._CD.Body.Systems; // RS14
 using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Guidebook;
@@ -246,7 +245,6 @@ public sealed partial class HumanoidProfileEditor
             : 0f;
         CDHeightSlider.Value = percent;
         CDHeightLabel.Text = UnitConversion.GetMetricAndImperialDisplayFromScale(Profile.Height * species.BaseScale.Y);
-        CDPullSpeedReductionLabel.Text = SmallCharacterSystem.GetPullSpeedPenaltyDisplayFromScale(Profile.Height);
     }
     // RS14-end
 

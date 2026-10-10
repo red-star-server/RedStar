@@ -1,31 +1,15 @@
 using Content.Shared._CD.Records;
+using Content.Shared.Humanoid;
 
 namespace Content.Server._CD.Records;
 
 /// <summary>
-/// The component on the station that stores records after the round starts.
+/// Server-only RP details indexed by the native station record key. These must not be
+/// added to the networked StationRecordsComponent.
 /// </summary>
 [RegisterComponent]
 [Access(typeof(CharacterRecordsSystem))]
 public sealed partial class CharacterRecordsComponent : Component
 {
-    [ViewVariables(VVAccess.ReadOnly)]
-    public Dictionary<uint, FullCharacterRecords> Records = new();
-
-    [ViewVariables(VVAccess.ReadOnly)]
-    private uint _nextKey = 1;
-
-    /// <summary>
-    /// Creates a key has never been used previously
-    /// </summary>
-    public uint CreateNewKey()
-    {
-        return _nextKey++;
-    }
-}
-
-public sealed record CharacterRecordKey
-{
-    public EntityUid Station { get; init; }
-    public uint Index { get; init; }
+    public Dictionary<uint, (PlayerProvidedCharacterRecords Details, Sex Sex, EntityUid Owner)> Records = new();
 }

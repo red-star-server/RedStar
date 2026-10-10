@@ -3,7 +3,7 @@
     <BoxContainer Orientation="Vertical">
          <ScrollContainer VerticalExpand="True">
              <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="10">
-                 <!-- Height, Weight -->
+                 <!-- Weight -->
                  <GridContainer Columns="2">
                      <BoxContainer HorizontalExpand="True" SeparationOverride="2">
                          <Label Text="{Loc 'humanoid-profile-editor-cd-records-weight'}" />

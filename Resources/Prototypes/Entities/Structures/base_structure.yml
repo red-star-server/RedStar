@@ -64,4 +64,3 @@
   components:
     - type: TileFrictionModifier
       modifier: 0.4
-    - type: UnaffectedBySizePenalty # RS14

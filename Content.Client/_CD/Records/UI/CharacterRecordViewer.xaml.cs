@@ -44,15 +44,13 @@ public sealed partial class CharacterRecordViewer : FancyWindow
     {
         RobustXamlLoader.Load(this);
 
-        // There is no reason why we can't just steal the StationRecordFilter class.
-        // If wizden adds a new kind of filtering we want to replicate it here.
+        // Use the same filters as the station records consoles.
         foreach (var item in Enum.GetValues<StationRecordFilterType>())
         {
             RecordFilterType.AddItem(GetTypeFilterLocals(item), (int)item);
         }
 
-        // Again, if wizden changes something about Criminal Records, we want to replicate the
-        // functionality here.
+        // Show the security statuses used by the criminal records console.
         foreach (var status in Enum.GetValues<SecurityStatus>())
         {
             var name = Loc.GetString($"criminal-records-status-{status.ToString().ToLower()}");
@@ -275,7 +273,7 @@ public sealed partial class CharacterRecordViewer : FancyWindow
         #region FillRecordContainer
 
         // Enable container if we have a record selected
-        if (state.SelectedRecord == null)
+        if (state.SelectedGeneralRecord == null || state.SelectedDetails == null)
         {
             RecordContainerStatus.Visible = true;
             RecordContainer.Visible = false;
@@ -285,8 +283,8 @@ public sealed partial class CharacterRecordViewer : FancyWindow
         RecordContainerStatus.Visible = false;
         RecordContainer.Visible = true;
 
-        var record = state.SelectedRecord!;
-        var cr = record.PRecords;
+        var record = state.SelectedGeneralRecord;
+        var cr = state.SelectedDetails;
 
         // Basic info
         RecordContainerName.Text = record.Name;
@@ -295,7 +293,9 @@ public sealed partial class CharacterRecordViewer : FancyWindow
         RecordContainerGender.Text = record.Gender.ToString();
         RecordContainerSpecies.Text = record.Species;
         RecordContainerWeight.Text = $"{cr.Weight} ({UnitConversion.GetImperialDisplayMass(cr.Weight)})";
+        RecordContainerWeightRow.Visible = _type is RecordConsoleType.Medical or RecordConsoleType.Admin;
         RecordContainerContactName.SetValue(cr.EmergencyContactName);
+        RecordContainerContactName.Visible = _type is not RecordConsoleType.Security;
 
         RecordContainerEmployment.Visible = false;
         RecordContainerMedical.Visible = false;
@@ -305,20 +305,20 @@ public sealed partial class CharacterRecordViewer : FancyWindow
         {
             case RecordConsoleType.Employment:
                 SetEntries(cr.EmploymentEntries);
-                UpdateRecordBoxEmployment(record);
+                UpdateRecordBoxEmployment(cr);
                 break;
             case RecordConsoleType.Medical:
                 SetEntries(cr.MedicalEntries);
-                UpdateRecordBoxMedical(record);
+                UpdateRecordBoxMedical(cr, state.SelectedSex);
                 break;
             case RecordConsoleType.Security:
                 SetEntries(cr.SecurityEntries);
-                UpdateRecordBoxSecurity(record, state.SelectedSecurityStatus);
+                UpdateRecordBoxSecurity(cr, record, state.SelectedSecurityStatus);
                 break;
             case RecordConsoleType.Admin:
-                UpdateRecordBoxEmployment(record);
-                UpdateRecordBoxMedical(record);
-                UpdateRecordBoxSecurity(record, state.SelectedSecurityStatus);
+                UpdateRecordBoxEmployment(cr);
+                UpdateRecordBoxMedical(cr, state.SelectedSex);
+                UpdateRecordBoxSecurity(cr, record, state.SelectedSecurityStatus);
                 switch ((RecordConsoleType) RecordEntryViewType.SelectedId)
                 {
                 case RecordConsoleType.Employment:
@@ -350,28 +350,27 @@ public sealed partial class CharacterRecordViewer : FancyWindow
         }
     }
 
-    private void UpdateRecordBoxEmployment(FullCharacterRecords record)
+    private void UpdateRecordBoxEmployment(PlayerProvidedCharacterRecords record)
     {
         RecordContainerEmployment.Visible = true;
-        RecordContainerWorkAuth.Text = record.PRecords.HasWorkAuthorization
+        RecordContainerWorkAuth.Text = record.HasWorkAuthorization
             ? Loc.GetString("cd-character-records-viewer-yes")
             : Loc.GetString("cd-character-records-viewer-no");
     }
 
-    private void UpdateRecordBoxMedical(FullCharacterRecords record)
+    private void UpdateRecordBoxMedical(PlayerProvidedCharacterRecords cr, Content.Shared.Humanoid.Sex? sex)
     {
-        var cr = record.PRecords;
         RecordContainerMedical.Visible = true;
         RecordContainerAllergies.SetValue(cr.Allergies);
         RecordContainerDrugAllergies.SetValue(cr.DrugAllergies);
         RecordContainerPostmortem.SetValue(cr.PostmortemInstructions);
-        RecordContainerSex.Text = record.Sex.ToString();
+        RecordContainerSex.Text = sex?.ToString() ?? string.Empty;
     }
 
-    private void UpdateRecordBoxSecurity(FullCharacterRecords record, (SecurityStatus, string?)? criminal)
+    private void UpdateRecordBoxSecurity(PlayerProvidedCharacterRecords details, GeneralStationRecord record, (SecurityStatus, string?)? criminal)
     {
         RecordContainerSecurity.Visible = true;
-        RecordContainerIdentFeatures.SetValue(record.PRecords.IdentifyingFeatures);
+        RecordContainerIdentFeatures.SetValue(details.IdentifyingFeatures);
         RecordContainerFingerprint.Text = record.Fingerprint ?? Loc.GetString("cd-character-records-viewer-unknown");
         RecordContainerDNA.Text = record.DNA ?? Loc.GetString("cd-character-records-viewer-unknown");
 
@@ -385,7 +384,6 @@ public sealed partial class CharacterRecordViewer : FancyWindow
         }
     }
 
-    // This is copied almost verbatim from CriminalRecordsConsoleWindow.xaml.cs
     private void SetStatusWithReason(SecurityStatus status)
     {
         if (_wantedReasonDialog != null)

@@ -356,6 +356,8 @@
     color: "#1f8c28"
   - type: Computer
     board: MedicalRecordsComputerCircuitboard
+  - type: AccessReader # RS14
+    access: [["Medical"]] # RS14
   # RS14-start
   - type: CharacterRecordConsole
     consoleType: Medical
@@ -379,10 +381,12 @@
     interfaces:
       enum.CharacterRecordConsoleKey.Key: # RS14
         type: CharacterRecordConsoleBoundUserInterface # RS14
+      enum.CriminalRecordsConsoleKey.Key: # RS14
+        type: CriminalRecordsConsoleBoundUserInterface # RS14
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: ActivatableUI
-    key: enum.CharacterRecordConsoleKey.Key # RS14
+    key: enum.CriminalRecordsConsoleKey.Key # RS14
   # RS14-start
   - type: CharacterRecordConsole
     consoleType: Security
@@ -422,10 +426,12 @@
     interfaces:
         enum.CharacterRecordConsoleKey.Key: # RS14
           type: CharacterRecordConsoleBoundUserInterface # RS14
+        enum.GeneralStationRecordConsoleKey.Key: # RS14
+          type: GeneralStationRecordConsoleBoundUserInterface # RS14
         enum.WiresUiKey.Key:
           type: WiresBoundUserInterface
   - type: ActivatableUI
-    key: enum.CharacterRecordConsoleKey.Key # RS14
+    key: enum.GeneralStationRecordConsoleKey.Key # RS14
   # RS14-start
   - type: CharacterRecordConsole
     consoleType: Employment
@@ -436,6 +442,8 @@
     color: "#1f8c28"
   - type: Computer
     board: StationRecordsComputerCircuitboard
+  - type: AccessReader # RS14
+    access: [["HeadOfPersonnel"], ["Command"]] # RS14
   - type: GuideHelp
     guides:
     - Forensics

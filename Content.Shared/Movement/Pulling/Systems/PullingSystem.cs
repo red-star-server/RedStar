@@ -1,6 +1,4 @@
 using Content.Shared._Floof.OfferItem;
-using Content.Shared._CD.Body.Components; // RS14
-using Content.Shared._CD.Body.Systems; // RS14
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
@@ -56,7 +54,6 @@ public sealed partial class PullingSystem : EntitySystem
     [Dependency] private HeldSpeedModifierSystem _clothingMoveSpeed = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedVirtualItemSystem _virtual = default!;
-    [Dependency] private SmallCharacterSystem _smallCharacter = default!; // RS14
 
     public override void Initialize()
     {
@@ -297,13 +294,6 @@ public sealed partial class PullingSystem : EntitySystem
 
     private void OnRefreshMovespeed(EntityUid uid, PullerComponent component, RefreshMovementSpeedModifiersEvent args)
     {
-        // RS14-start
-        if (TryComp<SmallCharacterComponent>(uid, out var small))
-        {
-            var penalty = _smallCharacter.ApplyPullSpeedPenalty((uid, small), component.Pulling);
-            args.ModifySpeed(penalty, penalty);
-        }
-        // RS14-end
         if (TryComp<HeldSpeedModifierComponent>(component.Pulling, out var heldMoveSpeed) && component.Pulling.HasValue)
         {
             var (walkMod, sprintMod) =
