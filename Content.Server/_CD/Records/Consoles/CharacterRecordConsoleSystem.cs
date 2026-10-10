@@ -27,7 +27,7 @@ public sealed partial class CharacterRecordConsoleSystem : EntitySystem
         Subs.BuiEvents<CharacterRecordConsoleComponent>(CharacterRecordConsoleKey.Key,
             subr =>
             {
-                subr.Event<BoundUIOpenedEvent>((uid, component, _) => UpdateUi(uid, component));
+                subr.Event<BoundUIOpenedEvent>((uid, component, _) => UpdateUi((uid, component)));
                 subr.Event<CharacterRecordConsoleSelectMsg>(OnKeySelect);
                 subr.Event<CharacterRecordsConsoleFilterMsg>(OnFilterApplied);
                 // Begin DeltaV - i hate this, forward to criminal records console
@@ -38,9 +38,14 @@ public sealed partial class CharacterRecordConsoleSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnRecordsModified(Entity<CharacterRecordConsoleComponent> ent, ref CharacterRecordsModifiedEvent args)
+    private void OnRecordsModified(CharacterRecordsModifiedEvent args)
     {
-        UpdateUi(ent);
+        var query = EntityQueryEnumerator<CharacterRecordConsoleComponent>();
+        while (query.MoveNext(out var uid, out var console))
+        {
+            if (console.ConsoleType == RecordConsoleType.Admin || _station.GetOwningStation(uid) == args.Station)
+                UpdateUi((uid, console));
+        }
     }
 
     private void OnFilterApplied(Entity<CharacterRecordConsoleComponent> ent, ref CharacterRecordsConsoleFilterMsg msg)
@@ -75,12 +80,22 @@ public sealed partial class CharacterRecordConsoleSystem : EntitySystem
     }
     // End DeltaV - i hate this, forward to criminal records console
 
-    private void UpdateUi(EntityUid entity, CharacterRecordConsoleComponent? console = null)
+    private void UpdateUi(Entity<CharacterRecordConsoleComponent> ent)
     {
-        if (!Resolve(entity, ref console))
-            return;
-
+        var entity = ent.Owner;
+        var console = ent.Comp;
         var station = _station.GetOwningStation(entity);
+        if (station == null && console.ConsoleType == RecordConsoleType.Admin)
+        {
+            foreach (var candidate in _station.GetStations())
+            {
+                if (!HasComp<CharacterRecordsComponent>(candidate))
+                    continue;
+
+                station = candidate;
+                break;
+            }
+        }
         if (!HasComp<StationRecordsComponent>(station) || !HasComp<CharacterRecordsComponent>(station))
         {
             SendState(entity, new CharacterRecordConsoleState { ConsoleType = console.ConsoleType });

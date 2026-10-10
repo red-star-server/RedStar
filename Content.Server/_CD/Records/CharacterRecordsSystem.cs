@@ -90,12 +90,7 @@ public sealed partial class CharacterRecordsSystem : EntitySystem
             keyStorageEntity = id;
         }
 
-        if (!TryComp<StationRecordKeyStorageComponent>(keyStorageEntity, out var storage))
-        {
-            return null;
-        }
-
-        return storage.Key;
+        return !TryComp<StationRecordKeyStorageComponent>(keyStorageEntity, out var storage) ? null : storage.Key;
     }
 
     private void AddRecord(EntityUid station, EntityUid player, FullCharacterRecords records, CharacterRecordsComponent? recordsDb = null)
@@ -108,7 +103,7 @@ public sealed partial class CharacterRecordsSystem : EntitySystem
         var playerKey = new CharacterRecordKey { Station = station, Index = key };
         AddComp(player, new CharacterRecordKeyStorageComponent(playerKey));
 
-        RaiseLocalEvent(station, new CharacterRecordsModifiedEvent());
+        RaiseLocalEvent(new CharacterRecordsModifiedEvent(station));
     }
 
     public void DelEntry(
@@ -127,20 +122,19 @@ public sealed partial class CharacterRecordsSystem : EntitySystem
 
         var cr = value.PRecords;
 
-        switch (ty)
+        var entries = ty switch
         {
-            case CharacterRecordType.Employment:
-                cr.EmploymentEntries.RemoveAt(idx);
-                break;
-            case CharacterRecordType.Medical:
-                cr.MedicalEntries.RemoveAt(idx);
-                break;
-            case CharacterRecordType.Security:
-                cr.SecurityEntries.RemoveAt(idx);
-                break;
-        }
+            CharacterRecordType.Employment => cr.EmploymentEntries,
+            CharacterRecordType.Medical => cr.MedicalEntries,
+            CharacterRecordType.Security => cr.SecurityEntries,
+            _ => null,
+        };
+        if (entries is null || idx < 0 || idx >= entries.Count)
+            return;
 
-        RaiseLocalEvent(station, new CharacterRecordsModifiedEvent());
+        entries.RemoveAt(idx);
+
+        RaiseLocalEvent(new CharacterRecordsModifiedEvent(station));
     }
 
     public void ResetRecord(
@@ -159,7 +153,7 @@ public sealed partial class CharacterRecordsSystem : EntitySystem
         if (TryComp(player, out MetaDataComponent? meta))
             value.Name = meta.EntityName;
         value.PRecords = records;
-        RaiseLocalEvent(station, new CharacterRecordsModifiedEvent());
+        RaiseLocalEvent(new CharacterRecordsModifiedEvent(station));
     }
 
     public void DeleteAllRecords(EntityUid player, CharacterRecordKeyStorageComponent? key = null)
@@ -173,6 +167,7 @@ public sealed partial class CharacterRecordsSystem : EntitySystem
             return;
 
         records.Records.Remove(key.Key.Index);
+        RaiseLocalEvent(new CharacterRecordsModifiedEvent(station));
     }
 
     public IDictionary<uint, FullCharacterRecords> QueryRecords(EntityUid station, CharacterRecordsComponent? recordsDb = null)
@@ -183,4 +178,7 @@ public sealed partial class CharacterRecordsSystem : EntitySystem
     }
 }
 
-public sealed class CharacterRecordsModifiedEvent : EntityEventArgs;
+public sealed class CharacterRecordsModifiedEvent(EntityUid station) : EntityEventArgs
+{
+    public EntityUid Station { get; } = station;
+}

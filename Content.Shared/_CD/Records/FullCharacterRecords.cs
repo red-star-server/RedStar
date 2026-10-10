@@ -34,43 +34,43 @@ public sealed class FullCharacterRecords(
     public uint? StationRecordsKey = stationRecordsKey;
 
     /// <summary>
-    ///     Name tied to this record.
+    /// Name tied to this record.
     /// </summary>
     [ViewVariables]
     public string Name = name;
 
     /// <summary>
-    ///     Age of the person that this record represents.
+    /// Age of the person that this record represents.
     /// </summary>
     [ViewVariables]
     public int Age = age;
 
     /// <summary>
-    ///     Job title tied to this record.
+    /// Job title tied to this record.
     /// </summary>
     [ViewVariables]
     public string JobTitle = jobTitle;
 
     /// <summary>
-    ///     Job icon tied to this record.
+    /// Job icon tied to this record.
     /// </summary>
     [ViewVariables]
     public string JobIcon = jobIcon;
 
     /// <summary>
-    ///     Species tied to this record.
+    /// Species tied to this record.
     /// </summary>
     [ViewVariables]
     public string Species = species;
 
     /// <summary>
-    ///     Gender identity tied to this record.
+    /// Gender identity tied to this record.
     /// </summary>
     [ViewVariables]
     public Gender Gender = gender;
 
     /// <summary>
-    ///     Sex identity tied to this record.
+    /// Sex identity tied to this record.
     /// </summary>
     [ViewVariables]
     public Sex Sex = sex;
@@ -79,7 +79,7 @@ public sealed class FullCharacterRecords(
     public string? Fingerprint = fingerprint;
 
     /// <summary>
-    ///     DNA of the person.
+    /// DNA of the person.
     /// </summary>
     [ViewVariables]
     // ReSharper disable once InconsistentNaming

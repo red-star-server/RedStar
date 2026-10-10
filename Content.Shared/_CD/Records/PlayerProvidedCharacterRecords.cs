@@ -264,5 +264,7 @@ public sealed partial class PlayerProvidedCharacterRecords
 
 public enum CharacterRecordType : byte
 {
-    Employment, Medical, Security
+    Employment,
+    Medical,
+    Security
 }

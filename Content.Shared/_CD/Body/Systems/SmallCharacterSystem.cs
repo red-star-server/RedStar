@@ -14,6 +14,7 @@ namespace Content.Shared._CD.Body.Systems;
 public sealed partial class SmallCharacterSystem : EntitySystem
 {
     private const float NO_PENALTY = 1.0f;
+
     [SubscribeLocalEvent]
     private void OnSpawn(PlayerSpawnCompleteEvent ev)
     {
