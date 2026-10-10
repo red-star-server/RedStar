@@ -170,6 +170,8 @@ namespace Content.Client.Lobby.UI
                 var height = MathF.Round(MathHelper.Lerp(species.MinHeight, species.MaxHeight, CDHeightSlider.Value), 2);
                 CDHeightLabel.Text = UnitConversion.GetMetricAndImperialDisplayFromScale(height * species.BaseScale.Y);
                 CDPullSpeedReductionLabel.Text = SmallCharacterSystem.GetPullSpeedPenaltyDisplayFromScale(height);
+                if (Profile.Height == height)
+                    return;
                 SetProfileHeight(height);
             };
             // RS14-end

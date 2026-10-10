@@ -17,13 +17,18 @@ public sealed class CharacterRecordConsoleBoundUserInterface(EntityUid owner, En
         if (baseState is not CharacterRecordConsoleState state)
             return;
 
-        if (_window?.IsSecurity() ?? false)
+        if (_window is { } window &&
+            (state.ConsoleType is RecordConsoleType.Security or RecordConsoleType.Admin) &&
+            EntMan.TryGetComponent<CriminalRecordsConsoleComponent>(Owner, out var comp))
         {
-            var comp = EntMan.GetComponent<CriminalRecordsConsoleComponent>(Owner);
-            _window!.SecurityWantedStatusMaxLength = comp.MaxStringLength;
+            window.SecurityWantedStatusMaxLength = comp.MaxStringLength;
         }
 
         _window?.UpdateState(state);
+        _window?.SetSecurityStatusEnabled(
+            (state.ConsoleType is RecordConsoleType.Security or RecordConsoleType.Admin) &&
+            state.SelectedSecurityStatus != null &&
+            EntMan.HasComponent<CriminalRecordsConsoleComponent>(Owner));
     }
 
     protected override void Open()
@@ -32,21 +37,10 @@ public sealed class CharacterRecordConsoleBoundUserInterface(EntityUid owner, En
 
         _window = new();
         _window.OnClose += Close;
-        _window.OnListingItemSelected += meta =>
+        _window.OnListingItemSelected += key =>
         {
-            SendMessage(new CharacterRecordConsoleSelectMsg(meta?.CharacterRecordKey));
-
-            // Only records linked to station records can have their security status changed.
-            if (_window.IsSecurity() && meta?.StationRecordKey != null)
-            {
-                _window.SetSecurityStatusEnabled(true);
-            }
-            else
-            {
-                // If the user does not have criminal records for some reason, we should not be able
-                // to set their wanted status
-                _window.SetSecurityStatusEnabled(false);
-            }
+            SendMessage(new CharacterRecordConsoleSelectMsg(key));
+            _window.SetSecurityStatusEnabled(false);
         };
 
         _window.OnFiltersChanged += (ty, txt) =>

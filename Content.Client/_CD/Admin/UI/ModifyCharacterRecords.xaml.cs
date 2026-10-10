@@ -26,23 +26,28 @@ public sealed partial class ModifyCharacterRecords : DefaultWindow
 
         EntityEdit.OnTextChanged += _ => UpdateCommands();
         EntityEntryIndex.OnTextChanged += _ => UpdateCommands();
+        UpdateCommands();
     }
 
     private void UpdateCommands()
     {
+        PurgeCommand.Command = null;
+        DelCommand.Command = null;
+        PurgeCommand.Disabled = true;
+        DelCommand.Disabled = true;
+
         if (!int.TryParse(EntityEdit.Text, out var uid))
         {
             return;
         }
 
+        PurgeCommand.Command = $"purgecharacterrecords {uid}";
+        PurgeCommand.Disabled = false;
         if (!int.TryParse(EntityEntryIndex.Text, out var idx))
-        {
             return;
-        }
 
         var ty = (CharacterRecordType)EntityEntryType.SelectedId;
-
-        PurgeCommand.Command = $"purgecharacterrecords {uid}";
         DelCommand.Command = $"delrecordentry {uid} {ty.ToString()} {idx}";
+        DelCommand.Disabled = false;
     }
 }

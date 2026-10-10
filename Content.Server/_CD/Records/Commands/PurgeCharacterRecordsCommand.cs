@@ -1,6 +1,5 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
-using Content.Shared.Station.Systems;
 using Robust.Shared.Console;
 
 namespace Content.Server._CD.Records.Commands;
@@ -31,12 +30,7 @@ public sealed partial class PurgeCharacterRecordsCommand : IConsoleCommand
         }
 
         var characterRecordsSystem = _entManager.System<CharacterRecordsSystem>();
-        var stationSystem = _entManager.System<StationSystem>();
-
-        foreach (var s in stationSystem.GetStations())
-        {
-            characterRecordsSystem.ResetRecord(s, uid.Value);
-        }
+        characterRecordsSystem.ResetRecord(uid.Value);
     }
 
 }

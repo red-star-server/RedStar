@@ -1,7 +1,6 @@
 using Content.Server.Administration;
 using Content.Shared._CD.Records;
 using Content.Shared.Administration;
-using Content.Shared.Station.Systems;
 using Robust.Shared.Console;
 
 namespace Content.Server._CD.Records.Commands;
@@ -14,7 +13,7 @@ public sealed partial class DelRecordEntryCommand : IConsoleCommand
     public string Command => "delrecordentry";
 
     public string Description =>
-        "Resets the records of the given entity to the default values. This is not saved to the database and only lasts until the round is over";
+        "Deletes one character record entry for this round.";
 
     public string Help => $"{Command} <entity> <recordType> <index>";
     public void Execute(IConsoleShell shell, string argStr, string[] args)
@@ -44,12 +43,7 @@ public sealed partial class DelRecordEntryCommand : IConsoleCommand
         }
 
         var characterRecordsSystem = _entManager.System<CharacterRecordsSystem>();
-        var stationSystem = _entManager.System<StationSystem>();
-
-        foreach (var s in stationSystem.GetStations())
-        {
-            characterRecordsSystem.DelEntry(s, uid.Value, ty, idx);
-        }
+        characterRecordsSystem.DelEntry(uid.Value, ty, idx);
     }
 
 }

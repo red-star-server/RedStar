@@ -46,11 +46,8 @@ public abstract partial class SharedScaleVisualsSystem : EntitySystem
         // RS14-start
         if (TryComp<HumanoidProfileComponent>(uid, out var profile))
         {
-            comp.SpeciesScale = _proto.Index(profile.Species).BaseScale;
-            comp.ProfileScale = new Vector2(profile.Height, profile.Height);
-            scale *= comp.SpeciesScale * comp.ProfileScale;
+            scale *= _proto.Index(profile.Species).BaseScale * new Vector2(profile.Height);
         }
-        comp.ComputedScale = scale;
         // RS14-end
         Dirty(uid, comp);
 

@@ -57,10 +57,8 @@ public sealed partial class RecordEditorEntrySelector : Control
             var idx = EntrySelector.IndexOf(EntrySelector.GetSelected().First());
             EntrySelector.RemoveAt(idx);
             _entries.RemoveAt(idx);
-            if (idx == _editIdx)
-                _editPopup.Close();
-            _editIdx--;
-            OnUpdateEntries?.Invoke(new RecordEditorEntryUpdateArgs(_entries));
+            _editPopup.Close();
+            OnUpdateEntries?.Invoke(new RecordEditorEntryUpdateArgs(new(_entries)));
         };
 
         UpButton.OnPressed += _ =>
@@ -72,7 +70,8 @@ public sealed partial class RecordEditorEntrySelector : Control
                 return;
             (_entries[idx], _entries[idx - 1]) = (_entries[idx - 1], _entries[idx]);
             (EntrySelector[idx], EntrySelector[idx - 1]) = (EntrySelector[idx - 1], EntrySelector[idx]);
-            OnUpdateEntries?.Invoke(new RecordEditorEntryUpdateArgs(_entries));
+            _editPopup.Close();
+            OnUpdateEntries?.Invoke(new RecordEditorEntryUpdateArgs(new(_entries)));
         };
 
         DownButton.OnPressed += _ =>
@@ -84,7 +83,8 @@ public sealed partial class RecordEditorEntrySelector : Control
                 return;
             (_entries[idx], _entries[idx + 1]) = (_entries[idx + 1], _entries[idx]);
             (EntrySelector[idx], EntrySelector[idx + 1]) = (EntrySelector[idx + 1], EntrySelector[idx]);
-            OnUpdateEntries?.Invoke(new RecordEditorEntryUpdateArgs(_entries));
+            _editPopup.Close();
+            OnUpdateEntries?.Invoke(new RecordEditorEntryUpdateArgs(new(_entries)));
         };
 
         _editPopup.SaveButton.OnPressed += _ =>
@@ -100,17 +100,18 @@ public sealed partial class RecordEditorEntrySelector : Control
                 _entries[_editIdx] = _editPopup.GetContents();
                 EntrySelector[_editIdx].Text = _entries[_editIdx].Title;
             }
-            OnUpdateEntries?.Invoke(new RecordEditorEntryUpdateArgs(_entries));
+            OnUpdateEntries?.Invoke(new RecordEditorEntryUpdateArgs(new(_entries)));
         };
         OnVisibilityChanged += _ =>
         {
             _editPopup.Close();
+            _entryViewPopup.Close();
         };
     }
 
     public void UpdateContents(List<PlayerProvidedCharacterRecords.RecordEntry> entries)
     {
-        _entries = entries;
+        _entries = new(entries);
         RefreshSelector();
     }
 

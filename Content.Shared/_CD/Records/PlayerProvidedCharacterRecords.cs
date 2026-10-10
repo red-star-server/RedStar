@@ -250,15 +250,15 @@ public sealed partial class PlayerProvidedCharacterRecords
     }
     public PlayerProvidedCharacterRecords WithEmploymentEntries(List<RecordEntry> entries)
     {
-        return new(this) { EmploymentEntries = entries};
+        return new(this) { EmploymentEntries = entries.Select(x => new RecordEntry(x)).ToList() };
     }
     public PlayerProvidedCharacterRecords WithMedicalEntries(List<RecordEntry> entries)
     {
-        return new(this) { MedicalEntries = entries};
+        return new(this) { MedicalEntries = entries.Select(x => new RecordEntry(x)).ToList() };
     }
     public PlayerProvidedCharacterRecords WithSecurityEntries(List<RecordEntry> entries)
     {
-        return new(this) { SecurityEntries = entries};
+        return new(this) { SecurityEntries = entries.Select(x => new RecordEntry(x)).ToList() };
     }
 }
 

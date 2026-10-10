@@ -12,22 +12,17 @@ namespace Content.Client._CD.Records.UI;
 [GenerateTypedNameReferences]
 public sealed partial class CharacterRecordViewer : FancyWindow
 {
-    public struct CharacterListMetadata
-    {
-        public uint CharacterRecordKey;
-        public uint? StationRecordKey;
-    }
-
     public static readonly Color BackgroundColor = Color.FromHex("#25252a"); // Dark grey
     public static readonly Color ContentPanelColor = Color.FromHex("#1a1a1a"); // Darker grey for content areas
     public static readonly Color BorderColor = Color.FromHex("#404040"); // Light grey border
     public static readonly Color ErrorColor = Color.FromHex("#ff0000"); // Red for validation errors
 
-    public event Action<CharacterListMetadata?>? OnListingItemSelected;
+    public event Action<uint?>? OnListingItemSelected;
     public event Action<StationRecordFilterType, string?>? OnFiltersChanged;
 
     private bool _isPopulating;
     private StationRecordFilterType _filterType;
+    private CharacterRecordConsoleState? _lastState;
 
     private RecordConsoleType? _type;
 
@@ -41,13 +36,6 @@ public sealed partial class CharacterRecordViewer : FancyWindow
     /// </summary>
     private uint? _selectedListingKey;
 
-    /// <summary>
-    /// The key to the record that is currently visible.
-    /// </summary>
-    /// <remarks>
-    /// This may differ from <see cref="_selectedListingKey"/> because this contents has not been updated yet to reflect the new selection.
-    /// </remarks>
-    // private uint? _openRecordKey;
     public event Action<SecurityStatus, string?>? OnSetSecurityStatus;
 
     public uint? SecurityWantedStatusMaxLength;
@@ -76,10 +64,10 @@ public sealed partial class CharacterRecordViewer : FancyWindow
             if (!CharacterListing.GetSelected().Any())
                 return;
             var selected = CharacterListing.GetSelected().First();
-            var meta = (CharacterListMetadata)selected.Metadata!;
-            _selectedListingKey = meta.CharacterRecordKey;
+            var key = (uint)selected.Metadata!;
+            _selectedListingKey = key;
             if (!_isPopulating)
-                OnListingItemSelected?.Invoke(meta);
+                OnListingItemSelected?.Invoke(key);
         };
 
         CharacterListing.OnItemDeselected += _ =>
@@ -128,26 +116,31 @@ public sealed partial class CharacterRecordViewer : FancyWindow
         {
             var status = (SecurityStatus)args.Id;
             // This should reflect SetStatus in CriminalRecordsConsoleWindow.xaml.cs
-            if (status == SecurityStatus.Wanted || status == SecurityStatus.Suspected)
+            if (status is SecurityStatus.Wanted or SecurityStatus.Suspected or SecurityStatus.Hostile)
                 SetStatusWithReason(status);
             else
                 OnSetSecurityStatus?.Invoke(status, null);
         };
 
-        OnClose += () => _entryView.Close();
+        OnClose += () =>
+        {
+            _entryView.Close();
+            _wantedReasonDialog?.Close();
+        };
 
         // Admin console entry type selector
-        RecordEntryViewType.AddItem(Loc.GetString("department-Security"));
-        RecordEntryViewType.AddItem(Loc.GetString("department-Medical"));
         RecordEntryViewType.AddItem(Loc.GetString("humanoid-profile-editor-cd-records-employment"));
+        RecordEntryViewType.AddItem(Loc.GetString("department-Medical"));
+        RecordEntryViewType.AddItem(Loc.GetString("department-Security"));
         RecordEntryViewType.OnItemSelected += args =>
         {
             if (args.Id == RecordEntryViewType.SelectedId)
                 return;
             RecordEntryViewType.SelectId(args.Id);
-            // This is a hack to get the server to send us another packet with the new entries
-            OnFiltersChanged?.Invoke(_filterType, RecordFiltersValue.Text);
+            if (_lastState is { } state)
+                UpdateState(state);
         };
+        SetSecurityStatusEnabled(false);
     }
 
     // If we are using wizden's class we might as well use their localization.
@@ -175,7 +168,7 @@ public sealed partial class CharacterRecordViewer : FancyWindow
         {
             foreach (var item in CharacterListing)
             {
-                if (((CharacterListMetadata) item.Metadata!).CharacterRecordKey == key)
+                if ((uint)item.Metadata! == key)
                 {
                     item.Selected = true;
                     break;
@@ -186,21 +179,18 @@ public sealed partial class CharacterRecordViewer : FancyWindow
         _isPopulating = false;
     }
 
-    private bool CharacterListNeedsRepopulating(IReadOnlyDictionary<uint, CharacterRecordConsoleState.CharacterInfo> newKeys)
+    private bool CharacterListNeedsRepopulating(IReadOnlyDictionary<uint, string> newKeys)
     {
         var newCount = newKeys.Count;
         if (newCount != CharacterListing.Count)
             return true;
 
-        // Given that there is the same number of keys in the dictionary as in items in the listing, they are not equal
-        // if and only if there exists a key in the listing that is not in the dictionary
         foreach (var item in CharacterListing)
         {
-            var key = ((CharacterListMetadata)item.Metadata!).CharacterRecordKey;
-            if (!newKeys.ContainsKey(key))
-            {
+            var key = (uint)item.Metadata!;
+            if (!newKeys.TryGetValue(key, out var info) ||
+                item.Text != info)
                 return true;
-            }
         }
 
         return false;
@@ -208,6 +198,7 @@ public sealed partial class CharacterRecordViewer : FancyWindow
 
     public void UpdateState(CharacterRecordConsoleState state)
     {
+        _lastState = state;
         #region Visibility
 
         RecordEntryViewType.Visible = false;
@@ -249,7 +240,7 @@ public sealed partial class CharacterRecordViewer : FancyWindow
                 break;
             case RecordConsoleType.Admin:
                 RecordFilterType.Visible = true;
-                Title = "Admin records console";
+                Title = Loc.GetString("cd-character-records-viewer-title-admin");
                 RecordEntryViewType.Visible = true;
 
                 break;
@@ -271,15 +262,8 @@ public sealed partial class CharacterRecordViewer : FancyWindow
 
             CharacterListing.Clear();
 
-            // Add the records to the listing in a sorted order. There is probably are faster way of doing this, but
-            // this is not really a hot code path.
-            state.CharacterList
-                // The items in this tuple are as follows: (name of character, CharacterListMetadata)
-                .Select(r
-                    => (CharacterName: r.Value.CharacterDisplayName, new CharacterListMetadata() { CharacterRecordKey = r.Key, StationRecordKey = r.Value.StationRecordKey}))
-                .OrderBy(r => r.Item1)
-                .ToList()
-                .ForEach(r => CharacterListing.AddItem(r.Item1, metadata: r.Item2));
+            foreach (var (key, name) in state.CharacterList.OrderBy(record => record.Value))
+                CharacterListing.AddItem(name, metadata: key);
 
             _isPopulating = false;
         }
@@ -300,12 +284,6 @@ public sealed partial class CharacterRecordViewer : FancyWindow
 
         RecordContainerStatus.Visible = false;
         RecordContainer.Visible = true;
-
-        // DeltaV - that's not the case
-        // Do not needlessly reload the record if not needed. This is mainly done to prevent a bug in the admin record viewer.
-        // if (state.SelectedIndex == _openRecordKey)
-        //     return;
-        // _openRecordKey = state.SelectedIndex;
 
         var record = state.SelectedRecord!;
         var cr = record.PRecords;
@@ -375,12 +353,13 @@ public sealed partial class CharacterRecordViewer : FancyWindow
     private void UpdateRecordBoxEmployment(FullCharacterRecords record)
     {
         RecordContainerEmployment.Visible = true;
-        RecordContainerWorkAuth.Text = record.PRecords.HasWorkAuthorization ? "yes" : "no";
+        RecordContainerWorkAuth.Text = record.PRecords.HasWorkAuthorization
+            ? Loc.GetString("cd-character-records-viewer-yes")
+            : Loc.GetString("cd-character-records-viewer-no");
     }
 
     private void UpdateRecordBoxMedical(FullCharacterRecords record)
     {
-        RecordContainerMedical.Visible = true;
         var cr = record.PRecords;
         RecordContainerMedical.Visible = true;
         RecordContainerAllergies.SetValue(cr.Allergies);

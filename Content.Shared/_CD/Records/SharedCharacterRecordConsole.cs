@@ -25,13 +25,6 @@ public enum RecordConsoleType : byte
 [Serializable, NetSerializable]
 public sealed class CharacterRecordConsoleState : BoundUserInterfaceState
 {
-    [Serializable, NetSerializable]
-    public struct CharacterInfo
-    {
-        public string CharacterDisplayName;
-        public uint? StationRecordKey;
-    }
-
     public RecordConsoleType ConsoleType { get; set; }
 
     /// <summary>
@@ -40,9 +33,9 @@ public sealed class CharacterRecordConsoleState : BoundUserInterfaceState
     public uint? SelectedIndex { get; set; } = null;
 
     /// <summary>
-    /// List of names+station record keys to display in the listing
+    /// Names to display in the listing.
     /// </summary>
-    public Dictionary<uint, CharacterInfo>? CharacterList { get; set; }
+    public Dictionary<uint, string>? CharacterList { get; set; }
 
     /// <summary>
     /// The contents of the selected record

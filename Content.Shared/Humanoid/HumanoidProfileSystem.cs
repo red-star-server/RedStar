@@ -4,6 +4,7 @@ using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Preferences;
 using Content.Shared.Sprite; // RS14
+using Content.Shared._CD.Body.Systems; // RS14
 using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Prototypes;
 
@@ -13,6 +14,7 @@ public sealed partial class HumanoidProfileSystem : EntitySystem
 {
     [Dependency] private GrammarSystem _grammar = default!;
     [Dependency] private SharedScaleVisualsSystem _scale = default!; // RS14
+    [Dependency] private SmallCharacterSystem _smallCharacter = default!; // RS14
 
     public override void Initialize()
     {
@@ -44,10 +46,9 @@ public sealed partial class HumanoidProfileSystem : EntitySystem
         }
 
         // RS14-start
-        var scale = Vector2.One;
-        if (TryComp<ScaleVisualsComponent>(ent, out var visuals) && visuals.OriginalScale is { } original)
-            scale = original;
+        var scale = TryComp<ScaleVisualsComponent>(ent, out var visuals) ? visuals.Scale : Vector2.One;
         _scale.SetSpriteScale(ent, scale);
+        _smallCharacter.UpdateHeight(ent, profile.Height);
         // RS14-end
     }
 

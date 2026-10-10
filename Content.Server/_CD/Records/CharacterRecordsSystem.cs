@@ -21,35 +21,21 @@ public sealed partial class CharacterRecordsSystem : EntitySystem
     private void OnPlayerSpawn(PlayerSpawnCompleteEvent args)
     {
         if (!HasComp<StationRecordsComponent>(args.Station))
-        {
-            Log.Error("Tried to add CharacterRecords on a station without StationRecords");
             return;
-        }
-        if (!HasComp<CharacterRecordsComponent>(args.Station))
-            AddComp<CharacterRecordsComponent>(args.Station);
 
         if (string.IsNullOrEmpty(args.JobId))
-        {
-            Log.Error($"Null JobId in CharacterRecordsSystem::OnPlayerSpawn for character {args.Profile.Name} played by {args.Player.Name}");
-            return;
-        }
-
-        if (HasComp<SkipLoadingCharacterRecordsComponent>(args.Mob))
             return;
 
         var profile = args.Profile;
         if (profile.CDCharacterRecords == null)
-        {
-            Log.Error($"Null records in CharacterRecordsSystem::OnPlayerSpawn for character {args.Profile.Name} played by {args.Player.Name}.");
             return;
-        }
 
         var player = args.Mob;
 
         if (!_prototype.TryIndex(args.JobId, out JobPrototype? jobPrototype))
-        {
-            throw new ArgumentException($"Invalid job prototype ID: {args.JobId}");
-        }
+            return;
+
+        EnsureComp<CharacterRecordsComponent>(args.Station);
 
         TryComp<FingerprintComponent>(player, out var fingerprintComponent);
         TryComp<DnaComponent>(player, out var dnaComponent);
@@ -107,14 +93,13 @@ public sealed partial class CharacterRecordsSystem : EntitySystem
     }
 
     public void DelEntry(
-        EntityUid station,
         EntityUid player,
         CharacterRecordType ty,
         int idx,
-        CharacterRecordsComponent? recordsDb = null,
         CharacterRecordKeyStorageComponent? key = null)
     {
-        if (!Resolve(station, ref recordsDb) || !Resolve(player, ref key))
+        if (!Resolve(player, ref key) ||
+            !TryComp<CharacterRecordsComponent>(key.Key.Station, out var recordsDb))
             return;
 
         if (!recordsDb.Records.TryGetValue(key.Key.Index, out var value))
@@ -134,16 +119,15 @@ public sealed partial class CharacterRecordsSystem : EntitySystem
 
         entries.RemoveAt(idx);
 
-        RaiseLocalEvent(new CharacterRecordsModifiedEvent(station));
+        RaiseLocalEvent(new CharacterRecordsModifiedEvent(key.Key.Station));
     }
 
     public void ResetRecord(
-        EntityUid station,
         EntityUid player,
-        CharacterRecordsComponent? recordsDb = null,
         CharacterRecordKeyStorageComponent? key = null)
     {
-        if (!Resolve(station, ref recordsDb) || !Resolve(player, ref key))
+        if (!Resolve(player, ref key) ||
+            !TryComp<CharacterRecordsComponent>(key.Key.Station, out var recordsDb))
             return;
 
         if (!recordsDb.Records.TryGetValue(key.Key.Index, out var value))
@@ -153,21 +137,7 @@ public sealed partial class CharacterRecordsSystem : EntitySystem
         if (TryComp(player, out MetaDataComponent? meta))
             value.Name = meta.EntityName;
         value.PRecords = records;
-        RaiseLocalEvent(new CharacterRecordsModifiedEvent(station));
-    }
-
-    public void DeleteAllRecords(EntityUid player, CharacterRecordKeyStorageComponent? key = null)
-    {
-        if (!Resolve(player, ref key))
-            return;
-
-        var station = key.Key.Station;
-        CharacterRecordsComponent? records = null;
-        if (!Resolve(station, ref records))
-            return;
-
-        records.Records.Remove(key.Key.Index);
-        RaiseLocalEvent(new CharacterRecordsModifiedEvent(station));
+        RaiseLocalEvent(new CharacterRecordsModifiedEvent(key.Key.Station));
     }
 
     public IDictionary<uint, FullCharacterRecords> QueryRecords(EntityUid station, CharacterRecordsComponent? recordsDb = null)

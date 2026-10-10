@@ -241,7 +241,9 @@ public sealed partial class HumanoidProfileEditor
             return;
 
         var species = _prototypeManager.Index(Profile.Species);
-        var percent = (Profile.Height - species.MinHeight) / (species.MaxHeight - species.MinHeight);
+        var percent = species.MaxHeight > species.MinHeight
+            ? (Profile.Height - species.MinHeight) / (species.MaxHeight - species.MinHeight)
+            : 0f;
         CDHeightSlider.Value = percent;
         CDHeightLabel.Text = UnitConversion.GetMetricAndImperialDisplayFromScale(Profile.Height * species.BaseScale.Y);
         CDPullSpeedReductionLabel.Text = SmallCharacterSystem.GetPullSpeedPenaltyDisplayFromScale(Profile.Height);

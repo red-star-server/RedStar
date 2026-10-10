@@ -2,9 +2,8 @@
 humanoid-profile-editor-cd-records-tab = Records
 
 # General
-humanoid-profile-editor-cd-records-height = Height (cm):
 humanoid-profile-editor-cd-records-weight = Weight (kg):
-humanoid-profile-editor-cd-records-contact-name = Emergency Contact Names(s):
+humanoid-profile-editor-cd-records-contact-name = Emergency Contact Name(s):
 
 # Employment
 humanoid-profile-editor-cd-records-employment = Employment
@@ -28,7 +27,6 @@ humanoid-profile-editor-cd-records-down = Down
 
 cd-records-entry-edit-popup-title = View/Edit Entry
 cd-records-entry-edit-popup-save = Save
-cd-records-entry-default-title = Untitled Entry
 
 cd-records-entry-edit-popup-title-placeholder = Entry Title
 cd-records-entry-edit-popup-involved-placeholder = Author(s)

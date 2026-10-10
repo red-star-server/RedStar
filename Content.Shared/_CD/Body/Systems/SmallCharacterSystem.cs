@@ -1,6 +1,4 @@
 using Content.Shared._CD.Body.Components;
-using Content.Shared.GameTicking;
-using Content.Shared.Humanoid;
 using Content.Shared.Item;
 using JetBrains.Annotations;
 using Robust.Shared.Physics.Components;
@@ -8,19 +6,11 @@ using Robust.Shared.Physics.Components;
 namespace Content.Shared._CD.Body.Systems;
 
 /// <summary>
-/// Used to relay or subscribe to events if a character's scale is 1.0 or below.
-/// This is only used for the height slider scale.
+/// Applies the pull speed penalty for characters below normal height.
 /// </summary>
 public sealed partial class SmallCharacterSystem : EntitySystem
 {
     private const float NO_PENALTY = 1.0f;
-
-    [SubscribeLocalEvent]
-    private void OnSpawn(PlayerSpawnCompleteEvent ev)
-    {
-        if (TryComp<HumanoidProfileComponent>(ev.Mob, out var profile))
-            ApplySmallCharacter(ev.Mob, profile.Height);
-    }
 
     [PublicAPI]
     public float ApplyPullSpeedPenalty(Entity<SmallCharacterComponent?> puller, EntityUid? pulledEntity)
@@ -77,17 +67,16 @@ public sealed partial class SmallCharacterSystem : EntitySystem
     }
     #endregion
 
-    #region Private Members
-    private void ApplySmallCharacter(EntityUid uid, float scale = 1)
+    public void UpdateHeight(EntityUid uid, float scale)
     {
         if (scale >= 1)
+        {
+            RemComp<SmallCharacterComponent>(uid);
             return;
+        }
 
-        // The character scale is stored in the HumanoidProfileComponent if you ever
-        // need it.
         var comp = EnsureComp<SmallCharacterComponent>(uid);
         comp.PullSpeedPenalty = GetPullSpeedPenaltyFromScale(scale);
         Dirty(uid, comp);
     }
-    #endregion
 }

@@ -1,8 +1,8 @@
-using Content.Server.CriminalRecords.Systems; // DeltaV - i hate this, forward to criminal records console
+using Content.Server.CriminalRecords.Systems;
 using Content.Shared.StationRecords.Systems;
 using Content.Shared.Station.Systems;
 using Content.Shared.CriminalRecords;
-using Content.Shared.CriminalRecords.Components; // DeltaV - i hate this, forward to criminal records console
+using Content.Shared.CriminalRecords.Components;
 using Content.Shared.Security;
 using Content.Shared.StationRecords;
 using Content.Shared._CD.Records;
@@ -30,9 +30,7 @@ public sealed partial class CharacterRecordConsoleSystem : EntitySystem
                 subr.Event<BoundUIOpenedEvent>((uid, component, _) => UpdateUi((uid, component)));
                 subr.Event<CharacterRecordConsoleSelectMsg>(OnKeySelect);
                 subr.Event<CharacterRecordsConsoleFilterMsg>(OnFilterApplied);
-                // Begin DeltaV - i hate this, forward to criminal records console
                 subr.Event<CriminalRecordChangeStatus>(OnCriminalRecordChangeStatus);
-                // End DeltaV - i hate this, forward to criminal records console
             });
     }
 
@@ -69,7 +67,6 @@ public sealed partial class CharacterRecordConsoleSystem : EntitySystem
         UpdateUi(ent);
     }
 
-    // Begin DeltaV - i hate this, forward to criminal records console
     private void OnCriminalRecordChangeStatus(Entity<CharacterRecordConsoleComponent> ent, ref CriminalRecordChangeStatus msg)
     {
         if (!TryComp<CriminalRecordsConsoleComponent>(ent, out var console))
@@ -78,7 +75,6 @@ public sealed partial class CharacterRecordConsoleSystem : EntitySystem
         _criminalRecordsConsole.OnChangeStatus((ent.Owner, console), ref msg);
         UpdateUi(ent);
     }
-    // End DeltaV - i hate this, forward to criminal records console
 
     private void UpdateUi(Entity<CharacterRecordConsoleComponent> ent)
     {
@@ -103,31 +99,24 @@ public sealed partial class CharacterRecordConsoleSystem : EntitySystem
         }
 
         var characterRecords = _characterRecords.QueryRecords(station.Value);
-        // Get the name and station records key display from the list of records
-        var names = new Dictionary<uint, CharacterRecordConsoleState.CharacterInfo>();
+        // Get the names to display from the list of records.
+        var names = new Dictionary<uint, string>();
         foreach (var (i, r) in characterRecords)
         {
-            var netEnt = _entity.GetNetEntity(r.Owner!.Value);
+            var netEnt = r.Owner is { } owner ? _entity.GetNetEntity(owner).ToString() : "unknown";
             // Admins get additional info to make it easier to run commands
             var nameJob = console.ConsoleType != RecordConsoleType.Admin
                 ? $"{r.Name} ({r.JobTitle})"
-                : $"{r.Name} ({netEnt}, {r.JobTitle}";
+                : $"{r.Name} ({netEnt}, {r.JobTitle})";
 
             // Apply any filter the user has set
             if (console.Filter != null)
             {
-                if (IsSkippedRecord(console.Filter, r, nameJob))
+                if (IsSkippedRecord(console.Filter, r))
                     continue;
             }
 
-            if (names.ContainsKey(i))
-            {
-                Log.Error(
-                    $"We somehow have duplicate character record keys, NetEntity: {i}, Entity: {entity}, Character Name: {r.Name}");
-            }
-
-            names[i] = new CharacterRecordConsoleState.CharacterInfo
-                { CharacterDisplayName = nameJob, StationRecordKey = r.StationRecordsKey };
+            names[i] = nameJob;
         }
 
         var record =
@@ -167,32 +156,24 @@ public sealed partial class CharacterRecordConsoleSystem : EntitySystem
     /// Almost exactly the same as <see cref="StationRecordsSystem.IsSkipped"/>
     /// </summary>
     private static bool IsSkippedRecord(StationRecordsFilter filter,
-        FullCharacterRecords record,
-        string nameJob)
+        FullCharacterRecords record)
     {
-        var isFilter = filter.Value.Length > 0;
-
-        if (!isFilter)
+        if (filter.Value.Length == 0)
             return false;
-
-        var filterLowerCaseValue = filter.Value.ToLower();
 
         return filter.Type switch
         {
             StationRecordFilterType.Name =>
-                !nameJob.Contains(filterLowerCaseValue, StringComparison.CurrentCultureIgnoreCase),
-            // DeltaV - start of silicon bio filters fix
+                !record.Name.Contains(filter.Value, StringComparison.OrdinalIgnoreCase),
+            StationRecordFilterType.Job =>
+                !record.JobTitle.Contains(filter.Value, StringComparison.OrdinalIgnoreCase),
+            StationRecordFilterType.Species =>
+                !record.Species.Contains(filter.Value, StringComparison.OrdinalIgnoreCase),
             StationRecordFilterType.Prints => record.Fingerprint == null
-                || IsFilterWithSomeCodeValue(record.Fingerprint, filterLowerCaseValue),
+                || !record.Fingerprint.StartsWith(filter.Value, StringComparison.OrdinalIgnoreCase),
             StationRecordFilterType.DNA => record.DNA == null
-                || IsFilterWithSomeCodeValue(record.DNA, filterLowerCaseValue),
-            // DeltaV - start of silicon bio filters fix
-            _ => throw new ArgumentOutOfRangeException(nameof(filter), "Invalid Character Record filter type"),
+                || !record.DNA.StartsWith(filter.Value, StringComparison.OrdinalIgnoreCase),
+            _ => true,
         };
-    }
-
-    private static bool IsFilterWithSomeCodeValue(string value, string filter)
-    {
-        return !value.StartsWith(filter, StringComparison.CurrentCultureIgnoreCase);
     }
 }

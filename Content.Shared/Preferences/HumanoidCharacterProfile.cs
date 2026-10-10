@@ -865,6 +865,8 @@ namespace Content.Shared.Preferences
             _traitPreferences.UnionWith(GetValidTraits(traits, prototypeManager));
 
             // RS14-start
+            if (!float.IsFinite(Height))
+                Height = 1f;
             Height = Math.Clamp(MathF.Round(Height, 2), speciesPrototype.MinHeight, speciesPrototype.MaxHeight);
             CDCharacterRecords ??= PlayerProvidedCharacterRecords.DefaultRecords();
             CDCharacterRecords.EnsureValid();
