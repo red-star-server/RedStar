@@ -100,7 +100,7 @@ entity-condition-guidebook-bloodlevel =
     { $max ->
         [2147483648] у цели не менее { NATURALFIXED($min, 2) }% крови
         *[other] { $min ->
-                    [0] у цели не более { NATURALFIXED($max, 2) }% крови
-                    *[other] у цели от { NATURALFIXED($min, 2) }% до { NATURALFIXED($max, 2) }% крови
-                 }
+                [0] у цели не более { NATURALFIXED($max, 2) }% крови
+                *[other] у цели от { NATURALFIXED($min, 2) }% до { NATURALFIXED($max, 2) }% крови
+            }
     }

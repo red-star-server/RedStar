@@ -10,11 +10,6 @@ microwave-component-suicide-message = Вы зажариваете свою го�
 microwave-component-interact-full = Она заполнена.
 microwave-component-interact-item-too-big = { CAPITALIZE($item) } не может поместиться в микроволновой печи из-за размера!
 
-## Bound UI
-
-microwave-bound-user-interface-instant-button = МГНОВЕННО
-microwave-bound-user-interface-cook-time-label = ВРЕМЯ: { $time }
-
 ## UI
 
 microwave-menu-title = Микроволновая печь
@@ -24,3 +19,6 @@ microwave-menu-eject-all-tooltip = Это испарит все жидкости
 microwave-menu-instant-button = МГНОВЕННО
 microwave-menu-footer-flavor-left = Не помещайте сюда электронные, металлические или живые объекты.
 microwave-menu-footer-flavor-right = v1.5
+microwave-menu-ingredients = ИНГРЕДИЕНТЫ
+microwave-menu-ingredients-empty = Нет ингредиентов
+microwave-menu-cook-time = ВРЕМЯ ГОТОВКИ
