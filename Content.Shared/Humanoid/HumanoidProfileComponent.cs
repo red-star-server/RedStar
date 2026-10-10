@@ -34,6 +34,9 @@ public sealed partial class HumanoidProfileComponent : Component
     public int Age = 18;
 
     [DataField, AutoNetworkedField]
+    public float Height = 1f; // RS14
+
+    [DataField, AutoNetworkedField]
     public ProtoId<SpeciesPrototype> Species = HumanoidCharacterProfile.DefaultSpecies;
 
     /// <summary>
