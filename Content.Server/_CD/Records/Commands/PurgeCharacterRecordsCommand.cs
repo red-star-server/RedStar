@@ -6,7 +6,7 @@ using Robust.Shared.Console;
 namespace Content.Server._CD.Records.Commands;
 
 [AdminCommand(AdminFlags.Ban)]
-public sealed class PurgeCharacterRecordsCommand : IConsoleCommand
+public sealed partial class PurgeCharacterRecordsCommand : IConsoleCommand
 {
     [Dependency] private IEntityManager _entManager = default!;
 

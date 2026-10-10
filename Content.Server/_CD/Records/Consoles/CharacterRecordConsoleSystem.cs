@@ -31,7 +31,6 @@ public sealed partial class CharacterRecordConsoleSystem : EntitySystem
                 subr.Event<CharacterRecordConsoleSelectMsg>(OnKeySelect);
                 subr.Event<CharacterRecordsConsoleFilterMsg>(OnFilterApplied);
                 // Begin DeltaV - i hate this, forward to criminal records console
-                subr.Event<SelectStationRecord>(OnSelectStationRecord);
                 subr.Event<CriminalRecordChangeStatus>(OnCriminalRecordChangeStatus);
                 // End DeltaV - i hate this, forward to criminal records console
             });
@@ -57,19 +56,20 @@ public sealed partial class CharacterRecordConsoleSystem : EntitySystem
     private void OnKeySelect(Entity<CharacterRecordConsoleComponent> ent, ref CharacterRecordConsoleSelectMsg msg)
     {
         ent.Comp.SelectedIndex = msg.CharacterRecordKey;
+        if (TryComp<CriminalRecordsConsoleComponent>(ent, out var criminalConsole) &&
+            _station.GetOwningStation(ent) is { } station)
+        {
+            uint? stationKey = null;
+            if (msg.CharacterRecordKey is { } characterKey &&
+                _characterRecords.QueryRecords(station).TryGetValue(characterKey, out var record))
+                stationKey = record.StationRecordsKey;
+
+            _criminalRecordsConsole.SelectRecord((ent.Owner, criminalConsole), stationKey);
+        }
         UpdateUi(ent);
     }
 
     // Begin DeltaV - i hate this, forward to criminal records console
-    private void OnSelectStationRecord(Entity<CharacterRecordConsoleComponent> ent, ref SelectStationRecord msg)
-    {
-        if (!TryComp<CriminalRecordsConsoleComponent>(ent, out var console))
-            return;
-
-        _criminalRecordsConsole.OnKeySelected((ent.Owner, console), ref msg);
-        UpdateUi(ent);
-    }
-
     private void OnCriminalRecordChangeStatus(Entity<CharacterRecordConsoleComponent> ent, ref CriminalRecordChangeStatus msg)
     {
         if (!TryComp<CriminalRecordsConsoleComponent>(ent, out var console))

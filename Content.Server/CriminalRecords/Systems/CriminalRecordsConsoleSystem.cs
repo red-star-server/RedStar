@@ -57,12 +57,19 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
         UpdateUserInterface(ent);
     }
 
-    public void OnKeySelected(Entity<CriminalRecordsConsoleComponent> ent, ref SelectStationRecord msg) // RS14
+    private void OnKeySelected(Entity<CriminalRecordsConsoleComponent> ent, ref SelectStationRecord msg)
     {
         // no concern of sus client since record retrieval will fail if invalid id is given
-        ent.Comp.ActiveKey = msg.SelectedKey;
+        SelectRecord(ent, msg.SelectedKey); // RS14
+    }
+
+    // RS14-start
+    public void SelectRecord(Entity<CriminalRecordsConsoleComponent> ent, uint? key)
+    {
+        ent.Comp.ActiveKey = key;
         UpdateUserInterface(ent);
     }
+    // RS14-end
 
     private void OnStatusFilterPressed(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordSetStatusFilter msg)
     {

@@ -36,11 +36,9 @@ public sealed class CharacterRecordConsoleBoundUserInterface(EntityUid owner, En
         {
             SendMessage(new CharacterRecordConsoleSelectMsg(meta?.CharacterRecordKey));
 
-            // If we are a security records console, we also need to inform the criminal records
-            // system of our state.
+            // Only records linked to station records can have their security status changed.
             if (_window.IsSecurity() && meta?.StationRecordKey != null)
             {
-                SendMessage(new SelectStationRecord(meta.Value.StationRecordKey.Value));
                 _window.SetSecurityStatusEnabled(true);
             }
             else
