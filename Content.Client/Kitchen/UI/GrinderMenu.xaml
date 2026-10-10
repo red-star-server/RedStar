@@ -1,6 +1,5 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-    xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     Title="{Loc grinder-menu-title}" MinSize="768 342" Resizable="False">
     <BoxContainer Orientation="Vertical">
@@ -32,7 +31,7 @@
                     </PanelContainer>
                 </BoxContainer>
             </BoxContainer>
-            <customControls:VSeparator Margin="0 5" />
+            <controls:Separator StyleClasses="LowDivider" Orientation="Vertical" Margin="0 5" />
             <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="8 3 8 8">
                 <controls:StripeBack>
                     <Label Text="{Loc grinder-menu-chamber-content-box-label}" StyleClasses="LabelHeading" HorizontalAlignment="Center" Margin="10 0" />
@@ -48,7 +47,7 @@
                 </PanelContainer>
                 <Button Name="ChamberEjectButton" Text="{Loc grinder-menu-chamber-content-box-button}" StyleClasses="negative" />
             </BoxContainer>
-            <customControls:VSeparator Margin="0 5" />
+            <controls:Separator StyleClasses="LowDivider" Orientation="Vertical" Margin="0 5" />
             <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="8 3 8 8" SizeFlagsStretchRatio="2">
                 <controls:StripeBack>
                     <Label Text="{Loc grinder-menu-beaker-content-box-label}" StyleClasses="LabelHeading" HorizontalAlignment="Center" Margin="10 0" />
