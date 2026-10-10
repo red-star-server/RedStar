@@ -1,0 +1,251 @@
+- type: entity
+  id: MobBabySlimes
+  parent: BaseMobAdultSlimes
+  abstract: true
+  components:
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: baby
+  - type: SlimeDigestion
+    preyWhitelist:
+      sizes: [Tiny, Small]
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesBlue
+    duration: 120s
+  - type: HTN
+    rootTask:
+      task: SlimeCombatCompound
+  - type: NpcFactionMember
+    factions:
+    - SimpleNeutral
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      60: Dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: baby
+      Dead:
+        Base: baby-dead
+
+- type: entity
+  id: MobBabySlimesGray
+  name: baby gray slime
+  parent: MobBabySlimes
+  components:
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesGray
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/gray.rsi
+
+- type: entity
+  id: MobBabySlimesOrange
+  name: baby orange slime
+  parent: MobBabySlimes
+  components:
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesOrange
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/orange.rsi
+
+- type: entity
+  id: MobBabySlimesPurple
+  name: baby purple slime
+  parent: MobBabySlimes
+  components:
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesPurple
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/purple.rsi
+
+- type: entity
+  id: MobBabySlimesBlue
+  name: baby blue slime
+  parent: MobBabySlimes
+  components:
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesBlue
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/blue.rsi
+
+- type: entity
+  id: MobBabySlimesMetal
+  name: baby metal slime
+  parent: MobBabySlimes
+  components:
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesMetal
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/metal.rsi
+
+- type: entity
+  id: MobBabySlimesYellow
+  name: baby yellow slime
+  parent: MobBabySlimes
+  components:
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesYellow
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/yellow.rsi
+
+- type: entity
+  id: MobBabySlimesDarkPurple
+  name: baby darkpurple slime
+  parent: MobBabySlimes
+  components:
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesDarkPurple
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/dark_purple.rsi
+
+- type: entity
+  id: MobBabySlimesDarkBlue
+  name: baby darkblue slime
+  parent: MobBabySlimes
+  components:
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesDarkBlue
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/dark_blue.rsi
+
+- type: entity
+  id: MobBabySlimesSilver
+  name: baby silver slime
+  parent: MobBabySlimes
+  components:
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesSilver
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/silver.rsi
+
+- type: entity
+  id: MobBabySlimesBluespace
+  name: baby bluespace slime
+  parent: MobBabySlimes
+  components:
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesBluespace
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/bluespace.rsi
+
+- type: entity
+  id: MobBabySlimesSepia
+  name: baby sepia slime
+  parent: MobBabySlimes
+  components:
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesSepia
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/sepia.rsi
+
+- type: entity
+  id: MobBabySlimesCerulean
+  name: baby cerulean slime
+  parent: MobBabySlimes
+  components:
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesCerulean
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/cerulean.rsi
+
+- type: entity
+  id: MobBabySlimesPyrite
+  name: baby pyrite slime
+  parent: MobBabySlimes
+  components:
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesPyrite
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/pyrite.rsi
+
+- type: entity
+  id: MobBabySlimesRed
+  name: baby red slime
+  parent: MobBabySlimes
+  components:
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesRed
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/red.rsi
+
+- type: entity
+  id: MobBabySlimesGreen
+  name: baby green slime
+  parent: MobBabySlimes
+  components:
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesGreen
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/green.rsi
+
+- type: entity
+  id: MobBabySlimesPink
+  name: baby pink slime
+  parent: MobBabySlimes
+  components:
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesPink
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/pink.rsi
+
+- type: entity
+  id: MobBabySlimesGold
+  name: baby gold slime
+  parent: MobBabySlimes
+  components:
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesGold
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/gold.rsi
+
+- type: entity
+  id: MobBabySlimesOil
+  name: baby oil slime
+  parent: MobBabySlimes
+  components:
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesOil
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/oil.rsi
+
+- type: entity
+  id: MobBabySlimesBlack
+  name: baby black slime
+  parent: MobBabySlimes
+  components:
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesBlack
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/black.rsi
+
+- type: entity
+  id: MobBabySlimesLightPink
+  name: baby lightpink slime
+  parent: MobBabySlimes
+  components:
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesLightPink
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/light_pink.rsi
+
+- type: entity
+  id: MobBabySlimesAdamantine
+  name: baby adamantine slime
+  parent: MobBabySlimes
+  components:
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesAdamantine
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/adamantine.rsi
+
+- type: entity
+  id: MobBabySlimesRainbow
+  name: baby rainbow slime
+  parent: MobBabySlimes
+  components:
+  - type: TimedMetamorphosis
+    target: MobAdultSlimesRainbow
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/rainbow.rsi

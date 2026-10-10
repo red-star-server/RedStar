@@ -1,0 +1,4 @@
+- type: satiation
+  id: SlimeHunger
+  parent: NormalSatiationHunger
+  baseChangeRate: -1

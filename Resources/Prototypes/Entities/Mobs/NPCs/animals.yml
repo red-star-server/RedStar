@@ -1769,6 +1769,14 @@
     speechSounds: Monkey
     speechVerb: Monkey
   - type: MonkeyAccent
+  # RS14-start
+  - type: Tag
+    tags:
+    - VimPilot
+    - DoorBumpOpener
+    - AnomalyHost
+    - Monkey
+  # RS14-end
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-primate
   - type: AlwaysRevolutionaryConvertible

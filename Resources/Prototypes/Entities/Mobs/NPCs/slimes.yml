@@ -7,10 +7,12 @@
   components:
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/Aliens/slimes.rsi
+    sprite: _RedStar/Mobs/XenoSlimes/blue.rsi # RS14
+    # RS14-start
     layers:
-    - map: [ "enum.DamageStateVisualLayers.Base" ]
-      state: blue_adult_slime
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: adult
+    # RS14-end
   - type: Fixtures
     fixtures:
       fix1:
@@ -107,6 +109,28 @@
     allowedEmotes: ['Squish']
   - type: TypingIndicator
     proto: slime
+  # RS14-start
+  - type: Satiation
+    satiations:
+      Hunger:
+        prototype: SlimeHunger # RS14
+  - type: Slime
+  - type: SlimeDigestion
+  - type: Appearance
+  - type: TemperatureDamage
+    coldDamage:
+      types:
+        Cold: 10.0
+  - type: Butcherable
+    butcherDelay: 20
+    spawned: []
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: adult
+      Dead:
+        Base: baby-dead
+  # RS14-end
 
 - type: entity
   abstract: true
@@ -131,9 +155,19 @@
     - SimpleNeutral
   - type: HTN
     rootTask:
-      task: SimpleHostileCompound
+      task: SlimeCombatCompound # RS14
   - type: NPCRetaliation
     attackMemoryLength: 10
+  # RS14-start
+  - type: SlimeMutation
+  - type: SlimeMitosis
+    minInterval: 90s
+    maxInterval: 120s
+    gestationDuration: 60s
+    hungerPerBirth: 75
+    offspringCount: 2
+    offspringPrototype: MobBabySlimesBlue
+  # RS14-end
 
 - type: entity
   abstract: true
@@ -160,9 +194,21 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: blue_adult_slime
+        Base: adult # RS14
       Dead:
-        Base: blue_adult_slime_dead
+        Base: baby-dead # RS14
+  # RS14-start
+  - type: Butcherable
+    spawned:
+    - id: BlueSlimeExtract
+      amount: 1
+  - type: SlimeMutation
+    mutations:
+    - target: MobBabySlimesDarkBlue
+    - target: MobBabySlimesSilver
+    - target: MobBabySlimesPink
+      weight: 2
+  # RS14-end
 
 - type: entity
   parent: [ BaseAdultSlimesAngry, MobAdultSlimesBlue ]
@@ -176,21 +222,31 @@
   name: green slime
   components:
   - type: Sprite
-    layers:
-    - map: [ "enum.DamageStateVisualLayers.Base" ]
-      state: green_adult_slime
+    sprite: _RedStar/Mobs/XenoSlimes/green.rsi # RS14
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: green_adult_slime
+        Base: adult # RS14
       Dead:
-        Base: green_adult_slime_dead
+        Base: baby-dead # RS14
   - type: MeleeWeapon
     damage:
       types:
         Blunt: 6
         Caustic: 1
         Poison: 4
+        Cellular: 1
+  # RS14-start
+  - type: Butcherable
+    spawned:
+    - id: GreenSlimeExtract
+      amount: 1
+  - type: SlimeMutation
+    mutations:
+    - target: MobBabySlimesBlack
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesGreen
+  # RS14-end
 
 - type: entity
   parent: [ BaseAdultSlimesAngry, MobAdultSlimesGreen ]
@@ -204,20 +260,33 @@
   name: yellow slime
   components:
   - type: Sprite
-    layers:
-    - map: [ "enum.DamageStateVisualLayers.Base" ]
-      state: yellow_adult_slime
+    sprite: _RedStar/Mobs/XenoSlimes/yellow.rsi # RS14
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: yellow_adult_slime
+        Base: adult # RS14
       Dead:
-        Base: yellow_adult_slime_dead
+        Base: baby-dead # RS14
   - type: MeleeWeapon
     damage:
       types:
         Blunt: 6
         Caustic: 4
+        Cellular: 1
+  # RS14-start
+  - type: Butcherable
+    spawned:
+    - id: YellowSlimeExtract
+      amount: 1
+  - type: SlimeMutation
+    mutations:
+    - target: MobBabySlimesOrange
+    - target: MobBabySlimesMetal
+    - target: MobBabySlimesBluespace
+      weight: 2
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesYellow
+  # RS14-end
 
 - type: entity
   parent: [ BaseAdultSlimesAngry, MobAdultSlimesYellow ]
