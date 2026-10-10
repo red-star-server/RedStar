@@ -7,11 +7,12 @@ using Content.Shared.Security;
 using Content.Shared.StationRecords;
 using Content.Shared._CD.Records;
 using Content.Shared.StationRecords.Components;
-using Content.Shared.Access.Systems;
+using Content.Shared.StationRecords.Events;
 using Content.Shared.Verbs;
 using Content.Shared.Humanoid;
 using Content.Server.Administration.Managers;
 using Robust.Server.GameObjects;
+using System.Linq;
 
 namespace Content.Server._CD.Records.Consoles;
 
@@ -21,7 +22,6 @@ public sealed partial class CharacterRecordConsoleSystem : EntitySystem
     [Dependency] private IEntityManager _entity = default!;
     [Dependency] private CharacterRecordsSystem _characterRecords = default!;
     [Dependency] private StationRecordsSystem _records = default!;
-    [Dependency] private AccessReaderSystem _access = default!;
     [Dependency] private IAdminManager _admins = default!;
     [Dependency] private StationSystem _station = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
@@ -56,9 +56,11 @@ public sealed partial class CharacterRecordConsoleSystem : EntitySystem
 
     private bool CanView(Entity<CharacterRecordConsoleComponent> ent, EntityUid user)
     {
+        // Native record consoles allow viewing; the native criminal records system
+        // checks access separately when changing a security status.
         return ent.Comp.ConsoleType == RecordConsoleType.Admin
             ? _admins.IsAdmin(user)
-            : _access.IsAllowed(user, ent.Owner);
+            : true;
     }
 
     private void OnUiOpened(Entity<CharacterRecordConsoleComponent> ent, ref BoundUIOpenedEvent args)
@@ -75,10 +77,22 @@ public sealed partial class CharacterRecordConsoleSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnRecordsModified(CharacterRecordsModifiedEvent args)
     {
+        UpdateOpenConsoles(args.Station);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnGeneralRecordModified(ref RecordModifiedEvent args)
+    {
+        UpdateOpenConsoles(args.Station);
+    }
+
+    private void UpdateOpenConsoles(EntityUid station)
+    {
         var query = EntityQueryEnumerator<CharacterRecordConsoleComponent>();
         while (query.MoveNext(out var uid, out var console))
         {
-            if (console.ConsoleType == RecordConsoleType.Admin || _station.GetOwningStation(uid) == args.Station)
+            if (_ui.IsUiOpen(uid, CharacterRecordConsoleKey.Key) &&
+                (console.ConsoleType == RecordConsoleType.Admin || _station.GetOwningStation(uid) == station))
                 UpdateUi((uid, console));
         }
     }
@@ -125,6 +139,9 @@ public sealed partial class CharacterRecordConsoleSystem : EntitySystem
     private void UpdateUi(Entity<CharacterRecordConsoleComponent> ent)
     {
         var entity = ent.Owner;
+        if (!_ui.IsUiOpen(entity, CharacterRecordConsoleKey.Key))
+            return;
+
         var console = ent.Comp;
         var station = _station.GetOwningStation(entity);
         if (station == null && console.ConsoleType == RecordConsoleType.Admin)
@@ -140,7 +157,7 @@ public sealed partial class CharacterRecordConsoleSystem : EntitySystem
         }
         if (!HasComp<StationRecordsComponent>(station))
         {
-            SendState(entity, new CharacterRecordConsoleState { ConsoleType = console.ConsoleType });
+            SendState(ent, new CharacterRecordConsoleUpdateMsg { ConsoleType = console.ConsoleType });
             return;
         }
 
@@ -194,8 +211,8 @@ public sealed partial class CharacterRecordConsoleSystem : EntitySystem
                 securityStatus = (entry.Status, entry.Reason);
         }
 
-        SendState(entity,
-            new CharacterRecordConsoleState
+        SendState(ent,
+            new CharacterRecordConsoleUpdateMsg
             {
                 ConsoleType = console.ConsoleType,
                 CharacterList = names,
@@ -208,9 +225,15 @@ public sealed partial class CharacterRecordConsoleSystem : EntitySystem
             });
     }
 
-    private void SendState(EntityUid entity, CharacterRecordConsoleState state)
+    private void SendState(Entity<CharacterRecordConsoleComponent> ent, CharacterRecordConsoleUpdateMsg state)
     {
-        _ui.SetUiState(entity, CharacterRecordConsoleKey.Key, state);
+        foreach (var actor in _ui.GetActors(ent.Owner, CharacterRecordConsoleKey.Key).ToArray())
+        {
+            if (CanView(ent, actor))
+                _ui.ServerSendUiMessage(ent.Owner, CharacterRecordConsoleKey.Key, state, actor);
+            else
+                _ui.CloseUi(ent.Owner, CharacterRecordConsoleKey.Key, actor);
+        }
     }
 
     /// <summary>

@@ -1,9 +1,6 @@
 using Content.Shared._CD.Records;
 using Content.Shared.GameTicking;
-using Content.Shared.Inventory;
-using Content.Shared.PDA;
 using Content.Shared.StationRecords;
-using Content.Shared.StationRecords.Components;
 using Content.Shared.StationRecords.Events;
 using Content.Shared.StationRecords.Systems;
 
@@ -11,16 +8,17 @@ namespace Content.Server._CD.Records;
 
 public sealed partial class CharacterRecordsSystem : EntitySystem
 {
-    [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private StationRecordsSystem _records = default!;
 
     [SubscribeLocalEvent(after: [typeof(StationRecordsSystem)])]
     private void OnPlayerSpawn(PlayerSpawnCompleteEvent args)
     {
         if (args.Profile.CDCharacterRecords is not { } details ||
-            FindStationRecordsKey(args.Mob) is not { } key ||
-            key.OriginStation != args.Station ||
-            !_records.TryGetRecord<GeneralStationRecord>(key, out _))
+            _records.GetRecordByName(args.Station, args.Profile.Name) is not { } id)
+            return;
+
+        var key = new StationRecordKey(id, args.Station);
+        if (!_records.TryGetRecord<GeneralStationRecord>(key, out _))
             return;
 
         // A reused general record keeps the same key across respawns.
@@ -38,16 +36,17 @@ public sealed partial class CharacterRecordsSystem : EntitySystem
 
     private StationRecordKey? FindStationRecordsKey(EntityUid player)
     {
-        if (!_inventory.TryGetSlotEntity(player, "id", out var idUid))
-            return null;
+        var query = EntityQueryEnumerator<CharacterRecordsComponent>();
+        while (query.MoveNext(out var station, out var db))
+        {
+            foreach (var (id, record) in db.Records)
+            {
+                if (record.Owner == player)
+                    return new StationRecordKey(id, station);
+            }
+        }
 
-        var storageUid = idUid.Value;
-        if (TryComp<PdaComponent>(storageUid, out var pda) && pda.ContainedId is { } containedId)
-            storageUid = containedId;
-
-        return TryComp<StationRecordKeyStorageComponent>(storageUid, out var storage)
-            ? storage.Key
-            : null;
+        return null;
     }
 
     public void DelEntry(EntityUid player, CharacterRecordType type, int index)

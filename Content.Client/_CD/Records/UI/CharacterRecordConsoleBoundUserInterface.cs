@@ -10,25 +10,16 @@ namespace Content.Client._CD.Records.UI;
 public sealed class CharacterRecordConsoleBoundUserInterface(EntityUid owner, Enum key) : BoundUserInterface(owner, key)
 {
     [ViewVariables] private CharacterRecordViewer? _window;
+    private CharacterRecordConsoleUpdateMsg? _lastMessage;
 
-    protected override void UpdateState(BoundUserInterfaceState baseState)
+    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
     {
-        base.UpdateState(baseState);
-        if (baseState is not CharacterRecordConsoleState state)
+        base.ReceiveMessage(message);
+        if (message is not CharacterRecordConsoleUpdateMsg state)
             return;
 
-        if (_window is { } window &&
-            (state.ConsoleType is RecordConsoleType.Security or RecordConsoleType.Admin) &&
-            EntMan.TryGetComponent<CriminalRecordsConsoleComponent>(Owner, out var comp))
-        {
-            window.SecurityWantedStatusMaxLength = comp.MaxStringLength;
-        }
-
-        _window?.UpdateState(state);
-        _window?.SetSecurityStatusEnabled(
-            (state.ConsoleType is RecordConsoleType.Security or RecordConsoleType.Admin) &&
-            state.SelectedSecurityStatus != null &&
-            EntMan.HasComponent<CriminalRecordsConsoleComponent>(Owner));
+        _lastMessage = state;
+        ApplyUpdate(state);
     }
 
     protected override void Open()
@@ -36,6 +27,8 @@ public sealed class CharacterRecordConsoleBoundUserInterface(EntityUid owner, En
         base.Open();
 
         _window = new();
+        if (_lastMessage is { } lastMessage)
+            ApplyUpdate(lastMessage);
         _window.OnClose += Close;
         _window.OnListingItemSelected += key =>
         {
@@ -56,6 +49,22 @@ public sealed class CharacterRecordConsoleBoundUserInterface(EntityUid owner, En
         };
 
         _window.OpenCentered();
+    }
+
+    private void ApplyUpdate(CharacterRecordConsoleUpdateMsg state)
+    {
+        if (_window is not { } window)
+            return;
+
+        if (state.ConsoleType is RecordConsoleType.Security or RecordConsoleType.Admin &&
+            EntMan.TryGetComponent<CriminalRecordsConsoleComponent>(Owner, out var comp))
+            window.SecurityWantedStatusMaxLength = comp.MaxStringLength;
+
+        window.UpdateState(state);
+        window.SetSecurityStatusEnabled(
+            state.ConsoleType is RecordConsoleType.Security or RecordConsoleType.Admin &&
+            state.SelectedSecurityStatus != null &&
+            EntMan.HasComponent<CriminalRecordsConsoleComponent>(Owner));
     }
 
     protected override void Dispose(bool disposing)

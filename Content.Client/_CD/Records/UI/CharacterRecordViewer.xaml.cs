@@ -22,7 +22,7 @@ public sealed partial class CharacterRecordViewer : FancyWindow
 
     private bool _isPopulating;
     private StationRecordFilterType _filterType;
-    private CharacterRecordConsoleState? _lastState;
+    private CharacterRecordConsoleUpdateMsg? _lastState;
 
     private RecordConsoleType? _type;
 
@@ -194,7 +194,7 @@ public sealed partial class CharacterRecordViewer : FancyWindow
         return false;
     }
 
-    public void UpdateState(CharacterRecordConsoleState state)
+    public void UpdateState(CharacterRecordConsoleUpdateMsg state)
     {
         _lastState = state;
         #region Visibility

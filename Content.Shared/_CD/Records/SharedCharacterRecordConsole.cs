@@ -24,7 +24,7 @@ public enum RecordConsoleType : byte
 }
 
 [Serializable, NetSerializable]
-public sealed class CharacterRecordConsoleState : BoundUserInterfaceState
+public sealed class CharacterRecordConsoleUpdateMsg : BoundUserInterfaceMessage
 {
     public RecordConsoleType ConsoleType { get; set; }
 
