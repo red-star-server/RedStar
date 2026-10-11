@@ -88,6 +88,7 @@
   - type: ComplexInteraction
   - type: ContainerContainer
   - type: Appearance
+  - type: ScaleVisuals # RS14
   - type: HideableHumanoidLayers
   - type: UserInterface
     interfaces:

@@ -4,6 +4,7 @@
   roundStart: true
   prototype: MobDwarf
   dollPrototype: AppearanceDwarf
+  heightAdjustable: false # RS14
   skinColoration: HumanToned
   defaultSoundsBySex:
   - UnisexDwarf

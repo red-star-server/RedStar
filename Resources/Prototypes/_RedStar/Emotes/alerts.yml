@@ -1,0 +1,31 @@
+- type: alert
+  id: PairedHighFiveOffer
+  clickEvent: !type:AcceptPairedEmoteAlertEvent {}
+  icons:
+  - /Textures/_RedStar/Interface/Emotes/highfive.png
+  name: alerts-paired-high-five-name
+  description: alerts-paired-emote-desc
+
+- type: alert
+  id: PairedFistBumpOffer
+  clickEvent: !type:AcceptPairedEmoteAlertEvent {}
+  icons:
+  - /Textures/_RedStar/Interface/Emotes/fistbump.png
+  name: alerts-paired-fist-bump-name
+  description: alerts-paired-emote-desc
+
+- type: alert
+  id: PairedHandshakeOffer
+  clickEvent: !type:AcceptPairedEmoteAlertEvent {}
+  icons:
+  - /Textures/_RedStar/Interface/Emotes/handshake.png
+  name: alerts-paired-handshake-name
+  description: alerts-paired-emote-desc
+
+- type: alert
+  id: PairedHugOffer
+  clickEvent: !type:AcceptPairedEmoteAlertEvent {}
+  icons:
+  - /Textures/_RedStar/Interface/Emotes/hug.png
+  name: alerts-paired-hug-name
+  description: alerts-paired-emote-desc

@@ -83,11 +83,11 @@
                                     <LineEdit Name="AgeEdit" MinSize="40 0" HorizontalAlignment="Right" />
                                 </BoxContainer>
                                 <!-- RS14-start -->
-                                <BoxContainer HorizontalExpand="True">
+                                <BoxContainer Name="HeightRow" HorizontalExpand="True">
                                     <Label Text="{Loc 'humanoid-profile-editor-height-label'}" />
                                     <Control HorizontalExpand="True" />
-                                    <Label Name="CDHeightLabel" />
-                                    <Slider Name="CDHeightSlider" HorizontalAlignment="Right" SetWidth="300" MinValue="0.0" MaxValue="1.0" />
+                                    <Label Name="HeightLabel" />
+                                    <Slider Name="HeightSlider" HorizontalAlignment="Right" SetWidth="300" MinValue="0.0" MaxValue="1.0" />
                                 </BoxContainer>
                                 <!-- RS14-end -->
                                 <!-- Sex -->

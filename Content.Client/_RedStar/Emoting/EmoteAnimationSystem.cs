@@ -1,8 +1,9 @@
-﻿using System.Linq;
-using System.Numerics;
+﻿using System.Numerics;
+using Content.Shared._DV.Carrying;
 using Content.Shared._RedStar.Emoting.Components;
 using Content.Shared._RedStar.Emoting.Events;
 using Content.Shared._RedStar.Emoting.Prototypes;
+using Content.Shared._RedStar.Posing;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Robust.Client.Animations;
@@ -35,12 +36,17 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
     [SubscribeNetworkEvent]
     private void OnPairedAnimation(PairedEmoteAnimationEvent args)
     {
-        var hasInitiator = TryGetEntity(args.Initiator, out var initiator) && !Deleted(initiator);
-        var hasTarget = TryGetEntity(args.Target, out var target) && !Deleted(target);
+        if (!TryGetEntity(args.Initiator, out var initiator) || initiator is not { } fromEntity ||
+            !TryGetEntity(args.Target, out var target) || target is not { } toEntity ||
+            !CanAnimate(fromEntity) || !CanAnimate(toEntity) ||
+            !ProtoMan.TryIndex(args.InitiatorAnimation, out var initiatorAnimation) ||
+            !ProtoMan.TryIndex(args.TargetAnimation, out var targetAnimation) ||
+            !initiatorAnimation.TryGetLength(out _) || !targetAnimation.TryGetLength(out _))
+            return;
+
         var approach = Vector2.Zero;
 
-        if (hasInitiator && hasTarget && initiator is { } fromEntity && target is { } toEntity &&
-            TryComp(fromEntity, out TransformComponent? initiatorTransform) &&
+        if (TryComp(fromEntity, out TransformComponent? initiatorTransform) &&
             TryComp(toEntity, out TransformComponent? targetTransform))
         {
             var from = _transform.GetMapCoordinates(fromEntity, initiatorTransform);
@@ -51,11 +57,8 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
                 approach = delta / distance * Math.Clamp(args.ApproachOffset, 0f, distance * 0.45f);
         }
 
-        if (hasInitiator && initiator is { } initiatorUid)
-            TryPlayAnimation(initiatorUid, args.InitiatorAnimation, approach);
-
-        if (hasTarget && target is { } targetUid)
-            TryPlayAnimation(targetUid, args.TargetAnimation, -approach);
+        PlayAnimation(fromEntity, initiatorAnimation, approach);
+        PlayAnimation(toEntity, targetAnimation, -approach);
     }
 
     [SubscribeLocalEvent]
@@ -80,19 +83,25 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
             RestoreVisualState(ent);
     }
 
+    [SubscribeLocalEvent]
+    private void OnStartedCarrying(Entity<CarryingComponent> ent, ref ComponentStartup args)
+    {
+        StopAnimation(ent.Owner);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnBecameCarried(Entity<BeingCarriedComponent> ent, ref ComponentStartup args)
+    {
+        StopAnimation(ent.Owner);
+    }
+
     private void TryPlayAnimation(
         EntityUid uid,
         ProtoId<EmoteAnimationPrototype> animation,
         Vector2 approach = default)
     {
-        if (!HasComp<EmoteAnimationComponent>(uid))
+        if (!CanAnimate(uid))
             return;
-
-        if (TryComp<MobStateComponent>(uid, out var mobState) &&
-            mobState.CurrentState != MobState.Alive)
-        {
-            return;
-        }
 
         if (!ProtoMan.TryIndex(animation, out var prototype))
             return;
@@ -100,14 +109,20 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
         PlayAnimation(uid, prototype, approach);
     }
 
+    private bool CanAnimate(EntityUid uid)
+    {
+        return !Deleted(uid) && HasComp<EmoteAnimationComponent>(uid) && HasComp<SpriteComponent>(uid) &&
+               !HasComp<CarryingComponent>(uid) && !HasComp<BeingCarriedComponent>(uid) &&
+               !(TryComp<PosingComponent>(uid, out var posing) && posing.Active) &&
+               !(TryComp<MobStateComponent>(uid, out var mobState) && mobState.CurrentState != MobState.Alive);
+    }
+
     private void PlayAnimation(EntityUid uid, EmoteAnimationPrototype prototype, Vector2 approach)
     {
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
-        var length = GetAnimationLength(prototype);
-
-        if (length <= TimeSpan.Zero)
+        if (!prototype.TryGetLength(out var length))
             return;
 
         StopAnimation(uid);
@@ -254,21 +269,9 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
         return track;
     }
 
-    private static TimeSpan GetAnimationLength(EmoteAnimationPrototype prototype)
+    public void CancelAnimation(EntityUid uid)
     {
-        var offsetLength = prototype.Offset.Count > 0
-            ? prototype.Offset.Max(frame => frame.Time)
-            : TimeSpan.Zero;
-
-        var rotationLength = prototype.Rotation.Count > 0
-            ? prototype.Rotation.Max(frame => frame.Time)
-            : TimeSpan.Zero;
-
-        var directionLength = prototype.Direction.Count > 0
-            ? prototype.Direction.Max(frame => frame.Time)
-            : TimeSpan.Zero;
-
-        return new[] { offsetLength, rotationLength, directionLength }.Max();
+        StopAnimation(uid);
     }
 
     private void StopAnimation(EntityUid uid)

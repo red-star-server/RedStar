@@ -18,7 +18,7 @@ public sealed partial class ScaleVisualsSystem : SharedScaleVisualsSystem
         // save the original scale
         ent.Comp.OriginalScale ??= args.Sprite.Scale;
 
-        _sprite.SetScale((ent.Owner, args.Sprite), scale);
+        _sprite.SetScale((ent.Owner, args.Sprite), ApplyCharacterHeight(ent.Owner, scale)); // RS14
     }
 
     // revert to the original scale

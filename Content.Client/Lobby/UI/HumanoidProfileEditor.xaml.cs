@@ -1,10 +1,8 @@
 using Content.Client.Humanoid;
-using Content.Client._CD.Records.UI; // RS14
 using Content.Client.Message;
 using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Sprite;
 using Content.Shared.CCVar;
-using Content.Shared._CD.Records; // RS14
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
@@ -61,7 +59,6 @@ namespace Content.Client.Lobby.UI
         private Direction _previewRotation = Direction.North;
 
         private bool _isDirty;
-        private readonly RecordEditorGui _recordsTab; // RS14
 
         public bool IsDirty
         {
@@ -156,23 +153,7 @@ namespace Content.Client.Lobby.UI
 
             TabContainer.SetTabTitle(0, Loc.GetString("humanoid-profile-editor-appearance-tab"));
 
-            // RS14-start
-            _recordsTab = new RecordEditorGui(UpdateProfileRecords);
-            TabContainer.AddChild(_recordsTab);
-            TabContainer.SetTabTitle(TabContainer.ChildCount - 1, Loc.GetString("humanoid-profile-editor-cd-records-tab"));
-            CDHeightSlider.OnValueChanged += _ =>
-            {
-                if (Profile is null)
-                    return;
-
-                var species = _prototypeManager.Index(Profile.Species);
-                var height = MathF.Round(MathHelper.Lerp(species.MinHeight, species.MaxHeight, CDHeightSlider.Value), 2);
-                CDHeightLabel.Text = UnitConversion.GetMetricAndImperialDisplayFromScale(height * species.BaseScale.Y);
-                if (Profile.Height == height)
-                    return;
-                SetProfileHeight(height);
-            };
-            // RS14-end
+            InitializeHeightControls(); // RS14
 
             #region Sex
 
@@ -397,7 +378,6 @@ namespace Content.Client.Lobby.UI
         public void SetProfile(HumanoidCharacterProfile? profile, int? slot)
         {
             Profile = profile?.Clone();
-            _recordsTab.Update(Profile); // RS14
             CharacterSlot = slot;
             IsDirty = false;
             JobOverride = null;
@@ -410,6 +390,7 @@ namespace Content.Client.Lobby.UI
             UpdateSkinColor();
             UpdateSpawnPriorityControls();
             UpdateAgeEdit();
+            UpdateHeightControls(); // RS14
             UpdateEyePickers();
             UpdateSaveButton();
             UpdateMarkings();
@@ -442,17 +423,6 @@ namespace Content.Client.Lobby.UI
             // Check and set the dirty flag to enable the save/reset buttons as appropriate.
             SetDirty();
         }
-
-        // RS14-start
-        private void UpdateProfileRecords(PlayerProvidedCharacterRecords records)
-        {
-            if (Profile is null)
-                return;
-
-            Profile = Profile.WithCDCharacterRecords(records);
-            SetDirty();
-        }
-        // RS14-end
 
         protected override void Dispose(bool disposing)
         {

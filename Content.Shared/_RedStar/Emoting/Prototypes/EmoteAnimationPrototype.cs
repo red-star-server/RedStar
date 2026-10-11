@@ -34,6 +34,37 @@ public sealed partial class EmoteAnimationPrototype : IPrototype
 
     [DataField]
     public List<EmoteAnimationDirectionFrame> Direction = [];
+
+    /// <summary>
+    /// Rejects tracks that would give AnimationPlayer negative or out-of-order frame durations.
+    /// Equal times are valid for instantaneous transitions.
+    /// </summary>
+    public bool TryGetLength(out TimeSpan length)
+    {
+        length = TimeSpan.Zero;
+
+        return ValidTrack(Offset, static frame => frame.Time, ref length) &&
+               ValidTrack(Rotation, static frame => frame.Time, ref length) &&
+               ValidTrack(Direction, static frame => frame.Time, ref length) &&
+               length > TimeSpan.Zero;
+    }
+
+    private static bool ValidTrack<T>(IReadOnlyList<T> frames, Func<T, TimeSpan> getTime, ref TimeSpan length)
+    {
+        var previous = TimeSpan.Zero;
+        foreach (var frame in frames)
+        {
+            var time = getTime(frame);
+            if (time < previous)
+                return false;
+
+            previous = time;
+            if (time > length)
+                length = time;
+        }
+
+        return true;
+    }
 }
 
 [DataDefinition]

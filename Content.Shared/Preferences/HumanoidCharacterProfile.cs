@@ -2,7 +2,6 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Content.Shared._Sirena.Humanoid;
-using Content.Shared._CD.Records; // RS14
 using Content.Shared.CCVar;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.EntityEffects.Effects;
@@ -113,13 +112,8 @@ namespace Content.Shared.Preferences
         [DataField]
         public HumanoidCharacterAppearance Appearance { get; set; } = new();
 
-        // RS14-start
         [DataField]
-        public float Height = 1f;
-
-        [DataField]
-        public PlayerProvidedCharacterRecords? CDCharacterRecords = PlayerProvidedCharacterRecords.DefaultRecords();
-        // RS14-end
+        public float Height = 1f; // RS14
 
         /// <summary>
         /// When spawning into a round what's the preferred spot to spawn.
@@ -216,12 +210,7 @@ namespace Content.Shared.Preferences
                 new Dictionary<string, RoleLoadout>(other.Loadouts))
         {
             ErpStatus = other.ErpStatus; // RS14
-            // RS14-start
-            Height = other.Height;
-            CDCharacterRecords = other.CDCharacterRecords is { } records
-                ? new PlayerProvidedCharacterRecords(records)
-                : PlayerProvidedCharacterRecords.DefaultRecords();
-            // RS14-end
+            Height = other.Height; // RS14
         }
 
         /// <summary>
@@ -490,18 +479,6 @@ namespace Content.Shared.Preferences
             return new(this) { Appearance = appearance };
         }
 
-        // RS14-start
-        public HumanoidCharacterProfile WithHeight(float height)
-        {
-            return new(this) { Height = height };
-        }
-
-        public HumanoidCharacterProfile WithCDCharacterRecords(PlayerProvidedCharacterRecords records)
-        {
-            return new(this) { CDCharacterRecords = new PlayerProvidedCharacterRecords(records) };
-        }
-        // RS14-end
-
         public HumanoidCharacterProfile WithSpawnPriorityPreference(SpawnPriorityPreference spawnPriority)
         {
             return new(this) { SpawnPriority = spawnPriority };
@@ -700,11 +677,7 @@ namespace Content.Shared.Preferences
             if (FlavorText != other.FlavorText) return false;
             if (TTSVoice != other.TTSVoice) return false; // Corvax-TTS
             if (ErpStatus != other.ErpStatus) return false; // RS14
-            // RS14-start
-            if (Height != other.Height) return false;
-            if (CDCharacterRecords is null != (other.CDCharacterRecords is null)) return false;
-            if (CDCharacterRecords is { } records && !records.MemberwiseEquals(other.CDCharacterRecords!)) return false;
-            // RS14-end
+            if (Height != other.Height) return false; // RS14
             return Appearance.Equals(other.Appearance);
         }
 
@@ -867,9 +840,9 @@ namespace Content.Shared.Preferences
             // RS14-start
             if (!float.IsFinite(Height))
                 Height = 1f;
-            Height = Math.Clamp(MathF.Round(Height, 2), speciesPrototype.MinHeight, speciesPrototype.MaxHeight);
-            CDCharacterRecords ??= PlayerProvidedCharacterRecords.DefaultRecords();
-            CDCharacterRecords.EnsureValid();
+            Height = MathF.Round(Height, 2);
+            if (speciesPrototype.HeightAdjustable)
+                Height = Math.Clamp(Height, speciesPrototype.MinHeight, speciesPrototype.MaxHeight);
             // RS14-end
 
             // Corvax-TTS-start

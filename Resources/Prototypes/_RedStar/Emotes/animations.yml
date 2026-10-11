@@ -1,6 +1,5 @@
 ﻿- type: emoteAnimation
   id: Flip
-  rotationInterpolation: Linear
   rotation:
   - time: 0
     rotation: 0
@@ -44,7 +43,6 @@
 
 - type: emoteAnimation
   id: Dance
-  offsetInterpolation: Linear
   offset:
   - time: 0
     offset: 0,0
@@ -146,7 +144,6 @@
 
 - type: emoteAnimation
   id: Tremble
-  offsetInterpolation: Linear
   offset:
   - time: 0
     offset: 0,0
@@ -167,7 +164,6 @@
 
 - type: emoteAnimation
   id: Shiver
-  offsetInterpolation: Linear
   offset:
   - time: 0
     offset: 0,0
@@ -210,7 +206,6 @@
     offset: 0.045,0
   - time: 0.45
     offset: 0,0
-  rotationInterpolation: Linear
   rotation:
   - time: 0
     rotation: 0
@@ -227,7 +222,6 @@
 
 - type: emoteAnimation
   id: DanceFromTheFloor
-  rotationInterpolation: Linear
   rotation:
   - time: 0
     rotation: 0
@@ -255,7 +249,6 @@
     rotation: -70
   - time: 3
     rotation: 0
-  offsetInterpolation: Linear
   offset:
   - time: 0
     offset: 0,0
@@ -317,7 +310,6 @@
 
 - type: emoteAnimation
   id: SpinningOnHead
-  rotationInterpolation: Linear
   rotation:
   - time: 0
     rotation: 0
@@ -331,7 +323,6 @@
     rotation: 0
   - time: 5.5
     rotation: 0
-  offsetInterpolation: Linear
   offset:
   - time: 0
     offset: 0,0

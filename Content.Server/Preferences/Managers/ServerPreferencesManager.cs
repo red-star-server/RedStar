@@ -205,7 +205,7 @@ namespace Content.Server.Preferences.Managers
                 antags.ToHashSet(),
                 traits.ToHashSet(),
                 loadouts
-            ).WithErpStatus((ErpStatus) profile.ErpStatus); // RS14
+            ).WithErpStatus((ErpStatus) profile.ErpStatus).WithHeight(profile.Height); // RS14
         }
 
         private async void HandleSelectCharacterMessage(MsgSelectCharacter message)
