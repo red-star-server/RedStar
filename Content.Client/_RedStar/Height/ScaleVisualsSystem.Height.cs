@@ -34,11 +34,15 @@ public sealed partial class ScaleVisualsSystem
     {
         if (!TryComp<ScaleVisualsComponent>(uid, out var visuals) ||
             visuals.LifeStage >= ComponentLifeStage.Stopping ||
-            !TryComp<SpriteComponent>(uid, out var sprite) ||
-            !TryComp<AppearanceComponent>(uid, out var appearance) ||
-            !_heightAppearance.TryGetData<Vector2>(uid, ScaleVisuals.Scale, out var baseScale, appearance))
+            !TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
+        var baseScale = visuals.Scale;
+        if (TryComp<AppearanceComponent>(uid, out var appearance) &&
+            _heightAppearance.TryGetData<Vector2>(uid, ScaleVisuals.Scale, out var appearanceScale, appearance))
+            baseScale = appearanceScale;
+
+        visuals.OriginalScale ??= sprite.Scale;
         _sprite.SetScale((uid, sprite), ApplyCharacterHeight(uid, baseScale));
     }
 }
