@@ -23,10 +23,10 @@ public sealed class MedicalRecordsConsoleState : BoundUserInterfaceState
     public uint? SelectedKey { get; }
     public GeneralStationRecord? GeneralRecord { get; }
     public CharacterDossier? Dossier { get; }
-    public MedicalTriageSnapshot? Triage { get; }
+    public MedicalTriagePriority? Triage { get; }
 
     public MedicalRecordsConsoleState(Dictionary<uint, string> listing, uint? selectedKey,
-        GeneralStationRecord? generalRecord, CharacterDossier? dossier, MedicalTriageSnapshot? triage = null)
+        GeneralStationRecord? generalRecord, CharacterDossier? dossier, MedicalTriagePriority? triage = null)
     {
         Listing = listing;
         SelectedKey = selectedKey;

@@ -13,17 +13,6 @@ public enum MedicalTriagePriority : byte
 }
 
 [Serializable, NetSerializable]
-public sealed class MedicalTriageSnapshot
-{
-    public MedicalTriagePriority Priority { get; }
-
-    public MedicalTriageSnapshot(MedicalTriagePriority priority)
-    {
-        Priority = priority;
-    }
-}
-
-[Serializable, NetSerializable]
 public sealed class MedicalTriageSetPriorityMessage(MedicalTriagePriority priority, NetEntity? target = null) : BoundUserInterfaceMessage
 {
     public MedicalTriagePriority Priority { get; } = priority;

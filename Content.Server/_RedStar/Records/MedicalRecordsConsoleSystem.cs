@@ -43,7 +43,6 @@ public sealed partial class MedicalRecordsConsoleSystem : EntitySystem
     {
         key = default;
         if (!_access.IsAllowed(actor, ent.Owner) ||
-            !_triage.HasMedicalAccess(actor) ||
             _station.GetOwningStation(ent.Owner) is not { } station ||
             ent.Comp.ActiveKey is not { } id)
             return false;
@@ -101,7 +100,7 @@ public sealed partial class MedicalRecordsConsoleSystem : EntitySystem
         var listing = _records.BuildListing((station, stationRecords), null);
         GeneralStationRecord? general = null;
         CharacterDossier? dossier = null;
-        MedicalTriageSnapshot? triageSnapshot = null;
+        MedicalTriagePriority? triage = null;
         if (ent.Comp.ActiveKey is { } id)
         {
             var key = new StationRecordKey(id, station);
@@ -110,11 +109,11 @@ public sealed partial class MedicalRecordsConsoleSystem : EntitySystem
             {
                 if (_dossiers.TryGet(key, out var stored))
                     dossier = stored.ForSection(DossierSection.Medical);
-                triageSnapshot = _triage.Get(key);
+                triage = _triage.Get(key);
             }
         }
 
         _ui.SetUiState(ent.Owner, MedicalRecordsConsoleKey.Key,
-            new MedicalRecordsConsoleState(listing, ent.Comp.ActiveKey, general, dossier, triageSnapshot));
+            new MedicalRecordsConsoleState(listing, ent.Comp.ActiveKey, general, dossier, triage));
     }
 }

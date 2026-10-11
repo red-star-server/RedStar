@@ -74,8 +74,23 @@ public sealed partial class MedicalRecordsConsoleWindow : FancyWindow
 
     public void UpdateState(MedicalRecordsConsoleState state)
     {
+        var previous = _state;
+        var updateListing = previous == null || previous.SelectedKey != state.SelectedKey ||
+                            previous.Listing.Count != state.Listing.Count;
+        if (!updateListing && previous != null)
+        {
+            foreach (var (key, name) in state.Listing)
+            {
+                if (previous.Listing.TryGetValue(key, out var oldName) && oldName == name)
+                    continue;
+
+                updateListing = true;
+                break;
+            }
+        }
         _state = state;
-        RebuildListing();
+        if (updateListing)
+            RebuildListing();
 
         RecordDetails.RemoveAllChildren();
         TriagePanel.Visible = state.GeneralRecord != null;
@@ -86,7 +101,7 @@ public sealed partial class MedicalRecordsConsoleWindow : FancyWindow
         if (state.Dossier != null)
             RecordDetails.AddChild(new CharacterDossierView(state.Dossier, DossierSection.Medical));
 
-        var priority = state.Triage?.Priority ?? MedicalTriagePriority.None;
+        var priority = state.Triage ?? MedicalTriagePriority.None;
         _updating = true;
         PriorityOptionButton.SelectId((int) priority);
         _updating = false;

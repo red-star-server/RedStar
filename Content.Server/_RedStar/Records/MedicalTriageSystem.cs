@@ -2,10 +2,7 @@ using Content.Shared._RedStar.Records;
 using Content.Shared.Access;
 using Content.Shared.Access.Systems;
 using Content.Shared.GameTicking;
-using Content.Shared.Inventory;
-using Content.Shared.PDA;
 using Content.Shared.StationRecords;
-using Content.Shared.StationRecords.Components;
 using Content.Shared.StationRecords.Events;
 using Content.Shared.StationRecords.Systems;
 using Robust.Shared.Prototypes;
@@ -18,10 +15,8 @@ namespace Content.Server._RedStar.Records;
 public sealed partial class MedicalTriageSystem : EntitySystem
 {
     [Dependency] private AccessReaderSystem _access = default!;
-    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private SpawnStationRecordSystem _spawnRecords = default!;
     [Dependency] private StationRecordsSystem _records = default!;
-    [Dependency] private EntityQuery<PdaComponent> _pdas;
-    [Dependency] private EntityQuery<StationRecordKeyStorageComponent> _recordKeys;
 
     private readonly Dictionary<StationRecordKey, EntityUid> _patients = new();
     private static readonly ProtoId<AccessLevelPrototype> MedicalAccess = "Medical";
@@ -41,14 +36,14 @@ public sealed partial class MedicalTriageSystem : EntitySystem
         return true;
     }
 
-    public MedicalTriageSnapshot? Get(StationRecordKey key)
+    public MedicalTriagePriority? Get(StationRecordKey key)
     {
         if (!_records.TryGetRecord<GeneralStationRecord>(key, out _) ||
             !TryComp<MedicalTriageComponent>(key.OriginStation, out var db) ||
             !db.Entries.TryGetValue(key.Id, out var priority))
             return null;
 
-        return new MedicalTriageSnapshot(priority);
+        return priority;
     }
 
     public bool SetPriority(StationRecordKey key, MedicalTriagePriority priority, EntityUid actor)
@@ -94,17 +89,7 @@ public sealed partial class MedicalTriageSystem : EntitySystem
     [SubscribeLocalEvent(after: [typeof(StationRecordsSystem)])]
     private void OnPlayerSpawn(PlayerSpawnCompleteEvent args)
     {
-        if (!_inventory.TryGetSlotEntity(args.Mob, "id", out var idEntity))
-            return;
-
-        var keyEntity = idEntity.Value;
-        if (_pdas.TryComp(keyEntity, out var pda) && pda.ContainedId is { } containedId)
-            keyEntity = containedId;
-
-        if (!_recordKeys.TryComp(keyEntity, out var storage) || storage.Key is not { } key ||
-            key.OriginStation != args.Station ||
-            !_records.TryGetRecord<GeneralStationRecord>(key, out var record) ||
-            record.Name != args.Profile.Name)
+        if (!_spawnRecords.TryGetKey(args, out var key))
             return;
 
         if (_patients.TryGetValue(key, out var oldPatient) && oldPatient != args.Mob && !Deleted(oldPatient))
@@ -113,7 +98,9 @@ public sealed partial class MedicalTriageSystem : EntitySystem
             RemComp<MedicalTriageStatusComponent>(oldPatient);
         }
 
-        if (TryComp<MedicalTriagePatientComponent>(args.Mob, out var previous) && previous.Key != key)
+        if (TryComp<MedicalTriagePatientComponent>(args.Mob, out var previous) &&
+            !previous.Key.Equals(key) &&
+            _patients.TryGetValue(previous.Key, out var current) && current == args.Mob)
             _patients.Remove(previous.Key);
 
         var binding = EnsureComp<MedicalTriagePatientComponent>(args.Mob);

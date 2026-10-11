@@ -20,13 +20,12 @@ public sealed partial class HealthAnalyzerTriageSystem : EntitySystem
         });
     }
 
-    private bool TryGetPatientRecord(Entity<HealthAnalyzerComponent> analyzer, EntityUid actor, NetEntity? target,
+    private bool TryGetPatientRecord(Entity<HealthAnalyzerComponent> analyzer, NetEntity? target,
         out StationRecordKey key)
     {
         key = default;
         if (!analyzer.Comp.IsAnalyzerActive || analyzer.Comp.ScannedEntity is not { } patient ||
             Deleted(patient) || target == null || GetNetEntity(patient) != target ||
-            !_triage.HasMedicalAccess(actor) ||
             (analyzer.Comp.MaxScanRange is { } range &&
              !_transform.InRange(Transform(patient).Coordinates, Transform(analyzer.Owner).Coordinates, range)))
             return false;
@@ -36,7 +35,7 @@ public sealed partial class HealthAnalyzerTriageSystem : EntitySystem
 
     private void OnSetPriority(Entity<HealthAnalyzerComponent> analyzer, ref MedicalTriageSetPriorityMessage args)
     {
-        if (TryGetPatientRecord(analyzer, args.Actor, args.Target, out var key))
+        if (TryGetPatientRecord(analyzer, args.Target, out var key))
             _triage.SetPriority(key, args.Priority, args.Actor);
     }
 }
