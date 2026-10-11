@@ -366,7 +366,6 @@
     key: enum.MedicalRecordsConsoleKey.Key
   - type: AccessReader
     access: [["Medical"]]
-  - type: ActivatableUIRequiresAccess
   # RS14-end
   - type: AmbientMusicMarkerMedical
 
