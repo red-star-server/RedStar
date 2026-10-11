@@ -2,7 +2,6 @@ using Content.Shared.Examine;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Preferences;
-using Content.Shared._RedStar.Height; // RS14
 using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Prototypes;
 
@@ -11,7 +10,6 @@ namespace Content.Shared.Humanoid;
 public sealed partial class HumanoidProfileSystem : EntitySystem
 {
     [Dependency] private GrammarSystem _grammar = default!;
-    [Dependency] private CharacterHeightSystem _height = default!; // RS14
 
     public override void Initialize()
     {
@@ -42,7 +40,7 @@ public sealed partial class HumanoidProfileSystem : EntitySystem
             _grammar.SetGender((ent, grammar), profile.Gender);
         }
 
-        _height.Refresh(ent.Owner); // RS14
+        RefreshCharacterHeight(ent.Owner); // RS14
     }
 
     private void OnExamined(Entity<HumanoidProfileComponent> ent, ref ExaminedEvent args)

@@ -153,20 +153,7 @@ namespace Content.Client.Lobby.UI
 
             TabContainer.SetTabTitle(0, Loc.GetString("humanoid-profile-editor-appearance-tab"));
 
-            // RS14-start
-            CDHeightSlider.OnValueChanged += _ =>
-            {
-                if (Profile is null)
-                    return;
-
-                var species = _prototypeManager.Index(Profile.Species);
-                var height = MathF.Round(MathHelper.Lerp(species.MinHeight, species.MaxHeight, CDHeightSlider.Value), 2);
-                CDHeightLabel.Text = FormatHeight(height * species.BaseScale.Y);
-                if (MathF.Abs(Profile.Height - height) < 0.005f)
-                    return;
-                SetProfileHeight(height);
-            };
-            // RS14-end
+            InitializeHeightControls(); // RS14
 
             #region Sex
 

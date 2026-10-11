@@ -479,8 +479,6 @@ namespace Content.Shared.Preferences
             return new(this) { Appearance = appearance };
         }
 
-        public HumanoidCharacterProfile WithHeight(float height) => new(this) { Height = height }; // RS14
-
         public HumanoidCharacterProfile WithSpawnPriorityPreference(SpawnPriorityPreference spawnPriority)
         {
             return new(this) { SpawnPriority = spawnPriority };

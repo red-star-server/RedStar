@@ -55,10 +55,13 @@ public abstract partial class SharedScaleVisualsSystem : EntitySystem
     /// </summary>
     public Vector2 GetSpriteScale(EntityUid uid)
     {
-        // RS14-start
-        // Appearance includes character height; callers need the base scale to avoid applying it twice.
-        return TryComp<ScaleVisualsComponent>(uid, out var visuals) ? visuals.Scale : Vector2.One;
-        // RS14-end
+        if (!TryComp<AppearanceComponent>(uid, out var appearanceComponent))
+            return Vector2.One;
+
+        if (!_appearance.TryGetData<Vector2>(uid, ScaleVisuals.Scale, out var scale, appearanceComponent))
+            scale = Vector2.One;
+
+        return scale;
     }
 }
 

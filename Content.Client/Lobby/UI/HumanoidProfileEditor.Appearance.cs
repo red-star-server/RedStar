@@ -226,34 +226,6 @@ public sealed partial class HumanoidProfileEditor
         ReloadPreview();
     }
 
-    // RS14-start
-    private void SetProfileHeight(float height)
-    {
-        Profile = Profile?.WithHeight(height);
-        ReloadProfilePreview();
-    }
-
-    private void UpdateHeightControls()
-    {
-        if (Profile is null)
-            return;
-
-        var species = _prototypeManager.Index(Profile.Species);
-        var percent = species.MaxHeight > species.MinHeight
-            ? (Profile.Height - species.MinHeight) / (species.MaxHeight - species.MinHeight)
-            : 0f;
-        CDHeightSlider.Value = percent;
-        CDHeightLabel.Text = FormatHeight(Profile.Height * species.BaseScale.Y);
-    }
-
-    private static string FormatHeight(float scale)
-    {
-        var centimeters = (int)Math.Max(scale * 175, 1);
-        var inches = (int)Math.Round(centimeters * 0.3937007874);
-        return $"{centimeters}cm ({inches / 12}'{inches % 12}\")";
-    }
-    // RS14-end
-
     private void SetAge(int newAge)
     {
         Profile = Profile?.WithAge(newAge);

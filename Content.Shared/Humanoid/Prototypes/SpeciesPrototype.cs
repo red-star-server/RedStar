@@ -132,6 +132,9 @@ public sealed partial class SpeciesPrototype : IPrototype
 
     [DataField]
     public float MaxHeight = 1.2f;
+
+    [DataField]
+    public int BaseHeightCm = 175;
     // RS14-end
 }
 
