@@ -215,6 +215,7 @@ namespace Content.Server.Database
             profile.Species = humanoid.Species;
             profile.TTSVoice = humanoid.TTSVoice; // Corvax-TTS
             profile.Age = humanoid.Age;
+            profile.Height = humanoid.Height; // RS14
             profile.Sex = humanoid.Sex.ToString();
             profile.Voice = humanoid.Voice.ToString();
             profile.Gender = humanoid.Gender.ToString();

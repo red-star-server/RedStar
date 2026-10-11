@@ -26,7 +26,7 @@ public sealed partial class ProfilePreviewSpriteView
             return;
 
         EntMan.System<SharedVisualBodySystem>().ApplyProfileTo(PreviewDummy, humanoid);
-        EntMan.System<HumanoidProfileSystem>().ApplyProfileTo(PreviewDummy, humanoid); // RS14
+        EntMan.System<HumanoidProfileSystem>().ApplyHeightTo(PreviewDummy, humanoid); // RS14
     }
 
     /// <summary>
