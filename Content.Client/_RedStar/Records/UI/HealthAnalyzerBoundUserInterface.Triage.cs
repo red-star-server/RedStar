@@ -1,3 +1,4 @@
+using Content.Shared._RedStar.Records;
 using Content.Shared.MedicalScanner;
 
 namespace Content.Client.HealthAnalyzer.UI;
