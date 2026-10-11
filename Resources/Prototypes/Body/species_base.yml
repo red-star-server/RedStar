@@ -150,6 +150,7 @@
   - type: BodyEmotes
     soundsId: GeneralBodyEmotes
   - type: EmoteAnimation # RS14
+  - type: Posing # RS14
   - type: Grammar
     attributes:
       proper: true

@@ -213,6 +213,16 @@ namespace Content.Client.Options.UI.Tabs
             AddButton(ContentKeyFunctions.RotateObjectCounterclockwise);
             AddButton(ContentKeyFunctions.FlipObject);
 
+            // RS14-start
+            AddButton(ContentKeyFunctions.TogglePosing);
+            AddButton(ContentKeyFunctions.PosingOffsetLeft);
+            AddButton(ContentKeyFunctions.PosingOffsetRight);
+            AddButton(ContentKeyFunctions.PosingOffsetUp);
+            AddButton(ContentKeyFunctions.PosingOffsetDown);
+            AddButton(ContentKeyFunctions.PosingRotateNegative);
+            AddButton(ContentKeyFunctions.PosingRotatePositive);
+            // RS14-end
+
             AddHeader("ui-options-header-ui");
             AddButton(ContentKeyFunctions.FocusChat);
             AddButton(ContentKeyFunctions.FocusLocalChat);

@@ -3,6 +3,7 @@ using System.Numerics;
 using Content.Shared._RedStar.Emoting.Components;
 using Content.Shared._RedStar.Emoting.Events;
 using Content.Shared._RedStar.Emoting.Prototypes;
+using Content.Shared._RedStar.Posing;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Robust.Client.Animations;
@@ -85,7 +86,8 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
         ProtoId<EmoteAnimationPrototype> animation,
         Vector2 approach = default)
     {
-        if (!HasComp<EmoteAnimationComponent>(uid))
+        if (!HasComp<EmoteAnimationComponent>(uid) ||
+            TryComp<PosingComponent>(uid, out var posing) && posing.Active)
             return;
 
         if (TryComp<MobStateComponent>(uid, out var mobState) &&
@@ -269,6 +271,11 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
             : TimeSpan.Zero;
 
         return new[] { offsetLength, rotationLength, directionLength }.Max();
+    }
+
+    public void CancelAnimation(EntityUid uid)
+    {
+        StopAnimation(uid);
     }
 
     private void StopAnimation(EntityUid uid)
