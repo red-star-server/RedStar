@@ -26,7 +26,10 @@ public sealed partial class ProfilePreviewSpriteView
             return;
 
         EntMan.System<SharedVisualBodySystem>().ApplyProfileTo(PreviewDummy, humanoid);
-        EntMan.System<HumanoidProfileSystem>().ApplyHeightTo(PreviewDummy, humanoid); // RS14
+        // RS14-start
+        EntMan.EnsureComponent<HumanoidProfileComponent>(PreviewDummy);
+        EntMan.System<HumanoidProfileSystem>().ApplyHeightTo(PreviewDummy, humanoid);
+        // RS14-end
     }
 
     /// <summary>
@@ -59,8 +62,11 @@ public sealed partial class ProfilePreviewSpriteView
         }
 
         // RS14-start
-        if (humanoid is not null && EntMan.HasComponent<HumanoidProfileComponent>(PreviewDummy))
-            EntMan.System<HumanoidProfileSystem>().ApplyProfileTo(PreviewDummy, humanoid);
+        if (humanoid is not null && EntMan.HasComponent<VisualBodyComponent>(PreviewDummy))
+        {
+            EntMan.EnsureComponent<HumanoidProfileComponent>(PreviewDummy);
+            EntMan.System<HumanoidProfileSystem>().ApplyHeightTo(PreviewDummy, humanoid);
+        }
         // RS14-end
 
         if (humanoid != null && jobClothes)
