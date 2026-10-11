@@ -27,6 +27,5 @@ public sealed partial class ShowTriageIconsSystem : EquipmentHudSystem<ShowTriag
 
         if (id != null && _prototypes.TryIndex<StatusIconPrototype>(id, out var icon))
             args.StatusIcons.Add(icon);
-
     }
 }

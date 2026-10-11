@@ -59,25 +59,28 @@ public sealed partial class MedicalRecordsConsoleSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnRecordModified(ref RecordModifiedEvent args) => UpdateOpenConsoles();
+    private void OnRecordModified(ref RecordModifiedEvent args) => UpdateOpenConsoles(args.Key.OriginStation);
 
     [SubscribeLocalEvent]
-    private void OnGeneralRecordCreated(ref GeneralRecordCreatedEvent args) => UpdateOpenConsoles();
+    private void OnGeneralRecordCreated(ref GeneralRecordCreatedEvent args) => UpdateOpenConsoles(args.Station);
 
     [SubscribeLocalEvent]
-    private void OnRecordRemoved(ref RecordRemovedEvent args) => UpdateOpenConsoles();
+    private void OnRecordRemoved(ref RecordRemovedEvent args) => UpdateOpenConsoles(args.Station);
 
     [SubscribeLocalEvent]
-    private void OnDossierModified(ref CharacterDossierModifiedEvent args) => UpdateOpenConsoles();
+    private void OnDossierModified(CharacterDossierModifiedEvent args) => UpdateOpenConsoles(args.Key.OriginStation);
 
     [SubscribeLocalEvent]
-    private void OnTriageChanged(MedicalTriageChangedEvent args) => UpdateOpenConsoles();
+    private void OnTriageChanged(MedicalTriageChangedEvent args) => UpdateOpenConsoles(args.Key.OriginStation);
 
-    private void UpdateOpenConsoles()
+    private void UpdateOpenConsoles(EntityUid station)
     {
         var query = EntityQueryEnumerator<MedicalRecordsConsoleComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
+            if (_station.GetOwningStation(uid) != station)
+                continue;
+
             UpdateUi((uid, comp));
         }
     }

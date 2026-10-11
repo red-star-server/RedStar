@@ -47,7 +47,7 @@ public sealed partial class HealthAnalyzerWindow : FancyWindow
         HealthAnalyzer.Populate(state);
         // RS14-start
         var patient = _entities.GetEntity(state.TargetEntity);
-        TriageControls.Visible = patient != null;
+        TriageControls.Visible = state.TriageEligible && patient != null;
         if (!TriageControls.Visible)
             return;
 

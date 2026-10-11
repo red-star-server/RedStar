@@ -57,14 +57,21 @@ public sealed partial class MedicalTriageSystem : EntitySystem
             !_records.TryGetRecord<GeneralStationRecord>(key, out _))
             return false;
 
-        var db = EnsureComp<MedicalTriageComponent>(key.OriginStation);
+        var current = TryComp<MedicalTriageComponent>(key.OriginStation, out var existing) &&
+                      existing.Entries.TryGetValue(key.Id, out var stored)
+            ? stored
+            : MedicalTriagePriority.None;
+        if (current == priority)
+            return false;
+
+        var db = existing ?? EnsureComp<MedicalTriageComponent>(key.OriginStation);
         if (priority == MedicalTriagePriority.None)
             db.Entries.Remove(key.Id);
         else
             db.Entries[key.Id] = priority;
 
         UpdatePatient(key, priority);
-        RaiseLocalEvent(new MedicalTriageChangedEvent());
+        RaiseLocalEvent(new MedicalTriageChangedEvent(key));
         return true;
     }
 
@@ -106,6 +113,9 @@ public sealed partial class MedicalTriageSystem : EntitySystem
             RemComp<MedicalTriageStatusComponent>(oldPatient);
         }
 
+        if (TryComp<MedicalTriagePatientComponent>(args.Mob, out var previous) && previous.Key != key)
+            _patients.Remove(previous.Key);
+
         var binding = EnsureComp<MedicalTriagePatientComponent>(args.Mob);
         binding.Key = key;
         _patients[key] = args.Mob;
@@ -134,9 +144,10 @@ public sealed partial class MedicalTriageSystem : EntitySystem
             RemComp<MedicalTriagePatientComponent>(patient);
             RemComp<MedicalTriageStatusComponent>(patient);
         }
-
-        RaiseLocalEvent(new MedicalTriageChangedEvent());
     }
 }
 
-public sealed class MedicalTriageChangedEvent : EntityEventArgs;
+public sealed class MedicalTriageChangedEvent(StationRecordKey key) : EntityEventArgs
+{
+    public StationRecordKey Key { get; } = key;
+}

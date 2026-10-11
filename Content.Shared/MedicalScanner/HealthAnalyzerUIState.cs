@@ -14,6 +14,7 @@ public sealed class HealthAnalyzerUiState : BoundUserInterfaceState
     public bool ScanMode;
     public bool Bleeding;
     public bool Unrevivable;
+    public bool TriageEligible; // RS14
 
     public HealthAnalyzerUiState() {}
 
