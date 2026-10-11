@@ -8,7 +8,7 @@ public sealed partial class GeneralStationRecordConsoleBoundUserInterface
     {
         base.ReceiveMessage(message);
         if (message is DossierStateMessage state)
-            _window?.UpdateDossier(state.Dossier, state.Section);
+            _window?.UpdateDossier(state.Dossier);
     }
 
     private void RequestDossier(uint? recordId)

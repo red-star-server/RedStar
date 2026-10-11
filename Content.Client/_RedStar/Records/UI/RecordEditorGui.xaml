@@ -17,14 +17,14 @@
                      <Control HorizontalExpand="True" />
                      <LineEdit Name="ContactNameEdit" HorizontalAlignment="Right" MinSize="350 0"/>
                  </BoxContainer>
-                 <LineEdit Name="ResidenceEdit" PlaceHolder="Residence / origin" />
-                 <LineEdit Name="GeneralNotesEdit" PlaceHolder="Additional information" />
+                 <LineEdit Name="ResidenceEdit" PlaceHolder="{Loc 'character-dossier-editor-residence'}" />
+                 <LineEdit Name="GeneralNotesEdit" PlaceHolder="{Loc 'character-dossier-editor-general-notes'}" />
                  <Control MinSize="0 20"/>
-                 <Label Text="Employment" StyleClasses="LabelHeading" />
-                 <LineEdit Name="EducationEdit" PlaceHolder="Education and qualifications" />
-                 <LineEdit Name="PreviousEmploymentEdit" PlaceHolder="Previous employment" />
-                 <LineEdit Name="ProfessionalExperienceEdit" PlaceHolder="Professional experience" />
-                 <LineEdit Name="EmploymentNotesEdit" PlaceHolder="Employment notes" />
+                 <Label Text="{Loc 'character-dossier-editor-employment'}" StyleClasses="LabelHeading" />
+                 <LineEdit Name="EducationEdit" PlaceHolder="{Loc 'character-dossier-editor-education'}" />
+                 <LineEdit Name="PreviousEmploymentEdit" PlaceHolder="{Loc 'character-dossier-editor-previous-employment'}" />
+                 <LineEdit Name="ProfessionalExperienceEdit" PlaceHolder="{Loc 'character-dossier-editor-professional-experience'}" />
+                 <LineEdit Name="EmploymentNotesEdit" PlaceHolder="{Loc 'character-dossier-editor-employment-notes'}" />
                  <Control MinSize="0 20"/>
                  <!-- Security stuff -->
                  <BoxContainer Orientation="Horizontal">
@@ -32,8 +32,8 @@
                      <Control HorizontalExpand="True" />
                      <LineEdit Name="IdentifyingFeaturesEdit" HorizontalAlignment="Right" MinSize="350 0"/>
                  </BoxContainer>
-                 <LineEdit Name="SecurityBackgroundEdit" PlaceHolder="Previous incidents" />
-                 <LineEdit Name="SecurityNotesEdit" PlaceHolder="Additional security background" />
+                 <LineEdit Name="SecurityBackgroundEdit" PlaceHolder="{Loc 'character-dossier-editor-security-background'}" />
+                 <LineEdit Name="SecurityNotesEdit" PlaceHolder="{Loc 'character-dossier-editor-security-notes'}" />
                  <Control MinSize="0 20"/>
                  <!-- Medical stuff -->
                  <BoxContainer Orientation="Horizontal">
@@ -46,8 +46,8 @@
                      <Control HorizontalExpand="True" />
                      <LineEdit Name="DrugAllergiesEdit" HorizontalAlignment="Right" MinSize="350 0"/>
                  </BoxContainer>
-                 <LineEdit Name="MedicalConditionsEdit" PlaceHolder="Conditions and contraindications" />
-                 <LineEdit Name="PrescriptionsEdit" PlaceHolder="Current prescriptions" />
+                 <LineEdit Name="MedicalConditionsEdit" PlaceHolder="{Loc 'character-dossier-editor-medical-conditions'}" />
+                 <LineEdit Name="PrescriptionsEdit" PlaceHolder="{Loc 'character-dossier-editor-prescriptions'}" />
                  <BoxContainer Orientation="Horizontal">
                      <Label Text="{Loc 'character-dossier-editor-postmortem'}" />
                      <Control HorizontalExpand="True" />

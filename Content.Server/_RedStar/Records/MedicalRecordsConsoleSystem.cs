@@ -14,7 +14,7 @@ public sealed partial class MedicalRecordsConsoleSystem : EntitySystem
     [Dependency] private StationRecordsSystem _records = default!;
     [Dependency] private StationSystem _station = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
-    [Dependency] private EntityQuery<StationRecordsComponent> _stationRecordsQuery = default!;
+    [Dependency] private EntityQuery<StationRecordsComponent> _stationRecordsQuery;
 
     public override void Initialize()
     {
@@ -31,7 +31,6 @@ public sealed partial class MedicalRecordsConsoleSystem : EntitySystem
     private void OnSelected(Entity<MedicalRecordsConsoleComponent> ent, ref MedicalRecordSelectMessage args)
     {
         ent.Comp.ActiveKey = args.Key;
-        Dirty(ent);
         UpdateUi(ent);
     }
 
@@ -45,7 +44,11 @@ public sealed partial class MedicalRecordsConsoleSystem : EntitySystem
     private void OnRecordRemoved(Entity<MedicalRecordsConsoleComponent> ent, ref RecordRemovedEvent args) => UpdateUi(ent);
 
     [SubscribeLocalEvent]
-    private void OnDossierModified(Entity<MedicalRecordsConsoleComponent> ent, ref CharacterDossierModifiedEvent args) => UpdateUi(ent);
+    private void OnDossierModified(Entity<MedicalRecordsConsoleComponent> ent, ref CharacterDossierModifiedEvent args)
+    {
+        if (_station.GetOwningStation(ent.Owner) == args.Key.OriginStation)
+            UpdateUi(ent);
+    }
 
     private void UpdateUi(Entity<MedicalRecordsConsoleComponent> ent)
     {

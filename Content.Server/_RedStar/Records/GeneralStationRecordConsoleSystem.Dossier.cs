@@ -25,12 +25,12 @@ public sealed partial class GeneralStationRecordConsoleSystem
         {
             var key = new StationRecordKey(id, station);
             if (_dossiers.TryGet(key, out var stored))
-                dossier = stored.ForSection(ent.Comp.DossierSection);
+                dossier = stored.ForSection(DossierSection.Employment);
         }
 
         _dossierUi.ServerSendUiMessage(ent.Owner,
             GeneralStationRecordConsoleKey.Key,
-            new DossierStateMessage(dossier, ent.Comp.DossierSection),
+            new DossierStateMessage(dossier),
             args.Actor);
     }
 }

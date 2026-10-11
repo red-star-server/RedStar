@@ -1,9 +1,9 @@
 character-dossier-tab-title = Досье
 medical-records-console-title = Медицинские записи
 medical-records-console-list-title = Экипаж
-cd-records-entry-view-popup-title = Просмотр записи
-cd-character-records-entry-view-title = Заголовок:
-cd-character-records-entry-view-involved = Автор(ы):
+character-dossier-entry-view-popup-title = Просмотр записи
+character-dossier-entry-view-title = Заголовок:
+character-dossier-entry-view-involved = Автор(ы):
 character-dossier-section-title = RP-досье
 character-dossier-emergency-contact = Контакт на экстренный случай: { $value }
 character-dossier-residence = Место проживания / происхождения: { $value }

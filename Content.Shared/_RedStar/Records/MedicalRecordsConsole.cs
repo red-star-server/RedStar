@@ -1,13 +1,12 @@
 using Content.Shared.StationRecords;
-using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared._RedStar.Records;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent]
 public sealed partial class MedicalRecordsConsoleComponent : Component
 {
-    [DataField, AutoNetworkedField]
+    [DataField]
     public uint? ActiveKey;
 }
 

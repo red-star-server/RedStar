@@ -58,18 +58,6 @@ public sealed partial class CharacterDossierSystem : EntitySystem
         return _dossierQuery.TryComp(key.OriginStation, out var component) &&
                component.Records.TryGetRecordEntry(key.Id, out dossier);
     }
-
-    public bool TryUpdate(StationRecordKey key, CharacterDossier dossier)
-    {
-        if (!_dossierQuery.TryComp(key.OriginStation, out var component) ||
-            !component.Records.HasRecordEntry<CharacterDossier>(key.Id))
-            return false;
-
-        dossier.EnsureValid();
-        component.Records.AddRecordEntry(key.Id, dossier.DeepCopy());
-        RaiseLocalEvent(new CharacterDossierModifiedEvent(key));
-        return true;
-    }
 }
 
 public sealed class CharacterDossierModifiedEvent(StationRecordKey key) : EntityEventArgs
