@@ -3,6 +3,7 @@ using Content.Shared.StationRecords;
 using Content.Shared.StationRecords.Components;
 using Content.Shared.StationRecords.Systems;
 using Robust.Client.UserInterface;
+using Content.Shared._RedStar.Records; // RS14
 
 namespace Content.Client.StationRecords;
 
@@ -29,6 +30,15 @@ public sealed partial class GeneralStationRecordConsoleBoundUserInterface : Boun
         Update();
     }
 
+    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+    {
+        base.ReceiveMessage(message);
+        if (message is not DossierStateMessage state)
+            return;
+
+        _window?.UpdateDossier(state.Dossier, state.Section);
+    }
+
     public override void Update()
     {
         base.Update();
@@ -51,6 +61,7 @@ public sealed partial class GeneralStationRecordConsoleBoundUserInterface : Boun
         }
 
         _window?.UpdateState(comp.ActiveKey, record, listing, comp.Filter, comp.CanDeleteEntries);
+        SendMessage(new DossierRequestMessage(comp.ActiveKey)); // RS14
     }
 
     private void SelectStationRecord(uint? key)

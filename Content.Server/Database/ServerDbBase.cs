@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Shared.Administration.Logs;
+using Content.Shared._RedStar.Records; // RS14
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.Humanoid;
@@ -216,6 +217,8 @@ namespace Content.Server.Database
             profile.TTSVoice = humanoid.TTSVoice; // Corvax-TTS
             profile.Age = humanoid.Age;
             profile.Height = humanoid.Height; // RS14
+            var dossierNode = _serialization.WriteValue(humanoid.Dossier, alwaysWrite: true, notNullableOverride: true);
+            profile.Dossier = JsonSerializer.SerializeToDocument(dossierNode.ToJsonNode()); // RS14
             profile.Sex = humanoid.Sex.ToString();
             profile.Voice = humanoid.Voice.ToString();
             profile.Gender = humanoid.Gender.ToString();

@@ -2,6 +2,8 @@ using Content.Client.UserInterface.Controls;
 using Content.Shared.Access.Systems;
 using Content.Shared.Administration;
 using Content.Shared.CriminalRecords;
+using Content.Client._RedStar.Records; // RS14
+using Content.Shared._RedStar.Records; // RS14
 using Content.Shared.Dataset;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Security;
@@ -194,6 +196,9 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         if (state is { CriminalRecord: not null, StationRecord: not null })
         {
             PopulateRecordContainer(state.StationRecord, state.CriminalRecord);
+            DossierContainer.RemoveAllChildren();
+            if (state.Dossier != null)
+                DossierContainer.AddChild(new CharacterDossierView(state.Dossier, DossierSection.Security)); // RS14
             OnHistoryUpdated?.Invoke(state.CriminalRecord, _access, false);
             _selectedRecord = state.CriminalRecord;
         }

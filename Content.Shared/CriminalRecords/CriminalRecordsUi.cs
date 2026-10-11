@@ -1,5 +1,6 @@
 using Content.Shared.Security;
 using Content.Shared.StationRecords;
+using Content.Shared._RedStar.Records; // RS14
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.CriminalRecords;
@@ -37,6 +38,7 @@ public sealed class CriminalRecordsConsoleState : BoundUserInterfaceState
     public uint? SelectedKey = null;
     public CriminalRecord? CriminalRecord = null;
     public GeneralStationRecord? StationRecord = null;
+    public CharacterDossier? Dossier = null; // RS14
     public SecurityStatus FilterStatus = SecurityStatus.None;
     public readonly Dictionary<uint, string>? RecordListing;
     public readonly StationRecordsFilter? Filter;

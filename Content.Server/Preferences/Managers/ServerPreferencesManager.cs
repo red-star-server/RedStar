@@ -7,6 +7,7 @@ using Content.Server.Afk;
 using Content.Server.Database;
 using Content.Shared._Corvax.TTS;
 using Content.Shared._Sirena.Humanoid;
+using Content.Shared._RedStar.Records; // RS14
 using Content.Shared.Body;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.CCVar;
@@ -184,6 +185,10 @@ namespace Content.Server.Preferences.Managers
                 loadouts[role.RoleName] = loadout;
             }
 
+            var dossier = profile.Dossier?.RootElement is { } dossierElement
+                ? _serialization.Read<CharacterDossier>(dossierElement.ToDataNode(), notNullableOverride: true)
+                : new CharacterDossier(); // RS14
+
             return new HumanoidCharacterProfile(
                 profile.CharacterName,
                 profile.FlavorText,
@@ -205,7 +210,7 @@ namespace Content.Server.Preferences.Managers
                 antags.ToHashSet(),
                 traits.ToHashSet(),
                 loadouts
-            ).WithErpStatus((ErpStatus) profile.ErpStatus).WithHeight(profile.Height); // RS14
+            ).WithErpStatus((ErpStatus) profile.ErpStatus).WithHeight(profile.Height).WithDossier(dossier); // RS14
         }
 
         private async void HandleSelectCharacterMessage(MsgSelectCharacter message)

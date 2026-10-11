@@ -107,6 +107,7 @@
                     <Button Name="HistoryButton"
                             Text="{Loc 'criminal-records-console-crime-history'}"
                             Margin="0 5" />
+                    <BoxContainer Name="DossierContainer" Orientation="Vertical" />
                 </BoxContainer>
             </BoxContainer>
             <BoxContainer Orientation="Horizontal"

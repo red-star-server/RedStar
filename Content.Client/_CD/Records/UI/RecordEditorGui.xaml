@@ -18,13 +18,14 @@
                      <Control HorizontalExpand="True" />
                      <LineEdit Name="ContactNameEdit" HorizontalAlignment="Right" MinSize="350 0"/>
                  </BoxContainer>
+                 <LineEdit Name="ResidenceEdit" PlaceHolder="Residence / origin" />
+                 <LineEdit Name="GeneralNotesEdit" PlaceHolder="Additional information" />
                  <Control MinSize="0 20"/>
-                 <!-- Employment stuff -->
-                 <BoxContainer HorizontalExpand="True">
-                     <Label Text="{Loc 'humanoid-profile-editor-cd-records-work-authorization'}" />
-                     <Control HorizontalExpand="True" MinSize="5 0" />
-                     <CheckBox Name="WorkAuthCheckBox" HorizontalAlignment="Right"/>
-                 </BoxContainer>
+                 <Label Text="Employment" StyleClasses="LabelHeading" />
+                 <LineEdit Name="EducationEdit" PlaceHolder="Education and qualifications" />
+                 <LineEdit Name="PreviousEmploymentEdit" PlaceHolder="Previous employment" />
+                 <LineEdit Name="ProfessionalExperienceEdit" PlaceHolder="Professional experience" />
+                 <LineEdit Name="EmploymentNotesEdit" PlaceHolder="Employment notes" />
                  <Control MinSize="0 20"/>
                  <!-- Security stuff -->
                  <BoxContainer Orientation="Horizontal">
@@ -32,6 +33,8 @@
                      <Control HorizontalExpand="True" />
                      <LineEdit Name="IdentifyingFeaturesEdit" HorizontalAlignment="Right" MinSize="350 0"/>
                  </BoxContainer>
+                 <LineEdit Name="SecurityBackgroundEdit" PlaceHolder="Previous incidents" />
+                 <LineEdit Name="SecurityNotesEdit" PlaceHolder="Additional security background" />
                  <Control MinSize="0 20"/>
                  <!-- Medical stuff -->
                  <BoxContainer Orientation="Horizontal">
@@ -44,6 +47,8 @@
                      <Control HorizontalExpand="True" />
                      <LineEdit Name="DrugAllergiesEdit" HorizontalAlignment="Right" MinSize="350 0"/>
                  </BoxContainer>
+                 <LineEdit Name="MedicalConditionsEdit" PlaceHolder="Conditions and contraindications" />
+                 <LineEdit Name="PrescriptionsEdit" PlaceHolder="Current prescriptions" />
                  <BoxContainer Orientation="Horizontal">
                      <Label Text="{Loc 'humanoid-profile-editor-cd-records-postmortem'}" />
                      <Control HorizontalExpand="True" />

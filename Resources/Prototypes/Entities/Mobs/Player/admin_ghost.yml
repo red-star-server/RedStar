@@ -61,8 +61,6 @@
       enum.GeneralStationRecordConsoleKey.Key:
       # who the fuck named this bruh
         type: GeneralStationRecordConsoleBoundUserInterface
-      enum.CharacterRecordConsoleKey.Key: # RS14
-        type: CharacterRecordConsoleBoundUserInterface # RS14
   - type: IntrinsicUI
     uis:
       enum.SolarControlConsoleUiKey.Key:
@@ -77,8 +75,6 @@
         toggleAction: ActionAGhostShowCrewMonitoring
       enum.GeneralStationRecordConsoleKey.Key:
         toggleAction: ActionAGhostShowStationRecords
-      enum.CharacterRecordConsoleKey.Key: # RS14
-        toggleAction: ActionAGhostShowCharacterRecords # RS14
   - type: SolarControlConsole # look ma i AM the computer!
   - type: CommunicationsConsole
     title: comms-console-announcement-title-centcom
@@ -92,11 +88,6 @@
   - type: CrewMonitoringConsole
   - type: GeneralStationRecordConsole
     canDeleteEntries: true
-  # RS14-start
-  - type: CharacterRecordConsole
-    consoleType: Admin
-  - type: CriminalRecordsConsole
-  # RS14-end
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: CrewMonitor
@@ -227,20 +218,3 @@
   - type: InstantAction
     event: !type:ToggleIntrinsicUIEvent { key: enum.GeneralStationRecordConsoleKey.Key }
 
-# RS14-start
-- type: entity
-  parent: BaseAGhostAction
-  id: ActionAGhostShowCharacterRecords
-  name: Character Records Interface
-  description: View all character records.
-  components:
-  - type: Action
-    keywords: [ "AI", "console", "interface" ]
-    priority: -10
-  - type: Sprite
-    sprite: Interface/Actions/actions_ai.rsi
-    layers:
-    - state: station_records
-  - type: InstantAction
-    event: !type:ToggleIntrinsicUIEvent { key: enum.CharacterRecordConsoleKey.Key }
-# RS14-end

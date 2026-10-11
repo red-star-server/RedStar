@@ -107,6 +107,7 @@ namespace Content.Client.Lobby.UI
             _allowFlavorText = _cfgManager.GetCVar(CCVars.FlavorText);
 
             Markings.SetModel(_markingsModel);
+            InitializeDossierEditor(); // RS14
 
             ImportButton.OnPressed += args =>
             {
@@ -378,6 +379,7 @@ namespace Content.Client.Lobby.UI
         public void SetProfile(HumanoidCharacterProfile? profile, int? slot)
         {
             Profile = profile?.Clone();
+            UpdateDossierEditor(); // RS14
             CharacterSlot = slot;
             IsDirty = false;
             JobOverride = null;
