@@ -2,12 +2,12 @@
   id: HighFive
   approachOffset: 0.08
   icon: _RedStar/Interface/Emotes/highfive.png
+  alert: PairedHighFiveOffer
   name: paired-emote-high-five-name
   initiatorAnimation: PairedHighFiveInitiator
   targetAnimation: PairedHighFiveTarget
   range: 1.5
   offerDuration: 5
-  attemptSelf: paired-emote-high-five-attempt-self
   attemptTarget: paired-emote-high-five-attempt-target
   success: paired-emote-high-five-success
   sound: !type:SoundPathSpecifier
@@ -19,12 +19,12 @@
   id: FistBump
   approachOffset: 0.05
   icon: _RedStar/Interface/Emotes/fistbump.png
+  alert: PairedFistBumpOffer
   name: paired-emote-fist-bump-name
   initiatorAnimation: PairedFistBumpInitiator
   targetAnimation: PairedFistBumpTarget
   range: 1.5
   offerDuration: 5
-  attemptSelf: paired-emote-fist-bump-attempt-self
   attemptTarget: paired-emote-fist-bump-attempt-target
   success: paired-emote-fist-bump-success
   sound: !type:SoundPathSpecifier
@@ -36,12 +36,12 @@
   id: Handshake
   approachOffset: 0.1
   icon: _RedStar/Interface/Emotes/handshake.png
+  alert: PairedHandshakeOffer
   name: paired-emote-handshake-name
   initiatorAnimation: PairedHandshakeInitiator
   targetAnimation: PairedHandshakeTarget
   range: 1.5
   offerDuration: 5
-  attemptSelf: paired-emote-handshake-attempt-self
   attemptTarget: paired-emote-handshake-attempt-target
   success: paired-emote-handshake-success
   sound: !type:SoundPathSpecifier
@@ -54,11 +54,11 @@
   approachOffset: 0.24
   name: paired-emote-hug-name
   icon: _RedStar/Interface/Emotes/hug.png
+  alert: PairedHugOffer
   initiatorAnimation: PairedHugInitiator
   targetAnimation: PairedHugTarget
   range: 1.5
   offerDuration: 5
-  attemptSelf: paired-emote-hug-attempt-self
   attemptTarget: paired-emote-hug-attempt-target
   success: paired-emote-hug-success
   sound: !type:SoundPathSpecifier

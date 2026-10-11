@@ -1,5 +1,6 @@
 ﻿using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
+using Content.Shared.Alert;
 using Robust.Shared.Utility;
 
 namespace Content.Shared._RedStar.Emoting.Prototypes;
@@ -19,6 +20,9 @@ public sealed partial class PairedEmotePrototype : IPrototype
 
     [DataField]
     public SpriteSpecifier? Icon;
+
+    [DataField(required: true)]
+    public ProtoId<AlertPrototype> Alert;
 
     [DataField]
     public SoundSpecifier? Sound;
@@ -46,9 +50,6 @@ public sealed partial class PairedEmotePrototype : IPrototype
     /// </summary>
     [DataField]
     public TimeSpan OfferDuration = TimeSpan.FromSeconds(5);
-
-    [DataField(required: true)]
-    public LocId AttemptSelf;
 
     [DataField(required: true)]
     public LocId AttemptTarget;
