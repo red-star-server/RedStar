@@ -4,7 +4,6 @@ medical-records-console-list-title = Экипаж
 character-dossier-entry-view-popup-title = Просмотр записи
 character-dossier-entry-view-title = Заголовок:
 character-dossier-entry-view-involved = Автор(ы):
-character-dossier-section-title = Досье члена экипажа
 character-dossier-emergency-contact = Контакт на экстренный случай: { $value }
 character-dossier-residence = Место проживания / происхождения: { $value }
 character-dossier-marital-status = Семейное положение: { $value }

@@ -4,7 +4,6 @@ medical-records-console-list-title = Crew
 character-dossier-entry-view-popup-title = View Entry
 character-dossier-entry-view-title = Title:
 character-dossier-entry-view-involved = Author(s):
-character-dossier-section-title = RP dossier
 character-dossier-emergency-contact = Emergency contact: { $value }
 character-dossier-residence = Residence / origin: { $value }
 character-dossier-marital-status = Marital status: { $value }

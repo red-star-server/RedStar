@@ -9,7 +9,6 @@ public sealed class CharacterDossierView : BoxContainer
     {
         Orientation = LayoutOrientation.Vertical;
         Margin = new Thickness(0, 12, 0, 0);
-        AddChild(new Label { Text = Loc.GetString("character-dossier-section-title"), StyleClasses = { "LabelHeading" } });
 
         switch (section)
         {

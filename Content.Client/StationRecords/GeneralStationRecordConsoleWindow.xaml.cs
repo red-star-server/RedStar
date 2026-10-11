@@ -80,6 +80,7 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
         StationRecordsFilter? filter,
         bool canDeleteEntries)
     {
+        UpdateDossierSelection(selectedKey); // RS14
         if (filter != null)
         {
             if (filter.Type != _currentFilterType)

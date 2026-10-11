@@ -9,7 +9,8 @@ public sealed class DossierRequestMessage(uint? recordId) : BoundUserInterfaceMe
 }
 
 [Serializable, NetSerializable]
-public sealed class DossierStateMessage(CharacterDossier? dossier) : BoundUserInterfaceMessage
+public sealed class DossierStateMessage(uint? recordId, CharacterDossier? dossier) : BoundUserInterfaceMessage
 {
+    public uint? RecordId { get; } = recordId;
     public CharacterDossier? Dossier { get; } = dossier;
 }

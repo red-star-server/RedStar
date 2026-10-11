@@ -30,7 +30,7 @@ public sealed partial class GeneralStationRecordConsoleSystem
 
         _dossierUi.ServerSendUiMessage(ent.Owner,
             GeneralStationRecordConsoleKey.Key,
-            new DossierStateMessage(dossier),
+            new DossierStateMessage(args.RecordId, dossier),
             args.Actor);
     }
 }
