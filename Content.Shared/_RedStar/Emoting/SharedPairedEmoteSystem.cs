@@ -1,5 +1,6 @@
 using Content.Shared._RedStar.Emoting.Components;
 using Content.Shared._RedStar.Emoting.Prototypes;
+using Content.Shared._RedStar.Posing;
 using Content.Shared._DV.Carrying;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Mobs;
@@ -45,6 +46,7 @@ public abstract partial class SharedPairedEmoteSystem : EntitySystem
     {
         return !Deleted(uid) && HasComp<EmoteAnimationComponent>(uid) &&
                !HasComp<CarryingComponent>(uid) && !HasComp<BeingCarriedComponent>(uid) &&
+               !(TryComp<PosingComponent>(uid, out var posing) && posing.Active) &&
                (!TryComp<MobStateComponent>(uid, out var mobState) || mobState.CurrentState == MobState.Alive) &&
                _actionBlocker.CanInteract(uid, null);
     }
