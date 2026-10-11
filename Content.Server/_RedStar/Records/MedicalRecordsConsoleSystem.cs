@@ -1,6 +1,5 @@
 using Content.Shared._RedStar.Records;
 using Content.Shared.Access.Systems;
-using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Station.Systems;
 using Content.Shared.StationRecords;
 using Content.Shared.StationRecords.Components;
@@ -14,9 +13,9 @@ public sealed partial class MedicalRecordsConsoleSystem : EntitySystem
 {
     [Dependency] private CharacterDossierSystem _dossiers = default!;
     [Dependency] private StationRecordsSystem _records = default!;
+    [Dependency] private MedicalTriageSystem _triage = default!;
     [Dependency] private StationSystem _station = default!;
     [Dependency] private AccessReaderSystem _access = default!;
-    [Dependency] private SharedIdCardSystem _idCards = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
     [Dependency] private EntityQuery<StationRecordsComponent> _stationRecordsQuery;
 
@@ -28,7 +27,6 @@ public sealed partial class MedicalRecordsConsoleSystem : EntitySystem
             events.Event<BoundUIOpenedEvent>(OnOpened);
             events.Event<MedicalRecordSelectMessage>(OnSelected);
             events.Event<MedicalTriageSetPriorityMessage>(OnSetPriority);
-            events.Event<MedicalTriageClaimMessage>(OnClaim);
         });
     }
 
@@ -40,109 +38,24 @@ public sealed partial class MedicalRecordsConsoleSystem : EntitySystem
         UpdateUi(ent);
     }
 
-    /// <summary>
-    /// Access is required for mutations, not reading, as on vanilla security consoles.
-    /// </summary>
-    private bool TryGetEditableRecord(Entity<MedicalRecordsConsoleComponent> ent, EntityUid actor,
-        out EntityUid station, out uint id)
+    private bool TryGetEditableKey(Entity<MedicalRecordsConsoleComponent> ent, EntityUid actor,
+        out StationRecordKey key)
     {
-        station = default;
-        id = default;
+        key = default;
         if (!_access.IsAllowed(actor, ent.Owner) ||
-            _station.GetOwningStation(ent.Owner) is not { } owningStation ||
-            ent.Comp.ActiveKey is not { } selected)
+            !_triage.HasMedicalAccess(actor) ||
+            _station.GetOwningStation(ent.Owner) is not { } station ||
+            ent.Comp.ActiveKey is not { } id)
             return false;
 
-        var key = new StationRecordKey(selected, owningStation);
-        if (!_records.TryGetRecord<GeneralStationRecord>(key, out _))
-            return false;
-
-        station = owningStation;
-        id = selected;
+        key = new StationRecordKey(id, station);
         return true;
     }
 
     private void OnSetPriority(Entity<MedicalRecordsConsoleComponent> ent, ref MedicalTriageSetPriorityMessage args)
     {
-        if (!TryGetEditableRecord(ent, args.Actor, out var station, out var id))
-            return;
-
-        SetPriority(new StationRecordKey(id, station), args.Priority);
-    }
-
-    private void OnClaim(Entity<MedicalRecordsConsoleComponent> ent, ref MedicalTriageClaimMessage args)
-    {
-        if (!TryGetEditableRecord(ent, args.Actor, out var station, out var id))
-            return;
-
-        Claim(new StationRecordKey(id, station), args.Actor);
-    }
-
-    public void SetPriority(StationRecordKey key, MedicalTriagePriority priority)
-    {
-        if (!Enum.IsDefined(priority))
-            return;
-
-        var db = EnsureComp<MedicalTriageComponent>(key.OriginStation);
-        if (!db.Entries.TryGetValue(key.Id, out var entry))
-            db.Entries[key.Id] = entry = new MedicalTriageEntry();
-        entry.Priority = priority;
-        UpdatePatient(key, entry);
-        UpdateOpenConsoles();
-    }
-
-    public void Claim(StationRecordKey key, EntityUid actor)
-    {
-        var db = EnsureComp<MedicalTriageComponent>(key.OriginStation);
-        if (!db.Entries.TryGetValue(key.Id, out var entry))
-            db.Entries[key.Id] = entry = new MedicalTriageEntry();
-
-        if (entry.Doctor == actor)
-        {
-            entry.Doctor = null;
-            entry.DoctorName = null;
-        }
-        else
-        {
-            entry.Doctor = actor;
-            entry.DoctorName = _idCards.TryFindIdCard(actor, out var card) &&
-                               !string.IsNullOrEmpty(card.Comp.FullName)
-                ? card.Comp.FullName
-                : MetaData(actor).EntityName;
-        }
-
-        UpdatePatient(key, entry);
-        UpdateOpenConsoles();
-    }
-
-    private void UpdateOpenConsoles()
-    {
-        var query = EntityQueryEnumerator<MedicalRecordsConsoleComponent>();
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            UpdateUi((uid, comp));
-        }
-    }
-
-    private void UpdatePatient(StationRecordKey key, MedicalTriageEntry? entry)
-    {
-        var query = EntityQueryEnumerator<IdentityComponent>();
-        while (query.MoveNext(out var uid, out _))
-        {
-            if (!_access.FindStationRecordKeys(uid, out var keys) || !keys.Contains(key))
-                continue;
-
-            if (entry == null || entry.Priority == MedicalTriagePriority.None && entry.DoctorName == null)
-            {
-                RemComp<MedicalTriageStatusComponent>(uid);
-                continue;
-            }
-
-            var status = EnsureComp<MedicalTriageStatusComponent>(uid);
-            status.Priority = entry.Priority;
-            status.DoctorName = entry.DoctorName;
-            Dirty(uid, status);
-        }
+        if (TryGetEditableKey(ent, args.Actor, out var key))
+            _triage.SetPriority(key, args.Priority, args.Actor);
     }
 
     [SubscribeLocalEvent]
@@ -152,16 +65,22 @@ public sealed partial class MedicalRecordsConsoleSystem : EntitySystem
     private void OnGeneralRecordCreated(ref GeneralRecordCreatedEvent args) => UpdateOpenConsoles();
 
     [SubscribeLocalEvent]
-    private void OnRecordRemoved(ref RecordRemovedEvent args)
-    {
-        if (TryComp<MedicalTriageComponent>(args.Station, out var triage))
-            triage.Entries.Remove(args.Key.Id);
-        UpdatePatient(args.Key, null);
-        UpdateOpenConsoles();
-    }
+    private void OnRecordRemoved(ref RecordRemovedEvent args) => UpdateOpenConsoles();
 
     [SubscribeLocalEvent]
     private void OnDossierModified(ref CharacterDossierModifiedEvent args) => UpdateOpenConsoles();
+
+    [SubscribeLocalEvent]
+    private void OnTriageChanged(MedicalTriageChangedEvent args) => UpdateOpenConsoles();
+
+    private void UpdateOpenConsoles()
+    {
+        var query = EntityQueryEnumerator<MedicalRecordsConsoleComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            UpdateUi((uid, comp));
+        }
+    }
 
     private void UpdateUi(Entity<MedicalRecordsConsoleComponent> ent)
     {
@@ -188,9 +107,7 @@ public sealed partial class MedicalRecordsConsoleSystem : EntitySystem
             {
                 if (_dossiers.TryGet(key, out var stored))
                     dossier = stored.ForSection(DossierSection.Medical);
-                if (TryComp<MedicalTriageComponent>(station, out var db) &&
-                    db.Entries.TryGetValue(id, out var triage))
-                    triageSnapshot = new MedicalTriageSnapshot(triage.Priority, triage.DoctorName);
+                triageSnapshot = _triage.Get(key);
             }
         }
 

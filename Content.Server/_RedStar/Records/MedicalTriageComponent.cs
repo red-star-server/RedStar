@@ -8,12 +8,5 @@ namespace Content.Server._RedStar.Records;
 [RegisterComponent]
 public sealed partial class MedicalTriageComponent : Component
 {
-    public readonly Dictionary<uint, MedicalTriageEntry> Entries = new();
-}
-
-public sealed class MedicalTriageEntry
-{
-    public MedicalTriagePriority Priority;
-    public EntityUid? Doctor;
-    public string? DoctorName;
+    public readonly Dictionary<uint, MedicalTriagePriority> Entries = new();
 }

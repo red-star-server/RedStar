@@ -19,8 +19,6 @@
                         <AnimatedTextureRect Name="PriorityIcon" Margin="8 0" />
                         <OptionButton Name="PriorityOptionButton" MinWidth="155" />
                     </BoxContainer>
-                    <Label Name="DoctorLabel" />
-                    <Button Name="ClaimButton" Text="{Loc 'medical-triage-claim'}" Margin="0 5 0 5" />
                     <controls:Separator StyleClasses="LowDivider" Margin="0 5 0 8" />
                 </BoxContainer>
                 <BoxContainer Name="RecordDetails" Orientation="Vertical" HorizontalExpand="True" />

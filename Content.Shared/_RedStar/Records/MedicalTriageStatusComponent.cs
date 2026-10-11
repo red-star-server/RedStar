@@ -10,7 +10,4 @@ public sealed partial class MedicalTriageStatusComponent : Component
 {
     [AutoNetworkedField]
     public MedicalTriagePriority Priority;
-
-    [AutoNetworkedField]
-    public string? DoctorName;
 }

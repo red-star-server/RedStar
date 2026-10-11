@@ -1,11 +1,6 @@
 medical-records-search = Поиск по экипажу...
 medical-triage-heading = Медицинская сортировка
 medical-triage-status = Статус:
-medical-triage-priority = Приоритет: {$priority}
-medical-triage-doctor = Ответственный врач: {$doctor}
-medical-triage-unassigned = не назначен
-medical-triage-claim = Принять пациента
-medical-triage-toggle-claim = Назначить / снять назначение
 medical-triage-none = Нет
 medical-triage-minor = Лёгкий
 medical-triage-delayed = Отложенный

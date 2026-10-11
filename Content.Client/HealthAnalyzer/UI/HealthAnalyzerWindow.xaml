@@ -17,10 +17,9 @@
                 <Label Text="{Loc 'medical-triage-heading'}" StyleClasses="LabelHeading" />
                 <BoxContainer Orientation="Horizontal" Margin="0 5 0 5">
                     <Label Text="{Loc 'medical-triage-status'}" FontColorOverride="DarkGray" />
-                    <OptionButton Name="PriorityOptionButton" MinWidth="155" Margin="8 0 0 0" />
+                    <AnimatedTextureRect Name="PriorityIcon" Margin="8 0" />
+                    <OptionButton Name="PriorityOptionButton" MinWidth="155" />
                 </BoxContainer>
-                <Label Name="DoctorLabel" />
-                <Button Name="ClaimButton" Text="{Loc 'medical-triage-claim'}" />
             </BoxContainer>
         </BoxContainer>
         <!-- RS14-end -->

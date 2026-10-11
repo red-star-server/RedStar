@@ -1,19 +1,15 @@
 using Content.Shared._RedStar.Records;
-using Content.Shared.Access.Systems;
-using Content.Shared.Access;
 using Content.Shared.Medical.HealthAnalyzer;
 using Content.Shared.MedicalScanner;
 using Content.Shared.StationRecords;
-using Content.Shared.StationRecords.Systems;
-using Robust.Shared.Prototypes;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server._RedStar.Records;
 
 public sealed partial class HealthAnalyzerTriageSystem : EntitySystem
 {
-    [Dependency] private AccessReaderSystem _access = default!;
-    [Dependency] private StationRecordsSystem _records = default!;
-    [Dependency] private MedicalRecordsConsoleSystem _triage = default!;
+    [Dependency] private MedicalTriageSystem _triage = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -21,40 +17,26 @@ public sealed partial class HealthAnalyzerTriageSystem : EntitySystem
         Subs.BuiEvents<HealthAnalyzerComponent>(HealthAnalyzerUiKey.Key, events =>
         {
             events.Event<MedicalTriageSetPriorityMessage>(OnSetPriority);
-            events.Event<MedicalTriageClaimMessage>(OnClaim);
         });
     }
 
-    private bool TryGetPatientRecord(Entity<HealthAnalyzerComponent> analyzer, EntityUid actor,
+    private bool TryGetPatientRecord(Entity<HealthAnalyzerComponent> analyzer, EntityUid actor, NetEntity? target,
         out StationRecordKey key)
     {
         key = default;
         if (!analyzer.Comp.IsAnalyzerActive || analyzer.Comp.ScannedEntity is not { } patient ||
-            !_access.FindAccessTags(actor).Contains(new ProtoId<AccessLevelPrototype>("Medical")) ||
-            !_access.FindStationRecordKeys(patient, out var keys))
+            Deleted(patient) || target == null || GetNetEntity(patient) != target ||
+            !_triage.HasMedicalAccess(actor) ||
+            (analyzer.Comp.MaxScanRange is { } range &&
+             !_transform.InRange(Transform(patient).Coordinates, Transform(analyzer.Owner).Coordinates, range)))
             return false;
 
-        foreach (var candidate in keys)
-        {
-            if (!_records.TryGetRecord<GeneralStationRecord>(candidate, out _))
-                continue;
-
-            key = candidate;
-            return true;
-        }
-
-        return false;
+        return _triage.TryGetPatientKey(patient, out key);
     }
 
     private void OnSetPriority(Entity<HealthAnalyzerComponent> analyzer, ref MedicalTriageSetPriorityMessage args)
     {
-        if (TryGetPatientRecord(analyzer, args.Actor, out var key))
-            _triage.SetPriority(key, args.Priority);
-    }
-
-    private void OnClaim(Entity<HealthAnalyzerComponent> analyzer, ref MedicalTriageClaimMessage args)
-    {
-        if (TryGetPatientRecord(analyzer, args.Actor, out var key))
-            _triage.Claim(key, args.Actor);
+        if (TryGetPatientRecord(analyzer, args.Actor, args.Target, out var key))
+            _triage.SetPriority(key, args.Priority, args.Actor);
     }
 }

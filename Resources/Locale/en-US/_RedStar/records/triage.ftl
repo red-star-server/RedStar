@@ -1,11 +1,6 @@
 medical-records-search = Search crew...
 medical-triage-heading = Patient triage
 medical-triage-status = Status:
-medical-triage-priority = Priority: {$priority}
-medical-triage-doctor = Attending doctor: {$doctor}
-medical-triage-unassigned = unassigned
-medical-triage-claim = Claim patient
-medical-triage-toggle-claim = Assign / release doctor
 medical-triage-none = None
 medical-triage-minor = Minor
 medical-triage-delayed = Delayed

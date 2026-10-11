@@ -6,14 +6,6 @@
   isShaded: true
 
 - type: statusIcon
-  id: MedicalTriageIconClaimBase
-  abstract: true
-  priority: 5
-  offset: 1
-  locationPreference: Left
-  isShaded: true
-
-- type: statusIcon
   parent: MedicalTriageIconBase
   id: MedicalTriageIconMinor
   icon:
@@ -40,24 +32,3 @@
   icon:
     sprite: /Textures/_RedStar/Interface/Misc/triage_icons.rsi
     state: expectant
-
-- type: statusIcon
-  parent: MedicalTriageIconClaimBase
-  id: MedicalTriageIconUnclaimed
-  icon:
-    sprite: /Textures/_RedStar/Interface/Misc/triage_icons.rsi
-    state: unclaimed
-
-- type: statusIcon
-  parent: MedicalTriageIconClaimBase
-  id: MedicalTriageIconClaimedYours
-  icon:
-    sprite: /Textures/_RedStar/Interface/Misc/triage_icons.rsi
-    state: claimed_yours
-
-- type: statusIcon
-  parent: MedicalTriageIconClaimBase
-  id: MedicalTriageIconClaimedOthers
-  icon:
-    sprite: /Textures/_RedStar/Interface/Misc/triage_icons.rsi
-    state: claimed_others

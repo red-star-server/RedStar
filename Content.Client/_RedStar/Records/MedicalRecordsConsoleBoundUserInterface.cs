@@ -13,7 +13,6 @@ public sealed class MedicalRecordsConsoleBoundUserInterface(EntityUid owner, Enu
         _window = this.CreateWindow<MedicalRecordsConsoleWindow>();
         _window.OnSelected += key => SendMessage(new MedicalRecordSelectMessage(key));
         _window.OnPriorityChanged += priority => SendMessage(new MedicalTriageSetPriorityMessage(priority));
-        _window.OnClaim += () => SendMessage(new MedicalTriageClaimMessage());
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
