@@ -9,6 +9,20 @@
         Margin="5 5 5 5"
         ReturnMeasure="True"
         VerticalExpand="True">
-        <ui:HealthAnalyzerControl Name="HealthAnalyzer"/>
+        <!-- RS14-start -->
+        <BoxContainer Orientation="Vertical">
+            <ui:HealthAnalyzerControl Name="HealthAnalyzer"/>
+            <BoxContainer Name="TriageControls" Orientation="Vertical" Visible="False" Margin="0 8 0 0">
+                <controls:Separator StyleClasses="LowDivider" />
+                <Label Text="{Loc 'medical-triage-heading'}" StyleClasses="LabelHeading" />
+                <BoxContainer Orientation="Horizontal" Margin="0 5 0 5">
+                    <Label Text="{Loc 'medical-triage-status'}" FontColorOverride="DarkGray" />
+                    <OptionButton Name="PriorityOptionButton" MinWidth="155" Margin="8 0 0 0" />
+                </BoxContainer>
+                <Label Name="DoctorLabel" />
+                <Button Name="ClaimButton" Text="{Loc 'medical-triage-claim'}" />
+            </BoxContainer>
+        </BoxContainer>
+        <!-- RS14-end -->
     </ScrollContainer>
 </controls:FancyWindow>

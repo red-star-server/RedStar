@@ -1,4 +1,5 @@
 using Content.Shared.Medical.HealthAnalyzer;
+using Content.Shared._RedStar.Records; // RS14
 using Content.Shared.MedicalScanner;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
@@ -16,6 +17,10 @@ public sealed partial class HealthAnalyzerBoundUserInterface(EntityUid owner, En
         base.Open();
 
         _window = this.CreateWindow<HealthAnalyzerWindow>();
+        // RS14-start
+        _window.OnPriorityChanged += priority => SendMessage(new MedicalTriageSetPriorityMessage(priority));
+        _window.OnClaim += () => SendMessage(new MedicalTriageClaimMessage());
+        // RS14-end
         _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
     }
 
