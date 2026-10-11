@@ -112,6 +112,9 @@ namespace Content.Shared.Preferences
         [DataField]
         public HumanoidCharacterAppearance Appearance { get; set; } = new();
 
+        [DataField]
+        public float Height = 1f; // RS14
+
         /// <summary>
         /// When spawning into a round what's the preferred spot to spawn.
         /// </summary>
@@ -207,6 +210,7 @@ namespace Content.Shared.Preferences
                 new Dictionary<string, RoleLoadout>(other.Loadouts))
         {
             ErpStatus = other.ErpStatus; // RS14
+            Height = other.Height; // RS14
         }
 
         /// <summary>
@@ -475,6 +479,8 @@ namespace Content.Shared.Preferences
             return new(this) { Appearance = appearance };
         }
 
+        public HumanoidCharacterProfile WithHeight(float height) => new(this) { Height = height }; // RS14
+
         public HumanoidCharacterProfile WithSpawnPriorityPreference(SpawnPriorityPreference spawnPriority)
         {
             return new(this) { SpawnPriority = spawnPriority };
@@ -673,6 +679,7 @@ namespace Content.Shared.Preferences
             if (FlavorText != other.FlavorText) return false;
             if (TTSVoice != other.TTSVoice) return false; // Corvax-TTS
             if (ErpStatus != other.ErpStatus) return false; // RS14
+            if (Height != other.Height) return false; // RS14
             return Appearance.Equals(other.Appearance);
         }
 
@@ -832,6 +839,12 @@ namespace Content.Shared.Preferences
             _traitPreferences.Clear();
             _traitPreferences.UnionWith(GetValidTraits(traits, prototypeManager));
 
+            // RS14-start
+            if (!float.IsFinite(Height))
+                Height = 1f;
+            Height = Math.Clamp(MathF.Round(Height, 2), speciesPrototype.MinHeight, speciesPrototype.MaxHeight);
+            // RS14-end
+
             // Corvax-TTS-start
             if (!prototypeManager.TryIndex(TTSVoice, out var ttsVoice) ||
                 !TTSVoiceHelper.CanUseVoice(ttsVoice, Sex, Species))
@@ -948,6 +961,7 @@ namespace Content.Shared.Preferences
             hashCode.Add((int)SpawnPriority);
             hashCode.Add((int)PreferenceUnavailable);
             hashCode.Add((int)ErpStatus); // RS14
+            hashCode.Add(Height); // RS14
             return hashCode.ToHashCode();
         }
 
