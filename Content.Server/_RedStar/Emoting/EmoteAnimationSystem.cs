@@ -1,5 +1,6 @@
 ﻿using Content.Shared._RedStar.Emoting.Components;
 using Content.Shared._RedStar.Emoting.Events;
+using Content.Shared._DV.Carrying;
 using Content.Shared.Chat;
 using Robust.Shared.Player;
 
@@ -10,7 +11,8 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnEmote(Entity<EmoteAnimationComponent> ent, ref EmoteEvent args)
     {
-        if (args.Emote.Animation is not { } animation)
+        if (args.Emote.Animation is not { } animation ||
+            HasComp<CarryingComponent>(ent) || HasComp<BeingCarriedComponent>(ent))
             return;
 
         RaiseNetworkEvent(

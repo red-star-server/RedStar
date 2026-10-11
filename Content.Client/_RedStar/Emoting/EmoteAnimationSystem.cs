@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Numerics;
+using Content.Shared._DV.Carrying;
 using Content.Shared._RedStar.Emoting.Components;
 using Content.Shared._RedStar.Emoting.Events;
 using Content.Shared._RedStar.Emoting.Prototypes;
@@ -81,12 +82,26 @@ public sealed partial class EmoteAnimationSystem : EntitySystem
             RestoreVisualState(ent);
     }
 
+    [SubscribeLocalEvent]
+    private void OnStartedCarrying(Entity<CarryingComponent> ent, ref ComponentStartup args)
+    {
+        StopAnimation(ent.Owner);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnBecameCarried(Entity<BeingCarriedComponent> ent, ref ComponentStartup args)
+    {
+        StopAnimation(ent.Owner);
+    }
+
     private void TryPlayAnimation(
         EntityUid uid,
         ProtoId<EmoteAnimationPrototype> animation,
         Vector2 approach = default)
     {
         if (!HasComp<EmoteAnimationComponent>(uid) ||
+            HasComp<CarryingComponent>(uid) ||
+            HasComp<BeingCarriedComponent>(uid) ||
             TryComp<PosingComponent>(uid, out var posing) && posing.Active)
             return;
 
