@@ -113,11 +113,13 @@ namespace Content.Shared.Preferences
         [DataField]
         public HumanoidCharacterAppearance Appearance { get; set; } = new();
 
+        // RS14-start
         [DataField]
-        public float Height = 1f; // RS14
+        public float Height = 1f;
 
         [DataField]
-        public CharacterDossier Dossier = new(); // RS14
+        public CharacterDossier Dossier = new();
+        // RS14-end
 
         /// <summary>
         /// When spawning into a round what's the preferred spot to spawn.

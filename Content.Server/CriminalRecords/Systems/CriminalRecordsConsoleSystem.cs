@@ -16,8 +16,6 @@ using Content.Shared.Database;
 using Content.Shared.StationRecords.Components;
 using Content.Shared.StationRecords.Events;
 using Content.Shared.StationRecords.Systems;
-using Content.Server._RedStar.Records; // RS14
-using Content.Shared._RedStar.Records; // RS14
 
 namespace Content.Server.CriminalRecords.Systems;
 
@@ -35,7 +33,6 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
     [Dependency] private ServerStationSystem _station = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
     [Dependency] private IdentitySystem _identity = default!;
-    [Dependency] private CharacterDossierSystem _dossiers = default!; // RS14
 
     public override void Initialize()
     {
@@ -244,8 +241,7 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
             var key = new StationRecordKey(id, owningStation.Value);
             _records.TryGetRecord(key, out state.StationRecord, stationRecords);
             _records.TryGetRecord(key, out state.CriminalRecord, stationRecords);
-            if (_dossiers.TryGet(key, out var dossier))
-                state.Dossier = dossier.ForSection(DossierSection.Security); // RS14
+            PopulateDossier(key, state); // RS14
             state.SelectedKey = id;
         }
 

@@ -217,8 +217,10 @@ namespace Content.Server.Database
             profile.TTSVoice = humanoid.TTSVoice; // Corvax-TTS
             profile.Age = humanoid.Age;
             profile.Height = humanoid.Height; // RS14
+            // RS14-start
             var dossierNode = _serialization.WriteValue(humanoid.Dossier, alwaysWrite: true, notNullableOverride: true);
-            profile.Dossier = JsonSerializer.SerializeToDocument(dossierNode.ToJsonNode()); // RS14
+            profile.Dossier = JsonSerializer.SerializeToDocument(dossierNode.ToJsonNode());
+            // RS14-end
             profile.Sex = humanoid.Sex.ToString();
             profile.Voice = humanoid.Voice.ToString();
             profile.Gender = humanoid.Gender.ToString();

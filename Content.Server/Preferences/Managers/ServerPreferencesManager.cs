@@ -185,9 +185,11 @@ namespace Content.Server.Preferences.Managers
                 loadouts[role.RoleName] = loadout;
             }
 
+            // RS14-start
             var dossier = profile.Dossier?.RootElement is { } dossierElement
                 ? _serialization.Read<CharacterDossier>(dossierElement.ToDataNode(), notNullableOverride: true)
-                : new CharacterDossier(); // RS14
+                : new CharacterDossier();
+            // RS14-end
 
             return new HumanoidCharacterProfile(
                 profile.CharacterName,

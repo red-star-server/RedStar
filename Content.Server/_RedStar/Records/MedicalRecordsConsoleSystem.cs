@@ -64,7 +64,7 @@ public sealed partial class MedicalRecordsConsoleSystem : EntitySystem
         {
             var key = new StationRecordKey(id, station);
             _records.TryGetRecord(key, out general, stationRecords);
-            if (_dossiers.TryGet(key, out var stored))
+            if (_dossiers.TryGet(key, out var stored) && stored != null)
                 dossier = stored.ForSection(DossierSection.Medical);
         }
 
