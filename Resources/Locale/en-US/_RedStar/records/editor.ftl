@@ -1,29 +1,27 @@
 # Character dossier editor
-humanoid-profile-editor-cd-records-tab = Records
 
 # General
-humanoid-profile-editor-cd-records-weight = Weight (kg):
-humanoid-profile-editor-cd-records-contact-name = Emergency Contact Name(s):
+character-dossier-editor-weight = Weight (kg):
+character-dossier-editor-contact-name = Emergency Contact Name(s):
 
 # Employment
-humanoid-profile-editor-cd-records-employment = Employment
-humanoid-profile-editor-cd-records-work-authorization = Work Authorization:
+character-dossier-editor-employment = Employment
 
 # Security
-humanoid-profile-editor-cd-records-identifying-features = Identifying Features:
+character-dossier-editor-identifying-features = Identifying Features:
 
 # Medical
-humanoid-profile-editor-cd-records-allergies = Allergies:
-humanoid-profile-editor-cd-records-drug-allergies = Drug Allergies:
-humanoid-profile-editor-cd-records-postmortem = Postmortem Instructions:
+character-dossier-editor-allergies = Allergies:
+character-dossier-editor-drug-allergies = Drug Allergies:
+character-dossier-editor-postmortem = Postmortem Instructions:
 
 # Entries
-humanoid-profile-editor-cd-records-add-entry = Add Entry
-humanoid-profile-editor-cd-records-edit-entry = Edit Entry
-humanoid-profile-editor-cd-records-view-entry = View Entry
-humanoid-profile-editor-cd-records-remove-entry = Remove Entry
-humanoid-profile-editor-cd-records-up = Up
-humanoid-profile-editor-cd-records-down = Down
+character-dossier-editor-add-entry = Add Entry
+character-dossier-editor-edit-entry = Edit Entry
+character-dossier-editor-view-entry = View Entry
+character-dossier-editor-remove-entry = Remove Entry
+character-dossier-editor-up = Up
+character-dossier-editor-down = Down
 
 cd-records-entry-edit-popup-title = View/Edit Entry
 cd-records-entry-edit-popup-save = Save
