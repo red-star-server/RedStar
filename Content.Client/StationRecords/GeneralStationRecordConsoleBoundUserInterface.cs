@@ -51,7 +51,6 @@ public sealed partial class GeneralStationRecordConsoleBoundUserInterface : Boun
         }
 
         _window?.UpdateState(comp.ActiveKey, record, listing, comp.Filter, comp.CanDeleteEntries);
-        RequestDossier(comp.ActiveKey); // RS14
     }
 
     private void SelectStationRecord(uint? key)
@@ -61,6 +60,7 @@ public sealed partial class GeneralStationRecordConsoleBoundUserInterface : Boun
 
         comp.ActiveKey = key;
         Update();
+        RequestDossier(key); // RS14
     }
 
     private void SetStationRecordFilter(StationRecordFilterType type, string value)
