@@ -33,11 +33,19 @@ public sealed partial class RecordEditorGui : Control
             UpdateRecords(_records.WithWeight(newWeight));
         };
 
+        HeightEdit.OnTextChanged += args =>
+        {
+            if (!int.TryParse(args.Text, out var newHeight))
+                return;
+            UpdateRecords(_records.WithHeight(newHeight));
+        };
+
         ContactNameEdit.OnTextChanged += args =>
         {
             UpdateRecords(_records.WithEmergencyContact(args.Text));
         };
         ResidenceEdit.OnTextChanged += args => UpdateRecords(_records.WithResidence(args.Text));
+        MaritalStatusEdit.OnTextChanged += args => UpdateRecords(_records.WithMaritalStatus(args.Text));
         GeneralNotesEdit.OnTextChanged += args => UpdateRecords(_records.WithGeneralNotes(args.Text));
 
         #endregion
@@ -47,6 +55,8 @@ public sealed partial class RecordEditorGui : Control
         EducationEdit.OnTextChanged += args => UpdateRecords(_records.WithEducation(args.Text));
         PreviousEmploymentEdit.OnTextChanged += args => UpdateRecords(_records.WithPreviousEmployment(args.Text));
         ProfessionalExperienceEdit.OnTextChanged += args => UpdateRecords(_records.WithProfessionalExperience(args.Text));
+        CertificationsAndTrainingEdit.OnTextChanged += args =>
+            UpdateRecords(_records.WithCertificationsAndTraining(args.Text));
         EmploymentNotesEdit.OnTextChanged += args => UpdateRecords(_records.WithEmploymentNotes(args.Text));
 
         #endregion
@@ -58,6 +68,8 @@ public sealed partial class RecordEditorGui : Control
             UpdateRecords(_records.WithIdentifyingFeatures(args.Text));
         };
         SecurityBackgroundEdit.OnTextChanged += args => UpdateRecords(_records.WithSecurityBackground(args.Text));
+        KnownAssociatesEdit.OnTextChanged += args => UpdateRecords(_records.WithKnownAssociates(args.Text));
+        ThreatAssessmentEdit.OnTextChanged += args => UpdateRecords(_records.WithThreatAssessment(args.Text));
         SecurityNotesEdit.OnTextChanged += args => UpdateRecords(_records.WithSecurityNotes(args.Text));
 
         #endregion
@@ -75,6 +87,8 @@ public sealed partial class RecordEditorGui : Control
         };
         MedicalConditionsEdit.OnTextChanged += args => UpdateRecords(_records.WithMedicalConditions(args.Text));
         PrescriptionsEdit.OnTextChanged += args => UpdateRecords(_records.WithPrescriptions(args.Text));
+        ProstheticsEdit.OnTextChanged += args => UpdateRecords(_records.WithProsthetics(args.Text));
+        PsychologicalNotesEdit.OnTextChanged += args => UpdateRecords(_records.WithPsychologicalNotes(args.Text));
 
         PostmortemEdit.OnTextChanged += args =>
         {
@@ -127,23 +141,30 @@ public sealed partial class RecordEditorGui : Control
     {
         _updating = true;
         WeightEdit.SetText(_records.Weight.ToString());
+        HeightEdit.SetText(_records.Height.ToString());
         ContactNameEdit.SetText(_records.EmergencyContact);
         ResidenceEdit.SetText(_records.Residence);
+        MaritalStatusEdit.SetText(_records.MaritalStatus);
         GeneralNotesEdit.SetText(_records.GeneralNotes);
 
         EducationEdit.SetText(_records.Education);
         PreviousEmploymentEdit.SetText(_records.PreviousEmployment);
         ProfessionalExperienceEdit.SetText(_records.ProfessionalExperience);
+        CertificationsAndTrainingEdit.SetText(_records.CertificationsAndTraining);
         EmploymentNotesEdit.SetText(_records.EmploymentNotes);
 
         IdentifyingFeaturesEdit.SetText(_records.IdentifyingFeatures);
         SecurityBackgroundEdit.SetText(_records.SecurityBackground);
+        KnownAssociatesEdit.SetText(_records.KnownAssociates);
+        ThreatAssessmentEdit.SetText(_records.ThreatAssessment);
         SecurityNotesEdit.SetText(_records.SecurityNotes);
 
         AllergiesEdit.SetText(_records.Allergies);
         DrugAllergiesEdit.SetText(_records.DrugAllergies);
         MedicalConditionsEdit.SetText(_records.MedicalConditions);
         PrescriptionsEdit.SetText(_records.Prescriptions);
+        ProstheticsEdit.SetText(_records.Prosthetics);
+        PsychologicalNotesEdit.SetText(_records.PsychologicalNotes);
         PostmortemEdit.SetText(_records.PostmortemInstructions);
         _updating = false;
     }
