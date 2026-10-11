@@ -840,7 +840,9 @@ namespace Content.Shared.Preferences
             // RS14-start
             if (!float.IsFinite(Height))
                 Height = 1f;
-            Height = Math.Clamp(MathF.Round(Height, 2), speciesPrototype.MinHeight, speciesPrototype.MaxHeight);
+            Height = MathF.Round(Height, 2);
+            if (speciesPrototype.HeightAdjustable)
+                Height = Math.Clamp(Height, speciesPrototype.MinHeight, speciesPrototype.MaxHeight);
             // RS14-end
 
             // Corvax-TTS-start

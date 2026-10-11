@@ -125,16 +125,13 @@ public sealed partial class SpeciesPrototype : IPrototype
 
     // RS14-start
     [DataField]
-    public System.Numerics.Vector2 BaseScale = new(1f, 1f);
-
-    [DataField]
     public float MinHeight = 0.8f;
 
     [DataField]
     public float MaxHeight = 1.2f;
 
     [DataField]
-    public int BaseHeightCm = 175;
+    public bool HeightAdjustable = true;
     // RS14-end
 }
 

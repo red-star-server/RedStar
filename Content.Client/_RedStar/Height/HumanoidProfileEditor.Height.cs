@@ -1,5 +1,3 @@
-using Content.Shared.Humanoid.Prototypes;
-
 namespace Content.Client.Lobby.UI;
 
 public sealed partial class HumanoidProfileEditor
@@ -8,18 +6,21 @@ public sealed partial class HumanoidProfileEditor
 
     private void InitializeHeightControls()
     {
-        CDHeightSlider.OnValueChanged += _ =>
+        HeightSlider.OnValueChanged += _ =>
         {
             if (_updatingHeightControls || Profile is null)
                 return;
 
             var species = _prototypeManager.Index(Profile.Species);
-            var height = MathF.Round(MathHelper.Lerp(species.MinHeight, species.MaxHeight, CDHeightSlider.Value), 2);
+            if (!species.HeightAdjustable)
+                return;
+
+            var height = MathF.Round(MathHelper.Lerp(species.MinHeight, species.MaxHeight, HeightSlider.Value), 2);
             if (MathF.Abs(Profile.Height - height) < 0.005f)
                 return;
 
             Profile = Profile.WithHeight(height);
-            CDHeightLabel.Text = FormatHeight(height, species);
+            HeightLabel.Text = FormatHeight(height);
             ReloadProfilePreview();
         };
     }
@@ -30,6 +31,10 @@ public sealed partial class HumanoidProfileEditor
             return;
 
         var species = _prototypeManager.Index(Profile.Species);
+        HeightRow.Visible = species.HeightAdjustable;
+        if (!species.HeightAdjustable)
+            return;
+
         var height = float.IsFinite(Profile.Height) ? Profile.Height : 1f;
         height = Math.Clamp(height, species.MinHeight, species.MaxHeight);
         if (MathF.Abs(Profile.Height - height) >= 0.005f || !float.IsFinite(Profile.Height))
@@ -42,20 +47,15 @@ public sealed partial class HumanoidProfileEditor
         _updatingHeightControls = true;
         try
         {
-            CDHeightSlider.Value = Math.Clamp(percent, 0f, 1f);
+            HeightSlider.Value = Math.Clamp(percent, 0f, 1f);
         }
         finally
         {
             _updatingHeightControls = false;
         }
 
-        CDHeightLabel.Text = FormatHeight(height, species);
+        HeightLabel.Text = FormatHeight(height);
     }
 
-    private static string FormatHeight(float height, SpeciesPrototype species)
-    {
-        var centimeters = (int)Math.Round(height * species.BaseHeightCm);
-        var inches = (int)Math.Round(centimeters / 2.54);
-        return $"{centimeters}cm ({inches / 12}'{inches % 12}\")";
-    }
+    private static string FormatHeight(float height) => $"{height * 100:0}%";
 }

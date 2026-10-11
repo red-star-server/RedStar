@@ -25,7 +25,7 @@ public sealed partial class HumanoidProfileSystem : EntitySystem
 
         ent.Comp.Gender = profile.Gender;
         ent.Comp.Age = profile.Age;
-        ent.Comp.Height = profile.Height; // RS14
+        ent.Comp.Height = GetVisualHeight(profile); // RS14
         ent.Comp.Species = profile.Species;
         ent.Comp.Voice = profile.Voice;
         ent.Comp.Sex = profile.Sex;
