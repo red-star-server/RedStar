@@ -19,7 +19,6 @@
                 </BoxContainer>
             </BoxContainer>
         </PanelContainer>
-
         <!-- Content section with styled background -->
         <PanelContainer Name="ContentPanel" VerticalExpand="True">
             <ScrollContainer HorizontalExpand="True"

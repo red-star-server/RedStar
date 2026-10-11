@@ -972,7 +972,6 @@ namespace Content.Shared.Preferences
             hashCode.Add((int)PreferenceUnavailable);
             hashCode.Add((int)ErpStatus); // RS14
             hashCode.Add(Height); // RS14
-            hashCode.Add(Dossier); // RS14
             return hashCode.ToHashCode();
         }
 

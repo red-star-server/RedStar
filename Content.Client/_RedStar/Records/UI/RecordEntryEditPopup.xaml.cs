@@ -6,7 +6,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Utility;
 using System.Linq;
 
-namespace Content.Client._CD.Records.UI;
+namespace Content.Client._RedStar.Records.UI;
 
 [GenerateTypedNameReferences]
 public sealed partial class RecordEntryEditPopup : FancyWindow
@@ -31,7 +31,7 @@ public sealed partial class RecordEntryEditPopup : FancyWindow
         {
             BackgroundColor = Color.FromHex("#20252b"),
             BorderColor = Color.FromHex("#3e4650"),
-            BorderThickness = new Thickness(1),
+            BorderThickness = new Thickness(1)
         };
 
         ContentPanel.PanelOverride = styleBox;
@@ -103,7 +103,7 @@ public sealed partial class RecordEntryEditPopup : FancyWindow
                 {
                     ("current", (object)descriptionLength),
                     ("max", CharacterDossier.LongTextLength)
-                }),
+                })
         };
 
         // Find first failing validation rule

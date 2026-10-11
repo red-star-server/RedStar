@@ -1,3 +1,4 @@
+# Редактор досье персонажа
 humanoid-profile-editor-cd-records-tab = Записи
 humanoid-profile-editor-cd-records-weight = Вес (кг):
 humanoid-profile-editor-cd-records-contact-name = Контакт на случай ЧП:

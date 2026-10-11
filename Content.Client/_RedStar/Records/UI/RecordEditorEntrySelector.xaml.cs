@@ -4,7 +4,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Client.UserInterface;
 using System.Linq;
 
-namespace Content.Client._CD.Records.UI;
+namespace Content.Client._RedStar.Records.UI;
 
 /// <summary>
 /// The box that contains the list of entities in the record editor. We create one for each record type

@@ -1,7 +1,7 @@
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 
-namespace Content.Client._CD.Records.UI;
+namespace Content.Client._RedStar.Records.UI;
 
 /// <summary>
 /// Widget that displays the record on one line if it is short enough, and on two lines if it is
@@ -29,7 +29,7 @@ public sealed class RecordLongItemDisplay : BoxContainer
     {
         Orientation = LayoutOrientation.Horizontal,
         HorizontalExpand = true,
-        Visible = false,
+        Visible = false
     };
     private readonly Label _titleLabel = new();
     private readonly Label _shortContents = new() { Visible = true, Align = Label.AlignMode.Right };

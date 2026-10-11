@@ -7,7 +7,7 @@ using Content.Client.UserInterface.RichText;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Utility;
 
-namespace Content.Client._CD.Records.UI;
+namespace Content.Client._RedStar.Records.UI;
 
 [GenerateTypedNameReferences]
 public sealed partial class RecordEntryViewPopup : FancyWindow
@@ -33,7 +33,7 @@ public sealed partial class RecordEntryViewPopup : FancyWindow
         {
             BackgroundColor = Color.FromHex("#20252b"),
             BorderColor = Color.FromHex("#3e4650"),
-            BorderThickness = new Thickness(1),
+            BorderThickness = new Thickness(1)
         };
 
         ContentPanel.PanelOverride = styleBox;

@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared._RedStar.Records;
 using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
@@ -13,9 +14,9 @@ public sealed partial class CharacterDossierSystem : EntitySystem
 {
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private StationRecordsSystem _stationRecords = default!;
-    [Dependency] private EntityQuery<PdaComponent> _pdaQuery = default!;
-    [Dependency] private EntityQuery<StationRecordKeyStorageComponent> _recordKeyQuery = default!;
-    [Dependency] private EntityQuery<CharacterDossierComponent> _dossierQuery = default!;
+    [Dependency] private EntityQuery<PdaComponent> _pdaQuery;
+    [Dependency] private EntityQuery<StationRecordKeyStorageComponent> _recordKeyQuery;
+    [Dependency] private EntityQuery<CharacterDossierComponent> _dossierQuery;
 
     [SubscribeLocalEvent(after: [typeof(StationRecordsSystem)])]
     private void OnPlayerSpawn(PlayerSpawnCompleteEvent args)
@@ -34,6 +35,9 @@ public sealed partial class CharacterDossierSystem : EntitySystem
             return;
 
         var component = EnsureComp<CharacterDossierComponent>(key.OriginStation);
+        if (component.Records.HasRecordEntry<CharacterDossier>(key.Id))
+            return;
+
         component.Records.AddRecordEntry(key.Id, args.Profile.Dossier.DeepCopy());
         RaiseLocalEvent(new CharacterDossierModifiedEvent(key));
     }
@@ -48,7 +52,7 @@ public sealed partial class CharacterDossierSystem : EntitySystem
         RaiseLocalEvent(new CharacterDossierModifiedEvent(args.Key));
     }
 
-    public bool TryGet(StationRecordKey key, out CharacterDossier? dossier)
+    public bool TryGet(StationRecordKey key, [NotNullWhen(true)] out CharacterDossier? dossier)
     {
         dossier = null;
         return _dossierQuery.TryComp(key.OriginStation, out var component) &&

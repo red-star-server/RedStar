@@ -11,7 +11,7 @@ public sealed partial class CriminalRecordsConsoleSystem
 
     private void PopulateDossier(StationRecordKey key, CriminalRecordsConsoleState state)
     {
-        if (_dossiers.TryGet(key, out var dossier) && dossier != null)
+        if (_dossiers.TryGet(key, out var dossier))
             state.Dossier = dossier.ForSection(DossierSection.Security);
     }
 }

@@ -1,4 +1,4 @@
-using Content.Client._CD.Records.UI;
+using Content.Client._RedStar.Records.UI;
 
 namespace Content.Client.Lobby.UI;
 

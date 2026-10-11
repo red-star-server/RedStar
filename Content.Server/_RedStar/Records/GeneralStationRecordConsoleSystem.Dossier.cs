@@ -24,7 +24,7 @@ public sealed partial class GeneralStationRecordConsoleSystem
         if (args.RecordId is { } id && StationSys.GetOwningStation(ent.Owner) is { } station)
         {
             var key = new StationRecordKey(id, station);
-            if (_dossiers.TryGet(key, out var stored) && stored != null)
+            if (_dossiers.TryGet(key, out var stored))
                 dossier = stored.ForSection(ent.Comp.DossierSection);
         }
 

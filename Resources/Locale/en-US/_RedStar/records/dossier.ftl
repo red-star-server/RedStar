@@ -1,6 +1,9 @@
 character-dossier-tab-title = Dossier
 medical-records-console-title = Medical records
 medical-records-console-list-title = Crew
+cd-records-entry-view-popup-title = View Entry
+cd-character-records-entry-view-title = Title:
+cd-character-records-entry-view-involved = Author(s):
 character-dossier-section-title = RP dossier
 character-dossier-emergency-contact = Emergency contact: { $value }
 character-dossier-residence = Residence / origin: { $value }

@@ -11,7 +11,6 @@
                 <LineEdit Name="InvolvedEdit" HorizontalExpand="True" PlaceHolder="{Loc 'cd-records-entry-edit-popup-involved-placeholder'}"/>
             </BoxContainer>
         </PanelContainer>
-
         <!-- Content section with styled background -->
         <PanelContainer Name="ContentPanel" VerticalExpand="True">
             <TextEdit Name="DescriptionEdit"
@@ -19,7 +18,6 @@
                       VerticalExpand="True"
                       Margin="8 4 8 8"/>
         </PanelContainer>
-
         <!-- Save button and validation section -->
         <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="4">
             <PanelContainer StyleClasses="AngleRect">

@@ -1,4 +1,4 @@
-# Records editor
+# Character dossier editor
 humanoid-profile-editor-cd-records-tab = Records
 
 # General
