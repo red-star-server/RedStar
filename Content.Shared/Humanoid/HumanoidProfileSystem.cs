@@ -23,6 +23,7 @@ public sealed partial class HumanoidProfileSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp))
             return;
 
+        var previousHeight = ent.Comp.Height; // RS14
         ent.Comp.Gender = profile.Gender;
         ent.Comp.Age = profile.Age;
         ent.Comp.Height = GetVisualHeight(profile); // RS14
@@ -40,7 +41,13 @@ public sealed partial class HumanoidProfileSystem : EntitySystem
             _grammar.SetGender((ent, grammar), profile.Gender);
         }
 
-        RefreshCharacterHeight(ent.Owner); // RS14
+        // RS14-start
+        if (MathF.Abs(previousHeight - ent.Comp.Height) > 0.0001f)
+        {
+            var heightChanged = new CharacterHeightChangedEvent();
+            RaiseLocalEvent(ent.Owner, ref heightChanged);
+        }
+        // RS14-end
     }
 
     private void OnExamined(Entity<HumanoidProfileComponent> ent, ref ExaminedEvent args)

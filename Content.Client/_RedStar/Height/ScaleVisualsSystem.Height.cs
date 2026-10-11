@@ -21,12 +21,24 @@ public sealed partial class ScaleVisualsSystem
     [SubscribeLocalEvent]
     private void OnHeightState(Entity<HumanoidProfileComponent> ent, ref AfterAutoHandleStateEvent args)
     {
-        if (!TryComp<ScaleVisualsComponent>(ent, out _) ||
-            !TryComp<SpriteComponent>(ent, out var sprite) ||
-            !TryComp<AppearanceComponent>(ent, out var appearance) ||
-            !_heightAppearance.TryGetData<Vector2>(ent.Owner, ScaleVisuals.Scale, out var baseScale, appearance))
+        RefreshHeightSprite(ent.Owner);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnHeightChanged(Entity<HumanoidProfileComponent> ent, ref CharacterHeightChangedEvent args)
+    {
+        RefreshHeightSprite(ent.Owner);
+    }
+
+    private void RefreshHeightSprite(EntityUid uid)
+    {
+        if (!TryComp<ScaleVisualsComponent>(uid, out var visuals) ||
+            visuals.LifeStage >= ComponentLifeStage.Stopping ||
+            !TryComp<SpriteComponent>(uid, out var sprite) ||
+            !TryComp<AppearanceComponent>(uid, out var appearance) ||
+            !_heightAppearance.TryGetData<Vector2>(uid, ScaleVisuals.Scale, out var baseScale, appearance))
             return;
 
-        _sprite.SetScale((ent.Owner, sprite), ApplyCharacterHeight(ent.Owner, baseScale));
+        _sprite.SetScale((uid, sprite), ApplyCharacterHeight(uid, baseScale));
     }
 }
