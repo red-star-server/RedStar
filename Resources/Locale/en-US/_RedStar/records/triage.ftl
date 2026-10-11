@@ -1,0 +1,12 @@
+rs-med-records-search = Search crew...
+rs-med-triage-heading = Patient triage
+rs-med-triage-priority = Priority: {$priority}
+rs-med-triage-doctor = Attending doctor: {$doctor}
+rs-med-triage-unassigned = unassigned
+rs-med-triage-claim = Claim patient
+rs-med-triage-toggle-claim = Assign / release doctor
+rs-med-triage-none = None
+rs-med-triage-minor = Minor
+rs-med-triage-delayed = Delayed
+rs-med-triage-immediate = Immediate
+rs-med-triage-expectant = Expectant

@@ -1,0 +1,12 @@
+rs-med-records-search = Поиск по экипажу...
+rs-med-triage-heading = Медицинская сортировка
+rs-med-triage-priority = Приоритет: {$priority}
+rs-med-triage-doctor = Ответственный врач: {$doctor}
+rs-med-triage-unassigned = не назначен
+rs-med-triage-claim = Принять пациента
+rs-med-triage-toggle-claim = Назначить / снять назначение
+rs-med-triage-none = Нет
+rs-med-triage-minor = Лёгкий
+rs-med-triage-delayed = Отложенный
+rs-med-triage-immediate = Срочный
+rs-med-triage-expectant = Критический
