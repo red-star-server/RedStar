@@ -21,12 +21,15 @@ public sealed partial class MedicalRecordsConsoleSystem : EntitySystem
         base.Initialize();
         Subs.BuiEvents<MedicalRecordsConsoleComponent>(MedicalRecordsConsoleKey.Key, events =>
         {
+            events.Event<BoundUIOpenedEvent>(OnOpened);
             events.Event<MedicalRecordSelectMessage>(OnSelected);
         });
     }
 
-    [SubscribeLocalEvent]
-    private void OnOpened(Entity<MedicalRecordsConsoleComponent> ent, ref BoundUIOpenedEvent args) => UpdateUi(ent);
+    private void OnOpened(Entity<MedicalRecordsConsoleComponent> ent, ref BoundUIOpenedEvent args)
+    {
+        UpdateUi(ent);
+    }
 
     private void OnSelected(Entity<MedicalRecordsConsoleComponent> ent, ref MedicalRecordSelectMessage args)
     {
@@ -52,6 +55,9 @@ public sealed partial class MedicalRecordsConsoleSystem : EntitySystem
 
     private void UpdateUi(Entity<MedicalRecordsConsoleComponent> ent)
     {
+        if (!_ui.IsUiOpen(ent.Owner, MedicalRecordsConsoleKey.Key))
+            return;
+
         if (_station.GetOwningStation(ent.Owner) is not { } station ||
             !_stationRecordsQuery.TryComp(station, out var stationRecords))
         {
