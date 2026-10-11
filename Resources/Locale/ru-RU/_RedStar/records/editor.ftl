@@ -1,4 +1,5 @@
 # Редактор досье персонажа
+character-dossier-editor-general-section = Общие записи
 character-dossier-editor-weight = Вес (кг):
 character-dossier-editor-contact-name = Контакт на случай ЧП:
 character-dossier-editor-residence = Место проживания / происхождения
@@ -9,9 +10,11 @@ character-dossier-editor-previous-employment = Предыдущие места �
 character-dossier-editor-professional-experience = Профессиональный опыт
 character-dossier-editor-employment-notes = Служебная характеристика
 character-dossier-editor-identifying-features = Особые приметы:
+character-dossier-editor-security-section = Криминальные записи
 character-dossier-editor-security-background = Биографические инциденты
 character-dossier-editor-security-notes = Служебные заметки СБ
 character-dossier-editor-allergies = Аллергии:
+character-dossier-editor-medical-section = Медицинские записи
 character-dossier-editor-drug-allergies = Аллергии на лекарства:
 character-dossier-editor-postmortem = Посмертные распоряжения:
 character-dossier-editor-medical-conditions = Заболевания и противопоказания

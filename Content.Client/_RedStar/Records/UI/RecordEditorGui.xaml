@@ -1,66 +1,67 @@
 <Control xmlns="https://spacestation14.io"
          xmlns:records="clr-namespace:Content.Client._RedStar.Records.UI">
-    <BoxContainer Orientation="Vertical">
-         <ScrollContainer VerticalExpand="True">
-             <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="10">
-                 <!-- Weight -->
-                 <GridContainer Columns="2">
-                     <BoxContainer HorizontalExpand="True" SeparationOverride="2">
-                         <Label Text="{Loc 'character-dossier-editor-weight'}" />
-                         <Control HorizontalExpand="True" MinSize="5 0" />
-                         <LineEdit Name="WeightEdit" HorizontalAlignment="Right" MinSize="60 0" />
-                     </BoxContainer>
-                 </GridContainer>
-                 <!-- Emergency Contact -->
-                 <BoxContainer Orientation="Horizontal">
-                     <Label Text="{Loc 'character-dossier-editor-contact-name'}" />
-                     <Control HorizontalExpand="True" />
-                     <LineEdit Name="ContactNameEdit" HorizontalAlignment="Right" MinSize="350 0"/>
-                 </BoxContainer>
-                 <LineEdit Name="ResidenceEdit" PlaceHolder="{Loc 'character-dossier-editor-residence'}" />
-                 <LineEdit Name="GeneralNotesEdit" PlaceHolder="{Loc 'character-dossier-editor-general-notes'}" />
-                 <Control MinSize="0 20"/>
-                 <Label Text="{Loc 'character-dossier-editor-employment'}" StyleClasses="LabelHeading" />
-                 <LineEdit Name="EducationEdit" PlaceHolder="{Loc 'character-dossier-editor-education'}" />
-                 <LineEdit Name="PreviousEmploymentEdit" PlaceHolder="{Loc 'character-dossier-editor-previous-employment'}" />
-                 <LineEdit Name="ProfessionalExperienceEdit" PlaceHolder="{Loc 'character-dossier-editor-professional-experience'}" />
-                 <LineEdit Name="EmploymentNotesEdit" PlaceHolder="{Loc 'character-dossier-editor-employment-notes'}" />
-                 <Control MinSize="0 20"/>
-                 <!-- Security stuff -->
-                 <BoxContainer Orientation="Horizontal">
-                     <Label Text="{Loc 'character-dossier-editor-identifying-features'}" />
-                     <Control HorizontalExpand="True" />
-                     <LineEdit Name="IdentifyingFeaturesEdit" HorizontalAlignment="Right" MinSize="350 0"/>
-                 </BoxContainer>
-                 <LineEdit Name="SecurityBackgroundEdit" PlaceHolder="{Loc 'character-dossier-editor-security-background'}" />
-                 <LineEdit Name="SecurityNotesEdit" PlaceHolder="{Loc 'character-dossier-editor-security-notes'}" />
-                 <Control MinSize="0 20"/>
-                 <!-- Medical stuff -->
-                 <BoxContainer Orientation="Horizontal">
-                     <Label Text="{Loc 'character-dossier-editor-allergies'}" />
-                     <Control HorizontalExpand="True" />
-                     <LineEdit Name="AllergiesEdit" HorizontalAlignment="Right" MinSize="350 0"/>
-                 </BoxContainer>
-                 <BoxContainer Orientation="Horizontal">
-                     <Label Text="{Loc 'character-dossier-editor-drug-allergies'}" />
-                     <Control HorizontalExpand="True" />
-                     <LineEdit Name="DrugAllergiesEdit" HorizontalAlignment="Right" MinSize="350 0"/>
-                 </BoxContainer>
-                 <LineEdit Name="MedicalConditionsEdit" PlaceHolder="{Loc 'character-dossier-editor-medical-conditions'}" />
-                 <LineEdit Name="PrescriptionsEdit" PlaceHolder="{Loc 'character-dossier-editor-prescriptions'}" />
-                 <BoxContainer Orientation="Horizontal">
-                     <Label Text="{Loc 'character-dossier-editor-postmortem'}" />
-                     <Control HorizontalExpand="True" />
-                     <LineEdit Name="PostmortemEdit" HorizontalAlignment="Right" MinSize="350 0"/>
-                 </BoxContainer>
-                 <Control MinSize="0 20"/>
-                 <!-- Entry editor -->
-                 <TabContainer Name="EntryEditorTabs" VerticalExpand="True" HorizontalExpand="True" Margin="10">
-                     <records:RecordEditorEntrySelector Name="EmploymentEntrySelector"/>
-                     <records:RecordEditorEntrySelector Name="MedicalEntrySelector"/>
-                     <records:RecordEditorEntrySelector Name="SecurityEntrySelector"/>
-                 </TabContainer>
-             </BoxContainer>
-         </ScrollContainer>
-    </BoxContainer>
+    <ScrollContainer VerticalExpand="True">
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="10" SeparationOverride="10">
+            <Label Text="{Loc 'character-dossier-editor-general-section'}" StyleClasses="LabelHeading" />
+            <PanelContainer StyleClasses="AngleRect">
+                <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="8" SeparationOverride="6">
+                    <BoxContainer Orientation="Horizontal">
+                        <Label Text="{Loc 'character-dossier-editor-contact-name'}" />
+                        <Control HorizontalExpand="True" />
+                        <LineEdit Name="ContactNameEdit" HorizontalAlignment="Right" MinSize="350 0" />
+                    </BoxContainer>
+                    <LineEdit Name="ResidenceEdit" PlaceHolder="{Loc 'character-dossier-editor-residence'}" />
+                    <LineEdit Name="GeneralNotesEdit" PlaceHolder="{Loc 'character-dossier-editor-general-notes'}" />
+                    <Label Text="{Loc 'character-dossier-editor-employment'}" StyleClasses="LabelSubText" />
+                    <LineEdit Name="EducationEdit" PlaceHolder="{Loc 'character-dossier-editor-education'}" />
+                    <LineEdit Name="PreviousEmploymentEdit" PlaceHolder="{Loc 'character-dossier-editor-previous-employment'}" />
+                    <LineEdit Name="ProfessionalExperienceEdit" PlaceHolder="{Loc 'character-dossier-editor-professional-experience'}" />
+                    <LineEdit Name="EmploymentNotesEdit" PlaceHolder="{Loc 'character-dossier-editor-employment-notes'}" />
+                    <records:RecordEditorEntrySelector Name="EmploymentEntrySelector" />
+                </BoxContainer>
+            </PanelContainer>
+
+            <Label Text="{Loc 'character-dossier-editor-security-section'}" StyleClasses="LabelHeading" />
+            <PanelContainer StyleClasses="AngleRect">
+                <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="8" SeparationOverride="6">
+                    <BoxContainer Orientation="Horizontal">
+                        <Label Text="{Loc 'character-dossier-editor-identifying-features'}" />
+                        <Control HorizontalExpand="True" />
+                        <LineEdit Name="IdentifyingFeaturesEdit" HorizontalAlignment="Right" MinSize="350 0" />
+                    </BoxContainer>
+                    <LineEdit Name="SecurityBackgroundEdit" PlaceHolder="{Loc 'character-dossier-editor-security-background'}" />
+                    <LineEdit Name="SecurityNotesEdit" PlaceHolder="{Loc 'character-dossier-editor-security-notes'}" />
+                    <records:RecordEditorEntrySelector Name="SecurityEntrySelector" />
+                </BoxContainer>
+            </PanelContainer>
+
+            <Label Text="{Loc 'character-dossier-editor-medical-section'}" StyleClasses="LabelHeading" />
+            <PanelContainer StyleClasses="AngleRect">
+                <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="8" SeparationOverride="6">
+                    <BoxContainer Orientation="Horizontal" SeparationOverride="8">
+                        <Label Text="{Loc 'character-dossier-editor-weight'}" />
+                        <LineEdit Name="WeightEdit" MinSize="60 0" />
+                    </BoxContainer>
+                    <BoxContainer Orientation="Horizontal">
+                        <Label Text="{Loc 'character-dossier-editor-allergies'}" />
+                        <Control HorizontalExpand="True" />
+                        <LineEdit Name="AllergiesEdit" HorizontalAlignment="Right" MinSize="350 0" />
+                    </BoxContainer>
+                    <BoxContainer Orientation="Horizontal">
+                        <Label Text="{Loc 'character-dossier-editor-drug-allergies'}" />
+                        <Control HorizontalExpand="True" />
+                        <LineEdit Name="DrugAllergiesEdit" HorizontalAlignment="Right" MinSize="350 0" />
+                    </BoxContainer>
+                    <LineEdit Name="MedicalConditionsEdit" PlaceHolder="{Loc 'character-dossier-editor-medical-conditions'}" />
+                    <LineEdit Name="PrescriptionsEdit" PlaceHolder="{Loc 'character-dossier-editor-prescriptions'}" />
+                    <BoxContainer Orientation="Horizontal">
+                        <Label Text="{Loc 'character-dossier-editor-postmortem'}" />
+                        <Control HorizontalExpand="True" />
+                        <LineEdit Name="PostmortemEdit" HorizontalAlignment="Right" MinSize="350 0" />
+                    </BoxContainer>
+                    <records:RecordEditorEntrySelector Name="MedicalEntrySelector" />
+                </BoxContainer>
+            </PanelContainer>
+        </BoxContainer>
+    </ScrollContainer>
 </Control>

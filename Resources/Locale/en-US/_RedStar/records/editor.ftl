@@ -1,6 +1,7 @@
 # Character dossier editor
 
 # General
+character-dossier-editor-general-section = General records
 character-dossier-editor-weight = Weight (kg):
 character-dossier-editor-contact-name = Emergency Contact Name(s):
 character-dossier-editor-residence = Residence / origin
@@ -14,11 +15,13 @@ character-dossier-editor-professional-experience = Professional experience
 character-dossier-editor-employment-notes = Employment notes
 
 # Security
+character-dossier-editor-security-section = Security records
 character-dossier-editor-identifying-features = Identifying Features:
 character-dossier-editor-security-background = Previous incidents
 character-dossier-editor-security-notes = Additional security background
 
 # Medical
+character-dossier-editor-medical-section = Medical records
 character-dossier-editor-allergies = Allergies:
 character-dossier-editor-drug-allergies = Drug Allergies:
 character-dossier-editor-postmortem = Postmortem Instructions:
