@@ -8,6 +8,7 @@
   targetAnimation: PairedHighFiveTarget
   range: 1.5
   offerDuration: 5
+  attemptSelf: paired-emote-high-five-attempt-self
   attemptTarget: paired-emote-high-five-attempt-target
   success: paired-emote-high-five-success
   sound: !type:SoundPathSpecifier
@@ -25,6 +26,7 @@
   targetAnimation: PairedFistBumpTarget
   range: 1.5
   offerDuration: 5
+  attemptSelf: paired-emote-fist-bump-attempt-self
   attemptTarget: paired-emote-fist-bump-attempt-target
   success: paired-emote-fist-bump-success
   sound: !type:SoundPathSpecifier
@@ -42,6 +44,7 @@
   targetAnimation: PairedHandshakeTarget
   range: 1.5
   offerDuration: 5
+  attemptSelf: paired-emote-handshake-attempt-self
   attemptTarget: paired-emote-handshake-attempt-target
   success: paired-emote-handshake-success
   sound: !type:SoundPathSpecifier
@@ -59,6 +62,7 @@
   targetAnimation: PairedHugTarget
   range: 1.5
   offerDuration: 5
+  attemptSelf: paired-emote-hug-attempt-self
   attemptTarget: paired-emote-hug-attempt-target
   success: paired-emote-hug-success
   sound: !type:SoundPathSpecifier

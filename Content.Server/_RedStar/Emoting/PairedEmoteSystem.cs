@@ -147,6 +147,12 @@ public sealed partial class PairedEmoteSystem : SharedPairedEmoteSystem
         _alerts.ShowAlert(target, prototype.Alert);
 
         _popup.PopupEntity(
+            Loc.GetString(prototype.AttemptSelf, ("target", target)),
+            initiator,
+            initiator,
+            PopupType.Medium);
+
+        _popup.PopupEntity(
             Loc.GetString(
                 prototype.AttemptTarget,
                 ("initiator", initiator)),

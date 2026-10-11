@@ -52,6 +52,9 @@ public sealed partial class PairedEmotePrototype : IPrototype
     public TimeSpan OfferDuration = TimeSpan.FromSeconds(5);
 
     [DataField(required: true)]
+    public LocId AttemptSelf;
+
+    [DataField(required: true)]
     public LocId AttemptTarget;
 
     [DataField(required: true)]
