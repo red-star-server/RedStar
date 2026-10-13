@@ -40,7 +40,6 @@ public abstract partial class SharedCellSystem : EntitySystem
 
         ent.Comp.Cells.Add(cell);
         ent.Comp.Revision++;
-        Dirty(ent);
 
         var ev = new CellContainerChangedEvent();
         RaiseLocalEvent(ent, ev);
@@ -60,8 +59,6 @@ public abstract partial class SharedCellSystem : EntitySystem
             return false;
 
         ent.Comp.Revision++;
-
-        Dirty(ent);
 
         var ev = new CellContainerChangedEvent();
         RaiseLocalEvent(ent, ev);
@@ -98,8 +95,6 @@ public abstract partial class SharedCellSystem : EntitySystem
         source.Comp.Cells.Clear();
         source.Comp.Revision++;
         destination.Comp.Revision++;
-        Dirty(source);
-        Dirty(destination);
         RaiseLocalEvent(source, new CellContainerChangedEvent());
         RaiseLocalEvent(destination, new CellContainerChangedEvent());
         return true;

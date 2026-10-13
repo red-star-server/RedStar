@@ -5,7 +5,7 @@
     MinSize="800 440">
     <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
         <!-- Nav panel -->
-        <BoxContainer Margin="8" MinWidth="330" Orientation="Vertical" VerticalExpand="True">
+        <BoxContainer Margin="8" MinWidth="200" Orientation="Vertical" VerticalExpand="True">
             <Button Name="ServerButton" Text="{Loc 'research-console-menu-server-selection-button'}" Margin="0 0 0 4" />
             <PanelContainer Margin="0 0 0 4" StyleClasses="LowDivider" />
             <Button Name="AddButton" Text="{Loc 'cell-sequencer-menu-add-button'}" Margin="0 0 0 4" />
