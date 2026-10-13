@@ -310,43 +310,6 @@ public sealed partial class GenomeSystem : EntitySystem
     }
 
     /// <summary>
-    /// Combines whole samples, allowing genes from different schemes in the result.
-    /// Sample quality controls whether a gene survives the laboratory procedure.
-    /// </summary>
-    public GenomeOperationResult Recombine(GenomeSnapshot first, GenomeSnapshot second,
-        float firstQuality, float secondQuality, out GenomeSnapshot? result)
-    {
-        result = null;
-        var a = first.GetGenes();
-        var b = second.GetGenes();
-        var validation = ValidateGenome(first.GenomeId, a);
-        if (validation != GenomeOperationResult.Success)
-            return validation;
-        validation = ValidateGenome(second.GenomeId, b);
-        if (validation != GenomeOperationResult.Success)
-            return validation;
-
-        var genes = new Dictionary<ProtoId<GenePrototype>, GeneState>();
-        foreach (var id in a.Keys.Concat(b.Keys).Distinct())
-        {
-            a.TryGetValue(id, out var fromFirst);
-            b.TryGetValue(id, out var fromSecond);
-            var useFirst = fromSecond is null || fromFirst is not null && _random.Prob(0.5f);
-            var selected = useFirst ? fromFirst : fromSecond;
-            var quality = useFirst ? firstQuality : secondQuality;
-            if (selected is not null && _random.Prob(Math.Clamp(quality, 0f, 1f)))
-                genes.Add(id, selected);
-        }
-
-        validation = ValidateGenome(first.GenomeId, genes);
-        if (validation != GenomeOperationResult.Success)
-            return validation;
-
-        result = new GenomeSnapshot(first.GenomeId, genes);
-        return GenomeOperationResult.Success;
-    }
-
-    /// <summary>
     /// Toggles a presence gene or changes the value of a present allele or number gene.
     /// Valued genes must be added explicitly before they can mutate.
     /// </summary>

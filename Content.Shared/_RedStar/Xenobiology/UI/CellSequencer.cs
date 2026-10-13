@@ -12,8 +12,8 @@ public enum CellSequencerUiKey
 public sealed class CellSequencerUiState(
     CellView[] insideCell,
     CellEntryView[] remoteCells,
-    int material,
     bool hasContainer,
+    bool hasSpace,
     int dishRevision,
     NetEntity? dish)
     : BoundUserInterfaceState
@@ -21,8 +21,8 @@ public sealed class CellSequencerUiState(
     public readonly CellView[] InsideCells = insideCell;
     public readonly CellEntryView[] RemoteCells = remoteCells;
     public bool Connected;
-    public readonly int Material = material;
     public readonly bool HasContainer = hasContainer;
+    public readonly bool HasSpace = hasSpace;
     public readonly int DishRevision = dishRevision;
     public readonly NetEntity? Dish = dish;
 }
@@ -45,7 +45,9 @@ public sealed class CellSequencerUiRemoveMessage(int? id, bool remote, int dishR
 }
 
 [Serializable, NetSerializable]
-public sealed class CellSequencerUiReplaceMessage(int? id) : BoundUserInterfaceMessage
+public sealed class CellSequencerUiWithdrawMessage(int? id, int dishRevision, NetEntity? dish) : BoundUserInterfaceMessage
 {
     public readonly int? Id = id;
+    public readonly int DishRevision = dishRevision;
+    public readonly NetEntity? Dish = dish;
 }

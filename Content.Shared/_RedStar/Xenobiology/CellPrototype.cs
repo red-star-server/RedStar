@@ -19,9 +19,6 @@ public sealed partial class CellPrototype : IPrototype
     public Color Color = Color.White;
 
     [DataField]
-    public int Cost = 5;
-
-    [DataField]
     public ProtoId<GenomePrototype> GenomeId = "LaboratorySample";
 
     [DataField]

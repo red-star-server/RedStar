@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server._RedStar.Genetics;
+using Content.Shared._RedStar.Genetics;
 using Content.Server._RedStar.Xenobiology.Events;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Research.Components;
@@ -26,7 +27,6 @@ public sealed partial class CellularFusionSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
     [Dependency] private SharedMaterialStorageSystem _materialStorage = default!;
-    [Dependency] private SharedCellSystem _cell = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private GenomeSystem _genomes = default!;
@@ -72,7 +72,8 @@ public sealed partial class CellularFusionSystem : EntitySystem
 
     private void UpdateConnection(Entity<CellularFusionComponent> ent)
     {
-        if (!_database.TryGetDatabase(ent.Owner, out _))
+        if (!_database.TryGetDatabase(ent.Owner, out var database) ||
+            ent.Comp.SpliceInProgress && ent.Comp.SpliceServer != database.Value.Owner)
             CancelSplice(ent);
 
         UpdateUI(ent);
@@ -102,10 +103,19 @@ public sealed partial class CellularFusionSystem : EntitySystem
         if (ent.Comp.SpliceInProgress || !this.IsPowered(ent.Owner, EntityManager))
             return;
 
-        if (!_database.TryGetCell(ent.Owner, args.CellAId, out var cellA) ||
-            !_database.TryGetCell(ent.Owner, args.CellBId, out var cellB) ||
-            cellA.GetGenome() is null || cellB.GetGenome() is null)
+        if (!_database.TryGetDatabase(ent.Owner, out var database))
             return;
+
+        if (args.CellAId == args.CellBId ||
+            !_database.TryGetCell(ent.Owner, args.CellAId, out var cellA) ||
+            !_database.TryGetCell(ent.Owner, args.CellBId, out var cellB))
+            return;
+
+        if (!CanStabilize(cellA, cellB, out _))
+        {
+            _popup.PopupEntity(Loc.GetString("cellular-fusion-incompatible"), ent, PopupType.MediumCaution);
+            return;
+        }
 
         var dishUid = _itemSlots.GetItemOrNull(ent.Owner, ent.Comp.DishSlot);
         if (dishUid is not { } dish)
@@ -114,18 +124,19 @@ public sealed partial class CellularFusionSystem : EntitySystem
             return;
         }
 
-        if (!TryComp<CellContainerComponent>(dish, out _))
+        if (!TryComp<CellContainerComponent>(dish, out var dishContainer) ||
+            dishContainer.Cells.Count >= dishContainer.MaxCells)
             return;
 
-        var cost = SharedCellSystem.GetMergedCost(cellA, cellB);
+        var cost = SharedCellSystem.StabilizationCost;
         var material = _materialStorage.GetMaterialAmount(ent.Owner, ent.Comp.RequiredMaterial);
         if (cost > material)
             return;
 
-        // A started operation keeps its selected genomes even if the database changes.
-        ent.Comp.SpliceCellA = cellA;
-        ent.Comp.SpliceCellB = cellB;
+        ent.Comp.SpliceCellAId = args.CellAId;
+        ent.Comp.SpliceCellBId = args.CellBId;
         ent.Comp.SpliceDish = dish;
+        ent.Comp.SpliceServer = database.Value.Owner;
         ent.Comp.SpliceCost = cost;
         ent.Comp.SpliceDuration = TimeSpan.FromSeconds(ent.Comp.SpliceDelay);
         ent.Comp.SpliceEndTime = _timing.CurTime + ent.Comp.SpliceDuration;
@@ -144,7 +155,8 @@ public sealed partial class CellularFusionSystem : EntitySystem
 
             var machine = new Entity<CellularFusionComponent>(uid, component);
             if (!this.IsPowered(uid, EntityManager) ||
-                !_database.TryGetDatabase(uid, out _) ||
+                !_database.TryGetDatabase(uid, out var database) ||
+                component.SpliceServer != database.Value.Owner ||
                 component.SpliceDish != _itemSlots.GetItemOrNull(uid, component.DishSlot))
             {
                 CancelSplice(machine);
@@ -158,17 +170,28 @@ public sealed partial class CellularFusionSystem : EntitySystem
 
     private void FinishSplice(Entity<CellularFusionComponent> ent)
     {
-        var cellA = ent.Comp.SpliceCellA;
-        var cellB = ent.Comp.SpliceCellB;
+        var firstId = ent.Comp.SpliceCellAId;
+        var secondId = ent.Comp.SpliceCellBId;
         var dish = ent.Comp.SpliceDish;
         var cost = ent.Comp.SpliceCost;
 
-        if (cellA is null || cellB is null || dish is not { } dishUid ||
+        if (firstId is not { } idA || secondId is not { } idB || dish is not { } dishUid ||
+            !_database.TryGetDatabase(ent.Owner, out var database) ||
+            database.Value.Owner != ent.Comp.SpliceServer ||
             _itemSlots.GetItemOrNull(ent.Owner, ent.Comp.DishSlot) != dishUid ||
-            !TryComp<CellContainerComponent>(dishUid, out var dishContainer))
+            !TryComp<CellContainerComponent>(dishUid, out var dishContainer) ||
+            dishContainer.Cells.Count >= dishContainer.MaxCells)
         {
             CancelSplice(ent);
             _popup.PopupEntity(Loc.GetString("cellular-fusion-dish-removed"), ent, PopupType.MediumCaution);
+            return;
+        }
+
+        if (!_database.TryGetCell(ent.Owner, idA, out var cellA) ||
+            !_database.TryGetCell(ent.Owner, idB, out var cellB) ||
+            !CanStabilize(cellA, cellB, out var genome))
+        {
+            CancelSplice(ent);
             return;
         }
 
@@ -180,37 +203,44 @@ public sealed partial class CellularFusionSystem : EntitySystem
             return;
         }
 
-        ResetSplice(ent.Comp);
-
         var avgStability = (cellA.Stability + cellB.Stability) / 2f;
         var failureChance = Math.Clamp(ent.Comp.BaseFailureChance + (1f - avgStability) * ent.Comp.StabilityMultiplier, 0f, 1f);
-        if (_random.Prob(failureChance))
-        {
-            _popup.PopupEntity(Loc.GetString("cellular-fusion-splice-failure"), ent, PopupType.MediumCaution);
-            UpdateUI(ent);
-            return;
-        }
-
-        var recombination = _genomes.Recombine(cellA.GetGenome()!, cellB.GetGenome()!,
-            cellA.Stability, cellB.Stability, out var genome);
-        if (recombination != GenomeOperationResult.Success || genome is null)
-        {
-            _popup.PopupEntity(Loc.GetString("cellular-fusion-splice-failure"), ent, PopupType.MediumCaution);
-            UpdateUI(ent);
-            return;
-        }
-
-        var result = new Cell(
+        var failed = _random.Prob(failureChance);
+        Cell? result = failed ? null : new Cell(
             prototypeId: null,
-            color: SharedCellSystem.GetMergedColor(cellA, cellB),
-            name: SharedCellSystem.GetMergedName(cellA, cellB),
-            stability: SharedCellSystem.GetMergedStability(cellA, cellB),
-            cost: SharedCellSystem.GetCellCost(genome.GeneCount),
+            color: SharedCellSystem.GetStabilizedColor(cellA, cellB),
+            name: SharedCellSystem.GetStabilizedName(cellA, cellB),
+            stability: SharedCellSystem.GetStabilizedStability(cellA, cellB),
             genome: genome);
 
-        _cell.AddCell((dishUid, dishContainer), result);
-        _popup.PopupEntity(Loc.GetString("cellular-fusion-splice-success"), ent, PopupType.Medium);
+        ResetSplice(ent.Comp);
+        if (!_database.CompletePair(ent.Owner, idA, idB, (dishUid, dishContainer), result))
+        {
+            _materialStorage.TrySetMaterialAmount(ent, ent.Comp.RequiredMaterial, material);
+            UpdateUI(ent);
+            return;
+        }
+
+        _popup.PopupEntity(Loc.GetString(failed ? "cellular-fusion-splice-failure" :
+            "cellular-fusion-splice-success"), ent, failed ? PopupType.MediumCaution : PopupType.Medium);
         UpdateUI(ent, result);
+    }
+
+    private bool CanStabilize(Cell first, Cell second, out GenomeSnapshot? genome)
+    {
+        genome = null;
+        if (!float.IsFinite(first.Stability) || !float.IsFinite(second.Stability) ||
+            first.Stability is < 0f or > 1f || second.Stability is < 0f or > 1f ||
+            Math.Max(first.Stability, second.Stability) >= 1f ||
+            first.GetGenome() is not { } firstGenome || second.GetGenome() is not { } secondGenome)
+            return false;
+
+        if (!firstGenome.SameContents(secondGenome) ||
+            _genomes.ValidateSnapshot(firstGenome) != GenomeOperationResult.Success)
+            return false;
+
+        genome = firstGenome;
+        return true;
     }
 
     private void CancelSplice(Entity<CellularFusionComponent> ent)
@@ -226,9 +256,10 @@ public sealed partial class CellularFusionSystem : EntitySystem
     {
         component.SpliceEndTime = null;
         component.SpliceDuration = TimeSpan.Zero;
-        component.SpliceCellA = null;
-        component.SpliceCellB = null;
+        component.SpliceCellAId = null;
+        component.SpliceCellBId = null;
         component.SpliceDish = null;
+        component.SpliceServer = null;
         component.SpliceCost = 0;
     }
     private void UpdateUI(Entity<CellularFusionComponent> ent, Cell? lastResult = null)

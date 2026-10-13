@@ -6,7 +6,6 @@ using Content.Shared._RedStar.Xenobiology.Events;
 using Content.Shared._RedStar.Xenobiology.Systems;
 using Content.Shared._RedStar.Xenobiology.UI;
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Materials;
 using Content.Shared.Popups;
 using Content.Shared.Research.Components;
 using Content.Shared.UserInterface;
@@ -17,18 +16,11 @@ namespace Content.Server._RedStar.Xenobiology.Machines;
 public sealed partial class CellSequencerSystem : EntitySystem
 {
     [Dependency] private XenobiologyDatabaseSystem _database = default!;
-    [Dependency] private SharedMaterialStorageSystem _materialStorage = default!;
     [Dependency] private SharedCellSystem _cell = default!;
     [Dependency] private SharedContainerSystem _containers = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
-
-    [SubscribeLocalEvent]
-    private void OnGetMaterialWhitelist(Entity<CellSequencerComponent> ent, ref GetMaterialWhitelistEvent args)
-    {
-        args.Whitelist.Add(ent.Comp.RequiredMaterial);
-    }
 
     [SubscribeLocalEvent]
     private void OnOpened(Entity<CellSequencerComponent> ent, ref AfterActivatableUIOpenEvent args)
@@ -83,12 +75,6 @@ public sealed partial class CellSequencerSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnMaterialAmountChanged(Entity<CellSequencerComponent> ent, ref MaterialAmountChangedEvent args)
-    {
-        UpdateUI(ent);
-    }
-
-    [SubscribeLocalEvent]
     private void OnAdd(Entity<CellSequencerComponent> ent, ref CellSequencerUiAddMessage args)
     {
         if (!_database.TryGetDatabase(ent.Owner, out _))
@@ -106,7 +92,7 @@ public sealed partial class CellSequencerSystem : EntitySystem
             return;
         }
 
-        _database.AddCell(ent.Owner, dish.Comp.Cells[index]);
+        _database.StoreCell(ent.Owner, dish, index);
     }
 
     [SubscribeLocalEvent]
@@ -140,23 +126,15 @@ public sealed partial class CellSequencerSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnReplace(Entity<CellSequencerComponent> ent, ref CellSequencerUiReplaceMessage args)
+    private void OnWithdraw(Entity<CellSequencerComponent> ent, ref CellSequencerUiWithdrawMessage args)
     {
         if (args.Id is not { } id || !TryGetDish(ent, out var dish) ||
-            !_database.TryGetCell(ent.Owner, id, out var cell))
+            args.Dish != GetNetEntity(dish.Owner) || args.DishRevision != dish.Comp.Revision ||
+            dish.Comp.Cells.Count >= dish.Comp.MaxCells)
         {
             return;
         }
-
-        var material = _materialStorage.GetMaterialAmount(ent.Owner, ent.Comp.RequiredMaterial);
-        if (material < cell.Cost ||
-            !_materialStorage.TrySetMaterialAmount(ent, ent.Comp.RequiredMaterial, material - cell.Cost))
-        {
-            return;
-        }
-
-        _cell.ClearCells((dish.Owner, dish.Comp));
-        _cell.AddCell((dish.Owner, dish.Comp), cell);
+        _database.WithdrawCell(ent.Owner, id, dish);
     }
 
     private bool TryGetDish(Entity<CellSequencerComponent> ent, out Entity<CellContainerComponent> dish)
@@ -179,12 +157,11 @@ public sealed partial class CellSequencerSystem : EntitySystem
 
         _database.TryGetDatabase(ent.Owner, out var database);
         var hasDish = TryGetDish(ent, out var dish);
-        var material = _materialStorage.GetMaterialAmount(ent.Owner, ent.Comp.RequiredMaterial);
         var state = new CellSequencerUiState(
             hasDish ? dish.Comp.Cells.Select(cell => new CellView(cell)).ToArray() : [],
             database?.Comp.Cells.Select(entry => new CellEntryView(entry.Id, entry.Cell)).ToArray() ?? [],
-            material,
             hasDish,
+            hasDish && dish.Comp.Cells.Count < dish.Comp.MaxCells,
             hasDish ? dish.Comp.Revision : -1,
             hasDish ? GetNetEntity(dish.Owner) : null)
         {

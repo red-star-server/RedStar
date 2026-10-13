@@ -49,7 +49,7 @@ public abstract partial class SharedCellSystem : EntitySystem
     /// </summary>
     public bool AddCell(Entity<CellContainerComponent?> ent, Cell cell)
     {
-        if (!Resolve(ent, ref ent.Comp))
+        if (!Resolve(ent, ref ent.Comp) || ent.Comp.Cells.Count >= ent.Comp.MaxCells)
             return false;
 
         ent.Comp.Cells.Add(cell);
@@ -99,31 +99,23 @@ public abstract partial class SharedCellSystem : EntitySystem
     }
 
     /// <summary>
-    /// Copies cells from the source container to the destination container.
+    /// Moves all cells only when the destination has room for every sample.
     /// </summary>
-    /// <seealso cref="AddCell(Entity{CellContainerComponent?}, Cell)"/>
-    public void CopyCells(Entity<CellContainerComponent?> destination, Entity<CellContainerComponent?> source)
-    {
-        if (destination.Owner == source.Owner ||
-            !Resolve(destination, ref destination.Comp) || !Resolve(source, ref source.Comp))
-            return;
-
-        foreach (var cell in source.Comp.Cells)
-        {
-            AddCell(destination, cell);
-        }
-    }
-
-    /// <summary>
-    /// Moves all cells from the source container to the destination container.
-    /// </summary>
-    public void MoveCells(Entity<CellContainerComponent?> source, Entity<CellContainerComponent?> destination)
+    public bool MoveCells(Entity<CellContainerComponent?> source, Entity<CellContainerComponent?> destination)
     {
         if (source.Owner == destination.Owner ||
-            !Resolve(source, ref source.Comp) || !Resolve(destination, ref destination.Comp))
-            return;
+            !Resolve(source, ref source.Comp) || !Resolve(destination, ref destination.Comp) ||
+            source.Comp.Empty || destination.Comp.MaxCells - destination.Comp.Cells.Count < source.Comp.Cells.Count)
+            return false;
 
-        CopyCells(destination, source);
-        ClearCells(source);
+        destination.Comp.Cells.AddRange(source.Comp.Cells);
+        source.Comp.Cells.Clear();
+        source.Comp.Revision++;
+        destination.Comp.Revision++;
+        Dirty(source);
+        Dirty(destination);
+        RaiseLocalEvent(source, new CellContainerChangedEvent());
+        RaiseLocalEvent(destination, new CellContainerChangedEvent());
+        return true;
     }
 }

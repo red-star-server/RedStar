@@ -14,6 +14,9 @@ public sealed partial class CellContainerComponent : Component
     [DataField, ViewVariables]
     public List<Cell> Cells = [];
 
+    [DataField]
+    public int MaxCells = int.MaxValue;
+
     /// <summary>
     /// Changes whenever the ordered cell list changes. Used to reject stale UI indices.
     /// </summary>

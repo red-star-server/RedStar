@@ -12,20 +12,19 @@ public sealed partial class CellSequencerWindow : FancyWindow
     public event Action? OnServerSelection;
     public event Action<int?, int, NetEntity?>? OnAdd;
     public event Action<int?, bool, int, NetEntity?>? OnRemove;
-    public event Action<int?>? OnPrint;
+    public event Action<int?, int, NetEntity?>? OnWithdraw;
 
     private CellEntryControl? _sequencerEntry;
     private IReadOnlyList<CellView> _insideCells = [];
     private IReadOnlyList<CellEntryView> _remoteCells = [];
-    private int _material;
     private bool _hasContainer;
+    private bool _hasSpace;
     private bool _connected;
     private int _dishRevision;
     private NetEntity? _dish;
 
     private bool SelectionIsRemote => _sequencerEntry is { Remote: true };
     private CellView? SelectedCell => _sequencerEntry?.Cell;
-    private bool HasMaterial => SelectedCell is { } cell && cell.Cost <= _material;
 
     public CellSequencerWindow()
     {
@@ -39,18 +38,13 @@ public sealed partial class CellSequencerWindow : FancyWindow
             OnRemove?.Invoke(_sequencerEntry?.Id, _sequencerEntry?.Remote ?? false, _dishRevision, _dish);
             SelectedCellEntry(null);
         };
-        ReplaceButton.OnPressed += _ => OnPrint?.Invoke(_sequencerEntry?.Id);
-    }
-
-    public void SetEntity(EntityUid owner)
-    {
-        MaterialsList.SetOwner(owner);
+        WithdrawButton.OnPressed += _ => OnWithdraw?.Invoke(_sequencerEntry?.Id, _dishRevision, _dish);
     }
 
     public void UpdateState(CellSequencerUiState state)
     {
-        _material = state.Material;
         _hasContainer = state.HasContainer;
+        _hasSpace = state.HasSpace;
         _connected = state.Connected;
         var insideChanged = _dish != state.Dish || _dishRevision != state.DishRevision ||
             !SameCells(_insideCells, state.InsideCells);
@@ -147,6 +141,6 @@ public sealed partial class CellSequencerWindow : FancyWindow
     {
         AddButton.Disabled = !_connected || SelectedCell is null || SelectionIsRemote;
         RemoveButton.Disabled = SelectedCell is null || (SelectionIsRemote && !_connected);
-        ReplaceButton.Disabled = !SelectionIsRemote || !HasMaterial || !_hasContainer;
+        WithdrawButton.Disabled = !SelectionIsRemote || !_connected || !_hasContainer || !_hasSpace;
     }
 }

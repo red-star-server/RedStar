@@ -27,5 +27,6 @@
         Bloodloss: 5
         Cellular: 10
   - type: CellContainer
+    maxCells: 1
     allowTransfer: false
     allowCollection: false

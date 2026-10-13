@@ -110,7 +110,7 @@ public sealed partial class CellSystem : SharedCellSystem
                 }
                 else if (TryComp<CellContainerComponent>(args.Target.Value, out var targetComp))
                 {
-                    CopyCells(ent.Owner, (args.Target.Value, targetComp));
+                    MoveCells((args.Target.Value, targetComp), ent.Owner);
                 }
 
                 _popup.PopupEntity(Loc.GetString("cell-collector-collected"), ent, args.Args.User);
@@ -165,14 +165,11 @@ public sealed partial class CellSystem : SharedCellSystem
         var geneCount = genome?.GeneCount ?? 0;
         var stability = MathF.Max(0.1f, 1.0f - geneCount * 0.05f + _random.NextFloat(-0.03f, 0.03f));
         stability *= 1f - 0.5f * Math.Clamp(cellularDamage, 0f, 120f) / 100f;
-        var cost = GetCellCost(geneCount);
-
         return new Cell(
             prototypeId: null,
             color: color,
             name: name,
             stability: stability,
-            cost: cost,
             genome: genome);
     }
 
@@ -206,7 +203,7 @@ public sealed partial class CellSystem : SharedCellSystem
         switch (direction)
         {
             case CellCollectorDirection.Collection:
-                if (!ent.Comp2.Empty)
+                if (ent.Comp2.Cells.Count >= ent.Comp2.MaxCells)
                 {
                     if (!popup)
                         return false;
@@ -229,7 +226,8 @@ public sealed partial class CellSystem : SharedCellSystem
                         _popup.PopupEntity(Loc.GetString("cell-collector-sample-damaged"), ent, user, PopupType.SmallCaution);
                     return false;
                 }
-                if (!biological && (target.Comp is not { AllowCollection: true }))
+                if (!biological && (target.Comp is not { AllowCollection: true } ||
+                                    ent.Comp2.MaxCells - ent.Comp2.Cells.Count < target.Comp.Cells.Count))
                 {
                     if (!popup)
                         return false;
@@ -243,7 +241,8 @@ public sealed partial class CellSystem : SharedCellSystem
                 if (target.Comp == null ||
                     _entityWhitelist.IsWhitelistFail(target.Comp.ToolsTransferWhitelist, ent) ||
                     target.Comp.ToolsTransferWhitelist is null ||
-                    !target.Comp.AllowTransfer)
+                    !target.Comp.AllowTransfer ||
+                    target.Comp.MaxCells - target.Comp.Cells.Count < ent.Comp2.Cells.Count)
                     return false;
 
                 if (ent.Comp2.Empty)

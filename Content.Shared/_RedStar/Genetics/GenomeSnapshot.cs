@@ -28,6 +28,8 @@ public sealed partial class GenomeSnapshot
 
     public int GeneCount => _genes.Count;
 
+    public GenomeSnapshot Clone() => new(GenomeId, _genes);
+
     public bool SameContents(GenomeSnapshot? other) =>
         other is not null && GenomeId == other.GenomeId && _genes.Count == other._genes.Count &&
         _genes.All(entry => other._genes.TryGetValue(entry.Key, out var state) &&

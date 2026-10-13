@@ -97,8 +97,8 @@
 - type: entity
   id: CellularFusion
   parent: BaseCellProcessingMachine
-  name: cellular fusion
-  description: Combines stored genomes into new cell samples.
+  name: cell stabilizer
+  description: Improves the stability of identical stored genetic samples.
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Machines/Xenobiology/cellular_fusion.rsi

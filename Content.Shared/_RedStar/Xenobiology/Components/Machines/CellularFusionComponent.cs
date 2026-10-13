@@ -31,13 +31,16 @@ public sealed partial class CellularFusionComponent : Component
     public TimeSpan SpliceDuration;
 
     [ViewVariables]
-    public Cell? SpliceCellA;
+    public int? SpliceCellAId;
 
     [ViewVariables]
-    public Cell? SpliceCellB;
+    public int? SpliceCellBId;
 
     [ViewVariables]
     public EntityUid? SpliceDish;
+
+    [ViewVariables]
+    public EntityUid? SpliceServer;
 
     [ViewVariables]
     public int SpliceCost;
