@@ -1763,6 +1763,10 @@
   parent: MobBaseAncestor
   description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Monkey
+  # RS14-end
   - type: NameIdentifier
     group: Monkey
   - type: Speech

@@ -13,33 +13,6 @@ public sealed partial class GenomeSystem : EntitySystem
     [Dependency] private IPrototypeManager _prototypes = default!;
     [Dependency] private IRobustRandom _random = default!;
 
-    private readonly Dictionary<ProtoId<GenomePrototype>, GenomeOperationResult> _schemeValidity = [];
-
-    public override void Initialize()
-    {
-        base.Initialize();
-        ValidateSchemes();
-    }
-
-    [SubscribeLocalEvent]
-    private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
-    {
-        if (args.WasModified<GenomePrototype>() || args.WasModified<GenePrototype>())
-            ValidateSchemes();
-    }
-
-    private void ValidateSchemes()
-    {
-        _schemeValidity.Clear();
-        foreach (var scheme in _prototypes.EnumeratePrototypes<GenomePrototype>())
-        {
-            var result = ValidateScheme(scheme);
-            _schemeValidity[scheme.ID] = result;
-            if (result != GenomeOperationResult.Success)
-                Log.Error($"Invalid genome scheme {scheme.ID}: {result}");
-        }
-    }
-
     private GenomeOperationResult ValidateScheme(GenomePrototype scheme)
     {
         var seen = new HashSet<ProtoId<GenePrototype>>();
@@ -56,16 +29,44 @@ public sealed partial class GenomeSystem : EntitySystem
 
     private GenomeOperationResult CheckScheme(ProtoId<GenomePrototype> id)
     {
-        if (!_prototypes.TryIndex(id, out var scheme))
-            return GenomeOperationResult.UnknownScheme;
-        if (_schemeValidity.TryGetValue(id, out var result))
+        return !_prototypes.TryIndex(id, out var scheme) ? GenomeOperationResult.UnknownScheme : ValidateScheme(scheme);
+    }
+
+    private GenomeOperationResult ValidateGenome(ProtoId<GenomePrototype> id,
+        IReadOnlyDictionary<ProtoId<GenePrototype>, GeneState> genes)
+    {
+        var result = CheckScheme(id);
+        if (result != GenomeOperationResult.Success)
             return result;
-        return _schemeValidity[id] = ValidateScheme(scheme);
+
+        foreach (var (geneId, state) in genes)
+        {
+            if (!_prototypes.TryIndex(geneId, out var gene))
+                return GenomeOperationResult.UnknownGene;
+            if (!ValidState(state, gene))
+                return GenomeOperationResult.InvalidValue;
+        }
+
+        return GenomeOperationResult.Success;
     }
 
     [SubscribeLocalEvent]
     private void OnComponentInit(Entity<GenomeComponent> ent, ref ComponentInit args)
     {
+        if (ent.Comp.GenomeGenerated || ent.Comp.Genes.Count > 0)
+        {
+            var result = ValidateGenome(ent.Comp.GenomeId, ent.Comp.Genes);
+            if (result != GenomeOperationResult.Success)
+            {
+                Log.Error($"Invalid loaded genome for {ToPrettyString(ent)}: {result}");
+                ent.Comp.Genes = [];
+                ent.Comp.GenomeGenerated = false;
+                return;
+            }
+
+            ent.Comp.GenomeGenerated = true;
+        }
+
         // A copied entity must not share mutable gene states with its source.
         ent.Comp.Genes = ent.Comp.Genes.ToDictionary(entry => entry.Key, entry => entry.Value.Clone());
     }
@@ -76,24 +77,33 @@ public sealed partial class GenomeSystem : EntitySystem
         if (ent.Comp.GenomeGenerated)
             return;
 
-        var result = Generate(ent.Comp.GenomeId, out var genome);
-        if (result != GenomeOperationResult.Success || genome is null)
+        var result = GenerateGenes(ent.Comp.GenomeId, out var genes);
+        if (result != GenomeOperationResult.Success)
         {
             Log.Error($"Could not generate genome {ent.Comp.GenomeId} for {ToPrettyString(ent)}: {result}");
             return;
         }
 
-        Store(ent, genome.GetGenes());
+        Store(ent, genes);
     }
 
     public GenomeOperationResult Generate(ProtoId<GenomePrototype> id, out GenomeSnapshot? genome)
     {
         genome = null;
+        var result = GenerateGenes(id, out var genes);
+        if (result == GenomeOperationResult.Success)
+            genome = new GenomeSnapshot(id, genes);
+        return result;
+    }
+
+    private GenomeOperationResult GenerateGenes(ProtoId<GenomePrototype> id,
+        out Dictionary<ProtoId<GenePrototype>, GeneState> genes)
+    {
+        genes = [];
         var result = CheckScheme(id);
         if (result != GenomeOperationResult.Success)
             return result;
 
-        var genes = new Dictionary<ProtoId<GenePrototype>, GeneState>();
         foreach (var definition in _prototypes.Index(id).Genes)
         {
             if (!_random.Prob(definition.PresenceChance))
@@ -118,7 +128,6 @@ public sealed partial class GenomeSystem : EntitySystem
             genes.Add(definition.Gene, state);
         }
 
-        genome = new GenomeSnapshot(id, genes);
         return GenomeOperationResult.Success;
     }
 
@@ -237,16 +246,9 @@ public sealed partial class GenomeSystem : EntitySystem
             return GenomeOperationResult.MissingGenome;
         if (component.GenomeId != id)
             return GenomeOperationResult.IncompatibleScheme;
-        var result = CheckScheme(id);
+        var result = ValidateGenome(id, genes);
         if (result != GenomeOperationResult.Success)
             return result;
-        foreach (var (geneId, state) in genes)
-        {
-            if (!_prototypes.TryIndex(geneId, out var gene))
-                return GenomeOperationResult.UnknownGene;
-            if (!ValidState(state, gene))
-                return GenomeOperationResult.InvalidValue;
-        }
 
         if (component.GenomeGenerated && component.Genes.Count == genes.Count &&
             component.Genes.All(entry => genes.TryGetValue(entry.Key, out var state) && SameState(entry.Value, state)))

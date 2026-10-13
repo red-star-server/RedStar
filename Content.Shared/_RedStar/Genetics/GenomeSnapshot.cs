@@ -1,17 +1,23 @@
-using Content.Shared._RedStar.Genetics;
 using System.Linq;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
-namespace Content.Server._RedStar.Genetics;
+namespace Content.Shared._RedStar.Genetics;
 
 /// <summary>
 /// Independent genetic material; it never retains the donor entity.
 /// </summary>
+[DataDefinition]
+[Serializable, NetSerializable]
 public sealed partial class GenomeSnapshot
 {
-    private readonly Dictionary<ProtoId<GenePrototype>, GeneState> _genes;
+    [DataField]
+    private Dictionary<ProtoId<GenePrototype>, GeneState> _genes = [];
 
-    public ProtoId<GenomePrototype> GenomeId { get; }
+    [DataField]
+    public ProtoId<GenomePrototype> GenomeId { get; private set; }
+
+    public GenomeSnapshot() { }
 
     public GenomeSnapshot(ProtoId<GenomePrototype> genomeId,
         IReadOnlyDictionary<ProtoId<GenePrototype>, GeneState> genes)
