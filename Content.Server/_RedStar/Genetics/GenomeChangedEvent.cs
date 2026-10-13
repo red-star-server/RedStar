@@ -14,7 +14,7 @@ public enum GenomeChangeKind : byte
 /// <summary>
 /// Phenotype systems can react to genetic changes without owning genetic data.
 /// </summary>
-public sealed partial class GenomeChangedEvent(
+public sealed class GenomeChangedEvent(
     GenomeChangeKind kind,
     ProtoId<GenePrototype>? gene = null) : EntityEventArgs
 {
@@ -28,6 +28,7 @@ public enum GenomeOperationResult : byte
     MissingGenome,
     UnknownScheme,
     UnknownGene,
+    MissingGene,
     InvalidValue,
     IncompatibleScheme,
     Uninitialized

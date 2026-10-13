@@ -32,6 +32,6 @@ public sealed partial class GenomeSnapshot
         return false;
     }
 
-    public IReadOnlyDictionary<ProtoId<GenePrototype>, GeneState> GetGenes() =>
+    public Dictionary<ProtoId<GenePrototype>, GeneState> GetGenes() =>
         _genes.ToDictionary(entry => entry.Key, entry => entry.Value.Clone());
 }

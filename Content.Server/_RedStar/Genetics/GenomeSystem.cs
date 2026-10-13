@@ -6,17 +6,74 @@ using Robust.Shared.Random;
 namespace Content.Server._RedStar.Genetics;
 
 /// <summary>
-/// Owns generation, inheritance and all mutations of an organism's genome.
+/// Owns generation, inheritance and all changes to an organism's genome.
 /// </summary>
 public sealed partial class GenomeSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototypes = default!;
     [Dependency] private IRobustRandom _random = default!;
 
+    private readonly Dictionary<ProtoId<GenomePrototype>, GenomeOperationResult> _schemeValidity = [];
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        ValidateSchemes();
+    }
+
+    [SubscribeLocalEvent]
+    private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
+    {
+        if (args.WasModified<GenomePrototype>() || args.WasModified<GenePrototype>())
+            ValidateSchemes();
+    }
+
+    private void ValidateSchemes()
+    {
+        _schemeValidity.Clear();
+        foreach (var scheme in _prototypes.EnumeratePrototypes<GenomePrototype>())
+        {
+            var result = ValidateScheme(scheme);
+            _schemeValidity[scheme.ID] = result;
+            if (result != GenomeOperationResult.Success)
+                Log.Error($"Invalid genome scheme {scheme.ID}: {result}");
+        }
+    }
+
+    private GenomeOperationResult ValidateScheme(GenomePrototype scheme)
+    {
+        var seen = new HashSet<ProtoId<GenePrototype>>();
+        foreach (var definition in scheme.Genes)
+        {
+            if (!_prototypes.TryIndex(definition.Gene, out var gene))
+                return GenomeOperationResult.UnknownGene;
+            if (!seen.Add(definition.Gene) || !ValidDefinition(definition, gene))
+                return GenomeOperationResult.InvalidValue;
+        }
+
+        return GenomeOperationResult.Success;
+    }
+
+    private GenomeOperationResult CheckScheme(ProtoId<GenomePrototype> id)
+    {
+        if (!_prototypes.TryIndex(id, out var scheme))
+            return GenomeOperationResult.UnknownScheme;
+        if (_schemeValidity.TryGetValue(id, out var result))
+            return result;
+        return _schemeValidity[id] = ValidateScheme(scheme);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnComponentInit(Entity<GenomeComponent> ent, ref ComponentInit args)
+    {
+        // A copied entity must not share mutable gene states with its source.
+        ent.Comp.Genes = ent.Comp.Genes.ToDictionary(entry => entry.Key, entry => entry.Value.Clone());
+    }
+
     [SubscribeLocalEvent]
     private void OnMapInit(Entity<GenomeComponent> ent, ref MapInitEvent args)
     {
-        if (ent.Comp.Initialized)
+        if (ent.Comp.GenomeGenerated)
             return;
 
         var result = Generate(ent.Comp.GenomeId, out var genome);
@@ -26,24 +83,24 @@ public sealed partial class GenomeSystem : EntitySystem
             return;
         }
 
-        Store(ent, genome, true);
+        Store(ent, genome.GetGenes());
     }
 
     public GenomeOperationResult Generate(ProtoId<GenomePrototype> id, out GenomeSnapshot? genome)
     {
         genome = null;
-        if (!_prototypes.TryIndex(id, out var scheme))
-            return GenomeOperationResult.UnknownScheme;
+        var result = CheckScheme(id);
+        if (result != GenomeOperationResult.Success)
+            return result;
 
         var genes = new Dictionary<ProtoId<GenePrototype>, GeneState>();
-        foreach (var definition in scheme.Genes)
+        foreach (var definition in _prototypes.Index(id).Genes)
         {
-            if (!_prototypes.TryIndex(definition.Gene, out var gene))
-                return GenomeOperationResult.UnknownGene;
-            if (genes.ContainsKey(definition.Gene) || !ValidDefinition(definition, gene))
-                return GenomeOperationResult.InvalidValue;
+            if (!_random.Prob(definition.PresenceChance))
+                continue;
 
-            var state = new GeneState { Present = _random.Prob(definition.PresenceChance) };
+            var gene = _prototypes.Index(definition.Gene);
+            var state = new GeneState();
             switch (gene.Kind)
             {
                 case GeneKind.Allele:
@@ -85,65 +142,73 @@ public sealed partial class GenomeSystem : EntitySystem
         };
     }
 
+    private GenomeOperationResult GetComponent(EntityUid uid, out GenomeComponent? component)
+    {
+        if (!TryComp(uid, out component))
+            return GenomeOperationResult.MissingGenome;
+        return component.GenomeGenerated ? GenomeOperationResult.Success : GenomeOperationResult.Uninitialized;
+    }
+
+    private GenomeOperationResult GetWritableComponent(EntityUid uid, out GenomeComponent? component)
+    {
+        var result = GetComponent(uid, out component);
+        return result == GenomeOperationResult.Success ? CheckScheme(component!.GenomeId) : result;
+    }
+
     public bool TryGetSnapshot(EntityUid uid, out GenomeSnapshot? snapshot)
     {
         snapshot = null;
-        if (!TryComp<GenomeComponent>(uid, out var component) || !component.Initialized)
+        if (GetComponent(uid, out var component) != GenomeOperationResult.Success)
             return false;
 
-        snapshot = new GenomeSnapshot(component.GenomeId, component.Genes);
+        snapshot = new GenomeSnapshot(component!.GenomeId, component.Genes);
         return true;
     }
 
-    public bool TryGetGene(EntityUid uid, ProtoId<GenePrototype> gene, out GeneState? state)
+    public bool TryGetGene(EntityUid uid, ProtoId<GenePrototype> id, out GeneState? state)
     {
         state = null;
-        if (!TryComp<GenomeComponent>(uid, out var component) || !component.Initialized ||
-            !component.Genes.TryGetValue(gene, out var stored))
+        if (GetComponent(uid, out var component) != GenomeOperationResult.Success ||
+            !component!.Genes.TryGetValue(id, out var stored))
             return false;
 
         state = stored.Clone();
         return true;
     }
 
-    public bool HasGene(EntityUid uid, ProtoId<GenePrototype> gene) =>
-        TryGetGene(uid, gene, out var state) && state!.Present;
+    public bool HasGene(EntityUid uid, ProtoId<GenePrototype> id) =>
+        GetComponent(uid, out var component) == GenomeOperationResult.Success && component!.Genes.ContainsKey(id);
 
     public GenomeOperationResult SetGene(EntityUid uid, ProtoId<GenePrototype> id, GeneState state)
     {
-        if (!TryComp<GenomeComponent>(uid, out var component))
-            return GenomeOperationResult.MissingGenome;
-        if (!component.Initialized)
-            return GenomeOperationResult.Uninitialized;
-        if (!_prototypes.TryIndex(component.GenomeId, out var scheme))
-            return GenomeOperationResult.UnknownScheme;
-        if (!_prototypes.TryIndex(id, out var gene) || scheme.Genes.All(definition => definition.Gene != id))
+        var result = GetWritableComponent(uid, out var component);
+        if (result != GenomeOperationResult.Success)
+            return result;
+        if (!_prototypes.TryIndex(id, out var gene))
             return GenomeOperationResult.UnknownGene;
         if (!ValidState(state, gene))
             return GenomeOperationResult.InvalidValue;
-
-        var existed = component.Genes.TryGetValue(id, out var old);
-        if (existed && old!.Present == state.Present && old.Allele == state.Allele && old.Number == state.Number)
+        if (component!.Genes.TryGetValue(id, out var old) && SameState(old, state))
             return GenomeOperationResult.Success;
 
+        var kind = component.Genes.ContainsKey(id) ? GenomeChangeKind.Changed : GenomeChangeKind.Added;
         component.Genes[id] = state.Clone();
-        var kind = !existed || !old!.Present && state.Present
-            ? GenomeChangeKind.Added
-            : old.Present && !state.Present ? GenomeChangeKind.Removed : GenomeChangeKind.Changed;
         RaiseLocalEvent(uid, new GenomeChangedEvent(kind, id));
         return GenomeOperationResult.Success;
     }
 
     public GenomeOperationResult RemoveGene(EntityUid uid, ProtoId<GenePrototype> id)
     {
-        if (!TryComp<GenomeComponent>(uid, out var component))
-            return GenomeOperationResult.MissingGenome;
-        if (!component.Initialized)
-            return GenomeOperationResult.Uninitialized;
-        if (!TryGetGene(uid, id, out var state))
+        var result = GetWritableComponent(uid, out var component);
+        if (result != GenomeOperationResult.Success)
+            return result;
+        if (!_prototypes.HasIndex(id))
             return GenomeOperationResult.UnknownGene;
-        state!.Present = false;
-        return SetGene(uid, id, state);
+        if (!component!.Genes.Remove(id))
+            return GenomeOperationResult.Success;
+
+        RaiseLocalEvent(uid, new GenomeChangedEvent(GenomeChangeKind.Removed, id));
+        return GenomeOperationResult.Success;
     }
 
     private static bool ValidState(GeneState state, GenePrototype gene) => gene.Kind switch
@@ -155,106 +220,128 @@ public sealed partial class GenomeSystem : EntitySystem
         _ => false
     };
 
-    public GenomeOperationResult ReplaceGenome(EntityUid uid, GenomeSnapshot snapshot)
+    private static bool SameState(GeneState first, GeneState second) =>
+        first.Allele == second.Allele && first.Number == second.Number;
+
+    /// <summary>
+    /// Replaces a complete genome only when the donor and recipient use the same scheme.
+    /// Individual genes may come from outside that scheme.
+    /// </summary>
+    public GenomeOperationResult ReplaceGenome(EntityUid uid, GenomeSnapshot snapshot) =>
+        ReplaceGenome(uid, snapshot.GenomeId, snapshot.GetGenes());
+
+    private GenomeOperationResult ReplaceGenome(EntityUid uid, ProtoId<GenomePrototype> id,
+        Dictionary<ProtoId<GenePrototype>, GeneState> genes)
     {
         if (!TryComp<GenomeComponent>(uid, out var component))
             return GenomeOperationResult.MissingGenome;
-        if (!Compatible(component.GenomeId, snapshot.GenomeId))
+        if (component.GenomeId != id)
             return GenomeOperationResult.IncompatibleScheme;
-        if (!_prototypes.TryIndex(component.GenomeId, out var target))
-            return GenomeOperationResult.UnknownScheme;
-
-        var incoming = snapshot.GetGenes();
-        if (incoming.Count != target.Genes.Count)
-            return GenomeOperationResult.InvalidValue;
-        foreach (var definition in target.Genes)
+        var result = CheckScheme(id);
+        if (result != GenomeOperationResult.Success)
+            return result;
+        foreach (var (geneId, state) in genes)
         {
-            if (!incoming.TryGetValue(definition.Gene, out var state) ||
-                !_prototypes.TryIndex(definition.Gene, out var gene) || !ValidState(state, gene))
+            if (!_prototypes.TryIndex(geneId, out var gene))
+                return GenomeOperationResult.UnknownGene;
+            if (!ValidState(state, gene))
                 return GenomeOperationResult.InvalidValue;
         }
 
-        Store((uid, component), snapshot, true);
+        if (component.GenomeGenerated && component.Genes.Count == genes.Count &&
+            component.Genes.All(entry => genes.TryGetValue(entry.Key, out var state) && SameState(entry.Value, state)))
+            return GenomeOperationResult.Success;
+
+        Store((uid, component), genes);
         return GenomeOperationResult.Success;
     }
 
-    private void Store(Entity<GenomeComponent> ent, GenomeSnapshot snapshot, bool notify)
+    private void Store(Entity<GenomeComponent> ent, Dictionary<ProtoId<GenePrototype>, GeneState> genes)
     {
-        ent.Comp.Genes = snapshot.GetGenes().ToDictionary(entry => entry.Key, entry => entry.Value);
-        ent.Comp.Initialized = true;
-        if (notify)
-            RaiseLocalEvent(ent.Owner, new GenomeChangedEvent(GenomeChangeKind.Replaced));
-    }
-
-    public bool Compatible(ProtoId<GenomePrototype> first, ProtoId<GenomePrototype> second)
-    {
-        if (!_prototypes.TryIndex(first, out var a) || !_prototypes.TryIndex(second, out var b))
-            return false;
-        return first == second || a.Compatibility is { Length: > 0 } key && key == b.Compatibility;
+        ent.Comp.Genes = genes;
+        ent.Comp.GenomeGenerated = true;
+        RaiseLocalEvent(ent.Owner, new GenomeChangedEvent(GenomeChangeKind.Replaced));
     }
 
     public GenomeOperationResult CopyGenome(EntityUid source, EntityUid target)
     {
-        if (!TryComp<GenomeComponent>(source, out var component))
-            return GenomeOperationResult.MissingGenome;
-        if (!component.Initialized)
-            return GenomeOperationResult.Uninitialized;
-        return !TryGetSnapshot(source, out var snapshot) ? GenomeOperationResult.MissingGenome : ReplaceGenome(target, snapshot!);
+        var result = GetComponent(source, out var component);
+        return result == GenomeOperationResult.Success
+            ? ReplaceGenome(target, component!.GenomeId,
+                component.Genes.ToDictionary(entry => entry.Key, entry => entry.Value.Clone()))
+            : result;
     }
 
+    /// <summary>
+    /// Each gene is independently taken from one parent; an absent parental gene stays absent
+    /// when that parent is selected. Foreign genes follow the same rule.
+    /// </summary>
     public GenomeOperationResult CreateOffspring(GenomeSnapshot first, GenomeSnapshot second,
         ProtoId<GenomePrototype> childId, out GenomeSnapshot? child)
     {
         child = null;
-        if (!_prototypes.HasIndex(first.GenomeId) || !_prototypes.HasIndex(second.GenomeId) ||
-            !_prototypes.HasIndex(childId))
-            return GenomeOperationResult.UnknownScheme;
-        if (!Compatible(first.GenomeId, second.GenomeId) || !Compatible(first.GenomeId, childId))
+        if (first.GenomeId != second.GenomeId || first.GenomeId != childId)
             return GenomeOperationResult.IncompatibleScheme;
-        var result = Generate(childId, out var generated);
+        var result = CheckScheme(childId);
         if (result != GenomeOperationResult.Success)
             return result;
 
-        var genes = generated!.GetGenes().ToDictionary(entry => entry.Key, entry => entry.Value);
-        foreach (var id in genes.Keys.ToArray())
+        var firstGenes = first.GetGenes();
+        var secondGenes = second.GetGenes();
+        var genes = new Dictionary<ProtoId<GenePrototype>, GeneState>();
+        foreach (var id in firstGenes.Keys.Concat(secondGenes.Keys).Distinct())
         {
-            if (first.TryGetGene(id, out var a) && second.TryGetGene(id, out var b))
-                genes[id] = (_random.Prob(0.5f) ? a : b)!.Clone();
+            firstGenes.TryGetValue(id, out var a);
+            secondGenes.TryGetValue(id, out var b);
+            if (!_prototypes.TryIndex(id, out var gene))
+                return GenomeOperationResult.UnknownGene;
+            if (a is not null && !ValidState(a, gene) || b is not null && !ValidState(b, gene))
+                return GenomeOperationResult.InvalidValue;
+
+            if ((_random.Prob(0.5f) ? a : b) is { } inherited)
+                genes.Add(id, inherited);
         }
 
         child = new GenomeSnapshot(childId, genes);
         return GenomeOperationResult.Success;
     }
 
+    /// <summary>
+    /// Toggles a presence gene or changes the value of a present allele or number gene.
+    /// Valued genes must be added explicitly before they can mutate.
+    /// </summary>
     public GenomeOperationResult MutateGene(EntityUid uid, ProtoId<GenePrototype> id)
     {
-        if (!TryComp<GenomeComponent>(uid, out var component))
-            return GenomeOperationResult.MissingGenome;
-        if (!component.Initialized)
-            return GenomeOperationResult.Uninitialized;
-        if (!TryGetGene(uid, id, out var state) || !_prototypes.TryIndex(id, out var gene))
+        var result = GetWritableComponent(uid, out var component);
+        if (result != GenomeOperationResult.Success)
+            return result;
+        if (!_prototypes.TryIndex(id, out var gene))
             return GenomeOperationResult.UnknownGene;
+        if (gene.Kind == GeneKind.Presence)
+            return component!.Genes.ContainsKey(id) ? RemoveGene(uid, id) : SetGene(uid, id, new GeneState());
+        if (!component!.Genes.TryGetValue(id, out var stored))
+            return GenomeOperationResult.MissingGene;
+        if (!ValidState(stored, gene))
+            return GenomeOperationResult.InvalidValue;
 
+        var state = stored.Clone();
         switch (gene.Kind)
         {
-            case GeneKind.Presence:
-                state!.Present = !state.Present;
-                break;
             case GeneKind.Allele:
-                var alternatives = gene.Alleles.Where(allele => allele != state!.Allele).ToArray();
+                var alternatives = gene.Alleles.Where(allele => allele != state.Allele).ToArray();
                 if (alternatives.Length == 0)
                     return GenomeOperationResult.InvalidValue;
-                state!.Allele = alternatives[_random.Next(alternatives.Length)];
+                state.Allele = alternatives[_random.Next(alternatives.Length)];
                 break;
             case GeneKind.Number:
                 if (gene.Minimum == gene.Maximum)
                     return GenomeOperationResult.InvalidValue;
-                var value = state!.Number!.Value;
+                var value = state.Number!.Value;
                 state.Number = value == gene.Minimum ? value + 1 : value == gene.Maximum ? value - 1 :
                     value + (_random.Prob(0.5f) ? 1 : -1);
                 break;
         }
 
-        return SetGene(uid, id, state!);
+        return SetGene(uid, id, state);
     }
 }
