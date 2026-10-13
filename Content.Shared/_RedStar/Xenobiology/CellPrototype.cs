@@ -22,7 +22,7 @@ public sealed partial class CellPrototype : IPrototype
     public int Cost = 5;
 
     [DataField]
-    public ProtoId<GenomePrototype> GenomeId = "Xenobiology";
+    public ProtoId<GenomePrototype> GenomeId = "LaboratorySample";
 
     [DataField]
     public Dictionary<ProtoId<GenePrototype>, GeneState> Genes = [];

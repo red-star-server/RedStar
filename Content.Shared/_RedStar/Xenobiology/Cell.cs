@@ -1,9 +1,7 @@
-using System.Linq;
 using Content.Shared._RedStar.Genetics;
 using Content.Shared._RedStar.Xenobiology.Components.Container;
 using Content.Shared._RedStar.Xenobiology.Systems;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared._RedStar.Xenobiology;
 
@@ -21,7 +19,6 @@ namespace Content.Shared._RedStar.Xenobiology;
 /// <seealso cref="CellContainerComponent"/>
 /// <seealso cref="SharedCellSystem"/>
 [DataDefinition]
-[Serializable, NetSerializable]
 public sealed partial class Cell
 {
     /// <summary>
@@ -64,9 +61,9 @@ public sealed partial class Cell
     public int Cost { get; private set; }
 
     /// <summary>
-    /// Genetic material is kept on the server; networked laboratory views contain no gene identifiers.
+    /// Genetic material is stored with the sample on the server.
     /// </summary>
-    [DataField, NonSerialized]
+    [DataField]
     private GenomeSnapshot? _genome;
 
     [DataField, ViewVariables]
@@ -86,7 +83,7 @@ public sealed partial class Cell
         Stability = stability;
         Cost = cost;
         _genome = genome is null ? null : new GenomeSnapshot(genome.GenomeId, genome.GetGenes());
-        GeneCount = genome?.GetGenes().Count ?? 0;
+        GeneCount = genome?.GeneCount ?? 0;
         HasGenome = genome is not null;
     }
 
@@ -114,11 +111,6 @@ public sealed partial class Cell
     {
         if (first is null || second is null)
             return first is null && second is null;
-        if (first.GenomeId != second.GenomeId)
-            return false;
-        var a = first.GetGenes();
-        var b = second.GetGenes();
-        return a.Count == b.Count && a.All(entry => b.TryGetValue(entry.Key, out var state) &&
-            entry.Value.Allele == state.Allele && entry.Value.Number == state.Number);
+        return first.SameContents(second);
     }
 }

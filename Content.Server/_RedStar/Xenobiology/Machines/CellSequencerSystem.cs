@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server._RedStar.Xenobiology.Events;
 using Content.Shared._RedStar.Xenobiology.Components.Container;
 using Content.Shared._RedStar.Xenobiology.Components.Machines;
@@ -180,8 +181,8 @@ public sealed partial class CellSequencerSystem : EntitySystem
         var hasDish = TryGetDish(ent, out var dish);
         var material = _materialStorage.GetMaterialAmount(ent.Owner, ent.Comp.RequiredMaterial);
         var state = new CellSequencerUiState(
-            hasDish ? dish.Comp.Cells.ToArray() : [],
-            database?.Comp.Cells.ToArray() ?? [],
+            hasDish ? dish.Comp.Cells.Select(cell => new CellView(cell)).ToArray() : [],
+            database?.Comp.Cells.Select(entry => new CellEntryView(entry.Id, entry.Cell)).ToArray() ?? [],
             material,
             hasDish,
             hasDish ? dish.Comp.Revision : -1,

@@ -429,10 +429,7 @@
     - Energy
   # RS14-start
   - type: Genome
-    genomeId: Xenobiology
-    genomeGenerated: true
-    genes:
-      Reflection: {}
+    genomeId: Basilisk
   # RS14-end
   - type: ToolRefinable
     refineResult:

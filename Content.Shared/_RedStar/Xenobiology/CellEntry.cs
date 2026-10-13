@@ -1,9 +1,6 @@
-using Robust.Shared.Serialization;
-
 namespace Content.Shared._RedStar.Xenobiology;
 
 [DataDefinition]
-[Serializable, NetSerializable]
 public partial struct CellEntry
 {
     [DataField]

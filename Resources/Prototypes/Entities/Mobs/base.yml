@@ -296,8 +296,5 @@
     lightingColor: '#FFFFFF15' # Basically makes it impossible for things to be "Pitch black" but can still be dark.
   # RS14-start
   - type: Genome
-    genomeId: Xenobiology
-    genomeGenerated: true
-    genes:
-      NightVision: {}
+    genomeId: NocturnalAnimal
   # RS14-end

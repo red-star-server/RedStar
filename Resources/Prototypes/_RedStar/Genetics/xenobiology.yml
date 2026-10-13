@@ -69,40 +69,68 @@
   kind: Presence
 
 - type: genome
-  id: Xenobiology
+  id: LaboratorySample
+
+- type: genome
+  id: NocturnalAnimal
   genes:
-  - gene: Pacifism
-    presenceChance: 0
-  - gene: OwO
-    presenceChance: 0
   - gene: NightVision
-    presenceChance: 0
+
+- type: genome
+  id: Fowl
+  genes:
   - gene: EggLayer
-    presenceChance: 0
+
+- type: genome
+  id: Bovine
+  genes:
   - gene: Lactation
-    presenceChance: 0
-  - gene: Venomous
-    presenceChance: 0
-  - gene: WebSpinning
-    presenceChance: 0
-  - gene: Regeneration
-    presenceChance: 0
-  - gene: NoSlip
-    presenceChance: 0
-  - gene: Reflection
-    presenceChance: 0
-  - gene: Invisibility
-    presenceChance: 0
-  - gene: Radiation
-    presenceChance: 0
-  - gene: Reform
-    presenceChance: 0
-  - gene: MessyDrinker
-    presenceChance: 0
-  - gene: ParrotSpeech
-    presenceChance: 0
+
+- type: genome
+  id: Caprine
+  genes:
+  - gene: Lactation
   - gene: Bleating
-    presenceChance: 0
+
+- type: genome
+  id: IrradiatedRodent
+  genes:
+  - gene: NightVision
+  - gene: Radiation
+
+- type: genome
+  id: Parrot
+  genes:
+  - gene: ParrotSpeech
+
+- type: genome
+  id: Canid
+  genes:
+  - gene: MessyDrinker
+
+- type: genome
+  id: DionaNymph
+  genes:
+  - gene: Reform
+
+- type: genome
+  id: Basilisk
+  genes:
+  - gene: Reflection
+
+- type: genome
+  id: SpaceSpider
+  genes:
+  - gene: NightVision
+  - gene: NoSlip
+  - gene: Venomous
+
+- type: genome
+  id: SpaceCobra
+  genes:
+  - gene: Invisibility
+  - gene: NightVision
+  - gene: Venomous
 
 - type: genome
   id: Human

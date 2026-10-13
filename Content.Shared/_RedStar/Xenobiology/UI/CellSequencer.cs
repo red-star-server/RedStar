@@ -10,16 +10,16 @@ public enum CellSequencerUiKey
 
 [Serializable, NetSerializable]
 public sealed class CellSequencerUiState(
-    Cell[] insideCell,
-    CellEntry[] remoteCells,
+    CellView[] insideCell,
+    CellEntryView[] remoteCells,
     int material,
     bool hasContainer,
     int dishRevision,
     NetEntity? dish)
     : BoundUserInterfaceState
 {
-    public readonly Cell[] InsideCells = insideCell;
-    public readonly CellEntry[] RemoteCells = remoteCells;
+    public readonly CellView[] InsideCells = insideCell;
+    public readonly CellEntryView[] RemoteCells = remoteCells;
     public bool Connected;
     public readonly int Material = material;
     public readonly bool HasContainer = hasContainer;

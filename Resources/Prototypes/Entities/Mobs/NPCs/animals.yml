@@ -278,10 +278,7 @@
     othersPopup: action-popup-lay-egg-others
   # RS14-start
   - type: Genome
-    genomeId: Xenobiology
-    genomeGenerated: true
-    genes:
-      EggLayer: {}
+    genomeId: Fowl
   # RS14-end
   - type: SatiationProduction
     delay: 60
@@ -754,10 +751,7 @@
     othersPopup: action-popup-lay-egg-others
   # RS14-start
   - type: Genome
-    genomeId: Xenobiology
-    genomeGenerated: true
-    genes:
-      EggLayer: {}
+    genomeId: Fowl
   # RS14-end
   - type: SatiationProduction
     delay: 60
@@ -961,10 +955,7 @@
     successMessage: udder-system-success
   # RS14-start
   - type: Genome
-    genomeId: Xenobiology
-    genomeGenerated: true
-    genes:
-      Lactation: {}
+    genomeId: Bovine
   # RS14-end
   - type: ToolRefinable
     refineResult:
@@ -1141,11 +1132,7 @@
     successMessage: udder-system-success
   # RS14-start
   - type: Genome
-    genomeId: Xenobiology
-    genomeGenerated: true
-    genes:
-      Lactation: {}
-      Bleating: {}
+    genomeId: Caprine
   # RS14-end
   - type: Edible
     destroyOnEmpty: false
@@ -1293,11 +1280,7 @@
     successMessage: udder-system-success
   # RS14-start
   - type: Genome
-    genomeId: Xenobiology
-    genomeGenerated: true
-    genes:
-      Lactation: {}
-      Bleating: {}
+    genomeId: Caprine
   # RS14-end
   - type: Shearable
     targetSolutionName: wool
@@ -2290,11 +2273,7 @@
     slope: 0.3
   # RS14-start
   - type: Genome
-    genomeId: Xenobiology
-    genomeGenerated: true
-    genes:
-      NightVision: {}
-      Radiation: {}
+    genomeId: IrradiatedRodent
   # RS14-end
   - type: Bloodstream
     bloodReferenceSolution:
@@ -2547,10 +2526,7 @@
   - type: ParrotMemory
   # RS14-start
   - type: Genome
-    genomeId: Xenobiology
-    genomeGenerated: true
-    genes:
-      ParrotSpeech: {}
+    genomeId: Parrot
   # RS14-end
   - type: Inventory
     templateId: parrot
@@ -2980,10 +2956,7 @@
   - type: MessyDrinker
   # RS14-start
   - type: Genome
-    genomeId: Xenobiology
-    genomeGenerated: true
-    genes:
-      MessyDrinker: {}
+    genomeId: Canid
   # RS14-end
   - type: Tag
     tags:
@@ -3055,10 +3028,7 @@
   - type: MessyDrinker
   # RS14-start
   - type: Genome
-    genomeId: Xenobiology
-    genomeGenerated: true
-    genes:
-      MessyDrinker: {}
+    genomeId: Canid
   # RS14-end
   # TODO: Fix the sprite offset
   #- type: CreamPied
@@ -3838,10 +3808,7 @@
     reformPrototype: MobDionaReformed
   # RS14-start
   - type: Genome
-    genomeId: Xenobiology
-    genomeGenerated: true
-    genes:
-      Reform: {}
+    genomeId: DionaNymph
   # RS14-end
   - type: TTS # Corvax-TTS
     #voice: Omu

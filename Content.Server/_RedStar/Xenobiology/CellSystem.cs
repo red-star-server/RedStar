@@ -103,10 +103,7 @@ public sealed partial class CellSystem : SharedCellSystem
                     var source = args.Target.Value;
                     var damage = GetCellularDamage(source);
                     _genomes.TryGetSnapshot(source, out var genome);
-                    var sample = GenerateRandomCell(genome);
-                    var stability = sample.Stability * (1f - 0.5f * Math.Clamp(damage, 0f, 120f) / 100f);
-                    AddCell(ent.Owner, new Cell(sample.PrototypeId, sample.Color, sample.Name,
-                        stability, sample.Cost, genome));
+                    AddCell(ent.Owner, GenerateRandomCell(genome, damage));
 
                     if (ent.Comp.Damage is not null)
                         _damageable.TryChangeDamage(source, ent.Comp.Damage);
@@ -154,7 +151,7 @@ public sealed partial class CellSystem : SharedCellSystem
     /// <summary>
     /// Creates a fresh laboratory sample from the organism's current genome.
     /// </summary>
-    private Cell GenerateRandomCell(GenomeSnapshot? genome)
+    private Cell GenerateRandomCell(GenomeSnapshot? genome, float cellularDamage)
     {
         var prefix = _random.Pick(_prototypes.Index(CellPrefixes));
         var suffix = _random.Pick(_prototypes.Index(CellSuffixes));
@@ -165,8 +162,9 @@ public sealed partial class CellSystem : SharedCellSystem
             _random.NextFloat(),
             _random.NextFloat());
 
-        var geneCount = genome?.GetGenes().Count ?? 0;
+        var geneCount = genome?.GeneCount ?? 0;
         var stability = MathF.Max(0.1f, 1.0f - geneCount * 0.05f + _random.NextFloat(-0.03f, 0.03f));
+        stability *= 1f - 0.5f * Math.Clamp(cellularDamage, 0f, 120f) / 100f;
         var cost = GetCellCost(geneCount);
 
         return new Cell(

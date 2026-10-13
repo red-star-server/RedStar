@@ -17,20 +17,20 @@ public sealed class CellularFusionUiSpliceMessage(int cellAId, int cellBId) : Bo
 
 [Serializable, NetSerializable]
 public sealed class CellularFusionUiState(
-    CellEntry[] remoteCells,
+    CellEntryView[] remoteCells,
     int material,
     int spliceCost = 0,
     bool spliceInProgress = false,
     double spliceDuration = 0,
     double spliceRemaining = 0,
-    Cell? lastResult = null)
+    CellView? lastResult = null)
     : BoundUserInterfaceState
 {
-    public readonly CellEntry[] RemoteCells = remoteCells;
+    public readonly CellEntryView[] RemoteCells = remoteCells;
     public readonly int Material = material;
     public readonly int SpliceCost = spliceCost;
     public readonly bool SpliceInProgress = spliceInProgress;
     public readonly double SpliceDuration = spliceDuration;
     public readonly double SpliceRemaining = spliceRemaining;
-    public readonly Cell? LastResult = lastResult;
+    public readonly CellView? LastResult = lastResult;
 }

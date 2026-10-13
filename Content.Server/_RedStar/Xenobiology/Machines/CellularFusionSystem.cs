@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server._RedStar.Genetics;
 using Content.Server._RedStar.Xenobiology.Events;
 using Content.Server.Power.EntitySystems;
@@ -204,7 +205,7 @@ public sealed partial class CellularFusionSystem : EntitySystem
             color: SharedCellSystem.GetMergedColor(cellA, cellB),
             name: SharedCellSystem.GetMergedName(cellA, cellB),
             stability: SharedCellSystem.GetMergedStability(cellA, cellB),
-            cost: SharedCellSystem.GetCellCost(genome.GetGenes().Count),
+            cost: SharedCellSystem.GetCellCost(genome.GeneCount),
             genome: genome);
 
         _cell.AddCell((dishUid, dishContainer), result);
@@ -240,13 +241,13 @@ public sealed partial class CellularFusionSystem : EntitySystem
             ? Math.Max(0, (endTime - _timing.CurTime).TotalSeconds)
             : 0;
         var state = new CellularFusionUiState(
-            serverEnt?.Comp.Cells.ToArray() ?? [],
+            serverEnt?.Comp.Cells.Select(entry => new CellEntryView(entry.Id, entry.Cell)).ToArray() ?? [],
             Math.Max(0, material - ent.Comp.SpliceCost),
             ent.Comp.SpliceCost,
             ent.Comp.SpliceInProgress,
             ent.Comp.SpliceDuration.TotalSeconds,
             remaining,
-            lastResult);
+            lastResult is null ? null : new CellView(lastResult));
         _userInterface.SetUiState(ent.Owner, CellularFusionUiKey.Key, state);
     }
 }

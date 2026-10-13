@@ -26,6 +26,13 @@ public sealed partial class GenomeSnapshot
         _genes = genes.ToDictionary(entry => entry.Key, entry => entry.Value.Clone());
     }
 
+    public int GeneCount => _genes.Count;
+
+    public bool SameContents(GenomeSnapshot? other) =>
+        other is not null && GenomeId == other.GenomeId && _genes.Count == other._genes.Count &&
+        _genes.All(entry => other._genes.TryGetValue(entry.Key, out var state) &&
+            entry.Value.Allele == state.Allele && entry.Value.Number == state.Number);
+
     public bool TryGetGene(ProtoId<GenePrototype> id, out GeneState? state)
     {
         if (_genes.TryGetValue(id, out var stored))

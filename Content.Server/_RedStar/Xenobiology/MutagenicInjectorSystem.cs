@@ -1,4 +1,5 @@
 using Content.Server._RedStar.Genetics;
+using Content.Shared._RedStar.Genetics;
 using Content.Server.Power.EntitySystems;
 using Content.Shared._RedStar.Xenobiology.Components.Container;
 using Content.Shared._RedStar.Xenobiology.Components.Machines;
@@ -132,36 +133,49 @@ public sealed partial class MutagenicInjectorSystem : SharedMutagenicInjectorSys
         if (subject is not { } mob || dish is not { } dishUid ||
             !TryComp<CellContainerComponent>(dishUid, out var dishContainer) ||
             dishContainer.Revision != ent.Comp.InjectionDishRevision || dishContainer.Empty ||
-            !IsValidRecipient(mob))
+            !IsValidRecipient(mob) || !_genomes.TryGetSnapshot(mob, out var recipient) || recipient is null)
         {
             CancelInjection(ent);
             return;
         }
 
-        var samples = dishContainer.Cells.ToArray();
-        foreach (var sample in samples)
+        var samples = new List<(GenomeSnapshot Genome, float Stability)>();
+        foreach (var sample in dishContainer.Cells)
         {
+            if (!sample.HasGenome)
+                continue;
             if (sample.GetGenome() is not { } genome ||
-                _genomes.ValidateSnapshot(genome) == GenomeOperationResult.Success)
-                continue;
+                _genomes.ValidateSnapshot(genome) != GenomeOperationResult.Success)
+            {
+                CancelInjection(ent);
+                return;
+            }
+            samples.Add((genome, sample.Stability));
+        }
 
+        if (samples.Count == 0)
+        {
             CancelInjection(ent);
             return;
         }
 
+        var genes = recipient.GetGenes();
         var transferred = 0;
-        foreach (var sample in samples)
+        foreach (var (genome, stability) in samples)
         {
-            if (sample.GetGenome() is not { } genome)
-                continue;
-
             foreach (var (id, state) in genome.GetGenes())
             {
-                if (!_random.Prob(Math.Clamp(sample.Stability, 0f, 1f)))
+                if (!_random.Prob(Math.Clamp(stability, 0f, 1f)))
                     continue;
-                if (_genomes.SetGene(mob, id, state) == GenomeOperationResult.Success)
-                    transferred++;
+                genes[id] = state;
+                transferred++;
             }
+        }
+
+        if (_genomes.ReplaceGenome(mob, new GenomeSnapshot(recipient.GenomeId, genes)) != GenomeOperationResult.Success)
+        {
+            CancelInjection(ent);
+            return;
         }
 
         _cell.ClearCells((dishUid, dishContainer));

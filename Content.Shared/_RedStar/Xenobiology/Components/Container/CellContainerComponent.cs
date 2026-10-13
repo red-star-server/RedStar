@@ -1,9 +1,8 @@
 using Content.Shared.Whitelist;
-using Robust.Shared.GameStates;
 
 namespace Content.Shared._RedStar.Xenobiology.Components.Container;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent]
 public sealed partial class CellContainerComponent : Component
 {
     [ViewVariables]
@@ -12,7 +11,7 @@ public sealed partial class CellContainerComponent : Component
     /// <summary>
     /// Current contents of the container.
     /// </summary>
-    [ViewVariables, AutoNetworkedField]
+    [DataField, ViewVariables]
     public List<Cell> Cells = [];
 
     /// <summary>

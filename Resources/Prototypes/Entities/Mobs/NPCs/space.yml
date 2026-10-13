@@ -261,12 +261,7 @@
   - type: IgnoreSpiderWeb
   # RS14-start
   - type: Genome
-    genomeId: Xenobiology
-    genomeGenerated: true
-    genes:
-      NightVision: {}
-      NoSlip: {}
-      Venomous: {}
+    genomeId: SpaceSpider
   # RS14-end
   - type: Speech
     speechVerb: Arachnid
@@ -385,12 +380,7 @@
       movementVisibilityRate: 0.25
   # RS14-start
     - type: Genome
-      genomeId: Xenobiology
-      genomeGenerated: true
-      genes:
-        Invisibility: {}
-        NightVision: {}
-        Venomous: {}
+      genomeId: SpaceCobra
   # RS14-end
 
 - type: entity
