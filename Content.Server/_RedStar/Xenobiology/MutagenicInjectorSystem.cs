@@ -12,6 +12,7 @@ using Content.Shared.Power;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Server._RedStar.Xenobiology;
@@ -159,8 +160,8 @@ public sealed partial class MutagenicInjectorSystem : SharedMutagenicInjectorSys
             return;
         }
 
-        var genes = recipient.GetGenes();
-        var transferred = 0;
+        var originalGenes = recipient.GetGenes();
+        var genes = new Dictionary<ProtoId<GenePrototype>, GeneState>(originalGenes);
         foreach (var (genome, stability) in samples)
         {
             foreach (var (id, state) in genome.GetGenes())
@@ -168,8 +169,15 @@ public sealed partial class MutagenicInjectorSystem : SharedMutagenicInjectorSys
                 if (!_random.Prob(Math.Clamp(stability, 0f, 1f)))
                     continue;
                 genes[id] = state;
-                transferred++;
             }
+        }
+
+        var changed = 0;
+        foreach (var (id, state) in genes)
+        {
+            if (!originalGenes.TryGetValue(id, out var original) ||
+                original.Allele != state.Allele || original.Number != state.Number)
+                changed++;
         }
 
         if (_genomes.ReplaceGenome(mob, new GenomeSnapshot(recipient.GenomeId, genes)) != GenomeOperationResult.Success)
@@ -180,7 +188,7 @@ public sealed partial class MutagenicInjectorSystem : SharedMutagenicInjectorSys
 
         _cell.ClearCells((dishUid, dishContainer));
         EjectBody(ent);
-        _popup.PopupEntity(Loc.GetString("mutagenic-injector-success", ("genes", transferred)), ent, PopupType.Medium);
+        _popup.PopupEntity(Loc.GetString("mutagenic-injector-success", ("genes", changed)), ent, PopupType.Medium);
     }
 
     protected override void CancelInjection(Entity<CellMutagenicInjectorComponent> ent)

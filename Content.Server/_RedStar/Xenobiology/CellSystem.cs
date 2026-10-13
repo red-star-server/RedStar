@@ -1,4 +1,3 @@
-using Content.Shared.Body.Components;
 using Content.Server._RedStar.Genetics;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
@@ -141,7 +140,7 @@ public sealed partial class CellSystem : SharedCellSystem
     /// </summary>
     private bool IsBiologicalSampleSource(EntityUid source)
     {
-        return HasComp<BloodstreamComponent>(source) || HasComp<GenomeComponent>(source);
+        return HasComp<GenomeComponent>(source);
     }
 
     private float GetCellularDamage(EntityUid source)

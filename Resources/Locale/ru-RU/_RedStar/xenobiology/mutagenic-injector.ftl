@@ -1,4 +1,4 @@
-mutagenic-injector-success = Клетки введены. Принято передач генов: {$genes}
+mutagenic-injector-success = Клетки введены. Изменено генов: {$genes}
 mutagenic-injector-no-dish = Чашка Петри не вставлена!
 mutagenic-injector-no-cells = Чашка Петри пуста!
 mutagenic-injector-no-traits = Ни одна клетка в чашке не содержит генетический материал для передачи.

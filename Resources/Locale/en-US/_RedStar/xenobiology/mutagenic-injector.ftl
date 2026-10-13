@@ -1,4 +1,4 @@
-mutagenic-injector-success = Cells injected. Accepted gene transfers: {$genes}
+mutagenic-injector-success = Cells injected. Genes changed: {$genes}
 mutagenic-injector-no-dish = No dish inserted!
 mutagenic-injector-no-cells = The dish is empty!
 mutagenic-injector-no-traits = None of these cells contains genetic material to transfer.
