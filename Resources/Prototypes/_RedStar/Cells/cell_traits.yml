@@ -1,5 +1,6 @@
 - type: cellTrait
   id: Pacifism
+  gene: Pacifism
   name: cell-trait-Pacifism-name
   color: "#b4e514"
   effects:
@@ -9,6 +10,7 @@
 
 - type: cellTrait
   id: OwO
+  gene: OwO
   name: cell-trait-OwO-name
   color: "#ff66aa"
   effects:
@@ -18,7 +20,7 @@
 
 - type: cellTrait
   id: NightVision
-  fusionIngredient: true
+  gene: NightVision
   name: cell-trait-NightVision-name
   color: "#44cc44"
   effects:
@@ -28,7 +30,7 @@
 
 - type: cellTrait
   id: EggLayer
-  fusionIngredient: true
+  gene: EggLayer
   name: cell-trait-EggLayer-name
   color: "#f5e7ba"
   effects:
@@ -53,7 +55,7 @@
 
 - type: cellTrait
   id: Lactation
-  fusionIngredient: true
+  gene: Lactation
   name: cell-trait-Lactation-name
   color: "#fff7dc"
   effects:
@@ -70,7 +72,7 @@
 
 - type: cellTrait
   id: Venomous
-  fusionIngredient: true
+  gene: Venomous
   name: cell-trait-Venomous-name
   color: "#88dd44"
   effects:
@@ -85,7 +87,7 @@
 
 - type: cellTrait
   id: WebSpinning
-  fusionIngredient: true
+  gene: WebSpinning
   name: cell-trait-WebSpinning-name
   color: "#eeeeee"
   effects:
@@ -95,7 +97,7 @@
 
 - type: cellTrait
   id: Regeneration
-  fusionIngredient: true
+  gene: Regeneration
   name: cell-trait-Regeneration-name
   color: "#44ff88"
   effects:
@@ -117,7 +119,7 @@
 
 - type: cellTrait
   id: NoSlip
-  fusionIngredient: true
+  gene: NoSlip
   name: cell-trait-NoSlip-name
   color: "#4488ff"
   effects:
@@ -127,7 +129,7 @@
 
 - type: cellTrait
   id: Reflection
-  fusionIngredient: true
+  gene: Reflection
   name: cell-trait-Reflection-name
   color: "#ffdd44"
   effects:
@@ -138,7 +140,7 @@
 
 - type: cellTrait
   id: Invisibility
-  fusionIngredient: true
+  gene: Invisibility
   name: cell-trait-Invisibility-name
   color: "#aaddff"
   effects:
@@ -149,7 +151,7 @@
 
 - type: cellTrait
   id: Radiation
-  fusionIngredient: true
+  gene: Radiation
   name: cell-trait-Radiation-name
   color: "#88ff00"
   effects:
@@ -159,7 +161,7 @@
 
 - type: cellTrait
   id: Reform
-  fusionIngredient: true
+  gene: Reform
   name: cell-trait-Reform-name
   color: "#cc44ff"
   effects:
@@ -173,7 +175,7 @@
 
 - type: cellTrait
   id: MessyDrinker
-  fusionIngredient: true
+  gene: MessyDrinker
   name: cell-trait-MessyDrinker-name
   color: "#bb7744"
   effects:
@@ -183,7 +185,7 @@
 
 - type: cellTrait
   id: ParrotSpeech
-  fusionIngredient: true
+  gene: ParrotSpeech
   name: cell-trait-ParrotSpeech-name
   color: "#ff4444"
   effects:
@@ -196,57 +198,10 @@
 
 - type: cellTrait
   id: Bleating
-  fusionIngredient: true
+  gene: Bleating
   name: cell-trait-Bleating-name
   color: "#ddddaa"
   effects:
   - !type:AddComponents
     components:
     - type: BleatingAccent
-
-# Mutation-only traits (obtained through fusion).
-- type: cellTrait
-  id: ToxicMutation
-  fusionMutation: true
-  name: cell-trait-ToxicMutation-name
-  color: "#66ff00"
-  effects:
-  - !type:AddComponents
-    components:
-    - type: DamageContacts
-      damage:
-        types:
-          Poison: 1
-
-- type: cellTrait
-  id: BioLuminescentMutation
-  fusionMutation: true
-  name: cell-trait-BioLuminescentMutation-name
-  color: "#44ddff"
-  effects:
-  - !type:Glow
-    color: "#44ddff"
-    radius: 2
-
-- type: cellTrait
-  id: VolatileMutation
-  fusionMutation: true
-  name: cell-trait-VolatileMutation-name
-  color: "#ff4400"
-  effects:
-  - !type:AddComponents
-    components:
-    - type: TriggerOnMobstateChange
-      keyOut: xenobiology-volatile
-      mobState:
-      - Dead
-    - type: ExplodeOnTrigger
-      keysIn:
-      - xenobiology-volatile
-    - type: Explosive
-      explosionType: Default
-      totalIntensity: 10
-      intensitySlope: 5
-      maxIntensity: 20
-      canCreateVacuum: false
-      deleteAfterExplosion: false

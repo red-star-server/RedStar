@@ -1,5 +1,5 @@
-using System.Collections.Immutable;
 using System.Linq;
+using Content.Shared._RedStar.Genetics;
 using Content.Shared._RedStar.Xenobiology.Components.Container;
 using Content.Shared._RedStar.Xenobiology.Systems;
 using Robust.Shared.Prototypes;
@@ -21,38 +21,32 @@ namespace Content.Shared._RedStar.Xenobiology;
 /// <seealso cref="CellPrototype"/>
 /// <seealso cref="CellContainerComponent"/>
 /// <seealso cref="SharedCellSystem"/>
+[DataDefinition]
 [Serializable, NetSerializable]
-public sealed class Cell(
-    ProtoId<CellPrototype>? prototypeId,
-    Color color,
-    string name,
-    float stability,
-    int cost,
-    IEnumerable<ProtoId<CellTraitPrototype>> traits)
-    : IEquatable<Cell>
+public sealed partial class Cell : IEquatable<Cell>
 {
     /// <summary>
     /// Reflects the prototype on which the cell is based,
     /// if it is generated, this value will be null.
     /// </summary>
-    [ViewVariables]
-    public readonly ProtoId<CellPrototype>? PrototypeId = prototypeId;
+    [DataField, ViewVariables]
+    public ProtoId<CellPrototype>? PrototypeId { get; private set; }
 
     /// <summary>
     /// The color of a cell
     /// affecting only its display in the world or consoles.
     /// </summary>
     /// <seealso cref="SharedCellSystem.GetMergedColor"/>
-    [ViewVariables]
-    public readonly Color Color = color;
+    [DataField, ViewVariables]
+    public Color Color { get; private set; }
 
     /// <summary>
     /// Cell name, this can be changed by the player,
     /// don't use this to index cells.
     /// </summary>
     /// <seealso cref="SharedCellSystem.GetMergedName"/>
-    [ViewVariables]
-    public readonly string Name = name;
+    [DataField, ViewVariables]
+    public string Name { get; private set; } = string.Empty;
 
     /// <summary>
     /// The current stability of the cell,
@@ -60,26 +54,45 @@ public sealed class Cell(
     /// </summary>
     ///
     /// <seealso cref="SharedCellSystem.GetMergedStability"/>
-    [ViewVariables]
-    public readonly float Stability = stability;
+    [DataField, ViewVariables]
+    public float Stability { get; private set; }
 
     /// <summary>
     /// Cost in materials of the device for printing as well as splicing of the cell.
     /// </summary>
     /// <seealso cref="SharedCellSystem.GetMergedCost"/>
-    [ViewVariables]
-    public readonly int Cost = cost;
+    [DataField, ViewVariables]
+    public int Cost { get; private set; }
 
     /// <summary>
-    /// Trait prototypes carried by this cell.
-    /// They affect an organism when injected and are tracked by <see cref="CellTraitHostComponent"/>.
+    /// Genetic material is kept on the server; networked laboratory views contain no gene identifiers.
     /// </summary>
-    [ViewVariables]
-    public readonly ImmutableArray<ProtoId<CellTraitPrototype>> Traits = ImmutableArray.CreateRange(traits);
+    [DataField, NonSerialized]
+    private GenomeSnapshot? _genome;
 
-    public Cell(Cell cell) : this(cell.PrototypeId, cell.Color, cell.Name, cell.Stability, cell.Cost, cell.Traits) { }
+    [DataField, ViewVariables]
+    public int GeneCount { get; private set; }
 
-    public Cell(CellPrototype cell) : this(cell.ID, cell.Color, Loc.GetString(cell.Name), cell.Stability, cell.Cost, cell.Traits) { }
+    public Cell() { }
+
+    public Cell(ProtoId<CellPrototype>? prototypeId, Color color, string name,
+        float stability, int cost, GenomeSnapshot? genome)
+    {
+        PrototypeId = prototypeId;
+        Color = color;
+        Name = name;
+        Stability = stability;
+        Cost = cost;
+        _genome = genome is null ? null : new GenomeSnapshot(genome.GenomeId, genome.GetGenes());
+        GeneCount = genome?.GetGenes().Count ?? 0;
+    }
+
+    public GenomeSnapshot? GetGenome() => _genome is null ? null : new GenomeSnapshot(_genome.GenomeId, _genome.GetGenes());
+
+    public Cell(Cell cell) : this(cell.PrototypeId, cell.Color, cell.Name, cell.Stability, cell.Cost, cell._genome) { }
+
+    public Cell(CellPrototype cell) : this(cell.ID, cell.Color, Loc.GetString(cell.Name), cell.Stability, cell.Cost,
+        new GenomeSnapshot(cell.GenomeId, cell.Genes)) { }
 
     public override bool Equals(object? obj)
     {
@@ -93,7 +106,8 @@ public sealed class Cell(
                other.Color == Color &&
                other.Stability.Equals(Stability) &&
                other.Cost == Cost &&
-               other.Traits.SequenceEqual(Traits) &&
+               other.GeneCount == GeneCount &&
+               SameGenome(other._genome, _genome) &&
                other.Name == Name;
     }
 
@@ -105,9 +119,13 @@ public sealed class Cell(
         hash.Add(Stability);
         hash.Add(Cost);
         hash.Add(Name);
-        foreach (var trait in Traits)
+        hash.Add(GeneCount);
+        if (_genome is not { } genome) return hash.ToHashCode();
+        foreach (var (id, state) in genome.GetGenes().OrderBy(entry => entry.Key.ToString()))
         {
-            hash.Add(trait);
+            hash.Add(id);
+            hash.Add(state.Allele);
+            hash.Add(state.Number);
         }
 
         return hash.ToHashCode();
@@ -121,5 +139,17 @@ public sealed class Cell(
     public static bool operator !=(Cell? cellA, Cell? cellB)
     {
         return !(cellA == cellB);
+    }
+
+    private static bool SameGenome(GenomeSnapshot? first, GenomeSnapshot? second)
+    {
+        if (first is null || second is null)
+            return first is null && second is null;
+        if (first.GenomeId != second.GenomeId)
+            return false;
+        var a = first.GetGenes();
+        var b = second.GetGenes();
+        return a.Count == b.Count && a.All(entry => b.TryGetValue(entry.Key, out var state) &&
+            entry.Value.Allele == state.Allele && entry.Value.Number == state.Number);
     }
 }

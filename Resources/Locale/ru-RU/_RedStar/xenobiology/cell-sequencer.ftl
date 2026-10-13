@@ -8,8 +8,7 @@ cell-sequencer-menu-no-selected-label = Клетка не выбрана
 # Свойства клетки
 cell-sequencer-menu-cell-stability-label = Стабильность: {$stability}%
 cell-sequencer-menu-cell-cost-label = Стоимость: {$cost} плазмы
-cell-sequencer-menu-cell-traits-label = Признаки:
-cell-sequencer-menu-cell-trait-message = - [color={$color}]{$name}[/color]
+cell-sequencer-menu-cell-traits-label = Генетические маркеры:
 
 # Кнопки
 cell-sequencer-menu-add-button = Сохранить

@@ -10,8 +10,7 @@ cell-sequencer-menu-no-selected-label = Cell not selected
 cell-sequencer-menu-cell-stability-label = Stability: {$stability}%
 cell-sequencer-menu-cell-cost-label = Cost: {$cost} plasma
 
-cell-sequencer-menu-cell-traits-label = Traits:
-cell-sequencer-menu-cell-trait-message = - [color={$color}]{$name}[/color]
+cell-sequencer-menu-cell-traits-label = Genetic markers:
 
 # Menu buttons
 cell-sequencer-menu-add-button = Save

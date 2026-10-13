@@ -1,5 +1,6 @@
 using Robust.Shared.Prototypes;
 using Content.Shared.EntityEffects;
+using Content.Shared._RedStar.Genetics;
 
 namespace Content.Shared._RedStar.Xenobiology;
 
@@ -13,16 +14,16 @@ public sealed partial class CellTraitPrototype : IPrototype
     public string ID { get; set; } = string.Empty;
 
     /// <summary>
-    /// This trait has an obtainable biopsy or an initial cell sample and may be used in fusion recipes.
+    /// A gene whose presence makes this phenotype eligible for expression.
     /// </summary>
-    [DataField]
-    public bool FusionIngredient;
+    [DataField(required: true)]
+    public ProtoId<GenePrototype> Gene;
 
     /// <summary>
-    /// May be produced by a fusion recipe instead of appearing as an ingredient.
+    /// Optional allele required in addition to the gene's presence.
     /// </summary>
     [DataField]
-    public bool FusionMutation;
+    public string? Allele;
 
     [DataField]
     public LocId Name;

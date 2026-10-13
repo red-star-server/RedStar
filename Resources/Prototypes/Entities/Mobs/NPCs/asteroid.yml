@@ -428,8 +428,11 @@
     reflects:
     - Energy
   # RS14-start
-  - type: CellTraitSource
-    traits: [ Reflection ]
+  - type: Genome
+    genomeId: Xenobiology
+    genomeGenerated: true
+    genes:
+      Reflection: {}
   # RS14-end
   - type: ToolRefinable
     refineResult:

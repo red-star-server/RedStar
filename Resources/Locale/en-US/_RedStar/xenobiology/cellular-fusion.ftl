@@ -12,7 +12,7 @@ cellular-fusion-menu-cell-b-no-selected-label = Cell B not selected
 cellular-fusion-menu-cell-stability-label = Stability: {$stability}%
 cellular-fusion-menu-cell-cost-label = Cost: {$cost} plasma
 
-cellular-fusion-menu-cell-traits-label = Traits:
+cellular-fusion-menu-cell-traits-label = Genetic markers:
 
 # Menu buttons
 cellular-fusion-menu-splice-button = Splice

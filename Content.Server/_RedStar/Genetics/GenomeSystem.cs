@@ -50,6 +50,9 @@ public sealed partial class GenomeSystem : EntitySystem
         return GenomeOperationResult.Success;
     }
 
+    public GenomeOperationResult ValidateSnapshot(GenomeSnapshot snapshot) =>
+        ValidateGenome(snapshot.GenomeId, snapshot.GetGenes());
+
     [SubscribeLocalEvent]
     private void OnComponentInit(Entity<GenomeComponent> ent, ref ComponentInit args)
     {
@@ -75,7 +78,10 @@ public sealed partial class GenomeSystem : EntitySystem
     private void OnMapInit(Entity<GenomeComponent> ent, ref MapInitEvent args)
     {
         if (ent.Comp.GenomeGenerated)
+        {
+            RaiseLocalEvent(ent.Owner, new GenomeChangedEvent(GenomeChangeKind.Replaced));
             return;
+        }
 
         var result = GenerateGenes(ent.Comp.GenomeId, out var genes);
         if (result != GenomeOperationResult.Success)
@@ -300,6 +306,39 @@ public sealed partial class GenomeSystem : EntitySystem
         }
 
         child = new GenomeSnapshot(childId, genes);
+        return GenomeOperationResult.Success;
+    }
+
+    /// <summary>
+    /// Combines whole samples, allowing genes from different schemes in the result.
+    /// Sample quality controls whether a gene survives the laboratory procedure.
+    /// </summary>
+    public GenomeOperationResult Recombine(GenomeSnapshot first, GenomeSnapshot second,
+        float firstQuality, float secondQuality, out GenomeSnapshot? result)
+    {
+        result = null;
+        var a = first.GetGenes();
+        var b = second.GetGenes();
+        var validation = ValidateGenome(first.GenomeId, a);
+        if (validation != GenomeOperationResult.Success)
+            return validation;
+        validation = ValidateGenome(second.GenomeId, b);
+        if (validation != GenomeOperationResult.Success)
+            return validation;
+
+        var genes = new Dictionary<ProtoId<GenePrototype>, GeneState>();
+        foreach (var id in a.Keys.Concat(b.Keys).Distinct())
+        {
+            a.TryGetValue(id, out var fromFirst);
+            b.TryGetValue(id, out var fromSecond);
+            var useFirst = fromSecond is null || fromFirst is not null && _random.Prob(0.5f);
+            var selected = useFirst ? fromFirst : fromSecond;
+            var quality = useFirst ? firstQuality : secondQuality;
+            if (selected is not null && _random.Prob(Math.Clamp(quality, 0f, 1f)))
+                genes.Add(id, selected);
+        }
+
+        result = new GenomeSnapshot(first.GenomeId, genes);
         return GenomeOperationResult.Success;
     }
 

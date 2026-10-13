@@ -1,5 +1,5 @@
-using System.Linq;
 using Content.Shared.Body.Components;
+using Content.Server._RedStar.Genetics;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Shared.Dataset;
@@ -12,7 +12,7 @@ using Content.Shared.Popups;
 using Content.Shared.Whitelist;
 using Content.Shared._RedStar.Xenobiology;
 using Content.Shared._RedStar.Xenobiology.Components.Container;
-using Content.Shared._RedStar.Xenobiology.Components.Traits;
+using Content.Shared._RedStar.Genetics;
 using Content.Shared._RedStar.Xenobiology.Components.Tools;
 using Content.Shared._RedStar.Xenobiology.Systems;
 using Content.Shared._RedStar.Xenobiology.Visuals;
@@ -23,8 +23,7 @@ using Robust.Shared.Random;
 namespace Content.Server._RedStar.Xenobiology;
 
 /// <summary>
-/// Server-side cell system that handles trait detection, random cell generation,
-/// and collector tool interactions (biopsy/transfer).
+/// Creates laboratory samples from current genomes and handles biopsy and transfer.
 /// </summary>
 public sealed partial class CellSystem : SharedCellSystem
 {
@@ -38,6 +37,7 @@ public sealed partial class CellSystem : SharedCellSystem
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private IPrototypeManager _prototypes = default!;
+    [Dependency] private GenomeSystem _genomes = default!;
 
     [SubscribeLocalEvent]
     private void OnCellGenerationInit(Entity<CellGenerationComponent> ent, ref ComponentInit args)
@@ -102,10 +102,11 @@ public sealed partial class CellSystem : SharedCellSystem
                 {
                     var source = args.Target.Value;
                     var damage = GetCellularDamage(source);
-                    var native = GetOrCreateNativeSample(source);
-                    var stability = native.Stability * (1f - 0.5f * Math.Clamp(damage, 0f, 120f) / 100f);
-                    AddCell(ent.Owner, new Cell(native.PrototypeId, native.Color, native.Name,
-                        stability, native.Cost, native.Traits));
+                    _genomes.TryGetSnapshot(source, out var genome);
+                    var sample = GenerateRandomCell(genome);
+                    var stability = sample.Stability * (1f - 0.5f * Math.Clamp(damage, 0f, 120f) / 100f);
+                    AddCell(ent.Owner, new Cell(sample.PrototypeId, sample.Color, sample.Name,
+                        stability, sample.Cost, genome));
 
                     if (ent.Comp.Damage is not null)
                         _damageable.TryChangeDamage(source, ent.Comp.Damage);
@@ -138,9 +139,7 @@ public sealed partial class CellSystem : SharedCellSystem
     /// </summary>
     private bool IsBiologicalSampleSource(EntityUid source)
     {
-        return HasComp<BloodstreamComponent>(source) ||
-            HasComp<CellTraitSourceComponent>(source) ||
-            HasComp<NativeCellGenomeComponent>(source);
+        return HasComp<BloodstreamComponent>(source) || HasComp<GenomeComponent>(source);
     }
 
     private float GetCellularDamage(EntityUid source)
@@ -153,25 +152,9 @@ public sealed partial class CellSystem : SharedCellSystem
     }
 
     /// <summary>
-    /// Creates an organism's native sample once, independently of injected cells.
+    /// Creates a fresh laboratory sample from the organism's current genome.
     /// </summary>
-    public Cell GetOrCreateNativeSample(EntityUid source)
-    {
-        var genome = EnsureComp<NativeCellGenomeComponent>(source);
-        if (genome.Sample is { } sample)
-            return sample;
-
-        var traits = TryComp<CellTraitSourceComponent>(source, out var traitSource)
-            ? traitSource.Traits.Distinct().OrderBy(id => id.ToString(), StringComparer.Ordinal).ToList()
-            : [];
-        return genome.Sample = GenerateRandomCell(traits);
-    }
-
-    /// <summary>
-    /// Creates a new Cell with a random name, random color, and stability/cost
-    /// derived from the number of traits. Higher trait count = lower stability + higher cost.
-    /// </summary>
-    private Cell GenerateRandomCell(List<ProtoId<CellTraitPrototype>> traits)
+    private Cell GenerateRandomCell(GenomeSnapshot? genome)
     {
         var prefix = _random.Pick(_prototypes.Index(CellPrefixes));
         var suffix = _random.Pick(_prototypes.Index(CellSuffixes));
@@ -182,9 +165,9 @@ public sealed partial class CellSystem : SharedCellSystem
             _random.NextFloat(),
             _random.NextFloat());
 
-        var traitCount = traits.Count;
-        var stability = MathF.Max(0.1f, 1.0f - traitCount * 0.05f + _random.NextFloat(-0.03f, 0.03f));
-        var cost = GetCellCost(traitCount);
+        var geneCount = genome?.GetGenes().Count ?? 0;
+        var stability = MathF.Max(0.1f, 1.0f - geneCount * 0.05f + _random.NextFloat(-0.03f, 0.03f));
+        var cost = GetCellCost(geneCount);
 
         return new Cell(
             prototypeId: null,
@@ -192,7 +175,7 @@ public sealed partial class CellSystem : SharedCellSystem
             name: name,
             stability: stability,
             cost: cost,
-            traits: traits);
+            genome: genome);
     }
 
     /// <summary>
@@ -235,6 +218,13 @@ public sealed partial class CellSystem : SharedCellSystem
                 }
 
                 var biological = IsBiologicalSampleSource(target.Owner);
+                if (HasComp<GenomeComponent>(target.Owner) &&
+                    !_genomes.TryGetSnapshot(target.Owner, out _))
+                {
+                    if (popup)
+                        _popup.PopupEntity(Loc.GetString("cell-collector-target-cant-collected"), ent, user, PopupType.SmallCaution);
+                    return false;
+                }
                 if (biological && GetCellularDamage(target.Owner) >= 120f)
                 {
                     if (popup)

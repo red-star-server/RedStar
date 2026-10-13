@@ -94,6 +94,10 @@
   id: MobHuman
   name: Urist McHands
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Human
+  # RS14-end
   - type: Butcherable
     spawned:
     - id: FoodMeatHuman

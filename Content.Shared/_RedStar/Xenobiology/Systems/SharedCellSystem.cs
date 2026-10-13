@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Shared._RedStar.Xenobiology.Components.Container;
 using Content.Shared._RedStar.Xenobiology.Events;
-using Content.Shared.EntityEffects;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
@@ -20,7 +19,6 @@ namespace Content.Shared._RedStar.Xenobiology.Systems;
 public abstract partial class SharedCellSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototype = default!;
-    [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
 
     [SubscribeLocalEvent]
     private void OnDishExamined(Entity<CellContainerVisualsComponent> ent, ref ExaminedEvent args)

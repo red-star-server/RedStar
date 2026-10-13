@@ -47,7 +47,7 @@ public abstract partial class SharedMutagenicInjectorSystem : EntitySystem
         return ent.Comp.BodyContainer.ContainedEntity is null && IsValidRecipient(dragged);
     }
 
-    protected bool IsValidRecipient(EntityUid recipient)
+    protected virtual bool IsValidRecipient(EntityUid recipient)
     {
         return HasComp<MobStateComponent>(recipient) && HasComp<BloodstreamComponent>(recipient);
     }

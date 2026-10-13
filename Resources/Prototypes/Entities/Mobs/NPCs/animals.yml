@@ -277,8 +277,11 @@
     userPopup: action-popup-lay-egg-user
     othersPopup: action-popup-lay-egg-others
   # RS14-start
-  - type: CellTraitSource
-    traits: [ EggLayer ]
+  - type: Genome
+    genomeId: Xenobiology
+    genomeGenerated: true
+    genes:
+      EggLayer: {}
   # RS14-end
   - type: SatiationProduction
     delay: 60
@@ -750,8 +753,11 @@
     userPopup: action-popup-lay-egg-user
     othersPopup: action-popup-lay-egg-others
   # RS14-start
-  - type: CellTraitSource
-    traits: [ EggLayer ]
+  - type: Genome
+    genomeId: Xenobiology
+    genomeGenerated: true
+    genes:
+      EggLayer: {}
   # RS14-end
   - type: SatiationProduction
     delay: 60
@@ -954,8 +960,11 @@
     emptyMessage: udder-system-dry
     successMessage: udder-system-success
   # RS14-start
-  - type: CellTraitSource
-    traits: [ Lactation ]
+  - type: Genome
+    genomeId: Xenobiology
+    genomeGenerated: true
+    genes:
+      Lactation: {}
   # RS14-end
   - type: ToolRefinable
     refineResult:
@@ -1131,8 +1140,12 @@
     emptyMessage: udder-system-dry
     successMessage: udder-system-success
   # RS14-start
-  - type: CellTraitSource
-    traits: [ Lactation, Bleating ]
+  - type: Genome
+    genomeId: Xenobiology
+    genomeGenerated: true
+    genes:
+      Lactation: {}
+      Bleating: {}
   # RS14-end
   - type: Edible
     destroyOnEmpty: false
@@ -1279,8 +1292,12 @@
     emptyMessage: udder-system-dry
     successMessage: udder-system-success
   # RS14-start
-  - type: CellTraitSource
-    traits: [ Lactation, Bleating ]
+  - type: Genome
+    genomeId: Xenobiology
+    genomeGenerated: true
+    genes:
+      Lactation: {}
+      Bleating: {}
   # RS14-end
   - type: Shearable
     targetSolutionName: wool
@@ -2272,8 +2289,12 @@
     intensity: 0.5
     slope: 0.3
   # RS14-start
-  - type: CellTraitSource
-    traits: [ NightVision, Radiation ]
+  - type: Genome
+    genomeId: Xenobiology
+    genomeGenerated: true
+    genes:
+      NightVision: {}
+      Radiation: {}
   # RS14-end
   - type: Bloodstream
     bloodReferenceSolution:
@@ -2525,8 +2546,11 @@
   - type: ParrotListener
   - type: ParrotMemory
   # RS14-start
-  - type: CellTraitSource
-    traits: [ ParrotSpeech ]
+  - type: Genome
+    genomeId: Xenobiology
+    genomeGenerated: true
+    genes:
+      ParrotSpeech: {}
   # RS14-end
   - type: Inventory
     templateId: parrot
@@ -2955,8 +2979,11 @@
       task: RuminantHostileCompound
   - type: MessyDrinker
   # RS14-start
-  - type: CellTraitSource
-    traits: [ MessyDrinker ]
+  - type: Genome
+    genomeId: Xenobiology
+    genomeGenerated: true
+    genes:
+      MessyDrinker: {}
   # RS14-end
   - type: Tag
     tags:
@@ -3027,8 +3054,11 @@
     price: 200
   - type: MessyDrinker
   # RS14-start
-  - type: CellTraitSource
-    traits: [ MessyDrinker ]
+  - type: Genome
+    genomeId: Xenobiology
+    genomeGenerated: true
+    genes:
+      MessyDrinker: {}
   # RS14-end
   # TODO: Fix the sprite offset
   #- type: CreamPied
@@ -3807,8 +3837,11 @@
     popupText: diona-reform-attempt
     reformPrototype: MobDionaReformed
   # RS14-start
-  - type: CellTraitSource
-    traits: [ Reform ]
+  - type: Genome
+    genomeId: Xenobiology
+    genomeGenerated: true
+    genes:
+      Reform: {}
   # RS14-end
   - type: TTS # Corvax-TTS
     #voice: Omu

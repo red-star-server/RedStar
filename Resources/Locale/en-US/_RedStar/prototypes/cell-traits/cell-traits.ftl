@@ -20,6 +20,3 @@ cell-trait-MessyDrinker-name = Messy Drinker
 cell-trait-ParrotSpeech-name = Parrot Speech
 cell-trait-MediumSize-name = Medium Size
 cell-trait-Bleating-name = Bleating
-cell-trait-ToxicMutation-name = Toxic Mutation
-cell-trait-BioLuminescentMutation-name = Bio-Luminescent Mutation
-cell-trait-VolatileMutation-name = Volatile Mutation

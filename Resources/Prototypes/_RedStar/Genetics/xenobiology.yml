@@ -1,0 +1,120 @@
+# Genetic values carried by xenobiology samples. Effects stay in cellTrait prototypes.
+- type: gene
+  id: BiologicalVariant
+  kind: Allele
+  alleles: [A, B, C, D]
+
+- type: gene
+  id: Pacifism
+  kind: Presence
+
+- type: gene
+  id: OwO
+  kind: Presence
+
+- type: gene
+  id: NightVision
+  kind: Presence
+
+- type: gene
+  id: EggLayer
+  kind: Presence
+
+- type: gene
+  id: Lactation
+  kind: Presence
+
+- type: gene
+  id: Venomous
+  kind: Presence
+
+- type: gene
+  id: WebSpinning
+  kind: Presence
+
+- type: gene
+  id: Regeneration
+  kind: Presence
+
+- type: gene
+  id: NoSlip
+  kind: Presence
+
+- type: gene
+  id: Reflection
+  kind: Presence
+
+- type: gene
+  id: Invisibility
+  kind: Presence
+
+- type: gene
+  id: Radiation
+  kind: Presence
+
+- type: gene
+  id: Reform
+  kind: Presence
+
+- type: gene
+  id: MessyDrinker
+  kind: Presence
+
+- type: gene
+  id: ParrotSpeech
+  kind: Presence
+
+- type: gene
+  id: Bleating
+  kind: Presence
+
+- type: genome
+  id: Xenobiology
+  genes:
+  - gene: Pacifism
+    presenceChance: 0
+  - gene: OwO
+    presenceChance: 0
+  - gene: NightVision
+    presenceChance: 0
+  - gene: EggLayer
+    presenceChance: 0
+  - gene: Lactation
+    presenceChance: 0
+  - gene: Venomous
+    presenceChance: 0
+  - gene: WebSpinning
+    presenceChance: 0
+  - gene: Regeneration
+    presenceChance: 0
+  - gene: NoSlip
+    presenceChance: 0
+  - gene: Reflection
+    presenceChance: 0
+  - gene: Invisibility
+    presenceChance: 0
+  - gene: Radiation
+    presenceChance: 0
+  - gene: Reform
+    presenceChance: 0
+  - gene: MessyDrinker
+    presenceChance: 0
+  - gene: ParrotSpeech
+    presenceChance: 0
+  - gene: Bleating
+    presenceChance: 0
+
+- type: genome
+  id: Human
+  genes:
+  - gene: BiologicalVariant
+
+- type: genome
+  id: Spider
+  genes:
+  - gene: BiologicalVariant
+  - gene: Regeneration
+  - gene: NightVision
+  - gene: NoSlip
+  - gene: Venomous
+  - gene: WebSpinning

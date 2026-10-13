@@ -20,6 +20,3 @@ cell-trait-MessyDrinker-name = Неаккуратное питьё
 cell-trait-ParrotSpeech-name = Попугайская речь
 cell-trait-MediumSize-name = Средний размер
 cell-trait-Bleating-name = Блеяние
-cell-trait-ToxicMutation-name = Токсичная мутация
-cell-trait-BioLuminescentMutation-name = Биолюминесцентная мутация
-cell-trait-VolatileMutation-name = Взрывная мутация

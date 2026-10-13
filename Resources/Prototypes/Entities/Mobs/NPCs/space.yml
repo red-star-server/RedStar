@@ -260,8 +260,13 @@
   - type: NoSlip
   - type: IgnoreSpiderWeb
   # RS14-start
-  - type: CellTraitSource
-    traits: [ NightVision, NoSlip, Venomous ]
+  - type: Genome
+    genomeId: Xenobiology
+    genomeGenerated: true
+    genes:
+      NightVision: {}
+      NoSlip: {}
+      Venomous: {}
   # RS14-end
   - type: Speech
     speechVerb: Arachnid
@@ -379,11 +384,13 @@
       passiveVisibilityRate: -0.25
       movementVisibilityRate: 0.25
   # RS14-start
-    - type: CellTraitSource
-      traits:
-      - Invisibility
-      - NightVision
-      - Venomous
+    - type: Genome
+      genomeId: Xenobiology
+      genomeGenerated: true
+      genes:
+        Invisibility: {}
+        NightVision: {}
+        Venomous: {}
   # RS14-end
 
 - type: entity

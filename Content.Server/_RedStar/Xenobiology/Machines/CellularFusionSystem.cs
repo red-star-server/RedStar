@@ -1,4 +1,4 @@
-using System.Linq;
+using Content.Server._RedStar.Genetics;
 using Content.Server._RedStar.Xenobiology.Events;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Research.Components;
@@ -9,12 +9,10 @@ using Content.Shared._RedStar.Xenobiology.Systems;
 using Content.Shared._RedStar.Xenobiology.UI;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Destructible;
-using Content.Shared.GameTicking;
 using Content.Shared.Materials;
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.UserInterface;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Containers;
@@ -30,10 +28,8 @@ public sealed partial class CellularFusionSystem : EntitySystem
     [Dependency] private SharedCellSystem _cell = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
     [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private IPrototypeManager _prototypes = default!;
+    [Dependency] private GenomeSystem _genomes = default!;
     [Dependency] private IGameTiming _timing = default!;
-
-    private Dictionary<string, ProtoId<CellTraitPrototype>>? _mutationRecipes;
 
     [SubscribeLocalEvent]
     private void OnGetMaterialWhitelist(Entity<CellularFusionComponent> ent, ref GetMaterialWhitelistEvent args)
@@ -82,68 +78,6 @@ public sealed partial class CellularFusionSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnRoundRestart(RoundRestartCleanupEvent _)
-    {
-        _mutationRecipes = null;
-    }
-
-    private void EnsureRecipesInitialized()
-    {
-        if (_mutationRecipes is not null)
-            return;
-
-        _mutationRecipes = new Dictionary<string, ProtoId<CellTraitPrototype>>();
-        var catalog = _prototypes.EnumeratePrototypes<CellTraitPrototype>()
-            .OrderBy(prototype => prototype.ID, StringComparer.Ordinal)
-            .ToArray();
-        var available = catalog
-            .Where(prototype => prototype is { FusionIngredient: true, FusionMutation: false })
-            .Select(prototype => new ProtoId<CellTraitPrototype>(prototype.ID))
-            .ToList();
-
-        foreach (var mutation in catalog.Where(prototype => prototype.FusionMutation))
-        {
-            if (available.Count < 2)
-                break;
-
-            var idx1 = _random.Next(available.Count);
-            var a = available[idx1];
-            available.RemoveAt(idx1);
-
-            var idx2 = _random.Next(available.Count);
-            var b = available[idx2];
-            available.RemoveAt(idx2);
-
-            var key = GetRecipeKey(a, b);
-            _mutationRecipes[key] = mutation.ID;
-        }
-    }
-
-    private static string GetRecipeKey(ProtoId<CellTraitPrototype> a, ProtoId<CellTraitPrototype> b)
-    {
-        return string.Compare(a, b, StringComparison.Ordinal) <= 0
-            ? $"{a}+{b}"
-            : $"{b}+{a}";
-    }
-
-    private ProtoId<CellTraitPrototype>? CheckMutationRecipe(List<ProtoId<CellTraitPrototype>> traits)
-    {
-        EnsureRecipesInitialized();
-
-        for (var i = 0; i < traits.Count; i++)
-        {
-            for (var j = i + 1; j < traits.Count; j++)
-            {
-                var key = GetRecipeKey(traits[i], traits[j]);
-                if (_mutationRecipes!.TryGetValue(key, out var mutation))
-                    return mutation;
-            }
-        }
-
-        return null;
-    }
-
-    [SubscribeLocalEvent]
     private void OnMaterialAmountChanged(Entity<CellularFusionComponent> ent, ref MaterialAmountChangedEvent args)
     {
         UpdateUI(ent);
@@ -168,7 +102,8 @@ public sealed partial class CellularFusionSystem : EntitySystem
             return;
 
         if (!_database.TryGetCell(ent.Owner, args.CellAId, out var cellA) ||
-            !_database.TryGetCell(ent.Owner, args.CellBId, out var cellB))
+            !_database.TryGetCell(ent.Owner, args.CellBId, out var cellB) ||
+            cellA.GetGenome() is null || cellB.GetGenome() is null)
             return;
 
         var dishUid = _itemSlots.GetItemOrNull(ent.Owner, ent.Comp.DishSlot);
@@ -255,11 +190,13 @@ public sealed partial class CellularFusionSystem : EntitySystem
             return;
         }
 
-        var traits = InheritTraits(cellA, cellB);
-        var mutation = CheckMutationRecipe(traits);
-        if (mutation is not null)
+        var recombination = _genomes.Recombine(cellA.GetGenome()!, cellB.GetGenome()!,
+            cellA.Stability, cellB.Stability, out var genome);
+        if (recombination != GenomeOperationResult.Success || genome is null)
         {
-            traits.Add(mutation.Value);
+            _popup.PopupEntity(Loc.GetString("cellular-fusion-splice-failure"), ent, PopupType.MediumCaution);
+            UpdateUI(ent);
+            return;
         }
 
         var result = new Cell(
@@ -267,8 +204,8 @@ public sealed partial class CellularFusionSystem : EntitySystem
             color: SharedCellSystem.GetMergedColor(cellA, cellB),
             name: SharedCellSystem.GetMergedName(cellA, cellB),
             stability: SharedCellSystem.GetMergedStability(cellA, cellB),
-            cost: SharedCellSystem.GetCellCost(traits.Count),
-            traits: traits);
+            cost: SharedCellSystem.GetCellCost(genome.GetGenes().Count),
+            genome: genome);
 
         _cell.AddCell((dishUid, dishContainer), result);
         _popup.PopupEntity(Loc.GetString("cellular-fusion-splice-success"), ent, PopupType.Medium);
@@ -293,26 +230,6 @@ public sealed partial class CellularFusionSystem : EntitySystem
         component.SpliceDish = null;
         component.SpliceCost = 0;
     }
-    private List<ProtoId<CellTraitPrototype>> InheritTraits(Cell cellA, Cell cellB)
-    {
-        var combined = new List<ProtoId<CellTraitPrototype>>();
-        var seen = new HashSet<ProtoId<CellTraitPrototype>>();
-
-        foreach (var trait in cellA.Traits)
-        {
-            if (_random.Prob(cellA.Stability) && seen.Add(trait))
-                combined.Add(trait);
-        }
-
-        foreach (var trait in cellB.Traits)
-        {
-            if (_random.Prob(cellB.Stability) && seen.Add(trait))
-                combined.Add(trait);
-        }
-
-        return combined;
-    }
-
     private void UpdateUI(Entity<CellularFusionComponent> ent, Cell? lastResult = null)
     {
         if (TerminatingOrDeleted(ent))

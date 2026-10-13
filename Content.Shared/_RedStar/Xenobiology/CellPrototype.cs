@@ -1,3 +1,4 @@
+using Content.Shared._RedStar.Genetics;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared._RedStar.Xenobiology;
@@ -21,5 +22,8 @@ public sealed partial class CellPrototype : IPrototype
     public int Cost = 5;
 
     [DataField]
-    public List<ProtoId<CellTraitPrototype>> Traits = [];
+    public ProtoId<GenomePrototype> GenomeId = "Xenobiology";
+
+    [DataField]
+    public Dictionary<ProtoId<GenePrototype>, GeneState> Genes = [];
 }

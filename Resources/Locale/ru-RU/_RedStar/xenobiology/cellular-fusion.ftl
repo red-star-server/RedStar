@@ -9,7 +9,7 @@ cellular-fusion-menu-cell-b-no-selected-label = Клетка B не выбран
 # Свойства клетки
 cellular-fusion-menu-cell-stability-label = Стабильность: {$stability}%
 cellular-fusion-menu-cell-cost-label = Стоимость: {$cost} плазмы
-cellular-fusion-menu-cell-traits-label = Признаки:
+cellular-fusion-menu-cell-traits-label = Генетические маркеры:
 
 # Кнопки
 cellular-fusion-menu-splice-button = Объединить клетки

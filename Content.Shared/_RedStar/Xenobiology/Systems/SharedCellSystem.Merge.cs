@@ -1,5 +1,3 @@
-using System.Linq;
-
 namespace Content.Shared._RedStar.Xenobiology.Systems;
 
 public abstract partial class SharedCellSystem
@@ -30,12 +28,12 @@ public abstract partial class SharedCellSystem
 
     public static int GetMergedCost(Cell cellA, Cell cellB)
     {
-        return GetCellCost(cellA.Traits.Union(cellB.Traits).Count());
+        return GetCellCost(cellA.GeneCount + cellB.GeneCount);
     }
 
-    public static int GetCellCost(int traitCount)
+    public static int GetCellCost(int geneCount)
     {
-        return 5 + traitCount * 3;
+        return 5 + geneCount * 3;
     }
 
 }
