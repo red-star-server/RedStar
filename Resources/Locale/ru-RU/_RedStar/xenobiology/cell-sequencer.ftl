@@ -11,11 +11,8 @@ cell-sequencer-menu-cell-traits-label = Генетические маркеры:
 
 # Кнопки
 cell-sequencer-menu-add-button = Сохранить
-cell-sequencer-menu-add-tooltip-info = Переместить образец в хранилище РНД. За новый генотип очки исследования начисляются один раз.
 cell-sequencer-menu-remove-button = Удалить
-cell-sequencer-menu-remove-tooltip-info = Удалить выбранную клетку из чашки или базы данных.
 cell-sequencer-menu-withdraw-button = Извлечь
-cell-sequencer-menu-withdraw-tooltip-info = Переместить выбранный образец из хранилища РНД в чашку Петри.
 
 # Сообщения
 cell-sequencer-no-connect = Нет соединения с исследовательским сервером!

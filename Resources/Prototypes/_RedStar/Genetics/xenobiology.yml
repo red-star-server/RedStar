@@ -109,6 +109,22 @@
   - gene: MessyDrinker
 
 - type: genome
+  id: Feline
+  genes:
+  - gene: NightVision
+  - gene: BiologicalVariant
+
+- type: genome
+  id: Porcine
+  genes:
+  - gene: BiologicalVariant
+
+- type: genome
+  id: Cervid
+  genes:
+  - gene: BiologicalVariant
+
+- type: genome
   id: DionaNymph
   genes:
   - gene: Reform

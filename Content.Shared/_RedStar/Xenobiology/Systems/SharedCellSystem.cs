@@ -1,7 +1,5 @@
-using System.Linq;
 using Content.Shared._RedStar.Xenobiology.Components.Container;
 using Content.Shared._RedStar.Xenobiology.Events;
-using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
@@ -19,18 +17,6 @@ namespace Content.Shared._RedStar.Xenobiology.Systems;
 public abstract partial class SharedCellSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototype = default!;
-
-    [SubscribeLocalEvent]
-    private void OnDishExamined(Entity<CellContainerVisualsComponent> ent, ref ExaminedEvent args)
-    {
-        if (!args.IsInDetailsRange || !TryComp<CellContainerComponent>(ent, out var container))
-            return;
-
-        args.PushText(container.Empty
-            ? Loc.GetString("cell-dish-examine-empty")
-            : Loc.GetString("cell-dish-examine-contents",
-                ("cells", string.Join(", ", container.Cells.Select(cell => cell.Name)))));
-    }
 
     /// <summary>
     /// Adds a new <see cref="Cell"/> instance created from the prototype to the container.

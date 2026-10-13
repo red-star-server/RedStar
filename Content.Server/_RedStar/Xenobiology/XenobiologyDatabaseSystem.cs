@@ -1,9 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Server._RedStar.Xenobiology.Components;
 using Content.Server._RedStar.Xenobiology.Events;
 using Content.Server._RedStar.Genetics;
-using Content.Shared._RedStar.Genetics;
 using Content.Shared._RedStar.Xenobiology.Components.Container;
 using Content.Shared._RedStar.Xenobiology.Systems;
 using Content.Server.Power.EntitySystems;
@@ -15,15 +13,13 @@ using Content.Shared.Research.Components;
 namespace Content.Server._RedStar.Xenobiology;
 
 /// <summary>
-/// Uses existing research connections to store physical samples and record studied genomes.
+/// Uses existing research connections to store physical samples.
 /// </summary>
 public sealed partial class XenobiologyDatabaseSystem : EntitySystem
 {
     [Dependency] private ResearchSystem _research = default!;
     [Dependency] private GenomeSystem _genomes = default!;
     [Dependency] private SharedCellSystem _cells = default!;
-
-    private const int NewGenomeResearchPoints = 100;
 
     public bool TryGetDatabase(EntityUid machine,
         [NotNullWhen(true)] out Entity<XenobiologyDatabaseComponent>? database)
@@ -76,12 +72,6 @@ public sealed partial class XenobiologyDatabaseSystem : EntitySystem
             return false;
         var nextId = database.Value.Comp.NextCellId++;
         database.Value.Comp.Cells.Add(new CellEntry(nextId, cell));
-        if (genome is not null &&
-            !database.Value.Comp.StudiedGenomes.Any(studied => studied.SameContents(genome)))
-        {
-            database.Value.Comp.StudiedGenomes.Add(genome);
-            _research.ModifyServerPoints(database.Value.Owner, NewGenomeResearchPoints);
-        }
         NotifyClients(database.Value.Owner);
         return true;
     }

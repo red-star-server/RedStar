@@ -84,7 +84,7 @@ public sealed partial class CellSystem : SharedCellSystem
 
     /// <summary>
     /// Completes the collector DoAfter. Biological biopsies use the organism's native sample;
-    /// laboratory containers copy their contents. Transfer moves cells into a container.
+    /// laboratory containers move their contents. Transfer moves cells into a container.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnCollectorCollectDoAfter(Entity<CellCollectorComponent> ent, ref CellCollectorDoAfter args)
@@ -102,7 +102,9 @@ public sealed partial class CellSystem : SharedCellSystem
                 {
                     var source = args.Target.Value;
                     var damage = GetCellularDamage(source);
-                    _genomes.TryGetSnapshot(source, out var genome);
+                    if (!_genomes.TryGetSnapshot(source, out var genome) || genome is null)
+                        return;
+
                     AddCell(ent.Owner, GenerateRandomCell(genome, damage));
 
                     if (ent.Comp.Damage is not null)
@@ -132,7 +134,7 @@ public sealed partial class CellSystem : SharedCellSystem
     }
 
     /// <summary>
-    /// Identifies an organism that can provide a stable native biopsy sample.
+    /// Identifies an organism targeted by a biopsy attempt.
     /// </summary>
     private bool IsBiologicalSampleSource(EntityUid source)
     {
@@ -151,7 +153,7 @@ public sealed partial class CellSystem : SharedCellSystem
     /// <summary>
     /// Creates a fresh laboratory sample from the organism's current genome.
     /// </summary>
-    private Cell GenerateRandomCell(GenomeSnapshot? genome, float cellularDamage)
+    private Cell GenerateRandomCell(GenomeSnapshot genome, float cellularDamage)
     {
         var prefix = _random.Pick(_prototypes.Index(CellPrefixes));
         var suffix = _random.Pick(_prototypes.Index(CellSuffixes));
@@ -162,7 +164,7 @@ public sealed partial class CellSystem : SharedCellSystem
             _random.NextFloat(),
             _random.NextFloat());
 
-        var geneCount = genome?.GeneCount ?? 0;
+        var geneCount = genome.GeneCount;
         var stability = MathF.Max(0.1f, 1.0f - geneCount * 0.05f + _random.NextFloat(-0.03f, 0.03f));
         stability *= 1f - 0.5f * Math.Clamp(cellularDamage, 0f, 120f) / 100f;
         return new Cell(
@@ -213,8 +215,7 @@ public sealed partial class CellSystem : SharedCellSystem
                 }
 
                 var biological = IsBiologicalSampleSource(target.Owner);
-                if (HasComp<GenomeComponent>(target.Owner) &&
-                    !_genomes.TryGetSnapshot(target.Owner, out _))
+                if (biological && !_genomes.TryGetSnapshot(target.Owner, out _))
                 {
                     if (popup)
                         _popup.PopupEntity(Loc.GetString("cell-collector-target-cant-collected"), ent, user, PopupType.SmallCaution);

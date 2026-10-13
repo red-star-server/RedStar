@@ -13,11 +13,8 @@ cell-sequencer-menu-cell-traits-label = Genetic markers:
 
 # Menu buttons
 cell-sequencer-menu-add-button = Save
-cell-sequencer-menu-add-tooltip-info = Move the selected sample into R&D storage. New genetic material awards research points once.
 cell-sequencer-menu-remove-button = Remove
-cell-sequencer-menu-remove-tooltip-info = Remove the selected cell from its dish or the database.
 cell-sequencer-menu-withdraw-button = Withdraw
-cell-sequencer-menu-withdraw-tooltip-info = Move the selected sample from R&D storage into the Petri dish.
 
 # Popups
 cell-sequencer-no-connect = No connection with the server!

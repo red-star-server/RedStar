@@ -3154,6 +3154,10 @@
   id: MobCat
   description: Feline pet, very funny.
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Feline
+  # RS14-end
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/cat.rsi
@@ -3661,6 +3665,10 @@
   id: MobPig
   description: Oink.
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Porcine
+  # RS14-end
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -3828,6 +3836,10 @@
   id: MobReindeerBuck
   description: You think it can pull a sleigh?
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Cervid
+  # RS14-end
   - type: Sprite
     drawdepth: Mobs
     layers:

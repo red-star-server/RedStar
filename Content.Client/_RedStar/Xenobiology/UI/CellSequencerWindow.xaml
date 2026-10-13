@@ -8,18 +8,9 @@
         <BoxContainer Margin="8" MinWidth="330" Orientation="Vertical" VerticalExpand="True">
             <Button Name="ServerButton" Text="{Loc 'research-console-menu-server-selection-button'}" Margin="0 0 0 4" />
             <PanelContainer Margin="0 0 0 4" StyleClasses="LowDivider" />
-            <Button Name="AddButton"
-                    Text="{Loc 'cell-sequencer-menu-add-button'}"
-                    ToolTip="{Loc 'cell-sequencer-menu-add-tooltip-info'}"
-                    Margin="0 0 0 4" />
-            <Button Name="RemoveButton"
-                    Text="{Loc 'cell-sequencer-menu-remove-button'}"
-                    ToolTip="{Loc 'cell-sequencer-menu-remove-tooltip-info'}"
-                    Margin="0 0 0 4" />
-            <Button Name="WithdrawButton"
-                    Text="{Loc 'cell-sequencer-menu-withdraw-button'}"
-                    ToolTip="{Loc 'cell-sequencer-menu-withdraw-tooltip-info'}"
-                    Margin="0 0 0 4" />
+            <Button Name="AddButton" Text="{Loc 'cell-sequencer-menu-add-button'}" Margin="0 0 0 4" />
+            <Button Name="RemoveButton" Text="{Loc 'cell-sequencer-menu-remove-button'}" Margin="0 0 0 4" />
+            <Button Name="WithdrawButton" Text="{Loc 'cell-sequencer-menu-withdraw-button'}" Margin="0 0 0 4" />
         </BoxContainer>
         <PanelContainer Margin="4 0" StyleClasses="LowDivider" />
         <!-- Cell lists -->

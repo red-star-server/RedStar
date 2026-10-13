@@ -6,8 +6,10 @@ public abstract partial class SharedCellSystem
 
     public static float GetStabilizedStability(Cell cellA, Cell cellB)
     {
-        var max = Math.Clamp(Math.Max(cellA.Stability, cellB.Stability), 0f, 1f);
-        return Math.Min(1f, Math.Max(MathF.BitIncrement(max), max + (1f - max) * 0.04f));
+        var max = Math.Max(cellA.Stability, cellB.Stability);
+        var min = Math.Min(cellA.Stability, cellB.Stability);
+        var gain = Math.Max(0.01f, (1f - max) * (0.05f + 0.05f * min));
+        return Math.Min(1f, max + gain);
     }
 
     public static string GetStabilizedName(Cell cellA, Cell cellB)
