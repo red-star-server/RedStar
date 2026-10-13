@@ -46,6 +46,7 @@ public sealed partial class CellSequencerWindow : FancyWindow
         _hasContainer = state.HasContainer;
         _hasSpace = state.HasSpace;
         _connected = state.Connected;
+        var sameDishRevision = _dish == state.Dish && _dishRevision == state.DishRevision;
         var insideChanged = _dish != state.Dish || _dishRevision != state.DishRevision ||
             !SameCells(_insideCells, state.InsideCells);
         var remoteChanged = !SameEntries(_remoteCells, state.RemoteCells);
@@ -67,7 +68,7 @@ public sealed partial class CellSequencerWindow : FancyWindow
                 var entry = new CellEntryControl(state.InsideCells[index], false, index);
                 entry.OnSelect += SelectedCellEntry;
                 InsideCellContainer.AddChild(entry);
-                if (!selectedRemote && selectedId == index)
+                if (!selectedRemote && sameDishRevision && selectedId == index)
                     restored = entry;
             }
         }

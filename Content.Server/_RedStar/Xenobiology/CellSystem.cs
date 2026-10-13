@@ -105,14 +105,16 @@ public sealed partial class CellSystem : SharedCellSystem
                     if (!_genomes.TryGetSnapshot(source, out var genome) || genome is null)
                         return;
 
-                    AddCell(ent.Owner, GenerateRandomCell(genome, damage));
+                    if (!AddCell(ent.Owner, GenerateRandomCell(genome, damage)))
+                        return;
 
                     if (ent.Comp.Damage is not null)
                         _damageable.TryChangeDamage(source, ent.Comp.Damage);
                 }
                 else if (TryComp<CellContainerComponent>(args.Target.Value, out var targetComp))
                 {
-                    MoveCells((args.Target.Value, targetComp), ent.Owner);
+                    if (!MoveCells((args.Target.Value, targetComp), ent.Owner))
+                        return;
                 }
 
                 _popup.PopupEntity(Loc.GetString("cell-collector-collected"), ent, args.Args.User);
@@ -120,7 +122,8 @@ public sealed partial class CellSystem : SharedCellSystem
                 break;
 
             case CellCollectorDirection.Transfer:
-                MoveCells(ent.Owner, args.Target.Value);
+                if (!MoveCells(ent.Owner, args.Target.Value))
+                    return;
 
                 _popup.PopupEntity(Loc.GetString("cell-collector-transfer"), ent, args.Args.User);
                 break;
@@ -197,6 +200,9 @@ public sealed partial class CellSystem : SharedCellSystem
         EntityUid user,
         bool popup = true)
     {
+        if (ent.Owner == target.Owner)
+            return false;
+
         if (!Resolve(ent, ref ent.Comp2))
             return false;
 

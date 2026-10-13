@@ -48,12 +48,6 @@
       dishSlot: !type:ContainerSlot
       machine_board: !type:Container
       machine_parts: !type:Container
-  - type: MaterialStorage
-    whitelist:
-      tags:
-      - Sheet
-    materialWhiteList:
-    - Plasma
   - type: ItemSlots
     slots:
       dishSlot:
@@ -68,7 +62,7 @@
   id: CellSequencer
   parent: BaseCellProcessingMachine
   name: cell sequencer
-  description: Reads cell samples and stores genomes on the R&D server.
+  description: Moves cell samples between a Petri dish and R&D storage.
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Machines/Xenobiology/cell_sequencer.rsi
@@ -121,6 +115,12 @@
       enum.ResearchClientUiKey.Key:
         type: ResearchClientBoundUserInterface
   - type: CellularFusion
+  - type: MaterialStorage
+    whitelist:
+      tags:
+      - Sheet
+    materialWhiteList:
+    - Plasma
   - type: Machine
     board: CellularFusionCircuitboard
 

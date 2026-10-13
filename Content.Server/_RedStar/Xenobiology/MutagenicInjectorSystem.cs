@@ -89,7 +89,7 @@ public sealed partial class MutagenicInjectorSystem : SharedMutagenicInjectorSys
             return false;
         }
 
-        if (!dishContainer.Cells.Exists(cell => cell.GeneCount > 0 && cell.GetGenome() is not null))
+        if (!dishContainer.Cells.Exists(cell => cell.GeneCount > 0))
         {
             _popup.PopupEntity(Loc.GetString("mutagenic-injector-no-traits"), ent, PopupType.MediumCaution);
             return false;

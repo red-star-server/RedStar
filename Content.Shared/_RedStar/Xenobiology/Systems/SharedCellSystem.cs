@@ -6,9 +6,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared._RedStar.Xenobiology.Systems;
 
 /// <summary>
-/// The system responsible for the operation, copy, translate, update and splicing of <see cref="Cell"/>
-/// and the containers in which they are contained,
-/// without visual effects, only direct interaction.
+/// Manages samples in cell containers.
+/// Moves complete samples between containers.
+/// Notifies other systems when contents change.
 /// </summary>
 /// <seealso cref="CellContainerComponent"/>
 /// <seealso cref="CellGenerationComponent"/>

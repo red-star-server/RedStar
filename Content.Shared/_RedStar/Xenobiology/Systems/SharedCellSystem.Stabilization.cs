@@ -8,7 +8,7 @@ public abstract partial class SharedCellSystem
     {
         var max = Math.Max(cellA.Stability, cellB.Stability);
         var min = Math.Min(cellA.Stability, cellB.Stability);
-        var gain = Math.Max(0.01f, (1f - max) * (0.05f + 0.05f * min));
+        var gain = (1f - max) * (0.08f + 0.04f * min);
         return Math.Min(1f, max + gain);
     }
 

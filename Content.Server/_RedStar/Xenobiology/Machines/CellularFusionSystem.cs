@@ -73,7 +73,12 @@ public sealed partial class CellularFusionSystem : EntitySystem
     private void UpdateConnection(Entity<CellularFusionComponent> ent)
     {
         if (!_database.TryGetDatabase(ent.Owner, out var database) ||
-            ent.Comp.SpliceInProgress && ent.Comp.SpliceServer != database.Value.Owner)
+            ent.Comp.SpliceInProgress &&
+            (ent.Comp.SpliceServer != database.Value.Owner ||
+             ent.Comp.SpliceCellAId is not { } firstId ||
+             ent.Comp.SpliceCellBId is not { } secondId ||
+             !database.Value.Comp.Cells.Exists(entry => entry.Id == firstId) ||
+             !database.Value.Comp.Cells.Exists(entry => entry.Id == secondId)))
             CancelSplice(ent);
 
         UpdateUI(ent);
@@ -206,7 +211,7 @@ public sealed partial class CellularFusionSystem : EntitySystem
         var avgStability = (cellA.Stability + cellB.Stability) / 2f;
         var failureChance = Math.Clamp(ent.Comp.BaseFailureChance + (1f - avgStability) * ent.Comp.StabilityMultiplier, 0f, 1f);
         var failed = _random.Prob(failureChance);
-        Cell? result = failed ? null : new Cell(
+        var result = failed ? null : new Cell(
             prototypeId: null,
             color: SharedCellSystem.GetStabilizedColor(cellA, cellB),
             name: SharedCellSystem.GetStabilizedName(cellA, cellB),
@@ -221,8 +226,7 @@ public sealed partial class CellularFusionSystem : EntitySystem
             return;
         }
 
-        _popup.PopupEntity(Loc.GetString(failed ? "cellular-fusion-splice-failure" :
-            "cellular-fusion-splice-success"), ent, failed ? PopupType.MediumCaution : PopupType.Medium);
+        _popup.PopupEntity(Loc.GetString(failed ? "cellular-fusion-splice-failure" : "cellular-fusion-splice-success"), ent, failed ? PopupType.MediumCaution : PopupType.Medium);
         UpdateUI(ent, result);
     }
 
