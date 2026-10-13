@@ -125,7 +125,7 @@ public sealed partial class CellSequencerWindow : FancyWindow
 
         for (var i = 0; i < left.Count; i++)
         {
-            if (left[i].Id != right[i].Id || !left[i].Cell.Equals(right[i].Cell))
+            if (left[i].Id != right[i].Id || !left[i].Cell.SameContents(right[i].Cell))
                 return false;
         }
 

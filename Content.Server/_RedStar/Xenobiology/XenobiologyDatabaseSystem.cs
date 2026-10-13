@@ -60,7 +60,7 @@ public sealed partial class XenobiologyDatabaseSystem : EntitySystem
             return false;
         }
 
-        if (database.Value.Comp.Cells.Any(entry => entry.Cell == cell))
+        if (database.Value.Comp.Cells.Any(entry => entry.Cell.SameContents(cell)))
             return false;
 
         var nextId = database.Value.Comp.NextCellId++;

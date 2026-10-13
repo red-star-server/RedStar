@@ -79,7 +79,7 @@ public sealed partial class GenomeSystem : EntitySystem
     {
         if (ent.Comp.GenomeGenerated)
         {
-            RaiseLocalEvent(ent.Owner, new GenomeChangedEvent(GenomeChangeKind.Replaced));
+            RaiseLocalEvent(ent.Owner, new GenomeReadyEvent());
             return;
         }
 
@@ -337,6 +337,10 @@ public sealed partial class GenomeSystem : EntitySystem
             if (selected is not null && _random.Prob(Math.Clamp(quality, 0f, 1f)))
                 genes.Add(id, selected);
         }
+
+        validation = ValidateGenome(first.GenomeId, genes);
+        if (validation != GenomeOperationResult.Success)
+            return validation;
 
         result = new GenomeSnapshot(first.GenomeId, genes);
         return GenomeOperationResult.Success;

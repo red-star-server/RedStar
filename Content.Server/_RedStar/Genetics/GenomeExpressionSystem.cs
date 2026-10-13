@@ -20,6 +20,9 @@ public sealed partial class GenomeExpressionSystem : EntitySystem
     private void OnGenomeChanged(Entity<GenomeComponent> ent, ref GenomeChangedEvent args) => Recalculate(ent.Owner);
 
     [SubscribeLocalEvent]
+    private void OnGenomeReady(Entity<GenomeComponent> ent, ref GenomeReadyEvent args) => Recalculate(ent.Owner);
+
+    [SubscribeLocalEvent]
     private void OnComponentInit(Entity<GenomeExpressionComponent> ent, ref ComponentInit args)
     {
         ent.Comp.Applied = [..ent.Comp.Applied];

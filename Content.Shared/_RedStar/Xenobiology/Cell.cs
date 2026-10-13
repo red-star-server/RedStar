@@ -14,16 +14,15 @@ namespace Content.Shared._RedStar.Xenobiology;
 /// which is also passed between the client and the server.
 /// </summary>
 /// <remarks>
-/// Cells are immutable values: equality compares their fields, while database identity
-/// is assigned separately by <see cref="CellEntry.Id"/>. Equal generated samples may
-/// therefore still be separate database entries.
+/// Compare sample contents with <see cref="SameContents"/> when needed.
+/// Database identity is assigned separately by <see cref="CellEntry.Id"/>.
 /// </remarks>
 /// <seealso cref="CellPrototype"/>
 /// <seealso cref="CellContainerComponent"/>
 /// <seealso cref="SharedCellSystem"/>
 [DataDefinition]
 [Serializable, NetSerializable]
-public sealed partial class Cell : IEquatable<Cell>
+public sealed partial class Cell
 {
     /// <summary>
     /// Reflects the prototype on which the cell is based,
@@ -73,6 +72,9 @@ public sealed partial class Cell : IEquatable<Cell>
     [DataField, ViewVariables]
     public int GeneCount { get; private set; }
 
+    [DataField, ViewVariables]
+    public bool HasGenome { get; private set; }
+
     public Cell() { }
 
     public Cell(ProtoId<CellPrototype>? prototypeId, Color color, string name,
@@ -85,6 +87,7 @@ public sealed partial class Cell : IEquatable<Cell>
         Cost = cost;
         _genome = genome is null ? null : new GenomeSnapshot(genome.GenomeId, genome.GetGenes());
         GeneCount = genome?.GetGenes().Count ?? 0;
+        HasGenome = genome is not null;
     }
 
     public GenomeSnapshot? GetGenome() => _genome is null ? null : new GenomeSnapshot(_genome.GenomeId, _genome.GetGenes());
@@ -94,12 +97,7 @@ public sealed partial class Cell : IEquatable<Cell>
     public Cell(CellPrototype cell) : this(cell.ID, cell.Color, Loc.GetString(cell.Name), cell.Stability, cell.Cost,
         new GenomeSnapshot(cell.GenomeId, cell.Genes)) { }
 
-    public override bool Equals(object? obj)
-    {
-        return obj is Cell other && Equals(other);
-    }
-
-    public bool Equals(Cell? other)
+    public bool SameContents(Cell? other)
     {
         return other is not null &&
                other.PrototypeId == PrototypeId &&
@@ -107,38 +105,9 @@ public sealed partial class Cell : IEquatable<Cell>
                other.Stability.Equals(Stability) &&
                other.Cost == Cost &&
                other.GeneCount == GeneCount &&
+               other.HasGenome == HasGenome &&
                SameGenome(other._genome, _genome) &&
                other.Name == Name;
-    }
-
-    public override int GetHashCode()
-    {
-        var hash = new HashCode();
-        hash.Add(PrototypeId);
-        hash.Add(Color);
-        hash.Add(Stability);
-        hash.Add(Cost);
-        hash.Add(Name);
-        hash.Add(GeneCount);
-        if (_genome is not { } genome) return hash.ToHashCode();
-        foreach (var (id, state) in genome.GetGenes().OrderBy(entry => entry.Key.ToString()))
-        {
-            hash.Add(id);
-            hash.Add(state.Allele);
-            hash.Add(state.Number);
-        }
-
-        return hash.ToHashCode();
-    }
-
-    public static bool operator ==(Cell? cellA, Cell? cellB)
-    {
-        return ReferenceEquals(cellA, cellB) || cellA is not null && cellA.Equals(cellB);
-    }
-
-    public static bool operator !=(Cell? cellA, Cell? cellB)
-    {
-        return !(cellA == cellB);
     }
 
     private static bool SameGenome(GenomeSnapshot? first, GenomeSnapshot? second)

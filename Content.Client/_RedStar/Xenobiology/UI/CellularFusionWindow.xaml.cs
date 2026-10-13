@@ -91,6 +91,7 @@ public sealed partial class CellularFusionWindow : FancyWindow
         CellInfoContainer.Visible = CellInfo.Visible;
         SpliceButton.Disabled = _spliceInProgress || _showingResult ||
             _selectedEntryA is null || _selectedEntryB is null ||
+            !_selectedEntryA.Cell.HasGenome || !_selectedEntryB.Cell.HasGenome ||
             SharedCellSystem.GetMergedCost(_selectedEntryA.Cell, _selectedEntryB.Cell) > _material;
 
         if (!_spliceInProgress && !_showingResult)
@@ -142,7 +143,7 @@ public sealed partial class CellularFusionWindow : FancyWindow
 
         for (var i = 0; i < left.Count; i++)
         {
-            if (left[i].Id != right[i].Id || !left[i].Cell.Equals(right[i].Cell))
+            if (left[i].Id != right[i].Id || !left[i].Cell.SameContents(right[i].Cell))
                 return false;
         }
 
@@ -219,7 +220,8 @@ public sealed partial class CellularFusionWindow : FancyWindow
         CellInfo.SetPreview(cost);
         CellInfo.Visible = true;
         CellInfoContainer.Visible = true;
-        SpliceButton.Disabled = _spliceInProgress || cost > _material;
+        SpliceButton.Disabled = _spliceInProgress || !entryA.Cell.HasGenome || !entryB.Cell.HasGenome ||
+            cost > _material;
     }
 
     protected override void FrameUpdate(FrameEventArgs args)

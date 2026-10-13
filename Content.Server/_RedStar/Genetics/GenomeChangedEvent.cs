@@ -22,6 +22,11 @@ public sealed class GenomeChangedEvent(
     public ProtoId<GenePrototype>? Gene { get; } = gene;
 }
 
+/// <summary>
+/// A restored genome is available when its entity enters the map.
+/// </summary>
+public sealed class GenomeReadyEvent : EntityEventArgs;
+
 public enum GenomeOperationResult : byte
 {
     Success,
