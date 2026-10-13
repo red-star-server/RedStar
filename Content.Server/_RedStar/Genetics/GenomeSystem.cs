@@ -158,12 +158,6 @@ public sealed partial class GenomeSystem : EntitySystem
         return component.GenomeGenerated ? GenomeOperationResult.Success : GenomeOperationResult.Uninitialized;
     }
 
-    private GenomeOperationResult GetWritableComponent(EntityUid uid, out GenomeComponent? component)
-    {
-        var result = GetComponent(uid, out component);
-        return result == GenomeOperationResult.Success ? CheckScheme(component!.GenomeId) : result;
-    }
-
     public bool TryGetSnapshot(EntityUid uid, out GenomeSnapshot? snapshot)
     {
         snapshot = null;
@@ -190,17 +184,18 @@ public sealed partial class GenomeSystem : EntitySystem
 
     public GenomeOperationResult SetGene(EntityUid uid, ProtoId<GenePrototype> id, GeneState state)
     {
-        var result = GetWritableComponent(uid, out var component);
+        var result = GetComponent(uid, out var component);
         if (result != GenomeOperationResult.Success)
             return result;
         if (!_prototypes.TryIndex(id, out var gene))
             return GenomeOperationResult.UnknownGene;
         if (!ValidState(state, gene))
             return GenomeOperationResult.InvalidValue;
-        if (component!.Genes.TryGetValue(id, out var old) && SameState(old, state))
+        var hadOld = component!.Genes.TryGetValue(id, out var old);
+        if (hadOld && SameState(old!, state))
             return GenomeOperationResult.Success;
 
-        var kind = component.Genes.ContainsKey(id) ? GenomeChangeKind.Changed : GenomeChangeKind.Added;
+        var kind = hadOld ? GenomeChangeKind.Changed : GenomeChangeKind.Added;
         component.Genes[id] = state.Clone();
         RaiseLocalEvent(uid, new GenomeChangedEvent(kind, id));
         return GenomeOperationResult.Success;
@@ -208,7 +203,7 @@ public sealed partial class GenomeSystem : EntitySystem
 
     public GenomeOperationResult RemoveGene(EntityUid uid, ProtoId<GenePrototype> id)
     {
-        var result = GetWritableComponent(uid, out var component);
+        var result = GetComponent(uid, out var component);
         if (result != GenomeOperationResult.Success)
             return result;
         if (!_prototypes.HasIndex(id))
@@ -314,7 +309,7 @@ public sealed partial class GenomeSystem : EntitySystem
     /// </summary>
     public GenomeOperationResult MutateGene(EntityUid uid, ProtoId<GenePrototype> id)
     {
-        var result = GetWritableComponent(uid, out var component);
+        var result = GetComponent(uid, out var component);
         if (result != GenomeOperationResult.Success)
             return result;
         if (!_prototypes.TryIndex(id, out var gene))
@@ -339,7 +334,8 @@ public sealed partial class GenomeSystem : EntitySystem
                 if (gene.Minimum == gene.Maximum)
                     return GenomeOperationResult.InvalidValue;
                 var value = state.Number!.Value;
-                state.Number = value == gene.Minimum ? value + 1 : value == gene.Maximum ? value - 1 :
+                state.Number = value == gene.Minimum ? value + 1 :
+                    value == gene.Maximum ? value - 1 :
                     value + (_random.Prob(0.5f) ? 1 : -1);
                 break;
         }
