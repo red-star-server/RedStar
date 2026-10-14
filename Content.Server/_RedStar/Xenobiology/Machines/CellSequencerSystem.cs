@@ -97,12 +97,19 @@ public sealed partial class CellSequencerSystem : EntitySystem
         {
             if (permutation[args.Order[i]] == i)
                 continue;
+            cell.ReduceStability(0.02f);
+            ent.Comp.FeedbackSample = args.SampleIndex;
+            ent.Comp.FeedbackMarker = args.MarkerIndex;
+            ent.Comp.FeedbackOrder = args.Order.ToArray();
             ent.Comp.NextAttempt = _timing.CurTime + TimeSpan.FromSeconds(5);
             _popup.PopupEntity(Loc.GetString("cell-sequencer-incorrect"), ent, PopupType.MediumCaution);
             UpdateUI(ent);
             return;
         }
 
+        ent.Comp.FeedbackOrder = [];
+        ent.Comp.FeedbackSample = -1;
+        ent.Comp.FeedbackMarker = -1;
         if (ent.Comp.Decoded.Add(sequence))
         {
             _popup.PopupEntity(Loc.GetString("cell-sequencer-discovered", ("gene", Loc.GetString($"gene-{id}-name"))),
@@ -128,6 +135,9 @@ public sealed partial class CellSequencerSystem : EntitySystem
         component.ActiveRevision = -1;
         component.Decoded.Clear();
         component.NextAttempt = TimeSpan.Zero;
+        component.FeedbackOrder = [];
+        component.FeedbackSample = -1;
+        component.FeedbackMarker = -1;
     }
 
     private static void SyncWork(CellSequencerComponent component, Entity<CellContainerComponent> dish)
@@ -148,7 +158,7 @@ public sealed partial class CellSequencerSystem : EntitySystem
         {
             Reset(ent.Comp);
             _userInterface.SetUiState(ent.Owner, CellSequencerUiKey.Key,
-                new CellSequencerUiState([], -1, null, 0));
+                new CellSequencerUiState([], -1, null, 0, -1, -1, []));
             return;
         }
 
@@ -161,7 +171,8 @@ public sealed partial class CellSequencerSystem : EntitySystem
                 : [])).ToArray();
         var retry = Math.Max(0, (ent.Comp.NextAttempt - _timing.CurTime).TotalSeconds);
         _userInterface.SetUiState(ent.Owner, CellSequencerUiKey.Key,
-            new CellSequencerUiState(samples, dish.Comp.Revision, GetNetEntity(dish.Owner), retry));
+            new CellSequencerUiState(samples, dish.Comp.Revision, GetNetEntity(dish.Owner), retry,
+                ent.Comp.FeedbackSample, ent.Comp.FeedbackMarker, ent.Comp.FeedbackOrder));
     }
 
     private SequencerMarkerView Marker(ProtoId<GenePrototype> id, GeneState state, HashSet<string> decoded)

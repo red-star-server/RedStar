@@ -29,6 +29,7 @@ public sealed class SequencerAssemblyControl : Control
     private int? _origin;
     private Vector2 _cursor;
     private bool _held;
+    private bool _feedback;
 
     private const float CardW = 156;
     private const float CardH = 52;
@@ -62,6 +63,7 @@ public sealed class SequencerAssemblyControl : Control
         _drag = null;
         _origin = null;
         _held = false;
+        _feedback = false;
         if (notify)
             AssemblyChanged?.Invoke();
     }
@@ -72,7 +74,12 @@ public sealed class SequencerAssemblyControl : Control
 
     public bool HasPlaced => _slots.Any(x => x.HasValue);
 
-    public bool Complete => OrderedFragments.Length == 4 && AllOverlaps;
+    public bool Complete => OrderedFragments.Length == 4;
+
+    public void SetFeedback(int[] order)
+    {
+        _feedback = order.Length == 4 && OrderedFragments.SequenceEqual(order);
+    }
 
     public bool AllOverlaps
     {
@@ -105,11 +112,8 @@ public sealed class SequencerAssemblyControl : Control
     private int? HitSlot(Vector2 point, float y)
     {
         for (var i = 0; i < 4; i++)
-        {
             if (Inside(point, TilePos(i, y), UIScale))
                 return i;
-        }
-
         return null;
     }
 
@@ -135,6 +139,7 @@ public sealed class SequencerAssemblyControl : Control
             return;
         }
         _cursor = point;
+        _feedback = false;
         _held = true;
         args.Handle();
     }
@@ -187,9 +192,12 @@ public sealed class SequencerAssemblyControl : Control
             var cell = _slots[i];
             var fill = cell.HasValue ? Card : Back;
             DrawTile(handle, pos, fill, cell is { } index ? _fragments[index] : $"{i + 1:00}", !cell.HasValue);
-            if (cell is { } current && i > 0 && _slots[i - 1] is { } previous)
+            if (_feedback && cell is { } current)
             {
-                var matches = _fragments[previous][3..] == _fragments[current][..4];
+                var matches = i == 0
+                    ? _fragments[current][..4] == _prefix[..4]
+                    : _slots[i - 1] is { } previous &&
+                      _fragments[previous][3..] == _fragments[current][..4];
                 handle.DrawRect(new UIBox2(pos.X - 8 * UIScale, pos.Y + 13 * UIScale,
                     pos.X - 4 * UIScale, pos.Y + 39 * UIScale), matches ? Good : Bad);
             }

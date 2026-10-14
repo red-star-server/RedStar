@@ -69,6 +69,8 @@ public sealed partial class CellSequencerWindow : FancyWindow
         BuildSamples();
         BuildMarkers();
         BuildAssembly();
+        Assembly.SetFeedback(state.FeedbackSample == _primary && state.FeedbackMarker == _marker
+            ? state.FeedbackOrder : []);
     }
 
     private void BuildSamples()

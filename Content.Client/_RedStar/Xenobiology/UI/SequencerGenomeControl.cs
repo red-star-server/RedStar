@@ -83,10 +83,11 @@ public sealed class SequencerGenomeControl : Control
                 new Vector2(x + 8 * scale, center + 8 * scale), tint);
             handle.DrawLine(new Vector2(x - 8 * scale, center + 8 * scale),
                 new Vector2(x + 8 * scale, center - 8 * scale), tint);
-            var header = marker.Decoded ? "●" : "○";
-            handle.DrawString(_font, new Vector2(x - 9 * scale, 22 * scale), header, tint);
-            handle.DrawString(_font, new Vector2(x - 28 * scale, 111 * scale), marker.FamilyCode[..4], Color.White);
-            handle.DrawString(_font, new Vector2(x - 19 * scale, 130 * scale), $"{i + 1:00}", Color.FromHex("#9AAEBB"));
+            // A single compact glyph: no floating status ring above the locus.
+            var label = marker.FamilyCode.Length >= 4 ? marker.FamilyCode[..4] : marker.FamilyCode;
+            handle.DrawString(_font, new Vector2(x - 20 * scale, 113 * scale), label, Color.White);
+            if (marker.Decoded)
+                handle.DrawRect(UIBox2.FromDimensions(new Vector2(x - 13 * scale, 133 * scale), new Vector2(26, 3) * scale), tint);
         }
     }
 

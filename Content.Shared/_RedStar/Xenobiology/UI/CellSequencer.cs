@@ -3,19 +3,11 @@ using Robust.Shared.Serialization;
 namespace Content.Shared._RedStar.Xenobiology.UI;
 
 [Serializable, NetSerializable]
-public enum CellSequencerUiKey
-{
-    Key
-}
+public enum CellSequencerUiKey { Key }
 
 [Serializable, NetSerializable]
-public sealed class SequencerMarkerView(
-    string familyCode,
-    string[] fragments,
-    bool decoded,
-    string name,
-    string value,
-    string sequence)
+public sealed class SequencerMarkerView(string familyCode, string[] fragments, bool decoded,
+    string name, string value, string sequence)
 {
     public readonly string FamilyCode = familyCode;
     public readonly string[] Fragments = fragments;
@@ -34,13 +26,15 @@ public sealed class SequencerSampleView(CellView cell, SequencerMarkerView[] mar
 
 [Serializable, NetSerializable]
 public sealed class CellSequencerUiState(SequencerSampleView[] samples, int dishRevision, NetEntity? dish,
-    double retrySeconds)
-    : BoundUserInterfaceState
+    double retrySeconds, int feedbackSample, int feedbackMarker, int[] feedbackOrder) : BoundUserInterfaceState
 {
     public readonly SequencerSampleView[] Samples = samples;
     public readonly int DishRevision = dishRevision;
     public readonly NetEntity? Dish = dish;
     public readonly double RetrySeconds = retrySeconds;
+    public readonly int FeedbackSample = feedbackSample;
+    public readonly int FeedbackMarker = feedbackMarker;
+    public readonly int[] FeedbackOrder = feedbackOrder;
 }
 
 [Serializable, NetSerializable]

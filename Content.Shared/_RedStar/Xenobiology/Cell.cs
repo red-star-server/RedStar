@@ -4,43 +4,22 @@ using Content.Shared._RedStar.Xenobiology.Systems;
 
 namespace Content.Shared._RedStar.Xenobiology;
 
-/// <summary>
-/// Stores one laboratory sample and its complete genome.
-/// The client receives only a separate CellView.
-/// </summary>
+/// <summary>One laboratory sample with server-owned genetic material.</summary>
 /// <seealso cref="CellPrototype"/>
 /// <seealso cref="CellContainerComponent"/>
 /// <seealso cref="SharedCellSystem"/>
 [DataDefinition]
 public sealed partial class Cell
 {
-    /// <summary>
-    /// The color of a cell
-    /// affecting only its display in the world or consoles.
-    /// </summary>
-    /// <seealso cref="SharedCellSystem.GetStabilizedColor"/>
     [DataField, ViewVariables]
     public Color Color { get; private set; }
 
-    /// <summary>
-    /// Cell name, this can be changed by the player,
-    /// don't use this to index cells.
-    /// </summary>
     [DataField, ViewVariables]
     public string Name { get; private set; } = string.Empty;
 
-    /// <summary>
-    /// The current stability of the cell,
-    /// this affects stabilization and genetic transfer.
-    /// </summary>
-    ///
-    /// <seealso cref="SharedCellSystem.GetStabilizedStability"/>
     [DataField, ViewVariables]
     public float Stability { get; private set; }
 
-    /// <summary>
-    /// Genetic material is stored with the sample on the server.
-    /// </summary>
     [DataField]
     private GenomeSnapshot? _genome;
 
@@ -52,8 +31,7 @@ public sealed partial class Cell
 
     public Cell() { }
 
-    public Cell(Color color, string name,
-        float stability, GenomeSnapshot? genome)
+    public Cell(Color color, string name, float stability, GenomeSnapshot? genome)
     {
         Color = color;
         Name = name;
@@ -63,7 +41,9 @@ public sealed partial class Cell
 
     public GenomeSnapshot? GetGenome() => _genome?.Clone();
 
+    /// <summary>Sequencing mistakes damage this physical sample, never its stored genome.</summary>
+    public void ReduceStability(float amount) => Stability = Math.Clamp(Stability - Math.Max(0f, amount), 0f, 1f);
+
     public Cell(CellPrototype cell) : this(cell.Color, Loc.GetString(cell.Name), cell.Stability,
         new GenomeSnapshot(cell.GenomeId, cell.Genes)) { }
-
 }
