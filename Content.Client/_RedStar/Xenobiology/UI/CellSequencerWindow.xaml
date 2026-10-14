@@ -1,49 +1,57 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:lab="clr-namespace:Content.Client._RedStar.Xenobiology.UI"
     Title="{Loc 'cell-sequencer-menu-title'}"
-    MinSize="900 540">
-    <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True" SeparationOverride="8" Margin="8">
-        <PanelContainer StyleClasses="PanelInsetDeep" MinWidth="210" VerticalExpand="True">
-            <BoxContainer Orientation="Vertical" Margin="8" SeparationOverride="6">
-                <Label Text="{Loc 'cell-sequencer-primary-sample'}" StyleClasses="LabelHeading" />
-                <ScrollContainer VerticalExpand="True">
-                    <BoxContainer Name="SampleList" Orientation="Vertical" SeparationOverride="3" />
-                </ScrollContainer>
-                <Label Name="SampleDetails" />
-                <Label Text="{Loc 'cell-sequencer-comparison-sample'}" StyleClasses="LabelHeading" />
-                <ScrollContainer VerticalExpand="True">
-                    <BoxContainer Name="ComparisonSampleList" Orientation="Vertical" SeparationOverride="3" />
-                </ScrollContainer>
-            </BoxContainer>
-        </PanelContainer>
-        <PanelContainer StyleClasses="PanelInsetDeep" MinWidth="315" HorizontalExpand="True" VerticalExpand="True">
-            <BoxContainer Orientation="Vertical" Margin="8" SeparationOverride="6">
-                <Label Text="{Loc 'cell-sequencer-map'}" StyleClasses="LabelHeading" />
-                <Label Text="{Loc 'cell-sequencer-map-help'}" />
-                <Label Name="PrimaryLabel" />
-                <ScrollContainer VerticalExpand="True">
-                    <BoxContainer Name="PrimaryMarkerList" Orientation="Vertical" SeparationOverride="3" />
-                </ScrollContainer>
-                <Label Name="ComparisonLabel" />
-                <ScrollContainer VerticalExpand="True">
-                    <BoxContainer Name="ComparisonMarkerList" Orientation="Vertical" SeparationOverride="3" />
-                </ScrollContainer>
-            </BoxContainer>
-        </PanelContainer>
-        <PanelContainer StyleClasses="PanelInsetDeep" MinWidth="300" VerticalExpand="True">
-            <BoxContainer Orientation="Vertical" Margin="8" SeparationOverride="8">
-                <Label Text="{Loc 'cell-sequencer-decoding'}" StyleClasses="LabelHeading" />
-                <Label Name="MarkerDetails" />
-                <Label Text="{Loc 'cell-sequencer-fragment-help'}" />
-                <ScrollContainer VerticalExpand="True">
-                    <BoxContainer Name="FragmentList" Orientation="Vertical" SeparationOverride="4" />
-                </ScrollContainer>
-                <Label Name="AssemblyLabel" />
-                <BoxContainer Orientation="Horizontal" SeparationOverride="6">
-                    <Button Name="ResetButton" Text="{Loc 'cell-sequencer-reset'}" HorizontalExpand="True" />
-                    <Button Name="DecodeButton" Text="{Loc 'cell-sequencer-submit'}" HorizontalExpand="True" />
+    MinSize="940 580">
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" SeparationOverride="7" Margin="8">
+        <BoxContainer Orientation="Horizontal" SeparationOverride="7" MinHeight="198">
+            <PanelContainer StyleClasses="PanelInsetDeep" MinWidth="225" VerticalExpand="True">
+                <BoxContainer Orientation="Vertical" SeparationOverride="5">
+                    <PanelContainer StyleClasses="PanelDark" HorizontalExpand="True">
+                        <Label Text="{Loc 'cell-sequencer-samples'}" StyleClasses="LabelHeading" Margin="10 5 10 5" />
+                    </PanelContainer>
+                    <ScrollContainer VerticalExpand="True" Margin="8 3 8 0">
+                        <BoxContainer Name="SampleList" Orientation="Vertical" SeparationOverride="4" />
+                    </ScrollContainer>
+                    <PanelContainer StyleClasses="PanelDark" HorizontalExpand="True">
+                        <Label Name="SampleDetails" Margin="10 5 10 5" />
+                    </PanelContainer>
                 </BoxContainer>
-                <Label Name="ResultLabel" />
+            </PanelContainer>
+            <PanelContainer StyleClasses="PanelInsetDeep" HorizontalExpand="True" VerticalExpand="True">
+                <BoxContainer Orientation="Vertical" SeparationOverride="5">
+                    <PanelContainer StyleClasses="PanelDark" HorizontalExpand="True">
+                        <BoxContainer Orientation="Horizontal" Margin="10 4 8 4" SeparationOverride="5">
+                            <Label Text="{Loc 'cell-sequencer-map'}" StyleClasses="LabelHeading" HorizontalExpand="True" />
+                            <Button Name="CompareButton" Text="{Loc 'cell-sequencer-compare'}" />
+                        </BoxContainer>
+                    </PanelContainer>
+                    <ScrollContainer VerticalExpand="True" Margin="8 2 8 0">
+                        <lab:SequencerGenomeControl Name="Genome" />
+                    </ScrollContainer>
+                    <BoxContainer Orientation="Horizontal" Margin="10 0 10 5" SeparationOverride="8">
+                        <Label Name="MarkerDetails" HorizontalExpand="True" />
+                        <Label Name="ComparisonLabel" />
+                    </BoxContainer>
+                </BoxContainer>
+            </PanelContainer>
+        </BoxContainer>
+        <PanelContainer StyleClasses="PanelInsetDeep" HorizontalExpand="True" VerticalExpand="True">
+            <BoxContainer Orientation="Vertical" SeparationOverride="5">
+                <PanelContainer StyleClasses="PanelDark" HorizontalExpand="True">
+                    <BoxContainer Orientation="Horizontal" Margin="10 5 10 5">
+                        <Label Text="{Loc 'cell-sequencer-assembly'}" StyleClasses="LabelHeading" HorizontalExpand="True" />
+                        <Label Name="DecodeStatus" />
+                    </BoxContainer>
+                </PanelContainer>
+                <lab:SequencerAssemblyControl Name="Assembly" Margin="8 4 8 0" HorizontalExpand="True" VerticalExpand="True" />
+                <PanelContainer StyleClasses="PanelDark" HorizontalExpand="True">
+                    <BoxContainer Orientation="Horizontal" Margin="10 5 10 5" SeparationOverride="8">
+                        <Label Name="ResultLabel" HorizontalExpand="True" />
+                        <Button Name="ResetButton" Text="{Loc 'cell-sequencer-reset'}" />
+                        <Button Name="DecodeButton" Text="{Loc 'cell-sequencer-submit'}" />
+                    </BoxContainer>
+                </PanelContainer>
             </BoxContainer>
         </PanelContainer>
     </BoxContainer>

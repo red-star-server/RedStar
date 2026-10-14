@@ -7,6 +7,10 @@ using Robust.Client.UserInterface.XAML;
 
 namespace Content.Client._RedStar.Xenobiology.UI;
 
+/// <summary>
+/// Sequencer workstation. One sample list; optional comparison shares the same dish.
+/// All biological information comes from the sanitized BUI state.
+/// </summary>
 [GenerateTypedNameReferences]
 public sealed partial class CellSequencerWindow : FancyWindow
 {
@@ -16,22 +20,35 @@ public sealed partial class CellSequencerWindow : FancyWindow
     private int _primary = -1;
     private int _comparison = -1;
     private int _marker = -1;
-    private int _comparisonMarker = -1;
-    private readonly List<int> _assembly = [];
+    private bool _comparing;
+    private string[] _lastFragments = [];
+    private string _lastPrefix = string.Empty;
 
     public CellSequencerWindow()
     {
         RobustXamlLoader.Load(this);
-        ResetButton.OnPressed += _ =>
+        Assembly.AssemblyChanged += RefreshAssembly;
+        Genome.OnSelect += index =>
         {
-            _assembly.Clear();
-            BuildFragments();
+            _marker = index;
+            _lastFragments = [];
+            BuildMarkers();
+            BuildAssembly();
         };
+        ResetButton.OnPressed += _ => Assembly.Clear();
         DecodeButton.OnPressed += _ =>
         {
-            if (_state is not null && _primary >= 0 && _marker >= 0 && _assembly.Count == 4)
-                OnDecode?.Invoke(_primary, _marker, _assembly.ToArray(), _state.DishRevision, _state.Dish);
+            if (_state is not null && _primary >= 0 && _marker >= 0 && Assembly.Complete)
+                OnDecode?.Invoke(_primary, _marker, Assembly.OrderedFragments, _state.DishRevision, _state.Dish);
         };
+        CompareButton.OnPressed += _ =>
+        {
+            _comparing = !_comparing;
+            _comparison = -1;
+            BuildSamples();
+            BuildMarkers();
+        };
+        RefreshAssembly();
     }
 
     public void UpdateState(CellSequencerUiState state)
@@ -41,20 +58,25 @@ public sealed partial class CellSequencerWindow : FancyWindow
             _primary = -1;
             _comparison = -1;
             _marker = -1;
-            _comparisonMarker = -1;
-            _assembly.Clear();
+            _lastFragments = [];
+            Assembly.SetFragments([], string.Empty);
         }
-
         _state = state;
+        if (_primary >= state.Samples.Length)
+            _primary = -1;
+        if (_comparison >= state.Samples.Length)
+            _comparison = -1;
         BuildSamples();
         BuildMarkers();
-        BuildFragments();
+        BuildAssembly();
     }
 
     private void BuildSamples()
     {
         SampleList.RemoveAllChildren();
-        ComparisonSampleList.RemoveAllChildren();
+        CompareButton.Pressed = _comparing;
+        CompareButton.ToggleMode = true;
+        CompareButton.Disabled = _state is null || _state.Samples.Length < 2;
         if (_state is null)
             return;
 
@@ -62,168 +84,110 @@ public sealed partial class CellSequencerWindow : FancyWindow
         {
             var index = i;
             var cell = _state.Samples[i].Cell;
-            var primary = new CellEntryControl(cell, index);
-            primary.SetSelected(index == _primary);
-            primary.OnSelect += _ =>
+            var button = new Button
             {
-                _primary = index;
-                if (_comparison == index)
-                    _comparison = -1;
-                _marker = -1;
-                _comparisonMarker = -1;
-                _assembly.Clear();
+                Text = cell.Name,
+                HorizontalExpand = true,
+                ToggleMode = true,
+                Pressed = index == _primary || _comparing && index == _comparison
+            };
+            button.OnPressed += _ =>
+            {
+                if (_comparing && _primary >= 0 && index != _primary)
+                {
+                    _comparison = index == _comparison ? -1 : index;
+                }
+                else
+                {
+                    if (_primary != index)
+                    {
+                        _primary = index;
+                        _marker = -1;
+                        _comparison = -1;
+                        _lastFragments = [];
+                    }
+                }
                 BuildSamples();
                 BuildMarkers();
-                BuildFragments();
+                BuildAssembly();
             };
-            SampleList.AddChild(primary);
-
-            if (index == _primary)
-                continue;
-            var comparison = new CellEntryControl(cell, index);
-            comparison.SetSelected(index == _comparison);
-            comparison.OnSelect += _ =>
-            {
-                _comparison = index;
-                _comparisonMarker = -1;
-                BuildSamples();
-                BuildMarkers();
-                BuildFragments();
-            };
-            ComparisonSampleList.AddChild(comparison);
+            SampleList.AddChild(button);
         }
 
         SampleDetails.Text = _primary < 0
-            ? Loc.GetString("cell-sequencer-menu-no-selected-label")
-            : Loc.GetString("cell-sequencer-sample-details",
-                ("stability", MathF.Round(_state.Samples[_primary].Cell.Stability * 100)),
-                ("count", _state.Samples[_primary].Markers.Length));
+            ? string.Empty
+            : Loc.GetString("cell-sequencer-sample-stability",
+                ("stability", MathF.Round(_state.Samples[_primary].Cell.Stability * 100)));
     }
 
     private void BuildMarkers()
     {
-        PrimaryMarkerList.RemoveAllChildren();
-        ComparisonMarkerList.RemoveAllChildren();
-        if (_state is null)
-            return;
-
-        PrimaryLabel.Text = _primary < 0 ? string.Empty : _state.Samples[_primary].Cell.Name;
-        ComparisonLabel.Text = _comparison < 0 ? string.Empty : _state.Samples[_comparison].Cell.Name;
-        if (_primary >= 0)
+        MarkerDetails.Text = string.Empty;
+        ComparisonLabel.Text = string.Empty;
+        if (_state is null || _primary < 0)
         {
-            var markers = _state.Samples[_primary].Markers;
-            for (var i = 0; i < markers.Length; i++)
-            {
-                var index = i;
-                var button = MarkerButton(markers[i], i, i == _marker);
-                button.OnPressed += _ =>
-                {
-                    _marker = index;
-                    _assembly.Clear();
-                    BuildMarkers();
-                    BuildFragments();
-                };
-                PrimaryMarkerList.AddChild(button);
-            }
+            Genome.SetMarkers([], -1);
+            return;
         }
 
-        if (_comparison < 0)
+        var samples = _state.Samples;
+        var markers = samples[_primary].Markers;
+        if (_marker >= markers.Length)
+            _marker = -1;
+        Genome.SetMarkers(markers, _marker);
+
+        if (_marker < 0)
             return;
-        var comparisonMarkers = _state.Samples[_comparison].Markers;
-        for (var i = 0; i < comparisonMarkers.Length; i++)
-        {
-            var index = i;
-            var button = MarkerButton(comparisonMarkers[i], i, i == _comparisonMarker);
-            button.OnPressed += _ =>
-            {
-                _comparisonMarker = index;
-                BuildMarkers();
-                BuildFragments();
-            };
-            ComparisonMarkerList.AddChild(button);
-        }
+        var active = markers[_marker];
+        MarkerDetails.Text = active.Decoded
+            ? Loc.GetString("cell-sequencer-known-detail", ("name", active.Name), ("value", active.Value))
+            : active.FamilyCode;
+
+        if (!_comparing || _comparison < 0)
+            return;
+
+        var other = samples[_comparison].Markers;
+        var match = Array.Find(other, m => m.FamilyCode == active.FamilyCode);
+        ComparisonLabel.Text = match is null
+            ? Loc.GetString("cell-sequencer-different-gene")
+            : !match.Decoded || !active.Decoded
+                ? Loc.GetString("cell-sequencer-same-gene-hidden")
+                : active.Sequence == match.Sequence
+                    ? Loc.GetString("cell-sequencer-same-value")
+                    : Loc.GetString("cell-sequencer-different-value");
     }
 
-    private static Button MarkerButton(SequencerMarkerView marker, int index, bool selected) => new()
+    private void BuildAssembly()
     {
-        Text = $"{index + 1:00}   {marker.FamilyCode[..4]}-{marker.FamilyCode[4..]}  |  " +
-            (marker.Decoded ? marker.Sequence[8..] : "••••-••••"),
-        ToggleMode = true,
-        Pressed = selected
-    };
+        SequencerMarkerView? active = null;
+        if (_state is not null && _primary >= 0 && _marker >= 0 &&
+            _marker < _state.Samples[_primary].Markers.Length)
+            active = _state.Samples[_primary].Markers[_marker];
 
-    private void BuildFragments()
+        if (active is null || active.Decoded)
+        {
+            Assembly.SetFragments([], string.Empty);
+            _lastFragments = [];
+        }
+        else if (_lastPrefix != active.FamilyCode ||
+                 !_lastFragments.SequenceEqual(active.Fragments))
+        {
+            _lastPrefix = active.FamilyCode;
+            _lastFragments = active.Fragments.ToArray();
+            Assembly.SetFragments(active.Fragments, active.FamilyCode);
+        }
+        DecodeStatus.Text = active is null ? string.Empty
+            : active.Decoded ? Loc.GetString("cell-sequencer-status-known")
+            : Loc.GetString("cell-sequencer-status-unknown");
+        RefreshAssembly();
+    }
+
+    private void RefreshAssembly()
     {
-        FragmentList.RemoveAllChildren();
-        if (_state is null)
-            return;
-
-        var selected = _primary >= 0 && _marker >= 0 &&
-            _marker < _state.Samples[_primary].Markers.Length
-                ? _state.Samples[_primary].Markers[_marker] : null;
-        MarkerDetails.Text = selected is null
-            ? Loc.GetString("cell-sequencer-select-marker")
-            : selected.Decoded
-                ? Loc.GetString("cell-sequencer-known-detail", ("name", selected.Name), ("value", selected.Value))
-                : Loc.GetString("cell-sequencer-unknown-detail", ("family", selected.FamilyCode));
-
-        if (selected is not null && !selected.Decoded)
-        {
-            for (var i = 0; i < selected.Fragments.Length; i++)
-            {
-                var index = i;
-                var fragment = selected.Fragments[i];
-                var button = new Button
-                {
-                    Text = $"{i + 1:00}   {fragment[..4]}  →  {fragment[3..]}",
-                    Disabled = _assembly.Contains(i)
-                };
-                button.OnPressed += _ =>
-                {
-                    _assembly.Add(index);
-                    BuildFragments();
-                };
-                FragmentList.AddChild(button);
-            }
-        }
-
-        var validOverlap = true;
-        if (_assembly.Count == 0 || selected is null)
-        {
-            AssemblyLabel.Text = Loc.GetString("cell-sequencer-empty-assembly");
-        }
-        else
-        {
-            var reads = _assembly.Select(index => selected.Fragments[index]).ToArray();
-            validOverlap = reads[0][..4] == selected.FamilyCode[..4];
-            for (var i = 1; i < reads.Length; i++)
-                validOverlap &= reads[i - 1][3..] == reads[i][..4];
-            var assembled = reads[0] + string.Concat(reads.Skip(1).Select(read => read[4..]));
-            AssemblyLabel.Text = Loc.GetString("cell-sequencer-assembly-status",
-                ("sequence", assembled),
-                ("status", Loc.GetString(validOverlap ? "cell-sequencer-overlap-match" : "cell-sequencer-overlap-mismatch")));
-        }
-        ResetButton.Disabled = _assembly.Count == 0;
-        DecodeButton.Disabled = selected is null || selected.Decoded || _assembly.Count != 4 || !validOverlap ||
-            _state.RetrySeconds > 0;
-
-        ResultLabel.Text = _state.RetrySeconds > 0
+        ResetButton.Disabled = !Assembly.HasPlaced;
+        DecodeButton.Disabled = _state is null || !Assembly.Complete || _state.RetrySeconds > 0;
+        ResultLabel.Text = _state is { RetrySeconds: > 0 }
             ? Loc.GetString("cell-sequencer-retry", ("seconds", Math.Ceiling(_state.RetrySeconds)))
-            : ComparisonResult();
-    }
-
-    private string ComparisonResult()
-    {
-        if (_state is null || _primary < 0 || _marker < 0 || _comparison < 0 || _comparisonMarker < 0)
-            return string.Empty;
-        var first = _state.Samples[_primary].Markers[_marker];
-        var second = _state.Samples[_comparison].Markers[_comparisonMarker];
-        if (first.FamilyCode != second.FamilyCode)
-            return Loc.GetString("cell-sequencer-different-gene");
-        if (!first.Decoded || !second.Decoded)
-            return Loc.GetString("cell-sequencer-same-gene-hidden");
-        return first.Sequence == second.Sequence
-            ? Loc.GetString("cell-sequencer-same-value")
-            : Loc.GetString("cell-sequencer-different-value");
+            : string.Empty;
     }
 }
