@@ -58,7 +58,7 @@ public sealed partial class CellSystem : SharedCellSystem
             if (_genomes.Generate(entry.Genome, out var genome) != GenomeOperationResult.Success || genome is null)
                 continue;
 
-            AddCell((ent, container), new Cell(entry.Color, Loc.GetString(entry.Name), entry.Stability, genome));
+            AddCell((ent, container), CreateCell(genome, entry.Stability));
         }
     }
 
@@ -140,7 +140,7 @@ public sealed partial class CellSystem : SharedCellSystem
                     if (!_genomes.TryGetSnapshot(target, out var genome) || genome is null)
                         return false;
 
-                    if (!AddCell(ent.Owner, GenerateRandomCell(genome, damage)))
+                    if (!AddCell(ent.Owner, GenerateBiopsyCell(genome, damage)))
                         return false;
 
                     if (ent.Comp.Damage is not null)
@@ -190,29 +190,35 @@ public sealed partial class CellSystem : SharedCellSystem
     /// <summary>
     /// Creates a fresh laboratory sample from the organism's current genome.
     /// </summary>
-    private Cell GenerateRandomCell(GenomeSnapshot genome, float cellularDamage)
+    private Cell GenerateBiopsyCell(GenomeSnapshot genome, float cellularDamage)
     {
-        var name = GetProceduralName(genome);
-
-        var color = new Color(
-            _random.NextFloat(),
-            _random.NextFloat(),
-            _random.NextFloat());
-
         var geneCount = genome.GeneCount;
         var stability = MathF.Max(0.1f, 1.0f - geneCount * 0.05f + _random.NextFloat(-0.03f, 0.03f));
         stability *= 1f - 0.5f * Math.Clamp(cellularDamage, 0f, 120f) / 100f;
-        return new Cell(
-            color: color,
-            name: name,
-            stability: stability,
-            genome: genome);
+        return CreateCell(genome, stability);
     }
 
-    private string GetProceduralName(GenomeSnapshot genome)
+    /// <summary>
+    /// Derives the initial appearance from gene content for both biopsies and prepared samples.
+    /// Later gene extraction leaves the physical sample's appearance unchanged.
+    /// </summary>
+    private Cell CreateCell(GenomeSnapshot genome, float stability)
+    {
+        var hash = GetAppearanceHash(genome);
+        var prefixes = _prototypes.Index(CellPrefixes).Values;
+        var suffixes = _prototypes.Index(CellSuffixes).Values;
+        var prefix = Loc.GetString(prefixes[(int) (hash % (ulong) prefixes.Count)]);
+        var suffix = Loc.GetString(suffixes[(int) (hash / (ulong) prefixes.Count % (ulong) suffixes.Count)]);
+        var color = new Color(
+            0.2f + (hash & 0xff) / 255f * 0.65f,
+            0.2f + (hash >> 8 & 0xff) / 255f * 0.65f,
+            0.2f + (hash >> 16 & 0xff) / 255f * 0.65f);
+        return new Cell(color, prefix + suffix, stability, genome);
+    }
+
+    private static ulong GetAppearanceHash(GenomeSnapshot genome)
     {
         var canonical = new StringBuilder();
-        AppendField(canonical, genome.GenomeId.ToString());
         foreach (var (id, state) in genome.GetGenes().OrderBy(entry => entry.Key.ToString(), StringComparer.Ordinal))
         {
             AppendField(canonical, id.ToString());
@@ -228,11 +234,7 @@ public sealed partial class CellSystem : SharedCellSystem
             hash = unchecked((hash ^ value) * prime);
         }
 
-        var prefixes = _prototypes.Index(CellPrefixes).Values;
-        var suffixes = _prototypes.Index(CellSuffixes).Values;
-        var prefix = Loc.GetString(prefixes[(int) (hash % (ulong) prefixes.Count)]);
-        var suffix = Loc.GetString(suffixes[(int) (hash / (ulong) prefixes.Count % (ulong) suffixes.Count)]);
-        return prefix + suffix;
+        return hash;
     }
 
     private static void AppendField(StringBuilder builder, string? value)
