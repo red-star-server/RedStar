@@ -142,7 +142,11 @@ public sealed partial class MutagenicInjectorSystem : SharedMutagenicInjectorSys
         foreach (var sample in dishContainer.Cells)
         {
             if (sample.GetGenome() is not { } genome)
-                continue;
+            {
+                CancelInjection(ent);
+                _popup.PopupEntity(Loc.GetString("mutagenic-injector-no-genome-sample"), ent, PopupType.MediumCaution);
+                return;
+            }
             if (_genomes.ValidateSnapshot(genome) != GenomeOperationResult.Success)
             {
                 CancelInjection(ent);
