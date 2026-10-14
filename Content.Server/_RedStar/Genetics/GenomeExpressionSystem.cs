@@ -39,7 +39,7 @@ public sealed partial class GenomeExpressionSystem : EntitySystem
             if (!_prototypes.TryIndex(id, out var gene) || gene.Effects.Length == 0)
                 continue;
 
-            if (host.Applied.TryGetValue(id, out var applied) && SameValue(applied, state))
+            if (host.Applied.Contains(id))
             {
                 host.Incubating.Remove(id);
                 continue;
@@ -48,15 +48,18 @@ public sealed partial class GenomeExpressionSystem : EntitySystem
             if (natural)
             {
                 if (_effects.TryApplyEffects(uid, gene.Effects))
-                    host.Applied[id] = state.Clone();
+                    host.Applied.Add(id);
                 continue;
             }
 
-            if (!host.Incubating.TryGetValue(id, out var pending) || !SameValue(pending.Value, state))
-            {
-                host.Incubating[id] = new IncubatingGene(state,
-                    TimeSpan.FromSeconds(Math.Max(0, _config.GetCVar(GeneticsCVars.IncubationSeconds))));
-            }
+            if (host.Incubating.TryGetValue(id, out var pending) && SameValue(pending.Value, state)) 
+                continue;
+
+            var seconds = _config.GetCVar(GeneticsCVars.IncubationSeconds);
+            if (!float.IsFinite(seconds))
+                seconds = 60f;
+            host.Incubating[id] = new IncubatingGene(state,
+                TimeSpan.FromSeconds(Math.Max(0f, seconds)));
         }
 
         foreach (var id in host.Incubating.Keys.ToArray())
@@ -92,7 +95,7 @@ public sealed partial class GenomeExpressionSystem : EntitySystem
 
                 if (_effects.TryApplyEffects(uid, gene.Effects))
                 {
-                    host.Applied[id] = current;
+                    host.Applied.Add(id);
                     host.Incubating.Remove(id);
                 }
             }

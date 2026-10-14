@@ -27,9 +27,6 @@ public sealed partial class GrowingVatComponent : Component
     [DataField]
     public TimeSpan CycleDuration = TimeSpan.FromSeconds(60);
 
-    [DataField]
-    public float MutationChance = 1f;
-
     [ViewVariables]
     public EntityUid? Subject;
 
@@ -38,4 +35,7 @@ public sealed partial class GrowingVatComponent : Component
 
     [ViewVariables]
     public float TickAccumulator;
+
+    [ViewVariables]
+    public bool Processing;
 }

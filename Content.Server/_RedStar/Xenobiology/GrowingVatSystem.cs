@@ -3,6 +3,7 @@ using Content.Server._RedStar.Genetics;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared._RedStar.Genetics;
+using Content.Shared._RedStar.Genetics.Prototypes;
 using Content.Shared._RedStar.Xenobiology.Components.Machines;
 using Content.Shared._RedStar.Xenobiology.Visuals;
 using Content.Shared.Chemistry.Components;
@@ -16,6 +17,7 @@ using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server._RedStar.Xenobiology;
 
@@ -30,6 +32,7 @@ public sealed partial class GrowingVatSystem : EntitySystem
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private IPrototypeManager _prototypes = default!;
 
     private const string Nutriment = "Nutriment";
     private const string Saline = "Saline";
@@ -147,8 +150,14 @@ public sealed partial class GrowingVatSystem : EntitySystem
         UpdateVisual(ent, false);
     }
 
-    private void UpdateVisual(Entity<GrowingVatComponent> ent, bool processing) =>
+    private void UpdateVisual(Entity<GrowingVatComponent> ent, bool processing)
+    {
+        if (ent.Comp.Processing == processing)
+            return;
+
+        ent.Comp.Processing = processing;
         _appearance.SetData(ent, GrowingVatVisuals.Processing, processing);
+    }
 
     public override void Update(float frameTime)
     {
@@ -183,15 +192,15 @@ public sealed partial class GrowingVatSystem : EntitySystem
                     break;
                 }
 
-                _solutions.RemoveReagent(solution, Nutriment, component.NutrimentPerSecond);
-                _solutions.RemoveReagent(solution, Saline, component.SalinePerSecond);
                 component.TickAccumulator -= 1f;
                 component.Progress += TimeSpan.FromSeconds(1);
-                if (component.Progress < component.CycleDuration)
-                    continue;
+                if (component.Progress >= component.CycleDuration)
+                    Complete(vat, subject);
 
-                Complete(vat, subject);
-                break;
+                _solutions.RemoveReagent(solution, Nutriment, component.NutrimentPerSecond);
+                _solutions.RemoveReagent(solution, Saline, component.SalinePerSecond);
+                if (component.Subject is null)
+                    break;
             }
         }
     }
@@ -199,11 +208,21 @@ public sealed partial class GrowingVatSystem : EntitySystem
     private void Complete(Entity<GrowingVatComponent> vat, EntityUid subject)
     {
         Cancel(vat);
-        if (!_genomes.HasGene(subject, "NightVision") || !_genomes.HasGene(subject, "Regeneration") ||
-            _genomes.HasGene(subject, "NoSlip") || !float.IsFinite(vat.Comp.MutationChance) ||
-            !_random.Prob(Math.Clamp(vat.Comp.MutationChance, 0f, 1f)))
+        if (!_solutions.TryGetSolution(vat.Owner, vat.Comp.Solution, out _, out var solution))
             return;
 
-        _genomes.SetGene(subject, "NoSlip", new GeneState());
+        foreach (var recipe in _prototypes.EnumeratePrototypes<GeneticMutationPrototype>())
+        {
+            if (_genomes.HasGene(subject, recipe.ResultGene) ||
+                recipe.RequiredGenes.Any(id => !_genomes.HasGene(subject, id)) ||
+                recipe.RequiredReagents.Any(entry =>
+                    solution.GetTotalPrototypeQuantity(entry.Key.Id) < entry.Value) ||
+                !float.IsFinite(recipe.Chance) ||
+                !_random.Prob(Math.Clamp(recipe.Chance, 0f, 1f)))
+                continue;
+
+            if (_genomes.SetGene(subject, recipe.ResultGene, new GeneState()) == GenomeOperationResult.Success)
+                break;
+        }
     }
 }

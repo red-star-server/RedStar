@@ -10,7 +10,7 @@ namespace Content.Server._RedStar.Genetics;
 public sealed partial class GenomeExpressionComponent : Component
 {
     [DataField]
-    public Dictionary<ProtoId<GenePrototype>, GeneState> Applied = [];
+    public HashSet<ProtoId<GenePrototype>> Applied = [];
 
     [DataField]
     public Dictionary<ProtoId<GenePrototype>, IncubatingGene> Incubating = [];
