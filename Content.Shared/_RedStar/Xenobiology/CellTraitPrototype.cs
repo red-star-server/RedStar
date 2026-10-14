@@ -26,11 +26,5 @@ public sealed partial class CellTraitPrototype : IPrototype
     public string? Allele;
 
     [DataField]
-    public LocId Name;
-
-    [DataField]
-    public Color Color;
-
-    [DataField]
     public EntityEffect[] Effects = [];
 }

@@ -39,9 +39,10 @@ public sealed partial class GenomeExpressionSystem : EntitySystem
                 continue;
 
             host ??= EnsureComp<GenomeExpressionComponent>(uid);
-            if (!host.Applied.Add(rule.ID))
+            if (host.Applied.Contains(rule.ID))
                 continue;
-            _effects.ApplyEffects(uid, rule.Effects);
+            if (_effects.TryApplyEffects(uid, rule.Effects))
+                host.Applied.Add(rule.ID);
         }
     }
 }

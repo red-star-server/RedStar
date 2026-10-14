@@ -1,8 +1,6 @@
 - type: cellTrait
   id: Pacifism
   gene: Pacifism
-  name: cell-trait-Pacifism-name
-  color: "#b4e514"
   effects:
   - !type:AddComponents
     components:
@@ -11,8 +9,6 @@
 - type: cellTrait
   id: OwO
   gene: OwO
-  name: cell-trait-OwO-name
-  color: "#ff66aa"
   effects:
   - !type:AddComponents
     components:
@@ -21,8 +17,6 @@
 - type: cellTrait
   id: NightVision
   gene: NightVision
-  name: cell-trait-NightVision-name
-  color: "#44cc44"
   effects:
   - !type:AddComponents
     components:
@@ -31,8 +25,6 @@
 - type: cellTrait
   id: EggLayer
   gene: EggLayer
-  name: cell-trait-EggLayer-name
-  color: "#f5e7ba"
   effects:
   - !type:AddComponents
     components:
@@ -56,8 +48,6 @@
 - type: cellTrait
   id: Lactation
   gene: Lactation
-  name: cell-trait-Lactation-name
-  color: "#fff7dc"
   effects:
   - !type:ContainedSolutionEffect
     prototype: SolutionUdder
@@ -73,8 +63,6 @@
 - type: cellTrait
   id: Venomous
   gene: Venomous
-  name: cell-trait-Venomous-name
-  color: "#88dd44"
   effects:
   - !type:ContainedSolutionEffect
     prototype: SolutionVenomSpider
@@ -88,8 +76,6 @@
 - type: cellTrait
   id: WebSpinning
   gene: WebSpinning
-  name: cell-trait-WebSpinning-name
-  color: "#eeeeee"
   effects:
   - !type:AddComponents
     components:
@@ -98,8 +84,6 @@
 - type: cellTrait
   id: Regeneration
   gene: Regeneration
-  name: cell-trait-Regeneration-name
-  color: "#44ff88"
   effects:
   - !type:AddComponents
     components:
@@ -120,8 +104,6 @@
 - type: cellTrait
   id: NoSlip
   gene: NoSlip
-  name: cell-trait-NoSlip-name
-  color: "#4488ff"
   effects:
   - !type:AddComponents
     components:
@@ -130,8 +112,6 @@
 - type: cellTrait
   id: Reflection
   gene: Reflection
-  name: cell-trait-Reflection-name
-  color: "#ffdd44"
   effects:
   - !type:AddComponents
     components:
@@ -141,8 +121,6 @@
 - type: cellTrait
   id: Invisibility
   gene: Invisibility
-  name: cell-trait-Invisibility-name
-  color: "#aaddff"
   effects:
   - !type:AddComponents
     components:
@@ -152,8 +130,6 @@
 - type: cellTrait
   id: Radiation
   gene: Radiation
-  name: cell-trait-Radiation-name
-  color: "#88ff00"
   effects:
   - !type:AddComponents
     components:
@@ -162,8 +138,6 @@
 - type: cellTrait
   id: Reform
   gene: Reform
-  name: cell-trait-Reform-name
-  color: "#cc44ff"
   effects:
   - !type:AddComponents
     components:
@@ -176,8 +150,6 @@
 - type: cellTrait
   id: MessyDrinker
   gene: MessyDrinker
-  name: cell-trait-MessyDrinker-name
-  color: "#bb7744"
   effects:
   - !type:AddComponents
     components:
@@ -186,8 +158,6 @@
 - type: cellTrait
   id: ParrotSpeech
   gene: ParrotSpeech
-  name: cell-trait-ParrotSpeech-name
-  color: "#ff4444"
   effects:
   - !type:AddComponents
     components:
@@ -199,8 +169,6 @@
 - type: cellTrait
   id: Bleating
   gene: Bleating
-  name: cell-trait-Bleating-name
-  color: "#ddddaa"
   effects:
   - !type:AddComponents
     components:

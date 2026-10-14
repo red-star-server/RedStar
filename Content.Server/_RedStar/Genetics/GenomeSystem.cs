@@ -201,9 +201,8 @@ public sealed partial class GenomeSystem : EntitySystem
         if (hadOld && SameState(old!, state))
             return GenomeOperationResult.Success;
 
-        var kind = hadOld ? GenomeChangeKind.Changed : GenomeChangeKind.Added;
         component.Genes[id] = state.Clone();
-        RaiseLocalEvent(uid, new GenomeChangedEvent(kind, id));
+        RaiseLocalEvent(uid, new GenomeChangedEvent());
         return GenomeOperationResult.Success;
     }
 
@@ -217,7 +216,7 @@ public sealed partial class GenomeSystem : EntitySystem
         if (!component!.Genes.Remove(id))
             return GenomeOperationResult.Success;
 
-        RaiseLocalEvent(uid, new GenomeChangedEvent(GenomeChangeKind.Removed, id));
+        RaiseLocalEvent(uid, new GenomeChangedEvent());
         return GenomeOperationResult.Success;
     }
 
@@ -263,7 +262,7 @@ public sealed partial class GenomeSystem : EntitySystem
     {
         ent.Comp.Genes = genes;
         ent.Comp.GenomeGenerated = true;
-        RaiseLocalEvent(ent.Owner, new GenomeChangedEvent(GenomeChangeKind.Replaced));
+        RaiseLocalEvent(ent.Owner, new GenomeChangedEvent());
     }
 
     public GenomeOperationResult CopyGenome(EntityUid source, EntityUid target)
