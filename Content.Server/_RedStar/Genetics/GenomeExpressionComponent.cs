@@ -1,4 +1,4 @@
-using Content.Shared._RedStar.Xenobiology;
+using Content.Shared._RedStar.Genetics;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server._RedStar.Genetics;
@@ -11,5 +11,5 @@ namespace Content.Server._RedStar.Genetics;
 public sealed partial class GenomeExpressionComponent : Component
 {
     [DataField]
-    public HashSet<ProtoId<CellTraitPrototype>> Applied = [];
+    public HashSet<ProtoId<GenePrototype>> Applied = [];
 }

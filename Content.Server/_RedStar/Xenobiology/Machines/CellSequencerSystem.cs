@@ -7,6 +7,7 @@ using Content.Shared._RedStar.Genetics;
 using Content.Shared._RedStar.Xenobiology.Components.Container;
 using Content.Shared._RedStar.Xenobiology.Components.Machines;
 using Content.Shared._RedStar.Xenobiology.Events;
+using Content.Shared._RedStar.Xenobiology.Systems;
 using Content.Shared._RedStar.Xenobiology.UI;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Popups;
@@ -25,6 +26,8 @@ public sealed partial class CellSequencerSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private GenomeSystem _genomes = default!;
     [Dependency] private IPrototypeManager _prototypes = default!;
+    [Dependency] private GeneticVialSystem _vials = default!;
+    [Dependency] private SharedCellSystem _cells = default!;
 
     private byte[] _roundSeed = [];
 
@@ -40,18 +43,20 @@ public sealed partial class CellSequencerSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnInserted(Entity<CellSequencerComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
-        if (args.Container.ID != ent.Comp.DishSlot)
+        if (args.Container.ID != ent.Comp.DishSlot && args.Container.ID != ent.Comp.VialSlot)
             return;
-        Reset(ent.Comp);
+        if (args.Container.ID == ent.Comp.DishSlot)
+            Reset(ent.Comp);
         UpdateUI(ent);
     }
 
     [SubscribeLocalEvent]
     private void OnRemoved(Entity<CellSequencerComponent> ent, ref EntRemovedFromContainerMessage args)
     {
-        if (args.Container.ID != ent.Comp.DishSlot)
+        if (args.Container.ID != ent.Comp.DishSlot && args.Container.ID != ent.Comp.VialSlot)
             return;
-        Reset(ent.Comp);
+        if (args.Container.ID == ent.Comp.DishSlot)
+            Reset(ent.Comp);
         UpdateUI(ent);
     }
 
@@ -116,6 +121,44 @@ public sealed partial class CellSequencerSystem : EntitySystem
         UpdateUI(ent);
     }
 
+    [SubscribeLocalEvent]
+    private void OnExtract(Entity<CellSequencerComponent> ent, ref CellSequencerExtractMessage args)
+    {
+        if (!this.IsPowered(ent.Owner, EntityManager) ||
+            !TryGetDish(ent, out var dish) || !TryGetVial(ent, out var vial) ||
+            args.Dish != GetNetEntity(dish.Owner) || args.DishRevision != dish.Comp.Revision ||
+            args.Vial != GetNetEntity(vial.Owner) || args.VialRevision != vial.Comp.Revision ||
+            args.SampleIndex < 0 || args.SampleIndex >= dish.Comp.Cells.Count)
+            return;
+
+        var cell = dish.Comp.Cells[args.SampleIndex];
+        if (!float.IsFinite(cell.Stability) || cell.Stability < 0.5f ||
+            cell.GetGenome() is not { } genome ||
+            _genomes.ValidateSnapshot(genome) != GenomeOperationResult.Success)
+            return;
+
+        var genes = OrderedGenes(genome);
+        if (args.MarkerIndex < 0 || args.MarkerIndex >= genes.Length)
+            return;
+
+        SyncWork(ent.Comp, dish);
+        var (id, state) = genes[args.MarkerIndex];
+        if (!ent.Comp.Decoded.Contains(Sequence(id, state)) || !_vials.TryAdd(vial, id, state))
+            return;
+
+        ent.Comp.ActiveRevision = dish.Comp.Revision + 1;
+        if (_cells.TryRemoveGene((dish.Owner, (CellContainerComponent?) dish.Comp), cell, id))
+        {
+            _popup.PopupEntity(Loc.GetString("cell-sequencer-extracted", ("gene", Loc.GetString($"gene-{id}-name"))),
+                ent, PopupType.Medium);
+            return;
+        }
+
+        ent.Comp.ActiveRevision = dish.Comp.Revision;
+        _vials.TryRemove(vial, id);
+        UpdateUI(ent);
+    }
+
     private bool TryGetDish(Entity<CellSequencerComponent> ent, out Entity<CellContainerComponent> dish)
     {
         dish = default;
@@ -123,6 +166,16 @@ public sealed partial class CellSequencerSystem : EntitySystem
         if (uid is not { } dishUid || !TryComp<CellContainerComponent>(dishUid, out var container))
             return false;
         dish = (dishUid, container);
+        return true;
+    }
+
+    private bool TryGetVial(Entity<CellSequencerComponent> ent, out Entity<GeneticVialComponent> vial)
+    {
+        vial = default;
+        var uid = _itemSlots.GetItemOrNull(ent.Owner, ent.Comp.VialSlot);
+        if (uid is not { } vialUid || !TryComp<GeneticVialComponent>(vialUid, out var component))
+            return false;
+        vial = (vialUid, component);
         return true;
     }
 
@@ -154,23 +207,28 @@ public sealed partial class CellSequencerSystem : EntitySystem
         {
             Reset(ent.Comp);
             _userInterface.SetUiState(ent.Owner, CellSequencerUiKey.Key,
-                new CellSequencerUiState([], -1, null, 0, -1, -1, []));
+                new CellSequencerUiState([], -1, null, 0, -1, -1, [], null, -1));
             return;
         }
 
         SyncWork(ent.Comp, dish);
 
+        Entity<GeneticVialComponent>? vial = TryGetVial(ent, out var insertedVial) ? insertedVial : null;
+
         var samples = dish.Comp.Cells.Select(cell => new SequencerSampleView(new CellView(cell),
             cell.GetGenome() is { } genome &&
             _genomes.ValidateSnapshot(genome) == GenomeOperationResult.Success
-                ? OrderedGenes(genome).Select(entry => Marker(entry.Key, entry.Value, ent.Comp.Decoded)).ToArray()
+                ? OrderedGenes(genome).Select(entry => Marker(entry.Key, entry.Value, ent.Comp.Decoded,
+                    cell.Stability >= 0.5f ? vial : null)).ToArray()
                 : [])).ToArray();
         _userInterface.SetUiState(ent.Owner, CellSequencerUiKey.Key,
             new CellSequencerUiState(samples, dish.Comp.Revision, GetNetEntity(dish.Owner), 0,
-                ent.Comp.FeedbackSample, ent.Comp.FeedbackMarker, ent.Comp.FeedbackOrder));
+                ent.Comp.FeedbackSample, ent.Comp.FeedbackMarker, ent.Comp.FeedbackOrder,
+                vial is { } present ? GetNetEntity(present.Owner) : null, vial?.Comp.Revision ?? -1));
     }
 
-    private SequencerMarkerView Marker(ProtoId<GenePrototype> id, GeneState state, HashSet<string> decoded)
+    private SequencerMarkerView Marker(ProtoId<GenePrototype> id, GeneState state, HashSet<string> decoded,
+        Entity<GeneticVialComponent>? vial)
     {
         var sequence = Sequence(id, state);
         var known = decoded.Contains(sequence);
@@ -185,7 +243,8 @@ public sealed partial class CellSequencerSystem : EntitySystem
         var pieces = Fragments(sequence);
         var order = FragmentOrder(sequence);
         return new SequencerMarkerView(sequence[..8], order.Select(index => pieces[index]).ToArray(),
-            known, name, value, known ? sequence : string.Empty);
+            known, name, value, known ? sequence : string.Empty,
+            known && vial is { } inserted && _vials.CanAdd(inserted, id, state));
     }
 
     private static KeyValuePair<ProtoId<GenePrototype>, GeneState>[] OrderedGenes(GenomeSnapshot genome) =>

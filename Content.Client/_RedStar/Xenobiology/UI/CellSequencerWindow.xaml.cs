@@ -15,6 +15,7 @@ namespace Content.Client._RedStar.Xenobiology.UI;
 public sealed partial class CellSequencerWindow : FancyWindow
 {
     public event Action<int, int, int[], int, NetEntity?>? OnDecode;
+    public event Action<int, int, int, NetEntity?, NetEntity?, int>? OnExtract;
 
     private CellSequencerUiState? _state;
     private int _primary = -1;
@@ -40,6 +41,15 @@ public sealed partial class CellSequencerWindow : FancyWindow
         {
             if (_state is not null && _primary >= 0 && _marker >= 0 && Assembly.Complete)
                 OnDecode?.Invoke(_primary, _marker, Assembly.OrderedFragments, _state.DishRevision, _state.Dish);
+        };
+        ExtractButton.OnPressed += _ =>
+        {
+            if (_state is not null && _primary >= 0 && _marker >= 0 &&
+                _state.Samples[_primary].Markers[_marker].Extractable)
+            {
+                OnExtract?.Invoke(_primary, _marker, _state.DishRevision, _state.Dish,
+                    _state.Vial, _state.VialRevision);
+            }
         };
         CompareButton.OnPressed += _ =>
         {
@@ -189,6 +199,9 @@ public sealed partial class CellSequencerWindow : FancyWindow
     {
         ResetButton.Disabled = Assembly.IsDecoded || !Assembly.HasPlaced;
         DecodeButton.Disabled = _state is null || !Assembly.Complete || Assembly.IsDecoded;
+        ExtractButton.Disabled = _state is null || _primary < 0 || _marker < 0 ||
+            _marker >= _state.Samples[_primary].Markers.Length ||
+            !_state.Samples[_primary].Markers[_marker].Extractable;
         ResultLabel.Text = string.Empty;
     }
 }

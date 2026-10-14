@@ -30,3 +30,13 @@
   completetime: 2
   materials:
     Glass: 200
+
+- type: latheRecipe
+  id: GeneticVial
+  result: GeneticVial
+  categories:
+  - Tools
+  - Research
+  completetime: 2
+  materials:
+    Glass: 200

@@ -1,3 +1,4 @@
+using Content.Shared.EntityEffects;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared._RedStar.Genetics;
@@ -32,4 +33,7 @@ public sealed partial class GenePrototype : IPrototype
 
     [DataField]
     public int Maximum;
+
+    [DataField]
+    public EntityEffect[] Effects = [];
 }
