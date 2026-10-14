@@ -1,6 +1,7 @@
 using Content.Shared._RedStar.Genetics;
 using Content.Shared._RedStar.Xenobiology.Components.Container;
 using Content.Shared._RedStar.Xenobiology.Systems;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._RedStar.Xenobiology;
 
@@ -40,6 +41,19 @@ public sealed partial class Cell
     }
 
     public GenomeSnapshot? GetGenome() => _genome?.Clone();
+
+    internal bool TryRemoveGene(ProtoId<GenePrototype> id)
+    {
+        if (_genome is null)
+            return false;
+
+        var genes = _genome.GetGenes();
+        if (!genes.Remove(id))
+            return false;
+
+        _genome = new GenomeSnapshot(_genome.GenomeId, genes);
+        return true;
+    }
 
     /// <summary>Sequencing mistakes damage this physical sample, never its stored genome.</summary>
     public void ReduceStability(float amount) => Stability = Math.Clamp(Stability - Math.Max(0f, amount), 0f, 1f);

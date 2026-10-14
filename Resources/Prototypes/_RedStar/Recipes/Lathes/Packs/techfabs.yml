@@ -19,6 +19,7 @@
   recipes:
   - BiopsyTool
   - PetriDish
+  - GeneticVial
 
 - type: latheRecipePack
   id: MiningToolsStatic

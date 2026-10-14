@@ -82,6 +82,22 @@
       enum.CellSequencerUiKey.Key:
         type: CellSequencerBoundUserInterface
   - type: CellSequencer
+  - type: ContainerContainer
+    containers:
+      dishSlot: !type:ContainerSlot
+      vialSlot: !type:ContainerSlot
+      machine_board: !type:Container
+      machine_parts: !type:Container
+  - type: ItemSlots
+    slots:
+      dishSlot:
+        whitelist:
+          tags:
+          - Dish
+      vialSlot:
+        whitelist:
+          components:
+          - GeneticVial
   - type: Machine
     board: CellSequencerCircuitboard
 
@@ -153,17 +169,17 @@
     containers:
       machine_board: !type:Container
       machine_parts: !type:Container
-      dishSlot: !type:ContainerSlot
+      vialSlot: !type:ContainerSlot
       injector-bodyContainer: !type:ContainerSlot
   - type: EmptyOnMachineDeconstruct
     containers:
     - injector-bodyContainer
   - type: ItemSlots
     slots:
-      dishSlot:
+      vialSlot:
         whitelist:
-          tags:
-          - Dish
+          components:
+          - GeneticVial
   - type: Appearance
   - type: GenericVisualizer
     visuals:

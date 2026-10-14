@@ -1,3 +1,4 @@
+using Content.Shared._RedStar.Genetics;
 using Content.Shared._RedStar.Xenobiology.Components.Container;
 using Content.Shared._RedStar.Xenobiology.Events;
 using JetBrains.Annotations;
@@ -61,6 +62,19 @@ public abstract partial class SharedCellSystem : EntitySystem
         ent.Comp.Cells.Remove(first);
         ent.Comp.Cells.Remove(second);
         ent.Comp.Cells.Add(result);
+        ent.Comp.Revision++;
+        RaiseLocalEvent(ent, new CellContainerChangedEvent());
+        return true;
+    }
+
+    /// <summary>
+    /// Removes one gene from a contained sample and notifies observers once.
+    /// </summary>
+    public bool TryRemoveGene(Entity<CellContainerComponent?> ent, Cell cell, ProtoId<GenePrototype> id)
+    {
+        if (!Resolve(ent, ref ent.Comp) || !ent.Comp.Cells.Contains(cell) || !cell.TryRemoveGene(id))
+            return false;
+
         ent.Comp.Revision++;
         RaiseLocalEvent(ent, new CellContainerChangedEvent());
         return true;

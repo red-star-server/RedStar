@@ -1,0 +1,22 @@
+- type: entity
+  parent: BaseItem
+  id: GeneticVial
+  name: genetic vial
+  description: Holds extracted genetic material.
+  components:
+  - type: GeneticVial
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.GeneticVialVisuals.Filled:
+        enum.GeneticVialVisuals.Layer:
+          True: { state: vial_load }
+          False: { state: vial }
+  - type: Sprite
+    sprite: _RedStar/Objects/Specific/Xenobiology/gene_vial.rsi
+    layers:
+    - state: vial
+      map: [ "enum.GeneticVialVisuals.Layer" ]
+  - type: Item
+    size: Small
+    sprite: _RedStar/Objects/Specific/Xenobiology/gene_vial.rsi

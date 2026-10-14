@@ -50,6 +50,7 @@
                         <Label Name="ResultLabel" HorizontalExpand="True" />
                         <Button Name="ResetButton" Text="{Loc 'cell-sequencer-reset'}" />
                         <Button Name="DecodeButton" Text="{Loc 'cell-sequencer-submit'}" />
+                        <Button Name="ExtractButton" Text="{Loc 'cell-sequencer-extract'}" />
                     </BoxContainer>
                 </PanelContainer>
             </BoxContainer>

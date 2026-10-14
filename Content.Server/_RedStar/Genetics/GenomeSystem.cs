@@ -53,6 +53,13 @@ public sealed partial class GenomeSystem : EntitySystem
     public GenomeOperationResult ValidateSnapshot(GenomeSnapshot snapshot) =>
         ValidateGenome(snapshot.GenomeId, snapshot.GetGenes());
 
+    public GenomeOperationResult ValidateGene(ProtoId<GenePrototype> id, GeneState state)
+    {
+        if (!_prototypes.TryIndex(id, out var gene))
+            return GenomeOperationResult.UnknownGene;
+        return ValidState(state, gene) ? GenomeOperationResult.Success : GenomeOperationResult.InvalidValue;
+    }
+
     [SubscribeLocalEvent]
     private void OnComponentInit(Entity<GenomeComponent> ent, ref ComponentInit args)
     {
