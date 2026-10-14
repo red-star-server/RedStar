@@ -28,7 +28,6 @@
     sprite: _RedStar/Objects/Specific/Xenobiology/petri_dish.rsi
   - type: CellContainer
     maxCells: 5
-    allowCollection: false
     toolsTransferWhitelist:
       components:
       - CellCollector

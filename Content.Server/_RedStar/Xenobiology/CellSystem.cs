@@ -15,6 +15,7 @@ using Content.Shared._RedStar.Xenobiology;
 using Content.Shared._RedStar.Xenobiology.Components.Container;
 using Content.Shared._RedStar.Genetics;
 using Content.Shared._RedStar.Xenobiology.Components.Tools;
+using Content.Shared._RedStar.Xenobiology.Events;
 using Content.Shared._RedStar.Xenobiology.Systems;
 using Content.Shared._RedStar.Xenobiology.Visuals;
 using Robust.Server.GameObjects;
@@ -52,9 +53,21 @@ public sealed partial class CellSystem : SharedCellSystem
         }
     }
 
+    [SubscribeLocalEvent]
+    private void OnCollectorCellsChanged(Entity<CellCollectorComponent> ent, ref CellContainerChangedEvent args)
+    {
+        UpdateCollectorAppearance(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnCollectorMapInit(Entity<CellCollectorComponent> ent, ref MapInitEvent args)
+    {
+        UpdateCollectorAppearance(ent);
+    }
+
     /// <summary>
     /// Starts a DoAfter for a living biopsy and handles container transfers immediately.
-    /// Determines direction based on whether the target has cells or detectable traits.
+    /// Determines direction from the target and whether the collector already holds a sample.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnCollectorInteract(Entity<CellCollectorComponent> ent, ref BeforeRangedInteractEvent args)
@@ -63,12 +76,15 @@ public sealed partial class CellSystem : SharedCellSystem
             return;
 
         TryComp<CellContainerComponent>(args.Target, out var containerComponent);
-        var direction = IsBiologicalSampleSource(args.Target.Value) ||
+        TryComp<CellContainerComponent>(ent, out var collectorContainer);
+        var biological = IsBiologicalSampleSource(args.Target.Value);
+        var direction = biological ||
+            collectorContainer is { Empty: true } &&
             containerComponent is { Empty: false, AllowCollection: true }
             ? CellCollectorDirection.Collection
             : CellCollectorDirection.Transfer;
 
-        if (!IsBiologicalSampleSource(args.Target.Value))
+        if (!biological)
         {
             args.Handled = CompleteCollectorInteraction(ent, args.Target.Value, direction, args.User);
             return;
@@ -85,8 +101,7 @@ public sealed partial class CellSystem : SharedCellSystem
             BlockDuplicate = true,
         };
 
-        _doAfter.TryStartDoAfter(doAfterArgs);
-        args.Handled = true;
+        args.Handled = _doAfter.TryStartDoAfter(doAfterArgs);
     }
 
     /// <summary>
@@ -143,7 +158,6 @@ public sealed partial class CellSystem : SharedCellSystem
                 throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
         }
 
-        UpdateCollectorAppearance(ent);
         return true;
     }
 

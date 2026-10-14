@@ -71,7 +71,7 @@ public abstract partial class SharedCellSystem : EntitySystem
     /// </summary>
     public bool ReplaceCells(Entity<CellContainerComponent?> ent, Cell first, Cell second, Cell result)
     {
-        if (!Resolve(ent, ref ent.Comp) || result is null || ReferenceEquals(first, second) ||
+        if (!Resolve(ent, ref ent.Comp) || ReferenceEquals(first, second) ||
             ReferenceEquals(result, first) || ReferenceEquals(result, second) ||
             !ent.Comp.Cells.Contains(first) || !ent.Comp.Cells.Contains(second) ||
             ent.Comp.Cells.Contains(result))
@@ -91,13 +91,12 @@ public abstract partial class SharedCellSystem : EntitySystem
     /// <seealso cref="RemoveCell"/>
     public void ClearCells(Entity<CellContainerComponent?> ent)
     {
-        if (!Resolve(ent, ref ent.Comp))
+        if (!Resolve(ent, ref ent.Comp) || ent.Comp.Empty)
             return;
 
-        while (ent.Comp.Cells.Count != 0)
-        {
-            RemoveCell(ent, ent.Comp.Cells[0]);
-        }
+        ent.Comp.Cells.Clear();
+        ent.Comp.Revision++;
+        RaiseLocalEvent(ent, new CellContainerChangedEvent());
     }
 
     /// <summary>

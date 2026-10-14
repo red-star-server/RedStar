@@ -14,6 +14,12 @@ public abstract partial class SharedCellVisualsSystem : EntitySystem
         UpdateAppearance(ent);
     }
 
+    [SubscribeLocalEvent]
+    private void OnMapInit(Entity<CellContainerVisualsComponent> ent, ref MapInitEvent args)
+    {
+        UpdateAppearance(ent);
+    }
+
     private void UpdateAppearance(Entity<CellContainerVisualsComponent> ent)
     {
         if (!TryComp<CellContainerComponent>(ent, out var containerComponent))
