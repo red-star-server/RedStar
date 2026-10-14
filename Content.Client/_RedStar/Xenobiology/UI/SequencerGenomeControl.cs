@@ -86,8 +86,6 @@ public sealed class SequencerGenomeControl : Control
             // A single compact glyph: no floating status ring above the locus.
             var label = marker.FamilyCode.Length >= 4 ? marker.FamilyCode[..4] : marker.FamilyCode;
             handle.DrawString(_font, new Vector2(x - 20 * scale, 75 * scale), label, Color.White);
-            if (marker.Decoded)
-                handle.DrawRect(UIBox2.FromDimensions(new Vector2(x - 13 * scale, 94 * scale), new Vector2(26, 3) * scale), tint);
         }
     }
 
