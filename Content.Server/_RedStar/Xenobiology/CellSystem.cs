@@ -29,6 +29,12 @@ namespace Content.Server._RedStar.Xenobiology;
 /// </summary>
 public sealed partial class CellSystem : SharedCellSystem
 {
+    private enum CellCollectorDirection
+    {
+        Collection,
+        Transfer
+    }
+
     private static readonly ProtoId<LocalizedDatasetPrototype> CellPrefixes = "CellPrefixes";
     private static readonly ProtoId<LocalizedDatasetPrototype> CellSuffixes = "CellSuffixes";
 
@@ -194,7 +200,6 @@ public sealed partial class CellSystem : SharedCellSystem
         var stability = MathF.Max(0.1f, 1.0f - geneCount * 0.05f + _random.NextFloat(-0.03f, 0.03f));
         stability *= 1f - 0.5f * Math.Clamp(cellularDamage, 0f, 120f) / 100f;
         return new Cell(
-            prototypeId: null,
             color: color,
             name: name,
             stability: stability,

@@ -32,7 +32,7 @@ public abstract partial class SharedCellVisualsSystem : EntitySystem
     /// <summary>
     /// All cells contribute equally; an empty dish uses the sprite's default tint.
     /// </summary>
-    public static Color GetAverageColor(IReadOnlyList<Cell> cells)
+    private static Color GetAverageColor(IReadOnlyList<Cell> cells)
     {
         if (cells.Count == 0)
         {

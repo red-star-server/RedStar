@@ -9,15 +9,13 @@ namespace Content.Client._RedStar.Xenobiology.UI;
 public sealed partial class CellEntryControl : Control
 {
     public readonly CellView Cell;
-    public readonly bool Remote;
     public readonly int Id;
     public event Action<CellEntryControl>? OnSelect;
 
-    public CellEntryControl(CellView cell, bool remote, int id)
+    public CellEntryControl(CellView cell, int id)
     {
         RobustXamlLoader.Load(this);
         Cell = cell;
-        Remote = remote;
         Id = id;
 
         CellNameLabel.Text = cell.Name;

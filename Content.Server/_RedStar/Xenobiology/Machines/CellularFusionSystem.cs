@@ -133,7 +133,7 @@ public sealed partial class CellularFusionSystem : EntitySystem
             return;
         }
 
-        var result = new Cell(null, SharedCellSystem.GetStabilizedColor(first, second),
+        var result = new Cell(SharedCellSystem.GetStabilizedColor(first, second),
             first.Name,
             SharedCellSystem.GetStabilizedStability(first, second), genome);
         ResetSplice(ent.Comp);

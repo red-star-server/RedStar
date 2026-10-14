@@ -1,6 +1,5 @@
 using System.Linq;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared._RedStar.Genetics;
 
@@ -8,7 +7,6 @@ namespace Content.Shared._RedStar.Genetics;
 /// Independent genetic material; it never retains the donor entity.
 /// </summary>
 [DataDefinition]
-[Serializable, NetSerializable]
 public sealed partial class GenomeSnapshot
 {
     [DataField]

@@ -3,3 +3,4 @@ mutagenic-injector-no-dish = No dish inserted!
 mutagenic-injector-no-cells = The dish is empty!
 mutagenic-injector-no-traits = None of these cells contains genetic material to transfer.
 mutagenic-injector-no-target = No specimen inside the injector!
+mutagenic-injector-conflicting-samples = The dish contains conflicting genetic samples.

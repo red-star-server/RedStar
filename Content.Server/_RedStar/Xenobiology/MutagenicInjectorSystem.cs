@@ -11,7 +11,6 @@ using Content.Shared.Popups;
 using Content.Shared.Power;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
-using Robust.Shared.Random;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -24,7 +23,6 @@ public sealed partial class MutagenicInjectorSystem : SharedMutagenicInjectorSys
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private GenomeSystem _genomes = default!;
-    [Dependency] private IRobustRandom _random = default!;
 
     protected override bool IsValidRecipient(EntityUid recipient) =>
         base.IsValidRecipient(recipient) && HasComp<GenomeComponent>(recipient);
@@ -140,21 +138,31 @@ public sealed partial class MutagenicInjectorSystem : SharedMutagenicInjectorSys
             return;
         }
 
-        var samples = new List<(GenomeSnapshot Genome, float Stability)>();
+        var incoming = new Dictionary<ProtoId<GenePrototype>, GeneState>();
         foreach (var sample in dishContainer.Cells)
         {
-            if (!sample.HasGenome)
+            if (sample.GetGenome() is not { } genome)
                 continue;
-            if (sample.GetGenome() is not { } genome ||
-                _genomes.ValidateSnapshot(genome) != GenomeOperationResult.Success)
+            if (_genomes.ValidateSnapshot(genome) != GenomeOperationResult.Success)
             {
                 CancelInjection(ent);
                 return;
             }
-            samples.Add((genome, sample.Stability));
+            foreach (var (id, state) in genome.GetGenes())
+            {
+                if (incoming.TryGetValue(id, out var existing) &&
+                    (existing.Allele != state.Allele || existing.Number != state.Number))
+                {
+                    CancelInjection(ent);
+                    _popup.PopupEntity(Loc.GetString("mutagenic-injector-conflicting-samples"), ent, PopupType.MediumCaution);
+                    return;
+                }
+
+                incoming[id] = state;
+            }
         }
 
-        if (samples.Count == 0)
+        if (incoming.Count == 0)
         {
             CancelInjection(ent);
             return;
@@ -162,22 +170,13 @@ public sealed partial class MutagenicInjectorSystem : SharedMutagenicInjectorSys
 
         var originalGenes = recipient.GetGenes();
         var genes = new Dictionary<ProtoId<GenePrototype>, GeneState>(originalGenes);
-        foreach (var (genome, stability) in samples)
-        {
-            foreach (var (id, state) in genome.GetGenes())
-            {
-                if (!_random.Prob(Math.Clamp(stability, 0f, 1f)))
-                    continue;
-                genes[id] = state;
-            }
-        }
-
         var changed = 0;
-        foreach (var (id, state) in genes)
+        foreach (var (id, state) in incoming)
         {
             if (!originalGenes.TryGetValue(id, out var original) ||
                 original.Allele != state.Allele || original.Number != state.Number)
                 changed++;
+            genes[id] = state;
         }
 
         if (_genomes.ReplaceGenome(mob, new GenomeSnapshot(recipient.GenomeId, genes)) != GenomeOperationResult.Success)

@@ -72,7 +72,7 @@ public sealed partial class CellularFusionWindow : FancyWindow
         CellContainer.RemoveAllChildren();
         for (var index = 0; index < cells.Count; index++)
         {
-            var entry = new CellEntryControl(cells[index], false, index);
+            var entry = new CellEntryControl(cells[index], index);
             entry.OnSelect += SelectEntry;
             CellContainer.AddChild(entry);
         }

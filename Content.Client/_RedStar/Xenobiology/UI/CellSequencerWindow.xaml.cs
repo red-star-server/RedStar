@@ -21,7 +21,7 @@ public sealed partial class CellSequencerWindow : FancyWindow
         NoSelectedLabel.Visible = true;
         for (var index = 0; index < state.InsideCells.Length; index++)
         {
-            var entry = new CellEntryControl(state.InsideCells[index], false, index);
+            var entry = new CellEntryControl(state.InsideCells[index], index);
             entry.OnSelect += selected =>
             {
                 CellInfo.SetCell(selected.Cell);

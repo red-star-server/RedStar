@@ -11,10 +11,3 @@ public sealed partial class CellCollectorDoAfter : SimpleDoAfterEvent
         return new CellCollectorDoAfter();
     }
 }
-
-[Serializable, NetSerializable]
-public enum CellCollectorDirection
-{
-    Collection,
-    Transfer
-}

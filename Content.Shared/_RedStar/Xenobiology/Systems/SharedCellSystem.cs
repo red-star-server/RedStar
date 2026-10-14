@@ -48,25 +48,6 @@ public abstract partial class SharedCellSystem : EntitySystem
     }
 
     /// <summary>
-    /// Remove a <see cref="Cell"/> instance from the container.
-    /// </summary>
-    public bool RemoveCell(Entity<CellContainerComponent?> ent, Cell cell)
-    {
-        if (!Resolve(ent, ref ent.Comp))
-            return false;
-
-        if (!ent.Comp.Cells.Remove(cell))
-            return false;
-
-        ent.Comp.Revision++;
-
-        var ev = new CellContainerChangedEvent();
-        RaiseLocalEvent(ent, ev);
-
-        return true;
-    }
-
-    /// <summary>
     /// Replaces two distinct samples with one result and notifies listeners once.
     /// </summary>
     public bool ReplaceCells(Entity<CellContainerComponent?> ent, Cell first, Cell second, Cell result)
@@ -88,7 +69,6 @@ public abstract partial class SharedCellSystem : EntitySystem
     /// <summary>
     /// Remove all <see cref="Cell"/> instances from the container.
     /// </summary>
-    /// <seealso cref="RemoveCell"/>
     public void ClearCells(Entity<CellContainerComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp) || ent.Comp.Empty)
