@@ -1,9 +1,27 @@
 # Заголовок и списки
 cell-sequencer-menu-title = Анализатор клеток
-cell-sequencer-menu-inside-label = В чашке
-cell-sequencer-menu-info-label = Сведения о клетке
 cell-sequencer-menu-no-selected-label = Клетка не выбрана
-
-# Свойства клетки
-cell-sequencer-menu-cell-stability-label = Стабильность: {$stability}%
-cell-sequencer-menu-cell-traits-label = Генетические маркеры:
+cell-sequencer-primary-sample = ОСНОВНОЙ ОБРАЗЕЦ
+cell-sequencer-comparison-sample = ОБРАЗЕЦ ДЛЯ СРАВНЕНИЯ
+cell-sequencer-map = ГЕНЕТИЧЕСКИЕ МАРКЕРЫ
+cell-sequencer-map-help = Совпадающие коды слева обозначают один ген.
+cell-sequencer-decoding = СБОРКА ПОСЛЕДОВАТЕЛЬНОСТИ
+cell-sequencer-fragment-help = Совместите правые 4 с левыми 4. Начните с кода маркера.
+cell-sequencer-reset = Очистить
+cell-sequencer-submit = Расшифровать
+cell-sequencer-sample-details = Стабильность: {$stability}%   Маркеров: {$count}
+cell-sequencer-select-marker = Выберите маркер
+cell-sequencer-known-detail = {$name}: {$value}
+cell-sequencer-unknown-detail = Код гена: {$family}
+cell-sequencer-empty-assembly = Выберите перекрывающиеся фрагменты по порядку.
+cell-sequencer-assembly-status = {$sequence}  {$status}
+cell-sequencer-overlap-match = ✓ совпадение
+cell-sequencer-overlap-mismatch = ✕ не совпадает
+cell-sequencer-retry = Повторная калибровка: {$seconds} с
+cell-sequencer-present = Присутствует
+cell-sequencer-incorrect = Фрагменты не образуют последовательность. Проверьте перекрытия.
+cell-sequencer-discovered = Расшифровано: {$gene}.
+cell-sequencer-different-gene = Эти маркеры относятся к разным генам.
+cell-sequencer-same-gene-hidden = Один ген; расшифруйте оба значения для сравнения.
+cell-sequencer-same-value = Ген и значение совпадают.
+cell-sequencer-different-value = Один ген, разные значения.

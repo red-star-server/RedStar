@@ -61,7 +61,7 @@
   id: CellSequencer
   parent: BaseCellProcessingMachine
   name: cell sequencer
-  description: Displays the samples in an inserted Petri dish.
+  description: Deciphers genetic markers in samples from an inserted Petri dish.
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Machines/Xenobiology/cell_sequencer.rsi
