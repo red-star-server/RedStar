@@ -33,18 +33,7 @@ public sealed partial class CellInfoControl : Control
         CellNameLabel.Text = cell.Name;
         CellStabilityLabel.Text = Loc.GetString($"{_labelPrefix}-cell-stability-label",
             ("stability", Math.Round(cell.Stability * 100f, 3)));
-        CellCostLabel.Visible = false;
         CellTraitsText.SetMessage(cell.GeneCount.ToString());
     }
 
-    public void SetPreview(int cost)
-    {
-        CellStabilityLabel.Visible = false;
-        TraitsLabel.Visible = false;
-        CellTraitsText.Visible = false;
-
-        CellNameLabel.Text = "???";
-        CellCostLabel.Visible = true;
-        CellCostLabel.Text = Loc.GetString($"{_labelPrefix}-cell-cost-label", ("cost", cost));
-    }
 }

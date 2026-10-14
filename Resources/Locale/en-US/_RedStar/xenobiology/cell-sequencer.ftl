@@ -3,19 +3,9 @@ cell-sequencer-menu-title = Cell sequencer
 
 # Menu labels
 cell-sequencer-menu-inside-label = Inside
-cell-sequencer-menu-remote-label = Remote
 cell-sequencer-menu-info-label = Cell details
 cell-sequencer-menu-no-selected-label = Cell not selected
 
 cell-sequencer-menu-cell-stability-label = Stability: {$stability}%
 
 cell-sequencer-menu-cell-traits-label = Genetic markers:
-
-# Menu buttons
-cell-sequencer-menu-add-button = Save
-cell-sequencer-menu-remove-button = Remove
-cell-sequencer-menu-withdraw-button = Withdraw
-
-# Popups
-cell-sequencer-no-connect = No connection with the server!
-cell-sequencer-no-selected = No sample selected for further operations!

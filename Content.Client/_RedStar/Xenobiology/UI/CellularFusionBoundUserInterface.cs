@@ -1,4 +1,3 @@
-using Content.Shared.Research.Components;
 using Content.Shared._RedStar.Xenobiology.UI;
 using Robust.Client.UserInterface;
 
@@ -14,9 +13,8 @@ public sealed class CellularFusionBoundUserInterface(EntityUid owner, Enum uiKey
         base.Open();
 
         _window = this.CreateWindow<CellularFusionWindow>();
-        _window.SetEntity(Owner);
-        _window.OnServerSelection += () => SendMessage(new ConsoleServerSelectionMessage());
-        _window.OnSplice += (cellA, cellB) => SendMessage(new CellularFusionUiSpliceMessage(cellA, cellB));
+        _window.OnSplice += (cellA, cellB, revision, dish) =>
+            SendMessage(new CellularFusionUiSpliceMessage(cellA, cellB, revision, dish));
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

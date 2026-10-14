@@ -28,7 +28,6 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: ActivatableUIRequiresPower
-  - type: ResearchClient
   - type: ApcPowerReceiver
     powerLoad: 250
   - type: Appearance
@@ -62,7 +61,7 @@
   id: CellSequencer
   parent: BaseCellProcessingMachine
   name: cell sequencer
-  description: Moves cell samples between a Petri dish and R&D storage.
+  description: Displays the samples in an inserted Petri dish.
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Machines/Xenobiology/cell_sequencer.rsi
@@ -82,8 +81,6 @@
     interfaces:
       enum.CellSequencerUiKey.Key:
         type: CellSequencerBoundUserInterface
-      enum.ResearchClientUiKey.Key:
-        type: ResearchClientBoundUserInterface
   - type: CellSequencer
   - type: Machine
     board: CellSequencerCircuitboard
@@ -92,7 +89,7 @@
   id: CellularFusion
   parent: BaseCellProcessingMachine
   name: cell stabilizer
-  description: Improves the stability of identical stored genetic samples.
+  description: Improves the stability of identical samples in a Petri dish.
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Machines/Xenobiology/cellular_fusion.rsi
@@ -112,15 +109,7 @@
     interfaces:
       enum.CellularFusionUiKey.Key:
         type: CellularFusionBoundUserInterface
-      enum.ResearchClientUiKey.Key:
-        type: ResearchClientBoundUserInterface
   - type: CellularFusion
-  - type: MaterialStorage
-    whitelist:
-      tags:
-      - Sheet
-    materialWhiteList:
-    - Plasma
   - type: Machine
     board: CellularFusionCircuitboard
 

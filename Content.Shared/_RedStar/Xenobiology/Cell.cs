@@ -9,9 +9,6 @@ namespace Content.Shared._RedStar.Xenobiology;
 /// Stores one laboratory sample and its complete genome.
 /// The client receives only a separate CellView.
 /// </summary>
-/// <remarks>
-/// Database identity is assigned separately by <see cref="CellEntry.Id"/>.
-/// </remarks>
 /// <seealso cref="CellPrototype"/>
 /// <seealso cref="CellContainerComponent"/>
 /// <seealso cref="SharedCellSystem"/>

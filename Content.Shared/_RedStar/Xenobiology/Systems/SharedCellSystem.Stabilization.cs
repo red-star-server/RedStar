@@ -2,8 +2,6 @@ namespace Content.Shared._RedStar.Xenobiology.Systems;
 
 public abstract partial class SharedCellSystem
 {
-    public const int StabilizationCost = 5;
-
     public static float GetStabilizedStability(Cell cellA, Cell cellB)
     {
         var max = Math.Max(cellA.Stability, cellB.Stability);

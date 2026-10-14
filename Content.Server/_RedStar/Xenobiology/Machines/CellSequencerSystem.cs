@@ -1,13 +1,9 @@
 using System.Linq;
-using Content.Server._RedStar.Xenobiology.Events;
 using Content.Shared._RedStar.Xenobiology.Components.Container;
 using Content.Shared._RedStar.Xenobiology.Components.Machines;
 using Content.Shared._RedStar.Xenobiology.Events;
-using Content.Shared._RedStar.Xenobiology.Systems;
 using Content.Shared._RedStar.Xenobiology.UI;
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Popups;
-using Content.Shared.Research.Components;
 using Content.Shared.UserInterface;
 using Robust.Shared.Containers;
 
@@ -15,139 +11,36 @@ namespace Content.Server._RedStar.Xenobiology.Machines;
 
 public sealed partial class CellSequencerSystem : EntitySystem
 {
-    [Dependency] private XenobiologyDatabaseSystem _database = default!;
-    [Dependency] private SharedCellSystem _cell = default!;
     [Dependency] private SharedContainerSystem _containers = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
-    [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
+    [Dependency] private CellularFusionSystem _fusion = default!;
 
     [SubscribeLocalEvent]
-    private void OnOpened(Entity<CellSequencerComponent> ent, ref AfterActivatableUIOpenEvent args)
-    {
-        UpdateUI(ent);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnDatabaseChanged(Entity<CellSequencerComponent> ent, ref XenobiologyDatabaseChangedEvent args)
-    {
-        UpdateUI(ent);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnConnectionChanged(Entity<CellSequencerComponent> ent, ref ResearchRegistrationChangedEvent args)
-    {
-        UpdateUI(ent);
-    }
+    private void OnOpened(Entity<CellSequencerComponent> ent, ref AfterActivatableUIOpenEvent args) => UpdateUI(ent);
 
     [SubscribeLocalEvent]
     private void OnInserted(Entity<CellSequencerComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
         if (args.Container.ID == ent.Comp.DishSlot)
-        {
             UpdateUI(ent);
-        }
     }
 
     [SubscribeLocalEvent]
     private void OnRemoved(Entity<CellSequencerComponent> ent, ref EntRemovedFromContainerMessage args)
     {
         if (args.Container.ID == ent.Comp.DishSlot)
-        {
             UpdateUI(ent);
-        }
     }
 
     [SubscribeLocalEvent]
     private void OnCellChanged(Entity<CellContainerComponent> ent, ref CellContainerChangedEvent args)
     {
-        UpdateDishOwner(ent.Owner);
-    }
-
-    private void UpdateDishOwner(EntityUid dish)
-    {
-        if (_containers.TryGetContainingContainer(dish, out var container) &&
+        _fusion.OnDishCellChanged(ent);
+        if (_containers.TryGetContainingContainer(ent.Owner, out var container) &&
             TryComp<CellSequencerComponent>(container.Owner, out var sequencer) &&
             container.ID == sequencer.DishSlot)
-        {
             UpdateUI((container.Owner, sequencer));
-        }
-    }
-
-    [SubscribeLocalEvent]
-    private void OnAdd(Entity<CellSequencerComponent> ent, ref CellSequencerUiAddMessage args)
-    {
-        if (!_database.TryGetDatabase(ent.Owner, out _))
-        {
-            _popup.PopupEntity(Loc.GetString("cell-sequencer-no-connect"), ent, PopupType.MediumCaution);
-            return;
-        }
-
-        if (args.CellIndex is not { } index || !TryGetDish(ent, out var dish) ||
-            args.Dish != GetNetEntity(dish.Owner) ||
-            args.DishRevision != dish.Comp.Revision ||
-            index < 0 || index >= dish.Comp.Cells.Count)
-        {
-            _popup.PopupEntity(Loc.GetString("cell-sequencer-no-selected"), ent, PopupType.MediumCaution);
-            return;
-        }
-
-        _database.StoreCell(ent.Owner, dish, index);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnRemove(Entity<CellSequencerComponent> ent, ref CellSequencerUiRemoveMessage args)
-    {
-        if (args.Id is not { } id)
-        {
-            _popup.PopupEntity(Loc.GetString("cell-sequencer-no-selected"), ent, PopupType.MediumCaution);
-            return;
-        }
-
-        if (!args.Remote)
-        {
-            if (TryGetDish(ent, out var dish) && args.Dish == GetNetEntity(dish.Owner) &&
-                args.DishRevision == dish.Comp.Revision &&
-                id >= 0 && id < dish.Comp.Cells.Count)
-            {
-                _cell.RemoveCell((dish.Owner, dish.Comp), dish.Comp.Cells[id]);
-            }
-
-            return;
-        }
-
-        if (!_database.TryGetDatabase(ent.Owner, out _))
-        {
-            _popup.PopupEntity(Loc.GetString("cell-sequencer-no-connect"), ent, PopupType.MediumCaution);
-            return;
-        }
-
-        _database.RemoveCell(ent.Owner, id);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnWithdraw(Entity<CellSequencerComponent> ent, ref CellSequencerUiWithdrawMessage args)
-    {
-        if (args.Id is not { } id || !TryGetDish(ent, out var dish) ||
-            args.Dish != GetNetEntity(dish.Owner) || args.DishRevision != dish.Comp.Revision ||
-            dish.Comp.Cells.Count >= dish.Comp.MaxCells)
-        {
-            return;
-        }
-        _database.WithdrawCell(ent.Owner, id, dish);
-    }
-
-    private bool TryGetDish(Entity<CellSequencerComponent> ent, out Entity<CellContainerComponent> dish)
-    {
-        dish = default;
-        if (_itemSlots.GetItemOrNull(ent.Owner, ent.Comp.DishSlot) is not { } uid ||
-            TerminatingOrDeleted(uid) || !TryComp<CellContainerComponent>(uid, out var container))
-        {
-            return false;
-        }
-
-        dish = (uid, container);
-        return true;
     }
 
     private void UpdateUI(Entity<CellSequencerComponent> ent)
@@ -155,18 +48,10 @@ public sealed partial class CellSequencerSystem : EntitySystem
         if (TerminatingOrDeleted(ent))
             return;
 
-        _database.TryGetDatabase(ent.Owner, out var database);
-        var hasDish = TryGetDish(ent, out var dish);
-        var state = new CellSequencerUiState(
-            hasDish ? dish.Comp.Cells.Select(cell => new CellView(cell)).ToArray() : [],
-            database?.Comp.Cells.Select(entry => new CellEntryView(entry.Id, entry.Cell)).ToArray() ?? [],
-            hasDish,
-            hasDish && dish.Comp.Cells.Count < dish.Comp.MaxCells,
-            hasDish ? dish.Comp.Revision : -1,
-            hasDish ? GetNetEntity(dish.Owner) : null)
-        {
-            Connected = database != null
-        };
-        _userInterface.SetUiState(ent.Owner, CellSequencerUiKey.Key, state);
+        var dish = _itemSlots.GetItemOrNull(ent.Owner, ent.Comp.DishSlot);
+        var cells = dish is { } uid && TryComp<CellContainerComponent>(uid, out var container)
+            ? container.Cells.Select(cell => new CellView(cell)).ToArray()
+            : [];
+        _userInterface.SetUiState(ent.Owner, CellSequencerUiKey.Key, new CellSequencerUiState(cells));
     }
 }

@@ -18,10 +18,3 @@ public sealed class CellView(Cell cell)
         Name == other.Name && Color == other.Color && Stability.Equals(other.Stability) &&
         GeneCount == other.GeneCount && HasGenome == other.HasGenome;
 }
-
-[Serializable, NetSerializable]
-public sealed class CellEntryView(int id, Cell cell)
-{
-    public readonly int Id = id;
-    public readonly CellView Cell = new(cell);
-}
