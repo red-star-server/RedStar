@@ -13,6 +13,7 @@
   - CellSequencerCircuitboard
   - CellularFusionCircuitboard
   - MutagenicCellInjectorCircuitboard
+  - GrowingVatCircuitboard
 
 - type: latheRecipePack
   id: XenobiologyToolsStatic

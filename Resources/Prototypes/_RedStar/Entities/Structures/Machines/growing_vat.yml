@@ -1,0 +1,85 @@
+- type: entity
+  id: GrowingVat
+  parent: [BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible]
+  name: growing vat
+  description: Cultivates an organism in a controlled nutrient medium.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Machines/Xenobiology/growing_vat.rsi
+    snapCardinals: true
+    layers:
+    - state: growing_vat
+    - state: vat_reagent1
+      visible: false
+      map: ["enum.SolutionContainerLayers.Fill"]
+    - state: vat_bubbles
+      visible: false
+      map: ["enum.GrowingVatVisuals.BubblesLayer"]
+    - state: growing_vat_glow
+      visible: false
+      shader: unshaded
+      map: ["enum.GrowingVatVisuals.GlowLayer"]
+    - state: growing_vat_off
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: {state: growing_vat_on}
+          False: {state: growing_vat_off}
+      enum.GrowingVatVisuals.Processing:
+        enum.GrowingVatVisuals.BubblesLayer:
+          True: {visible: true}
+          False: {visible: false}
+        enum.GrowingVatVisuals.GlowLayer:
+          True: {visible: true}
+          False: {visible: false}
+  - type: GrowingVat
+  - type: Machine
+    board: GrowingVatCircuitboard
+  - type: WiresPanel
+  - type: WiresVisuals
+  - type: EntityStorage
+    capacity: 1
+    showContents: false
+    whitelist:
+      components:
+      - MobState
+  - type: ResistLocker
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      entity_storage: !type:Container
+  - type: Construction
+    containers:
+    - machine_board
+    - machine_parts
+    - entity_storage
+  - type: EmptyOnMachineDeconstruct
+    containers:
+    - entity_storage
+  - type: SolutionManager
+    solutions:
+    - SolutionGrowingVat
+  - type: RefillableSolution
+    solution: vat
+  - type: DrainableSolution
+    solution: vat
+  - type: ExaminableSolution
+    solution: vat
+  - type: SolutionContainerVisuals
+    solutionName: vat
+    maxFillLevels: 2
+    fillBaseName: vat_reagent
+
+- type: entity
+  id: SolutionGrowingVat
+  parent: SolutionLarge
+  categories: [HideSpawnMenu]
+  components:
+  - type: Solution
+    id: vat
+

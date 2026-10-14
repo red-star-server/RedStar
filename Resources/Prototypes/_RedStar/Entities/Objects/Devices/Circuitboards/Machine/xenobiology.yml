@@ -27,3 +27,13 @@
     prototype: MutagenicCellInjector
     stackRequirements:
       Manipulator: 2
+
+- type: entity
+  id: GrowingVatCircuitboard
+  parent: BaseMachineCircuitboard
+  name: growing vat machine board
+  components:
+  - type: MachineBoard
+    prototype: GrowingVat
+    stackRequirements:
+      Manipulator: 2
