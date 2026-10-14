@@ -6,7 +6,6 @@ cell-sequencer-assembly = RECONSTRUCTION
 cell-sequencer-reset = Reset
 cell-sequencer-submit = Decode
 cell-sequencer-extract = Extract
-cell-sequencer-extracted = Extracted {$gene} into the vial.
 cell-sequencer-sample-stability = Stability: {$stability}%
 cell-sequencer-known-detail = {$name} · {$value}
 cell-sequencer-status-known = DECODED

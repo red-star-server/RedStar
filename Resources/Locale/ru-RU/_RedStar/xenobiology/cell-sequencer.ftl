@@ -6,7 +6,6 @@ cell-sequencer-assembly = РЕКОНСТРУКЦИЯ
 cell-sequencer-reset = Сброс
 cell-sequencer-submit = Расшифровать
 cell-sequencer-extract = Извлечь
-cell-sequencer-extracted = Ген «{$gene}» извлечён в колбу.
 cell-sequencer-sample-stability = Стабильность: {$stability}%
 cell-sequencer-known-detail = {$name} · {$value}
 cell-sequencer-status-known = РАСШИФРОВАНО

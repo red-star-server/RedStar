@@ -62,7 +62,8 @@ public sealed partial class CellSequencerWindow : FancyWindow
 
     public void UpdateState(CellSequencerUiState state)
     {
-        if (_state?.Dish != state.Dish || _state?.DishRevision != state.DishRevision)
+        if (_state is null || _state.Dish != state.Dish ||
+            _state.DishRevision != state.DishRevision && !SameSampleContents(_state.Samples, state.Samples))
         {
             _primary = -1;
             _comparison = -1;
@@ -80,6 +81,31 @@ public sealed partial class CellSequencerWindow : FancyWindow
         BuildAssembly();
         Assembly.SetFeedback(state.FeedbackSample == _primary && state.FeedbackMarker == _marker
             ? state.FeedbackOrder : []);
+    }
+
+    private static bool SameSampleContents(SequencerSampleView[] previous, SequencerSampleView[] current)
+    {
+        if (previous.Length != current.Length)
+            return false;
+
+        for (var i = 0; i < previous.Length; i++)
+        {
+            var before = previous[i];
+            var after = current[i];
+            if (before.Sample.Name != after.Sample.Name || before.Sample.Color != after.Sample.Color ||
+                before.Sample.GeneCount != after.Sample.GeneCount ||
+                before.Sample.HasGenome != after.Sample.HasGenome || before.Markers.Length != after.Markers.Length)
+                return false;
+
+            for (var marker = 0; marker < before.Markers.Length; marker++)
+            {
+                if (before.Markers[marker].FamilyCode != after.Markers[marker].FamilyCode ||
+                    !before.Markers[marker].Fragments.SequenceEqual(after.Markers[marker].Fragments))
+                    return false;
+            }
+        }
+
+        return true;
     }
 
     private void BuildSamples()

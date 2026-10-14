@@ -155,8 +155,6 @@ public sealed partial class CellSequencerSystem : EntitySystem
             return;
         }
 
-        _popup.PopupEntity(Loc.GetString("cell-sequencer-extracted", ("gene", Loc.GetString($"gene-{id}-name"))),
-            ent, PopupType.Medium);
         UpdateUI(ent);
     }
 

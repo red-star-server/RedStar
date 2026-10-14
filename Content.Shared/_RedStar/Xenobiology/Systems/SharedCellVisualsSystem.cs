@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared._RedStar.Xenobiology.Components.Container;
 using Content.Shared._RedStar.Xenobiology.Events;
 using Content.Shared._RedStar.Xenobiology.Visuals;
@@ -25,7 +26,8 @@ public abstract partial class SharedCellVisualsSystem : EntitySystem
         if (!TryComp<SampleContainerComponent>(ent, out var containerComponent))
             return;
 
-        _appearance.SetData(ent, CellContainerVisuals.DishVisibility, !containerComponent.Empty);
+        _appearance.SetData(ent, CellContainerVisuals.DishVisibility,
+            containerComponent.Samples.Any(sample => sample.GeneCount > 0));
         _appearance.SetData(ent, CellContainerVisuals.DishColor, GetAverageSampleColor(containerComponent.Samples));
     }
 

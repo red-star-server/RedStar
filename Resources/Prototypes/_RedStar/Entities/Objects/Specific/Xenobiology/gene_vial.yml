@@ -10,13 +10,15 @@
     visuals:
       enum.GeneticVialVisuals.Filled:
         enum.GeneticVialVisuals.Layer:
-          True: { state: vial_load }
-          False: { state: vial }
+          True: { visible: true }
+          False: { visible: false }
   - type: Sprite
     sprite: _RedStar/Objects/Specific/Xenobiology/gene_vial.rsi
     layers:
     - state: vial
+    - state: vial_load
       map: [ "enum.GeneticVialVisuals.Layer" ]
+      visible: false
   - type: Item
     size: Small
     sprite: _RedStar/Objects/Specific/Xenobiology/gene_vial.rsi
