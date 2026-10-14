@@ -14,11 +14,10 @@ public sealed partial class CellularFusionWindow : FancyWindow
 
     public event Action<int, int, int, NetEntity?>? OnSplice;
 
-    private CellEntryControl? _selectedEntryA;
-    private CellEntryControl? _selectedEntryB;
+    private readonly List<CellEntryControl> _selected = [];
     private IReadOnlyList<CellView> _cells = [];
-    private int _dishRevision;
     private NetEntity? _dish;
+    private int _dishRevision = -1;
     private bool _spliceInProgress;
     private bool _showingResult;
     private TimeSpan _spliceStartTime;
@@ -28,41 +27,31 @@ public sealed partial class CellularFusionWindow : FancyWindow
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
-        CellInfo.SetLabelPrefix("cellular-fusion-menu");
-
+        CellInfoA.SetLabelPrefix("cellular-fusion-menu");
+        CellInfoB.SetLabelPrefix("cellular-fusion-menu");
         SpliceButton.OnPressed += _ =>
         {
-            if (_selectedEntryA is not { } cellA || _selectedEntryB is not { } cellB)
-                return;
-
-            OnSplice?.Invoke(cellA.Id, cellB.Id, _dishRevision, _dish);
+            if (_selected.Count == 2 && !_spliceInProgress)
+                OnSplice?.Invoke(_selected[0].Id, _selected[1].Id, _dishRevision, _dish);
         };
     }
 
     public void UpdateState(CellularFusionUiState state)
     {
-        var sameDish = _dish == state.Dish && _dishRevision == state.DishRevision;
+        var contentsChanged = _dish != state.Dish || _dishRevision != state.DishRevision ||
+            !SameCells(_cells, state.Cells);
         _dish = state.Dish;
         _dishRevision = state.DishRevision;
-        RebuildEntriesIfChanged(state.Cells, sameDish);
 
-        if (state.SpliceInProgress && !_spliceInProgress)
-        {
-            _spliceInProgress = true;
-            _showingResult = false;
-        }
-        else if (!state.SpliceInProgress && _spliceInProgress)
-        {
-            _spliceInProgress = false;
-            if (state.LastResult is { } result)
-                ShowResult(result);
-            else
-                ClearSelection();
-        }
-        else if (state.LastResult is { } result)
-        {
+        if (contentsChanged)
+            RebuildEntries(state.Cells);
+
+        var wasProcessing = _spliceInProgress;
+        _spliceInProgress = state.SpliceInProgress;
+        if (state.LastResult is { } result)
             ShowResult(result);
-        }
+        else if (wasProcessing && !_spliceInProgress)
+            ClearSelection();
 
         if (_spliceInProgress)
         {
@@ -71,163 +60,111 @@ public sealed partial class CellularFusionWindow : FancyWindow
                 Math.Max(0, state.SpliceDuration - state.SpliceRemaining));
         }
 
-        SpliceProgressBar.Visible = _spliceInProgress;
-        if (_spliceInProgress)
+        foreach (var entry in CellContainer.Children.OfType<CellEntryControl>())
         {
-            CellANoSelectedLabel.Visible = false;
-            CellBNoSelectedLabel.Visible = false;
+            entry.SetEnabled(!_spliceInProgress);
         }
 
-        CellInfo.Visible = _spliceInProgress || _showingResult ||
-            _selectedEntryA is not null && _selectedEntryB is not null;
-        CellInfoContainer.Visible = CellInfo.Visible;
-        SpliceButton.Disabled = _spliceInProgress || _showingResult ||
-            _selectedEntryA is null || _selectedEntryB is null ||
-            _selectedEntryA.Id == _selectedEntryB.Id ||
-            !_selectedEntryA.Cell.HasGenome || !_selectedEntryB.Cell.HasGenome ||
-            Math.Max(_selectedEntryA.Cell.Stability, _selectedEntryB.Cell.Stability) >= 1f;
-
-        if (!_spliceInProgress && !_showingResult)
-            UpdateCellInfo();
+        NoDishLabel.Visible = state.Dish is null;
+        EmptyDishLabel.Visible = state.Dish is not null && state.Cells.Length == 0;
+        SpliceProgressBar.Visible = _spliceInProgress;
+        UpdateDetails();
     }
 
-    private void RebuildEntriesIfChanged(IReadOnlyList<CellView> cells, bool sameDish)
+    private void RebuildEntries(IReadOnlyList<CellView> cells)
     {
-        if (sameDish && SameEntries(_cells, cells))
-            return;
-
-        var selectedA = _selectedEntryA?.Id;
-        var selectedB = _selectedEntryB?.Id;
-        _selectedEntryA = null;
-        _selectedEntryB = null;
+        _selected.Clear();
+        _showingResult = false;
         _cells = cells.ToArray();
-
-        CellContainerA.RemoveAllChildren();
-        CellContainerB.RemoveAllChildren();
+        CellContainer.RemoveAllChildren();
         for (var index = 0; index < cells.Count; index++)
         {
-            var entryA = new CellEntryControl(cells[index], false, index);
-            entryA.OnSelect += SelectedCellEntryA;
-            CellContainerA.AddChild(entryA);
-            if (sameDish && selectedA == index)
-            {
-                _selectedEntryA = entryA;
-                entryA.SetState(false);
-            }
-
-            var entryB = new CellEntryControl(cells[index], false, index);
-            entryB.OnSelect += SelectedCellEntryB;
-            CellContainerB.AddChild(entryB);
-            if (!sameDish || selectedB != index)
-                continue;
-
-            _selectedEntryB = entryB;
-            entryB.SetState(false);
+            var entry = new CellEntryControl(cells[index], false, index);
+            entry.OnSelect += SelectEntry;
+            CellContainer.AddChild(entry);
         }
-
-        CellANoSelectedLabel.Visible = !_showingResult && _selectedEntryA is null;
-        CellBNoSelectedLabel.Visible = !_showingResult && _selectedEntryB is null;
     }
 
-    private static bool SameEntries(IReadOnlyList<CellView> left, IReadOnlyList<CellView> right)
+    private static bool SameCells(IReadOnlyList<CellView> left, IReadOnlyList<CellView> right)
     {
         if (left.Count != right.Count)
             return false;
-
         for (var i = 0; i < left.Count; i++)
         {
             if (!left[i].SameDisplay(right[i]))
                 return false;
         }
-
         return true;
+    }
+
+    private void SelectEntry(CellEntryControl entry)
+    {
+        if (_spliceInProgress)
+            return;
+
+        _showingResult = false;
+        if (_selected.Remove(entry))
+            entry.SetSelected(false);
+        else
+        {
+            if (_selected.Count == 2)
+            {
+                _selected[0].SetSelected(false);
+                _selected.RemoveAt(0);
+            }
+            _selected.Add(entry);
+            entry.SetSelected(true);
+        }
+
+        UpdateDetails();
     }
 
     private void ClearSelection()
     {
-        _selectedEntryA?.SetState(true);
-        _selectedEntryB?.SetState(true);
-        _selectedEntryA = null;
-        _selectedEntryB = null;
-        _showingResult = false;
-        CellANoSelectedLabel.Visible = true;
-        CellBNoSelectedLabel.Visible = true;
-        CellInfoContainer.Visible = false;
-        SpliceButton.Disabled = true;
-    }
-
-    private void ShowResult(CellView cell)
-    {
-        _selectedEntryA?.SetState(true);
-        _selectedEntryB?.SetState(true);
-        _selectedEntryA = null;
-        _selectedEntryB = null;
-        _showingResult = true;
-        CellANoSelectedLabel.Visible = false;
-        CellBNoSelectedLabel.Visible = false;
-        CellInfoContainer.Visible = true;
-        CellInfo.SetCell(cell);
-        SpliceButton.Disabled = true;
-    }
-
-    private void SelectedCellEntryA(CellEntryControl entry)
-    {
-        if (_spliceInProgress)
-            return;
-
-        SelectCellEntry(entry, ref _selectedEntryA);
-        CellANoSelectedLabel.Visible = false;
-        CellBNoSelectedLabel.Visible = _selectedEntryB is null;
-        UpdateCellInfo();
-    }
-
-    private void SelectedCellEntryB(CellEntryControl entry)
-    {
-        if (_spliceInProgress)
-            return;
-
-        SelectCellEntry(entry, ref _selectedEntryB);
-        CellANoSelectedLabel.Visible = _selectedEntryA is null;
-        CellBNoSelectedLabel.Visible = false;
-        UpdateCellInfo();
-    }
-
-    private void SelectCellEntry(CellEntryControl entry, ref CellEntryControl? previous)
-    {
-        previous?.SetState(true);
-        entry.SetState(false);
-        previous = entry;
-        _showingResult = false;
-    }
-
-    private void UpdateCellInfo()
-    {
-        if (_selectedEntryA is not { } entryA || _selectedEntryB is not { } entryB)
+        foreach (var entry in _selected)
         {
-            CellInfoContainer.Visible = false;
-            SpliceButton.Disabled = true;
-            return;
+            entry.SetSelected(false);
         }
 
-        CellInfo.SetCell(entryA.Cell);
-        CellInfo.Visible = true;
-        CellInfoContainer.Visible = true;
-        SpliceButton.Disabled = _spliceInProgress || entryA.Id == entryB.Id ||
-            !entryA.Cell.HasGenome || !entryB.Cell.HasGenome ||
-            Math.Max(entryA.Cell.Stability, entryB.Cell.Stability) >= 1f;
+        _selected.Clear();
+        _showingResult = false;
+    }
+
+    private void ShowResult(CellView result)
+    {
+        ClearSelection();
+        _showingResult = true;
+        CellInfoA.SetCell(result);
+    }
+
+    private void UpdateDetails()
+    {
+        var count = _selected.Count;
+        NoSelectionLabel.Visible = count == 0 && !_showingResult;
+        ResultLabel.Visible = _showingResult;
+        CellInfoA.Visible = count > 0 || _showingResult;
+        CellInfoB.Visible = count == 2;
+        InfoDivider.Visible = count == 2;
+
+        if (!_showingResult && count > 0)
+            CellInfoA.SetCell(_selected[0].Cell);
+        if (count == 2)
+            CellInfoB.SetCell(_selected[1].Cell);
+
+        SpliceButton.Disabled = _spliceInProgress || count != 2 ||
+            !_selected[0].Cell.HasGenome || !_selected[1].Cell.HasGenome ||
+            Math.Max(_selected[0].Cell.Stability, _selected[1].Cell.Stability) >= 1f;
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
-
         if (!_spliceInProgress)
             return;
 
         var elapsed = (_timing.RealTime - _spliceStartTime).TotalSeconds;
-        var progress = _spliceDuration > 0
-            ? Math.Clamp(elapsed / _spliceDuration * 100.0, 0.0, 100.0)
+        SpliceProgressBar.Value = _spliceDuration > 0
+            ? (float) Math.Clamp(elapsed / _spliceDuration * 100.0, 0.0, 100.0)
             : 0;
-        SpliceProgressBar.Value = (float)progress;
     }
 }

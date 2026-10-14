@@ -1,10 +1,11 @@
 # Заголовок и списки
 cellular-fusion-menu-title = Стабилизатор клеток
-cellular-fusion-menu-cell-a-label = Клетка A
-cellular-fusion-menu-cell-b-label = Клетка B
-cellular-fusion-menu-preview-label = Стабилизированный образец
-cellular-fusion-menu-cell-a-no-selected-label = Клетка A не выбрана
-cellular-fusion-menu-cell-b-no-selected-label = Клетка B не выбрана
+cellular-fusion-menu-samples-label = Образцы в чашке Петри
+cellular-fusion-menu-details-label = Характеристики образцов
+cellular-fusion-menu-no-dish-label = Вставьте чашку Петри.
+cellular-fusion-menu-empty-dish-label = Чашка Петри пуста.
+cellular-fusion-menu-no-selection-label = Выберите до двух образцов.
+cellular-fusion-menu-result-label = Стабилизированный образец
 
 # Свойства клетки
 cellular-fusion-menu-cell-stability-label = Стабильность: {$stability}%

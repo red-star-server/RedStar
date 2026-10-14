@@ -2,12 +2,12 @@
 cellular-fusion-menu-title = Cell stabilizer
 
 # Menu labels
-cellular-fusion-menu-cell-a-label = Cell A
-cellular-fusion-menu-cell-b-label = Cell B
-cellular-fusion-menu-preview-label = Stabilized sample
-
-cellular-fusion-menu-cell-a-no-selected-label = Cell A not selected
-cellular-fusion-menu-cell-b-no-selected-label = Cell B not selected
+cellular-fusion-menu-samples-label = Petri dish samples
+cellular-fusion-menu-details-label = Sample details
+cellular-fusion-menu-no-dish-label = Insert a Petri dish.
+cellular-fusion-menu-empty-dish-label = The Petri dish is empty.
+cellular-fusion-menu-no-selection-label = Select up to two samples.
+cellular-fusion-menu-result-label = Stabilized sample
 
 cellular-fusion-menu-cell-stability-label = Stability: {$stability}%
 

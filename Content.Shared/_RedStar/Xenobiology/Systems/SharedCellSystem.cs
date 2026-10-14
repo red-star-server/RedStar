@@ -67,6 +67,25 @@ public abstract partial class SharedCellSystem : EntitySystem
     }
 
     /// <summary>
+    /// Replaces two distinct samples with one result and notifies listeners once.
+    /// </summary>
+    public bool ReplaceCells(Entity<CellContainerComponent?> ent, Cell first, Cell second, Cell result)
+    {
+        if (!Resolve(ent, ref ent.Comp) || result is null || ReferenceEquals(first, second) ||
+            ReferenceEquals(result, first) || ReferenceEquals(result, second) ||
+            !ent.Comp.Cells.Contains(first) || !ent.Comp.Cells.Contains(second) ||
+            ent.Comp.Cells.Contains(result))
+            return false;
+
+        ent.Comp.Cells.Remove(first);
+        ent.Comp.Cells.Remove(second);
+        ent.Comp.Cells.Add(result);
+        ent.Comp.Revision++;
+        RaiseLocalEvent(ent, new CellContainerChangedEvent());
+        return true;
+    }
+
+    /// <summary>
     /// Remove all <see cref="Cell"/> instances from the container.
     /// </summary>
     /// <seealso cref="RemoveCell"/>

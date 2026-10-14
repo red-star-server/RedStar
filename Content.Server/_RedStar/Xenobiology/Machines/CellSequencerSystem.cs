@@ -14,7 +14,6 @@ public sealed partial class CellSequencerSystem : EntitySystem
     [Dependency] private SharedContainerSystem _containers = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
     [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
-    [Dependency] private CellularFusionSystem _fusion = default!;
 
     [SubscribeLocalEvent]
     private void OnOpened(Entity<CellSequencerComponent> ent, ref AfterActivatableUIOpenEvent args) => UpdateUI(ent);
@@ -36,7 +35,6 @@ public sealed partial class CellSequencerSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnCellChanged(Entity<CellContainerComponent> ent, ref CellContainerChangedEvent args)
     {
-        _fusion.OnDishCellChanged(ent);
         if (_containers.TryGetContainingContainer(ent.Owner, out var container) &&
             TryComp<CellSequencerComponent>(container.Owner, out var sequencer) &&
             container.ID == sequencer.DishSlot)

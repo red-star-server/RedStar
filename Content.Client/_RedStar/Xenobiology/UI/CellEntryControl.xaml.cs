@@ -26,8 +26,14 @@ public sealed partial class CellEntryControl : Control
         Button.OnPressed += _ => OnSelect?.Invoke(this);
     }
 
-    public void SetState(bool value)
+    public void SetSelected(bool selected)
     {
-        Button.Disabled = !value;
+        Button.ToggleMode = true;
+        Button.Pressed = selected;
+    }
+
+    public void SetEnabled(bool enabled)
+    {
+        Button.Disabled = !enabled;
     }
 }

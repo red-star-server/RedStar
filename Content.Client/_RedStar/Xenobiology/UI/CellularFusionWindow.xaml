@@ -2,59 +2,45 @@
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                       xmlns:xenobio="clr-namespace:Content.Client._RedStar.Xenobiology.UI"
                       Title="{Loc 'cellular-fusion-menu-title'}"
-                      MinSize="900 440">
-    <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
-        <!-- Nav panel -->
-        <BoxContainer Margin="8" MinWidth="330" Orientation="Vertical" VerticalExpand="True">
-            <Button Name="SpliceButton"
-                    Text="{Loc 'cellular-fusion-menu-splice-button'}"
-                    Margin="0 0 0 4" />
+                      MinSize="650 400">
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Margin="8">
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
+            <BoxContainer Orientation="Vertical" MinWidth="250" HorizontalExpand="True" VerticalExpand="True">
+                <PanelContainer StyleClasses="PanelDark" HorizontalExpand="True">
+                    <Label StyleClasses="LabelHeading" Text="{Loc 'cellular-fusion-menu-samples-label'}"
+                           Margin="8 4" HorizontalExpand="True" Align="Center" />
+                </PanelContainer>
+                <PanelContainer StyleClasses="PanelInsetDeep" Margin="0 4 0 0" HorizontalExpand="True" VerticalExpand="True">
+                    <Label Name="NoDishLabel" Text="{Loc 'cellular-fusion-menu-no-dish-label'}" Align="Center" />
+                    <Label Name="EmptyDishLabel" Text="{Loc 'cellular-fusion-menu-empty-dish-label'}" Align="Center" Visible="False" />
+                    <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
+                        <BoxContainer Name="CellContainer" Margin="8" Orientation="Vertical" HorizontalExpand="True" />
+                    </ScrollContainer>
+                </PanelContainer>
+            </BoxContainer>
+            <PanelContainer Margin="8 0" StyleClasses="LowDivider" />
+            <BoxContainer Orientation="Vertical" MinWidth="300" HorizontalExpand="True" VerticalExpand="True">
+                <PanelContainer StyleClasses="PanelDark" HorizontalExpand="True">
+                    <Label StyleClasses="LabelHeading" Text="{Loc 'cellular-fusion-menu-details-label'}"
+                           Margin="8 4" HorizontalExpand="True" Align="Center" />
+                </PanelContainer>
+                <PanelContainer StyleClasses="PanelInsetDeep" Margin="0 4 0 0" HorizontalExpand="True" VerticalExpand="True">
+                    <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
+                        <BoxContainer Orientation="Vertical" Margin="10" HorizontalExpand="True">
+                            <Label Name="NoSelectionLabel" Text="{Loc 'cellular-fusion-menu-no-selection-label'}" />
+                            <Label Name="ResultLabel" Text="{Loc 'cellular-fusion-menu-result-label'}"
+                                   StyleClasses="LabelHeading" Visible="False" />
+                            <xenobio:CellInfoControl Name="CellInfoA" Visible="False" />
+                            <PanelContainer Name="InfoDivider" StyleClasses="LowDivider" Margin="0 8" Visible="False" />
+                            <xenobio:CellInfoControl Name="CellInfoB" Visible="False" />
+                        </BoxContainer>
+                    </ScrollContainer>
+                </PanelContainer>
+            </BoxContainer>
         </BoxContainer>
-        <PanelContainer Margin="4 0" StyleClasses="LowDivider" />
-        <!-- First sample -->
-        <BoxContainer Margin="8" MinWidth="210" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
-            <PanelContainer StyleClasses="PanelDark" HorizontalExpand="True">
-                <Label StyleClasses="LabelHeading" Text="{Loc 'cellular-fusion-menu-cell-a-label'}" Margin="8 4 8 4" HorizontalExpand="True" Align="Center" />
-            </PanelContainer>
-            <PanelContainer Margin="0 4 0 0" StyleClasses="PanelInsetDeep" VerticalExpand="True" HorizontalExpand="True">
-                <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
-                    <BoxContainer Name="CellContainerA" Margin="8" Orientation="Vertical" HorizontalExpand="True" />
-                </ScrollContainer>
-            </PanelContainer>
-        </BoxContainer>
-        <PanelContainer Margin="4 0" StyleClasses="LowDivider" />
-        <!-- Info panel -->
-        <BoxContainer Margin="8" MinWidth="250" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
-            <PanelContainer StyleClasses="PanelDark" HorizontalExpand="True">
-                <Label StyleClasses="LabelHeading" Text="{Loc 'cellular-fusion-menu-preview-label'}" Margin="8 4 8 4" HorizontalExpand="True" Align="Center" />
-            </PanelContainer>
-            <Control MinHeight="4" />
-            <PanelContainer StyleClasses="PanelInsetDeep" HorizontalExpand="True" VerticalExpand="True">
-                <BoxContainer Orientation="Vertical" Align="Center">
-                    <Label Name="CellANoSelectedLabel" Text="{Loc 'cellular-fusion-menu-cell-a-no-selected-label'}"
-                           HorizontalAlignment="Center" />
-                    <Label Name="CellBNoSelectedLabel" Text="{Loc 'cellular-fusion-menu-cell-b-no-selected-label'}"
-                           HorizontalAlignment="Center" />
-                </BoxContainer>
-                <BoxContainer Name="CellInfoContainer" Orientation="Vertical" HorizontalExpand="True"
-                              VerticalExpand="True" Margin="10" Visible="False">
-                    <xenobio:CellInfoControl Name="CellInfo" />
-                    <ProgressBar Name="SpliceProgressBar" Visible="False" MinValue="0" MaxValue="100" Value="0"
-                                 Margin="0 8 0 0" HorizontalExpand="True" />
-                </BoxContainer>
-            </PanelContainer>
-        </BoxContainer>
-        <PanelContainer Margin="4 0" StyleClasses="LowDivider" />
-        <!-- Second sample -->
-        <BoxContainer Margin="8" MinWidth="210" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
-            <PanelContainer StyleClasses="PanelDark" HorizontalExpand="True">
-                <Label StyleClasses="LabelHeading" Text="{Loc 'cellular-fusion-menu-cell-b-label'}" Margin="8 4 8 4" HorizontalExpand="True" Align="Center" />
-            </PanelContainer>
-            <PanelContainer Margin="0 4 0 0" StyleClasses="PanelInsetDeep" VerticalExpand="True" HorizontalExpand="True">
-                <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
-                    <BoxContainer Name="CellContainerB" Margin="8" Orientation="Vertical" HorizontalExpand="True" />
-                </ScrollContainer>
-            </PanelContainer>
-        </BoxContainer>
+        <ProgressBar Name="SpliceProgressBar" Visible="False" MinValue="0" MaxValue="100" Value="0"
+                     Margin="0 8 0 4" HorizontalExpand="True" />
+        <Button Name="SpliceButton" Text="{Loc 'cellular-fusion-menu-splice-button'}"
+                HorizontalExpand="True" Margin="0 8 0 0" />
     </BoxContainer>
 </controls:FancyWindow>

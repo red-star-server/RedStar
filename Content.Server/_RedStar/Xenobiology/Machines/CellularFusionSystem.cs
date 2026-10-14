@@ -5,7 +5,6 @@ using Content.Shared._RedStar.Genetics;
 using Content.Shared._RedStar.Xenobiology;
 using Content.Shared._RedStar.Xenobiology.Components.Container;
 using Content.Shared._RedStar.Xenobiology.Components.Machines;
-using Content.Shared._RedStar.Xenobiology.Events;
 using Content.Shared._RedStar.Xenobiology.Systems;
 using Content.Shared._RedStar.Xenobiology.UI;
 using Content.Shared.Containers.ItemSlots;
@@ -23,7 +22,6 @@ public sealed partial class CellularFusionSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
-    [Dependency] private SharedContainerSystem _containers = default!;
     [Dependency] private SharedCellSystem _cells = default!;
     [Dependency] private GenomeSystem _genomes = default!;
     [Dependency] private IGameTiming _timing = default!;
@@ -52,17 +50,6 @@ public sealed partial class CellularFusionSystem : EntitySystem
             UpdateUI(ent);
     }
 
-    public void OnDishCellChanged(Entity<CellContainerComponent> ent)
-    {
-        if (!_containers.TryGetContainingContainer(ent.Owner, out var container) ||
-            !TryComp<CellularFusionComponent>(container.Owner, out var fusion) ||
-            container.ID != fusion.DishSlot) return;
-
-        if (fusion.SpliceInProgress && fusion.SpliceRevision != ent.Comp.Revision)
-            CancelSplice((container.Owner, fusion));
-        UpdateUI((container.Owner, fusion));
-    }
-
     [SubscribeLocalEvent]
     private void OnDestruction(Entity<CellularFusionComponent> ent, ref DestructionEventArgs args) => CancelSplice(ent);
 
@@ -84,7 +71,7 @@ public sealed partial class CellularFusionSystem : EntitySystem
 
         var first = dish.Comp.Cells[args.CellAIndex];
         var second = dish.Comp.Cells[args.CellBIndex];
-        if (!CanStabilize(first, second, out _))
+        if (ReferenceEquals(first, second) || !CanStabilize(first, second, out _))
         {
             _popup.PopupEntity(Loc.GetString("cellular-fusion-incompatible"), ent, PopupType.MediumCaution);
             return;
@@ -105,12 +92,25 @@ public sealed partial class CellularFusionSystem : EntitySystem
         var query = EntityQueryEnumerator<CellularFusionComponent, MetaDataComponent>();
         while (query.MoveNext(out var uid, out var component, out var metadata))
         {
-            if (metadata.EntityPaused || component.SpliceEndTime is not { } endTime)
+            if (metadata.EntityPaused)
                 continue;
 
             var machine = new Entity<CellularFusionComponent>(uid, component);
-            if (!this.IsPowered(uid, EntityManager) || !TryGetDish(machine, out var dish) ||
-                component.SpliceDish != dish.Owner || component.SpliceRevision != dish.Comp.Revision)
+            var hasDish = TryGetDish(machine, out var dish);
+            var dishUid = hasDish ? dish.Owner : (EntityUid?) null;
+            var revision = hasDish ? dish.Comp.Revision : -1;
+            if (component.ObservedDish != dishUid || component.ObservedRevision != revision)
+            {
+                component.ObservedDish = dishUid;
+                component.ObservedRevision = revision;
+                UpdateUI(machine);
+            }
+
+            if (component.SpliceEndTime is not { } endTime)
+                continue;
+
+            if (!this.IsPowered(uid, EntityManager) || !hasDish ||
+                component.SpliceDish != dish.Owner || component.SpliceRevision != revision)
             {
                 CancelSplice(machine);
                 continue;
@@ -137,15 +137,12 @@ public sealed partial class CellularFusionSystem : EntitySystem
             SharedCellSystem.GetStabilizedName(first, second),
             SharedCellSystem.GetStabilizedStability(first, second), genome);
         ResetSplice(ent.Comp);
-        // The result replaces one source sample before the second is removed, so even a full dish has room.
-        if (!_cells.RemoveCell((dish.Owner, (CellContainerComponent?) dish.Comp), first))
-            return;
-        if (!_cells.RemoveCell((dish.Owner, (CellContainerComponent?) dish.Comp), second))
+        if (!_cells.ReplaceCells((dish.Owner, (CellContainerComponent?) dish.Comp), first, second, result))
         {
-            _cells.AddCell((dish.Owner, (CellContainerComponent?) dish.Comp), first);
+            UpdateUI(ent);
             return;
         }
-        _cells.AddCell((dish.Owner, (CellContainerComponent?) dish.Comp), result);
+        ent.Comp.ObservedRevision = dish.Comp.Revision;
         _popup.PopupEntity(Loc.GetString("cellular-fusion-splice-success"), ent, PopupType.Medium);
         UpdateUI(ent, result);
     }
