@@ -60,6 +60,21 @@ public sealed partial class GenomeSystem : EntitySystem
         return ValidState(state, gene) ? GenomeOperationResult.Success : GenomeOperationResult.InvalidValue;
     }
 
+    /// <summary>
+    /// Checks every incoming gene before a procedure starts or modifies a genome.
+    /// </summary>
+    public GenomeOperationResult ValidateGenes(IReadOnlyDictionary<ProtoId<GenePrototype>, GeneState> genes)
+    {
+        foreach (var (id, state) in genes)
+        {
+            var result = ValidateGene(id, state);
+            if (result != GenomeOperationResult.Success)
+                return result;
+        }
+
+        return GenomeOperationResult.Success;
+    }
+
     [SubscribeLocalEvent]
     private void OnComponentInit(Entity<GenomeComponent> ent, ref ComponentInit args)
     {
@@ -270,6 +285,37 @@ public sealed partial class GenomeSystem : EntitySystem
         ent.Comp.Genes = genes;
         ent.Comp.GenomeGenerated = true;
         RaiseLocalEvent(ent.Owner, new GenomeChangedEvent());
+    }
+
+    /// <summary>
+    /// Validates and merges incoming genes into an existing organism genome.
+    /// Reports changed genes only after the complete replacement succeeds.
+    /// </summary>
+    public GenomeOperationResult ApplyGenes(EntityUid uid,
+        IReadOnlyDictionary<ProtoId<GenePrototype>, GeneState> incoming, out int changed)
+    {
+        changed = 0;
+        var result = GetComponent(uid, out var component);
+        if (result != GenomeOperationResult.Success)
+            return result;
+
+        result = ValidateGenes(incoming);
+        if (result != GenomeOperationResult.Success)
+            return result;
+
+        var genes = component!.Genes.ToDictionary(entry => entry.Key, entry => entry.Value.Clone());
+        var count = 0;
+        foreach (var (id, state) in incoming)
+        {
+            if (!genes.TryGetValue(id, out var original) || !SameState(original, state))
+                count++;
+            genes[id] = state.Clone();
+        }
+
+        result = ReplaceGenome(uid, component.GenomeId, genes);
+        if (result == GenomeOperationResult.Success)
+            changed = count;
+        return result;
     }
 
     public GenomeOperationResult CopyGenome(EntityUid source, EntityUid target)

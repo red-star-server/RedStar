@@ -12,14 +12,6 @@
     - type: Pacified
 
 - type: gene
-  id: OwO
-  kind: Presence
-  effects:
-  - !type:AddComponents
-    components:
-    - type: OwOAccent
-
-- type: gene
   id: NightVision
   kind: Presence
   effects:
@@ -178,9 +170,6 @@
   - !type:AddComponents
     components:
     - type: BleatingAccent
-
-- type: genome
-  id: LaboratorySample
 
 - type: genome
   id: NocturnalAnimal

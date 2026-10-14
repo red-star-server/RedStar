@@ -17,20 +17,6 @@ namespace Content.Shared._RedStar.Xenobiology.Systems;
 [PublicAPI]
 public abstract partial class SharedCellSystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _prototype = default!;
-
-    /// <summary>
-    /// Adds a new <see cref="Cell"/> instance created from the prototype to the container.
-    /// </summary>
-    /// <seealso cref="CellPrototype"/>
-    public bool AddCell(Entity<CellContainerComponent?> ent, ProtoId<CellPrototype> cellId)
-    {
-        if (!Resolve(ent, ref ent.Comp) || !_prototype.TryIndex(cellId, out var cellPrototype))
-            return false;
-
-        return AddCell(ent, new Cell(cellPrototype));
-    }
-
     /// <summary>
     /// Adds a new <see cref="Cell"/> instance to the container.
     /// </summary>

@@ -6,7 +6,6 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared._RedStar.Xenobiology;
 
 /// <summary>One laboratory sample with server-owned genetic material.</summary>
-/// <seealso cref="CellPrototype"/>
 /// <seealso cref="CellContainerComponent"/>
 /// <seealso cref="SharedCellSystem"/>
 [DataDefinition]
@@ -58,6 +57,4 @@ public sealed partial class Cell
     /// <summary>Sequencing mistakes damage this physical sample, never its stored genome.</summary>
     public void ReduceStability(float amount) => Stability = Math.Clamp(Stability - Math.Max(0f, amount), 0f, 1f);
 
-    public Cell(CellPrototype cell) : this(cell.Color, Loc.GetString(cell.Name), cell.Stability,
-        new GenomeSnapshot(cell.GenomeId, cell.Genes)) { }
 }

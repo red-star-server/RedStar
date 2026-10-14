@@ -53,9 +53,12 @@ public sealed partial class CellSystem : SharedCellSystem
         if (!TryComp<CellContainerComponent>(ent, out var container))
             return;
 
-        foreach (var cellId in ent.Comp.Cells)
+        foreach (var entry in ent.Comp.Cells)
         {
-            AddCell((ent, container), cellId);
+            if (_genomes.Generate(entry.Genome, out var genome) != GenomeOperationResult.Success || genome is null)
+                continue;
+
+            AddCell((ent, container), new Cell(entry.Color, Loc.GetString(entry.Name), entry.Stability, genome));
         }
     }
 

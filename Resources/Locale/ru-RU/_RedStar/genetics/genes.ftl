@@ -1,6 +1,5 @@
 gene-BiologicalVariant-name = Биологический вариант
 gene-Pacifism-name = Пацифизм
-gene-OwO-name = ОwО
 gene-NightVision-name = Ночное зрение
 gene-EggLayer-name = Яйцекладка
 gene-Lactation-name = Лактация

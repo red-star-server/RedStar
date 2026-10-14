@@ -32,16 +32,16 @@ public sealed partial class GenomeExpressionSystem : EntitySystem
             return;
 
         GenomeExpressionComponent? host = null;
-        foreach (var gene in _prototypes.EnumeratePrototypes<GenePrototype>())
+        foreach (var (id, _) in genome.GetGenes())
         {
-            if (gene.Effects.Length == 0 || !genome.TryGetGene(gene.ID, out _))
+            if (!_prototypes.TryIndex(id, out var gene) || gene.Effects.Length == 0)
                 continue;
 
             host ??= EnsureComp<GenomeExpressionComponent>(uid);
-            if (host.Applied.Contains(gene.ID))
+            if (host.Applied.Contains(id))
                 continue;
             if (_effects.TryApplyEffects(uid, gene.Effects))
-                host.Applied.Add(gene.ID);
+                host.Applied.Add(id);
         }
     }
 }

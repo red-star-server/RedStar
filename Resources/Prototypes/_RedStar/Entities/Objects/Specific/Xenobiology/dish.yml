@@ -40,7 +40,9 @@
   components:
   - type: CellGeneration
     cells:
-    - Murine
+    - genome: NocturnalAnimal
+      name: cell-Murine-name
+      color: "#494546"
 
 - type: entity
   parent: PetriDish
@@ -49,7 +51,10 @@
   components:
   - type: CellGeneration
     cells:
-    - Galliform
+    - genome: Fowl
+      name: cell-Galliform-name
+      color: "#C2B280"
+      stability: 0.97
 
 - type: entity
   parent: PetriDish
@@ -58,16 +63,10 @@
   components:
   - type: CellGeneration
     cells:
-    - Bovine
-
-- type: entity
-  parent: PetriDish
-  id: PetriDishFeliform
-  suffix: Feliform
-  components:
-  - type: CellGeneration
-    cells:
-    - Feliform
+    - genome: Bovine
+      name: cell-Bovine-name
+      color: "#7F5B3E"
+      stability: 0.95
 
 - type: entity
   parent: PetriDish
@@ -76,7 +75,9 @@
   components:
   - type: CellGeneration
     cells:
-    - Canid
+    - genome: Canid
+      name: cell-Canid-name
+      color: "#D2691E"
 
 - type: entity
   parent: PetriDish
@@ -85,7 +86,9 @@
   components:
   - type: CellGeneration
     cells:
-    - Ursine
+    - genome: NocturnalAnimal
+      name: cell-Ursine-name
+      color: "#8B4513"
 
 - type: entity
   parent: PetriDish
@@ -94,7 +97,10 @@
   components:
   - type: CellGeneration
     cells:
-    - Cyprinid
+    - genome: NocturnalAnimal
+      name: cell-Cyprinid-name
+      color: "#4682B4"
+      stability: 0.84
 
 - type: entity
   parent: PetriDish
@@ -103,7 +109,10 @@
   components:
   - type: CellGeneration
     cells:
-    - CartilaginousCyprinid
+    - genome: NocturnalAnimal
+      name: cell-CartilaginousCyprinid-name
+      color: "#5F9EA0"
+      stability: 0.8
 
 - type: entity
   parent: PetriDish
@@ -112,43 +121,9 @@
   components:
   - type: CellGeneration
     cells:
-    - Ophidic
-
-- type: entity
-  parent: PetriDish
-  id: PetriDishAnura
-  suffix: Anura
-  components:
-  - type: CellGeneration
-    cells:
-    - Anura
-
-- type: entity
-  parent: PetriDish
-  id: PetriDishCaudata
-  suffix: Caudata
-  components:
-  - type: CellGeneration
-    cells:
-    - Caudata
-
-- type: entity
-  parent: PetriDish
-  id: PetriDishAtypical
-  suffix: Atypical
-  components:
-  - type: CellGeneration
-    cells:
-    - Atypical
-
-- type: entity
-  parent: PetriDish
-  id: PetriDishPseudoarachnoid
-  suffix: Pseudoarachnoid
-  components:
-  - type: CellGeneration
-    cells:
-    - Pseudoarachnoid
+    - genome: SpaceCobra
+      name: cell-Ophidic-name
+      color: "#556B2F"
 
 - type: entity
   parent: PetriDish
@@ -157,7 +132,9 @@
   components:
   - type: CellGeneration
     cells:
-    - Psittacine
+    - genome: Parrot
+      name: cell-Psittacine-name
+      color: "#38B85A"
 
 - type: entity
   parent: PetriDish
@@ -166,7 +143,10 @@
   components:
   - type: CellGeneration
     cells:
-    - Basilisk
+    - genome: Basilisk
+      name: cell-Basilisk-name
+      color: "#726D9A"
+      stability: 0.8
 
 - type: entity
   parent: PetriDish
@@ -175,7 +155,9 @@
   components:
   - type: CellGeneration
     cells:
-    - Caprine
+    - genome: Caprine
+      name: cell-Caprine-name
+      color: "#A58B68"
 
 - type: entity
   parent: PetriDish
@@ -184,4 +166,6 @@
   components:
   - type: CellGeneration
     cells:
-    - Ovine
+    - genome: Caprine
+      name: cell-Ovine-name
+      color: "#E8E2D2"

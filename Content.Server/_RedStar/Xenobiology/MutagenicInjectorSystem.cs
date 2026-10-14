@@ -86,10 +86,8 @@ public sealed partial class MutagenicInjectorSystem : SharedMutagenicInjectorSys
             return false;
         }
 
-        foreach (var (id, state) in vialComponent.Genes)
+        if (_genomes.ValidateGenes(vialComponent.Genes) != GenomeOperationResult.Success)
         {
-            if (_genomes.ValidateGene(id, state) == GenomeOperationResult.Success)
-                continue;
             _popup.PopupEntity(Loc.GetString("mutagenic-injector-invalid-vial"), ent, PopupType.MediumCaution);
             return false;
         }
@@ -135,34 +133,14 @@ public sealed partial class MutagenicInjectorSystem : SharedMutagenicInjectorSys
         if (subject is not { } mob || vial is not { } vialUid ||
             !TryComp<GeneticVialComponent>(vialUid, out var vialComponent) ||
             vialComponent.Revision != ent.Comp.InjectionVialRevision || vialComponent.Genes.Count == 0 ||
-            !IsValidRecipient(mob) || !_genomes.TryGetSnapshot(mob, out var recipient) || recipient is null)
+            !IsValidRecipient(mob))
         {
             CancelInjection(ent);
             return;
         }
 
-        var incoming = _vials.GetGenes((vialUid, vialComponent));
-        foreach (var (id, state) in incoming)
-        {
-            if (_genomes.ValidateGene(id, state) == GenomeOperationResult.Success)
-                continue;
-
-            CancelInjection(ent);
-            return;
-        }
-
-        var originalGenes = recipient.GetGenes();
-        var genes = new Dictionary<ProtoId<GenePrototype>, GeneState>(originalGenes);
-        var changed = 0;
-        foreach (var (id, state) in incoming)
-        {
-            if (!originalGenes.TryGetValue(id, out var original) ||
-                original.Allele != state.Allele || original.Number != state.Number)
-                changed++;
-            genes[id] = state;
-        }
-
-        if (_genomes.ReplaceGenome(mob, new GenomeSnapshot(recipient.GenomeId, genes)) != GenomeOperationResult.Success)
+        if (_genomes.ApplyGenes(mob, _vials.GetGenes((vialUid, vialComponent)), out var changed) !=
+            GenomeOperationResult.Success)
         {
             CancelInjection(ent);
             return;

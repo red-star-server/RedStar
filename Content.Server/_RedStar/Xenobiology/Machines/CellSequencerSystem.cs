@@ -27,7 +27,6 @@ public sealed partial class CellSequencerSystem : EntitySystem
     [Dependency] private GenomeSystem _genomes = default!;
     [Dependency] private IPrototypeManager _prototypes = default!;
     [Dependency] private GeneticVialSystem _vials = default!;
-    [Dependency] private SharedCellSystem _cells = default!;
 
     private byte[] _roundSeed = [];
 
@@ -143,19 +142,18 @@ public sealed partial class CellSequencerSystem : EntitySystem
 
         SyncWork(ent.Comp, dish);
         var (id, state) = genes[args.MarkerIndex];
-        if (!ent.Comp.Decoded.Contains(Sequence(id, state)) || !_vials.TryAdd(vial, id, state))
+        if (!ent.Comp.Decoded.Contains(Sequence(id, state)))
             return;
 
         ent.Comp.ActiveRevision = dish.Comp.Revision + 1;
-        if (_cells.TryRemoveGene((dish.Owner, (CellContainerComponent?) dish.Comp), cell, id))
+        if (!_vials.TryExtract(dish, cell, vial, id, state))
         {
-            _popup.PopupEntity(Loc.GetString("cell-sequencer-extracted", ("gene", Loc.GetString($"gene-{id}-name"))),
-                ent, PopupType.Medium);
+            ent.Comp.ActiveRevision = dish.Comp.Revision;
             return;
         }
 
-        ent.Comp.ActiveRevision = dish.Comp.Revision;
-        _vials.TryRemove(vial, id);
+        _popup.PopupEntity(Loc.GetString("cell-sequencer-extracted", ("gene", Loc.GetString($"gene-{id}-name"))),
+            ent, PopupType.Medium);
         UpdateUI(ent);
     }
 

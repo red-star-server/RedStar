@@ -1,6 +1,5 @@
 gene-BiologicalVariant-name = Biological Variant
 gene-Pacifism-name = Pacifism
-gene-OwO-name = OwO
 gene-NightVision-name = Night Vision
 gene-EggLayer-name = Egg Layer
 gene-Lactation-name = Lactation
