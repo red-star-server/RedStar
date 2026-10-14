@@ -1,8 +1,10 @@
+using System.Globalization;
+using System.Linq;
+using System.Text;
 using Content.Server._RedStar.Genetics;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Shared.Dataset;
-using Content.Shared.Random.Helpers;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Damage.Components;
 using Content.Shared.DoAfter;
@@ -51,7 +53,7 @@ public sealed partial class CellSystem : SharedCellSystem
     }
 
     /// <summary>
-    /// Starts a DoAfter for biopsy or cell transfer when interacting with a target.
+    /// Starts a DoAfter for a living biopsy and handles container transfers immediately.
     /// Determines direction based on whether the target has cells or detectable traits.
     /// </summary>
     [SubscribeLocalEvent]
@@ -66,10 +68,16 @@ public sealed partial class CellSystem : SharedCellSystem
             ? CellCollectorDirection.Collection
             : CellCollectorDirection.Transfer;
 
+        if (!IsBiologicalSampleSource(args.Target.Value))
+        {
+            args.Handled = CompleteCollectorInteraction(ent, args.Target.Value, direction, args.User);
+            return;
+        }
+
         if (!CollectorInteractValidate(ent, (args.Target.Value, containerComponent), direction, args.User))
             return;
 
-        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, ent.Comp.Delay, new CellCollectorDoAfter(direction), ent, target: args.Target, used: ent)
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, ent.Comp.Delay, new CellCollectorDoAfter(), ent, target: args.Target, used: ent)
         {
             BreakOnDamage = true,
             BreakOnMove = true,
@@ -82,8 +90,7 @@ public sealed partial class CellSystem : SharedCellSystem
     }
 
     /// <summary>
-    /// Completes the collector DoAfter. Biological biopsies use the organism's native sample;
-    /// laboratory containers move their contents. Transfer moves cells into a container.
+    /// Completes a living biopsy after its delay.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnCollectorCollectDoAfter(Entity<CellCollectorComponent> ent, ref CellCollectorDoAfter args)
@@ -91,48 +98,53 @@ public sealed partial class CellSystem : SharedCellSystem
         if (args.Handled || args.Cancelled || args.Target is null)
             return;
 
-        if (!CollectorInteractValidate(ent, args.Target.Value, args.Direction, args.Args.User))
-            return;
+        args.Handled = CompleteCollectorInteraction(ent, args.Target.Value, CellCollectorDirection.Collection, args.Args.User);
+    }
 
-        switch (args.Direction)
+    private bool CompleteCollectorInteraction(Entity<CellCollectorComponent> ent, EntityUid target,
+        CellCollectorDirection direction, EntityUid user)
+    {
+        if (!CollectorInteractValidate(ent, target, direction, user))
+            return false;
+
+        switch (direction)
         {
             case CellCollectorDirection.Collection:
-                if (IsBiologicalSampleSource(args.Target.Value))
+                if (IsBiologicalSampleSource(target))
                 {
-                    var source = args.Target.Value;
-                    var damage = GetCellularDamage(source);
-                    if (!_genomes.TryGetSnapshot(source, out var genome) || genome is null)
-                        return;
+                    var damage = GetCellularDamage(target);
+                    if (!_genomes.TryGetSnapshot(target, out var genome) || genome is null)
+                        return false;
 
                     if (!AddCell(ent.Owner, GenerateRandomCell(genome, damage)))
-                        return;
+                        return false;
 
                     if (ent.Comp.Damage is not null)
-                        _damageable.TryChangeDamage(source, ent.Comp.Damage);
+                        _damageable.TryChangeDamage(target, ent.Comp.Damage);
                 }
-                else if (TryComp<CellContainerComponent>(args.Target.Value, out var targetComp))
+                else if (TryComp<CellContainerComponent>(target, out var targetComp))
                 {
-                    if (!MoveCells((args.Target.Value, targetComp), ent.Owner))
-                        return;
+                    if (!MoveFirstCell((target, targetComp), ent.Owner))
+                        return false;
                 }
 
-                _popup.PopupEntity(Loc.GetString("cell-collector-collected"), ent, args.Args.User);
+                _popup.PopupEntity(Loc.GetString("cell-collector-collected"), ent, user);
 
                 break;
 
             case CellCollectorDirection.Transfer:
-                if (!MoveCells(ent.Owner, args.Target.Value))
-                    return;
+                if (!MoveFirstCell(ent.Owner, target))
+                    return false;
 
-                _popup.PopupEntity(Loc.GetString("cell-collector-transfer"), ent, args.Args.User);
+                _popup.PopupEntity(Loc.GetString("cell-collector-transfer"), ent, user);
                 break;
 
             default:
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
         }
 
         UpdateCollectorAppearance(ent);
-        args.Handled = true;
+        return true;
     }
 
     /// <summary>
@@ -157,9 +169,7 @@ public sealed partial class CellSystem : SharedCellSystem
     /// </summary>
     private Cell GenerateRandomCell(GenomeSnapshot genome, float cellularDamage)
     {
-        var prefix = _random.Pick(_prototypes.Index(CellPrefixes));
-        var suffix = _random.Pick(_prototypes.Index(CellSuffixes));
-        var name = prefix + suffix;
+        var name = GetProceduralName(genome);
 
         var color = new Color(
             _random.NextFloat(),
@@ -175,6 +185,40 @@ public sealed partial class CellSystem : SharedCellSystem
             name: name,
             stability: stability,
             genome: genome);
+    }
+
+    private string GetProceduralName(GenomeSnapshot genome)
+    {
+        var canonical = new StringBuilder();
+        AppendField(canonical, genome.GenomeId.ToString());
+        foreach (var (id, state) in genome.GetGenes().OrderBy(entry => entry.Key.ToString(), StringComparer.Ordinal))
+        {
+            AppendField(canonical, id.ToString());
+            AppendField(canonical, state.Allele);
+            AppendField(canonical, state.Number?.ToString(CultureInfo.InvariantCulture));
+        }
+
+        const ulong offset = 14695981039346656037;
+        const ulong prime = 1099511628211;
+        var hash = offset;
+        foreach (var value in Encoding.UTF8.GetBytes(canonical.ToString()))
+        {
+            hash = unchecked((hash ^ value) * prime);
+        }
+
+        var prefixes = _prototypes.Index(CellPrefixes).Values;
+        var suffixes = _prototypes.Index(CellSuffixes).Values;
+        var prefix = Loc.GetString(prefixes[(int) (hash % (ulong) prefixes.Count)]);
+        var suffix = Loc.GetString(suffixes[(int) (hash / (ulong) prefixes.Count % (ulong) suffixes.Count)]);
+        return prefix + suffix;
+    }
+
+    private static void AppendField(StringBuilder builder, string? value)
+    {
+        if (value is null)
+            builder.Append("-1:");
+        else
+            builder.Append(value.Length.ToString(CultureInfo.InvariantCulture)).Append(':').Append(value);
     }
 
     /// <summary>
@@ -232,8 +276,7 @@ public sealed partial class CellSystem : SharedCellSystem
                         _popup.PopupEntity(Loc.GetString("cell-collector-sample-damaged"), ent, user, PopupType.SmallCaution);
                     return false;
                 }
-                if (!biological && (target.Comp is not { AllowCollection: true } ||
-                                    ent.Comp2.MaxCells - ent.Comp2.Cells.Count < target.Comp.Cells.Count))
+                if (!biological && target.Comp is not { AllowCollection: true, Empty: false })
                 {
                     if (!popup)
                         return false;
@@ -248,7 +291,7 @@ public sealed partial class CellSystem : SharedCellSystem
                     _entityWhitelist.IsWhitelistFail(target.Comp.ToolsTransferWhitelist, ent) ||
                     target.Comp.ToolsTransferWhitelist is null ||
                     !target.Comp.AllowTransfer ||
-                    target.Comp.MaxCells - target.Comp.Cells.Count < ent.Comp2.Cells.Count)
+                    target.Comp.Cells.Count >= target.Comp.MaxCells)
                     return false;
 
                 if (ent.Comp2.Empty)

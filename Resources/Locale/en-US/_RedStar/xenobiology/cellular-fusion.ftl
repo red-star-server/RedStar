@@ -7,7 +7,6 @@ cellular-fusion-menu-details-label = Sample details
 cellular-fusion-menu-no-dish-label = Insert a Petri dish.
 cellular-fusion-menu-empty-dish-label = The Petri dish is empty.
 cellular-fusion-menu-no-selection-label = Select up to two samples.
-cellular-fusion-menu-result-label = Stabilized sample
 
 cellular-fusion-menu-cell-stability-label = Stability: {$stability}%
 

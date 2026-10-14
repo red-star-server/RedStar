@@ -19,7 +19,6 @@ public sealed partial class CellularFusionWindow : FancyWindow
     private NetEntity? _dish;
     private int _dishRevision = -1;
     private bool _spliceInProgress;
-    private bool _showingResult;
     private TimeSpan _spliceStartTime;
     private double _spliceDuration;
 
@@ -46,12 +45,7 @@ public sealed partial class CellularFusionWindow : FancyWindow
         if (contentsChanged)
             RebuildEntries(state.Cells);
 
-        var wasProcessing = _spliceInProgress;
         _spliceInProgress = state.SpliceInProgress;
-        if (state.LastResult is { } result)
-            ShowResult(result);
-        else if (wasProcessing && !_spliceInProgress)
-            ClearSelection();
 
         if (_spliceInProgress)
         {
@@ -74,7 +68,6 @@ public sealed partial class CellularFusionWindow : FancyWindow
     private void RebuildEntries(IReadOnlyList<CellView> cells)
     {
         _selected.Clear();
-        _showingResult = false;
         _cells = cells.ToArray();
         CellContainer.RemoveAllChildren();
         for (var index = 0; index < cells.Count; index++)
@@ -102,7 +95,6 @@ public sealed partial class CellularFusionWindow : FancyWindow
         if (_spliceInProgress)
             return;
 
-        _showingResult = false;
         if (_selected.Remove(entry))
             entry.SetSelected(false);
         else
@@ -119,34 +111,15 @@ public sealed partial class CellularFusionWindow : FancyWindow
         UpdateDetails();
     }
 
-    private void ClearSelection()
-    {
-        foreach (var entry in _selected)
-        {
-            entry.SetSelected(false);
-        }
-
-        _selected.Clear();
-        _showingResult = false;
-    }
-
-    private void ShowResult(CellView result)
-    {
-        ClearSelection();
-        _showingResult = true;
-        CellInfoA.SetCell(result);
-    }
-
     private void UpdateDetails()
     {
         var count = _selected.Count;
-        NoSelectionLabel.Visible = count == 0 && !_showingResult;
-        ResultLabel.Visible = _showingResult;
-        CellInfoA.Visible = count > 0 || _showingResult;
+        NoSelectionLabel.Visible = count == 0;
+        CellInfoA.Visible = count > 0;
         CellInfoB.Visible = count == 2;
         InfoDivider.Visible = count == 2;
 
-        if (!_showingResult && count > 0)
+        if (count > 0)
             CellInfoA.SetCell(_selected[0].Cell);
         if (count == 2)
             CellInfoB.SetCell(_selected[1].Cell);

@@ -6,21 +6,9 @@ namespace Content.Shared._RedStar.Xenobiology;
 [Serializable, NetSerializable]
 public sealed partial class CellCollectorDoAfter : SimpleDoAfterEvent
 {
-    public readonly CellCollectorDirection Direction;
-
-    public CellCollectorDoAfter(CellCollectorDirection direction)
-    {
-        Direction = direction;
-    }
-
-    public CellCollectorDoAfter(CellCollectorDoAfter doAfter)
-    {
-        Direction = doAfter.Direction;
-    }
-
     public override DoAfterEvent Clone()
     {
-        return new CellCollectorDoAfter(this);
+        return new CellCollectorDoAfter();
     }
 }
 

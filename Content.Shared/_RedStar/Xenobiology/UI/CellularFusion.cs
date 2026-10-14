@@ -25,8 +25,7 @@ public sealed class CellularFusionUiState(
     NetEntity? dish,
     bool spliceInProgress,
     double spliceDuration,
-    double spliceRemaining,
-    CellView? lastResult = null) : BoundUserInterfaceState
+    double spliceRemaining) : BoundUserInterfaceState
 {
     public readonly CellView[] Cells = cells;
     public readonly int DishRevision = dishRevision;
@@ -34,5 +33,4 @@ public sealed class CellularFusionUiState(
     public readonly bool SpliceInProgress = spliceInProgress;
     public readonly double SpliceDuration = spliceDuration;
     public readonly double SpliceRemaining = spliceRemaining;
-    public readonly CellView? LastResult = lastResult;
 }

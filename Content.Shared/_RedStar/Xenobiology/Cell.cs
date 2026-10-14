@@ -34,7 +34,6 @@ public sealed partial class Cell
     /// Cell name, this can be changed by the player,
     /// don't use this to index cells.
     /// </summary>
-    /// <seealso cref="SharedCellSystem.GetStabilizedName"/>
     [DataField, ViewVariables]
     public string Name { get; private set; } = string.Empty;
 

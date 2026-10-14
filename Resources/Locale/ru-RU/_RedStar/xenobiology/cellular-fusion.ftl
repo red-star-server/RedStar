@@ -5,7 +5,6 @@ cellular-fusion-menu-details-label = Характеристики образцо
 cellular-fusion-menu-no-dish-label = Вставьте чашку Петри.
 cellular-fusion-menu-empty-dish-label = Чашка Петри пуста.
 cellular-fusion-menu-no-selection-label = Выберите до двух образцов.
-cellular-fusion-menu-result-label = Стабилизированный образец
 
 # Свойства клетки
 cellular-fusion-menu-cell-stability-label = Стабильность: {$stability}%

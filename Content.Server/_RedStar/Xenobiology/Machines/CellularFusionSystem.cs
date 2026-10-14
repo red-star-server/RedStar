@@ -134,7 +134,7 @@ public sealed partial class CellularFusionSystem : EntitySystem
         }
 
         var result = new Cell(null, SharedCellSystem.GetStabilizedColor(first, second),
-            SharedCellSystem.GetStabilizedName(first, second),
+            first.Name,
             SharedCellSystem.GetStabilizedStability(first, second), genome);
         ResetSplice(ent.Comp);
         if (!_cells.ReplaceCells((dish.Owner, (CellContainerComponent?) dish.Comp), first, second, result))
@@ -144,7 +144,7 @@ public sealed partial class CellularFusionSystem : EntitySystem
         }
         ent.Comp.ObservedRevision = dish.Comp.Revision;
         _popup.PopupEntity(Loc.GetString("cellular-fusion-splice-success"), ent, PopupType.Medium);
-        UpdateUI(ent, result);
+        UpdateUI(ent);
     }
 
     private bool CanStabilize(Cell first, Cell second, out GenomeSnapshot? genome)
@@ -191,7 +191,7 @@ public sealed partial class CellularFusionSystem : EntitySystem
         component.SpliceRevision = 0;
     }
 
-    private void UpdateUI(Entity<CellularFusionComponent> ent, Cell? lastResult = null)
+    private void UpdateUI(Entity<CellularFusionComponent> ent)
     {
         if (TerminatingOrDeleted(ent))
             return;
@@ -206,7 +206,6 @@ public sealed partial class CellularFusionSystem : EntitySystem
             hasDish ? GetNetEntity(dish.Owner) : null,
             ent.Comp.SpliceInProgress,
             ent.Comp.SpliceDuration.TotalSeconds,
-            remaining,
-            lastResult is null ? null : new CellView(lastResult)));
+            remaining));
     }
 }

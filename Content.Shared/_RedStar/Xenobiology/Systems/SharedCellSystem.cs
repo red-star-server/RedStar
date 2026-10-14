@@ -101,17 +101,18 @@ public abstract partial class SharedCellSystem : EntitySystem
     }
 
     /// <summary>
-    /// Moves all cells only when the destination has room for every sample.
+    /// Moves the first sample from one container to another without an intermediate notification.
     /// </summary>
-    public bool MoveCells(Entity<CellContainerComponent?> source, Entity<CellContainerComponent?> destination)
+    public bool MoveFirstCell(Entity<CellContainerComponent?> source, Entity<CellContainerComponent?> destination)
     {
         if (source.Owner == destination.Owner ||
             !Resolve(source, ref source.Comp) || !Resolve(destination, ref destination.Comp) ||
-            source.Comp.Empty || destination.Comp.MaxCells - destination.Comp.Cells.Count < source.Comp.Cells.Count)
+            source.Comp.Empty || destination.Comp.Cells.Count >= destination.Comp.MaxCells)
             return false;
 
-        destination.Comp.Cells.AddRange(source.Comp.Cells);
-        source.Comp.Cells.Clear();
+        var cell = source.Comp.Cells[0];
+        source.Comp.Cells.RemoveAt(0);
+        destination.Comp.Cells.Add(cell);
         source.Comp.Revision++;
         destination.Comp.Revision++;
         RaiseLocalEvent(source, new CellContainerChangedEvent());
