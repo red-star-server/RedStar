@@ -26,9 +26,7 @@
                             <Button Name="CompareButton" Text="{Loc 'cell-sequencer-compare'}" />
                         </BoxContainer>
                     </PanelContainer>
-                    <ScrollContainer VerticalExpand="True" Margin="8 2 8 0">
-                        <lab:SequencerGenomeControl Name="Genome" />
-                    </ScrollContainer>
+                    <lab:SequencerGenomeControl Name="Genome" Margin="8 2 8 0" />
                     <PanelContainer StyleClasses="PanelDark" Margin="8 0 8 5">
                         <BoxContainer Orientation="Horizontal" Margin="8 4 8 4" SeparationOverride="8">
                             <Label Name="MarkerDetails" HorizontalExpand="True" />

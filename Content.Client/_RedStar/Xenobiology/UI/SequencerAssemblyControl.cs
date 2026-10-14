@@ -232,15 +232,12 @@ public sealed class SequencerAssemblyControl : Control
             var cell = _slots[i];
             var fill = cell.HasValue ? Card : Back;
             DrawTile(handle, pos, fill, cell is { } index ? _fragments[index] : $"{i + 1:00}", !cell.HasValue);
-            if (_feedback && cell is { } current)
-            {
-                var matches = i == 0
-                    ? _fragments[current][..4] == _prefix[..4]
-                    : _slots[i - 1] is { } previous &&
-                      _fragments[previous][3..] == _fragments[current][..4];
-                handle.DrawRect(new UIBox2(pos.X - 8 * UIScale, pos.Y + 13 * UIScale,
-                    pos.X - 4 * UIScale, pos.Y + 39 * UIScale), matches ? Good : Bad);
-            }
+            if (!_feedback || i <= 0 || cell is not { } current || _slots[i - 1] is not { } previous)
+                continue;
+
+            var matches = _fragments[previous][3..] == _fragments[current][..4];
+            handle.DrawRect(new UIBox2(pos.X - 8 * UIScale, pos.Y + 13 * UIScale,
+                pos.X - 4 * UIScale, pos.Y + 39 * UIScale), matches ? Good : Bad);
         }
         if (_held && _drag is { } dragged)
             DrawTile(handle, _cursor - new Vector2(40, 18) * UIScale, Accent, _fragments[dragged], false);
