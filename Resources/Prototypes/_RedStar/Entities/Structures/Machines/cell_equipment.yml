@@ -144,7 +144,7 @@
     - state: base
       map: [ "base" ]
     - state: door-closed
-      map: [ "enum.MutagenicInjectorVisuals.DoorLayer" ]
+      map: [ "enum.StorageVisualLayers.Door" ]
     - state: unlit
       shader: unshaded
       map: [ "enum.PowerDeviceVisualLayers.Powered" ]
@@ -165,15 +165,16 @@
     containers:
     - machine_board
     - machine_parts
+    - entity_storage
   - type: ContainerContainer
     containers:
       machine_board: !type:Container
       machine_parts: !type:Container
       vialSlot: !type:ContainerSlot
-      injector-bodyContainer: !type:ContainerSlot
+      entity_storage: !type:Container
   - type: EmptyOnMachineDeconstruct
     containers:
-    - injector-bodyContainer
+    - entity_storage
   - type: ItemSlots
     slots:
       vialSlot:
@@ -183,10 +184,10 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.MutagenicInjectorVisuals.DoorState:
-        enum.MutagenicInjectorVisuals.DoorLayer:
-          True: { visible: true }
-          False: { visible: false }
+      enum.StorageVisuals.Open:
+        enum.StorageVisualLayers.Door:
+          True: { visible: false }
+          False: { visible: true }
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
@@ -201,6 +202,12 @@
       params:
         loop: true
         maxDistance: 5
+  - type: ResistLocker
+  - type: EntityStorage
+    capacity: 1
+    whitelist:
+      components:
+      - MobState
   - type: GuideHelp
     guides:
     - Science

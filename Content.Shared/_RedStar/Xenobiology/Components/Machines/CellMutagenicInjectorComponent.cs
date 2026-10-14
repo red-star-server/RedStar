@@ -1,4 +1,3 @@
-using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Audio;
 
@@ -10,8 +9,6 @@ namespace Content.Shared._RedStar.Xenobiology.Components.Machines;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
 public sealed partial class CellMutagenicInjectorComponent : Component
 {
-    public const string BodyContainerId = "injector-bodyContainer";
-
     [DataField]
     public string VialSlot = "vialSlot";
 
@@ -34,7 +31,4 @@ public sealed partial class CellMutagenicInjectorComponent : Component
     public int InjectionVialRevision;
 
     public EntityUid? AudioStream;
-
-    [ViewVariables]
-    public ContainerSlot BodyContainer = default!;
 }
