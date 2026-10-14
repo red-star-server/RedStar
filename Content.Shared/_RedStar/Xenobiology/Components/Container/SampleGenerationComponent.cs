@@ -5,19 +5,18 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared._RedStar.Xenobiology.Components.Container;
 
 /// <summary>
-/// Generates the configured samples once when a container is created.
-/// Appearance derives from generated genes; stability belongs to the sample.
+/// Generates configured samples with individual stability when a container is created.
 /// </summary>
-/// <seealso cref="SharedCellSystem"/>
+/// <seealso cref="SharedSampleSystem"/>
 [RegisterComponent]
-public sealed partial class CellGenerationComponent : Component
+public sealed partial class SampleGenerationComponent : Component
 {
     [DataField]
-    public List<CellGenerationEntry> Cells = [];
+    public List<SampleGenerationEntry> Samples = [];
 }
 
 [DataDefinition]
-public sealed partial class CellGenerationEntry
+public sealed partial class SampleGenerationEntry
 {
     [DataField(required: true)]
     public ProtoId<GenomePrototype> Genome;

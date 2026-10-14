@@ -20,13 +20,13 @@
       state: icon
   - type: Item
     sprite: _RedStar/Objects/Specific/Xenobiology/biopsy_tool.rsi
-  - type: CellCollector
+  - type: SampleCollector
     damage:
       types:
         Blunt: 2
         Bloodloss: 5
         Cellular: 10
-  - type: CellContainer
-    maxCells: 1
+  - type: SampleContainer
+    maxSamples: 1
     allowTransfer: false
     allowCollection: false

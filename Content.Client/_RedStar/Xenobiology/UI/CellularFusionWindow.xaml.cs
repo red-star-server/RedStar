@@ -15,7 +15,7 @@ public sealed partial class CellularFusionWindow : FancyWindow
     public event Action<int, int, int, NetEntity?>? OnSplice;
 
     private readonly List<CellEntryControl> _selected = [];
-    private IReadOnlyList<CellView> _cells = [];
+    private IReadOnlyList<SampleView> _samples = [];
     private NetEntity? _dish;
     private int _dishRevision = -1;
     private bool _spliceInProgress;
@@ -38,12 +38,12 @@ public sealed partial class CellularFusionWindow : FancyWindow
     public void UpdateState(CellularFusionUiState state)
     {
         var contentsChanged = _dish != state.Dish || _dishRevision != state.DishRevision ||
-            !SameCells(_cells, state.Cells);
+            !SameSamples(_samples, state.Samples);
         _dish = state.Dish;
         _dishRevision = state.DishRevision;
 
         if (contentsChanged)
-            RebuildEntries(state.Cells);
+            RebuildEntries(state.Samples);
 
         _spliceInProgress = state.SpliceInProgress;
 
@@ -60,15 +60,15 @@ public sealed partial class CellularFusionWindow : FancyWindow
         }
 
         NoDishLabel.Visible = state.Dish is null;
-        EmptyDishLabel.Visible = state.Dish is not null && state.Cells.Length == 0;
+        EmptyDishLabel.Visible = state.Dish is not null && state.Samples.Length == 0;
         SpliceProgressBar.Visible = _spliceInProgress;
         UpdateDetails();
     }
 
-    private void RebuildEntries(IReadOnlyList<CellView> cells)
+    private void RebuildEntries(IReadOnlyList<SampleView> cells)
     {
         _selected.Clear();
-        _cells = cells.ToArray();
+        _samples = cells.ToArray();
         CellContainer.RemoveAllChildren();
         for (var index = 0; index < cells.Count; index++)
         {
@@ -78,7 +78,7 @@ public sealed partial class CellularFusionWindow : FancyWindow
         }
     }
 
-    private static bool SameCells(IReadOnlyList<CellView> left, IReadOnlyList<CellView> right)
+    private static bool SameSamples(IReadOnlyList<SampleView> left, IReadOnlyList<SampleView> right)
     {
         if (left.Count != right.Count)
             return false;
@@ -120,13 +120,13 @@ public sealed partial class CellularFusionWindow : FancyWindow
         InfoDivider.Visible = count == 2;
 
         if (count > 0)
-            CellInfoA.SetCell(_selected[0].Cell);
+            CellInfoA.SetSample(_selected[0].Sample);
         if (count == 2)
-            CellInfoB.SetCell(_selected[1].Cell);
+            CellInfoB.SetSample(_selected[1].Sample);
 
         SpliceButton.Disabled = _spliceInProgress || count != 2 ||
-            !_selected[0].Cell.HasGenome || !_selected[1].Cell.HasGenome ||
-            Math.Max(_selected[0].Cell.Stability, _selected[1].Cell.Stability) >= 1f;
+            !_selected[0].Sample.HasGenome || !_selected[1].Sample.HasGenome ||
+            Math.Max(_selected[0].Sample.Stability, _selected[1].Sample.Stability) >= 1f;
     }
 
     protected override void FrameUpdate(FrameEventArgs args)

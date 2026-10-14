@@ -19,9 +19,9 @@ public sealed class SequencerMarkerView(string familyCode, string[] fragments, b
 }
 
 [Serializable, NetSerializable]
-public sealed class SequencerSampleView(CellView cell, SequencerMarkerView[] markers)
+public sealed class SequencerSampleView(SampleView sample, SequencerMarkerView[] markers)
 {
-    public readonly CellView Cell = cell;
+    public readonly SampleView Sample = sample;
     public readonly SequencerMarkerView[] Markers = markers;
 }
 

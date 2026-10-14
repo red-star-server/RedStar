@@ -27,6 +27,7 @@ public sealed partial class CellSequencerSystem : EntitySystem
     [Dependency] private GenomeSystem _genomes = default!;
     [Dependency] private IPrototypeManager _prototypes = default!;
     [Dependency] private GeneticVialSystem _vials = default!;
+    [Dependency] private SharedSampleSystem _samples = default!;
 
     private byte[] _roundSeed = [];
 
@@ -60,7 +61,7 @@ public sealed partial class CellSequencerSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnCellChanged(Entity<CellContainerComponent> ent, ref CellContainerChangedEvent args)
+    private void OnSampleChanged(Entity<SampleContainerComponent> ent, ref SampleContainerChangedEvent args)
     {
         if (_containers.TryGetContainingContainer(ent.Owner, out var container) &&
             TryComp<CellSequencerComponent>(container.Owner, out var sequencer) &&
@@ -77,12 +78,12 @@ public sealed partial class CellSequencerSystem : EntitySystem
         if (!this.IsPowered(ent.Owner, EntityManager) ||
             !TryGetDish(ent, out var dish) || args.Dish != GetNetEntity(dish.Owner) ||
             args.DishRevision != dish.Comp.Revision ||
-            args.SampleIndex < 0 || args.SampleIndex >= dish.Comp.Cells.Count ||
+            args.SampleIndex < 0 || args.SampleIndex >= dish.Comp.Samples.Count ||
             args.Order is not { Length: 4 } || args.Order.Distinct().Count() != 4 ||
             args.Order.Any(index => index is < 0 or > 3))
             return;
 
-        var cell = dish.Comp.Cells[args.SampleIndex];
+        var cell = dish.Comp.Samples[args.SampleIndex];
         if (cell.GetGenome() is not { } genome ||
             _genomes.ValidateSnapshot(genome) != GenomeOperationResult.Success)
             return;
@@ -99,10 +100,12 @@ public sealed partial class CellSequencerSystem : EntitySystem
         {
             if (permutation[args.Order[i]] == i)
                 continue;
-            cell.ReduceStability(0.02f);
             ent.Comp.FeedbackSample = args.SampleIndex;
             ent.Comp.FeedbackMarker = args.MarkerIndex;
             ent.Comp.FeedbackOrder = args.Order.ToArray();
+            ent.Comp.ActiveRevision = dish.Comp.Revision + 1;
+            if (!_samples.TryReduceStability((dish.Owner, (SampleContainerComponent?) dish.Comp), cell, 0.02f))
+                ent.Comp.ActiveRevision = dish.Comp.Revision;
             _popup.PopupEntity(Loc.GetString("cell-sequencer-incorrect"), ent, PopupType.MediumCaution);
             UpdateUI(ent);
             return;
@@ -127,10 +130,10 @@ public sealed partial class CellSequencerSystem : EntitySystem
             !TryGetDish(ent, out var dish) || !TryGetVial(ent, out var vial) ||
             args.Dish != GetNetEntity(dish.Owner) || args.DishRevision != dish.Comp.Revision ||
             args.Vial != GetNetEntity(vial.Owner) || args.VialRevision != vial.Comp.Revision ||
-            args.SampleIndex < 0 || args.SampleIndex >= dish.Comp.Cells.Count)
+            args.SampleIndex < 0 || args.SampleIndex >= dish.Comp.Samples.Count)
             return;
 
-        var cell = dish.Comp.Cells[args.SampleIndex];
+        var cell = dish.Comp.Samples[args.SampleIndex];
         if (!float.IsFinite(cell.Stability) || cell.Stability < 0.5f ||
             cell.GetGenome() is not { } genome ||
             _genomes.ValidateSnapshot(genome) != GenomeOperationResult.Success)
@@ -157,11 +160,11 @@ public sealed partial class CellSequencerSystem : EntitySystem
         UpdateUI(ent);
     }
 
-    private bool TryGetDish(Entity<CellSequencerComponent> ent, out Entity<CellContainerComponent> dish)
+    private bool TryGetDish(Entity<CellSequencerComponent> ent, out Entity<SampleContainerComponent> dish)
     {
         dish = default;
         var uid = _itemSlots.GetItemOrNull(ent.Owner, ent.Comp.DishSlot);
-        if (uid is not { } dishUid || !TryComp<CellContainerComponent>(dishUid, out var container))
+        if (uid is not { } dishUid || !TryComp<SampleContainerComponent>(dishUid, out var container))
             return false;
         dish = (dishUid, container);
         return true;
@@ -187,7 +190,7 @@ public sealed partial class CellSequencerSystem : EntitySystem
         component.FeedbackMarker = -1;
     }
 
-    private static void SyncWork(CellSequencerComponent component, Entity<CellContainerComponent> dish)
+    private static void SyncWork(CellSequencerComponent component, Entity<SampleContainerComponent> dish)
     {
         if (component.ActiveDish == dish.Owner && component.ActiveRevision == dish.Comp.Revision)
             return;
@@ -213,7 +216,7 @@ public sealed partial class CellSequencerSystem : EntitySystem
 
         Entity<GeneticVialComponent>? vial = TryGetVial(ent, out var insertedVial) ? insertedVial : null;
 
-        var samples = dish.Comp.Cells.Select(cell => new SequencerSampleView(new CellView(cell),
+        var samples = dish.Comp.Samples.Select(cell => new SequencerSampleView(new SampleView(cell),
             cell.GetGenome() is { } genome &&
             _genomes.ValidateSnapshot(genome) == GenomeOperationResult.Success
                 ? OrderedGenes(genome).Select(entry => Marker(entry.Key, entry.Value, ent.Comp.Decoded,

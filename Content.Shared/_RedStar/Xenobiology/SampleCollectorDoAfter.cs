@@ -4,10 +4,10 @@ using Robust.Shared.Serialization;
 namespace Content.Shared._RedStar.Xenobiology;
 
 [Serializable, NetSerializable]
-public sealed partial class CellCollectorDoAfter : SimpleDoAfterEvent
+public sealed partial class SampleCollectorDoAfter : SimpleDoAfterEvent
 {
     public override DoAfterEvent Clone()
     {
-        return new CellCollectorDoAfter();
+        return new SampleCollectorDoAfter();
     }
 }

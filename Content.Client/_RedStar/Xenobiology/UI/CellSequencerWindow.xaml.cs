@@ -8,8 +8,7 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client._RedStar.Xenobiology.UI;
 
 /// <summary>
-/// Sequencer workstation. One sample list; optional comparison shares the same dish.
-/// All biological information comes from the sanitized BUI state.
+/// Displays one dish of samples and optional comparison from sanitized BUI state.
 /// </summary>
 [GenerateTypedNameReferences]
 public sealed partial class CellSequencerWindow : FancyWindow
@@ -95,7 +94,7 @@ public sealed partial class CellSequencerWindow : FancyWindow
         for (var i = 0; i < _state.Samples.Length; i++)
         {
             var index = i;
-            var cell = _state.Samples[i].Cell;
+            var cell = _state.Samples[i].Sample;
             var button = new Button
             {
                 Text = cell.Name,
@@ -129,7 +128,7 @@ public sealed partial class CellSequencerWindow : FancyWindow
         SampleDetails.Text = _primary < 0
             ? string.Empty
             : Loc.GetString("cell-sequencer-sample-stability",
-                ("stability", MathF.Round(_state.Samples[_primary].Cell.Stability * 100)));
+                ("stability", MathF.Round(_state.Samples[_primary].Sample.Stability * 100)));
     }
 
     private void BuildMarkers()

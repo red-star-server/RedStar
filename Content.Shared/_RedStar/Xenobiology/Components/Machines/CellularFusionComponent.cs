@@ -19,10 +19,10 @@ public sealed partial class CellularFusionComponent : Component
     public TimeSpan SpliceDuration;
 
     [ViewVariables]
-    public Cell? SpliceCellA;
+    public BiologicalSample? SpliceSampleA;
 
     [ViewVariables]
-    public Cell? SpliceCellB;
+    public BiologicalSample? SpliceSampleB;
 
     [ViewVariables]
     public EntityUid? SpliceDish;

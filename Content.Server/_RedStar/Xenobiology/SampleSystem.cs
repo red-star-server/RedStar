@@ -27,16 +27,16 @@ namespace Content.Server._RedStar.Xenobiology;
 /// <summary>
 /// Creates laboratory samples from current genomes and handles biopsy and transfer.
 /// </summary>
-public sealed partial class CellSystem : SharedCellSystem
+public sealed partial class SampleSystem : SharedSampleSystem
 {
-    private enum CellCollectorDirection
+    private enum SampleCollectorDirection
     {
         Collection,
         Transfer
     }
 
-    private static readonly ProtoId<LocalizedDatasetPrototype> CellPrefixes = "CellPrefixes";
-    private static readonly ProtoId<LocalizedDatasetPrototype> CellSuffixes = "CellSuffixes";
+    private static readonly ProtoId<LocalizedDatasetPrototype> SamplePrefixes = "CellPrefixes";
+    private static readonly ProtoId<LocalizedDatasetPrototype> SampleSuffixes = "CellSuffixes";
 
     [Dependency] private AppearanceSystem _appearance = default!;
     [Dependency] private DamageableSystem _damageable = default!;
@@ -48,50 +48,49 @@ public sealed partial class CellSystem : SharedCellSystem
     [Dependency] private GenomeSystem _genomes = default!;
 
     [SubscribeLocalEvent]
-    private void OnCellGenerationInit(Entity<CellGenerationComponent> ent, ref ComponentInit args)
+    private void OnSampleGenerationInit(Entity<SampleGenerationComponent> ent, ref ComponentInit args)
     {
-        if (!TryComp<CellContainerComponent>(ent, out var container))
+        if (!TryComp<SampleContainerComponent>(ent, out var container))
             return;
 
-        foreach (var entry in ent.Comp.Cells)
+        foreach (var entry in ent.Comp.Samples)
         {
             if (_genomes.Generate(entry.Genome, out var genome) != GenomeOperationResult.Success || genome is null)
                 continue;
 
-            AddCell((ent, container), CreateCell(genome, entry.Stability));
+            AddSample((ent, container), CreateSample(genome, entry.Stability));
         }
     }
 
     [SubscribeLocalEvent]
-    private void OnCollectorCellsChanged(Entity<CellCollectorComponent> ent, ref CellContainerChangedEvent args)
+    private void OnCollectorSamplesChanged(Entity<SampleCollectorComponent> ent, ref SampleContainerChangedEvent args)
     {
         UpdateCollectorAppearance(ent);
     }
 
     [SubscribeLocalEvent]
-    private void OnCollectorMapInit(Entity<CellCollectorComponent> ent, ref MapInitEvent args)
+    private void OnCollectorMapInit(Entity<SampleCollectorComponent> ent, ref MapInitEvent args)
     {
         UpdateCollectorAppearance(ent);
     }
 
     /// <summary>
-    /// Starts a DoAfter for a living biopsy and handles container transfers immediately.
-    /// Determines direction from the target and whether the collector already holds a sample.
+    /// Starts living biopsies and handles transfers between sample containers.
     /// </summary>
     [SubscribeLocalEvent]
-    private void OnCollectorInteract(Entity<CellCollectorComponent> ent, ref BeforeRangedInteractEvent args)
+    private void OnCollectorInteract(Entity<SampleCollectorComponent> ent, ref BeforeRangedInteractEvent args)
     {
         if (args.Handled || !args.CanReach || args.Target is null)
             return;
 
-        TryComp<CellContainerComponent>(args.Target, out var containerComponent);
-        TryComp<CellContainerComponent>(ent, out var collectorContainer);
-        var biological = IsBiologicalSampleSource(args.Target.Value);
+        TryComp<SampleContainerComponent>(args.Target, out var containerComponent);
+        TryComp<SampleContainerComponent>(ent, out var collectorContainer);
+        var biological = IsSampleSource(args.Target.Value);
         var direction = biological ||
             collectorContainer is { Empty: true } &&
             containerComponent is { Empty: false, AllowCollection: true }
-            ? CellCollectorDirection.Collection
-            : CellCollectorDirection.Transfer;
+            ? SampleCollectorDirection.Collection
+            : SampleCollectorDirection.Transfer;
 
         if (!biological)
         {
@@ -102,7 +101,7 @@ public sealed partial class CellSystem : SharedCellSystem
         if (!CollectorInteractValidate(ent, (args.Target.Value, containerComponent), direction, args.User))
             return;
 
-        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, ent.Comp.Delay, new CellCollectorDoAfter(), ent, target: args.Target, used: ent)
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, ent.Comp.Delay, new SampleCollectorDoAfter(), ent, target: args.Target, used: ent)
         {
             BreakOnDamage = true,
             BreakOnMove = true,
@@ -117,38 +116,38 @@ public sealed partial class CellSystem : SharedCellSystem
     /// Completes a living biopsy after its delay.
     /// </summary>
     [SubscribeLocalEvent]
-    private void OnCollectorCollectDoAfter(Entity<CellCollectorComponent> ent, ref CellCollectorDoAfter args)
+    private void OnCollectorCollectDoAfter(Entity<SampleCollectorComponent> ent, ref SampleCollectorDoAfter args)
     {
         if (args.Handled || args.Cancelled || args.Target is null)
             return;
 
-        args.Handled = CompleteCollectorInteraction(ent, args.Target.Value, CellCollectorDirection.Collection, args.Args.User);
+        args.Handled = CompleteCollectorInteraction(ent, args.Target.Value, SampleCollectorDirection.Collection, args.Args.User);
     }
 
-    private bool CompleteCollectorInteraction(Entity<CellCollectorComponent> ent, EntityUid target,
-        CellCollectorDirection direction, EntityUid user)
+    private bool CompleteCollectorInteraction(Entity<SampleCollectorComponent> ent, EntityUid target,
+        SampleCollectorDirection direction, EntityUid user)
     {
         if (!CollectorInteractValidate(ent, target, direction, user))
             return false;
 
         switch (direction)
         {
-            case CellCollectorDirection.Collection:
-                if (IsBiologicalSampleSource(target))
+            case SampleCollectorDirection.Collection:
+                if (IsSampleSource(target))
                 {
                     var damage = GetCellularDamage(target);
                     if (!_genomes.TryGetSnapshot(target, out var genome) || genome is null)
                         return false;
 
-                    if (!AddCell(ent.Owner, GenerateBiopsyCell(genome, damage)))
+                    if (!AddSample(ent.Owner, GenerateBiopsySample(genome, damage)))
                         return false;
 
                     if (ent.Comp.Damage is not null)
                         _damageable.TryChangeDamage(target, ent.Comp.Damage);
                 }
-                else if (TryComp<CellContainerComponent>(target, out var targetComp))
+                else if (TryComp<SampleContainerComponent>(target, out var targetComp))
                 {
-                    if (!MoveFirstCell((target, targetComp), ent.Owner))
+                    if (!MoveFirstSample((target, targetComp), ent.Owner))
                         return false;
                 }
 
@@ -156,8 +155,8 @@ public sealed partial class CellSystem : SharedCellSystem
 
                 break;
 
-            case CellCollectorDirection.Transfer:
-                if (!MoveFirstCell(ent.Owner, target))
+            case SampleCollectorDirection.Transfer:
+                if (!MoveFirstSample(ent.Owner, target))
                     return false;
 
                 _popup.PopupEntity(Loc.GetString("cell-collector-transfer"), ent, user);
@@ -173,7 +172,7 @@ public sealed partial class CellSystem : SharedCellSystem
     /// <summary>
     /// Identifies an organism targeted by a biopsy attempt.
     /// </summary>
-    private bool IsBiologicalSampleSource(EntityUid source)
+    private bool IsSampleSource(EntityUid source)
     {
         return HasComp<GenomeComponent>(source);
     }
@@ -190,30 +189,29 @@ public sealed partial class CellSystem : SharedCellSystem
     /// <summary>
     /// Creates a fresh laboratory sample from the organism's current genome.
     /// </summary>
-    private Cell GenerateBiopsyCell(GenomeSnapshot genome, float cellularDamage)
+    private BiologicalSample GenerateBiopsySample(GenomeSnapshot genome, float cellularDamage)
     {
         var geneCount = genome.GeneCount;
         var stability = MathF.Max(0.1f, 1.0f - geneCount * 0.05f + _random.NextFloat(-0.03f, 0.03f));
         stability *= 1f - 0.5f * Math.Clamp(cellularDamage, 0f, 120f) / 100f;
-        return CreateCell(genome, stability);
+        return CreateSample(genome, stability);
     }
 
     /// <summary>
-    /// Derives the initial appearance from gene content for both biopsies and prepared samples.
-    /// Later gene extraction leaves the physical sample's appearance unchanged.
+    /// Derives a sample's initial appearance from its genes without later recalculation.
     /// </summary>
-    private Cell CreateCell(GenomeSnapshot genome, float stability)
+    private BiologicalSample CreateSample(GenomeSnapshot genome, float stability)
     {
         var hash = GetAppearanceHash(genome);
-        var prefixes = _prototypes.Index(CellPrefixes).Values;
-        var suffixes = _prototypes.Index(CellSuffixes).Values;
+        var prefixes = _prototypes.Index(SamplePrefixes).Values;
+        var suffixes = _prototypes.Index(SampleSuffixes).Values;
         var prefix = Loc.GetString(prefixes[(int) (hash % (ulong) prefixes.Count)]);
         var suffix = Loc.GetString(suffixes[(int) (hash / (ulong) prefixes.Count % (ulong) suffixes.Count)]);
         var color = new Color(
             0.2f + (hash & 0xff) / 255f * 0.65f,
             0.2f + (hash >> 8 & 0xff) / 255f * 0.65f,
             0.2f + (hash >> 16 & 0xff) / 255f * 0.65f);
-        return new Cell(color, prefix + suffix, stability, genome);
+        return new BiologicalSample(color, prefix + suffix, stability, genome);
     }
 
     private static ulong GetAppearanceHash(GenomeSnapshot genome)
@@ -248,7 +246,7 @@ public sealed partial class CellSystem : SharedCellSystem
     /// <summary>
     /// Updates the collector sprite state based on whether its cell container is empty.
     /// </summary>
-    private void UpdateCollectorAppearance(Entity<CellCollectorComponent, CellContainerComponent?> ent)
+    private void UpdateCollectorAppearance(Entity<SampleCollectorComponent, SampleContainerComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp2))
             return;
@@ -257,13 +255,11 @@ public sealed partial class CellSystem : SharedCellSystem
     }
 
     /// <summary>
-    /// Validates a collector interaction. For collection: checks collector has space
-    /// and target allows collection. For transfer: checks whitelist and that collector has cells.
-    /// Shows popups on failure when <paramref name="popup"/> is true.
+    /// Validates collection or transfer and optionally shows failure popups.
     /// </summary>
-    private bool CollectorInteractValidate(Entity<CellCollectorComponent, CellContainerComponent?> ent,
-        Entity<CellContainerComponent?> target,
-        CellCollectorDirection direction,
+    private bool CollectorInteractValidate(Entity<SampleCollectorComponent, SampleContainerComponent?> ent,
+        Entity<SampleContainerComponent?> target,
+        SampleCollectorDirection direction,
         EntityUid user,
         bool popup = true)
     {
@@ -277,8 +273,8 @@ public sealed partial class CellSystem : SharedCellSystem
 
         switch (direction)
         {
-            case CellCollectorDirection.Collection:
-                if (ent.Comp2.Cells.Count >= ent.Comp2.MaxCells)
+            case SampleCollectorDirection.Collection:
+                if (ent.Comp2.Samples.Count >= ent.Comp2.MaxSamples)
                 {
                     if (!popup)
                         return false;
@@ -287,7 +283,7 @@ public sealed partial class CellSystem : SharedCellSystem
                     return false;
                 }
 
-                var biological = IsBiologicalSampleSource(target.Owner);
+                var biological = IsSampleSource(target.Owner);
                 if (biological && !_genomes.TryGetSnapshot(target.Owner, out _))
                 {
                     if (popup)
@@ -310,12 +306,12 @@ public sealed partial class CellSystem : SharedCellSystem
                 }
                 break;
 
-            case CellCollectorDirection.Transfer:
+            case SampleCollectorDirection.Transfer:
                 if (target.Comp == null ||
                     _entityWhitelist.IsWhitelistFail(target.Comp.ToolsTransferWhitelist, ent) ||
                     target.Comp.ToolsTransferWhitelist is null ||
                     !target.Comp.AllowTransfer ||
-                    target.Comp.Cells.Count >= target.Comp.MaxCells)
+                    target.Comp.Samples.Count >= target.Comp.MaxSamples)
                     return false;
 
                 if (ent.Comp2.Empty)

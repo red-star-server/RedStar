@@ -9,7 +9,7 @@ public abstract partial class SharedCellVisualsSystem : EntitySystem
     [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     [SubscribeLocalEvent]
-    private void OnCellChanged(Entity<CellContainerVisualsComponent> ent, ref CellContainerChangedEvent args)
+    private void OnSampleChanged(Entity<CellContainerVisualsComponent> ent, ref SampleContainerChangedEvent args)
     {
         UpdateAppearance(ent);
     }
@@ -22,17 +22,17 @@ public abstract partial class SharedCellVisualsSystem : EntitySystem
 
     private void UpdateAppearance(Entity<CellContainerVisualsComponent> ent)
     {
-        if (!TryComp<CellContainerComponent>(ent, out var containerComponent))
+        if (!TryComp<SampleContainerComponent>(ent, out var containerComponent))
             return;
 
         _appearance.SetData(ent, CellContainerVisuals.DishVisibility, !containerComponent.Empty);
-        _appearance.SetData(ent, CellContainerVisuals.DishColor, GetAverageColor(containerComponent.Cells));
+        _appearance.SetData(ent, CellContainerVisuals.DishColor, GetAverageSampleColor(containerComponent.Samples));
     }
 
     /// <summary>
     /// All cells contribute equally; an empty dish uses the sprite's default tint.
     /// </summary>
-    private static Color GetAverageColor(IReadOnlyList<Cell> cells)
+    private static Color GetAverageSampleColor(IReadOnlyList<BiologicalSample> cells)
     {
         if (cells.Count == 0)
         {

@@ -14,7 +14,7 @@ public sealed partial class GeneticVialSystem : EntitySystem
 {
     [Dependency] private GenomeSystem _genomes = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
-    [Dependency] private SharedCellSystem _cells = default!;
+    [Dependency] private SharedSampleSystem _samples = default!;
 
     [SubscribeLocalEvent]
     private void OnMapInit(Entity<GeneticVialComponent> ent, ref MapInitEvent args) => UpdateVisual(ent);
@@ -41,10 +41,10 @@ public sealed partial class GeneticVialSystem : EntitySystem
     /// Transfers a validated gene from a contained, stable sample into a vial.
     /// Restores the vial if removing the sample gene unexpectedly fails.
     /// </summary>
-    public bool TryExtract(Entity<CellContainerComponent> dish, Cell cell,
+    public bool TryExtract(Entity<SampleContainerComponent> dish, BiologicalSample cell,
         Entity<GeneticVialComponent> vial, ProtoId<GenePrototype> id, GeneState state)
     {
-        if (!dish.Comp.Cells.Contains(cell) || !float.IsFinite(cell.Stability) || cell.Stability < 0.5f ||
+        if (!dish.Comp.Samples.Contains(cell) || !float.IsFinite(cell.Stability) || cell.Stability < 0.5f ||
             cell.GetGenome() is not { } genome ||
             _genomes.ValidateSnapshot(genome) != GenomeOperationResult.Success ||
             !genome.TryGetGene(id, out var stored) || stored is null ||
@@ -54,7 +54,7 @@ public sealed partial class GeneticVialSystem : EntitySystem
         // All checks precede mutation. Both calls run synchronously on the server.
         if (!TryAdd(vial, id, state))
             return false;
-        if (_cells.TryRemoveGene((dish.Owner, (CellContainerComponent?) dish.Comp), cell, id))
+        if (_samples.TryRemoveGene((dish.Owner, (SampleContainerComponent?) dish.Comp), cell, id))
             return true;
 
         TryRemove(vial, id);

@@ -5,11 +5,13 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared._RedStar.Xenobiology;
 
-/// <summary>One laboratory sample with server-owned genetic material.</summary>
-/// <seealso cref="CellContainerComponent"/>
-/// <seealso cref="SharedCellSystem"/>
+/// <summary>
+/// One laboratory sample with server-owned genetic material.
+/// </summary>
+/// <seealso cref="SampleContainerComponent"/>
+/// <seealso cref="SharedSampleSystem"/>
 [DataDefinition]
-public sealed partial class Cell
+public sealed partial class BiologicalSample
 {
     [DataField, ViewVariables]
     public Color Color { get; private set; }
@@ -29,9 +31,9 @@ public sealed partial class Cell
     [ViewVariables]
     public bool HasGenome => _genome is not null;
 
-    public Cell() { }
+    public BiologicalSample() { }
 
-    public Cell(Color color, string name, float stability, GenomeSnapshot? genome)
+    public BiologicalSample(Color color, string name, float stability, GenomeSnapshot? genome)
     {
         Color = color;
         Name = name;
@@ -54,7 +56,19 @@ public sealed partial class Cell
         return true;
     }
 
-    /// <summary>Sequencing mistakes damage this physical sample, never its stored genome.</summary>
-    public void ReduceStability(float amount) => Stability = Math.Clamp(Stability - Math.Max(0f, amount), 0f, 1f);
+    /// <summary>
+    /// Reduces stability without changing the stored genome or notifying observers.
+    /// </summary>
+    internal bool TryReduceStability(float amount)
+    {
+        if (!float.IsFinite(amount) || amount <= 0f)
+            return false;
 
+        var reduced = Math.Clamp(Stability - amount, 0f, 1f);
+        if (reduced.Equals(Stability))
+            return false;
+
+        Stability = reduced;
+        return true;
+    }
 }
