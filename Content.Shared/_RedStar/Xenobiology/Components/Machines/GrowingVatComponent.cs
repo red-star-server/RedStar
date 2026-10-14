@@ -1,12 +1,11 @@
 using Content.Shared.FixedPoint;
-using Robust.Shared.GameStates;
 
 namespace Content.Shared._RedStar.Xenobiology.Components.Machines;
 
 /// <summary>
 /// Configures one genetic cultivation cycle and tracks its current subject.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent]
 public sealed partial class GrowingVatComponent : Component
 {
     [DataField]

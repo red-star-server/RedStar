@@ -5,7 +5,7 @@
   - NightVision
   - Regeneration
   requiredReagents:
-    Nutriment: 5
-    Saline: 5
+    Nutriment: 0.1
+    Saline: 0.1
   resultGene: NoSlip
   chance: 1
