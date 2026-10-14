@@ -9,7 +9,6 @@ public sealed partial class CellSequencerComponent : Component
     public EntityUid? ActiveDish;
     public int ActiveRevision = -1;
     public HashSet<string> Decoded = [];
-    public TimeSpan NextAttempt;
     public int FeedbackSample = -1;
     public int FeedbackMarker = -1;
     public int[] FeedbackOrder = [];

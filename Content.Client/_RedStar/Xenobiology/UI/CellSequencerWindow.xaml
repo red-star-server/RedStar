@@ -4,7 +4,7 @@
     Title="{Loc 'cell-sequencer-menu-title'}"
     MinSize="940 580">
     <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" SeparationOverride="7" Margin="8">
-        <BoxContainer Orientation="Horizontal" SeparationOverride="7" MinHeight="198">
+        <BoxContainer Orientation="Horizontal" SeparationOverride="7" MinHeight="190">
             <PanelContainer StyleClasses="PanelInsetDeep" MinWidth="225" VerticalExpand="True">
                 <BoxContainer Orientation="Vertical" SeparationOverride="5">
                     <PanelContainer StyleClasses="PanelDark" HorizontalExpand="True">
@@ -29,10 +29,12 @@
                     <ScrollContainer VerticalExpand="True" Margin="8 2 8 0">
                         <lab:SequencerGenomeControl Name="Genome" />
                     </ScrollContainer>
-                    <BoxContainer Orientation="Horizontal" Margin="10 0 10 5" SeparationOverride="8">
-                        <Label Name="MarkerDetails" HorizontalExpand="True" />
-                        <Label Name="ComparisonLabel" />
-                    </BoxContainer>
+                    <PanelContainer StyleClasses="PanelDark" Margin="8 0 8 5">
+                        <BoxContainer Orientation="Horizontal" Margin="8 4 8 4" SeparationOverride="8">
+                            <Label Name="MarkerDetails" HorizontalExpand="True" />
+                            <Label Name="ComparisonLabel" />
+                        </BoxContainer>
+                    </PanelContainer>
                 </BoxContainer>
             </PanelContainer>
         </BoxContainer>

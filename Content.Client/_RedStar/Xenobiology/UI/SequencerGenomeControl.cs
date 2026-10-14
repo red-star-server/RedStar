@@ -27,14 +27,14 @@ public sealed class SequencerGenomeControl : Control
 
     private const float Step = 104;
     private const float OriginX = 24;
-    private const float CenterY = 76;
+    private const float CenterY = 45;
 
     public SequencerGenomeControl()
     {
         var resource = IoCManager.Resolve<IResourceCache>()
             .GetResource<FontResource>("/EngineFonts/NotoSans/NotoSansMono-Regular.ttf");
         _font = new VectorFont(resource, 13);
-        MinSize = new Vector2(340, 152);
+        MinSize = new Vector2(340, 108);
         HorizontalExpand = true;
         MouseFilter = MouseFilterMode.Stop;
     }
@@ -43,7 +43,7 @@ public sealed class SequencerGenomeControl : Control
     {
         _markers = markers;
         _selected = selected;
-        MinSize = new Vector2(Math.Max(340, OriginX * 2 + markers.Length * Step), 152);
+        MinSize = new Vector2(Math.Max(340, OriginX * 2 + markers.Length * Step), 108);
     }
 
     protected override void KeyBindDown(GUIBoundKeyEventArgs args)
@@ -53,7 +53,7 @@ public sealed class SequencerGenomeControl : Control
             return;
         var mouse = UserInterfaceManager.MousePositionScaled.Position * UIScale - GlobalPixelPosition;
         var index = (int) MathF.Floor((mouse.X / UIScale - OriginX) / Step);
-        if (index < 0 || index >= _markers.Length || mouse.Y / UIScale is < 26 or > 136)
+        if (index < 0 || index >= _markers.Length || mouse.Y / UIScale is < 8 or > 108)
             return;
         OnSelect?.Invoke(index);
         args.Handle();
@@ -85,9 +85,9 @@ public sealed class SequencerGenomeControl : Control
                 new Vector2(x + 8 * scale, center - 8 * scale), tint);
             // A single compact glyph: no floating status ring above the locus.
             var label = marker.FamilyCode.Length >= 4 ? marker.FamilyCode[..4] : marker.FamilyCode;
-            handle.DrawString(_font, new Vector2(x - 20 * scale, 113 * scale), label, Color.White);
+            handle.DrawString(_font, new Vector2(x - 20 * scale, 81 * scale), label, Color.White);
             if (marker.Decoded)
-                handle.DrawRect(UIBox2.FromDimensions(new Vector2(x - 13 * scale, 133 * scale), new Vector2(26, 3) * scale), tint);
+                handle.DrawRect(UIBox2.FromDimensions(new Vector2(x - 13 * scale, 100 * scale), new Vector2(26, 3) * scale), tint);
         }
     }
 

@@ -166,7 +166,7 @@ public sealed partial class CellSequencerWindow : FancyWindow
             _marker < _state.Samples[_primary].Markers.Length)
             active = _state.Samples[_primary].Markers[_marker];
 
-        if (active is null || active.Decoded)
+        if (active is null)
         {
             Assembly.SetFragments([], string.Empty);
             _lastFragments = [];
@@ -178,6 +178,7 @@ public sealed partial class CellSequencerWindow : FancyWindow
             _lastFragments = active.Fragments.ToArray();
             Assembly.SetFragments(active.Fragments, active.FamilyCode);
         }
+        Assembly.SetDecoded(active?.Decoded == true);
         DecodeStatus.Text = active is null ? string.Empty
             : active.Decoded ? Loc.GetString("cell-sequencer-status-known")
             : Loc.GetString("cell-sequencer-status-unknown");
@@ -186,10 +187,8 @@ public sealed partial class CellSequencerWindow : FancyWindow
 
     private void RefreshAssembly()
     {
-        ResetButton.Disabled = !Assembly.HasPlaced;
-        DecodeButton.Disabled = _state is null || !Assembly.Complete || _state.RetrySeconds > 0;
-        ResultLabel.Text = _state is { RetrySeconds: > 0 }
-            ? Loc.GetString("cell-sequencer-retry", ("seconds", Math.Ceiling(_state.RetrySeconds)))
-            : string.Empty;
+        ResetButton.Disabled = Assembly.IsDecoded || !Assembly.HasPlaced;
+        DecodeButton.Disabled = _state is null || !Assembly.Complete || Assembly.IsDecoded;
+        ResultLabel.Text = string.Empty;
     }
 }

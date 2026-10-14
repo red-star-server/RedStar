@@ -14,7 +14,6 @@ using Content.Shared.Power;
 using Content.Shared.UserInterface;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.Server._RedStar.Xenobiology.Machines;
 
@@ -26,7 +25,6 @@ public sealed partial class CellSequencerSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private GenomeSystem _genomes = default!;
     [Dependency] private IPrototypeManager _prototypes = default!;
-    [Dependency] private IGameTiming _timing = default!;
 
     private byte[] _roundSeed = [];
 
@@ -72,7 +70,7 @@ public sealed partial class CellSequencerSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnDecode(Entity<CellSequencerComponent> ent, ref CellSequencerDecodeMessage args)
     {
-        if (!this.IsPowered(ent.Owner, EntityManager) || _timing.CurTime < ent.Comp.NextAttempt ||
+        if (!this.IsPowered(ent.Owner, EntityManager) ||
             !TryGetDish(ent, out var dish) || args.Dish != GetNetEntity(dish.Owner) ||
             args.DishRevision != dish.Comp.Revision ||
             args.SampleIndex < 0 || args.SampleIndex >= dish.Comp.Cells.Count ||
@@ -101,7 +99,6 @@ public sealed partial class CellSequencerSystem : EntitySystem
             ent.Comp.FeedbackSample = args.SampleIndex;
             ent.Comp.FeedbackMarker = args.MarkerIndex;
             ent.Comp.FeedbackOrder = args.Order.ToArray();
-            ent.Comp.NextAttempt = _timing.CurTime + TimeSpan.FromSeconds(5);
             _popup.PopupEntity(Loc.GetString("cell-sequencer-incorrect"), ent, PopupType.MediumCaution);
             UpdateUI(ent);
             return;
@@ -134,7 +131,6 @@ public sealed partial class CellSequencerSystem : EntitySystem
         component.ActiveDish = null;
         component.ActiveRevision = -1;
         component.Decoded.Clear();
-        component.NextAttempt = TimeSpan.Zero;
         component.FeedbackOrder = [];
         component.FeedbackSample = -1;
         component.FeedbackMarker = -1;
@@ -169,9 +165,8 @@ public sealed partial class CellSequencerSystem : EntitySystem
             _genomes.ValidateSnapshot(genome) == GenomeOperationResult.Success
                 ? OrderedGenes(genome).Select(entry => Marker(entry.Key, entry.Value, ent.Comp.Decoded)).ToArray()
                 : [])).ToArray();
-        var retry = Math.Max(0, (ent.Comp.NextAttempt - _timing.CurTime).TotalSeconds);
         _userInterface.SetUiState(ent.Owner, CellSequencerUiKey.Key,
-            new CellSequencerUiState(samples, dish.Comp.Revision, GetNetEntity(dish.Owner), retry,
+            new CellSequencerUiState(samples, dish.Comp.Revision, GetNetEntity(dish.Owner), 0,
                 ent.Comp.FeedbackSample, ent.Comp.FeedbackMarker, ent.Comp.FeedbackOrder));
     }
 
@@ -242,18 +237,5 @@ public sealed partial class CellSequencerSystem : EntitySystem
     {
         var hash = HMACSHA256.HashData(_roundSeed, Encoding.UTF8.GetBytes($"order:{sequence}"));
         return Enumerable.Range(0, 4).OrderBy(index => hash[index]).ThenBy(index => index).ToArray();
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-        var query = EntityQueryEnumerator<CellSequencerComponent>();
-        while (query.MoveNext(out var uid, out var component))
-        {
-            if (component.NextAttempt == TimeSpan.Zero || component.NextAttempt > _timing.CurTime)
-                continue;
-            component.NextAttempt = TimeSpan.Zero;
-            UpdateUI((uid, component));
-        }
     }
 }

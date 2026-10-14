@@ -30,6 +30,8 @@ public sealed class SequencerAssemblyControl : Control
     private Vector2 _cursor;
     private bool _held;
     private bool _feedback;
+    private bool _decoded;
+    public bool IsDecoded => _decoded;
 
     private const float CardW = 156;
     private const float CardH = 52;
@@ -64,6 +66,7 @@ public sealed class SequencerAssemblyControl : Control
         _origin = null;
         _held = false;
         _feedback = false;
+        _decoded = false;
         if (notify)
             AssemblyChanged?.Invoke();
     }
@@ -78,7 +81,41 @@ public sealed class SequencerAssemblyControl : Control
 
     public void SetFeedback(int[] order)
     {
-        _feedback = order.Length == 4 && OrderedFragments.SequenceEqual(order);
+        _feedback = !_decoded && order.Length == 4 && OrderedFragments.SequenceEqual(order);
+    }
+
+    /// <summary>
+    /// An already decoded locus stays visible as a read-only, correctly assembled sequence.
+    /// </summary>
+    public void SetDecoded(bool decoded)
+    {
+        if (_decoded == decoded)
+            return;
+        _decoded = decoded;
+        _feedback = decoded;
+        if (!decoded || _fragments.Length != 4 || _prefix.Length < 4)
+            return;
+
+        Array.Fill(_slots, null);
+        var used = new bool[4];
+        var expected = _prefix[..4];
+        for (var position = 0; position < 4; position++)
+        {
+            var match = -1;
+            for (var i = 0; i < _fragments.Length; i++)
+            {
+                if (!used[i] && _fragments[i].Length >= 7 && _fragments[i][..4] == expected)
+                {
+                    match = i;
+                    break;
+                }
+            }
+            if (match == -1)
+                break;
+            _slots[position] = match;
+            used[match] = true;
+            expected = _fragments[match][3..];
+        }
     }
 
     public bool AllOverlaps
@@ -112,15 +149,18 @@ public sealed class SequencerAssemblyControl : Control
     private int? HitSlot(Vector2 point, float y)
     {
         for (var i = 0; i < 4; i++)
+        {
             if (Inside(point, TilePos(i, y), UIScale))
                 return i;
+        }
+
         return null;
     }
 
     protected override void KeyBindDown(GUIBoundKeyEventArgs args)
     {
         base.KeyBindDown(args);
-        if (args.Handled || args.Function != EngineKeyFunctions.UIClick || _fragments.Length != 4)
+        if (_decoded || args.Handled || args.Function != EngineKeyFunctions.UIClick || _fragments.Length != 4)
             return;
         var point = Pointer();
         var slot = HitSlot(point, BoardY);
@@ -154,7 +194,7 @@ public sealed class SequencerAssemblyControl : Control
     protected override void KeyBindUp(GUIBoundKeyEventArgs args)
     {
         base.KeyBindUp(args);
-        if (args.Function != EngineKeyFunctions.UIClick || !_held || _drag is not { } dragged)
+        if (_decoded || args.Function != EngineKeyFunctions.UIClick || !_held || _drag is not { } dragged)
             return;
         _held = false;
         var target = HitSlot(Pointer(), BoardY);
