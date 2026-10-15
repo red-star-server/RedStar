@@ -1,10 +1,8 @@
-using Content.Shared._RedStar.Genetics;
 using Robust.Shared.Audio;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared._RedStar.Xenobiology.Components.Machines;
 
-[RegisterComponent]
+[RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class GrowingVatComponent : Component
 {
     [DataField]
@@ -22,14 +20,10 @@ public sealed partial class GrowingVatComponent : Component
     [ViewVariables]
     public string? Recipe;
 
-    [ViewVariables]
-    public Dictionary<ProtoId<GenePrototype>, GeneState> InputStates = [];
+    [ViewVariables, AutoPausedField]
+    public TimeSpan? EndTime;
 
-    [ViewVariables]
-    public TimeSpan Progress;
-
-    [ViewVariables]
-    public float TickAccumulator;
+    public bool Completing;
 
     [ViewVariables]
     public bool Processing;

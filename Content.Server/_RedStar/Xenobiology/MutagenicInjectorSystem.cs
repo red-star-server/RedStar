@@ -106,11 +106,15 @@ public sealed partial class MutagenicInjectorSystem : EntitySystem
             !IsValidRecipient(storage.Contents.ContainedEntities.First()) ||
             vialUid is not { } inserted ||
             !TryComp<GeneticVialComponent>(inserted, out var vialComponent) ||
-            vialComponent.Genes.Count == 0 ||
-            _genomes.ValidateGenes(vialComponent.Genes) != GenomeOperationResult.Success)
+            vialComponent.Genes.Count == 0)
             return false;
 
         subject = storage.Contents.ContainedEntities.First();
+        if (!_genomes.CanApplyGenes(subject, vialComponent.Genes))
+        {
+            _popup.PopupEntity(Loc.GetString("mutagenic-injector-overload"), ent, PopupType.MediumCaution);
+            return false;
+        }
         vial = (inserted, vialComponent);
         return true;
     }
@@ -153,8 +157,7 @@ public sealed partial class MutagenicInjectorSystem : EntitySystem
         if (subject is not { } mob || vial is not { } vialUid ||
             !TryComp<GeneticVialComponent>(vialUid, out var vialComponent) ||
             vialComponent.Revision != ent.Comp.InjectionVialRevision || vialComponent.Genes.Count == 0 ||
-            !IsValidRecipient(mob) || _genomes.ApplyGenes(mob, _vials.GetGenes((vialUid, vialComponent)), out var changed) !=
-            GenomeOperationResult.Success)
+            !IsValidRecipient(mob) || !_genomes.TryApplyGenes(mob, vialComponent.Genes, out var changed))
         {
             CancelInjection(ent);
             return;

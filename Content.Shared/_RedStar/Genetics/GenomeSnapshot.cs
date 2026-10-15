@@ -1,50 +1,32 @@
-using System.Linq;
+using System.Collections.Frozen;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared._RedStar.Genetics;
 
 /// <summary>
-/// Independent genetic material; it never retains the donor entity.
+/// Immutable genetic material, independent of its donor and expression status.
 /// </summary>
 [DataDefinition]
 public sealed partial class GenomeSnapshot
 {
     [DataField]
-    private Dictionary<ProtoId<GenePrototype>, GeneState> _genes = [];
+    private HashSet<ProtoId<GenePrototype>> _genes = [];
+
+    private FrozenSet<ProtoId<GenePrototype>>? _view;
+    public IReadOnlySet<ProtoId<GenePrototype>> Genes => _view ??= _genes.ToFrozenSet();
 
     [DataField]
     public ProtoId<GenomePrototype> GenomeId { get; private set; }
 
     public GenomeSnapshot() { }
 
-    public GenomeSnapshot(ProtoId<GenomePrototype> genomeId,
-        IReadOnlyDictionary<ProtoId<GenePrototype>, GeneState> genes)
+    public GenomeSnapshot(ProtoId<GenomePrototype> genomeId, IEnumerable<ProtoId<GenePrototype>> genes)
     {
         GenomeId = genomeId;
-        _genes = genes.ToDictionary(entry => entry.Key, entry => entry.Value.Clone());
+        _genes = new HashSet<ProtoId<GenePrototype>>(genes);
     }
 
     public int GeneCount => _genes.Count;
-
-    public GenomeSnapshot Clone() => new(GenomeId, _genes);
-
     public bool SameContents(GenomeSnapshot? other) =>
-        other is not null && GenomeId == other.GenomeId && _genes.Count == other._genes.Count &&
-        _genes.All(entry => other._genes.TryGetValue(entry.Key, out var state) &&
-            entry.Value.Allele == state.Allele && entry.Value.Number == state.Number);
-
-    public bool TryGetGene(ProtoId<GenePrototype> id, out GeneState? state)
-    {
-        if (_genes.TryGetValue(id, out var stored))
-        {
-            state = stored.Clone();
-            return true;
-        }
-
-        state = null;
-        return false;
-    }
-
-    public Dictionary<ProtoId<GenePrototype>, GeneState> GetGenes() =>
-        _genes.ToDictionary(entry => entry.Key, entry => entry.Value.Clone());
+        other is not null && GenomeId == other.GenomeId && Genes.SetEquals(other.Genes);
 }

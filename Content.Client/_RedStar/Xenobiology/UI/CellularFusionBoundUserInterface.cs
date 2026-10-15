@@ -13,8 +13,8 @@ public sealed class CellularFusionBoundUserInterface(EntityUid owner, Enum uiKey
         base.Open();
 
         _window = this.CreateWindow<CellularFusionWindow>();
-        _window.OnSplice += (cellA, cellB, revision, dish) =>
-            SendMessage(new CellularFusionUiSpliceMessage(cellA, cellB, revision, dish));
+        _window.OnSplice += (cellA, cellB) =>
+            SendMessage(new CellularFusionUiSpliceMessage(cellA, cellB));
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

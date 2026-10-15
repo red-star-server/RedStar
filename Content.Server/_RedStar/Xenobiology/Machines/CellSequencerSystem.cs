@@ -1,15 +1,16 @@
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using Content.Server._RedStar.Genetics;
 using Content.Server.Power.EntitySystems;
+using Content.Server._RedStar.Genetics;
 using Content.Shared._RedStar.Genetics;
+using Content.Shared._RedStar.Xenobiology;
 using Content.Shared._RedStar.Xenobiology.Components.Container;
 using Content.Shared._RedStar.Xenobiology.Components.Machines;
 using Content.Shared._RedStar.Xenobiology.Events;
-using Content.Shared._RedStar.Xenobiology.Systems;
 using Content.Shared._RedStar.Xenobiology.UI;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.GameTicking;
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.UserInterface;
@@ -24,39 +25,40 @@ public sealed partial class CellSequencerSystem : EntitySystem
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
     [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private GenomeSystem _genomes = default!;
     [Dependency] private IPrototypeManager _prototypes = default!;
     [Dependency] private GeneticVialSystem _vials = default!;
-    [Dependency] private SharedSampleSystem _samples = default!;
+    [Dependency] private SampleSystem _samples = default!;
 
     private byte[] _roundSeed = [];
+    private readonly HashSet<ProtoId<GenePrototype>> _decoded = [];
+    private readonly Dictionary<ProtoId<GenePrototype>, Puzzle> _puzzles = [];
+    private sealed record Puzzle(string Sequence, string[] Fragments, int[] Order);
+    private const float IncorrectStabilityCost = 0.1f;
 
     public override void Initialize()
     {
         base.Initialize();
+        ResetRound();
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(_ => ResetRound());
+    }
+
+    private void ResetRound()
+    {
         _roundSeed = RandomNumberGenerator.GetBytes(32);
+        _decoded.Clear();
+        _puzzles.Clear();
     }
 
     [SubscribeLocalEvent]
     private void OnOpened(Entity<CellSequencerComponent> ent, ref AfterActivatableUIOpenEvent args) => UpdateUI(ent);
 
     [SubscribeLocalEvent]
-    private void OnInserted(Entity<CellSequencerComponent> ent, ref EntInsertedIntoContainerMessage args)
-    {
-        if (args.Container.ID != ent.Comp.DishSlot && args.Container.ID != ent.Comp.VialSlot)
-            return;
-        if (args.Container.ID == ent.Comp.DishSlot)
-            Reset(ent.Comp);
-        UpdateUI(ent);
-    }
+    private void OnInserted(Entity<CellSequencerComponent> ent, ref EntInsertedIntoContainerMessage args) => UpdateUI(ent);
 
     [SubscribeLocalEvent]
     private void OnRemoved(Entity<CellSequencerComponent> ent, ref EntRemovedFromContainerMessage args)
     {
-        if (args.Container.ID != ent.Comp.DishSlot && args.Container.ID != ent.Comp.VialSlot)
-            return;
-        if (args.Container.ID == ent.Comp.DishSlot)
-            Reset(ent.Comp);
+        ClearFeedback(ent.Comp);
         UpdateUI(ent);
     }
 
@@ -64,98 +66,78 @@ public sealed partial class CellSequencerSystem : EntitySystem
     private void OnSampleChanged(Entity<SampleContainerComponent> ent, ref SampleContainerChangedEvent args)
     {
         if (_containers.TryGetContainingContainer(ent.Owner, out var container) &&
-            TryComp<CellSequencerComponent>(container.Owner, out var sequencer) &&
-            container.ID == sequencer.DishSlot)
+            TryComp<CellSequencerComponent>(container.Owner, out var sequencer) && container.ID == sequencer.DishSlot)
             UpdateUI((container.Owner, sequencer));
     }
 
     [SubscribeLocalEvent]
     private void OnPowerChanged(Entity<CellSequencerComponent> ent, ref PowerChangedEvent args) => UpdateUI(ent);
 
+    private bool TryGetMarker(Entity<CellSequencerComponent> ent, int sampleId, string family,
+        out Entity<SampleContainerComponent> dish, out BiologicalSample? sample, out ProtoId<GenePrototype> gene)
+    {
+        sample = null;
+        gene = default;
+        if (!this.IsPowered(ent.Owner, EntityManager) || !TryGetDish(ent, out dish))
+        {
+            dish = default;
+            return false;
+        }
+        sample = dish.Comp.Samples.Find(s => s.Id == sampleId);
+        if (sample?.GetGenome() is not { } genome)
+            return false;
+        foreach (var id in genome.Genes)
+        {
+            if (GetPuzzle(id).Sequence[..SequencerPuzzle.FamilyLength] != family)
+                continue;
+            gene = id;
+            return true;
+        }
+        return false;
+    }
+
     [SubscribeLocalEvent]
     private void OnDecode(Entity<CellSequencerComponent> ent, ref CellSequencerDecodeMessage args)
     {
-        if (!this.IsPowered(ent.Owner, EntityManager) ||
-            !TryGetDish(ent, out var dish) || args.Dish != GetNetEntity(dish.Owner) ||
-            args.DishRevision != dish.Comp.Revision ||
-            args.SampleIndex < 0 || args.SampleIndex >= dish.Comp.Samples.Count ||
-            args.Order is not { Length: 4 } || args.Order.Distinct().Count() != 4 ||
-            args.Order.Any(index => index is < 0 or > 3))
+        if (!TryGetMarker(ent, args.SampleId, args.Family, out var dish, out var sample, out var id) ||
+            _decoded.Contains(id))
             return;
-
-        var cell = dish.Comp.Samples[args.SampleIndex];
-        if (cell.GetGenome() is not { } genome ||
-            _genomes.ValidateSnapshot(genome) != GenomeOperationResult.Success)
+        var puzzle = GetPuzzle(id);
+        var count = puzzle.Order.Length;
+        var order = args.Order;
+        if (order is null || order.Length != count || order.Distinct().Count() != count ||
+            order.Any(index => index < 0 || index >= count))
             return;
-
-        var genes = OrderedGenes(genome);
-        if (args.MarkerIndex < 0 || args.MarkerIndex >= genes.Length)
-            return;
-
-        SyncWork(ent.Comp, dish);
-        var (id, state) = genes[args.MarkerIndex];
-        var sequence = Sequence(id, state);
-        var permutation = FragmentOrder(sequence);
-        for (var i = 0; i < permutation.Length; i++)
+        if (Enumerable.Range(0, count).Any(i => puzzle.Order[order[i]] != i))
         {
-            if (permutation[args.Order[i]] == i)
-                continue;
-            ent.Comp.FeedbackSample = args.SampleIndex;
-            ent.Comp.FeedbackMarker = args.MarkerIndex;
-            ent.Comp.FeedbackOrder = args.Order.ToArray();
-            ent.Comp.ActiveRevision = dish.Comp.Revision + 1;
-            if (!_samples.TryReduceStability((dish.Owner, (SampleContainerComponent?) dish.Comp), cell, 0.02f))
-                ent.Comp.ActiveRevision = dish.Comp.Revision;
+            ent.Comp.FeedbackSample = args.SampleId;
+            ent.Comp.FeedbackFamily = args.Family;
+            ent.Comp.FeedbackOrder = order.ToArray();
+            _samples.TryReduceStability((dish.Owner, (SampleContainerComponent?) dish.Comp), sample!, IncorrectStabilityCost);
             _popup.PopupEntity(Loc.GetString("cell-sequencer-incorrect"), ent, PopupType.MediumCaution);
             UpdateUI(ent);
             return;
         }
-
-        ent.Comp.FeedbackOrder = [];
-        ent.Comp.FeedbackSample = -1;
-        ent.Comp.FeedbackMarker = -1;
-        if (ent.Comp.Decoded.Add((id, state.Allele, state.Number)))
+        ClearFeedback(ent.Comp);
+        _decoded.Add(id);
+        _popup.PopupEntity(Loc.GetString("cell-sequencer-discovered", ("gene", Loc.GetString($"gene-{id}-name"))),
+            ent, PopupType.Medium);
+        var query = EntityQueryEnumerator<CellSequencerComponent>();
+        while (query.MoveNext(out var uid, out var component))
         {
-            _popup.PopupEntity(Loc.GetString("cell-sequencer-discovered", ("gene", Loc.GetString($"gene-{id}-name"))),
-                ent, PopupType.Medium);
+            UpdateUI((uid, component));
         }
-
-        UpdateUI(ent);
     }
 
     [SubscribeLocalEvent]
     private void OnExtract(Entity<CellSequencerComponent> ent, ref CellSequencerExtractMessage args)
     {
-        if (!this.IsPowered(ent.Owner, EntityManager) ||
-            !TryGetDish(ent, out var dish) || !TryGetVial(ent, out var vial) ||
-            args.Dish != GetNetEntity(dish.Owner) || args.DishRevision != dish.Comp.Revision ||
-            args.Vial != GetNetEntity(vial.Owner) || args.VialRevision != vial.Comp.Revision ||
-            args.SampleIndex < 0 || args.SampleIndex >= dish.Comp.Samples.Count)
+        if (!TryGetMarker(ent, args.SampleId, args.Family, out var dish, out var sample, out var id) ||
+            !_decoded.Contains(id) || !TryGetVial(ent, out var vial) || args.Vial != GetNetEntity(vial.Owner))
             return;
-
-        var cell = dish.Comp.Samples[args.SampleIndex];
-        if (!float.IsFinite(cell.Stability) || cell.Stability < 0.5f ||
-            cell.GetGenome() is not { } genome ||
-            _genomes.ValidateSnapshot(genome) != GenomeOperationResult.Success)
-            return;
-
-        var genes = OrderedGenes(genome);
-        if (args.MarkerIndex < 0 || args.MarkerIndex >= genes.Length)
-            return;
-
-        SyncWork(ent.Comp, dish);
-        var (id, state) = genes[args.MarkerIndex];
-        if (!ent.Comp.Decoded.Contains((id, state.Allele, state.Number)))
-            return;
-
-        ent.Comp.ActiveRevision = dish.Comp.Revision + 1;
-        if (!_vials.TryExtract(dish, cell, vial, id, state))
-        {
-            ent.Comp.ActiveRevision = dish.Comp.Revision;
-            return;
-        }
-
-        UpdateUI(ent);
+        ClearFeedback(ent.Comp);
+        if (_vials.TryExtract(dish, sample!, vial, id))
+            UpdateUI(ent);
     }
 
     private bool TryGetDish(Entity<CellSequencerComponent> ent, out Entity<SampleContainerComponent> dish)
@@ -178,99 +160,74 @@ public sealed partial class CellSequencerSystem : EntitySystem
         return true;
     }
 
-    private static void Reset(CellSequencerComponent component)
+    private static void ClearFeedback(CellSequencerComponent component)
     {
-        component.ActiveDish = null;
-        component.ActiveRevision = -1;
-        component.Decoded.Clear();
-        component.FeedbackOrder = [];
         component.FeedbackSample = -1;
-        component.FeedbackMarker = -1;
-    }
-
-    private static void SyncWork(CellSequencerComponent component, Entity<SampleContainerComponent> dish)
-    {
-        if (component.ActiveDish == dish.Owner && component.ActiveRevision == dish.Comp.Revision)
-            return;
-        Reset(component);
-        component.ActiveDish = dish.Owner;
-        component.ActiveRevision = dish.Comp.Revision;
+        component.FeedbackFamily = string.Empty;
+        component.FeedbackOrder = [];
     }
 
     private void UpdateUI(Entity<CellSequencerComponent> ent)
     {
         if (TerminatingOrDeleted(ent))
             return;
-
         if (!this.IsPowered(ent.Owner, EntityManager) || !TryGetDish(ent, out var dish))
         {
-            Reset(ent.Comp);
             _userInterface.SetUiState(ent.Owner, CellSequencerUiKey.Key,
-                new CellSequencerUiState([], -1, null, -1, -1, [], null, -1));
+                new CellSequencerUiState([], null, -1, string.Empty, [], null));
             return;
         }
-
-        SyncWork(ent.Comp, dish);
-
         Entity<GeneticVialComponent>? vial = TryGetVial(ent, out var insertedVial) ? insertedVial : null;
-
-        var samples = dish.Comp.Samples.Select(cell => new SequencerSampleView(new SampleView(cell),
-            cell.GetGenome() is { } genome &&
-            _genomes.ValidateSnapshot(genome) == GenomeOperationResult.Success
-                ? OrderedGenes(genome).Select(entry => Marker(entry.Key, entry.Value, ent.Comp.Decoded,
-                    cell.Stability >= 0.5f ? vial : null)).ToArray()
+        var samples = dish.Comp.Samples.Select(sample => new SequencerSampleView(new SampleView(sample),
+            sample.GetGenome() is { } genome
+                ? genome.Genes.OrderBy(id => id.Id, StringComparer.Ordinal)
+                    .Select(id => Marker(id, sample.Stability, vial)).ToArray()
                 : [])).ToArray();
         _userInterface.SetUiState(ent.Owner, CellSequencerUiKey.Key,
-            new CellSequencerUiState(samples, dish.Comp.Revision, GetNetEntity(dish.Owner),
-                ent.Comp.FeedbackSample, ent.Comp.FeedbackMarker, ent.Comp.FeedbackOrder,
-                vial is { } present ? GetNetEntity(present.Owner) : null, vial?.Comp.Revision ?? -1));
+            new CellSequencerUiState(samples, GetNetEntity(dish.Owner), ent.Comp.FeedbackSample,
+                ent.Comp.FeedbackFamily, ent.Comp.FeedbackOrder, vial is { } present ? GetNetEntity(present.Owner) : null));
     }
 
-    private SequencerMarkerView Marker(ProtoId<GenePrototype> id, GeneState state,
-        HashSet<(ProtoId<GenePrototype> Gene, string? Allele, int? Number)> decoded,
-        Entity<GeneticVialComponent>? vial)
+    private SequencerMarkerView Marker(ProtoId<GenePrototype> id, float stability, Entity<GeneticVialComponent>? vial)
     {
-        var sequence = Sequence(id, state);
-        var known = decoded.Contains((id, state.Allele, state.Number));
-        var name = known ? Loc.GetString($"gene-{id}-name") : string.Empty;
-        var value = !known ? string.Empty : _prototypes.Index(id).Kind switch
-        {
-            GeneKind.Presence => Loc.GetString("cell-sequencer-present"),
-            GeneKind.Allele => state.Allele ?? string.Empty,
-            GeneKind.Number => state.Number?.ToString() ?? string.Empty,
-            _ => string.Empty
-        };
-        var pieces = Fragments(sequence);
-        var order = FragmentOrder(sequence);
-        return new SequencerMarkerView(sequence[..8], order.Select(index => pieces[index]).ToArray(),
-            known, name, value, known ? sequence : string.Empty,
-            known && vial is { } inserted && _vials.CanAdd(inserted, id, state));
+        var puzzle = GetPuzzle(id);
+        var known = _decoded.Contains(id);
+        return new SequencerMarkerView(puzzle.Sequence[..SequencerPuzzle.FamilyLength], puzzle.Fragments, known,
+            known ? Loc.GetString($"gene-{id}-name") : string.Empty,
+            known ? Loc.GetString("cell-sequencer-present") : string.Empty, known ? puzzle.Sequence : string.Empty,
+            known && stability >= _prototypes.Index(id).MinimumStability &&
+            vial is { } inserted && _vials.CanAdd(inserted, id));
     }
 
-    private static KeyValuePair<ProtoId<GenePrototype>, GeneState>[] OrderedGenes(GenomeSnapshot genome) =>
-        genome.GetGenes().OrderBy(entry => entry.Key.Id, StringComparer.Ordinal).ToArray();
-
-    private static string ValueKey(ProtoId<GenePrototype> id, GeneState state) =>
-        $"{id.Id}\u001f{state.Allele ?? string.Empty}\u001f{state.Number?.ToString() ?? string.Empty}";
-
-    private string Sequence(ProtoId<GenePrototype> id, GeneState state)
+    private Puzzle GetPuzzle(ProtoId<GenePrototype> id)
     {
-        var family = Encode($"gene:{id.Id}");
-        var key = ValueKey(id, state);
+        if (_puzzles.TryGetValue(id, out var cached))
+            return cached;
+        var count = _prototypes.Index(id).FragmentCount;
+        var length = SequencerPuzzle.Overlap + SequencerPuzzle.Step * count;
         for (var nonce = 0; ; nonce++)
         {
-            var sequence = family + Encode($"value:{key}:{nonce}");
-            if (Unambiguous(Fragments(sequence)))
-                return sequence;
+            var sequence = Encode($"gene:{id}:{nonce}", length);
+            var family = sequence[..SequencerPuzzle.FamilyLength];
+            if (_puzzles.Values.Any(puzzle => puzzle.Sequence.StartsWith(family, StringComparison.Ordinal)))
+                continue;
+            var pieces = Enumerable.Range(0, count).Select(i => sequence.Substring(i * SequencerPuzzle.Step, SequencerPuzzle.ReadLength)).ToArray();
+            if (!Unambiguous(pieces))
+                continue;
+            var hash = HMACSHA256.HashData(_roundSeed, Encoding.UTF8.GetBytes($"order:{sequence}"));
+            var order = Enumerable.Range(0, count).OrderBy(index => hash[index]).ThenBy(index => index).ToArray();
+            var puzzle = new Puzzle(sequence, order.Select(index => pieces[index]).ToArray(), order);
+            _puzzles.Add(id, puzzle);
+            return puzzle;
         }
     }
 
-    private string Encode(string value)
+    private string Encode(string value, int length)
     {
         var hash = HMACSHA256.HashData(_roundSeed, Encoding.UTF8.GetBytes(value));
-        var result = new char[8];
+        var result = new char[length];
         const string bases = "ACGT";
-        for (var i = 0; i < result.Length; i++)
+        for (var i = 0; i < length; i++)
         {
             result[i] = bases[hash[i] & 3];
         }
@@ -278,23 +235,14 @@ public sealed partial class CellSequencerSystem : EntitySystem
         return new string(result);
     }
 
-    private static string[] Fragments(string sequence) =>
-        [sequence[..7], sequence[3..10], sequence[6..13], sequence[9..16]];
-
     private static bool Unambiguous(string[] pieces)
     {
         for (var i = 0; i < pieces.Length; i++)
         for (var j = 0; j < pieces.Length; j++)
         {
-            if (pieces[i][3..] == pieces[j][..4] && j != i + 1)
+            if (pieces[i][SequencerPuzzle.Step..] == pieces[j][..SequencerPuzzle.Overlap] && j != i + 1)
                 return false;
         }
         return true;
-    }
-
-    private int[] FragmentOrder(string sequence)
-    {
-        var hash = HMACSHA256.HashData(_roundSeed, Encoding.UTF8.GetBytes($"order:{sequence}"));
-        return Enumerable.Range(0, 4).OrderBy(index => hash[index]).ThenBy(index => index).ToArray();
     }
 }

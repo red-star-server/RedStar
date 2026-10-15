@@ -10,8 +10,8 @@ namespace Content.Client._RedStar.Xenobiology.UI;
 [GenerateTypedNameReferences]
 public sealed partial class CellSequencerWindow : FancyWindow
 {
-    public event Action<int, int, int[], int, NetEntity?>? OnDecode;
-    public event Action<int, int, int, NetEntity?, NetEntity?, int>? OnExtract;
+    public event Action<int, string, int[]>? OnDecode;
+    public event Action<int, string, NetEntity?>? OnExtract;
 
     private CellSequencerUiState? _state;
     private int _primary = -1;
@@ -36,15 +36,16 @@ public sealed partial class CellSequencerWindow : FancyWindow
         DecodeButton.OnPressed += _ =>
         {
             if (_state is not null && _primary >= 0 && _marker >= 0 && Assembly.Complete)
-                OnDecode?.Invoke(_primary, _marker, Assembly.OrderedFragments, _state.DishRevision, _state.Dish);
+                OnDecode?.Invoke(_state.Samples[_primary].Sample.Id,
+                    _state.Samples[_primary].Markers[_marker].FamilyCode, Assembly.OrderedFragments);
         };
         ExtractButton.OnPressed += _ =>
         {
             if (_state is not null && _primary >= 0 && _marker >= 0 &&
                 _state.Samples[_primary].Markers[_marker].Extractable)
             {
-                OnExtract?.Invoke(_primary, _marker, _state.DishRevision, _state.Dish,
-                    _state.Vial, _state.VialRevision);
+                OnExtract?.Invoke(_state.Samples[_primary].Sample.Id,
+                    _state.Samples[_primary].Markers[_marker].FamilyCode, _state.Vial);
             }
         };
         CompareButton.OnPressed += _ =>
@@ -60,7 +61,7 @@ public sealed partial class CellSequencerWindow : FancyWindow
     public void UpdateState(CellSequencerUiState state)
     {
         if (_state is null || _state.Dish != state.Dish ||
-            _state.DishRevision != state.DishRevision && !SameSampleContents(_state.Samples, state.Samples))
+            !SameSampleContents(_state.Samples, state.Samples))
         {
             _primary = -1;
             _comparison = -1;
@@ -76,7 +77,8 @@ public sealed partial class CellSequencerWindow : FancyWindow
         BuildSamples();
         BuildMarkers();
         BuildAssembly();
-        Assembly.SetFeedback(state.FeedbackSample == _primary && state.FeedbackMarker == _marker
+        Assembly.SetFeedback(_primary >= 0 && _marker >= 0 && state.FeedbackSample == state.Samples[_primary].Sample.Id &&
+            state.FeedbackFamily == state.Samples[_primary].Markers[_marker].FamilyCode
             ? state.FeedbackOrder : []);
     }
 
@@ -89,7 +91,7 @@ public sealed partial class CellSequencerWindow : FancyWindow
         {
             var before = previous[i];
             var after = current[i];
-            if (before.Sample.Name != after.Sample.Name || before.Sample.Color != after.Sample.Color ||
+            if (before.Sample.Id != after.Sample.Id || before.Sample.Name != after.Sample.Name || before.Sample.Color != after.Sample.Color ||
                 before.Sample.GeneCount != after.Sample.GeneCount ||
                 before.Sample.HasGenome != after.Sample.HasGenome || before.Markers.Length != after.Markers.Length)
                 return false;

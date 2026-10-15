@@ -1,11 +1,10 @@
 using Content.Shared._RedStar.Xenobiology.Components.Container;
-using Content.Shared._RedStar.Xenobiology.Systems;
 using Content.Shared._RedStar.Xenobiology.Visuals;
 using Robust.Client.GameObjects;
 
 namespace Content.Client._RedStar.Xenobiology;
 
-public sealed partial class CellVisualsSystem : SharedCellVisualsSystem
+public sealed partial class CellVisualsSystem : EntitySystem
 {
     [Dependency] private SpriteSystem _sprite = default!;
 

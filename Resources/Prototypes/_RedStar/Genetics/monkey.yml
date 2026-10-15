@@ -1,17 +1,11 @@
 - type: gene
   id: MonkeyCoatPigment
-  kind: Allele
-  alleles: [Brown, Golden]
 
 - type: gene
   id: MonkeyMetabolicRate
-  kind: Number
-  minimum: 1
-  maximum: 3
 
 - type: gene
   id: MonkeySparseFur
-  kind: Presence
 
 - type: genome
   id: Monkey

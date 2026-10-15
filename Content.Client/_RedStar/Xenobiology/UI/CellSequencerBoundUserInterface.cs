@@ -13,10 +13,10 @@ public sealed class CellSequencerBoundUserInterface(EntityUid owner, Enum uiKey)
     {
         base.Open();
         _window = this.CreateWindow<CellSequencerWindow>();
-        _window.OnDecode += (sample, marker, order, revision, dish) =>
-            SendMessage(new CellSequencerDecodeMessage(sample, marker, order, revision, dish));
-        _window.OnExtract += (sample, marker, revision, dish, vial, vialRevision) =>
-            SendMessage(new CellSequencerExtractMessage(sample, marker, revision, dish, vial, vialRevision));
+        _window.OnDecode += (sample, family, order) =>
+            SendMessage(new CellSequencerDecodeMessage(sample, family, order));
+        _window.OnExtract += (sample, family, vial) =>
+            SendMessage(new CellSequencerExtractMessage(sample, family, vial));
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

@@ -10,7 +10,7 @@ namespace Content.Shared._RedStar.Genetics;
 public sealed partial class GeneticVialComponent : Component
 {
     [DataField]
-    public Dictionary<ProtoId<GenePrototype>, GeneState> Genes = [];
+    public HashSet<ProtoId<GenePrototype>> Genes = [];
 
     public int Revision;
 }

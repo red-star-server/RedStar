@@ -1,22 +1,12 @@
+using Content.Shared._RedStar.Genetics;
+using Robust.Shared.Prototypes;
+
 namespace Content.Server._RedStar.Genetics;
 
 /// <summary>
-/// Phenotype systems can react to genetic changes without owning genetic data.
+/// Raised after a genome transaction. Only these genes need expression.
 /// </summary>
-public sealed class GenomeChangedEvent : EntityEventArgs;
-
-/// <summary>
-/// A restored genome is available when its entity enters the map.
-/// </summary>
-public sealed class GenomeReadyEvent : EntityEventArgs;
-
-public enum GenomeOperationResult : byte
+public sealed class GenomeChangedEvent(IReadOnlyList<ProtoId<GenePrototype>> activated) : EntityEventArgs
 {
-    Success,
-    MissingGenome,
-    UnknownScheme,
-    UnknownGene,
-    InvalidValue,
-    IncompatibleScheme,
-    Uninitialized
+    public readonly IReadOnlyList<ProtoId<GenePrototype>> Activated = activated;
 }

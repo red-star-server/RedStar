@@ -16,7 +16,6 @@ using Content.Shared._RedStar.Xenobiology.Components.Container;
 using Content.Shared._RedStar.Genetics;
 using Content.Shared._RedStar.Xenobiology.Components.Tools;
 using Content.Shared._RedStar.Xenobiology.Events;
-using Content.Shared._RedStar.Xenobiology.Systems;
 using Content.Shared._RedStar.Xenobiology.Visuals;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
@@ -27,7 +26,7 @@ namespace Content.Server._RedStar.Xenobiology;
 /// <summary>
 /// Creates laboratory samples from current genomes and handles biopsy and transfer.
 /// </summary>
-public sealed partial class SampleSystem : SharedSampleSystem
+public sealed partial class SampleSystem : EntitySystem
 {
     private enum SampleCollectorDirection
     {
@@ -55,7 +54,7 @@ public sealed partial class SampleSystem : SharedSampleSystem
 
         foreach (var entry in ent.Comp.Samples)
         {
-            if (_genomes.Generate(entry.Genome, out var genome) != GenomeOperationResult.Success || genome is null)
+            if (!_genomes.TryGenerate(entry.Genome, out var genome) || genome is null)
                 continue;
 
             AddSample((ent, container), CreateSample(genome, entry.Stability));
@@ -197,11 +196,9 @@ public sealed partial class SampleSystem : SharedSampleSystem
     private static ulong GetAppearanceHash(GenomeSnapshot genome)
     {
         var canonical = new StringBuilder();
-        foreach (var (id, state) in genome.GetGenes().OrderBy(entry => entry.Key.ToString(), StringComparer.Ordinal))
+        foreach (var id in genome.Genes.OrderBy(id => id.Id, StringComparer.Ordinal))
         {
             AppendField(canonical, id.ToString());
-            AppendField(canonical, state.Allele);
-            AppendField(canonical, state.Number?.ToString(CultureInfo.InvariantCulture));
         }
 
         const ulong offset = 14695981039346656037;

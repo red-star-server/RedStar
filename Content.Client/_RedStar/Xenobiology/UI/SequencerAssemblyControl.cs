@@ -17,7 +17,7 @@ public sealed class SequencerAssemblyControl : Control
     private static readonly Color Bad = Color.FromHex("#DC826F");
     private static readonly Color Muted = Color.FromHex("#96A9B8");
     private readonly Font _font;
-    private readonly int?[] _slots = new int?[4];
+    private int?[] _slots = [];
     private string[] _fragments = [];
     private string _prefix = string.Empty;
     private int? _drag;
@@ -50,6 +50,8 @@ public sealed class SequencerAssemblyControl : Control
     public void SetFragments(string[] fragments, string prefix)
     {
         _fragments = fragments;
+        _slots = new int?[fragments.Length];
+        MinSize = new Vector2(Math.Max(700, Left * 2 + fragments.Length * (CardW + Gap)), 215);
         _prefix = prefix;
         Clear(false);
     }
@@ -72,11 +74,11 @@ public sealed class SequencerAssemblyControl : Control
 
     public bool HasPlaced => _slots.Any(x => x.HasValue);
 
-    public bool Complete => _slots.All(slot => slot.HasValue);
+    public bool Complete => _slots.Length > 0 && _slots.All(slot => slot.HasValue);
 
     public void SetFeedback(int[] order)
     {
-        _feedback = !_decoded && order.Length == 4 && OrderedFragments.SequenceEqual(order);
+        _feedback = !_decoded && order.Length == _slots.Length && OrderedFragments.SequenceEqual(order);
     }
 
     /// <summary>
@@ -88,22 +90,22 @@ public sealed class SequencerAssemblyControl : Control
             return;
         _decoded = decoded;
         _feedback = decoded;
-        if (!decoded || _fragments.Length != 4 || _prefix.Length < 4)
+        if (!decoded || _fragments.Length == 0 || _prefix.Length < 4)
             return;
 
         Array.Fill(_slots, null);
-        var used = new bool[4];
+        var used = new bool[_fragments.Length];
         var expected = _prefix[..4];
-        for (var position = 0; position < 4; position++)
+        for (var position = 0; position < _fragments.Length; position++)
         {
             var match = -1;
             for (var i = 0; i < _fragments.Length; i++)
             {
-                if (!used[i] && _fragments[i].Length >= 7 && _fragments[i][..4] == expected)
-                {
-                    match = i;
-                    break;
-                }
+                if (used[i] || _fragments[i].Length < 7 || _fragments[i][..4] != expected)
+                    continue;
+
+                match = i;
+                break;
             }
             if (match == -1)
                 break;
@@ -125,7 +127,7 @@ public sealed class SequencerAssemblyControl : Control
 
     private int? HitSlot(Vector2 point, float y)
     {
-        for (var i = 0; i < 4; i++)
+        for (var i = 0; i < _fragments.Length; i++)
         {
             if (Inside(point, TilePos(i, y), UIScale))
                 return i;
@@ -137,7 +139,7 @@ public sealed class SequencerAssemblyControl : Control
     protected override void KeyBindDown(GUIBoundKeyEventArgs args)
     {
         base.KeyBindDown(args);
-        if (_decoded || args.Handled || args.Function != EngineKeyFunctions.UIClick || _fragments.Length != 4)
+        if (_decoded || args.Handled || args.Function != EngineKeyFunctions.UIClick || _fragments.Length == 0)
             return;
         var point = Pointer();
         var slot = HitSlot(point, BoardY);
@@ -196,11 +198,11 @@ public sealed class SequencerAssemblyControl : Control
     {
         base.Draw(handle);
         handle.DrawRect(PixelSizeBox, Back);
-        if (_fragments.Length != 4)
+        if (_fragments.Length == 0)
             return;
         Text(handle, Loc.GetString("cell-sequencer-reads"), new Vector2(Left, 16), Muted);
         Text(handle, Loc.GetString("cell-sequencer-board"), new Vector2(Left, 115), Muted);
-        for (var i = 0; i < 4; i++)
+        for (var i = 0; i < _fragments.Length; i++)
         {
             var trayPos = TilePos(i, TrayY);
             var trayBusy = _slots.Contains(i);

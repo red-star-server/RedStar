@@ -44,7 +44,9 @@
                         <Label Name="DecodeStatus" />
                     </BoxContainer>
                 </PanelContainer>
-                <lab:SequencerAssemblyControl Name="Assembly" Margin="8 4 8 0" HorizontalExpand="True" VerticalExpand="True" />
+                <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
+                    <lab:SequencerAssemblyControl Name="Assembly" Margin="8 4 8 0" HorizontalExpand="True" VerticalExpand="True" />
+                </ScrollContainer>
                 <PanelContainer StyleClasses="PanelDark" HorizontalExpand="True" MinHeight="38">
                     <BoxContainer Orientation="Horizontal" Margin="10 5 10 5" SeparationOverride="8">
                         <Button Name="ResetButton" Text="{Loc 'cell-sequencer-reset'}" />

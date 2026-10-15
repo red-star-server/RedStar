@@ -1,10 +1,26 @@
-﻿- type: geneticMutation
-  id: TestVatNoSlip
-  requiredGenes:
-  - NightVision
-  - Regeneration
+- type: geneticMutation
+  id: NoSlipMutation
+  requiredGenes: [NightVision, Regeneration]
   requiredReagents:
     Nutriment: 5
     Saline: 5
   resultGene: NoSlip
-  chance: 1
+  duration: 60
+
+- type: geneticMutation
+  id: ReflectionMutation
+  requiredGenes: [NoSlip, Radiation]
+  requiredReagents:
+    Saline: 10
+    Mutagen: 5
+  resultGene: Reflection
+  duration: 90
+
+- type: geneticMutation
+  id: InvisibilityMutation
+  requiredGenes: [NoSlip, Venomous]
+  requiredReagents:
+    Nutriment: 10
+    Mutagen: 5
+  resultGene: Invisibility
+  duration: 90

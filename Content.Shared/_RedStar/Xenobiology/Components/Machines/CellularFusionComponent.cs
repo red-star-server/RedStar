@@ -23,13 +23,4 @@ public sealed partial class CellularFusionComponent : Component
 
     [ViewVariables]
     public EntityUid? SpliceDish;
-
-    [ViewVariables]
-    public int SpliceRevision;
-
-    [ViewVariables]
-    public EntityUid? ObservedDish;
-
-    [ViewVariables]
-    public int ObservedRevision = -1;
 }

@@ -14,12 +14,6 @@ public sealed partial class SampleContainerComponent : Component
     [DataField]
     public int MaxSamples = int.MaxValue;
 
-    /// <summary>
-    /// Changes with sample contents or state to reject stale UI actions.
-    /// </summary>
-    [ViewVariables]
-    public int Revision;
-
     [DataField]
     public bool AllowTransfer = true;
 

@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared._RedStar.Genetics;
 
 /// <summary>
-/// A genetic scheme shared by organisms of one compatible group.
+/// Defines the natural genes generated for an organism.
 /// </summary>
 [Prototype]
 public sealed partial class GenomePrototype : IPrototype
@@ -26,13 +26,4 @@ public sealed partial class GenomeGeneDefinition
     /// </summary>
     [DataField]
     public float PresenceChance = 1f;
-
-    [DataField]
-    public string? DefaultAllele;
-
-    [DataField]
-    public int? DefaultNumber;
-
-    [DataField]
-    public bool Randomize = true;
 }

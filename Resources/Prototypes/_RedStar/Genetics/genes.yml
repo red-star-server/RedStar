@@ -1,11 +1,8 @@
 - type: gene
   id: BiologicalVariant
-  kind: Allele
-  alleles: [A, B, C, D]
 
 - type: gene
   id: Pacifism
-  kind: Presence
   effects:
   - !type:AddComponents
     components:
@@ -13,7 +10,6 @@
 
 - type: gene
   id: NightVision
-  kind: Presence
   effects:
   - !type:AddComponents
     components:
@@ -21,7 +17,6 @@
 
 - type: gene
   id: EggLayer
-  kind: Presence
   effects:
   - !type:AddComponents
     components:
@@ -44,7 +39,6 @@
 
 - type: gene
   id: Lactation
-  kind: Presence
   effects:
   - !type:ContainedSolutionEffect
     prototype: SolutionUdder
@@ -59,7 +53,6 @@
 
 - type: gene
   id: Venomous
-  kind: Presence
   effects:
   - !type:ContainedSolutionEffect
     prototype: SolutionVenomSpider
@@ -72,7 +65,6 @@
 
 - type: gene
   id: WebSpinning
-  kind: Presence
   effects:
   - !type:AddComponents
     components:
@@ -80,7 +72,6 @@
 
 - type: gene
   id: Regeneration
-  kind: Presence
   effects:
   - !type:AddComponents
     components:
@@ -100,7 +91,7 @@
 
 - type: gene
   id: NoSlip
-  kind: Presence
+  tier: 2
   effects:
   - !type:AddComponents
     components:
@@ -108,7 +99,7 @@
 
 - type: gene
   id: Reflection
-  kind: Presence
+  tier: 3
   effects:
   - !type:AddComponents
     components:
@@ -117,7 +108,7 @@
 
 - type: gene
   id: Invisibility
-  kind: Presence
+  tier: 3
   effects:
   - !type:AddComponents
     components:
@@ -126,7 +117,6 @@
 
 - type: gene
   id: Radiation
-  kind: Presence
   effects:
   - !type:AddComponents
     components:
@@ -134,7 +124,6 @@
 
 - type: gene
   id: Reform
-  kind: Presence
   effects:
   - !type:AddComponents
     components:
@@ -146,7 +135,6 @@
 
 - type: gene
   id: MessyDrinker
-  kind: Presence
   effects:
   - !type:AddComponents
     components:
@@ -154,7 +142,6 @@
 
 - type: gene
   id: ParrotSpeech
-  kind: Presence
   effects:
   - !type:AddComponents
     components:
@@ -165,100 +152,8 @@
 
 - type: gene
   id: Bleating
-  kind: Presence
   effects:
   - !type:AddComponents
     components:
     - type: BleatingAccent
 
-- type: genome
-  id: NocturnalAnimal
-  genes:
-  - gene: NightVision
-
-- type: genome
-  id: Fowl
-  genes:
-  - gene: EggLayer
-
-- type: genome
-  id: Bovine
-  genes:
-  - gene: Lactation
-
-- type: genome
-  id: Caprine
-  genes:
-  - gene: Lactation
-  - gene: Bleating
-
-- type: genome
-  id: IrradiatedRodent
-  genes:
-  - gene: NightVision
-  - gene: Radiation
-
-- type: genome
-  id: Parrot
-  genes:
-  - gene: ParrotSpeech
-
-- type: genome
-  id: Canid
-  genes:
-  - gene: MessyDrinker
-
-- type: genome
-  id: Feline
-  genes:
-  - gene: NightVision
-  - gene: BiologicalVariant
-
-- type: genome
-  id: Porcine
-  genes:
-  - gene: BiologicalVariant
-
-- type: genome
-  id: Cervid
-  genes:
-  - gene: BiologicalVariant
-
-- type: genome
-  id: DionaNymph
-  genes:
-  - gene: Reform
-
-- type: genome
-  id: Basilisk
-  genes:
-  - gene: Reflection
-
-- type: genome
-  id: SpaceSpider
-  genes:
-  - gene: NightVision
-  - gene: NoSlip
-  - gene: Venomous
-
-- type: genome
-  id: SpaceCobra
-  genes:
-  - gene: Invisibility
-  - gene: NightVision
-  - gene: Venomous
-
-- type: genome
-  id: Human
-  genes:
-  - gene: BiologicalVariant
-
-- type: genome
-  id: Spider
-  genes:
-  - gene: BiologicalVariant
-  - gene: Regeneration
-  - gene: NightVision
-  - gene: NoSlip
-  - gene: Venomous
-  - gene: WebSpinning

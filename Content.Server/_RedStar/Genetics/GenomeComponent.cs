@@ -18,6 +18,21 @@ public sealed partial class GenomeComponent : Component
     [DataField]
     public bool GenomeGenerated;
 
+    /// <summary>
+    /// Maximum combined tier cost of acquired genes, including raw genes.
+    /// </summary>
     [DataField]
-    public Dictionary<ProtoId<GenePrototype>, GeneState> Genes = [];
+    public int MaximumLoad = 6;
+
+    [DataField]
+    public HashSet<ProtoId<GenePrototype>> NaturalGenes = [];
+
+    [DataField]
+    public Dictionary<ProtoId<GenePrototype>, GeneStatus> Genes = [];
+}
+
+public enum GeneStatus : byte
+{
+    Raw,
+    Active
 }
