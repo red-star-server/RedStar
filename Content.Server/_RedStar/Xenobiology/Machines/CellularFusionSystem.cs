@@ -22,7 +22,6 @@ public sealed partial class CellularFusionSystem : EntitySystem
     [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
     [Dependency] private SampleSystem _samples = default!;
-    [Dependency] private SharedContainerSystem _containers = default!;
     [Dependency] private IGameTiming _timing = default!;
 
     [SubscribeLocalEvent]
@@ -59,14 +58,12 @@ public sealed partial class CellularFusionSystem : EntitySystem
     private void OnAfterOpen(Entity<CellularFusionComponent> ent, ref AfterActivatableUIOpenEvent args) => UpdateUI(ent);
 
     [SubscribeLocalEvent]
-    private void OnSampleChanged(Entity<SampleContainerComponent> ent, ref SampleContainerChangedEvent args)
+    private void OnSampleChanged(Entity<CellularFusionComponent> ent, ref ContainedSamplesChangedEvent args)
     {
-        if (!_containers.TryGetContainingContainer(ent.Owner, out var container) ||
-            !TryComp<CellularFusionComponent>(container.Owner, out var fusion) || container.ID != fusion.DishSlot)
+        if (!TryGetDish(ent, out var dish) || dish.Owner != args.SampleContainer)
             return;
-        var machine = new Entity<CellularFusionComponent>(container.Owner, fusion);
-        CancelSplice(machine);
-        UpdateUI(machine);
+        CancelSplice(ent);
+        UpdateUI(ent);
     }
 
     [SubscribeLocalEvent]

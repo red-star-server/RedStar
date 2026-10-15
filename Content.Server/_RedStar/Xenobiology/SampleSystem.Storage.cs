@@ -3,12 +3,24 @@ using Content.Shared._RedStar.Genetics;
 using Content.Shared._RedStar.Xenobiology.Components.Container;
 using Content.Shared._RedStar.Xenobiology.Events;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Containers;
 
 namespace Content.Server._RedStar.Xenobiology;
 
 public sealed partial class SampleSystem : EntitySystem
 {
     private int _nextSampleId;
+    [Dependency] private SharedContainerSystem _containers = default!;
+
+    [SubscribeLocalEvent]
+    private void OnSamplesChanged(Entity<SampleContainerComponent> ent, ref SampleContainerChangedEvent args)
+    {
+        if (!_containers.TryGetContainingContainer(ent.Owner, out var container))
+            return;
+
+        var ev = new ContainedSamplesChangedEvent(ent.Owner);
+        RaiseLocalEvent(container.Owner, ref ev);
+    }
 
     [SubscribeLocalEvent]
     private void OnMapInit(Entity<SampleContainerComponent> ent, ref MapInitEvent args)

@@ -10,3 +10,9 @@ public sealed class GenomeChangedEvent(IReadOnlyList<ProtoId<GenePrototype>> act
 {
     public readonly IReadOnlyList<ProtoId<GenePrototype>> Activated = activated;
 }
+
+/// <summary>
+/// Relayed to the entity containing an organism after its genome changes.
+/// </summary>
+[ByRefEvent]
+public readonly record struct ContainedGenomeChangedEvent(EntityUid Subject);

@@ -62,7 +62,7 @@ public sealed partial class GrowingVatSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnGenomeChanged(Entity<GenomeComponent> ent, ref GenomeChangedEvent args) => RefreshSubject(ent.Owner);
+    private void OnGenomeChanged(Entity<GrowingVatComponent> ent, ref ContainedGenomeChangedEvent args) => RefreshSubject(args.Subject);
 
     [SubscribeLocalEvent]
     private void OnMobChanged(Entity<GenomeComponent> ent, ref MobStateChangedEvent args) => RefreshSubject(ent.Owner);

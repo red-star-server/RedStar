@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Shared._RedStar.Genetics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Containers;
 
 namespace Content.Server._RedStar.Genetics;
 
@@ -9,6 +10,17 @@ public sealed partial class GenomeSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototypes = default!;
     [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedContainerSystem _containers = default!;
+
+    private void NotifyChanged(EntityUid uid, IReadOnlyList<ProtoId<GenePrototype>> activated)
+    {
+        RaiseLocalEvent(uid, new GenomeChangedEvent(activated));
+        if (!_containers.TryGetContainingContainer(uid, out var container))
+            return;
+
+        var ev = new ContainedGenomeChangedEvent(uid);
+        RaiseLocalEvent(container.Owner, ref ev);
+    }
 
     [SubscribeLocalEvent]
     private void OnMapInit(Entity<GenomeComponent> ent, ref MapInitEvent args)
@@ -22,7 +34,7 @@ public sealed partial class GenomeSystem : EntitySystem
         ent.Comp.Genes = genome.Genes.ToDictionary(id => id, _ => GeneStatus.Active);
         ent.Comp.NaturalGenes = new HashSet<ProtoId<GenePrototype>>(genome.Genes);
         ent.Comp.GenomeGenerated = true;
-        RaiseLocalEvent(ent.Owner, new GenomeChangedEvent(genome.Genes.ToArray()));
+        NotifyChanged(ent.Owner, genome.Genes.ToArray());
     }
 
     public bool TryGenerate(ProtoId<GenomePrototype> id, out GenomeSnapshot? genome)
@@ -73,7 +85,7 @@ public sealed partial class GenomeSystem : EntitySystem
                 changed++;
         }
         if (changed > 0)
-            RaiseLocalEvent(uid, new GenomeChangedEvent([]));
+            NotifyChanged(uid, []);
         return true;
     }
 
@@ -96,7 +108,7 @@ public sealed partial class GenomeSystem : EntitySystem
         }
 
         component.Genes.Add(result, GeneStatus.Raw);
-        RaiseLocalEvent(uid, new GenomeChangedEvent([]));
+        NotifyChanged(uid, []);
         return true;
     }
 }

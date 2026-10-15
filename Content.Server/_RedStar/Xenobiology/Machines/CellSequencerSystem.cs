@@ -21,7 +21,6 @@ namespace Content.Server._RedStar.Xenobiology.Machines;
 
 public sealed partial class CellSequencerSystem : EntitySystem
 {
-    [Dependency] private SharedContainerSystem _containers = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
     [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
@@ -63,11 +62,10 @@ public sealed partial class CellSequencerSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnSampleChanged(Entity<SampleContainerComponent> ent, ref SampleContainerChangedEvent args)
+    private void OnSampleChanged(Entity<CellSequencerComponent> ent, ref ContainedSamplesChangedEvent args)
     {
-        if (_containers.TryGetContainingContainer(ent.Owner, out var container) &&
-            TryComp<CellSequencerComponent>(container.Owner, out var sequencer) && container.ID == sequencer.DishSlot)
-            UpdateUI((container.Owner, sequencer));
+        if (TryGetDish(ent, out var dish) && dish.Owner == args.SampleContainer)
+            UpdateUI(ent);
     }
 
     [SubscribeLocalEvent]
@@ -105,7 +103,7 @@ public sealed partial class CellSequencerSystem : EntitySystem
         var puzzle = GetPuzzle(id);
         var count = puzzle.Order.Length;
         var order = args.Order;
-        if (order is null || order.Length != count || order.Distinct().Count() != count ||
+        if (order.Length != count || order.Distinct().Count() != count ||
             order.Any(index => index < 0 || index >= count))
             return;
         if (Enumerable.Range(0, count).Any(i => puzzle.Order[order[i]] != i))
