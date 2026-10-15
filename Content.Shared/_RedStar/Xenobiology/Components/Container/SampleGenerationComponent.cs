@@ -10,6 +10,9 @@ namespace Content.Shared._RedStar.Xenobiology.Components.Container;
 public sealed partial class SampleGenerationComponent : Component
 {
     [DataField]
+    public bool Generated;
+
+    [DataField]
     public List<SampleGenerationEntry> Samples = [];
 }
 

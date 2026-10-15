@@ -3,6 +3,8 @@ using Content.Shared._RedStar.Genetics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Containers;
+using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Cloning.Events;
 
 namespace Content.Server._RedStar.Genetics;
 
@@ -11,6 +13,16 @@ public sealed partial class GenomeSystem : EntitySystem
     [Dependency] private IPrototypeManager _prototypes = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedContainerSystem _containers = default!;
+
+    [SubscribeLocalEvent]
+    private void OnCloning(Entity<GenomeComponent> ent, ref CloningEvent args)
+    {
+        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+            return;
+
+        var clone = CopyComp(ent.Owner, args.CloneUid, ent.Comp);
+        NotifyChanged(args.CloneUid, clone.Genes.Where(gene => gene.Value == GeneStatus.Active).Select(gene => gene.Key).ToArray());
+    }
 
     private void NotifyChanged(EntityUid uid, IReadOnlyList<ProtoId<GenePrototype>> activated)
     {
@@ -22,7 +34,7 @@ public sealed partial class GenomeSystem : EntitySystem
         RaiseLocalEvent(container.Owner, ref ev);
     }
 
-    [SubscribeLocalEvent]
+    [SubscribeLocalEvent(after: [typeof(SharedSolutionContainerSystem)])]
     private void OnMapInit(Entity<GenomeComponent> ent, ref MapInitEvent args)
     {
         if (ent.Comp.GenomeGenerated)
@@ -71,7 +83,7 @@ public sealed partial class GenomeSystem : EntitySystem
         Load(component, component.Genes.Keys.Union(incoming)) <= component.MaximumLoad;
 
     /// <summary>
-    /// Acquired genes remain raw indefinitely. Existing active genes are preserved.
+    /// Acquired genes remain raw until activated. Existing active genes are preserved.
     /// </summary>
     public bool TryApplyGenes(EntityUid uid, IReadOnlySet<ProtoId<GenePrototype>> incoming, out int changed)
     {
@@ -87,6 +99,26 @@ public sealed partial class GenomeSystem : EntitySystem
         if (changed > 0)
             NotifyChanged(uid, []);
         return true;
+    }
+
+    /// <summary>
+    /// Expresses dormant genes once without adding genetic material or changing its load.
+    /// </summary>
+    public void ActivateGenes(EntityUid uid)
+    {
+        if (!TryComp<GenomeComponent>(uid, out var component) || !component.GenomeGenerated)
+            return;
+
+        var activated = component.Genes.Where(gene => gene.Value == GeneStatus.Raw).Select(gene => gene.Key).ToArray();
+        if (activated.Length == 0)
+            return;
+
+        foreach (var id in activated)
+        {
+            component.Genes[id] = GeneStatus.Active;
+        }
+
+        NotifyChanged(uid, activated);
     }
 
     public bool CanTransformGenes(EntityUid uid, IReadOnlySet<ProtoId<GenePrototype>> inputs,
@@ -107,8 +139,8 @@ public sealed partial class GenomeSystem : EntitySystem
             component.Genes.Remove(id);
         }
 
-        component.Genes.Add(result, GeneStatus.Raw);
-        NotifyChanged(uid, []);
+        component.Genes.Add(result, GeneStatus.Active);
+        NotifyChanged(uid, [result]);
         return true;
     }
 }

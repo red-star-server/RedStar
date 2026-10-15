@@ -33,7 +33,8 @@ public sealed partial class SampleSystem : EntitySystem
 
     public bool AddSample(Entity<SampleContainerComponent?> ent, BiologicalSample sample)
     {
-        if (!Resolve(ent, ref ent.Comp) || ent.Comp.Samples.Count >= ent.Comp.MaxSamples)
+        if (!Resolve(ent, ref ent.Comp) || !sample.HasValidStability ||
+            ent.Comp.Samples.Count >= ent.Comp.MaxSamples || ent.Comp.Samples.Contains(sample))
             return false;
 
         sample.Id = ++_nextSampleId;
@@ -47,7 +48,7 @@ public sealed partial class SampleSystem : EntitySystem
 
     public bool ReplaceSamples(Entity<SampleContainerComponent?> ent, BiologicalSample first, BiologicalSample second, BiologicalSample result)
     {
-        if (!Resolve(ent, ref ent.Comp) || ReferenceEquals(first, second) ||
+        if (!Resolve(ent, ref ent.Comp) || !result.HasValidStability || ReferenceEquals(first, second) ||
             ReferenceEquals(result, first) || ReferenceEquals(result, second) ||
             !ent.Comp.Samples.Contains(first) || !ent.Comp.Samples.Contains(second) ||
             ent.Comp.Samples.Contains(result))
@@ -61,13 +62,12 @@ public sealed partial class SampleSystem : EntitySystem
         return true;
     }
 
-    public bool TryRemoveGene(Entity<SampleContainerComponent?> ent, BiologicalSample sample, ProtoId<GenePrototype> id)
+    public void TryRemoveGene(Entity<SampleContainerComponent?> ent, BiologicalSample sample, ProtoId<GenePrototype> id)
     {
         if (!Resolve(ent, ref ent.Comp) || !ent.Comp.Samples.Contains(sample) || !sample.TryRemoveGene(id))
-            return false;
+            return;
 
         RaiseLocalEvent(ent, new SampleContainerChangedEvent());
-        return true;
     }
 
     public bool TryReduceStability(Entity<SampleContainerComponent?> ent, BiologicalSample sample, float amount)

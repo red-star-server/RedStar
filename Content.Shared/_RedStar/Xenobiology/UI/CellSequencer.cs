@@ -7,14 +7,12 @@ public enum CellSequencerUiKey { Key }
 
 [Serializable, NetSerializable]
 public sealed class SequencerMarkerView(string familyCode, string[] fragments, bool decoded,
-    string name, string value, string sequence, bool extractable)
+    string name, bool extractable)
 {
     public readonly string FamilyCode = familyCode;
     public readonly string[] Fragments = fragments;
     public readonly bool Decoded = decoded;
     public readonly string Name = name;
-    public readonly string Value = value;
-    public readonly string Sequence = sequence;
     public readonly bool Extractable = extractable;
 }
 

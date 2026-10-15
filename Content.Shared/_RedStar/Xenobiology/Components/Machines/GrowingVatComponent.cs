@@ -1,4 +1,6 @@
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
+using Content.Shared._RedStar.Genetics.Prototypes;
 
 namespace Content.Shared._RedStar.Xenobiology.Components.Machines;
 
@@ -18,7 +20,7 @@ public sealed partial class GrowingVatComponent : Component
     public EntityUid? Subject;
 
     [ViewVariables]
-    public string? Recipe;
+    public ProtoId<GeneticMutationPrototype>? Recipe;
 
     [ViewVariables, AutoPausedField]
     public TimeSpan? EndTime;

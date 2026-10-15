@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Power.EntitySystems;
 using Content.Shared._RedStar.Genetics;
 using Content.Shared._RedStar.Xenobiology;
@@ -37,7 +36,7 @@ public sealed partial class CellularFusionSystem : EntitySystem
         if (args.Container.ID != ent.Comp.DishSlot)
             return;
 
-        CancelSplice(ent);
+        ResetSplice(ent.Comp);
         UpdateUI(ent);
     }
 
@@ -62,7 +61,7 @@ public sealed partial class CellularFusionSystem : EntitySystem
     {
         if (!TryGetDish(ent, out var dish) || dish.Owner != args.SampleContainer)
             return;
-        CancelSplice(ent);
+        ResetSplice(ent.Comp);
         UpdateUI(ent);
     }
 
@@ -87,7 +86,7 @@ public sealed partial class CellularFusionSystem : EntitySystem
         ent.Comp.SpliceSampleA = first;
         ent.Comp.SpliceSampleB = second;
         ent.Comp.SpliceDish = dish.Owner;
-        ent.Comp.SpliceEndTime = _timing.CurTime + TimeSpan.FromSeconds(ent.Comp.SpliceDelay);
+        ent.Comp.SpliceEndTime = _timing.CurTime + ent.Comp.SpliceDelay;
         UpdateUI(ent);
     }
 
@@ -110,8 +109,7 @@ public sealed partial class CellularFusionSystem : EntitySystem
                 continue;
             }
 
-            if (_timing.CurTime >= endTime)
-                FinishSplice(machine, dish);
+            FinishSplice(machine, dish);
         }
     }
 
@@ -139,14 +137,12 @@ public sealed partial class CellularFusionSystem : EntitySystem
             return;
         }
         _popup.PopupEntity(Loc.GetString("cellular-fusion-splice-success"), ent, PopupType.Medium);
-        UpdateUI(ent);
     }
 
     private bool CanStabilize(BiologicalSample first, BiologicalSample second, out GenomeSnapshot? genome)
     {
         genome = null;
-        if (!float.IsFinite(first.Stability) || !float.IsFinite(second.Stability) ||
-            first.Stability is < 0f or > 1f || second.Stability is < 0f or > 1f ||
+        if (!first.HasValidStability || !second.HasValidStability ||
             Math.Max(first.Stability, second.Stability) >= 1f ||
             first.GetGenome() is not { } firstGenome || second.GetGenome() is not { } secondGenome ||
             !firstGenome.SameContents(secondGenome))
@@ -192,11 +188,31 @@ public sealed partial class CellularFusionSystem : EntitySystem
         var remaining = ent.Comp.SpliceEndTime is { } endTime
             ? Math.Max(0, (endTime - _timing.CurTime).TotalSeconds)
             : 0;
+        var samples = new List<SampleView>();
+        var genomes = new List<GenomeSnapshot>();
+        if (hasDish)
+        {
+            foreach (var sample in dish.Comp.Samples)
+            {
+                int? group = null;
+                if (sample.GetGenome() is { } genome)
+                {
+                    var index = genomes.FindIndex(existing => existing.SameContents(genome));
+                    if (index < 0)
+                    {
+                        index = genomes.Count;
+                        genomes.Add(genome);
+                    }
+                    group = index;
+                }
+                samples.Add(new SampleView(sample, group));
+            }
+        }
         _userInterface.SetUiState(ent.Owner, CellularFusionUiKey.Key, new CellularFusionUiState(
-            hasDish ? dish.Comp.Samples.Select(cell => new SampleView(cell)).ToArray() : [],
+            samples.ToArray(),
             hasDish ? GetNetEntity(dish.Owner) : null,
             ent.Comp.SpliceInProgress,
-            ent.Comp.SpliceDelay,
+            ent.Comp.SpliceDelay.TotalSeconds,
             remaining));
     }
 }

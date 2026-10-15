@@ -1,0 +1,11 @@
+- type: reaction
+  id: Genezine
+  reactants:
+    Phalanximine:
+      amount: 1
+    Inaprovaline:
+      amount: 1
+    Saline:
+      amount: 1
+  products:
+    Genezine: 2

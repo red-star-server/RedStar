@@ -47,9 +47,14 @@ public sealed partial class SampleSystem : EntitySystem
     [Dependency] private GenomeSystem _genomes = default!;
 
     [SubscribeLocalEvent]
-    private void OnSampleGenerationInit(Entity<SampleGenerationComponent> ent, ref ComponentInit args)
+    private void OnSampleGenerationInit(Entity<SampleGenerationComponent> ent, ref MapInitEvent args)
     {
-        if (!TryComp<SampleContainerComponent>(ent, out var container))
+        if (ent.Comp.Generated || !TryComp<SampleContainerComponent>(ent, out var container))
+            return;
+
+        ent.Comp.Generated = true;
+        // Preserve saved samples from before the generation flag was introduced.
+        if (!container.Empty)
             return;
 
         foreach (var entry in ent.Comp.Samples)
@@ -99,6 +104,7 @@ public sealed partial class SampleSystem : EntitySystem
 
         var doAfterArgs = new DoAfterArgs(EntityManager, args.User, ent.Comp.Delay, new SampleCollectorDoAfter(), ent, target: args.Target, used: ent)
         {
+            NeedHand = true,
             BreakOnDamage = true,
             BreakOnMove = true,
             MovementThreshold = 0.5f,
@@ -136,7 +142,7 @@ public sealed partial class SampleSystem : EntitySystem
                         return false;
 
                     if (ent.Comp.Damage is not null)
-                        _damageable.TryChangeDamage(target, ent.Comp.Damage);
+                        _damageable.TryChangeDamage(target, ent.Comp.Damage, origin: user);
                 }
                 else if (TryComp<SampleContainerComponent>(target, out var targetComp))
                 {
@@ -251,21 +257,19 @@ public sealed partial class SampleSystem : EntitySystem
                 }
 
                 var biological = HasComp<GenomeComponent>(target.Owner);
-                if (biological && !_genomes.TryGetSnapshot(target.Owner, out _))
+                switch (biological)
                 {
-                    _popup.PopupEntity(Loc.GetString("cell-collector-target-cant-collected"), ent, user, PopupType.SmallCaution);
-                    return false;
+                    case true when !_genomes.TryGetSnapshot(target.Owner, out _):
+                        _popup.PopupEntity(Loc.GetString("cell-collector-target-cant-collected"), ent, user, PopupType.SmallCaution);
+                        return false;
+                    case true when GetCellularDamage(target.Owner) >= 120f:
+                        _popup.PopupEntity(Loc.GetString("cell-collector-sample-damaged"), ent, user, PopupType.SmallCaution);
+                        return false;
+                    case false when target.Comp is not { AllowCollection: true, Empty: false }:
+                        _popup.PopupEntity(Loc.GetString("cell-collector-target-cant-collected"), ent, user, PopupType.SmallCaution);
+                        return false;
                 }
-                if (biological && GetCellularDamage(target.Owner) >= 120f)
-                {
-                    _popup.PopupEntity(Loc.GetString("cell-collector-sample-damaged"), ent, user, PopupType.SmallCaution);
-                    return false;
-                }
-                if (!biological && target.Comp is not { AllowCollection: true, Empty: false })
-                {
-                    _popup.PopupEntity(Loc.GetString("cell-collector-target-cant-collected"), ent, user, PopupType.SmallCaution);
-                    return false;
-                }
+
                 break;
 
             case SampleCollectorDirection.Transfer:

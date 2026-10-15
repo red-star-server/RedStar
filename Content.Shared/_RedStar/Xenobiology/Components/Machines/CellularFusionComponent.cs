@@ -7,7 +7,7 @@ public sealed partial class CellularFusionComponent : Component
     public string DishSlot = "dishSlot";
 
     [DataField]
-    public float SpliceDelay = 5f;
+    public TimeSpan SpliceDelay = TimeSpan.FromSeconds(5);
 
     [ViewVariables]
     public bool SpliceInProgress => SpliceEndTime != null;

@@ -36,8 +36,10 @@ public sealed partial class CellSequencerWindow : FancyWindow
         DecodeButton.OnPressed += _ =>
         {
             if (_state is not null && _primary >= 0 && _marker >= 0 && Assembly.Complete)
+            {
                 OnDecode?.Invoke(_state.Samples[_primary].Sample.Id,
                     _state.Samples[_primary].Markers[_marker].FamilyCode, Assembly.OrderedFragments);
+            }
         };
         ExtractButton.OnPressed += _ =>
         {
@@ -176,7 +178,7 @@ public sealed partial class CellSequencerWindow : FancyWindow
             return;
         var active = markers[_marker];
         MarkerDetails.Text = active.Decoded
-            ? Loc.GetString("cell-sequencer-known-detail", ("name", active.Name), ("value", active.Value))
+            ? active.Name
             : active.FamilyCode;
 
         if (!_comparing || _comparison < 0)
@@ -188,9 +190,7 @@ public sealed partial class CellSequencerWindow : FancyWindow
             ? Loc.GetString("cell-sequencer-different-gene")
             : !match.Decoded || !active.Decoded
                 ? Loc.GetString("cell-sequencer-same-gene-hidden")
-                : active.Sequence == match.Sequence
-                    ? Loc.GetString("cell-sequencer-same-value")
-                    : Loc.GetString("cell-sequencer-different-value");
+                : Loc.GetString("cell-sequencer-same-value");
     }
 
     private void BuildAssembly()

@@ -12,7 +12,7 @@
   requiredGenes: [NoSlip, Radiation]
   requiredReagents:
     Saline: 10
-    Mutagen: 5
+    UnstableMutagen: 5
   resultGene: Reflection
   duration: 90
 
@@ -21,6 +21,6 @@
   requiredGenes: [NoSlip, Venomous]
   requiredReagents:
     Nutriment: 10
-    Mutagen: 5
+    UnstableMutagen: 5
   resultGene: Invisibility
   duration: 90

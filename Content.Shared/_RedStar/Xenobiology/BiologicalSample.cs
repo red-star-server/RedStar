@@ -30,6 +30,8 @@ public sealed partial class BiologicalSample
     [ViewVariables]
     public bool HasGenome => _genome is not null;
 
+    public bool HasValidStability => float.IsFinite(Stability) && Stability is >= 0f and <= 1f;
+
     public BiologicalSample() { }
 
     public BiologicalSample(Color color, string name, float stability, GenomeSnapshot? genome)
@@ -60,7 +62,7 @@ public sealed partial class BiologicalSample
     /// </summary>
     public bool TryReduceStability(float amount)
     {
-        if (!float.IsFinite(amount) || amount <= 0f)
+        if (!HasValidStability || !float.IsFinite(amount) || amount <= 0f)
             return false;
 
         var reduced = Math.Clamp(Stability - amount, 0f, 1f);

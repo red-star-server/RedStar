@@ -36,6 +36,7 @@
                 </PanelContainer>
             </BoxContainer>
         </BoxContainer>
+        <RichTextLabel Name="IncompatibleLabel" Visible="False" Margin="0 8 0 0" />
         <ProgressBar Name="SpliceProgressBar" Visible="False" MinValue="0" MaxValue="100" Value="0"
                      Margin="0 8 0 4" HorizontalExpand="True" />
         <Button Name="SpliceButton" Text="{Loc 'cellular-fusion-menu-splice-button'}"

@@ -122,7 +122,13 @@ public sealed partial class CellularFusionWindow : FancyWindow
         if (count == 2)
             CellInfoB.SetSample(_selected[1].Sample);
 
-        SpliceButton.Disabled = _spliceInProgress || count != 2 ||
+        var incompatible = count == 2 &&
+            _selected[0].Sample.CompatibilityGroup != _selected[1].Sample.CompatibilityGroup;
+        IncompatibleLabel.Visible = incompatible;
+        if (incompatible)
+            IncompatibleLabel.SetMessage(Loc.GetString("cellular-fusion-incompatible"));
+
+        SpliceButton.Disabled = _spliceInProgress || count != 2 || incompatible ||
             !_selected[0].Sample.HasGenome || !_selected[1].Sample.HasGenome ||
             Math.Max(_selected[0].Sample.Stability, _selected[1].Sample.Stability) >= 1f;
     }

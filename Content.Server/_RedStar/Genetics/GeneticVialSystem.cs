@@ -21,7 +21,8 @@ public sealed partial class GeneticVialSystem : EntitySystem
     public bool TryExtract(Entity<SampleContainerComponent> dish, BiologicalSample sample,
         Entity<GeneticVialComponent> vial, ProtoId<GenePrototype> id)
     {
-        if (!dish.Comp.Samples.Contains(sample) || sample.Stability < _prototypes.Index(id).MinimumStability ||
+        if (!dish.Comp.Samples.Contains(sample) || !sample.HasValidStability ||
+            !_prototypes.TryIndex(id, out var gene) || sample.Stability < gene.MinimumStability ||
             sample.GetGenome() is not { } genome || !genome.Genes.Contains(id) || !CanAdd(vial, id))
             return false;
 

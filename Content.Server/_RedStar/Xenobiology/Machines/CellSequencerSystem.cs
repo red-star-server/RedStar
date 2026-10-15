@@ -1,6 +1,4 @@
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using Content.Server.Power.EntitySystems;
 using Content.Server._RedStar.Genetics;
 using Content.Shared._RedStar.Genetics;
@@ -16,6 +14,7 @@ using Content.Shared.Power;
 using Content.Shared.UserInterface;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server._RedStar.Xenobiology.Machines;
 
@@ -27,11 +26,11 @@ public sealed partial class CellSequencerSystem : EntitySystem
     [Dependency] private IPrototypeManager _prototypes = default!;
     [Dependency] private GeneticVialSystem _vials = default!;
     [Dependency] private SampleSystem _samples = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
-    private byte[] _roundSeed = [];
     private readonly HashSet<ProtoId<GenePrototype>> _decoded = [];
     private readonly Dictionary<ProtoId<GenePrototype>, Puzzle> _puzzles = [];
-    private sealed record Puzzle(string Sequence, string[] Fragments, int[] Order);
+    private sealed record Puzzle(string FamilyCode, string[] Fragments, int[] Order);
     private const float IncorrectStabilityCost = 0.1f;
 
     public override void Initialize()
@@ -43,7 +42,6 @@ public sealed partial class CellSequencerSystem : EntitySystem
 
     private void ResetRound()
     {
-        _roundSeed = RandomNumberGenerator.GetBytes(32);
         _decoded.Clear();
         _puzzles.Clear();
     }
@@ -86,7 +84,7 @@ public sealed partial class CellSequencerSystem : EntitySystem
             return false;
         foreach (var id in genome.Genes)
         {
-            if (GetPuzzle(id).Sequence[..SequencerPuzzle.FamilyLength] != family)
+            if (GetPuzzle(id).FamilyCode != family)
                 continue;
             gene = id;
             return true;
@@ -111,9 +109,9 @@ public sealed partial class CellSequencerSystem : EntitySystem
             ent.Comp.FeedbackSample = args.SampleId;
             ent.Comp.FeedbackFamily = args.Family;
             ent.Comp.FeedbackOrder = order.ToArray();
-            _samples.TryReduceStability((dish.Owner, (SampleContainerComponent?) dish.Comp), sample!, IncorrectStabilityCost);
+            if (!_samples.TryReduceStability((dish.Owner, (SampleContainerComponent?) dish.Comp), sample!, IncorrectStabilityCost))
+                UpdateUI(ent);
             _popup.PopupEntity(Loc.GetString("cell-sequencer-incorrect"), ent, PopupType.MediumCaution);
-            UpdateUI(ent);
             return;
         }
         ClearFeedback(ent.Comp);
@@ -134,7 +132,7 @@ public sealed partial class CellSequencerSystem : EntitySystem
             !_decoded.Contains(id) || !TryGetVial(ent, out var vial) || args.Vial != GetNetEntity(vial.Owner))
             return;
         ClearFeedback(ent.Comp);
-        if (_vials.TryExtract(dish, sample!, vial, id))
+        if (!_vials.TryExtract(dish, sample!, vial, id))
             UpdateUI(ent);
     }
 
@@ -190,9 +188,8 @@ public sealed partial class CellSequencerSystem : EntitySystem
     {
         var puzzle = GetPuzzle(id);
         var known = _decoded.Contains(id);
-        return new SequencerMarkerView(puzzle.Sequence[..SequencerPuzzle.FamilyLength], puzzle.Fragments, known,
+        return new SequencerMarkerView(puzzle.FamilyCode, puzzle.Fragments, known,
             known ? Loc.GetString($"gene-{id}-name") : string.Empty,
-            known ? Loc.GetString("cell-sequencer-present") : string.Empty, known ? puzzle.Sequence : string.Empty,
             known && stability >= _prototypes.Index(id).MinimumStability &&
             vial is { } inserted && _vials.CanAdd(inserted, id));
     }
@@ -203,31 +200,30 @@ public sealed partial class CellSequencerSystem : EntitySystem
             return cached;
         var count = _prototypes.Index(id).FragmentCount;
         var length = SequencerPuzzle.Overlap + SequencerPuzzle.Step * count;
-        for (var nonce = 0; ; nonce++)
+        while (true)
         {
-            var sequence = Encode($"gene:{id}:{nonce}", length);
+            var sequence = GenerateSequence(length);
             var family = sequence[..SequencerPuzzle.FamilyLength];
-            if (_puzzles.Values.Any(puzzle => puzzle.Sequence.StartsWith(family, StringComparison.Ordinal)))
+            if (_puzzles.Values.Any(puzzle => puzzle.FamilyCode == family))
                 continue;
             var pieces = Enumerable.Range(0, count).Select(i => sequence.Substring(i * SequencerPuzzle.Step, SequencerPuzzle.ReadLength)).ToArray();
             if (!Unambiguous(pieces))
                 continue;
-            var hash = HMACSHA256.HashData(_roundSeed, Encoding.UTF8.GetBytes($"order:{sequence}"));
-            var order = Enumerable.Range(0, count).OrderBy(index => hash[index]).ThenBy(index => index).ToArray();
-            var puzzle = new Puzzle(sequence, order.Select(index => pieces[index]).ToArray(), order);
+            var order = Enumerable.Range(0, count).ToArray();
+            _random.Shuffle(order);
+            var puzzle = new Puzzle(family, order.Select(index => pieces[index]).ToArray(), order);
             _puzzles.Add(id, puzzle);
             return puzzle;
         }
     }
 
-    private string Encode(string value, int length)
+    private string GenerateSequence(int length)
     {
-        var hash = HMACSHA256.HashData(_roundSeed, Encoding.UTF8.GetBytes(value));
         var result = new char[length];
         const string bases = "ACGT";
         for (var i = 0; i < length; i++)
         {
-            result[i] = bases[hash[i] & 3];
+            result[i] = bases[_random.Next(bases.Length)];
         }
 
         return new string(result);

@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Numerics;
+using Content.Shared._RedStar.Xenobiology.UI;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -78,7 +79,7 @@ public sealed class SequencerAssemblyControl : Control
 
     public void SetFeedback(int[] order)
     {
-        _feedback = !_decoded && order.Length == _slots.Length && OrderedFragments.SequenceEqual(order);
+        _feedback = _decoded || order.Length == _slots.Length && OrderedFragments.SequenceEqual(order);
     }
 
     /// <summary>
@@ -90,18 +91,18 @@ public sealed class SequencerAssemblyControl : Control
             return;
         _decoded = decoded;
         _feedback = decoded;
-        if (!decoded || _fragments.Length == 0 || _prefix.Length < 4)
+        if (!decoded || _fragments.Length == 0 || _prefix.Length < SequencerPuzzle.Overlap)
             return;
 
         Array.Fill(_slots, null);
         var used = new bool[_fragments.Length];
-        var expected = _prefix[..4];
+        var expected = _prefix[..SequencerPuzzle.Overlap];
         for (var position = 0; position < _fragments.Length; position++)
         {
             var match = -1;
             for (var i = 0; i < _fragments.Length; i++)
             {
-                if (used[i] || _fragments[i].Length < 7 || _fragments[i][..4] != expected)
+                if (used[i] || _fragments[i].Length < SequencerPuzzle.ReadLength || _fragments[i][..SequencerPuzzle.Overlap] != expected)
                     continue;
 
                 match = i;
@@ -111,7 +112,7 @@ public sealed class SequencerAssemblyControl : Control
                 break;
             _slots[position] = match;
             used[match] = true;
-            expected = _fragments[match][3..];
+            expected = _fragments[match][SequencerPuzzle.Step..];
         }
     }
 
@@ -214,7 +215,7 @@ public sealed class SequencerAssemblyControl : Control
             if (!_feedback || i <= 0 || cell is not { } current || _slots[i - 1] is not { } previous)
                 continue;
 
-            var matches = _fragments[previous][3..] == _fragments[current][..4];
+            var matches = _fragments[previous][SequencerPuzzle.Step..] == _fragments[current][..SequencerPuzzle.Overlap];
             handle.DrawRect(new UIBox2(pos.X - 8 * UIScale, pos.Y + 13 * UIScale,
                 pos.X - 4 * UIScale, pos.Y + 39 * UIScale), matches ? Good : Bad);
         }
@@ -230,8 +231,8 @@ public sealed class SequencerAssemblyControl : Control
         if (value.Length == 0)
             return;
 
-        var first = value[..Math.Min(4, value.Length)];
-        var second = value.Length > 4 ? value[4..] : string.Empty;
+        var first = value[..Math.Min(SequencerPuzzle.Overlap, value.Length)];
+        var second = value.Length > SequencerPuzzle.Overlap ? value[SequencerPuzzle.Overlap..] : string.Empty;
         Text(handle, first, pos / UIScale + new Vector2(15, 20), subdued ? Muted : Color.White);
         if (second.Length > 0)
             Text(handle, second, pos / UIScale + new Vector2(85, 20), subdued ? Muted : Accent);
