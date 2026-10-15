@@ -114,7 +114,7 @@ public sealed partial class CellSequencerSystem : EntitySystem
         ent.Comp.FeedbackOrder = [];
         ent.Comp.FeedbackSample = -1;
         ent.Comp.FeedbackMarker = -1;
-        if (ent.Comp.Decoded.Add(sequence))
+        if (ent.Comp.Decoded.Add((id, state.Allele, state.Number)))
         {
             _popup.PopupEntity(Loc.GetString("cell-sequencer-discovered", ("gene", Loc.GetString($"gene-{id}-name"))),
                 ent, PopupType.Medium);
@@ -145,7 +145,7 @@ public sealed partial class CellSequencerSystem : EntitySystem
 
         SyncWork(ent.Comp, dish);
         var (id, state) = genes[args.MarkerIndex];
-        if (!ent.Comp.Decoded.Contains(Sequence(id, state)))
+        if (!ent.Comp.Decoded.Contains((id, state.Allele, state.Number)))
             return;
 
         ent.Comp.ActiveRevision = dish.Comp.Revision + 1;
@@ -226,11 +226,12 @@ public sealed partial class CellSequencerSystem : EntitySystem
                 vial is { } present ? GetNetEntity(present.Owner) : null, vial?.Comp.Revision ?? -1));
     }
 
-    private SequencerMarkerView Marker(ProtoId<GenePrototype> id, GeneState state, HashSet<string> decoded,
+    private SequencerMarkerView Marker(ProtoId<GenePrototype> id, GeneState state,
+        HashSet<(ProtoId<GenePrototype> Gene, string? Allele, int? Number)> decoded,
         Entity<GeneticVialComponent>? vial)
     {
         var sequence = Sequence(id, state);
-        var known = decoded.Contains(sequence);
+        var known = decoded.Contains((id, state.Allele, state.Number));
         var name = known ? Loc.GetString($"gene-{id}-name") : string.Empty;
         var value = !known ? string.Empty : _prototypes.Index(id).Kind switch
         {

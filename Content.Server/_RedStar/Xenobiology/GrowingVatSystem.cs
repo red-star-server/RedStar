@@ -144,6 +144,33 @@ public sealed partial class GrowingVatSystem : EntitySystem
         recipe.RequiredReagents.All(entry => entry.Value > 0 &&
             mixture.GetTotalPrototypeQuantity(entry.Key.Id) >= entry.Value);
 
+    private bool TrySpendReagents(Entity<SolutionComponent> container, GeneticMutationPrototype recipe)
+    {
+        var source = container.Comp.Solution;
+        var remaining = source.Clone();
+        foreach (var (prototype, amount) in recipe.RequiredReagents)
+        {
+            var needed = amount;
+            foreach (var (reagent, quantity) in source.Contents)
+            {
+                if (reagent.Prototype != prototype.Id)
+                    continue;
+
+                var take = needed < quantity ? needed : quantity;
+                needed -= remaining.RemoveReagent(reagent, take);
+                if (needed <= 0)
+                    break;
+            }
+
+            if (needed > 0)
+                return false;
+        }
+
+        container.Comp.Solution = remaining;
+        _solutions.UpdateChemicals(container);
+        return true;
+    }
+
     private bool TryGetActiveRecipe(Entity<GrowingVatComponent> vat, EntityUid subject,
         out GeneticMutationPrototype? recipe, out Entity<SolutionComponent> container)
     {
@@ -231,11 +258,10 @@ public sealed partial class GrowingVatSystem : EntitySystem
             if (component.Progress < recipe!.Duration)
                 continue;
 
-            // Recheck eligibility before spending: reagents can be removed during incubation.
-            // A failed mutation still consumes the full recipe cost for this cycle.
-            foreach (var (reagent, amount) in recipe.RequiredReagents)
+            if (!TrySpendReagents(solution, recipe))
             {
-                _solutions.RemoveReagent(solution, reagent.Id, amount);
+                UpdateVisual(vat, false);
+                continue;
             }
 
             Cancel(vat);
