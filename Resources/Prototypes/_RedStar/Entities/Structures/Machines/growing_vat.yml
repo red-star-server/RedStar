@@ -37,30 +37,30 @@
           True: {visible: true}
           False: {visible: false}
   - type: GrowingVat
+    processSound:
+      path: /Audio/Ambience/bubbling.ogg
+      params:
+        loop: true
+        maxDistance: 5
   - type: Machine
     board: GrowingVatCircuitboard
   - type: WiresPanel
   - type: WiresVisuals
-  - type: EntityStorage
-    capacity: 1
-    showContents: false
-    whitelist:
-      components:
-      - MobState
-  - type: ResistLocker
+  - type: ExitContainerOnMove
+    containerId: subjectSlot
   - type: ContainerContainer
     containers:
       machine_board: !type:Container
       machine_parts: !type:Container
-      entity_storage: !type:Container
+      subjectSlot: !type:ContainerSlot
   - type: Construction
     containers:
     - machine_board
     - machine_parts
-    - entity_storage
+    - subjectSlot
   - type: EmptyOnMachineDeconstruct
     containers:
-    - entity_storage
+    - subjectSlot
   - type: SolutionManager
     solutions:
     - SolutionGrowingVat

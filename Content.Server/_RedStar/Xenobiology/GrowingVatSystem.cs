@@ -1,20 +1,18 @@
 using System.Linq;
 using Content.Server._RedStar.Genetics;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Storage.EntitySystems;
 using Content.Shared._RedStar.Genetics;
 using Content.Shared._RedStar.Genetics.Prototypes;
 using Content.Shared._RedStar.Xenobiology.Components.Machines;
 using Content.Shared._RedStar.Xenobiology.Visuals;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Climbing.Systems;
 using Content.Shared.DragDrop;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Power;
-using Content.Shared.Storage.Components;
-using Content.Shared.Storage.EntitySystems;
-using Content.Shared.Verbs;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -27,7 +25,9 @@ namespace Content.Server._RedStar.Xenobiology;
 /// </summary>
 public sealed partial class GrowingVatSystem : EntitySystem
 {
-    [Dependency] private EntityStorageSystem _storage = default!;
+    [Dependency] private SharedContainerSystem _containers = default!;
+    [Dependency] private ClimbSystem _climb = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedSolutionContainerSystem _solutions = default!;
     [Dependency] private GenomeSystem _genomes = default!;
     [Dependency] private MobStateSystem _mobState = default!;
@@ -44,53 +44,36 @@ public sealed partial class GrowingVatSystem : EntitySystem
         UpdateVisual(ent, CanProcess(ent));
 
     [SubscribeLocalEvent]
-    private void OnInsertAttempt(Entity<GrowingVatComponent> ent, ref EntityStorageInsertedIntoAttemptEvent args)
-    {
-        if (!IsValidSubject(args.ItemToInsert))
-            args.Cancelled = true;
-    }
-
-    [SubscribeLocalEvent]
     private void OnCanDrop(Entity<GrowingVatComponent> ent, ref CanDropTargetEvent args)
     {
         args.Handled = true;
-        args.CanDrop = TryComp<EntityStorageComponent>(ent, out var storage) && !storage.Open &&
-                       IsValidSubject(args.Dragged) && _storage.CanInsert(args.Dragged, ent, storage);
+        args.CanDrop = IsValidSubject(args.Dragged) &&
+                       _containers.TryGetContainer(ent.Owner, ent.Comp.SubjectSlot, out var container) &&
+                       _containers.CanInsert(args.Dragged, container);
     }
 
     [SubscribeLocalEvent]
     private void OnDragDrop(Entity<GrowingVatComponent> ent, ref DragDropTargetEvent args)
     {
-        if (args.Handled || !TryComp<EntityStorageComponent>(ent, out var storage) || storage.Open ||
-            !IsValidSubject(args.Dragged) || !_storage.CanInsert(args.Dragged, ent, storage))
+        if (args.Handled || !IsValidSubject(args.Dragged) ||
+            !_containers.TryGetContainer(ent.Owner, ent.Comp.SubjectSlot, out var container) ||
+            !_containers.CanInsert(args.Dragged, container))
             return;
 
-        args.Handled = _storage.Insert(args.Dragged, ent, storage);
+        args.Handled = _containers.Insert(args.Dragged, container);
     }
 
     [SubscribeLocalEvent]
-    private void OnGetAltVerbs(Entity<GrowingVatComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
+    private void OnInserted(Entity<GrowingVatComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
-        if (!args.CanAccess || !args.CanInteract || ent.Comp.Subject is not null ||
-            !TryGetSubject(ent, out var subject) || !this.IsPowered(ent.Owner, EntityManager) ||
-            !TryGetRecipe(ent, subject, out _))
-            return;
-
-        args.Verbs.Add(new AlternativeVerb
-        {
-            Text = Loc.GetString("growing-vat-start"),
-            Act = () => TryStart(ent),
-            Priority = 1
-        });
+        if (args.Container.ID == ent.Comp.SubjectSlot)
+            TryStart(ent);
     }
-
-    [SubscribeLocalEvent]
-    private void OnOpened(Entity<GrowingVatComponent> ent, ref StorageAfterOpenEvent args) => Cancel(ent);
 
     [SubscribeLocalEvent]
     private void OnContainerRemoved(Entity<GrowingVatComponent> ent, ref EntRemovedFromContainerMessage args)
     {
-        if (args.Container.ID == SharedEntityStorageSystem.ContainerName)
+        if (args.Container.ID == ent.Comp.SubjectSlot)
             Cancel(ent);
     }
 
@@ -103,11 +86,11 @@ public sealed partial class GrowingVatSystem : EntitySystem
     private bool TryGetSubject(Entity<GrowingVatComponent> ent, out EntityUid subject)
     {
         subject = default;
-        if (!TryComp<EntityStorageComponent>(ent, out var storage) || storage.Open ||
-            storage.Contents.ContainedEntities.Count != 1)
+        if (!_containers.TryGetContainer(ent.Owner, ent.Comp.SubjectSlot, out var container) ||
+            container.ContainedEntities.Count != 1)
             return false;
 
-        var contained = storage.Contents.ContainedEntities.First();
+        var contained = container.ContainedEntities.First();
         if (!IsValidSubject(contained))
             return false;
 
@@ -214,6 +197,16 @@ public sealed partial class GrowingVatSystem : EntitySystem
         UpdateVisual(vat, false);
     }
 
+    private void Eject(Entity<GrowingVatComponent> vat, EntityUid subject)
+    {
+        if (!_containers.TryGetContainer(vat.Owner, vat.Comp.SubjectSlot, out var container) ||
+            !container.Contains(subject))
+            return;
+
+        _climb.ForciblySetClimbing(subject, vat.Owner);
+        _containers.Remove(subject, container);
+    }
+
     private void UpdateVisual(Entity<GrowingVatComponent> vat, bool processing)
     {
         if (vat.Comp.Processing == processing)
@@ -221,6 +214,9 @@ public sealed partial class GrowingVatSystem : EntitySystem
 
         vat.Comp.Processing = processing;
         _appearance.SetData(vat, GrowingVatVisuals.Processing, processing);
+        vat.Comp.AudioStream = processing
+            ? _audio.PlayPvs(vat.Comp.ProcessSound, vat.Owner)?.Entity
+            : _audio.Stop(vat.Comp.AudioStream);
     }
 
     public override void Update(float frameTime)
@@ -230,13 +226,33 @@ public sealed partial class GrowingVatSystem : EntitySystem
         var query = EntityQueryEnumerator<GrowingVatComponent, MetaDataComponent>();
         while (query.MoveNext(out var uid, out var component, out var metadata))
         {
-            if (metadata.EntityPaused || component.Subject is not { } subject)
+            if (metadata.EntityPaused)
                 continue;
 
             var vat = new Entity<GrowingVatComponent>(uid, component);
+            if (component.Subject is not { } subject)
+            {
+                if (_containers.TryGetContainer(uid, component.SubjectSlot, out var slot) &&
+                    slot.ContainedEntities.Count == 1 &&
+                    !IsValidSubject(slot.ContainedEntities.First()))
+                {
+                    Eject(vat, slot.ContainedEntities.First());
+                    continue;
+                }
+
+                component.TickAccumulator += frameTime;
+                if (component.TickAccumulator >= 1f)
+                {
+                    component.TickAccumulator = 0f;
+                    TryStart(vat);
+                }
+                continue;
+            }
             if (!TryGetSubject(vat, out var contained) || contained != subject)
             {
                 Cancel(vat);
+                if (Exists(subject) && !IsValidSubject(subject))
+                    Eject(vat, subject);
                 continue;
             }
 
@@ -269,6 +285,8 @@ public sealed partial class GrowingVatSystem : EntitySystem
             if (float.IsFinite(recipe.Chance) &&
                 _random.Prob(Math.Clamp(recipe.Chance, 0f, 1f)))
                 _genomes.SetGene(subject, recipe.ResultGene, new GeneState());
+
+            Eject(vat, subject);
         }
     }
 }
