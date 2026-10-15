@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared._RedStar.Genetics;
 using Content.Shared.EntityEffects;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
@@ -14,6 +15,15 @@ public sealed partial class GenomeExpressionSystem : EntitySystem
     [Dependency] private IPrototypeManager _prototypes = default!;
     [Dependency] private SharedEntityEffectsSystem _effects = default!;
     [Dependency] private IConfigurationManager _config = default!;
+
+    private readonly Dictionary<EntityUid, IReadOnlySet<ProtoId<GenePrototype>>> _held = [];
+
+    public bool IsIncubating(EntityUid uid, ProtoId<GenePrototype> gene) =>
+        TryComp<GenomeExpressionComponent>(uid, out var host) &&
+        host.Incubating.TryGetValue(gene, out var remaining) && remaining > TimeSpan.Zero;
+
+    public void HoldIncubation(EntityUid uid, IReadOnlySet<ProtoId<GenePrototype>> genes) =>
+        _held[uid] = genes;
 
     [SubscribeLocalEvent]
     private void OnGenomeChanged(Entity<GenomeComponent> ent, ref GenomeChangedEvent args) =>
@@ -35,7 +45,7 @@ public sealed partial class GenomeExpressionSystem : EntitySystem
         var genes = genome.GetGenes();
         foreach (var (id, _) in genes)
         {
-            if (!_prototypes.TryIndex(id, out var gene) || gene.Effects.Length == 0)
+            if (!_prototypes.TryIndex(id, out var gene))
                 continue;
 
             if (host.Applied.Contains(id))
@@ -46,7 +56,7 @@ public sealed partial class GenomeExpressionSystem : EntitySystem
 
             if (natural)
             {
-                if (_effects.TryApplyEffects(uid, gene.Effects))
+                if (gene.Effects.Length == 0 || _effects.TryApplyEffects(uid, gene.Effects))
                     host.Applied.Add(id);
                 continue;
             }
@@ -56,7 +66,7 @@ public sealed partial class GenomeExpressionSystem : EntitySystem
 
             var seconds = _config.GetCVar(GeneticsCVars.IncubationSeconds);
             if (!float.IsFinite(seconds))
-                seconds = 60f;
+                seconds = 300f;
             host.Incubating[id] = TimeSpan.FromSeconds(Math.Max(0f, seconds));
         }
 
@@ -79,6 +89,9 @@ public sealed partial class GenomeExpressionSystem : EntitySystem
 
             foreach (var (id, remaining) in host.Incubating.ToArray())
             {
+                if (_held.TryGetValue(uid, out var held) && held.Contains(id))
+                    continue;
+
                 var next = remaining - TimeSpan.FromSeconds(frameTime);
                 if (next > TimeSpan.Zero)
                 {
@@ -87,18 +100,20 @@ public sealed partial class GenomeExpressionSystem : EntitySystem
                 }
 
                 if (!_genomes.HasGene(uid, id) ||
-                    !_prototypes.TryIndex(id, out var gene) || gene.Effects.Length == 0)
+                    !_prototypes.TryIndex(id, out var gene))
                 {
                     host.Incubating.Remove(id);
                     continue;
                 }
 
-                if (!_effects.TryApplyEffects(uid, gene.Effects))
+                if (gene.Effects.Length > 0 && !_effects.TryApplyEffects(uid, gene.Effects))
                     continue;
 
                 host.Applied.Add(id);
                 host.Incubating.Remove(id);
             }
         }
+
+        _held.Clear();
     }
 }

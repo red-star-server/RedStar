@@ -1,4 +1,6 @@
+using Content.Shared._RedStar.Genetics;
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._RedStar.Xenobiology.Components.Machines;
 
@@ -19,6 +21,9 @@ public sealed partial class GrowingVatComponent : Component
 
     [ViewVariables]
     public string? Recipe;
+
+    [ViewVariables]
+    public Dictionary<ProtoId<GenePrototype>, GeneState> InputStates = [];
 
     [ViewVariables]
     public TimeSpan Progress;

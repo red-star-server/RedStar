@@ -231,6 +231,27 @@ public sealed partial class GenomeSystem : EntitySystem
         return GenomeOperationResult.Success;
     }
 
+    public bool TryTransformGenes(EntityUid uid, IReadOnlySet<ProtoId<GenePrototype>> inputs,
+        ProtoId<GenePrototype> resultGene, GeneState resultState)
+    {
+        if (inputs.Count == 0 || inputs.Contains(resultGene) ||
+            GetComponent(uid, out var component) != GenomeOperationResult.Success ||
+            component!.Genes.ContainsKey(resultGene) ||
+            inputs.Any(id => !component.Genes.ContainsKey(id)) ||
+            ValidateGene(resultGene, resultState) != GenomeOperationResult.Success)
+            return false;
+
+        var genes = component.Genes.ToDictionary(entry => entry.Key, entry => entry.Value.Clone());
+        foreach (var id in inputs)
+        {
+            genes.Remove(id);
+        }
+
+        genes.Add(resultGene, resultState.Clone());
+
+        return ReplaceGenome(uid, component.GenomeId, genes) == GenomeOperationResult.Success;
+    }
+
     private static bool ValidState(GeneState state, GenePrototype gene) => gene.Kind switch
     {
         GeneKind.Presence => state.Allele is null && state.Number is null,

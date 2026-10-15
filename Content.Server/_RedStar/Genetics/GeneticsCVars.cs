@@ -6,5 +6,5 @@ namespace Content.Server._RedStar.Genetics;
 public sealed class GeneticsCVars
 {
     public static readonly CVarDef<float> IncubationSeconds =
-        CVarDef.Create("genetics.incubation_seconds", 60f, CVar.SERVERONLY);
+        CVarDef.Create("genetics.incubation_seconds", 300f, CVar.SERVERONLY);
 }

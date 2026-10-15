@@ -30,10 +30,17 @@ public sealed partial class GrowingVatSystem : EntitySystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedSolutionContainerSystem _solutions = default!;
     [Dependency] private GenomeSystem _genomes = default!;
+    [Dependency] private GenomeExpressionSystem _expression = default!;
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private IPrototypeManager _prototypes = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        UpdatesBefore.Add(typeof(GenomeExpressionSystem));
+    }
 
     [SubscribeLocalEvent]
     private void OnMapInit(Entity<GrowingVatComponent> ent, ref MapInitEvent args) =>
@@ -124,9 +131,24 @@ public sealed partial class GrowingVatSystem : EntitySystem
     private bool Eligible(EntityUid subject, GeneticMutationPrototype recipe, Solution mixture) =>
         !_genomes.HasGene(subject, recipe.ResultGene) &&
         _genomes.ValidateGene(recipe.ResultGene, new GeneState()) == GenomeOperationResult.Success &&
-        recipe.RequiredGenes.All(id => _genomes.HasGene(subject, id)) &&
+        recipe.RequiredGenes.Count > 0 &&
+        recipe.RequiredGenes.All(id => _genomes.HasGene(subject, id) && _expression.IsIncubating(subject, id)) &&
         recipe.RequiredReagents.All(entry => entry.Value > 0 &&
             mixture.GetTotalPrototypeQuantity(entry.Key.Id) >= entry.Value);
+
+    private bool InputsUnchanged(Entity<GrowingVatComponent> vat, EntityUid subject,
+        GeneticMutationPrototype recipe)
+    {
+        if (vat.Comp.InputStates.Count != recipe.RequiredGenes.Count ||
+            !_genomes.TryGetSnapshot(subject, out var snapshot) || snapshot is null)
+            return false;
+
+        var genes = snapshot.GetGenes();
+        return recipe.RequiredGenes.All(id =>
+            vat.Comp.InputStates.TryGetValue(id, out var original) &&
+            genes.TryGetValue(id, out var current) &&
+            original.Allele == current.Allele && original.Number == current.Number);
+    }
 
     private bool TrySpendReagents(Entity<SolutionComponent> container, GeneticMutationPrototype recipe)
     {
@@ -162,7 +184,7 @@ public sealed partial class GrowingVatSystem : EntitySystem
         container = default;
         if (vat.Comp.Recipe is not { } id || !_prototypes.TryIndex(id, out recipe) ||
             !_solutions.TryGetSolution(vat.Owner, vat.Comp.Solution, out var solution, out var mixture) ||
-            !Eligible(subject, recipe, mixture))
+            !Eligible(subject, recipe, mixture) || !InputsUnchanged(vat, subject, recipe))
             return false;
 
         container = solution.Value;
@@ -178,11 +200,14 @@ public sealed partial class GrowingVatSystem : EntitySystem
     private void TryStart(Entity<GrowingVatComponent> vat)
     {
         if (vat.Comp.Subject is not null || !this.IsPowered(vat.Owner, EntityManager) ||
-            !TryGetSubject(vat, out var subject) || !TryGetRecipe(vat, subject, out var recipe))
+            !TryGetSubject(vat, out var subject) || !TryGetRecipe(vat, subject, out var recipe) ||
+            !_genomes.TryGetSnapshot(subject, out var snapshot) || snapshot is null)
             return;
 
+        var genes = snapshot.GetGenes();
+        vat.Comp.InputStates = recipe!.RequiredGenes.ToDictionary(id => id, id => genes[id].Clone());
         vat.Comp.Subject = subject;
-        vat.Comp.Recipe = recipe!.ID;
+        vat.Comp.Recipe = recipe.ID;
         vat.Comp.Progress = TimeSpan.Zero;
         vat.Comp.TickAccumulator = 0f;
         UpdateVisual(vat, true);
@@ -192,6 +217,7 @@ public sealed partial class GrowingVatSystem : EntitySystem
     {
         vat.Comp.Subject = null;
         vat.Comp.Recipe = null;
+        vat.Comp.InputStates.Clear();
         vat.Comp.Progress = TimeSpan.Zero;
         vat.Comp.TickAccumulator = 0f;
         UpdateVisual(vat, false);
@@ -256,24 +282,29 @@ public sealed partial class GrowingVatSystem : EntitySystem
                 continue;
             }
 
-            // Recipes and chemistry are checked once per second, not every server tick.
-            component.TickAccumulator += frameTime;
-            if (component.TickAccumulator < 1f)
-                continue;
-            var elapsed = component.TickAccumulator;
-            component.TickAccumulator = 0f;
-
             if (!this.IsPowered(uid, EntityManager) ||
                 !TryGetActiveRecipe(vat, subject, out var recipe, out var solution))
             {
+                component.TickAccumulator = 0f;
                 UpdateVisual(vat, false);
                 continue;
             }
 
             UpdateVisual(vat, true);
+            component.TickAccumulator += frameTime;
+            if (component.TickAccumulator < 1f)
+            {
+                _expression.HoldIncubation(subject, recipe!.RequiredGenes);
+                continue;
+            }
+            var elapsed = component.TickAccumulator;
+            component.TickAccumulator = 0f;
             component.Progress += TimeSpan.FromSeconds(elapsed);
             if (component.Progress < recipe!.Duration)
+            {
+                _expression.HoldIncubation(subject, recipe.RequiredGenes);
                 continue;
+            }
 
             if (!TrySpendReagents(solution, recipe))
             {
@@ -284,7 +315,7 @@ public sealed partial class GrowingVatSystem : EntitySystem
             Cancel(vat);
             if (float.IsFinite(recipe.Chance) &&
                 _random.Prob(Math.Clamp(recipe.Chance, 0f, 1f)))
-                _genomes.SetGene(subject, recipe.ResultGene, new GeneState());
+                _genomes.TryTransformGenes(subject, recipe.RequiredGenes, recipe.ResultGene, new GeneState());
 
             Eject(vat, subject);
         }
