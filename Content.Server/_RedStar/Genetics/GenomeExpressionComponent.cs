@@ -20,22 +20,18 @@ public sealed partial class GenomeExpressionComponent : Component
 }
 
 /// <summary>
-/// Holds the acquired value and remaining game time for one gene.
+/// Holds the remaining game time for one acquired gene.
 /// </summary>
 [DataDefinition]
 public sealed partial class IncubatingGene
 {
     [DataField]
-    public GeneState Value = new();
-
-    [DataField]
     public TimeSpan Remaining;
 
     public IncubatingGene() { }
 
-    public IncubatingGene(GeneState value, TimeSpan remaining)
+    public IncubatingGene(TimeSpan remaining)
     {
-        Value = value.Clone();
         Remaining = remaining;
     }
 }

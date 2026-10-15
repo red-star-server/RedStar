@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Shared._RedStar.Genetics;
 using Content.Shared.EntityEffects;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
@@ -34,7 +33,7 @@ public sealed partial class GenomeExpressionSystem : EntitySystem
         host.InitialGenomeExpressed = true;
 
         var genes = genome.GetGenes();
-        foreach (var (id, state) in genes)
+        foreach (var (id, _) in genes)
         {
             if (!_prototypes.TryIndex(id, out var gene) || gene.Effects.Length == 0)
                 continue;
@@ -52,19 +51,18 @@ public sealed partial class GenomeExpressionSystem : EntitySystem
                 continue;
             }
 
-            if (host.Incubating.TryGetValue(id, out var pending) && SameValue(pending.Value, state)) 
+            if (host.Incubating.ContainsKey(id))
                 continue;
 
             var seconds = _config.GetCVar(GeneticsCVars.IncubationSeconds);
             if (!float.IsFinite(seconds))
                 seconds = 60f;
-            host.Incubating[id] = new IncubatingGene(state,
-                TimeSpan.FromSeconds(Math.Max(0f, seconds)));
+            host.Incubating[id] = new IncubatingGene(TimeSpan.FromSeconds(Math.Max(0f, seconds)));
         }
 
         foreach (var id in host.Incubating.Keys.ToArray())
         {
-            if (!genes.TryGetValue(id, out var state) || !SameValue(host.Incubating[id].Value, state))
+            if (!genes.ContainsKey(id))
                 host.Incubating.Remove(id);
         }
     }
@@ -85,23 +83,19 @@ public sealed partial class GenomeExpressionSystem : EntitySystem
                 if (pending.Remaining > TimeSpan.Zero)
                     continue;
 
-                if (!_genomes.TryGetGene(uid, id, out var current) || current is null ||
-                    !SameValue(current, pending.Value) ||
+                if (!_genomes.HasGene(uid, id) ||
                     !_prototypes.TryIndex(id, out var gene) || gene.Effects.Length == 0)
                 {
                     host.Incubating.Remove(id);
                     continue;
                 }
 
-                if (_effects.TryApplyEffects(uid, gene.Effects))
-                {
-                    host.Applied.Add(id);
-                    host.Incubating.Remove(id);
-                }
+                if (!_effects.TryApplyEffects(uid, gene.Effects))
+                    continue;
+
+                host.Applied.Add(id);
+                host.Incubating.Remove(id);
             }
         }
     }
-
-    private static bool SameValue(GeneState first, GeneState second) =>
-        first.Allele == second.Allele && first.Number == second.Number;
 }
