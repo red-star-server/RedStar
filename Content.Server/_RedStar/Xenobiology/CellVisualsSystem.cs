@@ -6,7 +6,7 @@ using Content.Shared._RedStar.Xenobiology.Visuals;
 
 namespace Content.Server._RedStar.Xenobiology;
 
-public sealed partial class SampleVisualsSystem : EntitySystem
+public sealed partial class CellVisualsSystem : EntitySystem
 {
     [Dependency] private SharedAppearanceSystem _appearance = default!;
 

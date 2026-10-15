@@ -160,7 +160,6 @@ public sealed partial class GrowingVatSystem : EntitySystem
 
     private bool Eligible(EntityUid subject, GeneticMutationPrototype recipe, Solution mixture) =>
         _genomes.CanTransformGenes(subject, recipe.RequiredGenes, recipe.ResultGene) &&
-        recipe.RequiredGenes.All(id => _genomes.IsRaw(subject, id)) &&
         recipe.RequiredReagents.All(entry => mixture.GetTotalPrototypeQuantity(entry.Key.Id) >= entry.Value);
 
     private void SpendReagents(Entity<SolutionComponent> container, GeneticMutationPrototype recipe)
