@@ -20,8 +20,8 @@ public sealed partial class GenomeSystem : EntitySystem
         if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
             return;
 
-        var clone = CopyComp(ent.Owner, args.CloneUid, ent.Comp);
-        NotifyChanged(args.CloneUid, clone.Genes.Where(gene => gene.Value == GeneStatus.Active).Select(gene => gene.Key).ToArray());
+        CopyComp(ent.Owner, args.CloneUid, ent.Comp);
+        NotifyChanged(args.CloneUid, []);
     }
 
     private void NotifyChanged(EntityUid uid, IReadOnlyList<ProtoId<GenePrototype>> activated)
@@ -46,7 +46,7 @@ public sealed partial class GenomeSystem : EntitySystem
         ent.Comp.Genes = genome.Genes.ToDictionary(id => id, _ => GeneStatus.Active);
         ent.Comp.NaturalGenes = new HashSet<ProtoId<GenePrototype>>(genome.Genes);
         ent.Comp.GenomeGenerated = true;
-        NotifyChanged(ent.Owner, genome.Genes.ToArray());
+        NotifyChanged(ent.Owner, []);
     }
 
     public bool TryGenerate(ProtoId<GenomePrototype> id, out GenomeSnapshot? genome)
