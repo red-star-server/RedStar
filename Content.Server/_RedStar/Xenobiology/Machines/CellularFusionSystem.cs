@@ -36,11 +36,11 @@ public sealed partial class CellularFusionSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnDishRemoved(Entity<CellularFusionComponent> ent, ref EntRemovedFromContainerMessage args)
     {
-        if (args.Container.ID == ent.Comp.DishSlot)
-        {
-            CancelSplice(ent);
-            UpdateUI(ent);
-        }
+        if (args.Container.ID != ent.Comp.DishSlot)
+            return;
+
+        CancelSplice(ent);
+        UpdateUI(ent);
     }
 
     [SubscribeLocalEvent]
@@ -81,8 +81,7 @@ public sealed partial class CellularFusionSystem : EntitySystem
         ent.Comp.SpliceSampleB = second;
         ent.Comp.SpliceDish = dish.Owner;
         ent.Comp.SpliceRevision = dish.Comp.Revision;
-        ent.Comp.SpliceDuration = TimeSpan.FromSeconds(ent.Comp.SpliceDelay);
-        ent.Comp.SpliceEndTime = _timing.CurTime + ent.Comp.SpliceDuration;
+        ent.Comp.SpliceEndTime = _timing.CurTime + TimeSpan.FromSeconds(ent.Comp.SpliceDelay);
         UpdateUI(ent);
     }
 
@@ -184,7 +183,6 @@ public sealed partial class CellularFusionSystem : EntitySystem
     private static void ResetSplice(CellularFusionComponent component)
     {
         component.SpliceEndTime = null;
-        component.SpliceDuration = TimeSpan.Zero;
         component.SpliceSampleA = null;
         component.SpliceSampleB = null;
         component.SpliceDish = null;
@@ -205,7 +203,7 @@ public sealed partial class CellularFusionSystem : EntitySystem
             hasDish ? dish.Comp.Revision : -1,
             hasDish ? GetNetEntity(dish.Owner) : null,
             ent.Comp.SpliceInProgress,
-            ent.Comp.SpliceDuration.TotalSeconds,
+            ent.Comp.SpliceDelay,
             remaining));
     }
 }

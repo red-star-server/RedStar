@@ -7,9 +7,6 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server._RedStar.Genetics;
 
-/// <summary>
-/// Validates and changes the contents of a physical genetic vial.
-/// </summary>
 public sealed partial class GeneticVialSystem : EntitySystem
 {
     [Dependency] private GenomeSystem _genomes = default!;
@@ -37,10 +34,6 @@ public sealed partial class GeneticVialSystem : EntitySystem
         return true;
     }
 
-    /// <summary>
-    /// Transfers a validated gene from a contained, stable sample into a vial.
-    /// Restores the vial if removing the sample gene unexpectedly fails.
-    /// </summary>
     public bool TryExtract(Entity<SampleContainerComponent> dish, BiologicalSample cell,
         Entity<GeneticVialComponent> vial, ProtoId<GenePrototype> id, GeneState state)
     {
@@ -51,7 +44,6 @@ public sealed partial class GeneticVialSystem : EntitySystem
             stored.Allele != state.Allele || stored.Number != state.Number || !CanAdd(vial, id, state))
             return false;
 
-        // All checks precede mutation. Both calls run synchronously on the server.
         if (!TryAdd(vial, id, state))
             return false;
         if (_samples.TryRemoveGene((dish.Owner, (SampleContainerComponent?) dish.Comp), cell, id))

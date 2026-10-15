@@ -13,25 +13,8 @@ public sealed partial class GenomeExpressionComponent : Component
     public HashSet<ProtoId<GenePrototype>> Applied = [];
 
     [DataField]
-    public Dictionary<ProtoId<GenePrototype>, IncubatingGene> Incubating = [];
+    public Dictionary<ProtoId<GenePrototype>, TimeSpan> Incubating = [];
 
     [DataField]
     public bool InitialGenomeExpressed;
-}
-
-/// <summary>
-/// Holds the remaining game time for one acquired gene.
-/// </summary>
-[DataDefinition]
-public sealed partial class IncubatingGene
-{
-    [DataField]
-    public TimeSpan Remaining;
-
-    public IncubatingGene() { }
-
-    public IncubatingGene(TimeSpan remaining)
-    {
-        Remaining = remaining;
-    }
 }

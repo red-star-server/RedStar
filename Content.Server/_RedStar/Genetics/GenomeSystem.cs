@@ -196,17 +196,6 @@ public sealed partial class GenomeSystem : EntitySystem
         return true;
     }
 
-    public bool TryGetGene(EntityUid uid, ProtoId<GenePrototype> id, out GeneState? state)
-    {
-        state = null;
-        if (GetComponent(uid, out var component) != GenomeOperationResult.Success ||
-            !component!.Genes.TryGetValue(id, out var stored))
-            return false;
-
-        state = stored.Clone();
-        return true;
-    }
-
     public bool HasGene(EntityUid uid, ProtoId<GenePrototype> id) =>
         GetComponent(uid, out var component) == GenomeOperationResult.Success && component!.Genes.ContainsKey(id);
 
@@ -253,13 +242,6 @@ public sealed partial class GenomeSystem : EntitySystem
 
     private static bool SameState(GeneState first, GeneState second) =>
         first.Allele == second.Allele && first.Number == second.Number;
-
-    /// <summary>
-    /// Replaces a complete genome only when the donor and recipient use the same scheme.
-    /// Individual genes may come from outside that scheme.
-    /// </summary>
-    public GenomeOperationResult ReplaceGenome(EntityUid uid, GenomeSnapshot snapshot) =>
-        ReplaceGenome(uid, snapshot.GenomeId, snapshot.GetGenes());
 
     private GenomeOperationResult ReplaceGenome(EntityUid uid, ProtoId<GenomePrototype> id,
         Dictionary<ProtoId<GenePrototype>, GeneState> genes)
@@ -322,86 +304,4 @@ public sealed partial class GenomeSystem : EntitySystem
         return result;
     }
 
-    public GenomeOperationResult CopyGenome(EntityUid source, EntityUid target)
-    {
-        var result = GetComponent(source, out var component);
-        return result == GenomeOperationResult.Success
-            ? ReplaceGenome(target, component!.GenomeId,
-                component.Genes.ToDictionary(entry => entry.Key, entry => entry.Value.Clone()))
-            : result;
-    }
-
-    /// <summary>
-    /// Each gene is independently taken from one parent; an absent parental gene stays absent
-    /// when that parent is selected. Foreign genes follow the same rule.
-    /// </summary>
-    public GenomeOperationResult CreateOffspring(GenomeSnapshot first, GenomeSnapshot second,
-        ProtoId<GenomePrototype> childId, out GenomeSnapshot? child)
-    {
-        child = null;
-        if (first.GenomeId != second.GenomeId || first.GenomeId != childId)
-            return GenomeOperationResult.IncompatibleScheme;
-        var result = CheckScheme(childId);
-        if (result != GenomeOperationResult.Success)
-            return result;
-
-        var firstGenes = first.GetGenes();
-        var secondGenes = second.GetGenes();
-        var genes = new Dictionary<ProtoId<GenePrototype>, GeneState>();
-        foreach (var id in firstGenes.Keys.Concat(secondGenes.Keys).Distinct())
-        {
-            firstGenes.TryGetValue(id, out var a);
-            secondGenes.TryGetValue(id, out var b);
-            if (!_prototypes.TryIndex(id, out var gene))
-                return GenomeOperationResult.UnknownGene;
-            if (a is not null && !ValidState(a, gene) || b is not null && !ValidState(b, gene))
-                return GenomeOperationResult.InvalidValue;
-
-            if ((_random.Prob(0.5f) ? a : b) is { } inherited)
-                genes.Add(id, inherited);
-        }
-
-        child = new GenomeSnapshot(childId, genes);
-        return GenomeOperationResult.Success;
-    }
-
-    /// <summary>
-    /// Toggles a presence gene or changes the value of a present allele or number gene.
-    /// Valued genes must be added explicitly before they can mutate.
-    /// </summary>
-    public GenomeOperationResult MutateGene(EntityUid uid, ProtoId<GenePrototype> id)
-    {
-        var result = GetComponent(uid, out var component);
-        if (result != GenomeOperationResult.Success)
-            return result;
-        if (!_prototypes.TryIndex(id, out var gene))
-            return GenomeOperationResult.UnknownGene;
-        if (gene.Kind == GeneKind.Presence)
-            return component!.Genes.ContainsKey(id) ? RemoveGene(uid, id) : SetGene(uid, id, new GeneState());
-        if (!component!.Genes.TryGetValue(id, out var stored))
-            return GenomeOperationResult.MissingGene;
-        if (!ValidState(stored, gene))
-            return GenomeOperationResult.InvalidValue;
-
-        var state = stored.Clone();
-        switch (gene.Kind)
-        {
-            case GeneKind.Allele:
-                var alternatives = gene.Alleles.Where(allele => allele != state.Allele).ToArray();
-                if (alternatives.Length == 0)
-                    return GenomeOperationResult.InvalidValue;
-                state.Allele = alternatives[_random.Next(alternatives.Length)];
-                break;
-            case GeneKind.Number:
-                if (gene.Minimum == gene.Maximum)
-                    return GenomeOperationResult.InvalidValue;
-                var value = state.Number!.Value;
-                state.Number = value == gene.Minimum ? value + 1 :
-                    value == gene.Maximum ? value - 1 :
-                    value + (_random.Prob(0.5f) ? 1 : -1);
-                break;
-        }
-
-        return SetGene(uid, id, state);
-    }
 }

@@ -47,7 +47,6 @@
                 <lab:SequencerAssemblyControl Name="Assembly" Margin="8 4 8 0" HorizontalExpand="True" VerticalExpand="True" />
                 <PanelContainer StyleClasses="PanelDark" HorizontalExpand="True" MinHeight="38">
                     <BoxContainer Orientation="Horizontal" Margin="10 5 10 5" SeparationOverride="8">
-                        <Label Name="ResultLabel" HorizontalExpand="True" />
                         <Button Name="ResetButton" Text="{Loc 'cell-sequencer-reset'}" />
                         <Button Name="DecodeButton" Text="{Loc 'cell-sequencer-submit'}" />
                         <Button Name="ExtractButton" Text="{Loc 'cell-sequencer-extract'}" />

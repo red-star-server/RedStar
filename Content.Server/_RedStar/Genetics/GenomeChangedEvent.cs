@@ -16,7 +16,6 @@ public enum GenomeOperationResult : byte
     MissingGenome,
     UnknownScheme,
     UnknownGene,
-    MissingGene,
     InvalidValue,
     IncompatibleScheme,
     Uninitialized

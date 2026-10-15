@@ -4,10 +4,6 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared._RedStar.Genetics.Prototypes;
 
-/// <summary>
-/// Genetic mutation recipe. Machines provide a suitable environment; the recipe defines
-/// which genes and total reagent costs are needed and what new presence gene can appear.
-/// </summary>
 [Prototype]
 public sealed partial class GeneticMutationPrototype : IPrototype
 {

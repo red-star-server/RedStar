@@ -5,9 +5,6 @@ using Robust.Client.UserInterface.XAML;
 
 namespace Content.Client._RedStar.Xenobiology.UI;
 
-/// <summary>
-/// Displays the properties of a sample in xenobiology machine windows.
-/// </summary>
 [GenerateTypedNameReferences]
 public sealed partial class CellInfoControl : Control
 {
@@ -26,10 +23,6 @@ public sealed partial class CellInfoControl : Control
 
     public void SetSample(SampleView sample)
     {
-        CellStabilityLabel.Visible = true;
-        TraitsLabel.Visible = true;
-        CellTraitsText.Visible = true;
-
         CellNameLabel.Text = sample.Name;
         CellStabilityLabel.Text = Loc.GetString($"{_labelPrefix}-cell-stability-label",
             ("stability", Math.Round(sample.Stability * 100f, 3)));

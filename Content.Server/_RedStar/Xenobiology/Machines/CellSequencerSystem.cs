@@ -206,7 +206,7 @@ public sealed partial class CellSequencerSystem : EntitySystem
         {
             Reset(ent.Comp);
             _userInterface.SetUiState(ent.Owner, CellSequencerUiKey.Key,
-                new CellSequencerUiState([], -1, null, 0, -1, -1, [], null, -1));
+                new CellSequencerUiState([], -1, null, -1, -1, [], null, -1));
             return;
         }
 
@@ -221,7 +221,7 @@ public sealed partial class CellSequencerSystem : EntitySystem
                     cell.Stability >= 0.5f ? vial : null)).ToArray()
                 : [])).ToArray();
         _userInterface.SetUiState(ent.Owner, CellSequencerUiKey.Key,
-            new CellSequencerUiState(samples, dish.Comp.Revision, GetNetEntity(dish.Owner), 0,
+            new CellSequencerUiState(samples, dish.Comp.Revision, GetNetEntity(dish.Owner),
                 ent.Comp.FeedbackSample, ent.Comp.FeedbackMarker, ent.Comp.FeedbackOrder,
                 vial is { } present ? GetNetEntity(present.Owner) : null, vial?.Comp.Revision ?? -1));
     }

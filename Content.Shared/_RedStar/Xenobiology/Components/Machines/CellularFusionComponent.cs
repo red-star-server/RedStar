@@ -16,9 +16,6 @@ public sealed partial class CellularFusionComponent : Component
     public TimeSpan? SpliceEndTime;
 
     [ViewVariables]
-    public TimeSpan SpliceDuration;
-
-    [ViewVariables]
     public BiologicalSample? SpliceSampleA;
 
     [ViewVariables]

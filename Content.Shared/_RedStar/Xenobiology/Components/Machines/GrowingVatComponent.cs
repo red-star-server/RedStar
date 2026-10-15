@@ -1,9 +1,5 @@
 namespace Content.Shared._RedStar.Xenobiology.Components.Machines;
 
-/// <summary>
-/// Holds the cultivation timer. Genes, chemical requirements and mutation odds
-/// belong to GeneticMutationPrototype, not to the machine.
-/// </summary>
 [RegisterComponent]
 public sealed partial class GrowingVatComponent : Component
 {

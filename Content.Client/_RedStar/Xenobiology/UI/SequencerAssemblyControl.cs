@@ -7,11 +7,6 @@ using Robust.Shared.Input;
 
 namespace Content.Client._RedStar.Xenobiology.UI;
 
-/// <summary>
-/// A single canvas for placing sequencing reads. The whole read is draggable; dropping
-/// a placed read outside the assembly returns it to the tray. All indices refer to
-/// the server-provided, shuffled fragment array.
-/// </summary>
 public sealed class SequencerAssemblyControl : Control
 {
     private static readonly Color Back = Color.FromHex("#101923");
@@ -77,7 +72,7 @@ public sealed class SequencerAssemblyControl : Control
 
     public bool HasPlaced => _slots.Any(x => x.HasValue);
 
-    public bool Complete => OrderedFragments.Length == 4;
+    public bool Complete => _slots.All(slot => slot.HasValue);
 
     public void SetFeedback(int[] order)
     {
@@ -115,24 +110,6 @@ public sealed class SequencerAssemblyControl : Control
             _slots[position] = match;
             used[match] = true;
             expected = _fragments[match][3..];
-        }
-    }
-
-    public bool AllOverlaps
-    {
-        get
-        {
-            if (_fragments.Length != 4 || _prefix.Length < 4 || !_slots[0].HasValue ||
-                _fragments.Any(fragment => fragment.Length < 7) ||
-                _fragments[_slots[0]!.Value][..4] != _prefix[..4])
-                return false;
-            for (var i = 1; i < _slots.Length; i++)
-            {
-                if (!_slots[i].HasValue ||
-                    _fragments[_slots[i - 1]!.Value][3..] != _fragments[_slots[i]!.Value][..4])
-                    return false;
-            }
-            return true;
         }
     }
 
@@ -251,8 +228,6 @@ public sealed class SequencerAssemblyControl : Control
         if (value.Length == 0)
             return;
 
-        // Empty board slots use a two-character ordinal; reads contain seven bases.
-        // Never slice a string beyond its length while drawing a UI frame.
         var first = value[..Math.Min(4, value.Length)];
         var second = value.Length > 4 ? value[4..] : string.Empty;
         Text(handle, first, pos / UIScale + new Vector2(15, 20), subdued ? Muted : Color.White);

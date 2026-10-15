@@ -1,5 +1,4 @@
-﻿# Temporary test recipe. It is deliberately not configured on the vat itself.
-- type: geneticMutation
+﻿- type: geneticMutation
   id: TestVatNoSlip
   requiredGenes:
   - NightVision

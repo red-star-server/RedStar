@@ -57,7 +57,7 @@ public sealed partial class GenomeExpressionSystem : EntitySystem
             var seconds = _config.GetCVar(GeneticsCVars.IncubationSeconds);
             if (!float.IsFinite(seconds))
                 seconds = 60f;
-            host.Incubating[id] = new IncubatingGene(TimeSpan.FromSeconds(Math.Max(0f, seconds)));
+            host.Incubating[id] = TimeSpan.FromSeconds(Math.Max(0f, seconds));
         }
 
         foreach (var id in host.Incubating.Keys.ToArray())
@@ -77,11 +77,14 @@ public sealed partial class GenomeExpressionSystem : EntitySystem
             if (metadata.EntityPaused || host.Incubating.Count == 0)
                 continue;
 
-            foreach (var (id, pending) in host.Incubating.ToArray())
+            foreach (var (id, remaining) in host.Incubating.ToArray())
             {
-                pending.Remaining -= TimeSpan.FromSeconds(frameTime);
-                if (pending.Remaining > TimeSpan.Zero)
+                var next = remaining - TimeSpan.FromSeconds(frameTime);
+                if (next > TimeSpan.Zero)
+                {
+                    host.Incubating[id] = next;
                     continue;
+                }
 
                 if (!_genomes.HasGene(uid, id) ||
                     !_prototypes.TryIndex(id, out var gene) || gene.Effects.Length == 0)

@@ -7,10 +7,6 @@ using Robust.Shared.Input;
 
 namespace Content.Client._RedStar.Xenobiology.UI;
 
-/// <summary>
-/// A compact, clickable genome track. Segments show observed loci, not invented
-/// genetic relationships. The visual code is intentionally independent of UI text.
-/// </summary>
 public sealed class SequencerGenomeControl : Control
 {
     private static readonly Color[] Palette =
@@ -83,7 +79,6 @@ public sealed class SequencerGenomeControl : Control
                 new Vector2(x + 8 * scale, center + 8 * scale), tint);
             handle.DrawLine(new Vector2(x - 8 * scale, center + 8 * scale),
                 new Vector2(x + 8 * scale, center - 8 * scale), tint);
-            // A single compact glyph: no floating status ring above the locus.
             var label = marker.FamilyCode.Length >= 4 ? marker.FamilyCode[..4] : marker.FamilyCode;
             handle.DrawString(_font, new Vector2(x - 20 * scale, 75 * scale), label, Color.White);
         }

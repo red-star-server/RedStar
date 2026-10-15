@@ -6,18 +6,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared._RedStar.Xenobiology.Systems;
 
-/// <summary>
-/// Manages samples, transfers, revisions and change notifications.
-/// </summary>
-/// <seealso cref="SampleContainerComponent"/>
-/// <seealso cref="SampleGenerationComponent"/>
-/// <seealso cref="SharedCellVisualsSystem"/>
 [PublicAPI]
 public abstract partial class SharedSampleSystem : EntitySystem
 {
-    /// <summary>
-    /// Adds a new <see cref="BiologicalSample"/> instance to the container.
-    /// </summary>
     public bool AddSample(Entity<SampleContainerComponent?> ent, BiologicalSample sample)
     {
         if (!Resolve(ent, ref ent.Comp) || ent.Comp.Samples.Count >= ent.Comp.MaxSamples)
@@ -32,9 +23,6 @@ public abstract partial class SharedSampleSystem : EntitySystem
         return true;
     }
 
-    /// <summary>
-    /// Replaces two distinct samples with one result and notifies listeners once.
-    /// </summary>
     public bool ReplaceSamples(Entity<SampleContainerComponent?> ent, BiologicalSample first, BiologicalSample second, BiologicalSample result)
     {
         if (!Resolve(ent, ref ent.Comp) || ReferenceEquals(first, second) ||
@@ -51,9 +39,6 @@ public abstract partial class SharedSampleSystem : EntitySystem
         return true;
     }
 
-    /// <summary>
-    /// Removes one gene from a contained sample and notifies observers once.
-    /// </summary>
     public bool TryRemoveGene(Entity<SampleContainerComponent?> ent, BiologicalSample sample, ProtoId<GenePrototype> id)
     {
         if (!Resolve(ent, ref ent.Comp) || !ent.Comp.Samples.Contains(sample) || !sample.TryRemoveGene(id))
@@ -64,9 +49,6 @@ public abstract partial class SharedSampleSystem : EntitySystem
         return true;
     }
 
-    /// <summary>
-    /// Reduces contained sample stability and notifies observers only on change.
-    /// </summary>
     public bool TryReduceStability(Entity<SampleContainerComponent?> ent, BiologicalSample sample, float amount)
     {
         if (!Resolve(ent, ref ent.Comp) || !ent.Comp.Samples.Contains(sample) ||
@@ -78,9 +60,6 @@ public abstract partial class SharedSampleSystem : EntitySystem
         return true;
     }
 
-    /// <summary>
-    /// Remove all <see cref="BiologicalSample"/> instances from the container.
-    /// </summary>
     public void ClearSamples(Entity<SampleContainerComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp) || ent.Comp.Empty)
@@ -91,9 +70,6 @@ public abstract partial class SharedSampleSystem : EntitySystem
         RaiseLocalEvent(ent, new SampleContainerChangedEvent());
     }
 
-    /// <summary>
-    /// Moves the first sample from one container to another without an intermediate notification.
-    /// </summary>
     public bool MoveFirstSample(Entity<SampleContainerComponent?> source, Entity<SampleContainerComponent?> destination)
     {
         if (source.Owner == destination.Owner ||

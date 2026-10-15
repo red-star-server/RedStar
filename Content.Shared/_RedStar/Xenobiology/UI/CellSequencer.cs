@@ -27,13 +27,12 @@ public sealed class SequencerSampleView(SampleView sample, SequencerMarkerView[]
 
 [Serializable, NetSerializable]
 public sealed class CellSequencerUiState(SequencerSampleView[] samples, int dishRevision, NetEntity? dish,
-    double retrySeconds, int feedbackSample, int feedbackMarker, int[] feedbackOrder,
+    int feedbackSample, int feedbackMarker, int[] feedbackOrder,
     NetEntity? vial, int vialRevision) : BoundUserInterfaceState
 {
     public readonly SequencerSampleView[] Samples = samples;
     public readonly int DishRevision = dishRevision;
     public readonly NetEntity? Dish = dish;
-    public readonly double RetrySeconds = retrySeconds;
     public readonly int FeedbackSample = feedbackSample;
     public readonly int FeedbackMarker = feedbackMarker;
     public readonly int[] FeedbackOrder = feedbackOrder;

@@ -7,9 +7,6 @@ using Robust.Client.UserInterface.XAML;
 
 namespace Content.Client._RedStar.Xenobiology.UI;
 
-/// <summary>
-/// Displays one dish of samples and optional comparison from sanitized BUI state.
-/// </summary>
 [GenerateTypedNameReferences]
 public sealed partial class CellSequencerWindow : FancyWindow
 {
@@ -227,6 +224,5 @@ public sealed partial class CellSequencerWindow : FancyWindow
         ExtractButton.Disabled = _state is null || _primary < 0 || _marker < 0 ||
             _marker >= _state.Samples[_primary].Markers.Length ||
             !_state.Samples[_primary].Markers[_marker].Extractable;
-        ResultLabel.Text = string.Empty;
     }
 }
