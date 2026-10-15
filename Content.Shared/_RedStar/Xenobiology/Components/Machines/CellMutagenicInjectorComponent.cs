@@ -1,4 +1,3 @@
-using Robust.Shared.GameStates;
 using Robust.Shared.Audio;
 
 namespace Content.Shared._RedStar.Xenobiology.Components.Machines;
@@ -6,7 +5,7 @@ namespace Content.Shared._RedStar.Xenobiology.Components.Machines;
 /// <summary>
 /// Injects genetic material from a vial into a specimen.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
+[RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class CellMutagenicInjectorComponent : Component
 {
     [DataField]

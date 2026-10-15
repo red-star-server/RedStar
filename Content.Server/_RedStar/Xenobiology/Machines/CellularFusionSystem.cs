@@ -132,9 +132,11 @@ public sealed partial class CellularFusionSystem : EntitySystem
             return;
         }
 
-        var result = new BiologicalSample(SharedSampleSystem.GetStabilizedColor(first, second),
-            first.Name,
-            SharedSampleSystem.GetStabilizedStability(first, second), genome);
+        var max = Math.Max(first.Stability, second.Stability);
+        var min = Math.Min(first.Stability, second.Stability);
+        var stability = Math.Min(1f, max + (1f - max) * (0.08f + 0.04f * min));
+        var result = new BiologicalSample(Color.InterpolateBetween(first.Color, second.Color, 0.5f),
+            first.Name, stability, genome);
         ResetSplice(ent.Comp);
         if (!_samples.ReplaceSamples((dish.Owner, (SampleContainerComponent?) dish.Comp), first, second, result))
         {

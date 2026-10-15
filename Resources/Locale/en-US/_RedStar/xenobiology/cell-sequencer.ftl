@@ -10,7 +10,6 @@ cell-sequencer-sample-stability = Stability: {$stability}%
 cell-sequencer-known-detail = {$name} · {$value}
 cell-sequencer-status-known = DECODED
 cell-sequencer-status-unknown = UNKNOWN
-cell-sequencer-retry = Calibrating: {$seconds}s
 cell-sequencer-present = Present
 cell-sequencer-incorrect = Sequence assembly could not be verified.
 cell-sequencer-discovered = Decoded: {$gene}.

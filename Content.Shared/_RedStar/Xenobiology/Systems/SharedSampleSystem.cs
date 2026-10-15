@@ -1,12 +1,10 @@
 using Content.Shared._RedStar.Genetics;
 using Content.Shared._RedStar.Xenobiology.Components.Container;
 using Content.Shared._RedStar.Xenobiology.Events;
-using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared._RedStar.Xenobiology.Systems;
 
-[PublicAPI]
 public abstract partial class SharedSampleSystem : EntitySystem
 {
     public bool AddSample(Entity<SampleContainerComponent?> ent, BiologicalSample sample)

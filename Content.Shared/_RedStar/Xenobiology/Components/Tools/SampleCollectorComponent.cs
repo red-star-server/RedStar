@@ -1,9 +1,8 @@
 using Content.Shared.Damage;
-using Robust.Shared.GameStates;
 
 namespace Content.Shared._RedStar.Xenobiology.Components.Tools;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent]
 public sealed partial class SampleCollectorComponent : Component
 {
     [DataField, ViewVariables(VVAccess.ReadWrite)]

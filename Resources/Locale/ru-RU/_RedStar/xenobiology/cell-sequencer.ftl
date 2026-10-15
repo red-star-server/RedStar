@@ -10,7 +10,6 @@ cell-sequencer-sample-stability = Стабильность: {$stability}%
 cell-sequencer-known-detail = {$name} · {$value}
 cell-sequencer-status-known = РАСШИФРОВАНО
 cell-sequencer-status-unknown = НЕИЗВЕСТНО
-cell-sequencer-retry = Калибровка: {$seconds} с
 cell-sequencer-present = Присутствует
 cell-sequencer-incorrect = Сборка последовательности не подтверждена.
 cell-sequencer-discovered = Расшифровано: {$gene}.
