@@ -161,6 +161,7 @@ public sealed partial class MutagenicInjectorSystem : EntitySystem
         }
 
         _vials.Clear((vialUid, vialComponent));
+        CancelInjection(ent);
         _storage.OpenStorage(ent.Owner);
         _popup.PopupEntity(Loc.GetString("mutagenic-injector-success", ("genes", changed)), ent, PopupType.Medium);
     }
