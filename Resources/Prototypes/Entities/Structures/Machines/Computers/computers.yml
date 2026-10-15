@@ -748,7 +748,7 @@
 
 - type: entity
   parent: BaseComputerAiAccess
-  id: computerBodyScanner
+  id: ComputerBodyScanner
   name: body scanner computer
   description: A body scanner.
   components:
