@@ -9,6 +9,12 @@ public sealed partial class CellularFusionComponent : Component
     [DataField]
     public TimeSpan SpliceDelay = TimeSpan.FromSeconds(5);
 
+    [DataField]
+    public float BaseStabilityGain = 0.08f;
+
+    [DataField]
+    public float DonorStabilityGain = 0.04f;
+
     [ViewVariables]
     public bool SpliceInProgress => SpliceEndTime != null;
 
@@ -16,10 +22,10 @@ public sealed partial class CellularFusionComponent : Component
     public TimeSpan? SpliceEndTime;
 
     [ViewVariables]
-    public BiologicalSample? SpliceSampleA;
+    public int? SpliceSampleA;
 
     [ViewVariables]
-    public BiologicalSample? SpliceSampleB;
+    public int? SpliceSampleB;
 
     [ViewVariables]
     public EntityUid? SpliceDish;

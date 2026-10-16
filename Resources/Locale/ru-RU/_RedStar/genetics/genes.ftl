@@ -14,6 +14,3 @@ gene-Reform-name = Восстановление формы
 gene-MessyDrinker-name = Неаккуратное питьё
 gene-ParrotSpeech-name = Попугайская речь
 gene-Bleating-name = Блеяние
-gene-MonkeyCoatPigment-name = Пигмент шерсти
-gene-MonkeyMetabolicRate-name = Скорость обмена веществ
-gene-MonkeySparseFur-name = Редкая шерсть

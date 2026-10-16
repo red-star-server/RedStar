@@ -1,6 +1,5 @@
 using Content.Server._RedStar.Xenobiology;
 using Content.Shared._RedStar.Genetics;
-using Content.Shared._RedStar.Xenobiology;
 using Content.Shared._RedStar.Xenobiology.Components.Container;
 using Robust.Shared.Prototypes;
 
@@ -18,10 +17,10 @@ public sealed partial class GeneticVialSystem : EntitySystem
     public bool CanAdd(Entity<GeneticVialComponent> vial, ProtoId<GenePrototype> id) =>
         !vial.Comp.Genes.Contains(id);
 
-    public bool TryExtract(Entity<SampleContainerComponent> dish, BiologicalSample sample,
+    public bool TryExtract(Entity<SampleContainerComponent> dish, int sampleId,
         Entity<GeneticVialComponent> vial, ProtoId<GenePrototype> id)
     {
-        if (!dish.Comp.Samples.Contains(sample) || !sample.HasValidStability ||
+        if (dish.Comp.Samples.Find(sample => sample.Id == sampleId) is not { } sample ||
             !_prototypes.TryIndex(id, out var gene) || sample.Stability < gene.MinimumStability ||
             sample.GetGenome() is not { } genome || !genome.Genes.Contains(id) || !CanAdd(vial, id))
             return false;
@@ -29,7 +28,12 @@ public sealed partial class GeneticVialSystem : EntitySystem
         // Sample observers must see the extracted gene in the vial when rebuilding the UI.
         vial.Comp.Genes.Add(id);
         vial.Comp.Revision++;
-        _samples.TryRemoveGene((dish.Owner, (SampleContainerComponent?) dish.Comp), sample, id);
+        if (!_samples.TryRemoveGene((dish.Owner, (SampleContainerComponent?) dish.Comp), sampleId, id))
+        {
+            vial.Comp.Genes.Remove(id);
+            vial.Comp.Revision++;
+            return false;
+        }
         UpdateVisual(vial);
         return true;
     }

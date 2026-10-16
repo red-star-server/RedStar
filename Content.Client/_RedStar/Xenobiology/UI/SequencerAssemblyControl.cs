@@ -26,6 +26,7 @@ public sealed class SequencerAssemblyControl : Control
     private Vector2 _cursor;
     private bool _held;
     private bool _feedback;
+    private bool[] _matches = [];
     private bool _decoded;
     public bool IsDecoded => _decoded;
 
@@ -77,9 +78,11 @@ public sealed class SequencerAssemblyControl : Control
 
     public bool Complete => _slots.Length > 0 && _slots.All(slot => slot.HasValue);
 
-    public void SetFeedback(int[] order)
+    public void SetFeedback(int[] order, bool[] matches)
     {
-        _feedback = _decoded || order.Length == _slots.Length && OrderedFragments.SequenceEqual(order);
+        _feedback = order.Length == _slots.Length && matches.Length == Math.Max(0, _slots.Length - 1) &&
+            OrderedFragments.SequenceEqual(order);
+        _matches = matches;
     }
 
     /// <summary>
@@ -212,10 +215,10 @@ public sealed class SequencerAssemblyControl : Control
             var cell = _slots[i];
             var fill = cell.HasValue ? Card : Back;
             DrawTile(handle, pos, fill, cell is { } index ? _fragments[index] : $"{i + 1:00}", !cell.HasValue);
-            if (!_feedback || i <= 0 || cell is not { } current || _slots[i - 1] is not { } previous)
+            if (!_feedback || i <= 0 || cell is null || _slots[i - 1] is null)
                 continue;
 
-            var matches = _fragments[previous][SequencerPuzzle.Step..] == _fragments[current][..SequencerPuzzle.Overlap];
+            var matches = _decoded || _matches[i - 1];
             handle.DrawRect(new UIBox2(pos.X - 8 * UIScale, pos.Y + 13 * UIScale,
                 pos.X - 4 * UIScale, pos.Y + 39 * UIScale), matches ? Good : Bad);
         }

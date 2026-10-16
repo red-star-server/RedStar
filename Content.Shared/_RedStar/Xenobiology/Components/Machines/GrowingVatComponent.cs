@@ -25,7 +25,7 @@ public sealed partial class GrowingVatComponent : Component
     [ViewVariables, AutoPausedField]
     public TimeSpan? EndTime;
 
-    public bool Completing;
+    public bool NeedsEvaluation = true;
 
     [ViewVariables]
     public bool Processing;

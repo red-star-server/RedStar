@@ -12,8 +12,11 @@ public sealed partial class GenePrototype : IPrototype
     [DataField]
     public int Tier = 1;
 
-    public int FragmentCount => Tier + 3;
-    public float MinimumStability => (40 + Tier * 10) / 100f;
+    [DataField]
+    public int FragmentCount = 4;
+
+    [DataField]
+    public float MinimumStability = 0.5f;
 
     [DataField]
     public EntityEffect[] Effects = [];

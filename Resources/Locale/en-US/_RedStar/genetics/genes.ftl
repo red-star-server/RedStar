@@ -14,6 +14,3 @@ gene-Reform-name = Reform
 gene-MessyDrinker-name = Messy Drinker
 gene-ParrotSpeech-name = Parrot Speech
 gene-Bleating-name = Bleating
-gene-MonkeyCoatPigment-name = Coat Pigment
-gene-MonkeyMetabolicRate-name = Metabolic Rate
-gene-MonkeySparseFur-name = Sparse Fur

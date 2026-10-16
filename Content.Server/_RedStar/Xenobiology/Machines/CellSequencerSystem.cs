@@ -31,7 +31,7 @@ public sealed partial class CellSequencerSystem : EntitySystem
     private readonly HashSet<ProtoId<GenePrototype>> _decoded = [];
     private readonly Dictionary<ProtoId<GenePrototype>, Puzzle> _puzzles = [];
     private sealed record Puzzle(string FamilyCode, string[] Fragments, int[] Order);
-    private const float IncorrectStabilityCost = 0.1f;
+    private const int MaximumPuzzleAttempts = 4096;
 
     public override void Initialize()
     {
@@ -55,7 +55,7 @@ public sealed partial class CellSequencerSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnRemoved(Entity<CellSequencerComponent> ent, ref EntRemovedFromContainerMessage args)
     {
-        ClearFeedback(ent.Comp);
+
         UpdateUI(ent);
     }
 
@@ -106,15 +106,17 @@ public sealed partial class CellSequencerSystem : EntitySystem
             return;
         if (Enumerable.Range(0, count).Any(i => puzzle.Order[order[i]] != i))
         {
-            ent.Comp.FeedbackSample = args.SampleId;
-            ent.Comp.FeedbackFamily = args.Family;
-            ent.Comp.FeedbackOrder = order.ToArray();
-            if (!_samples.TryReduceStability((dish.Owner, (SampleContainerComponent?) dish.Comp), sample!, IncorrectStabilityCost))
+            var matches = Enumerable.Range(1, count - 1).Select(i =>
+                puzzle.Fragments[order[i - 1]][SequencerPuzzle.Step..] ==
+                puzzle.Fragments[order[i]][..SequencerPuzzle.Overlap]).ToArray();
+            _userInterface.ServerSendUiMessage(ent.Owner, CellSequencerUiKey.Key,
+                new CellSequencerFeedbackMessage(args.SampleId, args.Family, order, matches), args.Actor);
+            if (!_samples.TryReduceStability((dish.Owner, (SampleContainerComponent?) dish.Comp), args.SampleId, ent.Comp.IncorrectStabilityCost))
                 UpdateUI(ent);
             _popup.PopupEntity(Loc.GetString("cell-sequencer-incorrect"), ent, PopupType.MediumCaution);
             return;
         }
-        ClearFeedback(ent.Comp);
+
         _decoded.Add(id);
         _popup.PopupEntity(Loc.GetString("cell-sequencer-discovered", ("gene", Loc.GetString($"gene-{id}-name"))),
             ent, PopupType.Medium);
@@ -131,8 +133,8 @@ public sealed partial class CellSequencerSystem : EntitySystem
         if (!TryGetMarker(ent, args.SampleId, args.Family, out var dish, out var sample, out var id) ||
             !_decoded.Contains(id) || !TryGetVial(ent, out var vial) || args.Vial != GetNetEntity(vial.Owner))
             return;
-        ClearFeedback(ent.Comp);
-        if (!_vials.TryExtract(dish, sample!, vial, id))
+
+        if (!_vials.TryExtract(dish, args.SampleId, vial, id))
             UpdateUI(ent);
     }
 
@@ -156,13 +158,6 @@ public sealed partial class CellSequencerSystem : EntitySystem
         return true;
     }
 
-    private static void ClearFeedback(CellSequencerComponent component)
-    {
-        component.FeedbackSample = -1;
-        component.FeedbackFamily = string.Empty;
-        component.FeedbackOrder = [];
-    }
-
     private void UpdateUI(Entity<CellSequencerComponent> ent)
     {
         if (TerminatingOrDeleted(ent))
@@ -170,7 +165,7 @@ public sealed partial class CellSequencerSystem : EntitySystem
         if (!this.IsPowered(ent.Owner, EntityManager) || !TryGetDish(ent, out var dish))
         {
             _userInterface.SetUiState(ent.Owner, CellSequencerUiKey.Key,
-                new CellSequencerUiState([], null, -1, string.Empty, [], null));
+                new CellSequencerUiState([], null, null));
             return;
         }
         Entity<GeneticVialComponent>? vial = TryGetVial(ent, out var insertedVial) ? insertedVial : null;
@@ -180,8 +175,8 @@ public sealed partial class CellSequencerSystem : EntitySystem
                     .Select(id => Marker(id, sample.Stability, vial)).ToArray()
                 : [])).ToArray();
         _userInterface.SetUiState(ent.Owner, CellSequencerUiKey.Key,
-            new CellSequencerUiState(samples, GetNetEntity(dish.Owner), ent.Comp.FeedbackSample,
-                ent.Comp.FeedbackFamily, ent.Comp.FeedbackOrder, vial is { } present ? GetNetEntity(present.Owner) : null));
+            new CellSequencerUiState(samples, GetNetEntity(dish.Owner),
+                vial is { } present ? GetNetEntity(present.Owner) : null));
     }
 
     private SequencerMarkerView Marker(ProtoId<GenePrototype> id, float stability, Entity<GeneticVialComponent>? vial)
@@ -200,7 +195,7 @@ public sealed partial class CellSequencerSystem : EntitySystem
             return cached;
         var count = _prototypes.Index(id).FragmentCount;
         var length = SequencerPuzzle.Overlap + SequencerPuzzle.Step * count;
-        while (true)
+        for (var attempt = 0; attempt < MaximumPuzzleAttempts; attempt++)
         {
             var sequence = GenerateSequence(length);
             var family = sequence[..SequencerPuzzle.FamilyLength];
@@ -215,6 +210,8 @@ public sealed partial class CellSequencerSystem : EntitySystem
             _puzzles.Add(id, puzzle);
             return puzzle;
         }
+
+        throw new InvalidOperationException($"Could not generate an unambiguous puzzle for gene {id} after {MaximumPuzzleAttempts} attempts.");
     }
 
     private string GenerateSequence(int length)

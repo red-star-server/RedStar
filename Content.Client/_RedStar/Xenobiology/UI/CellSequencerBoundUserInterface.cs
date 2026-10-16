@@ -25,4 +25,11 @@ public sealed class CellSequencerBoundUserInterface(EntityUid owner, Enum uiKey)
         if (state is CellSequencerUiState sequencerState)
             _window?.UpdateState(sequencerState);
     }
+
+    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+    {
+        base.ReceiveMessage(message);
+        if (message is CellSequencerFeedbackMessage feedback)
+            _window?.ShowFeedback(feedback);
+    }
 }

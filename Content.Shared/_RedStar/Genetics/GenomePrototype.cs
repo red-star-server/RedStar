@@ -20,10 +20,4 @@ public sealed partial class GenomeGeneDefinition
 {
     [DataField(required: true)]
     public ProtoId<GenePrototype> Gene;
-
-    /// <summary>
-    /// Chance that an optional gene is present in a newly generated genome.
-    /// </summary>
-    [DataField]
-    public float PresenceChance = 1f;
 }

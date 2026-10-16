@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Shared._RedStar.Genetics;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Containers;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Cloning.Events;
@@ -11,7 +10,7 @@ namespace Content.Server._RedStar.Genetics;
 public sealed partial class GenomeSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototypes = default!;
-    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private GenomeExpressionSystem _expression = default!;
     [Dependency] private SharedContainerSystem _containers = default!;
 
     [SubscribeLocalEvent]
@@ -21,12 +20,21 @@ public sealed partial class GenomeSystem : EntitySystem
             return;
 
         CopyComp(ent.Owner, args.CloneUid, ent.Comp);
-        NotifyChanged(args.CloneUid, []);
+        var clone = Comp<GenomeComponent>(args.CloneUid);
+        var acquired = clone.Genes.Where(gene => gene.Value == GeneStatus.Active &&
+            !clone.NaturalGenes.Contains(gene.Key)).Select(gene => gene.Key).ToArray();
+        foreach (var id in acquired)
+        {
+            if (!_expression.TryExpress(args.CloneUid, id))
+                clone.Genes[id] = GeneStatus.Raw;
+        }
+        NotifyChanged(args.CloneUid, acquired.Where(id => clone.Genes[id] == GeneStatus.Active).ToArray());
     }
 
     private void NotifyChanged(EntityUid uid, IReadOnlyList<ProtoId<GenePrototype>> activated)
     {
-        RaiseLocalEvent(uid, new GenomeChangedEvent(activated));
+        var changed = new GenomeChangedEvent(activated);
+        RaiseLocalEvent(uid, ref changed);
         if (!_containers.TryGetContainingContainer(uid, out var container))
             return;
 
@@ -54,7 +62,7 @@ public sealed partial class GenomeSystem : EntitySystem
         genome = null;
         if (!_prototypes.TryIndex(id, out var scheme))
             return false;
-        genome = new GenomeSnapshot(id, scheme.Genes.Where(g => _random.Prob(g.PresenceChance)).Select(g => g.Gene));
+        genome = new GenomeSnapshot(id, scheme.Genes.Select(g => g.Gene));
         return true;
     }
 
@@ -109,14 +117,17 @@ public sealed partial class GenomeSystem : EntitySystem
         if (!TryComp<GenomeComponent>(uid, out var component) || !component.GenomeGenerated)
             return;
 
-        var activated = component.Genes.Where(gene => gene.Value == GeneStatus.Raw).Select(gene => gene.Key).ToArray();
-        if (activated.Length == 0)
-            return;
-
-        foreach (var id in activated)
+        var raw = component.Genes.Where(gene => gene.Value == GeneStatus.Raw).Select(gene => gene.Key).ToArray();
+        var activated = new List<ProtoId<GenePrototype>>();
+        foreach (var id in raw)
         {
+            if (!_expression.TryExpress(uid, id))
+                continue;
             component.Genes[id] = GeneStatus.Active;
+            activated.Add(id);
         }
+        if (activated.Count == 0)
+            return;
 
         NotifyChanged(uid, activated);
     }
@@ -139,8 +150,9 @@ public sealed partial class GenomeSystem : EntitySystem
             component.Genes.Remove(id);
         }
 
-        component.Genes.Add(result, GeneStatus.Active);
-        NotifyChanged(uid, [result]);
+        var expressed = _expression.TryExpress(uid, result);
+        component.Genes.Add(result, expressed ? GeneStatus.Active : GeneStatus.Raw);
+        NotifyChanged(uid, expressed ? [result] : []);
         return true;
     }
 }

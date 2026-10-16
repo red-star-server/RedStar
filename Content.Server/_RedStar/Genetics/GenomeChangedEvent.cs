@@ -6,10 +6,8 @@ namespace Content.Server._RedStar.Genetics;
 /// <summary>
 /// Raised after a genome transaction. Only these genes need expression.
 /// </summary>
-public sealed class GenomeChangedEvent(IReadOnlyList<ProtoId<GenePrototype>> activated) : EntityEventArgs
-{
-    public readonly IReadOnlyList<ProtoId<GenePrototype>> Activated = activated;
-}
+[ByRefEvent]
+public readonly record struct GenomeChangedEvent(IReadOnlyList<ProtoId<GenePrototype>> Activated);
 
 /// <summary>
 /// Relayed to the entity containing an organism after its genome changes.

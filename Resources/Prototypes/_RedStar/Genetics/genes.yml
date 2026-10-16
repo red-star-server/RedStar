@@ -1,5 +1,8 @@
 - type: gene
   id: BiologicalVariant
+  tier: 0
+  fragmentCount: 3
+  minimumStability: 0.4
 
 - type: gene
   id: Pacifism
@@ -92,6 +95,8 @@
 - type: gene
   id: NoSlip
   tier: 2
+  fragmentCount: 5
+  minimumStability: 0.6
   effects:
   - !type:AddComponents
     components:
@@ -100,6 +105,8 @@
 - type: gene
   id: Reflection
   tier: 3
+  fragmentCount: 6
+  minimumStability: 0.7
   effects:
   - !type:AddComponents
     components:
@@ -109,6 +116,8 @@
 - type: gene
   id: Invisibility
   tier: 3
+  fragmentCount: 6
+  minimumStability: 0.7
   effects:
   - !type:AddComponents
     components:

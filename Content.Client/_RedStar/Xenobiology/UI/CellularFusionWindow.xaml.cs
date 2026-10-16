@@ -37,7 +37,7 @@ public sealed partial class CellularFusionWindow : FancyWindow
     public void UpdateState(CellularFusionUiState state)
     {
         var contentsChanged = _dish != state.Dish ||
-            !SameSamples(_samples, state.Samples);
+            !_samples.SequenceEqual(state.Samples);
         _dish = state.Dish;
 
         if (contentsChanged)
@@ -74,18 +74,6 @@ public sealed partial class CellularFusionWindow : FancyWindow
             entry.OnSelect += SelectEntry;
             CellContainer.AddChild(entry);
         }
-    }
-
-    private static bool SameSamples(IReadOnlyList<SampleView> left, IReadOnlyList<SampleView> right)
-    {
-        if (left.Count != right.Count)
-            return false;
-        for (var i = 0; i < left.Count; i++)
-        {
-            if (!left[i].SameDisplay(right[i]))
-                return false;
-        }
-        return true;
     }
 
     private void SelectEntry(CellEntryControl entry)

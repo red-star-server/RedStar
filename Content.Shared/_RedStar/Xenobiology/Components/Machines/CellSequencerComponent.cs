@@ -9,7 +9,6 @@ public sealed partial class CellSequencerComponent : Component
     [DataField]
     public string VialSlot = "vialSlot";
 
-    public int FeedbackSample = -1;
-    public string FeedbackFamily = string.Empty;
-    public int[] FeedbackOrder = [];
+    [DataField]
+    public float IncorrectStabilityCost = 0.1f;
 }

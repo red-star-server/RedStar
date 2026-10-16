@@ -19,7 +19,11 @@ public sealed partial class BiologicalSample
     public string Name { get; private set; } = string.Empty;
 
     [DataField, ViewVariables]
-    public float Stability { get; private set; }
+    public float Stability
+    {
+        get;
+        private set => field = float.IsFinite(value) ? Math.Clamp(value, 0f, 1f) : 0f;
+    }
 
     [DataField]
     private GenomeSnapshot? _genome;
@@ -29,8 +33,6 @@ public sealed partial class BiologicalSample
 
     [ViewVariables]
     public bool HasGenome => _genome is not null;
-
-    public bool HasValidStability => float.IsFinite(Stability) && Stability is >= 0f and <= 1f;
 
     public BiologicalSample() { }
 
@@ -62,14 +64,11 @@ public sealed partial class BiologicalSample
     /// </summary>
     public bool TryReduceStability(float amount)
     {
-        if (!HasValidStability || !float.IsFinite(amount) || amount <= 0f)
+        if (amount <= 0f)
             return false;
 
-        var reduced = Math.Clamp(Stability - amount, 0f, 1f);
-        if (reduced.Equals(Stability))
-            return false;
-
-        Stability = reduced;
-        return true;
+        var previous = Stability;
+        Stability -= amount;
+        return !Stability.Equals(previous);
     }
 }

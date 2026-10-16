@@ -6,15 +6,8 @@ namespace Content.Shared._RedStar.Xenobiology.UI;
 public enum CellSequencerUiKey { Key }
 
 [Serializable, NetSerializable]
-public sealed class SequencerMarkerView(string familyCode, string[] fragments, bool decoded,
-    string name, bool extractable)
-{
-    public readonly string FamilyCode = familyCode;
-    public readonly string[] Fragments = fragments;
-    public readonly bool Decoded = decoded;
-    public readonly string Name = name;
-    public readonly bool Extractable = extractable;
-}
+public sealed record SequencerMarkerView(string FamilyCode, string[] Fragments, bool Decoded,
+    string Name, bool Extractable);
 
 [Serializable, NetSerializable]
 public sealed class SequencerSampleView(SampleView sample, SequencerMarkerView[] markers)
@@ -25,14 +18,24 @@ public sealed class SequencerSampleView(SampleView sample, SequencerMarkerView[]
 
 [Serializable, NetSerializable]
 public sealed class CellSequencerUiState(SequencerSampleView[] samples, NetEntity? dish,
-    int feedbackSample, string feedbackFamily, int[] feedbackOrder, NetEntity? vial) : BoundUserInterfaceState
+    NetEntity? vial) : BoundUserInterfaceState
 {
     public readonly SequencerSampleView[] Samples = samples;
     public readonly NetEntity? Dish = dish;
-    public readonly int FeedbackSample = feedbackSample;
-    public readonly string FeedbackFamily = feedbackFamily;
-    public readonly int[] FeedbackOrder = feedbackOrder;
     public readonly NetEntity? Vial = vial;
+}
+
+/// <summary>
+/// Feedback for one submitted assembly, sent only to the submitting user.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class CellSequencerFeedbackMessage(int sampleId, string family, int[] order, bool[] matches)
+    : BoundUserInterfaceMessage
+{
+    public readonly int SampleId = sampleId;
+    public readonly string Family = family;
+    public readonly int[] Order = order;
+    public readonly bool[] Matches = matches;
 }
 
 [Serializable, NetSerializable]

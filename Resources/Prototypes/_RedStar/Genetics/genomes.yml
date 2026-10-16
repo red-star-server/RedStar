@@ -1,4 +1,8 @@
 - type: genome
+  id: Monkey
+  genes: []
+
+- type: genome
   id: NocturnalAnimal
   genes:
   - gene: NightVision

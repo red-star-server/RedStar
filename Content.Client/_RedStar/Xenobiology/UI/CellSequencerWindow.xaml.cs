@@ -14,12 +14,14 @@ public sealed partial class CellSequencerWindow : FancyWindow
     public event Action<int, string, NetEntity?>? OnExtract;
 
     private CellSequencerUiState? _state;
-    private int _primary = -1;
-    private int _comparison = -1;
-    private int _marker = -1;
+    private int? _primary;
+    private int? _comparison;
+    private string? _family;
     private bool _comparing;
-    private string[] _lastFragments = [];
-    private string _lastPrefix = string.Empty;
+    private (int Sample, string Family)? _assemblyKey;
+
+    private SequencerSampleView? Primary => _state?.Samples.FirstOrDefault(sample => sample.Sample.Id == _primary);
+    private SequencerMarkerView? Marker => Primary?.Markers.FirstOrDefault(marker => marker.FamilyCode == _family);
 
     public CellSequencerWindow()
     {
@@ -27,33 +29,25 @@ public sealed partial class CellSequencerWindow : FancyWindow
         Assembly.AssemblyChanged += RefreshAssembly;
         Genome.OnSelect += index =>
         {
-            _marker = index;
-            _lastFragments = [];
+            _family = Primary?.Markers.ElementAtOrDefault(index)?.FamilyCode;
             BuildMarkers();
             BuildAssembly();
         };
         ResetButton.OnPressed += _ => Assembly.Clear();
         DecodeButton.OnPressed += _ =>
         {
-            if (_state is not null && _primary >= 0 && _marker >= 0 && Assembly.Complete)
-            {
-                OnDecode?.Invoke(_state.Samples[_primary].Sample.Id,
-                    _state.Samples[_primary].Markers[_marker].FamilyCode, Assembly.OrderedFragments);
-            }
+            if (_primary is { } sampleId && Marker is { } marker && Assembly.Complete)
+                OnDecode?.Invoke(sampleId, marker.FamilyCode, Assembly.OrderedFragments);
         };
         ExtractButton.OnPressed += _ =>
         {
-            if (_state is not null && _primary >= 0 && _marker >= 0 &&
-                _state.Samples[_primary].Markers[_marker].Extractable)
-            {
-                OnExtract?.Invoke(_state.Samples[_primary].Sample.Id,
-                    _state.Samples[_primary].Markers[_marker].FamilyCode, _state.Vial);
-            }
+            if (_primary is { } sampleId && Marker is { Extractable: true } marker)
+                OnExtract?.Invoke(sampleId, marker.FamilyCode, _state?.Vial);
         };
         CompareButton.OnPressed += _ =>
         {
             _comparing = !_comparing;
-            _comparison = -1;
+            _comparison = null;
             BuildSamples();
             BuildMarkers();
         };
@@ -62,51 +56,30 @@ public sealed partial class CellSequencerWindow : FancyWindow
 
     public void UpdateState(CellSequencerUiState state)
     {
-        if (_state is null || _state.Dish != state.Dish ||
-            !SameSampleContents(_state.Samples, state.Samples))
+        if (_state?.Dish != state.Dish)
         {
-            _primary = -1;
-            _comparison = -1;
-            _marker = -1;
-            _lastFragments = [];
+            _primary = null;
+            _comparison = null;
+            _family = null;
+            _assemblyKey = null;
             Assembly.SetFragments([], string.Empty);
         }
         _state = state;
-        if (_primary >= state.Samples.Length)
-            _primary = -1;
-        if (_comparison >= state.Samples.Length)
-            _comparison = -1;
+        if (Primary is null)
+            _primary = null;
+        if (state.Samples.All(sample => sample.Sample.Id != _comparison))
+            _comparison = null;
+        if (Marker is null)
+            _family = null;
         BuildSamples();
         BuildMarkers();
         BuildAssembly();
-        Assembly.SetFeedback(_primary >= 0 && _marker >= 0 && state.FeedbackSample == state.Samples[_primary].Sample.Id &&
-            state.FeedbackFamily == state.Samples[_primary].Markers[_marker].FamilyCode
-            ? state.FeedbackOrder : []);
     }
 
-    private static bool SameSampleContents(SequencerSampleView[] previous, SequencerSampleView[] current)
+    public void ShowFeedback(CellSequencerFeedbackMessage feedback)
     {
-        if (previous.Length != current.Length)
-            return false;
-
-        for (var i = 0; i < previous.Length; i++)
-        {
-            var before = previous[i];
-            var after = current[i];
-            if (before.Sample.Id != after.Sample.Id || before.Sample.Name != after.Sample.Name || before.Sample.Color != after.Sample.Color ||
-                before.Sample.GeneCount != after.Sample.GeneCount ||
-                before.Sample.HasGenome != after.Sample.HasGenome || before.Markers.Length != after.Markers.Length)
-                return false;
-
-            for (var marker = 0; marker < before.Markers.Length; marker++)
-            {
-                if (before.Markers[marker].FamilyCode != after.Markers[marker].FamilyCode ||
-                    !before.Markers[marker].Fragments.SequenceEqual(after.Markers[marker].Fragments))
-                    return false;
-            }
-        }
-
-        return true;
+        if (_primary == feedback.SampleId && _family == feedback.Family)
+            Assembly.SetFeedback(feedback.Order, feedback.Matches);
     }
 
     private void BuildSamples()
@@ -118,32 +91,25 @@ public sealed partial class CellSequencerWindow : FancyWindow
         if (_state is null)
             return;
 
-        for (var i = 0; i < _state.Samples.Length; i++)
+        foreach (var sample in _state.Samples)
         {
-            var index = i;
-            var cell = _state.Samples[i].Sample;
+            var id = sample.Sample.Id;
             var button = new Button
             {
-                Text = cell.Name,
+                Text = sample.Sample.Name,
                 HorizontalExpand = true,
                 ToggleMode = true,
-                Pressed = index == _primary || _comparing && index == _comparison
+                Pressed = id == _primary || _comparing && id == _comparison,
             };
             button.OnPressed += _ =>
             {
-                if (_comparing && _primary >= 0 && index != _primary)
+                if (_comparing && _primary is not null && id != _primary)
+                    _comparison = id == _comparison ? null : id;
+                else if (_primary != id)
                 {
-                    _comparison = index == _comparison ? -1 : index;
-                }
-                else
-                {
-                    if (_primary != index)
-                    {
-                        _primary = index;
-                        _marker = -1;
-                        _comparison = -1;
-                        _lastFragments = [];
-                    }
+                    _primary = id;
+                    _family = null;
+                    _comparison = null;
                 }
                 BuildSamples();
                 BuildMarkers();
@@ -152,40 +118,24 @@ public sealed partial class CellSequencerWindow : FancyWindow
             SampleList.AddChild(button);
         }
 
-        SampleDetails.Text = _primary < 0
-            ? string.Empty
-            : Loc.GetString("cell-sequencer-sample-stability",
-                ("stability", MathF.Round(_state.Samples[_primary].Sample.Stability * 100)));
+        SampleDetails.Text = Primary is { } primary
+            ? Loc.GetString("cell-sequencer-sample-stability", ("stability", MathF.Round(primary.Sample.Stability * 100)))
+            : string.Empty;
     }
 
     private void BuildMarkers()
     {
         MarkerDetails.Text = string.Empty;
         ComparisonLabel.Text = string.Empty;
-        if (_state is null || _primary < 0)
-        {
-            Genome.SetMarkers([], -1);
+        var markers = Primary?.Markers ?? [];
+        Genome.SetMarkers(markers, Array.FindIndex(markers, marker => marker.FamilyCode == _family));
+        if (Marker is not { } active)
             return;
-        }
+        MarkerDetails.Text = active.Decoded ? active.Name : active.FamilyCode;
 
-        var samples = _state.Samples;
-        var markers = samples[_primary].Markers;
-        if (_marker >= markers.Length)
-            _marker = -1;
-        Genome.SetMarkers(markers, _marker);
-
-        if (_marker < 0)
+        if (!_comparing || _state?.Samples.FirstOrDefault(sample => sample.Sample.Id == _comparison) is not { } comparison)
             return;
-        var active = markers[_marker];
-        MarkerDetails.Text = active.Decoded
-            ? active.Name
-            : active.FamilyCode;
-
-        if (!_comparing || _comparison < 0)
-            return;
-
-        var other = samples[_comparison].Markers;
-        var match = Array.Find(other, m => m.FamilyCode == active.FamilyCode);
+        var match = Array.Find(comparison.Markers, marker => marker.FamilyCode == active.FamilyCode);
         ComparisonLabel.Text = match is null
             ? Loc.GetString("cell-sequencer-different-gene")
             : !match.Decoded || !active.Decoded
@@ -195,22 +145,14 @@ public sealed partial class CellSequencerWindow : FancyWindow
 
     private void BuildAssembly()
     {
-        SequencerMarkerView? active = null;
-        if (_state is not null && _primary >= 0 && _marker >= 0 &&
-            _marker < _state.Samples[_primary].Markers.Length)
-            active = _state.Samples[_primary].Markers[_marker];
-
-        if (active is null)
+        var active = Marker;
+        (int Sample, string Family)? key = _primary is { } sampleId && active is not null
+            ? (sampleId, active.FamilyCode)
+            : null;
+        if (_assemblyKey != key)
         {
-            Assembly.SetFragments([], string.Empty);
-            _lastFragments = [];
-        }
-        else if (_lastPrefix != active.FamilyCode ||
-                 !_lastFragments.SequenceEqual(active.Fragments))
-        {
-            _lastPrefix = active.FamilyCode;
-            _lastFragments = active.Fragments.ToArray();
-            Assembly.SetFragments(active.Fragments, active.FamilyCode);
+            _assemblyKey = key;
+            Assembly.SetFragments(active?.Fragments ?? [], active?.FamilyCode ?? string.Empty);
         }
         Assembly.SetDecoded(active?.Decoded == true);
         DecodeStatus.Text = active is null ? string.Empty
@@ -223,8 +165,6 @@ public sealed partial class CellSequencerWindow : FancyWindow
     {
         ResetButton.Disabled = Assembly.IsDecoded || !Assembly.HasPlaced;
         DecodeButton.Disabled = _state is null || !Assembly.Complete || Assembly.IsDecoded;
-        ExtractButton.Disabled = _state is null || _primary < 0 || _marker < 0 ||
-            _marker >= _state.Samples[_primary].Markers.Length ||
-            !_state.Samples[_primary].Markers[_marker].Extractable;
+        ExtractButton.Disabled = Marker?.Extractable != true;
     }
 }

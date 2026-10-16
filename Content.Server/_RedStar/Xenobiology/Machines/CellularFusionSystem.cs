@@ -77,14 +77,14 @@ public sealed partial class CellularFusionSystem : EntitySystem
         var second = dish.Comp.Samples.Find(sample => sample.Id == secondId);
         if (first is null || second is null)
             return;
-        if (ReferenceEquals(first, second) || !CanStabilize(first, second, out _))
+        if (!CanStabilize(first, second, out _))
         {
             _popup.PopupEntity(Loc.GetString("cellular-fusion-incompatible"), ent, PopupType.MediumCaution);
             return;
         }
 
-        ent.Comp.SpliceSampleA = first;
-        ent.Comp.SpliceSampleB = second;
+        ent.Comp.SpliceSampleA = first.Id;
+        ent.Comp.SpliceSampleB = second.Id;
         ent.Comp.SpliceDish = dish.Owner;
         ent.Comp.SpliceEndTime = _timing.CurTime + ent.Comp.SpliceDelay;
         UpdateUI(ent);
@@ -115,10 +115,9 @@ public sealed partial class CellularFusionSystem : EntitySystem
 
     private void FinishSplice(Entity<CellularFusionComponent> ent, Entity<SampleContainerComponent> dish)
     {
-        var first = ent.Comp.SpliceSampleA;
-        var second = ent.Comp.SpliceSampleB;
-        if (first is null || second is null || ReferenceEquals(first, second) ||
-            !dish.Comp.Samples.Contains(first) || !dish.Comp.Samples.Contains(second) ||
+        var first = dish.Comp.Samples.Find(sample => sample.Id == ent.Comp.SpliceSampleA);
+        var second = dish.Comp.Samples.Find(sample => sample.Id == ent.Comp.SpliceSampleB);
+        if (first is null || second is null || first.Id == second.Id ||
             !CanStabilize(first, second, out var genome))
         {
             CancelSplice(ent);
@@ -127,11 +126,11 @@ public sealed partial class CellularFusionSystem : EntitySystem
 
         var max = Math.Max(first.Stability, second.Stability);
         var min = Math.Min(first.Stability, second.Stability);
-        var stability = Math.Min(1f, max + (1f - max) * (0.08f + 0.04f * min));
+        var stability = max + (1f - max) * (ent.Comp.BaseStabilityGain + ent.Comp.DonorStabilityGain * min);
         var result = new BiologicalSample(Color.InterpolateBetween(first.Color, second.Color, 0.5f),
             first.Name, stability, genome);
         ResetSplice(ent.Comp);
-        if (!_samples.ReplaceSamples((dish.Owner, (SampleContainerComponent?) dish.Comp), first, second, result))
+        if (!_samples.ReplaceSamples((dish.Owner, (SampleContainerComponent?) dish.Comp), first.Id, second.Id, result))
         {
             UpdateUI(ent);
             return;
@@ -142,8 +141,7 @@ public sealed partial class CellularFusionSystem : EntitySystem
     private bool CanStabilize(BiologicalSample first, BiologicalSample second, out GenomeSnapshot? genome)
     {
         genome = null;
-        if (!first.HasValidStability || !second.HasValidStability ||
-            Math.Max(first.Stability, second.Stability) >= 1f ||
+        if (Math.Max(first.Stability, second.Stability) >= 1f ||
             first.GetGenome() is not { } firstGenome || second.GetGenome() is not { } secondGenome ||
             !firstGenome.SameContents(secondGenome))
             return false;
