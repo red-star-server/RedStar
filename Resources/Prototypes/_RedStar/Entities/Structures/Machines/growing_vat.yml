@@ -46,6 +46,10 @@
     board: GrowingVatCircuitboard
   - type: WiresPanel
   - type: WiresVisuals
+  - type: DragInsertContainer
+    containerId: subjectSlot
+    entryDelay: 2
+    delaySelfEntry: true
   - type: ExitContainerOnMove
     containerId: subjectSlot
   - type: ContainerContainer

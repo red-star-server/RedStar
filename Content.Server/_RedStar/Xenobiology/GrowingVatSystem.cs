@@ -7,7 +7,6 @@ using Content.Shared._RedStar.Xenobiology.Visuals;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Climbing.Systems;
-using Content.Shared.DragDrop;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -82,23 +81,10 @@ public sealed partial class GrowingVatSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnCanDrop(Entity<GrowingVatComponent> ent, ref CanDropTargetEvent args)
+    private void OnInsertAttempt(Entity<GrowingVatComponent> ent, ref ContainerIsInsertingAttemptEvent args)
     {
-        args.Handled = true;
-        args.CanDrop = IsValidSubject(args.Dragged) &&
-                       _containers.TryGetContainer(ent.Owner, ent.Comp.SubjectSlot, out var container) &&
-                       _containers.CanInsert(args.Dragged, container);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnDragDrop(Entity<GrowingVatComponent> ent, ref DragDropTargetEvent args)
-    {
-        if (args.Handled || !IsValidSubject(args.Dragged) ||
-            !_containers.TryGetContainer(ent.Owner, ent.Comp.SubjectSlot, out var container) ||
-            !_containers.CanInsert(args.Dragged, container))
-            return;
-
-        args.Handled = _containers.Insert(args.Dragged, container);
+        if (args.Container.ID == ent.Comp.SubjectSlot && !IsValidSubject(args.EntityUid))
+            args.Cancel();
     }
 
     [SubscribeLocalEvent]
@@ -212,8 +198,8 @@ public sealed partial class GrowingVatSystem : EntitySystem
             !container.Contains(subject))
             return;
 
-        _climb.ForciblySetClimbing(subject, vat.Owner);
-        _containers.Remove(subject, container);
+        if (_containers.Remove(subject, container))
+            _climb.ForciblySetClimbing(subject, vat.Owner);
     }
 
     private void UpdateVisual(Entity<GrowingVatComponent> vat, bool processing)
