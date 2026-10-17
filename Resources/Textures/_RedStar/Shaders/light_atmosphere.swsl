@@ -2,11 +2,13 @@ light_mode unshaded;
 
 uniform sampler2D SCREEN_TEXTURE;
 uniform sampler2D LIGHT_TEXTURE;
+uniform sampler2D ROOF_TEXTURE;
 
 void fragment() {
     highp vec2 screen_uv = FRAGCOORD.xy * SCREEN_PIXEL_SIZE;
     lowp vec4 scene = zTextureSpec(SCREEN_TEXTURE, screen_uv);
     highp vec3 illumination = zTextureSpec(LIGHT_TEXTURE, screen_uv).rgb;
+    highp float roof = zTextureSpec(ROOF_TEXTURE, screen_uv).a;
 
     highp float peak = max(max(illumination.r, illumination.g), illumination.b);
     highp float highlight = smoothstep(0.35, 1.05, peak);
@@ -17,9 +19,8 @@ void fragment() {
 
     // Accentuate strong local light without washing out already bright surfaces.
     lowp vec3 lift = clamp(illumination, 0.0, 1.0) * (0.156 * highlight * highlight_headroom);
-    // The scene is already lit by the engine. Grade its shadows with the same
-    // light colors, but cap the grade so high-energy fixtures cannot amplify it.
     highp float shadow_gain = min(pow(max(peak, 0.04), -0.15), 1.40);
     highp vec3 light_tone = min(illumination * shadow_gain, vec3(1.0));
-    COLOR = vec4((scene.rgb + lift * (vec3(1.0) - scene.rgb)) * light_tone, scene.a);
+    lowp vec3 graded = (scene.rgb + lift * (vec3(1.0) - scene.rgb)) * light_tone;
+    COLOR = vec4(mix(scene.rgb, graded, roof), scene.a);
 }
