@@ -21,17 +21,11 @@
             <PanelContainer StyleClasses="PanelInsetDeep" HorizontalExpand="True" VerticalExpand="True">
                 <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" SeparationOverride="5">
                     <PanelContainer StyleClasses="PanelDark" HorizontalExpand="True">
-                        <BoxContainer Orientation="Horizontal" Margin="10 4 8 4" SeparationOverride="5">
-                            <Label Text="{Loc 'cell-sequencer-map'}" StyleClasses="LabelHeading" HorizontalExpand="True" />
-                            <Button Name="CompareButton" Text="{Loc 'cell-sequencer-compare'}" />
-                        </BoxContainer>
+                        <Label Text="{Loc 'cell-sequencer-map'}" StyleClasses="LabelHeading" Margin="10 4 8 4" />
                     </PanelContainer>
                     <lab:SequencerGenomeControl Name="Genome" Margin="8 2 8 0" VerticalExpand="True" />
                     <PanelContainer StyleClasses="PanelDark" HorizontalExpand="True" MinHeight="34">
-                        <BoxContainer Orientation="Horizontal" Margin="8 4 8 4" SeparationOverride="8">
-                            <Label Name="MarkerDetails" HorizontalExpand="True" />
-                            <Label Name="ComparisonLabel" />
-                        </BoxContainer>
+                        <Label Name="MarkerDetails" Margin="8 4 8 4" />
                     </PanelContainer>
                 </BoxContainer>
             </PanelContainer>

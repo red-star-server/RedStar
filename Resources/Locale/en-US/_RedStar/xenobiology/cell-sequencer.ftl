@@ -1,7 +1,6 @@
 cell-sequencer-menu-title = Genetic sequencer
 cell-sequencer-samples = SAMPLES
 cell-sequencer-map = GENOME
-cell-sequencer-compare = Compare
 cell-sequencer-assembly = RECONSTRUCTION
 cell-sequencer-reset = Reset
 cell-sequencer-submit = Decode
@@ -11,8 +10,5 @@ cell-sequencer-status-known = DECODED
 cell-sequencer-status-unknown = UNKNOWN
 cell-sequencer-incorrect = Sequence assembly could not be verified.
 cell-sequencer-discovered = Decoded: {$gene}.
-cell-sequencer-different-gene = No matching gene
-cell-sequencer-same-gene-hidden = Match · undecoded data
-cell-sequencer-same-value = Exact match
 cell-sequencer-reads = READS
 cell-sequencer-board = ASSEMBLY
