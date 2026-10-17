@@ -14,7 +14,7 @@ void fragment() {
 
     lowp vec3 scene = zTextureSpec(SCREEN_TEXTURE, FRAGCOORD.xy * SCREEN_PIXEL_SIZE).rgb;
     lowp float luminance = dot(scene, vec3(0.2126, 0.7152, 0.0722));
-    lowp float headroom = 1.0 - 0.4 * smoothstep(0.55, 0.9, luminance);
+    lowp float headroom = 1.0 - smoothstep(0.4, 0.9, luminance);
 
     COLOR = vec4(mask.rgb, alpha * headroom);
 }

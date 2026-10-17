@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Light;
 
-public sealed partial class AtmosphericLightingSystem : EntitySystem
+public sealed partial class LightingPostProcessSystem : EntitySystem
 {
     [Dependency] private IConfigurationManager _config = default!;
     [Dependency] private IOverlayManager _overlays = default!;
@@ -15,14 +15,15 @@ public sealed partial class AtmosphericLightingSystem : EntitySystem
     [Dependency] private SpriteSystem _sprites = default!;
     [Dependency] private TransformSystem _transforms = default!;
 
-    private LightHighlightOverlay? _highlights;
+    private LightToneMappingOverlay _toneMapping = default!;
     private BloomLightOverlay? _bloom;
 
     public override void Initialize()
     {
         base.Initialize();
-        Subs.CVar(_config, LightAtmosphereCVars.HighlightsEnabled, SetHighlightsEnabled, true);
-        Subs.CVar(_config, LightAtmosphereCVars.BloomEnabled, SetBloomEnabled, true);
+        _toneMapping = new LightToneMappingOverlay();
+        _overlays.AddOverlay(_toneMapping);
+        Subs.CVar(_config, LightingCVars.BloomEnabled, SetBloomEnabled, true);
     }
 
     private void SetBloomEnabled(bool enabled)
@@ -51,29 +52,10 @@ public sealed partial class AtmosphericLightingSystem : EntitySystem
         _overlays.AddOverlay(_bloom);
     }
 
-    private void SetHighlightsEnabled(bool enabled)
-    {
-        if (!enabled)
-        {
-            if (_highlights == null)
-                return;
-
-            _overlays.RemoveOverlay(_highlights);
-            _highlights.Dispose();
-            _highlights = null;
-            return;
-        }
-
-        if (_highlights != null)
-            return;
-
-        _highlights = new LightHighlightOverlay(_prototypes, _overlays, EntityManager);
-        _overlays.AddOverlay(_highlights);
-    }
-
     public override void Shutdown()
     {
-        SetHighlightsEnabled(false);
+        _overlays.RemoveOverlay(_toneMapping);
+        _toneMapping.Dispose();
         SetBloomEnabled(false);
         base.Shutdown();
     }

@@ -112,7 +112,7 @@ ui-options-ambient-occlusion = Отображать окружающее зат�
 ## RS14-start
 ui-options-light-atmosphere = Глубокие тени
 ui-options-light-darkening-strength = Сила затемнения:
-ui-options-light-highlights = Усиление яркого света
+ui-options-light-highlights = Смягчение ярких источников света
 ui-options-light-bloom = Свечение ламп
 ## RS14-end
 ui-options-fps-counter = Показать счётчик FPS

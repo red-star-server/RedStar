@@ -187,15 +187,11 @@ namespace Content.Client.Viewport
             var drawBoxGlobal = drawBox.Translated(GlobalPixelPosition);
             _viewport.RenderScreenOverlaysBelow(handle, this, drawBoxGlobal);
 
-            // RS14-start
-            var darkAmbient = ApplyDarkAmbientShader(handle);
-            if (!darkAmbient)
-                ApplySharpnessShader(handle);
-            // RS14-end
+            ApplySharpnessShader(handle);
 
             handle.DrawingHandleScreen.DrawTextureRect(_viewport.RenderTarget.Texture, drawBox);
 
-            if (_sharpnessStrength > 0 || darkAmbient) // RS14
+            if (_sharpnessStrength > 0)
                 handle.DrawingHandleScreen.UseShader(null);
 
             _viewport.RenderScreenOverlaysAbove(handle, this, drawBoxGlobal);

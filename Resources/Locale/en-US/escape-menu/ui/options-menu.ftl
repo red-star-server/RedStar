@@ -112,7 +112,7 @@ ui-options-ambient-occlusion = Show Ambient Occlusion
 ## RS14-start
 ui-options-light-atmosphere = Deep shadows
 ui-options-light-darkening-strength = Darkening strength:
-ui-options-light-highlights = Light highlights
+ui-options-light-highlights = Compress bright light sources
 ui-options-light-bloom = Fixture glow
 ## RS14-end
 ui-options-fps-counter = Show FPS counter

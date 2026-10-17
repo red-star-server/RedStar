@@ -1,0 +1,26 @@
+light_mode unshaded;
+blend_mode none;
+
+uniform highp float ShadowStrength;
+uniform bool CompressHighlights;
+
+void fragment() {
+    highp vec4 light = zTexture(UV);
+    highp float peak = max(max(light.r, light.g), light.b);
+    if (peak <= 0.0) {
+        COLOR = light;
+        return;
+    }
+
+    // Deepen dim light rather than dark-colored materials in the finished scene.
+    // Values above one remain HDR until the highlight shoulder below.
+    highp float mapped = pow(min(peak, 1.0), 1.0 + 1.25 * ShadowStrength) + max(peak - 1.0, 0.0);
+    if (CompressHighlights && mapped > 0.6) {
+        // A continuous shoulder: identity below 0.6, approaching one without clipping.
+        highp float excess = mapped - 0.6;
+        mapped = 0.6 + 0.4 * excess / (0.4 + excess);
+    }
+
+    // One scalar for RGB preserves the source's chromaticity, including warm lamps.
+    COLOR = vec4(light.rgb * (mapped / peak), light.a);
+}
