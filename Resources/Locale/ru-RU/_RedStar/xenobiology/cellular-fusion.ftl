@@ -14,5 +14,4 @@ cellular-fusion-menu-cell-traits-label = Генетические маркеры
 cellular-fusion-menu-splice-button = Стабилизировать
 
 # Сообщения
-cellular-fusion-splice-success = Стабилизация завершена! Оба исходных образца израсходованы.
 cellular-fusion-incompatible = Нужны два отдельных образца с полностью одинаковым генетическим материалом.

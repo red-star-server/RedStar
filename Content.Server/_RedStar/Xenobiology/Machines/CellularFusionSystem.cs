@@ -83,7 +83,6 @@ public sealed partial class CellularFusionSystem : EntitySystem
             return;
         }
 
-        ent.Comp.SpliceUser = args.Actor;
         ent.Comp.SpliceSampleA = first.Id;
         ent.Comp.SpliceSampleB = second.Id;
         ent.Comp.SpliceDish = dish.Owner;
@@ -130,15 +129,12 @@ public sealed partial class CellularFusionSystem : EntitySystem
         var stability = max + (1f - max) * (ent.Comp.BaseStabilityGain + ent.Comp.DonorStabilityGain * min);
         var result = new BiologicalSample(Color.InterpolateBetween(first.Color, second.Color, 0.5f),
             first.Name, stability, genome);
-        var user = ent.Comp.SpliceUser;
         ResetSplice(ent.Comp);
         if (!_samples.ReplaceSamples((dish.Owner, (SampleContainerComponent?) dish.Comp), first.Id, second.Id, result))
         {
             UpdateUI(ent);
             return;
         }
-        if (user is { } recipient && !TerminatingOrDeleted(recipient))
-            _popup.PopupEntity(Loc.GetString("cellular-fusion-splice-success"), ent, recipient, PopupType.Medium);
     }
 
     private bool CanStabilize(BiologicalSample first, BiologicalSample second, out GenomeSnapshot? genome)
@@ -178,7 +174,6 @@ public sealed partial class CellularFusionSystem : EntitySystem
         component.SpliceSampleA = null;
         component.SpliceSampleB = null;
         component.SpliceDish = null;
-        component.SpliceUser = null;
     }
 
     private void UpdateUI(Entity<CellularFusionComponent> ent)

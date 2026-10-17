@@ -16,5 +16,4 @@ cellular-fusion-menu-cell-traits-label = Genetic markers:
 cellular-fusion-menu-splice-button = Stabilize
 
 # Popups
-cellular-fusion-splice-success = Stabilization successful! Both source samples were consumed.
 cellular-fusion-incompatible = Two separate samples with identical genetic material are required.

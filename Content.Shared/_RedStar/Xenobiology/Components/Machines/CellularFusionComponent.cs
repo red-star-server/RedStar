@@ -29,7 +29,4 @@ public sealed partial class CellularFusionComponent : Component
 
     [ViewVariables]
     public EntityUid? SpliceDish;
-
-    [ViewVariables]
-    public EntityUid? SpliceUser;
 }

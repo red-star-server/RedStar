@@ -86,7 +86,6 @@ public sealed partial class MutagenicInjectorSystem : EntitySystem
         if (!TryGetReadyInjection(ent, user, out var subject, out var vial))
             return;
 
-        ent.Comp.InjectionUser = user;
         ent.Comp.InjectionSubject = subject;
         ent.Comp.InjectionVial = vial.Owner;
         ent.Comp.InjectionVialRevision = vial.Comp.Revision;
@@ -171,12 +170,9 @@ public sealed partial class MutagenicInjectorSystem : EntitySystem
             return;
         }
 
-        var user = ent.Comp.InjectionUser;
         _vials.Clear((vialUid, vialComponent));
         CancelInjection(ent);
         _storage.OpenStorage(ent.Owner);
-        if (user is { } recipient && !TerminatingOrDeleted(recipient))
-            _popup.PopupEntity(Loc.GetString("mutagenic-injector-success", ("genes", changed)), ent, recipient, PopupType.Medium);
     }
 
     private void CancelInjection(Entity<CellMutagenicInjectorComponent> ent)
@@ -186,7 +182,6 @@ public sealed partial class MutagenicInjectorSystem : EntitySystem
 
         ent.Comp.InjectionEndTime = null;
         ent.Comp.InjectionSubject = null;
-        ent.Comp.InjectionUser = null;
         ent.Comp.InjectionVial = null;
         ent.Comp.InjectionVialRevision = 0;
         ent.Comp.AudioStream = _audio.Stop(ent.Comp.AudioStream);

@@ -24,9 +24,6 @@ public sealed partial class CellMutagenicInjectorComponent : Component
     public EntityUid? InjectionSubject;
 
     [ViewVariables]
-    public EntityUid? InjectionUser;
-
-    [ViewVariables]
     public EntityUid? InjectionVial;
 
     [ViewVariables]
