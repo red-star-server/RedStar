@@ -38,8 +38,8 @@
   id: PetriDishMurine
   suffix: Murine
   components:
-  - type: SampleGeneration
-    samples:
+  - type: SampleContainer
+    initialSamples:
     - genome: Mouse
 
 - type: entity
@@ -47,8 +47,8 @@
   id: PetriDishGalliform
   suffix: Galliform
   components:
-  - type: SampleGeneration
-    samples:
+  - type: SampleContainer
+    initialSamples:
     - genome: Fowl
       stability: 0.97
 
@@ -57,8 +57,8 @@
   id: PetriDishBovine
   suffix: Bovine
   components:
-  - type: SampleGeneration
-    samples:
+  - type: SampleContainer
+    initialSamples:
     - genome: Bovine
       stability: 0.95
 
@@ -67,8 +67,8 @@
   id: PetriDishCanid
   suffix: Canid
   components:
-  - type: SampleGeneration
-    samples:
+  - type: SampleContainer
+    initialSamples:
     - genome: Canid
 
 - type: entity
@@ -76,8 +76,8 @@
   id: PetriDishSpaceCobra
   suffix: Space Cobra
   components:
-  - type: SampleGeneration
-    samples:
+  - type: SampleContainer
+    initialSamples:
     - genome: SpaceCobra
 
 - type: entity
@@ -85,8 +85,8 @@
   id: PetriDishPsittacine
   suffix: Psittacine
   components:
-  - type: SampleGeneration
-    samples:
+  - type: SampleContainer
+    initialSamples:
     - genome: Parrot
 
 - type: entity
@@ -94,8 +94,8 @@
   id: PetriDishBasilisk
   suffix: Basilisk
   components:
-  - type: SampleGeneration
-    samples:
+  - type: SampleContainer
+    initialSamples:
     - genome: Basilisk
       stability: 0.8
 
@@ -104,6 +104,6 @@
   id: PetriDishCaprine
   suffix: Caprine
   components:
-  - type: SampleGeneration
-    samples:
+  - type: SampleContainer
+    initialSamples:
     - genome: Caprine

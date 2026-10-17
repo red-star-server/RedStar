@@ -22,18 +22,28 @@ public sealed partial class SampleFactorySystem : EntitySystem
     [Dependency] private SampleSystem _samples = default!;
 
     [SubscribeLocalEvent]
-    private void OnSampleGenerationInit(Entity<SampleGenerationComponent> ent, ref MapInitEvent args)
+    private void OnMapInit(Entity<SampleContainerComponent> ent, ref MapInitEvent args)
     {
-        if (ent.Comp.Generated || !TryComp<SampleContainerComponent>(ent, out var container))
+        if (ent.Comp.InitialSamplesInitialized)
             return;
 
-        ent.Comp.Generated = true;
-        foreach (var entry in ent.Comp.Samples)
+        if (ent.Comp.InitialSamples.Count > ent.Comp.MaxSamples - ent.Comp.Samples.Count)
+            throw new InvalidOperationException($"Initial samples exceed the capacity of {ToPrettyString(ent)}.");
+
+        var initial = new List<(GenomeSnapshot Genome, float Stability)>();
+        foreach (var entry in ent.Comp.InitialSamples)
         {
             if (!_genomes.TryGenerate(entry.Genome, out var genome) || genome is null)
-                continue;
+                throw new InvalidOperationException($"Unknown initial sample genome {entry.Genome} on {ToPrettyString(ent)}.");
 
-            _samples.AddSample((ent, container), CreateSample(genome, entry.Stability));
+            initial.Add((genome, entry.Stability));
+        }
+
+        ent.Comp.InitialSamplesInitialized = true;
+        foreach (var (genome, stability) in initial)
+        {
+            if (!_samples.AddSample(ent.AsNullable(), CreateSample(genome, stability)))
+                throw new InvalidOperationException($"Could not add an initial sample to {ToPrettyString(ent)}.");
         }
     }
 

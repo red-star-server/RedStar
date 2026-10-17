@@ -23,11 +23,17 @@ public sealed partial class SampleSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnMapInit(Entity<SampleContainerComponent> ent, ref MapInitEvent args)
+    private void OnInit(Entity<SampleContainerComponent> ent, ref ComponentInit args)
     {
         foreach (var sample in ent.Comp.Samples)
         {
-            sample.Id = ++_nextSampleId;
+            _nextSampleId = Math.Max(_nextSampleId, sample.Id);
+        }
+
+        foreach (var sample in ent.Comp.Samples)
+        {
+            if (sample.Id == 0)
+                sample.Id = ++_nextSampleId;
         }
     }
 
