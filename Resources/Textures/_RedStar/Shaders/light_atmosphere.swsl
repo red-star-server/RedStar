@@ -2,13 +2,19 @@ light_mode unshaded;
 
 uniform sampler2D SCREEN_TEXTURE;
 uniform sampler2D LIGHT_TEXTURE;
+uniform sampler2D AMBIENT_TEXTURE;
+uniform highp vec2 ambient_uv_scale;
+uniform highp vec2 ambient_uv_offset;
 
 void fragment() {
     highp vec2 screen_uv = FRAGCOORD.xy * SCREEN_PIXEL_SIZE;
     lowp vec4 scene = zTextureSpec(SCREEN_TEXTURE, screen_uv);
     highp vec3 illumination = zTextureSpec(LIGHT_TEXTURE, screen_uv).rgb;
+    highp vec3 ambient = zTextureSpec(AMBIENT_TEXTURE, screen_uv * ambient_uv_scale + ambient_uv_offset).rgb;
+    // The combined light map includes daylight. Only lift light added above that background.
+    highp vec3 local_light = max(illumination - ambient, vec3(0.0));
 
-    highp float peak = max(max(illumination.r, illumination.g), illumination.b);
+    highp float peak = max(max(local_light.r, local_light.g), local_light.b);
     highp float highlight = smoothstep(0.35, 1.05, peak);
     highlight *= highlight;
 
@@ -16,10 +22,6 @@ void fragment() {
     highp float highlight_headroom = 1.0 - 0.35 * smoothstep(0.40, 0.80, scene_level);
 
     // Accentuate strong local light without washing out already bright surfaces.
-    lowp vec3 lift = clamp(illumination, 0.0, 1.0) * (0.156 * highlight * highlight_headroom);
-    // The scene is already lit by the engine. Grade its shadows with the same
-    // light colors, but cap the grade so high-energy fixtures cannot amplify it.
-    highp float shadow_gain = min(pow(max(peak, 0.04), -0.15), 1.40);
-    highp vec3 light_tone = min(illumination * shadow_gain, vec3(1.0));
-    COLOR = vec4((scene.rgb + lift * (vec3(1.0) - scene.rgb)) * light_tone, scene.a);
+    lowp vec3 lift = clamp(local_light, 0.0, 1.0) * (0.156 * highlight * highlight_headroom);
+    COLOR = vec4(scene.rgb + lift * (vec3(1.0) - scene.rgb), scene.a);
 }

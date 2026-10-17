@@ -1,3 +1,4 @@
+using System.Numerics;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
@@ -5,9 +6,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Light;
 
 /// <summary>
-/// Accentuates strong local lighting and shapes shadows from the engine's light map.
+/// Accentuates local lighting above the existing ambient light without grading the scene again.
 /// </summary>
-public sealed class LightAtmosphereOverlay(IPrototypeManager prototypes) : Overlay
+public sealed class LightAtmosphereOverlay(IPrototypeManager prototypes, IOverlayManager overlays) : Overlay
 {
     private static readonly ProtoId<ShaderPrototype> ShaderId = "LightAtmosphere";
 
@@ -27,8 +28,15 @@ public sealed class LightAtmosphereOverlay(IPrototypeManager prototypes) : Overl
             return;
 
         var handle = args.WorldHandle;
+        var ambient = overlays.GetOverlay<BeforeLightTargetOverlay>()
+            .GetCachedForViewport(args.Viewport).EnlargedLightTarget;
+        var lightSize = args.Viewport.LightRenderTarget.Size;
+        var halfBorder = (ambient.Size - lightSize) / 2;
         _shader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
         _shader.SetParameter("LIGHT_TEXTURE", args.Viewport.LightRenderTarget.Texture);
+        _shader.SetParameter("AMBIENT_TEXTURE", ambient.Texture);
+        _shader.SetParameter("ambient_uv_scale", lightSize / (Vector2) ambient.Size);
+        _shader.SetParameter("ambient_uv_offset", halfBorder / (Vector2) ambient.Size);
         handle.UseShader(_shader);
         handle.DrawRect(args.WorldBounds, Color.White);
         handle.UseShader(null);

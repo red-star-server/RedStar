@@ -48,7 +48,7 @@ public sealed partial class AtmosphericLightingSystem : EntitySystem
         if (_atmosphere != null)
             return;
 
-        _atmosphere = new LightAtmosphereOverlay(_prototypes);
+        _atmosphere = new LightAtmosphereOverlay(_prototypes, _overlays);
         _bloom = new BloomLightOverlay(
             _tree,
             GetEntityQuery<PointLightComponent>(),
