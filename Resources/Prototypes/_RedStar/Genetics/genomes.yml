@@ -1,95 +1,645 @@
 - type: genome
+  id: Human
+  genes:
+  - gene: OmnivorousDigestion
+  - gene: ColorDiscrimination
+  - gene: FlexibleJoints
+  - gene: CellRenewal
+  - gene: AuditoryLearning
+
+- type: genome
+  id: Dwarf
+  genes:
+  - gene: OmnivorousDigestion
+  - gene: DenseConnectiveTissue
+  - gene: MineralizedTissue
+  - gene: XenobioticProcessing
+  - gene: ColdAdaptation
+
+- type: genome
   id: Monkey
-  genes: []
+  genes:
+  - gene: FlexibleJoints
+  - gene: LimbGrip
+  - gene: OmnivorousDigestion
+  - gene: VestibularBalance
+  - gene: AuditoryLearning
 
 - type: genome
-  id: NocturnalAnimal
+  id: Gorilla
   genes:
-  - gene: NightVision
+  - gene: DenseMusculature
+  - gene: DenseConnectiveTissue
+  - gene: LimbGrip
+  - gene: CelluloseDigestion
+  - gene: DefensiveAggression
 
 - type: genome
-  id: Fowl
+  id: Kobold
   genes:
+  - gene: KeratinizedCovering
+  - gene: FlexibleJoints
+  - gene: OmnivorousDigestion
+  - gene: StartleResponse
+  - gene: SlowMetabolism
+
+- type: genome
+  id: Vulpkanin
+  genes:
+  - gene: OlfactorySensitivity
+  - gene: AcuteHearing
+  - gene: OmnivorousDigestion
+  - gene: ColdAdaptation
+  - gene: AuditoryLearning
+
+- type: genome
+  id: Reptilian
+  genes:
+  - gene: KeratinizedCovering
+  - gene: HeatAdaptation
+  - gene: SlowMetabolism
+  - gene: PigmentPlasticity
   - gene: EggLayer
+
+- type: genome
+  id: Moth
+  genes:
+  - gene: ChitinousCovering
+  - gene: Photosensitivity
+  - gene: AcuteHearing
+  - gene: HighMetabolism
+  - gene: BroodDevelopment
+
+- type: genome
+  id: Arachnid
+  genes:
+  - gene: ChitinousCovering
+  - gene: VibrationSense
+  - gene: SilkSynthesis
+  - gene: ProteinSecretion
+  - gene: LimbGrip
+
+- type: genome
+  id: Diona
+  genes:
+  - gene: VegetativeGrowth
+  - gene: TissuePlasticity
+  - gene: CellRenewal
+  - gene: ProteinSecretion
+  - gene: ChemicalSensitivity
+
+- type: genome
+  id: Slime
+  genes:
+  - gene: TissuePlasticity
+  - gene: CellRenewal
+  - gene: MucusSecretion
+  - gene: ChemicalSensitivity
+  - gene: XenobioticProcessing
+
+- type: genome
+  id: Vox
+  genes:
+  - gene: NitrogenMetabolism
+  - gene: KeratinizedCovering
+  - gene: HighMetabolism
+  - gene: ProteinSecretion
+  - gene: AuditoryLearning
+
+- type: genome
+  id: Horror
+  genes:
+  - gene: TissuePlasticity
+  - gene: DenseMusculature
+  - gene: CellRenewal
+  - gene: HighMetabolism
+  - gene: DefensiveAggression
+  - gene: ToxinTolerance
+
+- type: genome
+  id: ChangelingLarva
+  genes:
+  - gene: TissuePlasticity
+  - gene: MucusSecretion
+  - gene: HighMetabolism
+  - gene: ProteinSecretion
+  - gene: BroodDevelopment
+  - gene: ToxinTolerance
+
+- type: genome
+  id: Feline
+  genes:
+  - gene: DimLightAdaptation
+  - gene: VestibularBalance
+  - gene: FlexibleJoints
+  - gene: TactileWhiskers
+  - gene: LimbGrip
+
+- type: genome
+  id: SpaceFeline
+  genes:
+  - gene: DimLightAdaptation
+  - gene: VestibularBalance
+  - gene: LowPressureAdaptation
+  - gene: ColdAdaptation
+  - gene: TactileWhiskers
+
+- type: genome
+  id: Canid
+  genes:
+  - gene: OlfactorySensitivity
+  - gene: AcuteHearing
+  - gene: VestibularBalance
+  - gene: MessyDrinker
+  - gene: PassiveTemperament
+
+- type: genome
+  id: Fox
+  genes:
+  - gene: OlfactorySensitivity
+  - gene: AcuteHearing
+  - gene: DimLightAdaptation
+  - gene: ElasticTendons
+  - gene: OmnivorousDigestion
+
+- type: genome
+  id: Mouse
+  genes:
+  - gene: DimLightAdaptation
+  - gene: AcuteHearing
+  - gene: TactileWhiskers
+  - gene: HighMetabolism
+  - gene: StartleResponse
+
+- type: genome
+  id: IrradiatedRodent
+  genes:
+  - gene: DimLightAdaptation
+  - gene: WeakImmunity
+  - gene: ChemicalSensitivity
+  - gene: MineralAssimilation
+  - gene: XenobioticProcessing
+
+- type: genome
+  id: Rat
+  genes:
+  - gene: OlfactorySensitivity
+  - gene: TactileWhiskers
+  - gene: OmnivorousDigestion
+  - gene: XenobioticProcessing
+  - gene: CollectiveSignaling
+
+- type: genome
+  id: Hamster
+  genes:
+  - gene: OlfactorySensitivity
+  - gene: TactileWhiskers
+  - gene: LipidStorage
+  - gene: HighMetabolism
+  - gene: StartleResponse
+
+- type: genome
+  id: Ferret
+  genes:
+  - gene: FlexibleJoints
+  - gene: OlfactorySensitivity
+  - gene: TactileWhiskers
+  - gene: ElasticTendons
+  - gene: HighMetabolism
+
+- type: genome
+  id: Possum
+  genes:
+  - gene: SlowMetabolism
+  - gene: OmnivorousDigestion
+  - gene: ToxinTolerance
+  - gene: StartleResponse
+  - gene: LimbGrip
+
+- type: genome
+  id: Raccoon
+  genes:
+  - gene: LimbGrip
+  - gene: FlexibleJoints
+  - gene: OmnivorousDigestion
+  - gene: TactileWhiskers
+  - gene: DimLightAdaptation
+
+- type: genome
+  id: Scurret
+  genes:
+  - gene: FlexibleJoints
+  - gene: ElasticTendons
+  - gene: TactileWhiskers
+  - gene: OlfactorySensitivity
+  - gene: VestibularBalance
+
+- type: genome
+  id: Sloth
+  genes:
+  - gene: SlowMetabolism
+  - gene: LimbGrip
+  - gene: PoorVision
+  - gene: CelluloseDigestion
+  - gene: PassiveTemperament
+
+- type: genome
+  id: Kangaroo
+  genes:
+  - gene: ElasticTendons
+  - gene: VestibularBalance
+  - gene: DenseMusculature
+  - gene: CelluloseDigestion
+  - gene: LipidStorage
+
+- type: genome
+  id: SpaceKangaroo
+  genes:
+  - gene: ElasticTendons
+  - gene: DenseMusculature
+  - gene: LowPressureAdaptation
+  - gene: ColdAdaptation
+  - gene: LipidStorage
+
+- type: genome
+  id: SpaceBear
+  genes:
+  - gene: DenseMusculature
+  - gene: DenseConnectiveTissue
+  - gene: LowPressureAdaptation
+  - gene: ColdAdaptation
+  - gene: DefensiveAggression
 
 - type: genome
   id: Bovine
   genes:
   - gene: Lactation
+  - gene: CelluloseDigestion
+  - gene: ProteinSecretion
+  - gene: LipidStorage
+  - gene: PassiveTemperament
 
 - type: genome
   id: Caprine
   genes:
   - gene: Lactation
+  - gene: CelluloseDigestion
+  - gene: LimbGrip
   - gene: Bleating
+  - gene: ProteinSecretion
 
 - type: genome
-  id: IrradiatedRodent
+  id: Ovine
   genes:
-  - gene: NightVision
-  - gene: Radiation
+  - gene: Lactation
+  - gene: CelluloseDigestion
+  - gene: KeratinizedCovering
+  - gene: Bleating
+  - gene: PassiveTemperament
 
 - type: genome
-  id: Parrot
+  id: SpaceOvine
   genes:
-  - gene: ParrotSpeech
-
-- type: genome
-  id: Canid
-  genes:
-  - gene: MessyDrinker
-
-- type: genome
-  id: Feline
-  genes:
-  - gene: NightVision
-  - gene: BiologicalVariant
+  - gene: KeratinizedCovering
+  - gene: Bleating
+  - gene: LowPressureAdaptation
+  - gene: ColdAdaptation
+  - gene: ProteinSecretion
 
 - type: genome
   id: Porcine
   genes:
-  - gene: BiologicalVariant
+  - gene: OmnivorousDigestion
+  - gene: OlfactorySensitivity
+  - gene: LipidStorage
+  - gene: ProteinSecretion
+  - gene: ChemicalSensitivity
 
 - type: genome
   id: Cervid
   genes:
-  - gene: BiologicalVariant
+  - gene: ColdAdaptation
+  - gene: KeratinizedCovering
+  - gene: MineralizedTissue
+  - gene: CelluloseDigestion
+  - gene: StartleResponse
 
 - type: genome
-  id: DionaNymph
+  id: Bat
   genes:
-  - gene: Reform
+  - gene: DimLightAdaptation
+  - gene: AcuteHearing
+  - gene: FragileBones
+  - gene: HighMetabolism
+  - gene: LimbGrip
 
 - type: genome
-  id: Basilisk
+  id: Fowl
   genes:
-  - gene: Reflection
+  - gene: EggLayer
+  - gene: KeratinizedCovering
+  - gene: ProteinSecretion
+  - gene: HighMetabolism
+  - gene: PassiveTemperament
 
 - type: genome
-  id: SpaceSpider
+  id: Duck
   genes:
-  - gene: NightVision
-  - gene: NoSlip
-  - gene: Venomous
+  - gene: EggLayer
+  - gene: KeratinizedCovering
+  - gene: LipidStorage
+  - gene: OxygenStorage
+  - gene: ProteinSecretion
+
+- type: genome
+  id: Goose
+  genes:
+  - gene: EggLayer
+  - gene: KeratinizedCovering
+  - gene: DefensiveAggression
+  - gene: ProteinSecretion
+  - gene: LipidStorage
+
+- type: genome
+  id: Penguin
+  genes:
+  - gene: EggLayer
+  - gene: KeratinizedCovering
+  - gene: ColdAdaptation
+  - gene: LipidStorage
+  - gene: OxygenStorage
+
+- type: genome
+  id: Parrot
+  genes:
+  - gene: AuditoryLearning
+  - gene: AcuteHearing
+  - gene: ColorDiscrimination
+  - gene: EggLayer
+  - gene: KeratinizedCovering
+
+- type: genome
+  id: Lizard
+  genes:
+  - gene: KeratinizedCovering
+  - gene: SlowMetabolism
+  - gene: PigmentPlasticity
+  - gene: HeatAdaptation
+  - gene: EggLayer
+
+- type: genome
+  id: Snake
+  genes:
+  - gene: KeratinizedCovering
+  - gene: VibrationSense
+  - gene: SlowMetabolism
+  - gene: OlfactorySensitivity
+  - gene: ElasticTendons
 
 - type: genome
   id: SpaceCobra
   genes:
-  - gene: Invisibility
-  - gene: NightVision
-  - gene: Venomous
+  - gene: PigmentPlasticity
+  - gene: DimLightAdaptation
+  - gene: ToxinProduction
+  - gene: ToxinTolerance
+  - gene: LowPressureAdaptation
+  - gene: StructuralIridescence
 
 - type: genome
-  id: Human
+  id: PurpleSnake
   genes:
-  - gene: BiologicalVariant
+  - gene: ToxinProduction
+  - gene: ToxinTolerance
+  - gene: ProteinSecretion
+  - gene: KeratinizedCovering
+  - gene: LowPressureAdaptation
+  - gene: DefensiveAggression
+
+- type: genome
+  id: Frog
+  genes:
+  - gene: MucusSecretion
+  - gene: ChemicalSensitivity
+  - gene: PigmentPlasticity
+  - gene: ElasticTendons
+
+- type: genome
+  id: Slug
+  genes:
+  - gene: MucusSecretion
+  - gene: SlowMetabolism
+  - gene: TissuePlasticity
+  - gene: ChemicalSensitivity
+
+- type: genome
+  id: SpaceSnail
+  genes:
+  - gene: MucusSecretion
+  - gene: MineralizedTissue
+  - gene: SlowMetabolism
+  - gene: LowPressureAdaptation
+  - gene: ChemicalSensitivity
+
+- type: genome
+  id: Bee
+  genes:
+  - gene: ChitinousCovering
+  - gene: ToxinProduction
+  - gene: ProteinSecretion
+  - gene: CollectiveSignaling
+  - gene: HighMetabolism
+
+- type: genome
+  id: Butterfly
+  genes:
+  - gene: ChitinousCovering
+  - gene: Photosensitivity
+  - gene: ColorDiscrimination
+  - gene: StructuralIridescence
+  - gene: HighMetabolism
+
+- type: genome
+  id: Cockroach
+  genes:
+  - gene: ChitinousCovering
+  - gene: VibrationSense
+  - gene: XenobioticProcessing
+  - gene: ToxinTolerance
+  - gene: DimLightAdaptation
+
+- type: genome
+  id: Mothroach
+  genes:
+  - gene: ChitinousCovering
+  - gene: Photosensitivity
+  - gene: LimbGrip
+  - gene: HighMetabolism
+  - gene: ProteinSecretion
+
+- type: genome
+  id: Crab
+  genes:
+  - gene: ChitinousCovering
+  - gene: MineralizedTissue
+  - gene: LimbGrip
+  - gene: VibrationSense
+  - gene: DefensiveAggression
 
 - type: genome
   id: Spider
   genes:
-  - gene: BiologicalVariant
-  - gene: Regeneration
-  - gene: NightVision
-  - gene: NoSlip
-  - gene: Venomous
-  - gene: WebSpinning
+  - gene: SilkSynthesis
+  - gene: ProteinSecretion
+  - gene: VibrationSense
+  - gene: ToxinProduction
+  - gene: LimbGrip
+  - gene: CellRenewal
+
+- type: genome
+  id: SpaceSpider
+  genes:
+  - gene: ChitinousCovering
+  - gene: VibrationSense
+  - gene: ToxinProduction
+  - gene: ToxinTolerance
+  - gene: LowPressureAdaptation
+  - gene: LimbGrip
+
+- type: genome
+  id: SpaceTick
+  genes:
+  - gene: ChitinousCovering
+  - gene: LimbGrip
+  - gene: ProteinSecretion
+  - gene: LowPressureAdaptation
+  - gene: HighMetabolism
+
+- type: genome
+  id: Carp
+  genes:
+  - gene: KeratinizedCovering
+  - gene: MineralizedTissue
+  - gene: LowPressureAdaptation
+  - gene: ColdAdaptation
+  - gene: DefensiveAggression
+
+- type: genome
+  id: Shark
+  genes:
+  - gene: DenseMusculature
+  - gene: MineralizedTissue
+  - gene: LowPressureAdaptation
+  - gene: ProteinSecretion
+  - gene: DefensiveAggression
+
+- type: genome
+  id: Dragon
+  genes:
+  - gene: HeatAdaptation
+  - gene: OxygenStorage
+  - gene: KeratinizedCovering
+  - gene: DenseMusculature
+  - gene: LowPressureAdaptation
+  - gene: DefensiveAggression
+
+- type: genome
+  id: Goliath
+  genes:
+  - gene: DenseConnectiveTissue
+  - gene: DenseMusculature
+  - gene: MineralizedTissue
+  - gene: LimbGrip
+  - gene: DefensiveAggression
+
+- type: genome
+  id: Hivelord
+  genes:
+  - gene: BroodDevelopment
+  - gene: CollectiveSignaling
+  - gene: TissuePlasticity
+  - gene: HighMetabolism
+  - gene: ProteinSecretion
+
+- type: genome
+  id: Basilisk
+  genes:
+  - gene: MineralizedTissue
+  - gene: StructuralIridescence
+  - gene: KeratinizedCovering
+  - gene: ColdAdaptation
+  - gene: DefensiveAggression
+
+- type: genome
+  id: Watcher
+  genes:
+  - gene: StructuralIridescence
+  - gene: ColorDiscrimination
+  - gene: LowPressureAdaptation
+  - gene: MineralizedTissue
+  - gene: HeatAdaptation
+
+- type: genome
+  id: Argocyte
+  genes:
+  - gene: MineralAssimilation
+  - gene: ChitinousCovering
+  - gene: CollectiveSignaling
+  - gene: BroodDevelopment
+  - gene: XenobioticProcessing
+
+- type: genome
+  id: AberrantFlesh
+  genes:
+  - gene: TissuePlasticity
+  - gene: CellRenewal
+  - gene: HighMetabolism
+  - gene: WeakImmunity
+  - gene: DefensiveAggression
+
+- type: genome
+  id: Mimic
+  genes:
+  - gene: TissuePlasticity
+  - gene: PigmentPlasticity
+  - gene: ProteinSecretion
+  - gene: SlowMetabolism
+  - gene: DefensiveAggression
+
+- type: genome
+  id: LaserRaptor
+  genes:
+  - gene: DenseMusculature
+  - gene: MineralizedTissue
+  - gene: KeratinizedCovering
+  - gene: HighMetabolism
+  - gene: AcuteHearing
+
+- type: genome
+  id: KillerTomato
+  genes:
+  - gene: VegetativeGrowth
+  - gene: TissuePlasticity
+  - gene: CellRenewal
+  - gene: ProteinSecretion
+  - gene: ChemicalSensitivity
+
+- type: genome
+  id: Hellspawn
+  genes:
+  - gene: DenseMusculature
+  - gene: HeatAdaptation
+  - gene: DefensiveAggression
+  - gene: TissuePlasticity
+  - gene: HighMetabolism
+  - gene: ToxinTolerance
+
+- type: genome
+  id: Xeno
+  genes:
+  - gene: ChitinousCovering
+  - gene: ToxinTolerance
+  - gene: ProteinSecretion
+  - gene: CollectiveSignaling
+  - gene: BroodDevelopment
+  - gene: LowPressureAdaptation

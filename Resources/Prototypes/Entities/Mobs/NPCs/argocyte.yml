@@ -6,6 +6,10 @@
   description: A dangerous alien found on the wrong side of planets, known for their propensity for munching on ruins.
   abstract: true
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Argocyte
+  # RS14-end
   - type: NpcFactionMember
     factions:
     - Xeno

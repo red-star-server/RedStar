@@ -10,6 +10,10 @@
   id: MobHellspawn
   description: An unstoppable force of carnage.
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Hellspawn
+  # RS14-end
   - type: GhostRole
     allowMovement: true
     makeSentient: true

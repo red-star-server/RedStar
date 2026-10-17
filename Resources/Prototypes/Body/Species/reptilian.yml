@@ -118,6 +118,10 @@
   id: MobReptilian
   name: Urist McScales
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Reptilian
+  # RS14-end
   - type: Puller
     needsHands: false
   - type: Butcherable

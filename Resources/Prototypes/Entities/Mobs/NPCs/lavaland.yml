@@ -5,6 +5,10 @@
   abstract: true
   description: It's like it's staring right through you.
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Watcher
+  # RS14-end
   - type: NpcFactionMember
     factions:
     - SimpleHostile

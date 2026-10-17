@@ -77,6 +77,10 @@
   parent: [MobSpaceBasic, BaseSlicingRefinableButchering, BaseMobDestructible]
   description: It looks friendly. Why don't you give it a hug?
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: SpaceBear
+  # RS14-end
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Animals/bear.rsi
@@ -126,6 +130,10 @@
   parent: [MobSpaceBasic, StripableInventoryBase, BaseSlicingRefinableButchering, BaseMobDestructible]
   description: It looks friendly. Why don't you give it a hug?
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: SpaceKangaroo
+  # RS14-end
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Animals/kangaroo.rsi
@@ -407,6 +415,10 @@
   name: space sheep
   description: A sheep... in space!
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: SpaceOvine
+  # RS14-end
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -512,6 +524,10 @@
   name: snail
   description: Revolting unless you're french.
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: SpaceSnail
+  # RS14-end
   - type: GhostRole
     makeSentient: true
     allowSpeech: false

@@ -40,7 +40,7 @@
   components:
   - type: SampleGeneration
     samples:
-    - genome: NocturnalAnimal
+    - genome: Mouse
 
 - type: entity
   parent: PetriDish

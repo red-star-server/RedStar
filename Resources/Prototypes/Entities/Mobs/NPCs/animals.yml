@@ -4,6 +4,10 @@
   id: MobBat
   description: Some cultures find them terrifying, others crunchy on the teeth.
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Bat
+  # RS14-end
   - type: MovementSpeedModifier
     baseWalkSpeed : 3
     baseSprintSpeed : 6
@@ -88,6 +92,10 @@
   id: MobBee
   description: Nice to have, but you can't build a civilization on a foundation of honey alone.
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Bee
+  # RS14-end
   - type: CombatMode
   - type: MovementSpeedModifier
     baseWalkSpeed : 3
@@ -370,6 +378,10 @@
   parent: [SolutionFood, SolutionTiny, SimpleMobBase, BaseSlicingRefinableButchering, MobNightVision]
   id: BaseCockroach
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Cockroach
+  # RS14-end
   - type: Sprite
     drawdepth: SmallMobs
   - type: Item
@@ -510,6 +522,10 @@
   id: MobMothroach
   description: This is the adorable by-product of multiple attempts at genetically mixing mothpeople with cockroaches.
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Mothroach
+  # RS14-end
   - type: GhostRole
     makeSentient: true
     allowSpeech: true
@@ -751,7 +767,7 @@
     othersPopup: action-popup-lay-egg-others
   # RS14-start
   - type: Genome
-    genomeId: Fowl
+    genomeId: Duck
   # RS14-end
   - type: SatiationProduction
     delay: 60
@@ -832,6 +848,10 @@
   id: MobButterfly
   description: Despite popular misconceptions, it's not actually made of butter.
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Butterfly
+  # RS14-end
   - type: MovementSpeedModifier
     baseWalkSpeed : 3
     baseSprintSpeed : 6
@@ -1013,6 +1033,10 @@
   id: MobCrab
   description: A folk legend goes around that his claw snaps spacemen out of existence over distasteful remarks. Be polite and tolerant for your own safety.
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Crab
+  # RS14-end
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -1278,10 +1302,6 @@
     verbText: udder-system-verb-milk
     emptyMessage: udder-system-dry
     successMessage: udder-system-success
-  # RS14-start
-  - type: Genome
-    genomeId: Caprine
-  # RS14-end
   - type: Shearable
     targetSolutionName: wool
     shearedProductId: MaterialCotton1 # Cotton is spawned because there is no wool item.
@@ -1381,6 +1401,11 @@
 - type: entity
   parent: [ MobSheepBase, SimpleMobBase, BaseMobDestructible ]
   id: MobSheep
+  # RS14-start
+  components:
+  - type: Genome
+    genomeId: Ovine
+  # RS14-end
   name: sheep
   description: An adorable genetically engineered chemical factory producing milk and cotton.
 
@@ -1418,6 +1443,10 @@
   id: MobGoose
   description: Its stomach and mind are an enigma beyond human comprehension.
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Goose
+  # RS14-end
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -1469,6 +1498,10 @@
   id: MobGorilla
   description: Smashes, roars, looks cool. Don't stand near one.
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Gorilla
+  # RS14-end
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -1556,6 +1589,10 @@
   id: MobKangaroo
   description: A large marsupial herbivore. It has powerful hind legs, with nails that resemble long claws.
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Kangaroo
+  # RS14-end
   - type: MovementSpeedModifier
     baseWalkSpeed: 3.5
     baseSprintSpeed: 4.5
@@ -1648,6 +1685,10 @@
   description: The genetic bipedal ancestor of... Uh... Something. Yeah, there's definitely something on the station that descended from whatever this is.
   abstract: true
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Monkey
+  # RS14-end
   - type: CombatMode
     canDisarm: true
   - type: Inventory
@@ -1763,10 +1804,6 @@
   parent: MobBaseAncestor
   description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
   components:
-  # RS14-start
-  - type: Genome
-    genomeId: Monkey
-  # RS14-end
   - type: NameIdentifier
     group: Monkey
   - type: Speech
@@ -1843,6 +1880,10 @@
   description: Cousins to the sentient race of lizard people, kobolds blend in with their natural habitat and are as nasty as monkeys; ready to pull out your hair and stab you to death.
   abstract: true
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Kobold
+  # RS14-end
   - type: NameIdentifier
     group: Kobold
   - type: LizardAccent
@@ -1996,6 +2037,10 @@
   id: MobMouse
   description: Squeak!
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Mouse
+  # RS14-end
   - type: GhostRole
     makeSentient: true
     allowSpeech: true
@@ -2302,6 +2347,10 @@
   id: MobLizard
   description: A harmless dragon.
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Lizard
+  # RS14-end
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
     baseSprintSpeed: 3
@@ -2359,6 +2408,10 @@
   id: MobSlug
   description: And they called this a lizard?
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Slug
+  # RS14-end
   - type: MovementSpeedModifier
     baseWalkSpeed : 2
     baseSprintSpeed : 3
@@ -2409,6 +2462,10 @@
   id: MobFrog
   description: Hop hop hop. Lookin' moist.
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Frog
+  # RS14-end
   - type: MovementSpeedModifier
     baseWalkSpeed: 3
     baseSprintSpeed: 6
@@ -2571,6 +2628,10 @@
   id: MobPenguin
   description: Their lives are constant pain due to their inner-body knees.
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Penguin
+  # RS14-end
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -2707,6 +2768,10 @@
   id: MobSnake
   description: Hissss! Bites aren't poisonous.
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Snake
+  # RS14-end
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -2756,6 +2821,10 @@
   id: MobPossum
   description: '"O Possum! My Possum!" -- Walt Whitman, 1865'
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Possum
+  # RS14-end
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Animals/possum.rsi
@@ -2829,6 +2898,10 @@
   id: MobRaccoon
   description: Trash panda!
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Raccoon
+  # RS14-end
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Animals/raccoon.rsi
@@ -2956,7 +3029,7 @@
   - type: MessyDrinker
   # RS14-start
   - type: Genome
-    genomeId: Canid
+    genomeId: Fox
   # RS14-end
   - type: Tag
     tags:
@@ -3302,6 +3375,10 @@
   parent: [MobCat, BaseSlicingRefinableButchering]
   description: Feline pet, prepared for the worst.
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: SpaceFeline
+  # RS14-end
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
@@ -3397,6 +3474,10 @@
   id: MobSloth
   description: Very slow animal. For people with low energy.
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Sloth
+  # RS14-end
   - type: MovementSpeedModifier
     baseWalkSpeed : 0.5
     baseSprintSpeed : 1
@@ -3454,6 +3535,10 @@
   id: MobFerret
   description: Just a silly little guy!
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Ferret
+  # RS14-end
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/ferret.rsi
@@ -3508,6 +3593,10 @@
   id: MobHamster
   description: A cute, fluffy, robust hamster.
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Hamster
+  # RS14-end
   - type: GhostRole
     makeSentient: true
     allowSpeech: true
@@ -3816,7 +3905,7 @@
     reformPrototype: MobDionaReformed
   # RS14-start
   - type: Genome
-    genomeId: DionaNymph
+    genomeId: Diona
   # RS14-end
   - type: TTS # Corvax-TTS
     #voice: Omu

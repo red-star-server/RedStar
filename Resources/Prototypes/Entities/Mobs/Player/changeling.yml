@@ -34,6 +34,10 @@
   id: MobHeadSlugBase
   abstract: true
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: ChangelingLarva
+  # RS14-end
   - type: Fixtures
     fixtures:
       fix1:

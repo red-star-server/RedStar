@@ -154,6 +154,10 @@
   id: MobMoth
   name: Urist McFluff
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Moth
+  # RS14-end
   - type: Damageable
     damageModifierSet: Moth
   - type: ZombieAccentOverride

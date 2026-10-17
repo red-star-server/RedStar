@@ -294,7 +294,3 @@
     prioritized: false
     relayOverlay: false # In case default value ever changes
     lightingColor: '#FFFFFF15' # Basically makes it impossible for things to be "Pitch black" but can still be dark.
-  # RS14-start
-  - type: Genome
-    genomeId: NocturnalAnimal
-  # RS14-end
