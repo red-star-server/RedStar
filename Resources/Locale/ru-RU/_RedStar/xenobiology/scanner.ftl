@@ -1,0 +1,1 @@
+slime-consume-verb = Поглотить
