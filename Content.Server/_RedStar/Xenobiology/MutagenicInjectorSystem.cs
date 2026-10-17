@@ -59,10 +59,11 @@ public sealed partial class MutagenicInjectorSystem : EntitySystem
             Comp<EntityStorageComponent>(ent).Open || ent.Comp.InjectionEndTime is not null)
             return;
 
+        var user = args.User;
         args.Verbs.Add(new AlternativeVerb
         {
             Text = Loc.GetString("mutagenic-injector-start"),
-            Act = () => TryStartInjection(ent),
+            Act = () => TryStartInjection(ent, user),
             Priority = 1
         });
     }
@@ -80,11 +81,12 @@ public sealed partial class MutagenicInjectorSystem : EntitySystem
         CancelInjection(ent);
     }
 
-    private void TryStartInjection(Entity<CellMutagenicInjectorComponent> ent)
+    private void TryStartInjection(Entity<CellMutagenicInjectorComponent> ent, EntityUid user)
     {
-        if (!TryGetReadyInjection(ent, out var subject, out var vial))
+        if (!TryGetReadyInjection(ent, user, out var subject, out var vial))
             return;
 
+        ent.Comp.InjectionUser = user;
         ent.Comp.InjectionSubject = subject;
         ent.Comp.InjectionVial = vial.Owner;
         ent.Comp.InjectionVialRevision = vial.Comp.Revision;
@@ -92,7 +94,7 @@ public sealed partial class MutagenicInjectorSystem : EntitySystem
         ent.Comp.AudioStream = _audio.PlayPvs(ent.Comp.ProcessSound, ent.Owner)?.Entity;
     }
 
-    private bool TryGetReadyInjection(Entity<CellMutagenicInjectorComponent> ent, out EntityUid subject,
+    private bool TryGetReadyInjection(Entity<CellMutagenicInjectorComponent> ent, EntityUid user, out EntityUid subject,
         out Entity<GeneticVialComponent> vial)
     {
         subject = default;
@@ -113,12 +115,12 @@ public sealed partial class MutagenicInjectorSystem : EntitySystem
         subject = recipient;
         if (vialComponent.Genes.All(id => _genomes.HasGene(recipient, id)))
         {
-            _popup.PopupEntity(Loc.GetString("mutagenic-injector-no-new-genes"), ent, PopupType.MediumCaution);
+            _popup.PopupEntity(Loc.GetString("mutagenic-injector-no-new-genes"), ent, user, PopupType.MediumCaution);
             return false;
         }
         if (!_genomes.CanApplyGenes(subject, vialComponent.Genes))
         {
-            _popup.PopupEntity(Loc.GetString("mutagenic-injector-overload"), ent, PopupType.MediumCaution);
+            _popup.PopupEntity(Loc.GetString("mutagenic-injector-overload"), ent, user, PopupType.MediumCaution);
             return false;
         }
         vial = (inserted, vialComponent);
@@ -169,10 +171,12 @@ public sealed partial class MutagenicInjectorSystem : EntitySystem
             return;
         }
 
+        var user = ent.Comp.InjectionUser;
         _vials.Clear((vialUid, vialComponent));
         CancelInjection(ent);
         _storage.OpenStorage(ent.Owner);
-        _popup.PopupEntity(Loc.GetString("mutagenic-injector-success", ("genes", changed)), ent, PopupType.Medium);
+        if (user is { } recipient && !TerminatingOrDeleted(recipient))
+            _popup.PopupEntity(Loc.GetString("mutagenic-injector-success", ("genes", changed)), ent, recipient, PopupType.Medium);
     }
 
     private void CancelInjection(Entity<CellMutagenicInjectorComponent> ent)
@@ -182,6 +186,7 @@ public sealed partial class MutagenicInjectorSystem : EntitySystem
 
         ent.Comp.InjectionEndTime = null;
         ent.Comp.InjectionSubject = null;
+        ent.Comp.InjectionUser = null;
         ent.Comp.InjectionVial = null;
         ent.Comp.InjectionVialRevision = 0;
         ent.Comp.AudioStream = _audio.Stop(ent.Comp.AudioStream);

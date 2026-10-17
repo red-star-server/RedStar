@@ -60,7 +60,7 @@ public sealed partial class BiologicalSample
     }
 
     /// <summary>
-    /// Reduces stability without changing the stored genome or notifying observers.
+    /// Reduces stability and destroys the genome at zero stability, without notifying observers.
     /// </summary>
     public bool TryReduceStability(float amount)
     {
@@ -69,6 +69,8 @@ public sealed partial class BiologicalSample
 
         var previous = Stability;
         Stability -= amount;
+        if (Stability <= 0f)
+            _genome = null;
         return !Stability.Equals(previous);
     }
 }

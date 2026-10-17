@@ -234,7 +234,7 @@ public sealed partial class GrowingVatSystem : EntitySystem
             SpendReagents(solution, recipe!);
             var success = _genomes.TryTransformGenes(subject, recipe!.RequiredGenes, recipe.ResultGene);
             _popup.PopupEntity(Loc.GetString(success ? "growing-vat-success" : "growing-vat-failure"),
-                vat, success ? PopupType.Medium : PopupType.MediumCaution);
+                vat, subject, success ? PopupType.Medium : PopupType.MediumCaution);
             Eject(vat, subject);
         }
     }

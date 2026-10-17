@@ -113,13 +113,13 @@ public sealed partial class CellSequencerSystem : EntitySystem
                 new CellSequencerFeedbackMessage(args.SampleId, args.Family, order, matches), args.Actor);
             if (!_samples.TryReduceStability((dish.Owner, (SampleContainerComponent?) dish.Comp), args.SampleId, ent.Comp.IncorrectStabilityCost))
                 UpdateUI(ent);
-            _popup.PopupEntity(Loc.GetString("cell-sequencer-incorrect"), ent, PopupType.MediumCaution);
+            _popup.PopupEntity(Loc.GetString("cell-sequencer-incorrect"), ent, args.Actor, PopupType.MediumCaution);
             return;
         }
 
         _decoded.Add(id);
         _popup.PopupEntity(Loc.GetString("cell-sequencer-discovered", ("gene", Loc.GetString($"gene-{id}-name"))),
-            ent, PopupType.Medium);
+            ent, args.Actor, PopupType.Medium);
         var query = EntityQueryEnumerator<CellSequencerComponent>();
         while (query.MoveNext(out var uid, out var component))
         {
