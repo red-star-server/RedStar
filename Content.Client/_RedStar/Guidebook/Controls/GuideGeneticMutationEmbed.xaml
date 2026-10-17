@@ -31,7 +31,6 @@
             </PanelContainer.PanelOverride>
             <BoxContainer Margin="10 6" SeparationOverride="12">
                 <Label Name="DurationLabel" HorizontalExpand="True" />
-                <Label Name="ChanceLabel" />
             </BoxContainer>
         </PanelContainer>
     </BoxContainer>

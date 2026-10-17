@@ -60,7 +60,6 @@ public sealed partial class GuideGeneticMutationEmbed : PanelContainer, IDocumen
         ResultName.SetMarkup($"[bold]{Loc.GetString($"gene-{result.ID}-name")}[/bold]");
         TierLabel.Text = Loc.GetString("guidebook-genetic-mutation-tier", ("tier", result.Tier));
         DurationLabel.Text = Loc.GetString("guidebook-genetic-mutation-duration", ("seconds", Math.Round(recipe.Duration.TotalSeconds, 2)));
-        ChanceLabel.Text = Loc.GetString("guidebook-genetic-mutation-chance", ("chance", MathF.Round(recipe.Chance * 100, 2)));
 
         Genes.RemoveAllChildren();
         foreach (var id in recipe.RequiredGenes.OrderBy(id => Loc.GetString($"gene-{id}-name")))

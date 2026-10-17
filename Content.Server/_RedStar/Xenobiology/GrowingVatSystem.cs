@@ -15,7 +15,6 @@ using Content.Shared.Power;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server._RedStar.Xenobiology;
@@ -34,7 +33,6 @@ public sealed partial class GrowingVatSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
-    [Dependency] private IRobustRandom _random = default!;
     [Dependency] private IPrototypeManager _prototypes = default!;
 
     [SubscribeLocalEvent]
@@ -234,8 +232,7 @@ public sealed partial class GrowingVatSystem : EntitySystem
 
             Cancel(vat);
             SpendReagents(solution, recipe!);
-            var success = _random.Prob(recipe!.Chance) &&
-                _genomes.TryTransformGenes(subject, recipe.RequiredGenes, recipe.ResultGene);
+            var success = _genomes.TryTransformGenes(subject, recipe!.RequiredGenes, recipe.ResultGene);
             _popup.PopupEntity(Loc.GetString(success ? "growing-vat-success" : "growing-vat-failure"),
                 vat, success ? PopupType.Medium : PopupType.MediumCaution);
             Eject(vat, subject);

@@ -6,7 +6,6 @@
     Saline: 5
   resultGene: NightVision
   duration: 60
-  chance: 1
 
 - type: geneticMutation
   id: MechanosensoryIntegrationMutation
@@ -16,7 +15,6 @@
     Saline: 5
   resultGene: MechanosensoryIntegration
   duration: 60
-  chance: 1
 
 - type: geneticMutation
   id: NoSlipMutation
@@ -26,7 +24,6 @@
     Saline: 5
   resultGene: NoSlip
   duration: 60
-  chance: 1
 
 - type: geneticMutation
   id: ElasticFrameMutation
@@ -36,7 +33,6 @@
     Saline: 5
   resultGene: ElasticFrame
   duration: 60
-  chance: 1
 
 - type: geneticMutation
   id: LamellarScalesMutation
@@ -46,7 +42,6 @@
     Saline: 5
   resultGene: LamellarScales
   duration: 60
-  chance: 1
 
 - type: geneticMutation
   id: CoordinatedRepairMutation
@@ -56,7 +51,6 @@
     Saline: 5
   resultGene: CoordinatedRepair
   duration: 60
-  chance: 1
 
 - type: geneticMutation
   id: ImmuneToleranceMutation
@@ -66,7 +60,6 @@
     Saline: 5
   resultGene: ImmuneTolerance
   duration: 60
-  chance: 1
 
 - type: geneticMutation
   id: VenomousMutation
@@ -76,7 +69,6 @@
     Saline: 5
   resultGene: Venomous
   duration: 60
-  chance: 1
 
 - type: geneticMutation
   id: DetoxifyingMetabolismMutation
@@ -86,7 +78,6 @@
     Saline: 5
   resultGene: DetoxifyingMetabolism
   duration: 60
-  chance: 1
 
 - type: geneticMutation
   id: TorporControlMutation
@@ -96,7 +87,6 @@
     Saline: 5
   resultGene: TorporControl
   duration: 60
-  chance: 1
 
 - type: geneticMutation
   id: PacifismMutation
@@ -106,7 +96,6 @@
     Saline: 5
   resultGene: Pacifism
   duration: 60
-  chance: 1
 
 - type: geneticMutation
   id: ReflexDisinhibitionMutation
@@ -116,7 +105,6 @@
     Saline: 5
   resultGene: ReflexDisinhibition
   duration: 60
-  chance: 1
 
 - type: geneticMutation
   id: RadionuclideSequestrationMutation
@@ -126,7 +114,6 @@
     Saline: 5
   resultGene: RadionuclideSequestration
   duration: 60
-  chance: 1
 
 - type: geneticMutation
   id: WebSpinningMutation
@@ -136,7 +123,6 @@
     Saline: 5
   resultGene: WebSpinning
   duration: 60
-  chance: 1
 
 - type: geneticMutation
   id: ParrotSpeechMutation
@@ -146,7 +132,6 @@
     Saline: 5
   resultGene: ParrotSpeech
   duration: 60
-  chance: 1
 
 - type: geneticMutation
   id: PhotonicLatticeMutation
@@ -157,7 +142,6 @@
     UnstableMutagen: 5
   resultGene: PhotonicLattice
   duration: 90
-  chance: 1
 
 - type: geneticMutation
   id: RegenerationMutation
@@ -168,7 +152,6 @@
     UnstableMutagen: 5
   resultGene: Regeneration
   duration: 90
-  chance: 1
 
 - type: geneticMutation
   id: ToxicOverproductionMutation
@@ -179,7 +162,6 @@
     UnstableMutagen: 5
   resultGene: ToxicOverproduction
   duration: 90
-  chance: 1
 
 - type: geneticMutation
   id: PressureHomeostasisMutation
@@ -190,7 +172,6 @@
     UnstableMutagen: 5
   resultGene: PressureHomeostasis
   duration: 90
-  chance: 1
 
 - type: geneticMutation
   id: SensoryOverloadMutation
@@ -201,7 +182,6 @@
     UnstableMutagen: 5
   resultGene: SensoryOverload
   duration: 90
-  chance: 1
 
 - type: geneticMutation
   id: AdaptivePigmentationMutation
@@ -212,7 +192,6 @@
     UnstableMutagen: 5
   resultGene: AdaptivePigmentation
   duration: 90
-  chance: 1
 
 - type: geneticMutation
   id: RadiationMutation
@@ -223,7 +202,6 @@
     UnstableMutagen: 5
   resultGene: Radiation
   duration: 90
-  chance: 1
 
 - type: geneticMutation
   id: ReflectionMutation
@@ -234,7 +212,6 @@
     UnstableMutagen: 10
   resultGene: Reflection
   duration: 120
-  chance: 1
 
 - type: geneticMutation
   id: InvisibilityMutation
@@ -245,7 +222,6 @@
     UnstableMutagen: 10
   resultGene: Invisibility
   duration: 120
-  chance: 1
 
 - type: geneticMutation
   id: SomaticHomeostasisMutation
@@ -256,4 +232,3 @@
     UnstableMutagen: 10
   resultGene: SomaticHomeostasis
   duration: 120
-  chance: 1

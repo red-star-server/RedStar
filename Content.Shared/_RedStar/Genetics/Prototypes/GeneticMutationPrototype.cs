@@ -20,8 +20,5 @@ public sealed partial class GeneticMutationPrototype : IPrototype
     public ProtoId<GenePrototype> ResultGene;
 
     [DataField]
-    public float Chance = 1f;
-
-    [DataField]
     public TimeSpan Duration = TimeSpan.FromSeconds(60);
 }
