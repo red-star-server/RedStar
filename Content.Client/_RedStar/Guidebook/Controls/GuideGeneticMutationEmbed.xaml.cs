@@ -56,6 +56,7 @@ public sealed partial class GuideGeneticMutationEmbed : PanelContainer, IDocumen
     {
         var result = _prototypes.Index(recipe.ResultGene);
         RepresentedPrototype = result;
+        Description.SetMessage(Loc.GetString($"gene-{result.ID}-desc"));
         ResultName.SetMarkup($"[bold]{Loc.GetString($"gene-{result.ID}-name")}[/bold]");
         TierLabel.Text = Loc.GetString("guidebook-genetic-mutation-tier", ("tier", result.Tier));
         DurationLabel.Text = Loc.GetString("guidebook-genetic-mutation-duration", ("seconds", Math.Round(recipe.Duration.TotalSeconds, 2)));

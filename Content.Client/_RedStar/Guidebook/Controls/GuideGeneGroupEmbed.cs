@@ -2,10 +2,12 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.Guidebook.Controls;
 using Content.Client.Guidebook.Richtext;
+using Content.Client.Message;
 using Content.Client.UserInterface.ControlExtensions;
 using Content.Shared._RedStar.Genetics;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Prototypes;
 
@@ -43,23 +45,39 @@ public sealed partial class GuideGeneGroupEmbed : BoxContainer, IDocumentTag
         return true;
     }
 
-    private sealed class GeneEntry : BoxContainer, ISearchableControl, IPrototypeRepresentationControl
+    private sealed class GeneEntry : PanelContainer, ISearchableControl, IPrototypeRepresentationControl
     {
         public IPrototype? RepresentedPrototype { get; }
 
         public GeneEntry(GenePrototype gene)
         {
             RepresentedPrototype = gene;
-            Margin = new Thickness(10, 4);
-            AddChild(new Label
+            Margin = new Thickness(5);
+            PanelOverride = new StyleBoxFlat
             {
-                Text = Loc.GetString($"gene-{gene.ID}-name"),
-                HorizontalExpand = true,
-            });
-            AddChild(new Label
+                BackgroundColor = Color.FromHex("#2b2e31"),
+                BorderColor = Color.FromHex("#777777"),
+                BorderThickness = new Thickness(1),
+            };
+            var body = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+                Margin = new Thickness(10, 8),
+                SeparationOverride = 6,
+            };
+            AddChild(body);
+            var header = new BoxContainer { SeparationOverride = 10 };
+            body.AddChild(header);
+            var name = new RichTextLabel { HorizontalExpand = true };
+            name.SetMarkup($"[bold]{Loc.GetString($"gene-{gene.ID}-name")}[/bold]");
+            header.AddChild(name);
+            header.AddChild(new Label
             {
                 Text = Loc.GetString("guidebook-genetic-mutation-tier", ("tier", gene.Tier)),
             });
+            var description = new RichTextLabel();
+            description.SetMessage(Loc.GetString($"gene-{gene.ID}-desc"));
+            body.AddChild(description);
         }
 
         public bool CheckMatchesSearch(string query) => this.ChildrenContainText(query);

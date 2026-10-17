@@ -149,7 +149,7 @@ public sealed partial class SampleCollectorSystem : EntitySystem
 
     private void UpdateCollectorAppearance(Entity<SampleCollectorComponent, SampleContainerComponent?> ent)
     {
-        if (!Resolve(ent, ref ent.Comp2))
+        if (!Resolve(ent, ref ent.Comp2, logMissing: false))
             return;
 
         _appearance.SetData(ent, CellCollectorVisuals.State, ent.Comp2.Empty);
