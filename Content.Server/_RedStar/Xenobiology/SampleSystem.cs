@@ -33,8 +33,22 @@ public sealed partial class SampleSystem : EntitySystem
         foreach (var sample in ent.Comp.Samples)
         {
             if (sample.Id == 0)
-                sample.Id = ++_nextSampleId;
+                sample.Id = NextSampleId();
         }
+    }
+
+    private int NextSampleId()
+    {
+        var query = AllEntityQuery<SampleContainerComponent>();
+        while (query.MoveNext(out var container))
+        {
+            foreach (var sample in container.Samples)
+            {
+                _nextSampleId = Math.Max(_nextSampleId, sample.Id);
+            }
+        }
+
+        return ++_nextSampleId;
     }
 
     private void NotifyChanged(EntityUid uid)
@@ -49,7 +63,7 @@ public sealed partial class SampleSystem : EntitySystem
             ent.Comp.Samples.Count >= ent.Comp.MaxSamples)
             return false;
 
-        sample.Id = ++_nextSampleId;
+        sample.Id = NextSampleId();
         ent.Comp.Samples.Add(sample);
 
         NotifyChanged(ent);
@@ -63,9 +77,9 @@ public sealed partial class SampleSystem : EntitySystem
             ent.Comp.Samples.Find(sample => sample.Id == secondId) is not { } second)
             return false;
 
+        result.Id = NextSampleId();
         ent.Comp.Samples.Remove(first);
         ent.Comp.Samples.Remove(second);
-        result.Id = ++_nextSampleId;
         ent.Comp.Samples.Add(result);
         NotifyChanged(ent);
         return true;

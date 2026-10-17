@@ -114,13 +114,12 @@ public sealed partial class GrowingVatSystem : EntitySystem
         {
             if (!Eligible(subject, candidate, mixture))
                 continue;
-            if (recipe is null || candidate.RequiredGenes.Count > recipe.RequiredGenes.Count ||
-                candidate.RequiredGenes.Count == recipe.RequiredGenes.Count &&
-                StringComparer.Ordinal.Compare(candidate.ID, recipe.ID) < 0)
-                recipe = candidate;
+
+            recipe = candidate;
+            return true;
         }
 
-        return recipe is not null;
+        return false;
     }
 
     private bool Eligible(EntityUid subject, GeneticMutationPrototype recipe, Solution mixture) =>
