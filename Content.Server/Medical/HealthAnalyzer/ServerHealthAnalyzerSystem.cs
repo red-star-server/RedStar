@@ -12,6 +12,7 @@ public sealed partial class ServerHealthAnalyzerSystem : HealthAnalyzerSystem
     public override HealthAnalyzerUiState GetHealthAnalyzerUiState(EntityUid? target, bool scanMode)
     {
         var state = base.GetHealthAnalyzerUiState(target, scanMode);
+        UpdateTriageEligibility(state, target); // RS14
 
         if (_temperatureQuery.TryComp(target, out var temp))
             state.Temperature = temp.Temperature;

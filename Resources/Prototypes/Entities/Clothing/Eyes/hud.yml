@@ -25,6 +25,7 @@
   components:
   - type: ShowHealthBars
   - type: ShowHealthIcons
+  - type: ShowTriageIcons # RS14
 
 - type: entity
   parent: ClothingEyesHudBase
