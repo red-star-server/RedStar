@@ -24,7 +24,14 @@ public sealed partial class GraphicsTab : Control
         var vSync = Control.AddOptionCheckBox(CVars.DisplayVSync, VSyncCheckBox);
         Control.AddOption(new OptionSliderIntInput(Control, _cfg, CVars.DisplayMaxFPS, MaxFpsInput, 0, 500));
         Control.AddOptionCheckBox(CCVars.AmbientOcclusion, AmbientOcclusionCheckBox);
-        Control.AddOptionCheckBox(LightAtmosphereCVars.Enabled, LightAtmosphereCheckBox); // RS14
+        // RS14-start
+        var darkening = Control.AddOptionCheckBox(LightAtmosphereCVars.Enabled, LightAtmosphereCheckBox);
+        Control.AddOptionSlider(LightAtmosphereCVars.DarkeningStrength, LightDarkeningStrengthSlider, 0, 100,
+            (_, value) => Loc.GetString("ui-options-value-percent", ("value", value)));
+        Control.AddOptionCheckBox(LightAtmosphereCVars.HighlightsEnabled, LightHighlightsCheckBox);
+        Control.AddOptionCheckBox(LightAtmosphereCVars.BloomEnabled, LightBloomCheckBox);
+        darkening.ImmediateValueChanged += _ => LightDarkeningStrengthSlider.Visible = LightAtmosphereCheckBox.Pressed;
+        // RS14-end
         Control.AddOption(new OptionFullscreen(Control, _cfg, FullscreenCheckBox));
         Control.AddOption(new OptionLightingQuality(Control, _cfg, DropDownLightingQuality));
 
@@ -85,6 +92,7 @@ public sealed partial class GraphicsTab : Control
         Control.AddOptionCheckBox(CCVars.HudFpsCounterVisible, FpsCounterCheckBox);
 
         Control.Initialize();
+        LightDarkeningStrengthSlider.Visible = LightAtmosphereCheckBox.Pressed; // RS14
 
         _cfg.OnValueChanged(CCVars.ViewportMinimumWidth, _ => UpdateViewportWidthRange());
         _cfg.OnValueChanged(CCVars.ViewportMaximumWidth, _ => UpdateViewportWidthRange());

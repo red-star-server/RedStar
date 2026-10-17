@@ -15,16 +15,17 @@ public sealed partial class AtmosphericLightingSystem : EntitySystem
     [Dependency] private SpriteSystem _sprites = default!;
     [Dependency] private TransformSystem _transforms = default!;
 
-    private LightAtmosphereOverlay? _atmosphere;
+    private LightHighlightOverlay? _highlights;
     private BloomLightOverlay? _bloom;
 
     public override void Initialize()
     {
         base.Initialize();
-        Subs.CVar(_config, LightAtmosphereCVars.Enabled, SetEnabled, true);
+        Subs.CVar(_config, LightAtmosphereCVars.HighlightsEnabled, SetHighlightsEnabled, true);
+        Subs.CVar(_config, LightAtmosphereCVars.BloomEnabled, SetBloomEnabled, true);
     }
 
-    private void SetEnabled(bool enabled)
+    private void SetBloomEnabled(bool enabled)
     {
         if (!enabled)
         {
@@ -35,33 +36,45 @@ public sealed partial class AtmosphericLightingSystem : EntitySystem
                 _bloom = null;
             }
 
-            if (_atmosphere == null)
-                return;
-
-            _overlays.RemoveOverlay(_atmosphere);
-            _atmosphere.Dispose();
-            _atmosphere = null;
-
             return;
         }
 
-        if (_atmosphere != null)
+        if (_bloom != null)
             return;
 
-        _atmosphere = new LightAtmosphereOverlay(_prototypes, EntityManager);
         _bloom = new BloomLightOverlay(
             _tree,
             GetEntityQuery<PointLightComponent>(),
             _sprites,
             _transforms,
             _prototypes);
-        _overlays.AddOverlay(_atmosphere);
         _overlays.AddOverlay(_bloom);
+    }
+
+    private void SetHighlightsEnabled(bool enabled)
+    {
+        if (!enabled)
+        {
+            if (_highlights == null)
+                return;
+
+            _overlays.RemoveOverlay(_highlights);
+            _highlights.Dispose();
+            _highlights = null;
+            return;
+        }
+
+        if (_highlights != null)
+            return;
+
+        _highlights = new LightHighlightOverlay(_prototypes, _overlays, EntityManager);
+        _overlays.AddOverlay(_highlights);
     }
 
     public override void Shutdown()
     {
-        SetEnabled(false);
+        SetHighlightsEnabled(false);
+        SetBloomEnabled(false);
         base.Shutdown();
     }
 }

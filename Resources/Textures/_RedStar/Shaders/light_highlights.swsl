@@ -1,0 +1,26 @@
+light_mode unshaded;
+
+uniform sampler2D SCREEN_TEXTURE;
+uniform sampler2D LIGHT_TEXTURE;
+uniform sampler2D AMBIENT_TEXTURE;
+uniform sampler2D ROOF_TEXTURE;
+uniform highp vec2 ambient_uv_scale;
+uniform highp vec2 ambient_uv_offset;
+
+void fragment() {
+    highp vec2 uv = FRAGCOORD.xy * SCREEN_PIXEL_SIZE;
+    highp vec4 scene = zTextureSpec(SCREEN_TEXTURE, uv);
+    highp vec3 illumination = zTextureSpec(LIGHT_TEXTURE, uv).rgb;
+    highp vec3 ambient = zTextureSpec(AMBIENT_TEXTURE, uv * ambient_uv_scale + ambient_uv_offset).rgb;
+    // Keep the old lift for window light in covered interiors. Outdoors only light
+    // above the ambient background contributes, avoiding a daylight-wide veil.
+    highp float roof = zTextureSpec(ROOF_TEXTURE, uv).a;
+    highp vec3 local_light = max(illumination - ambient * (1.0 - roof), vec3(0.0));
+    highp float peak = max(max(local_light.r, local_light.g), local_light.b);
+    highp float highlight = smoothstep(0.35, 1.05, peak);
+    highlight *= highlight;
+    highp float scene_level = dot(scene.rgb, vec3(0.2126, 0.7152, 0.0722));
+    highp float headroom = 1.0 - 0.35 * smoothstep(0.40, 0.80, scene_level);
+    highp vec3 lift = clamp(local_light, 0.0, 1.0) * (0.156 * highlight * headroom);
+    COLOR = vec4(scene.rgb + lift * (vec3(1.0) - scene.rgb), scene.a);
+}

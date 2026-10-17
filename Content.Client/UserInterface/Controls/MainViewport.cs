@@ -25,6 +25,7 @@ namespace Content.Client.UserInterface.Controls
             Viewport = new ScalingViewport
             {
                 AlwaysRender = true,
+                ApplyDarkAmbient = true, // RS14
                 RenderScaleMode = ScalingViewportRenderScaleMode.CeilInt,
                 MouseFilter = MouseFilterMode.Stop
             };

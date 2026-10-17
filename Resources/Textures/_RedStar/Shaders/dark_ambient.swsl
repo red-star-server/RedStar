@@ -1,0 +1,32 @@
+// SPDX-FileCopyrightText: 2026 flex5hybrid (RussianCM / CMU)
+// SPDX-FileCopyrightText: 2026 RedStar contributors
+// SPDX-License-Identifier: AGPL-3.0-only
+// Adapted from RussianCM PR #476, commit bdde559a1e77d00eb912807e2b0331333c6dbb00:
+// Content.CMU/Resources/Textures/CMU14/Shaders/dark_ambient.swsl
+// Neutral tonal grading, with shadow tint and desaturation removed for RedStar.
+// Lighting colors and the original alpha are preserved; there is no shadow tint.
+light_mode unshaded;
+
+uniform highp float Intensity;
+uniform highp float Sharpness;
+uniform highp vec2 PixelSize;
+
+void fragment() {
+    highp vec4 source = zTexture(UV);
+    if (Sharpness > 0.0) {
+        highp vec4 neighbors = zTexture(UV + vec2(PixelSize.x, 0.0));
+        neighbors += zTexture(UV - vec2(PixelSize.x, 0.0));
+        neighbors += zTexture(UV + vec2(0.0, PixelSize.y));
+        neighbors += zTexture(UV - vec2(0.0, PixelSize.y));
+        source = clamp(source + Sharpness * (source - neighbors * 0.25), 0.0, 1.0);
+    }
+
+    highp float luminance = dot(source.rgb, vec3(0.2126, 0.7152, 0.0722));
+    highp float brightest = max(source.r, max(source.g, source.b));
+    highp float darkest = min(source.r, min(source.g, source.b));
+    highp float saturation = (brightest - darkest) / max(brightest, 0.0001);
+    // Protect bright saturated signals without changing their hue.
+    highp float signal = smoothstep(0.7, 1.0, saturation) * smoothstep(0.35, 0.85, brightest);
+    highp float gain = pow(max(luminance, 0.0001), 0.45 * (1.0 - 0.8 * signal));
+    COLOR = vec4(source.rgb * mix(1.0, gain, clamp(Intensity, 0.0, 1.0)), source.a);
+}

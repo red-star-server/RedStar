@@ -1,8 +1,10 @@
 using System.Numerics;
+using Content.Client.Overlays;
 using Content.Shared.Light;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -13,8 +15,11 @@ namespace Content.Client.Light;
 /// <summary>
 /// Draws one fixture mask over the lit world. The engine light map shades it with the world.
 /// </summary>
-public sealed class BloomLightOverlay : Overlay
+public sealed partial class BloomLightOverlay : Overlay
 {
+    [Dependency] private IOverlayManager _overlays = default!;
+    [Dependency] private ILightManager _lighting = default!;
+    [Dependency] private IEntityManager _entities = default!;
     private static readonly ProtoId<ShaderPrototype> ShaderId = "BloomLightMask";
 
     private readonly BloomLightTreeSystem _tree;
@@ -35,6 +40,7 @@ public sealed class BloomLightOverlay : Overlay
         TransformSystem transforms,
         IPrototypeManager prototypes)
     {
+        IoCManager.InjectDependencies(this);
         _tree = tree;
         _lights = lights;
         _sprites = sprites;
@@ -46,6 +52,11 @@ public sealed class BloomLightOverlay : Overlay
     protected override bool BeforeDraw(in OverlayDrawArgs args)
     {
         _visible.Clear();
+        if (args.Viewport.Eye is not { DrawLight: true } || !_lighting.Enabled || !_lighting.DrawLighting ||
+            _overlays.HasOverlay<NightVisionOverlay>() ||
+            !_entities.TryGetComponent(args.MapUid, out MapComponent? map) || !map.LightingEnabled)
+            return false;
+
         var state = new QueryState(this);
         _tree.QueryAabb(ref state, Collect, args.MapId, args.WorldAABB);
         return _visible.Count > 0;

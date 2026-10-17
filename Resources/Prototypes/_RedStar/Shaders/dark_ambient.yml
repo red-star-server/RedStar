@@ -1,0 +1,4 @@
+- type: shader
+  id: DarkAmbient
+  kind: source
+  path: "/Textures/_RedStar/Shaders/dark_ambient.swsl"
