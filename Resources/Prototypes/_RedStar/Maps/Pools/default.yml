@@ -1,10 +1,10 @@
 - type: gameMapPool
   id: RedStarMapPool
   maps:
-  - Awesome
+  #- Awesome
   - Cluster
-  - Omega
-  - Silly
+  #- Omega
+  #- Silly
   #- Bagel
   #- Box
   #- Elkridge
