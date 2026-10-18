@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared._RedStar.Genetics.Prototypes;
 
 /// <summary>
-/// Defines the natural genes generated for an organism.
+/// Defines the donor catalogue sampled from an organism, independently of its working components.
 /// </summary>
 [Prototype]
 public sealed partial class GenomePrototype : IPrototype
@@ -12,7 +12,7 @@ public sealed partial class GenomePrototype : IPrototype
     public string ID { get; private set; } = string.Empty;
 
     /// <summary>
-    /// Natural genes present and active when this genome is generated.
+    /// Genes available in a biopsy. These entries do not apply effects to the donor.
     /// </summary>
     [DataField]
     public List<ProtoId<GenePrototype>> Genes = [];

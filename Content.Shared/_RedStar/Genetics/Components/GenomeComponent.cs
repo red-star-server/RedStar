@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared._RedStar.Genetics.Components;
 
 /// <summary>
-/// Stores inherited and acquired genes on the server. Only generation readiness is replicated.
+/// Stores acquired modifications and a reference to the organism's donor catalogue. Only readiness is replicated.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(GenomeSystem))]
 public sealed partial class GenomeComponent : Component
@@ -16,7 +16,7 @@ public sealed partial class GenomeComponent : Component
     public ProtoId<GenomePrototype> GenomeId;
 
     /// <summary>
-    /// Set after generation or loading; prevents MapInit from replacing an existing genome.
+    /// Set when the donor catalogue is initialized; required before sampling or introducing modifications.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool GenomeGenerated;
@@ -28,13 +28,7 @@ public sealed partial class GenomeComponent : Component
     public int MaximumLoad = 6;
 
     /// <summary>
-    /// Genes inherited from the original genome, excluded from acquired-gene load.
-    /// </summary>
-    [DataField]
-    public HashSet<ProtoId<GenePrototype>> NaturalGenes = [];
-
-    /// <summary>
-    /// All present genes and their expression status, including dormant and suppressed genes.
+    /// Acquired genes and their expression status. Catalogue entries do not activate effects or consume load.
     /// Mutations must go through ServerGenomeSystem to notify observers.
     /// </summary>
     [DataField]

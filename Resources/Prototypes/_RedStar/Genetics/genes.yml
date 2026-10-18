@@ -327,25 +327,7 @@
   loadCost: 1
   fragmentCount: 4
   minimumStability: 0.5
-  effects:
-  - !type:AddComponents
-    components:
-    - type: EntityProducerAction
-      insufficientSatiationPopup: action-popup-lay-egg-too-hungry
-      userPopup: action-popup-lay-egg-user
-      othersPopup: action-popup-lay-egg-others
-    - type: SatiationProduction
-      delay: 60
-      delayMax: 120
-      satiationUsage: 60
-      minimumSatiation: 60
-      automaticForPlayers: false
-    - type: EntityProducer
-      table:
-        id: FoodEgg
-    - type: ActionGrant
-      actions:
-      - ActionAnimalLayEgg
+  expression: GeneExpressionEggLayer
 
 - type: gene
   id: Lactation
@@ -353,17 +335,7 @@
   loadCost: 1
   fragmentCount: 4
   minimumStability: 0.5
-  effects:
-  - !type:ContainedSolutionEffect
-    prototype: SolutionUdder
-    solutionName: udder
-  - !type:AddComponents
-    components:
-    - type: HarvestableSolution
-      solutionName: udder
-      verbText: udder-system-verb-milk
-      emptyMessage: udder-system-dry
-      successMessage: udder-system-success
+  expression: GeneExpressionLactation
 
 - type: gene
   id: MessyDrinker
@@ -372,10 +344,7 @@
   category: Pathological
   fragmentCount: 4
   minimumStability: 0.5
-  effects:
-  - !type:AddComponents
-    components:
-    - type: MessyDrinker
+  expression: GeneExpressionMessyDrinker
 
 - type: gene
   id: Bleating
@@ -383,10 +352,7 @@
   loadCost: 1
   fragmentCount: 4
   minimumStability: 0.5
-  effects:
-  - !type:AddComponents
-    components:
-    - type: BleatingAccent
+  expression: GeneExpressionBleating
 
 - type: gene
   id: MineralAssimilation
@@ -416,10 +382,7 @@
   category: Beneficial
   fragmentCount: 5
   minimumStability: 0.6
-  effects:
-  - !type:AddComponents
-    components:
-    - type: NightVision
+  expression: GeneExpressionNightVision
 
 - type: gene
   id: MechanosensoryIntegration
@@ -436,10 +399,7 @@
   category: Beneficial
   fragmentCount: 5
   minimumStability: 0.6
-  effects:
-  - !type:AddComponents
-    components:
-    - type: NoSlip
+  expression: GeneExpressionNoSlip
 
 - type: gene
   id: ElasticFrame
@@ -482,15 +442,7 @@
   category: Beneficial
   fragmentCount: 5
   minimumStability: 0.6
-  effects:
-  - !type:ContainedSolutionEffect
-    prototype: SolutionVenomSpider
-    solutionName: melee
-  - !type:AddComponents
-    components:
-    - type: MeleeChemicalInjector
-      transferAmount: 1
-      solution: melee
+  expression: GeneExpressionVenomous
 
 - type: gene
   id: DetoxifyingMetabolism
@@ -514,10 +466,7 @@
   loadCost: 2
   fragmentCount: 5
   minimumStability: 0.6
-  effects:
-  - !type:AddComponents
-    components:
-    - type: Pacified
+  expression: GeneExpressionPacifism
 
 - type: gene
   id: ReflexDisinhibition
@@ -542,11 +491,7 @@
   category: Beneficial
   fragmentCount: 5
   minimumStability: 0.6
-  effects:
-  - !type:AddComponents
-    components:
-    - type: Spider
-      spawnsWebsAsNonPlayer: false
+  expression: GeneExpressionWebSpinning
 
 - type: gene
   id: ParrotSpeech
@@ -555,13 +500,7 @@
   category: Beneficial
   fragmentCount: 5
   minimumStability: 0.6
-  effects:
-  - !type:AddComponents
-    components:
-    - type: ActiveListener
-    - type: ParrotMemory
-    - type: ParrotListener
-    - type: Vocalizer
+  expression: GeneExpressionParrotSpeech
 
 - type: gene
   id: PhotonicLattice
@@ -598,12 +537,10 @@
   category: Beneficial
   fragmentCount: 6
   minimumStability: 0.65
-  effects:
-  - !type:ModifyStatusEffect
-    effectProto: StatusEffectPressureImmunity
-    time: null
+  expression: GeneExpressionPressureHomeostasis
 
 # TODO: Add periodic episodes of impaired movement and speech.
+
 - type: gene
   id: SensoryOverload
   tier: 3
@@ -628,12 +565,7 @@
   category: Pathological
   fragmentCount: 6
   minimumStability: 0.65
-  effects:
-  - !type:AddComponents
-    components:
-    - type: RadiationSource
-      intensity: 0.25
-      slope: 0.5
+  expression: GeneExpressionRadiation
 
 - type: gene
   id: Reflection
@@ -642,12 +574,7 @@
   category: Beneficial
   fragmentCount: 7
   minimumStability: 0.7
-  effects:
-  - !type:AddComponents
-    components:
-    - type: Reflect
-      reflects: Energy
-      reflectProb: 0.25
+  expression: GeneExpressionReflection
 
 - type: gene
   id: Invisibility
@@ -656,16 +583,10 @@
   category: Beneficial
   fragmentCount: 7
   minimumStability: 0.7
-  effects:
-  - !type:AddComponents
-    components:
-    - type: Stealth
-      enabledOnDeath: false
-    - type: StealthOnMove
-      passiveVisibilityRate: -0.1
-      movementVisibilityRate: 0.5
+  expression: GeneExpressionInvisibility
 
 # TODO: Add periodic mechanical and thermal healing.
+
 - type: gene
   id: SomaticHomeostasis
   tier: 4

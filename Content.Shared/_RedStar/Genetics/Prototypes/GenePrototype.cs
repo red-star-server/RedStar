@@ -34,7 +34,7 @@ public sealed partial class GenePrototype : IPrototype
 
     /// <summary>
     /// Describes the gene's manifestations independently of its research tier and load.
-    /// A mixed gene combines useful and harmful effects in the same effect list.
+    /// A mixed gene combines useful and harmful traits within the same manifestation.
     /// </summary>
     [DataField]
     public GeneCategory Category = GeneCategory.Neutral;
@@ -64,8 +64,14 @@ public sealed partial class GenePrototype : IPrototype
     public float MinimumStability = 0.5f;
 
     /// <summary>
-    /// Effects attempted when the gene is activated. An empty list still permits activation.
+    /// One-time effects attempted on first activation. Resuming or cloning a gene does not replay them.
     /// </summary>
     [DataField]
     public EntityEffect[] Effects = [];
+
+    /// <summary>
+    /// Persistent status manifestation owned by this gene. Null means it has no persistent effects.
+    /// </summary>
+    [DataField]
+    public EntProtoId? Expression;
 }
