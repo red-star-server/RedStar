@@ -7,27 +7,68 @@
       ClothingUnderwearTopBraWhite: 5
       ClothingUnderwearTopBraSports: 5
       ClothingUnderwearTopBraSportsAlternative: 5
+      ClothingUnderwearTopBralete: 5
+      ClothingUnderwearTopBraStripped: 5
+      ClothingUnderwearTopBraSport: 5
+      ClothingUnderwearTopBraStrapless: 5
+      ClothingUnderwearTopBraLizard: 3
+      ClothingUnderwearTopBraNekoBlack: 3
+      ClothingUnderwearTopBraNekoWhite: 3
+      ClothingUnderwearTopBraLace: 3
+      ClothingUnderwearTopCorset: 3
+      ClothingUnderwearTopBraLatex: 3
+      ClothingUnderwearTopBraFishnet: 3
+      ClothingUnderwearTopBraKinky: 3
+      ClothingUnderwearTopBraThong: 3
+      ClothingUnderwearTopBraPasties: 3
     contrabandInventory:
       ClothingUnderwearTopBraCentcomm: 1
     emaggedInventory:
       ClothingUnderwearTopBraSyndicateAgent: 1
-  - name: vending-machine-category-bottom
+  - name: vending-machine-category-boxers
+    icon: { entity: ClothingUnderwearBottomBoxersWhite }
+    startingInventory:
+      ClothingUnderwearBottomBoxersWhite: 5
+      ClothingUnderwearBottomHearts: 5
+      ClothingUnderwearBottomMBriefs: 5
+      ClothingUnderwearBottomSport: 5
+      ClothingUnderwearBottomStripe: 5
+      ClothingUnderwearBottomFishnet: 3
+      ClothingUnderwearBottomMankiny: 3
+      ClothingUnderwearBottomMKinky: 3
+    contrabandInventory:
+      ClothingUnderwearBottomBoxersCentcomm: 1
+    emaggedInventory:
+      ClothingUnderwearBottomBoxersSyndicateAgent: 1
+  - name: vending-machine-category-panties
     icon: { entity: ClothingUnderwearBottomPantiesWhite }
     startingInventory:
       ClothingUnderwearBottomPantiesWhite: 5
-      ClothingUnderwearBottomBoxersWhite: 5
+      ClothingUnderwearBottomFBriefs: 5
+      ClothingUnderwearBottomPanties: 5
+      ClothingUnderwearBottomStrippedPanties: 5
+      ClothingUnderwearBottomLizard: 3
+      ClothingUnderwearBottomNekoBlack: 3
+      ClothingUnderwearBottomNekoWhite: 3
+      ClothingUnderwearBottomNinja: 3
+      ClothingUnderwearBottomLace: 3
+      ClothingUnderwearBottomLatex: 3
+      ClothingUnderwearBottomThong: 3
+      ClothingUnderwearBottomFKinky: 3
     contrabandInventory:
       ClothingUnderwearBottomPantiesCentcomm: 1
-      ClothingUnderwearBottomBoxersCentcomm: 1
     emaggedInventory:
       ClothingUnderwearBottomPantiesSyndicateAgent: 1
-      ClothingUnderwearBottomBoxersSyndicateAgent: 1
   - name: vending-machine-category-socks
     icon: { entity: ClothingUnderwearSocksNormal }
     startingInventory:
       ClothingUnderwearSocksShort: 5
       ClothingUnderwearSocksNormal: 5
       ClothingUnderwearSocksHigh: 5
+      ClothingUnderwearSocksGraynee: 5
+      ClothingUnderwearSocksGraynorm: 5
+      ClothingUnderwearSocksGrayshort: 5
+      ClothingUnderwearSocksGraythigh: 5
       ClothingUnderwearSocksThigh: 2
       ClothingUnderwearStockingsBlack: 2
       ClothingUnderwearSocksNylon: 2
@@ -35,6 +76,10 @@
       ClothingUnderwearStockingsBlackPaws: 2
       ClothingUnderSocksCoder: 3
       ClothingUnderSocksBee: 3
+      ClothingUnderwearSocksPantyhose: 3
+      ClothingUnderwearSocksFishnetKnee: 3
+      ClothingUnderwearSocksFishnetThigh: 3
+      ClothingUnderwearSocksFishnet: 3
   - name: vending-machine-category-swimwear
     icon: { entity: ClothingUnderwearBottomSwimHalter }
     startingInventory:
@@ -48,3 +93,4 @@
       ClothingUnderwearBottomSwimGreen: 3
       ClothingUnderwearBottomSwimPurple: 3
       ClothingUnderwearBottomSwimRed: 3
+      ClothingUnderwearTopBikini: 3
