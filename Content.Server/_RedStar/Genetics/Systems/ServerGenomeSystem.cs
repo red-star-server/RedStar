@@ -149,6 +149,15 @@ public sealed partial class ServerGenomeSystem : GenomeSystem
         Resolve(ent, ref ent.Comp, logMissing: false) && ent.Comp.Genes.ContainsKey(id);
 
     /// <summary>
+    /// Reads an acquired gene's expression state. Returns false for genes present only in the donor catalogue.
+    /// </summary>
+    public bool TryGetGeneStatus(Entity<GenomeComponent?> ent, ProtoId<GenePrototype> id, out GeneStatus status)
+    {
+        status = default;
+        return Resolve(ent, ref ent.Comp, logMissing: false) && ent.Comp.Genes.TryGetValue(id, out status);
+    }
+
+    /// <summary>
     /// Checks whether the gene is present but has not been expressed.
     /// </summary>
     public bool IsRaw(Entity<GenomeComponent?> ent, ProtoId<GenePrototype> id) =>
@@ -164,6 +173,12 @@ public sealed partial class ServerGenomeSystem : GenomeSystem
 
     private int Load(IEnumerable<ProtoId<GenePrototype>> genes) =>
         genes.Sum(id => _prototypes.Index(id).LoadCost);
+
+    /// <summary>
+    /// Returns the load reserved by acquired genes, including dormant and suppressed ones, or zero without a genome.
+    /// </summary>
+    public int GetLoad(Entity<GenomeComponent?> ent) =>
+        Resolve(ent, ref ent.Comp, logMissing: false) ? Load(ent.Comp.Genes.Keys) : 0;
 
     /// <summary>
     /// Checks that incoming genes are compatible and their combined acquired load fits the limit.

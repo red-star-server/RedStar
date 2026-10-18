@@ -21,6 +21,7 @@
   - BiopsyTool
   - PetriDish
   - GeneticVial
+  - HandheldGeneticAnalyzer
 
 - type: latheRecipePack
   id: MiningToolsStatic
