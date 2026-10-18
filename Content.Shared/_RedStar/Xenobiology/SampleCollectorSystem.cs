@@ -37,19 +37,10 @@ public abstract partial class SampleCollectorSystem : EntitySystem
             return;
         }
 
-        string? failure = null;
-        if (container.SampleCount >= container.MaxSamples)
-            failure = "cell-collector-full";
-        else if (!_genomes.IsGenerated(target))
-            failure = "cell-collector-target-cant-collected";
-        else if (TryComp<DamageableComponent>(target, out var damageable) &&
-                 _damageable.GetPositiveDamage((target, damageable)).DamageDict.TryGetValue("Cellular", out var damage) &&
-                 (float) damage >= ent.Comp.MaximumCellularDamage)
-            failure = "cell-collector-sample-damaged";
-
-        if (failure is not null)
+        if (!CanCollectBiopsy((ent.Owner, ent.Comp, container), target, out _, out var failure))
         {
-            _popup.PopupEntity(Loc.GetString(failure), ent, args.User, PopupType.SmallCaution);
+            if (failure is not null)
+                _popup.PopupEntity(Loc.GetString(failure), ent, args.User, PopupType.SmallCaution);
             return;
         }
 
@@ -63,5 +54,38 @@ public abstract partial class SampleCollectorSystem : EntitySystem
             BlockDuplicate = true
         };
         args.Handled = _doAfter.TryStartDoAfter(doAfter);
+    }
+
+    /// <summary>
+    /// Checks collector capacity, genome readiness, and the donor's cellular damage.
+    /// Returns current damage for sample generation and a failure message key when available.
+    /// Does not change either entity or display a popup.
+    /// </summary>
+    public bool CanCollectBiopsy(
+        Entity<SampleCollectorComponent, SampleContainerComponent?> collector,
+        EntityUid target,
+        out float cellularDamage,
+        out string? failure)
+    {
+        cellularDamage = 0f;
+        failure = null;
+        if (collector.Owner == target || !Resolve(collector, ref collector.Comp2, logMissing: false))
+            return false;
+
+        if (collector.Comp2.SampleCount >= collector.Comp2.MaxSamples)
+            failure = "cell-collector-full";
+        else if (!_genomes.IsGenerated(target))
+            failure = "cell-collector-target-cant-collected";
+        else
+        {
+            if (TryComp<DamageableComponent>(target, out var damageable) &&
+                _damageable.GetPositiveDamage((target, damageable)).DamageDict.TryGetValue("Cellular", out var damage))
+                cellularDamage = (float) damage;
+
+            if (cellularDamage >= collector.Comp1.MaximumCellularDamage)
+                failure = "cell-collector-sample-damaged";
+        }
+
+        return failure is null;
     }
 }

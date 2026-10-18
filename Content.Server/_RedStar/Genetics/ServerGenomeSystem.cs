@@ -1,8 +1,7 @@
 using System.Linq;
 using Content.Shared._RedStar.Genetics;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Containers;
-using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.EntityEffects;
 using Content.Shared.Cloning.Events;
 
 namespace Content.Server._RedStar.Genetics;
@@ -10,8 +9,7 @@ namespace Content.Server._RedStar.Genetics;
 public sealed partial class ServerGenomeSystem : GenomeSystem
 {
     [Dependency] private IPrototypeManager _prototypes = default!;
-    [Dependency] private GenomeExpressionSystem _expression = default!;
-    [Dependency] private SharedContainerSystem _containers = default!;
+    [Dependency] private SharedEntityEffectsSystem _effects = default!;
 
     [SubscribeLocalEvent]
     private void OnCloning(Entity<GenomeComponent> ent, ref CloningEvent args)
@@ -25,24 +23,33 @@ public sealed partial class ServerGenomeSystem : GenomeSystem
             !clone.NaturalGenes.Contains(gene.Key)).Select(gene => gene.Key).ToArray();
         foreach (var id in acquired)
         {
-            if (!_expression.TryExpress(args.CloneUid, id))
+            if (!TryExpress(args.CloneUid, id))
                 clone.Genes[id] = GeneStatus.Raw;
         }
-        NotifyChanged(args.CloneUid, acquired.Where(id => clone.Genes[id] == GeneStatus.Active).ToArray());
+        NotifyChanged(args.CloneUid);
     }
 
-    private void NotifyChanged(EntityUid uid, IReadOnlyList<ProtoId<GenePrototype>> activated)
+    private void NotifyChanged(EntityUid uid)
     {
-        var changed = new GenomeChangedEvent(activated);
+        var changed = new GenomeChangedEvent();
         RaiseLocalEvent(uid, ref changed);
-        if (!_containers.TryGetContainingContainer(uid, out var container))
-            return;
-
-        var ev = new ContainedGenomeChangedEvent(uid);
-        RaiseLocalEvent(container.Owner, ref ev);
     }
 
-    [SubscribeLocalEvent(after: [typeof(SharedSolutionContainerSystem)])]
+    /// <summary>
+    /// Applies the gene's effects. Success means at least one effect passed its conditions,
+    /// or the gene has no effects; it does not guarantee that every effect was applied.
+    /// </summary>
+    private bool TryExpress(EntityUid uid, ProtoId<GenePrototype> id)
+    {
+        var effects = _prototypes.Index(id).Effects;
+        if (effects.Length == 0 || _effects.TryApplyEffects(uid, effects))
+            return true;
+
+        Log.Warning($"Could not express gene {id} on {ToPrettyString(uid)}.");
+        return false;
+    }
+
+    [SubscribeLocalEvent]
     private void OnMapInit(Entity<GenomeComponent> ent, ref MapInitEvent args)
     {
         if (ent.Comp.GenomeGenerated)
@@ -55,7 +62,7 @@ public sealed partial class ServerGenomeSystem : GenomeSystem
         ent.Comp.NaturalGenes = new HashSet<ProtoId<GenePrototype>>(genome.Genes);
         ent.Comp.GenomeGenerated = true;
         Dirty(ent);
-        NotifyChanged(ent.Owner, []);
+        NotifyChanged(ent.Owner);
     }
 
     /// <summary>
@@ -124,7 +131,7 @@ public sealed partial class ServerGenomeSystem : GenomeSystem
                 changed++;
         }
         if (changed > 0)
-            NotifyChanged(uid, []);
+            NotifyChanged(uid);
         return true;
     }
 
@@ -137,18 +144,18 @@ public sealed partial class ServerGenomeSystem : GenomeSystem
             return;
 
         var raw = component.Genes.Where(gene => gene.Value == GeneStatus.Raw).Select(gene => gene.Key).ToArray();
-        var activated = new List<ProtoId<GenePrototype>>();
+        var changed = false;
         foreach (var id in raw)
         {
-            if (!_expression.TryExpress(uid, id))
+            if (!TryExpress(uid, id))
                 continue;
             component.Genes[id] = GeneStatus.Active;
-            activated.Add(id);
+            changed = true;
         }
-        if (activated.Count == 0)
+        if (!changed)
             return;
 
-        NotifyChanged(uid, activated);
+        NotifyChanged(uid);
     }
 
     /// <summary>
@@ -177,9 +184,9 @@ public sealed partial class ServerGenomeSystem : GenomeSystem
             component.Genes.Remove(id);
         }
 
-        var expressed = _expression.TryExpress(uid, result);
+        var expressed = TryExpress(uid, result);
         component.Genes.Add(result, expressed ? GeneStatus.Active : GeneStatus.Raw);
-        NotifyChanged(uid, expressed ? [result] : []);
+        NotifyChanged(uid);
         return true;
     }
 }

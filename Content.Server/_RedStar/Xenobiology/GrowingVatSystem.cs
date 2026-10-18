@@ -49,13 +49,16 @@ public sealed partial class GrowingVatSystem : EntitySystem
         ent.Comp.NeedsEvaluation = true;
 
     [SubscribeLocalEvent]
-    private void OnGenomeChanged(Entity<GrowingVatComponent> ent, ref ContainedGenomeChangedEvent args) =>
-        ent.Comp.NeedsEvaluation = true;
+    private void OnGenomeChanged(Entity<GenomeComponent> ent, ref GenomeChangedEvent args) =>
+        ReevaluateContainingVat(ent.Owner);
 
     [SubscribeLocalEvent]
-    private void OnMobChanged(Entity<GenomeComponent> ent, ref MobStateChangedEvent args)
+    private void OnMobChanged(Entity<GenomeComponent> ent, ref MobStateChangedEvent args) =>
+        ReevaluateContainingVat(ent.Owner);
+
+    private void ReevaluateContainingVat(EntityUid subject)
     {
-        if (_containers.TryGetContainingContainer(ent.Owner, out var slot) &&
+        if (_containers.TryGetContainingContainer(subject, out var slot) &&
             TryComp<GrowingVatComponent>(slot.Owner, out var vat) && slot.ID == vat.SubjectSlot)
             vat.NeedsEvaluation = true;
     }

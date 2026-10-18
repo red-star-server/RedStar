@@ -2,7 +2,6 @@ using Content.Server._RedStar.Genetics;
 using Content.Shared._RedStar.Genetics;
 using Content.Server.Popups;
 using Content.Shared.Damage.Systems;
-using Content.Shared.Damage.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Whitelist;
@@ -69,7 +68,23 @@ public sealed partial class ServerSampleCollectorSystem : SampleCollectorSystem
         if (args.Handled || args.Cancelled || args.Target is null)
             return;
 
-        args.Handled = CompleteCollectorInteraction(ent, args.Target.Value, SampleCollectorDirection.Collection, args.Args.User);
+        var target = args.Target.Value;
+        if (!CanCollectBiopsy(ent, target, out var damage, out var failure))
+        {
+            if (failure is not null)
+                _popup.PopupEntity(Loc.GetString(failure), ent, args.Args.User, PopupType.SmallCaution);
+            return;
+        }
+
+        if (!_genomes.TryGetSnapshot(target, out var genome) || genome is null ||
+            !_samples.AddSample(ent.Owner, _factory.GenerateBiopsySample(genome, damage, ent.Comp)))
+            return;
+
+        if (ent.Comp.Damage is not null)
+            _damageable.TryChangeDamage(target, ent.Comp.Damage, origin: args.Args.User);
+
+        _popup.PopupEntity(Loc.GetString("cell-collector-collected"), ent, args.Args.User);
+        args.Handled = true;
     }
 
     private bool CompleteCollectorInteraction(Entity<SampleCollectorComponent> ent, EntityUid target,
@@ -81,23 +96,8 @@ public sealed partial class ServerSampleCollectorSystem : SampleCollectorSystem
         switch (direction)
         {
             case SampleCollectorDirection.Collection:
-                if (HasComp<GenomeComponent>(target))
-                {
-                    var damage = GetCellularDamage(target);
-                    if (!_genomes.TryGetSnapshot(target, out var genome) || genome is null)
-                        return false;
-
-                    if (!_samples.AddSample(ent.Owner, _factory.GenerateBiopsySample(genome, damage, ent.Comp)))
-                        return false;
-
-                    if (ent.Comp.Damage is not null)
-                        _damageable.TryChangeDamage(target, ent.Comp.Damage, origin: user);
-                }
-                else if (TryComp<SampleContainerComponent>(target, out var targetComp))
-                {
-                    if (!_samples.MoveFirstSample((target, targetComp), ent.Owner))
-                        return false;
-                }
+                if (!_samples.MoveFirstSample(target, ent.Owner))
+                    return false;
 
                 _popup.PopupEntity(Loc.GetString("cell-collector-collected"), ent, user);
 
@@ -115,15 +115,6 @@ public sealed partial class ServerSampleCollectorSystem : SampleCollectorSystem
         }
 
         return true;
-    }
-
-    private float GetCellularDamage(EntityUid source)
-    {
-        if (!TryComp<DamageableComponent>(source, out var damageable) ||
-            !_damageable.GetPositiveDamage((source, damageable)).DamageDict.TryGetValue("Cellular", out var damage))
-            return 0f;
-
-        return (float) damage;
     }
 
     private void UpdateCollectorAppearance(Entity<SampleCollectorComponent, SampleContainerComponent?> ent)
@@ -156,18 +147,10 @@ public sealed partial class ServerSampleCollectorSystem : SampleCollectorSystem
                     return false;
                 }
 
-                var biological = HasComp<GenomeComponent>(target.Owner);
-                switch (biological)
+                if (target.Comp is not { AllowCollection: true, Empty: false })
                 {
-                    case true when !_genomes.TryGetSnapshot(target.Owner, out _):
-                        _popup.PopupEntity(Loc.GetString("cell-collector-target-cant-collected"), ent, user, PopupType.SmallCaution);
-                        return false;
-                    case true when GetCellularDamage(target.Owner) >= ent.Comp1.MaximumCellularDamage:
-                        _popup.PopupEntity(Loc.GetString("cell-collector-sample-damaged"), ent, user, PopupType.SmallCaution);
-                        return false;
-                    case false when target.Comp is not { AllowCollection: true, Empty: false }:
-                        _popup.PopupEntity(Loc.GetString("cell-collector-target-cant-collected"), ent, user, PopupType.SmallCaution);
-                        return false;
+                    _popup.PopupEntity(Loc.GetString("cell-collector-target-cant-collected"), ent, user, PopupType.SmallCaution);
+                    return false;
                 }
 
                 break;

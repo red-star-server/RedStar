@@ -15,6 +15,7 @@ using Content.Shared.UserInterface;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Puzzle = Content.Server._RedStar.Xenobiology.SequencerPuzzleGenerator.Puzzle;
 
 namespace Content.Server._RedStar.Xenobiology.Machines;
 
@@ -32,8 +33,6 @@ public sealed partial class CellSequencerSystem : EntitySystem
     private readonly HashSet<ProtoId<GenePrototype>> _decoded = [];
     // Each gene retains its puzzle for the round; family codes must be unique across genes.
     private readonly Dictionary<ProtoId<GenePrototype>, Puzzle> _puzzles = [];
-    private sealed record Puzzle(string FamilyCode, string[] Fragments, int[] Order);
-    private const int MaximumPuzzleAttempts = 4096;
 
     public override void Initialize()
     {
@@ -195,51 +194,9 @@ public sealed partial class CellSequencerSystem : EntitySystem
     {
         if (_puzzles.TryGetValue(id, out var cached))
             return cached;
-        var count = _prototypes.Index(id).FragmentCount;
-        var length = SequencerPuzzle.Overlap + SequencerPuzzle.Step * count;
-        for (var attempt = 0; attempt < MaximumPuzzleAttempts; attempt++)
-        {
-            var sequence = GenerateSequence(length);
-            var family = sequence[..SequencerPuzzle.FamilyLength];
-            if (_puzzles.Values.Any(puzzle => puzzle.FamilyCode == family))
-                continue;
-            var pieces = Enumerable.Range(0, count).Select(i => sequence.Substring(i * SequencerPuzzle.Step, SequencerPuzzle.ReadLength)).ToArray();
-            if (!Unambiguous(pieces))
-                continue;
-            var order = Enumerable.Range(0, count).ToArray();
-            _random.Shuffle(order);
-            var puzzle = new Puzzle(family, order.Select(index => pieces[index]).ToArray(), order);
-            _puzzles.Add(id, puzzle);
-            return puzzle;
-        }
-
-        throw new InvalidOperationException($"Could not generate an unambiguous puzzle for gene {id} after {MaximumPuzzleAttempts} attempts.");
-    }
-
-    private string GenerateSequence(int length)
-    {
-        var result = new char[length];
-        const string bases = "ACGT";
-        for (var i = 0; i < length; i++)
-        {
-            result[i] = bases[_random.Next(bases.Length)];
-        }
-
-        return new string(result);
-    }
-
-    /// <summary>
-    /// Rejects any overlap except the next pair in the original sequence, including self-overlaps.
-    /// This ensures the shuffled fragments have only one valid assembly.
-    /// </summary>
-    private static bool Unambiguous(string[] pieces)
-    {
-        for (var i = 0; i < pieces.Length; i++)
-        for (var j = 0; j < pieces.Length; j++)
-        {
-            if (pieces[i][SequencerPuzzle.Step..] == pieces[j][..SequencerPuzzle.Overlap] && j != i + 1)
-                return false;
-        }
-        return true;
+        var puzzle = SequencerPuzzleGenerator.Generate(_random, _prototypes.Index(id).FragmentCount,
+            family => _puzzles.Values.Any(existing => existing.FamilyCode == family));
+        _puzzles.Add(id, puzzle);
+        return puzzle;
     }
 }
