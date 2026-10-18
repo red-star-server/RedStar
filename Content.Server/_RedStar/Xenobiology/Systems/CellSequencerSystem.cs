@@ -1,22 +1,24 @@
 using System.Linq;
 using Content.Server.Power.EntitySystems;
-using Content.Server._RedStar.Genetics;
-using Content.Shared._RedStar.Genetics;
-using Content.Shared._RedStar.Xenobiology.Components.Container;
-using Content.Shared._RedStar.Xenobiology.Components.Machines;
-using Content.Shared._RedStar.Xenobiology.Events;
-using Content.Shared._RedStar.Xenobiology.UI;
+using Content.Server._RedStar.Genetics.Systems;
+using Content.Server._RedStar.Xenobiology.Helpers;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.GameTicking;
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.UserInterface;
+using Content.Shared._RedStar.Genetics.Components;
+using Content.Shared._RedStar.Genetics.Prototypes;
+using Content.Shared._RedStar.Xenobiology.Components.Container;
+using Content.Shared._RedStar.Xenobiology.Components.Machines;
+using Content.Shared._RedStar.Xenobiology.Events;
+using Content.Shared._RedStar.Xenobiology.UI;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Puzzle = Content.Server._RedStar.Xenobiology.SequencerPuzzleGenerator.Puzzle;
+using Puzzle = Content.Server._RedStar.Xenobiology.Helpers.SequencerPuzzleGenerator.Puzzle;
 
-namespace Content.Server._RedStar.Xenobiology.Machines;
+namespace Content.Server._RedStar.Xenobiology.Systems;
 
 public sealed partial class CellSequencerSystem : EntitySystem
 {

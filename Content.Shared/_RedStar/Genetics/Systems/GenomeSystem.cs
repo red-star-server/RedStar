@@ -1,4 +1,5 @@
-namespace Content.Shared._RedStar.Genetics;
+using Content.Shared._RedStar.Genetics.Components;
+namespace Content.Shared._RedStar.Genetics.Systems;
 
 public abstract partial class GenomeSystem : EntitySystem
 {

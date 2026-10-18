@@ -1,6 +1,6 @@
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared._RedStar.Genetics;
+namespace Content.Shared._RedStar.Genetics.Prototypes;
 
 /// <summary>
 /// Defines the natural genes generated for an organism.

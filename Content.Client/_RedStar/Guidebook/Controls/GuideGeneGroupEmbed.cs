@@ -4,10 +4,10 @@ using Content.Client.Guidebook.Controls;
 using Content.Client.Guidebook.Richtext;
 using Content.Client.Message;
 using Content.Client.UserInterface.ControlExtensions;
-using Content.Shared._RedStar.Genetics;
+using Content.Shared._RedStar.Genetics.Prototypes;
 using JetBrains.Annotations;
-using Robust.Client.UserInterface;
 using Robust.Client.Graphics;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Prototypes;
 

@@ -1,7 +1,9 @@
+using Content.Shared._RedStar.Genetics.Prototypes;
+using Content.Shared._RedStar.Genetics.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared._RedStar.Genetics;
+namespace Content.Shared._RedStar.Genetics.Components;
 
 /// <summary>
 /// Stores inherited and acquired genes on the server. Only generation readiness is replicated.

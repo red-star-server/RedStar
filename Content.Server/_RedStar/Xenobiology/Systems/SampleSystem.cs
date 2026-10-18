@@ -1,11 +1,11 @@
-using Content.Shared._RedStar.Xenobiology;
-using Content.Shared._RedStar.Genetics;
+using Content.Shared._RedStar.Genetics.Prototypes;
 using Content.Shared._RedStar.Xenobiology.Components.Container;
+using Content.Shared._RedStar.Xenobiology.Data;
 using Content.Shared._RedStar.Xenobiology.Events;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 
-namespace Content.Server._RedStar.Xenobiology;
+namespace Content.Server._RedStar.Xenobiology.Systems;
 
 public sealed partial class SampleSystem : EntitySystem
 {

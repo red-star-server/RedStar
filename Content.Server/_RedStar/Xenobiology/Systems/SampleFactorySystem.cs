@@ -1,15 +1,15 @@
 using System.Linq;
 using System.Text;
-using Content.Server._RedStar.Genetics;
-using Content.Shared._RedStar.Genetics;
-using Content.Shared._RedStar.Xenobiology;
+using Content.Server._RedStar.Genetics.Systems;
+using Content.Shared.Dataset;
+using Content.Shared._RedStar.Genetics.Data;
 using Content.Shared._RedStar.Xenobiology.Components.Container;
 using Content.Shared._RedStar.Xenobiology.Components.Tools;
-using Content.Shared.Dataset;
+using Content.Shared._RedStar.Xenobiology.Data;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
-namespace Content.Server._RedStar.Xenobiology;
+namespace Content.Server._RedStar.Xenobiology.Systems;
 
 public sealed partial class SampleFactorySystem : EntitySystem
 {

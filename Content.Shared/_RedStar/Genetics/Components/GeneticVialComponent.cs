@@ -1,7 +1,7 @@
+using Content.Shared._RedStar.Genetics.Prototypes;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 
-namespace Content.Shared._RedStar.Genetics;
+namespace Content.Shared._RedStar.Genetics.Components;
 
 /// <summary>
 /// Physical storage for extracted gene values. Only GeneticVialSystem changes its contents.
@@ -19,11 +19,4 @@ public sealed partial class GeneticVialComponent : Component
     /// Changes whenever vial contents change. An injection is cancelled if its captured revision differs.
     /// </summary>
     public int Revision;
-}
-
-[Serializable, NetSerializable]
-public enum GeneticVialVisuals : byte
-{
-    Filled,
-    Layer
 }

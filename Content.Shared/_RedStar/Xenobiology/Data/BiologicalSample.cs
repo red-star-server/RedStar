@@ -1,7 +1,8 @@
-using Content.Shared._RedStar.Genetics;
+using Content.Shared._RedStar.Genetics.Data;
+using Content.Shared._RedStar.Genetics.Prototypes;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared._RedStar.Xenobiology;
+namespace Content.Shared._RedStar.Xenobiology.Data;
 
 /// <summary>
 /// One laboratory sample with server-owned genetic material.

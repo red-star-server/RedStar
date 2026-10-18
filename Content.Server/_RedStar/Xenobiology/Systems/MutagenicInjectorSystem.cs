@@ -1,10 +1,8 @@
 using System.Linq;
-using Content.Server._RedStar.Genetics;
-using Content.Server.Storage.EntitySystems;
-using Content.Shared.Body.Components;
-using Content.Shared._RedStar.Genetics;
 using Content.Server.Power.EntitySystems;
-using Content.Shared._RedStar.Xenobiology.Components.Machines;
+using Content.Server.Storage.EntitySystems;
+using Content.Server._RedStar.Genetics.Systems;
+using Content.Shared.Body.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
@@ -12,11 +10,13 @@ using Content.Shared.Power;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Verbs;
+using Content.Shared._RedStar.Genetics.Components;
+using Content.Shared._RedStar.Xenobiology.Components.Machines;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 
-namespace Content.Server._RedStar.Xenobiology;
+namespace Content.Server._RedStar.Xenobiology.Systems;
 public sealed partial class MutagenicInjectorSystem : EntitySystem
 {
     [Dependency] private GeneticVialSystem _vials = default!;

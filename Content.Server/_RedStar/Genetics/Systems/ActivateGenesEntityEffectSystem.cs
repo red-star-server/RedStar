@@ -1,8 +1,8 @@
-using Content.Shared._RedStar.EntityEffects.Effects;
 using Content.Shared.EntityEffects;
-using Content.Shared._RedStar.Genetics;
+using Content.Shared._RedStar.EntityEffects.Effects;
+using Content.Shared._RedStar.Genetics.Components;
 
-namespace Content.Server._RedStar.Genetics;
+namespace Content.Server._RedStar.Genetics.Systems;
 
 public sealed partial class ActivateGenesEntityEffectSystem : EntityEffectSystem<GenomeComponent, ActivateGenes>
 {

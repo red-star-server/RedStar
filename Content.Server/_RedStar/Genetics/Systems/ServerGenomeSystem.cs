@@ -1,11 +1,15 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Shared._RedStar.Genetics;
-using Robust.Shared.Prototypes;
-using Content.Shared.EntityEffects;
 using Content.Shared.Cloning.Events;
+using Content.Shared.EntityEffects;
+using Content.Shared._RedStar.Genetics.Components;
+using Content.Shared._RedStar.Genetics.Data;
+using Content.Shared._RedStar.Genetics.Events;
+using Content.Shared._RedStar.Genetics.Prototypes;
+using Content.Shared._RedStar.Genetics.Systems;
+using Robust.Shared.Prototypes;
 
-namespace Content.Server._RedStar.Genetics;
+namespace Content.Server._RedStar.Genetics.Systems;
 
 public sealed partial class ServerGenomeSystem : GenomeSystem
 {

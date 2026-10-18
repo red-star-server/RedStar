@@ -1,7 +1,8 @@
 using System.Collections.Frozen;
+using Content.Shared._RedStar.Genetics.Prototypes;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared._RedStar.Genetics;
+namespace Content.Shared._RedStar.Genetics.Data;
 
 /// <summary>
 /// Immutable genetic material, independent of its donor and expression status.

@@ -1,7 +1,7 @@
 using Content.Shared.EntityEffects;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared._RedStar.Genetics;
+namespace Content.Shared._RedStar.Genetics.Prototypes;
 
 [Prototype]
 public sealed partial class GenePrototype : IPrototype

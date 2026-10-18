@@ -1,6 +1,7 @@
-using Content.Shared._RedStar.Genetics;
-using Robust.Shared.GameStates;
 using Content.Shared.Whitelist;
+using Content.Shared._RedStar.Genetics.Prototypes;
+using Content.Shared._RedStar.Xenobiology.Data;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared._RedStar.Xenobiology.Components.Container;

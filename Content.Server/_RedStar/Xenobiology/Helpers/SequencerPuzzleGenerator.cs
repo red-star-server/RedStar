@@ -2,7 +2,7 @@ using System.Linq;
 using Content.Shared._RedStar.Xenobiology.UI;
 using Robust.Shared.Random;
 
-namespace Content.Server._RedStar.Xenobiology;
+namespace Content.Server._RedStar.Xenobiology.Helpers;
 
 public static class SequencerPuzzleGenerator
 {

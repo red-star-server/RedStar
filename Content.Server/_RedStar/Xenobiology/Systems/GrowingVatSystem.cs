@@ -1,11 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Server._RedStar.Genetics;
-using Content.Shared._RedStar.Genetics;
 using Content.Server.Power.EntitySystems;
-using Content.Shared._RedStar.Genetics.Prototypes;
-using Content.Shared._RedStar.Xenobiology.Components.Machines;
-using Content.Shared._RedStar.Xenobiology.Visuals;
+using Content.Server._RedStar.Genetics.Systems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Climbing.Systems;
@@ -14,12 +10,17 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Power;
+using Content.Shared._RedStar.Genetics.Components;
+using Content.Shared._RedStar.Genetics.Events;
+using Content.Shared._RedStar.Genetics.Prototypes;
+using Content.Shared._RedStar.Xenobiology.Components.Machines;
+using Content.Shared._RedStar.Xenobiology.Visuals;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
-namespace Content.Server._RedStar.Xenobiology;
+namespace Content.Server._RedStar.Xenobiology.Systems;
 
 /// <summary>
 /// Mutates raw genes in a living subject using recipe reagents.

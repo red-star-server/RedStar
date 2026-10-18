@@ -1,10 +1,10 @@
 using System.Linq;
-using Content.Shared._RedStar.Xenobiology;
 using Content.Shared._RedStar.Xenobiology.Components.Container;
+using Content.Shared._RedStar.Xenobiology.Data;
 using Content.Shared._RedStar.Xenobiology.Events;
 using Content.Shared._RedStar.Xenobiology.Visuals;
 
-namespace Content.Server._RedStar.Xenobiology;
+namespace Content.Server._RedStar.Xenobiology.Systems;
 
 public sealed partial class CellVisualsSystem : EntitySystem
 {

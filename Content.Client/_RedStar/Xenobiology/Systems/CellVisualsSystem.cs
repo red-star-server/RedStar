@@ -2,7 +2,7 @@ using Content.Shared._RedStar.Xenobiology.Components.Container;
 using Content.Shared._RedStar.Xenobiology.Visuals;
 using Robust.Client.GameObjects;
 
-namespace Content.Client._RedStar.Xenobiology;
+namespace Content.Client._RedStar.Xenobiology.Systems;
 
 public sealed partial class CellVisualsSystem : EntitySystem
 {

@@ -1,9 +1,11 @@
-using Content.Server._RedStar.Xenobiology;
-using Content.Shared._RedStar.Genetics;
+using Content.Server._RedStar.Xenobiology.Systems;
+using Content.Shared._RedStar.Genetics.Components;
+using Content.Shared._RedStar.Genetics.Prototypes;
+using Content.Shared._RedStar.Genetics.Visuals;
 using Content.Shared._RedStar.Xenobiology.Components.Container;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server._RedStar.Genetics;
+namespace Content.Server._RedStar.Genetics.Systems;
 
 public sealed partial class GeneticVialSystem : EntitySystem
 {

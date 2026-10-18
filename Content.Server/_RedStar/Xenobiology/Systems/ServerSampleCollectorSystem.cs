@@ -1,18 +1,18 @@
-using Content.Server._RedStar.Genetics;
-using Content.Shared._RedStar.Genetics;
 using Content.Server.Popups;
+using Content.Server._RedStar.Genetics.Systems;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Whitelist;
-using Content.Shared._RedStar.Xenobiology;
+using Content.Shared._RedStar.Genetics.Components;
 using Content.Shared._RedStar.Xenobiology.Components.Container;
 using Content.Shared._RedStar.Xenobiology.Components.Tools;
 using Content.Shared._RedStar.Xenobiology.Events;
+using Content.Shared._RedStar.Xenobiology.Systems;
 using Content.Shared._RedStar.Xenobiology.Visuals;
 using Robust.Server.GameObjects;
 
-namespace Content.Server._RedStar.Xenobiology;
+namespace Content.Server._RedStar.Xenobiology.Systems;
 
 /// <summary>
 /// Handles biopsy collection and transfer between sample containers.

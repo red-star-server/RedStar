@@ -1,13 +1,15 @@
-using Content.Shared._RedStar.Genetics;
-using Content.Shared._RedStar.Xenobiology.Components.Container;
-using Content.Shared._RedStar.Xenobiology.Components.Tools;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared._RedStar.Genetics.Components;
+using Content.Shared._RedStar.Genetics.Systems;
+using Content.Shared._RedStar.Xenobiology.Components.Container;
+using Content.Shared._RedStar.Xenobiology.Components.Tools;
+using Content.Shared._RedStar.Xenobiology.Events;
 
-namespace Content.Shared._RedStar.Xenobiology;
+namespace Content.Shared._RedStar.Xenobiology.Systems;
 
 public abstract partial class SampleCollectorSystem : EntitySystem
 {

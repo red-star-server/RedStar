@@ -1,4 +1,4 @@
-namespace Content.Shared._RedStar.Genetics;
+namespace Content.Shared._RedStar.Genetics.Events;
 
 /// <summary>
 /// Raised on an organism after its genes or their expression status change.

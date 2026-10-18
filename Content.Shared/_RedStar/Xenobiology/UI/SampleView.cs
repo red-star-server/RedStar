@@ -1,3 +1,4 @@
+using Content.Shared._RedStar.Xenobiology.Data;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared._RedStar.Xenobiology.UI;

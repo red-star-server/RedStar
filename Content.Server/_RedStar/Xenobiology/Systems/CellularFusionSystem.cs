@@ -1,20 +1,20 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Power.EntitySystems;
-using Content.Shared._RedStar.Genetics;
-using Content.Shared._RedStar.Xenobiology;
-using Content.Shared._RedStar.Xenobiology.Components.Container;
-using Content.Shared._RedStar.Xenobiology.Components.Machines;
-using Content.Shared._RedStar.Xenobiology.Events;
-using Content.Shared._RedStar.Xenobiology.UI;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Destructible;
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.UserInterface;
+using Content.Shared._RedStar.Genetics.Data;
+using Content.Shared._RedStar.Xenobiology.Components.Container;
+using Content.Shared._RedStar.Xenobiology.Components.Machines;
+using Content.Shared._RedStar.Xenobiology.Data;
+using Content.Shared._RedStar.Xenobiology.Events;
+using Content.Shared._RedStar.Xenobiology.UI;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 
-namespace Content.Server._RedStar.Xenobiology.Machines;
+namespace Content.Server._RedStar.Xenobiology.Systems;
 
 public sealed partial class CellularFusionSystem : EntitySystem
 {
