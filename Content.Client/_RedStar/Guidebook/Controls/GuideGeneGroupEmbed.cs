@@ -75,6 +75,11 @@ public sealed partial class GuideGeneGroupEmbed : BoxContainer, IDocumentTag
             {
                 Text = Loc.GetString("guidebook-genetic-mutation-tier", ("tier", gene.Tier)),
             });
+            body.AddChild(new Label
+            {
+                Text = Loc.GetString("guidebook-gene-properties", ("load", gene.LoadCost),
+                    ("category", Loc.GetString($"guidebook-gene-category-{gene.Category.ToString().ToLowerInvariant()}"))),
+            });
             var description = new RichTextLabel();
             description.SetMessage(Loc.GetString($"gene-{gene.ID}-desc"));
             body.AddChild(description);

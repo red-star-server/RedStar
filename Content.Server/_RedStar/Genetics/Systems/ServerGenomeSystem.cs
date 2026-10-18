@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Cloning.Events;
 using Content.Shared.EntityEffects;
+using Content.Shared.Whitelist;
 using Content.Shared._RedStar.Genetics.Components;
 using Content.Shared._RedStar.Genetics.Data;
 using Content.Shared._RedStar.Genetics.Events;
@@ -15,6 +16,7 @@ public sealed partial class ServerGenomeSystem : GenomeSystem
 {
     [Dependency] private IPrototypeManager _prototypes = default!;
     [Dependency] private SharedEntityEffectsSystem _effects = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
     [SubscribeLocalEvent]
     private void OnCloning(Entity<GenomeComponent> ent, ref CloningEvent args)
@@ -41,11 +43,14 @@ public sealed partial class ServerGenomeSystem : GenomeSystem
     }
 
     /// <summary>
-    /// Applies the gene's effects. Success means at least one effect passed its conditions,
+    /// Applies a compatible gene's effects. Success means at least one effect passed its conditions,
     /// or the gene has no effects; it does not guarantee that every effect was applied.
     /// </summary>
     private bool TryExpress(EntityUid uid, ProtoId<GenePrototype> id)
     {
+        if (!IsGeneCompatible(uid, id))
+            return false;
+
         var effects = _prototypes.Index(id).Effects;
         if (effects.Length == 0 || _effects.TryApplyEffects(uid, effects))
             return true;
@@ -84,7 +89,7 @@ public sealed partial class ServerGenomeSystem : GenomeSystem
     }
 
     /// <summary>
-    /// Copies all present genes, including dormant ones, without their expression status.
+    /// Copies all present genes, including dormant and suppressed ones, without their expression status.
     /// Returns false if the entity has no initialized genome.
     /// </summary>
     public bool TryGetSnapshot(Entity<GenomeComponent?> ent, [NotNullWhen(true)] out GenomeSnapshot? snapshot)
@@ -97,7 +102,7 @@ public sealed partial class ServerGenomeSystem : GenomeSystem
     }
 
     /// <summary>
-    /// Checks for a present gene regardless of whether it is dormant or active.
+    /// Checks for a present gene regardless of its expression state.
     /// </summary>
     public bool HasGene(Entity<GenomeComponent?> ent, ProtoId<GenePrototype> id) =>
         Resolve(ent, ref ent.Comp, logMissing: false) && ent.Comp.Genes.ContainsKey(id);
@@ -109,20 +114,27 @@ public sealed partial class ServerGenomeSystem : GenomeSystem
         Resolve(ent, ref ent.Comp, logMissing: false) &&
         ent.Comp.Genes.TryGetValue(id, out var status) && status == GeneStatus.Raw;
 
+    /// <summary>
+    /// Checks the gene's organism whitelist and blacklist. Returns false for an unknown gene.
+    /// Does not check expression state or remaining acquired load.
+    /// </summary>
+    public bool IsGeneCompatible(EntityUid uid, ProtoId<GenePrototype> id) =>
+        _prototypes.TryIndex(id, out var gene) && _whitelist.CheckBoth(uid, gene.Blacklist, gene.Whitelist);
+
     private int Load(GenomeComponent component, IEnumerable<ProtoId<GenePrototype>> genes) =>
-        genes.Where(id => !component.NaturalGenes.Contains(id)).Sum(id => _prototypes.Index(id).Tier);
+        genes.Where(id => !component.NaturalGenes.Contains(id)).Sum(id => _prototypes.Index(id).LoadCost);
 
     /// <summary>
-    /// Checks that all incoming genes exist and their combined acquired load fits the limit.
+    /// Checks that incoming genes are compatible and their combined acquired load fits the limit.
     /// Genes already present are counted once; natural genes do not consume acquired load.
     /// </summary>
     public bool CanApplyGenes(Entity<GenomeComponent?> ent, IReadOnlySet<ProtoId<GenePrototype>> incoming) =>
         Resolve(ent, ref ent.Comp, logMissing: false) && ent.Comp.GenomeGenerated &&
-        incoming.All(id => _prototypes.HasIndex(id)) &&
+        incoming.All(id => IsGeneCompatible(ent.Owner, id)) &&
         Load(ent.Comp, ent.Comp.Genes.Keys.Union(incoming)) <= ent.Comp.MaximumLoad;
 
     /// <summary>
-    /// Acquired genes remain raw until activated. Existing active genes are preserved.
+    /// Acquired genes remain raw until activated. Existing genes retain their expression state.
     /// </summary>
     public bool TryApplyGenes(Entity<GenomeComponent?> ent, IReadOnlySet<ProtoId<GenePrototype>> incoming, out int changed)
     {
@@ -140,7 +152,7 @@ public sealed partial class ServerGenomeSystem : GenomeSystem
     }
 
     /// <summary>
-    /// Expresses dormant genes once without adding genetic material or changing its load.
+    /// Expresses compatible dormant genes once. Suppressed genes remain suppressed; load is unchanged.
     /// </summary>
     public void ActivateGenes(Entity<GenomeComponent?> ent)
     {
@@ -163,12 +175,12 @@ public sealed partial class ServerGenomeSystem : GenomeSystem
     }
 
     /// <summary>
-    /// Checks that every input is dormant, the result is absent, and the resulting load fits.
+    /// Checks that inputs are dormant, the result is absent and compatible, and the resulting load fits.
     /// Does not consume inputs or apply gene effects.
     /// </summary>
     public bool CanTransformGenes(Entity<GenomeComponent?> ent, IReadOnlySet<ProtoId<GenePrototype>> inputs,
         ProtoId<GenePrototype> result) =>
-        inputs.Count > 0 && !inputs.Contains(result) && _prototypes.HasIndex(result) &&
+        inputs.Count > 0 && !inputs.Contains(result) && IsGeneCompatible(ent.Owner, result) &&
         Resolve(ent, ref ent.Comp, logMissing: false) && ent.Comp.GenomeGenerated &&
         !ent.Comp.Genes.ContainsKey(result) &&
         inputs.All(id => ent.Comp.Genes.TryGetValue(id, out var status) && status == GeneStatus.Raw) &&

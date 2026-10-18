@@ -1,4 +1,6 @@
 using Content.Shared.EntityEffects;
+using Content.Shared.Whitelist;
+using Content.Shared._RedStar.Genetics.Data;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared._RedStar.Genetics.Prototypes;
@@ -10,10 +12,44 @@ public sealed partial class GenePrototype : IPrototype
     public string ID { get; private set; } = string.Empty;
 
     /// <summary>
-    /// Acquired-gene load consumed by this gene; natural genes do not consume load.
+    /// Research tier used to group genes in the catalogue and mutation recipes.
     /// </summary>
     [DataField]
     public int Tier = 1;
+
+    /// <summary>
+    /// Load reserved by an acquired gene, including while dormant or suppressed.
+    /// Natural genes do not consume acquired load.
+    /// </summary>
+    [DataField]
+    public int LoadCost
+    {
+        get;
+        private set
+        {
+            ArgumentOutOfRangeException.ThrowIfNegative(value);
+            field = value;
+        }
+    } = 1;
+
+    /// <summary>
+    /// Describes the gene's manifestations independently of its research tier and load.
+    /// A mixed gene combines useful and harmful effects in the same effect list.
+    /// </summary>
+    [DataField]
+    public GeneCategory Category = GeneCategory.Neutral;
+
+    /// <summary>
+    /// Organisms allowed to receive or express this gene. Null permits any organism.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? Whitelist;
+
+    /// <summary>
+    /// Organisms forbidden from receiving or expressing this gene, even if whitelisted.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? Blacklist;
 
     /// <summary>
     /// Number of overlapping DNA fragments in the sequencing puzzle.

@@ -1,3 +1,4 @@
+using Content.Shared._RedStar.Genetics.Data;
 using Content.Shared._RedStar.Genetics.Prototypes;
 using Content.Shared._RedStar.Genetics.Systems;
 using Robust.Shared.GameStates;
@@ -21,7 +22,7 @@ public sealed partial class GenomeComponent : Component
     public bool GenomeGenerated;
 
     /// <summary>
-    /// Maximum combined tier cost of acquired genes, including raw genes.
+    /// Maximum combined load cost of acquired genes, including dormant and suppressed genes.
     /// </summary>
     [DataField]
     public int MaximumLoad = 6;
@@ -33,15 +34,9 @@ public sealed partial class GenomeComponent : Component
     public HashSet<ProtoId<GenePrototype>> NaturalGenes = [];
 
     /// <summary>
-    /// All present genes and their expression status, including dormant acquired genes.
+    /// All present genes and their expression status, including dormant and suppressed genes.
     /// Mutations must go through ServerGenomeSystem to notify observers.
     /// </summary>
     [DataField]
     public Dictionary<ProtoId<GenePrototype>, GeneStatus> Genes = [];
-}
-
-public enum GeneStatus : byte
-{
-    Raw,
-    Active
 }

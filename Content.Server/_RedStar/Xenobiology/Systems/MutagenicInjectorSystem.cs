@@ -113,6 +113,12 @@ public sealed partial class MutagenicInjectorSystem : EntitySystem
             return false;
         }
 
+        if (vial.Comp.Genes.Any(id => !_genomes.IsGeneCompatible(recipient.Owner, id)))
+        {
+            _popup.PopupEntity(Loc.GetString("mutagenic-injector-incompatible"), ent, user, PopupType.MediumCaution);
+            return false;
+        }
+
         if (_genomes.CanApplyGenes(recipient.AsNullable(), vial.Comp.Genes))
             return true;
 
