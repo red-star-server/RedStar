@@ -36,7 +36,7 @@ public sealed partial class CellularFusionSystem : EntitySystem
         if (args.Container.ID != ent.Comp.DishSlot)
             return;
 
-        ResetSplice(ent.Comp);
+        ResetSplice(ent);
         UpdateUI(ent);
     }
 
@@ -61,7 +61,7 @@ public sealed partial class CellularFusionSystem : EntitySystem
     {
         if (!TryGetDish(ent, out var dish) || dish.Owner != args.SampleContainer)
             return;
-        ResetSplice(ent.Comp);
+        ResetSplice(ent);
         UpdateUI(ent);
     }
 
@@ -87,6 +87,7 @@ public sealed partial class CellularFusionSystem : EntitySystem
         ent.Comp.SpliceSampleB = second.Id;
         ent.Comp.SpliceDish = dish.Owner;
         ent.Comp.SpliceEndTime = _timing.CurTime + ent.Comp.SpliceDelay;
+        Dirty(ent);
         UpdateUI(ent);
     }
 
@@ -129,12 +130,11 @@ public sealed partial class CellularFusionSystem : EntitySystem
         var stability = max + (1f - max) * (ent.Comp.BaseStabilityGain + ent.Comp.DonorStabilityGain * min);
         var result = new BiologicalSample(Color.InterpolateBetween(first.Color, second.Color, 0.5f),
             first.Name, stability, genome);
-        ResetSplice(ent.Comp);
-        if (!_samples.ReplaceSamples((dish.Owner, (SampleContainerComponent?) dish.Comp), first.Id, second.Id, result))
-        {
-            UpdateUI(ent);
+        ResetSplice(ent);
+        if (_samples.ReplaceSamples((dish.Owner, (SampleContainerComponent?)dish.Comp), first.Id, second.Id, result))
             return;
-        }
+
+        UpdateUI(ent);
     }
 
     private bool CanStabilize(BiologicalSample first, BiologicalSample second, out GenomeSnapshot? genome)
@@ -164,16 +164,18 @@ public sealed partial class CellularFusionSystem : EntitySystem
     {
         if (!ent.Comp.SpliceInProgress)
             return;
-        ResetSplice(ent.Comp);
+        ResetSplice(ent);
         UpdateUI(ent);
     }
 
-    private static void ResetSplice(CellularFusionComponent component)
+    private void ResetSplice(Entity<CellularFusionComponent> ent)
     {
+        var component = ent.Comp;
         component.SpliceEndTime = null;
         component.SpliceSampleA = null;
         component.SpliceSampleB = null;
         component.SpliceDish = null;
+        Dirty(ent);
     }
 
     private void UpdateUI(Entity<CellularFusionComponent> ent)
@@ -182,9 +184,6 @@ public sealed partial class CellularFusionSystem : EntitySystem
             return;
 
         var hasDish = TryGetDish(ent, out var dish);
-        var remaining = ent.Comp.SpliceEndTime is { } endTime
-            ? Math.Max(0, (endTime - _timing.CurTime).TotalSeconds)
-            : 0;
         var samples = new List<SampleView>();
         var genomes = new List<GenomeSnapshot>();
         if (hasDish)
@@ -209,7 +208,6 @@ public sealed partial class CellularFusionSystem : EntitySystem
             samples.ToArray(),
             hasDish ? GetNetEntity(dish.Owner) : null,
             ent.Comp.SpliceInProgress,
-            ent.Comp.SpliceDelay.TotalSeconds,
-            remaining));
+            ent.Comp.SpliceDelay.TotalSeconds));
     }
 }

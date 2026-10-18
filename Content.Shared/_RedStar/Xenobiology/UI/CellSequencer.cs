@@ -5,6 +5,10 @@ namespace Content.Shared._RedStar.Xenobiology.UI;
 [Serializable, NetSerializable]
 public enum CellSequencerUiKey { Key }
 
+/// <summary>
+/// Sequencing puzzle and discovery status without the gene prototype ID or solution order.
+/// FamilyCode identifies this gene's puzzle for the current round.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed record SequencerMarkerView(string FamilyCode, string[] Fragments, bool Decoded,
     string Name, bool Extractable);
@@ -34,7 +38,13 @@ public sealed class CellSequencerFeedbackMessage(int sampleId, string family, in
 {
     public readonly int SampleId = sampleId;
     public readonly string Family = family;
+    /// <summary>
+    /// Fragment indices in submitted board order, used to reject feedback for a changed assembly.
+    /// </summary>
     public readonly int[] Order = order;
+    /// <summary>
+    /// Whether each adjacent pair overlaps correctly; contains one entry fewer than Order.
+    /// </summary>
     public readonly bool[] Matches = matches;
 }
 

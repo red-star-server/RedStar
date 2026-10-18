@@ -1,9 +1,8 @@
 using Content.Server._RedStar.Genetics;
-using Content.Server.DoAfter;
+using Content.Shared._RedStar.Genetics;
 using Content.Server.Popups;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Damage.Components;
-using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Whitelist;
@@ -19,7 +18,7 @@ namespace Content.Server._RedStar.Xenobiology;
 /// <summary>
 /// Handles biopsy collection and transfer between sample containers.
 /// </summary>
-public sealed partial class SampleCollectorSystem : EntitySystem
+public sealed partial class ServerSampleCollectorSystem : SampleCollectorSystem
 {
     private enum SampleCollectorDirection
     {
@@ -29,10 +28,9 @@ public sealed partial class SampleCollectorSystem : EntitySystem
 
     [Dependency] private AppearanceSystem _appearance = default!;
     [Dependency] private DamageableSystem _damageable = default!;
-    [Dependency] private DoAfterSystem _doAfter = default!;
     [Dependency] private EntityWhitelistSystem _entityWhitelist = default!;
     [Dependency] private PopupSystem _popup = default!;
-    [Dependency] private GenomeSystem _genomes = default!;
+    [Dependency] private ServerGenomeSystem _genomes = default!;
     [Dependency] private SampleSystem _samples = default!;
     [Dependency] private SampleFactorySystem _factory = default!;
 
@@ -48,40 +46,21 @@ public sealed partial class SampleCollectorSystem : EntitySystem
         UpdateCollectorAppearance(ent);
     }
 
-    [SubscribeLocalEvent]
-    private void OnCollectorInteract(Entity<SampleCollectorComponent> ent, ref BeforeRangedInteractEvent args)
+    protected override void HandleContainerInteraction(Entity<SampleCollectorComponent> ent, ref BeforeRangedInteractEvent args)
     {
         if (args.Handled || !args.CanReach || args.Target is null)
             return;
 
+        if (HasComp<GenomeComponent>(args.Target.Value))
+            return;
+
         TryComp<SampleContainerComponent>(args.Target, out var containerComponent);
         TryComp<SampleContainerComponent>(ent, out var collectorContainer);
-        var biological = HasComp<GenomeComponent>(args.Target.Value);
-        var direction = biological ||
-            collectorContainer is { Empty: true } &&
+        var direction = collectorContainer is { Empty: true } &&
             containerComponent is { Empty: false, AllowCollection: true }
             ? SampleCollectorDirection.Collection
             : SampleCollectorDirection.Transfer;
-
-        if (!biological)
-        {
-            args.Handled = CompleteCollectorInteraction(ent, args.Target.Value, direction, args.User);
-            return;
-        }
-
-        if (!CollectorInteractValidate(ent, (args.Target.Value, containerComponent), direction, args.User))
-            return;
-
-        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, ent.Comp.Delay, new SampleCollectorDoAfter(), ent, target: args.Target, used: ent)
-        {
-            NeedHand = true,
-            BreakOnDamage = true,
-            BreakOnMove = true,
-            MovementThreshold = ent.Comp.MovementThreshold,
-            BlockDuplicate = true
-        };
-
-        args.Handled = _doAfter.TryStartDoAfter(doAfterArgs);
+        args.Handled = CompleteCollectorInteraction(ent, args.Target.Value, direction, args.User);
     }
 
     [SubscribeLocalEvent]

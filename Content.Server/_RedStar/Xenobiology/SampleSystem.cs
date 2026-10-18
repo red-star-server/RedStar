@@ -25,10 +25,11 @@ public sealed partial class SampleSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnInit(Entity<SampleContainerComponent> ent, ref ComponentInit args)
     {
-        foreach (var sample in ent.Comp.Samples)
-        {
-            _nextSampleId = Math.Max(_nextSampleId, sample.Id);
-        }
+        ent.Comp.SampleCount = ent.Comp.Samples.Count;
+        Dirty(ent);
+
+        if (ent.Comp.Samples.Count > 0)
+            ReserveLoadedSampleIds();
 
         foreach (var sample in ent.Comp.Samples)
         {
@@ -37,7 +38,7 @@ public sealed partial class SampleSystem : EntitySystem
         }
     }
 
-    private int NextSampleId()
+    private void ReserveLoadedSampleIds()
     {
         var query = AllEntityQuery<SampleContainerComponent>();
         while (query.MoveNext(out var container))
@@ -47,16 +48,22 @@ public sealed partial class SampleSystem : EntitySystem
                 _nextSampleId = Math.Max(_nextSampleId, sample.Id);
             }
         }
-
-        return ++_nextSampleId;
     }
+
+    private int NextSampleId() => checked(++_nextSampleId);
 
     private void NotifyChanged(EntityUid uid)
     {
+        var component = Comp<SampleContainerComponent>(uid);
+        component.SampleCount = component.Samples.Count;
+        Dirty(uid, component);
         var ev = new SampleContainerChangedEvent();
         RaiseLocalEvent(uid, ref ev);
     }
 
+    /// <summary>
+    /// Adds a new sample and assigns its ID. Rejects samples with an existing ID or a full container.
+    /// </summary>
     public bool AddSample(Entity<SampleContainerComponent?> ent, BiologicalSample sample)
     {
         if (!Resolve(ent, ref ent.Comp) || sample.Id != 0 ||
@@ -70,6 +77,10 @@ public sealed partial class SampleSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Replaces two distinct samples with one new sample and notifies observers once.
+    /// Leaves the container unchanged if either input is missing or the result already has an ID.
+    /// </summary>
     public bool ReplaceSamples(Entity<SampleContainerComponent?> ent, int firstId, int secondId, BiologicalSample result)
     {
         if (!Resolve(ent, ref ent.Comp) || result.Id != 0 || firstId == secondId ||
@@ -85,6 +96,9 @@ public sealed partial class SampleSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Removes a gene from the selected sample and notifies the containing machine on success.
+    /// </summary>
     public bool TryRemoveGene(Entity<SampleContainerComponent?> ent, int sampleId, ProtoId<GenePrototype> id)
     {
         if (!Resolve(ent, ref ent.Comp) || ent.Comp.Samples.Find(sample => sample.Id == sampleId) is not { } sample ||
@@ -95,6 +109,10 @@ public sealed partial class SampleSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Reduces the selected sample's stability, destroying its genome at zero.
+    /// Notifies observers only when stability changes.
+    /// </summary>
     public bool TryReduceStability(Entity<SampleContainerComponent?> ent, int sampleId, float amount)
     {
         if (!Resolve(ent, ref ent.Comp) || ent.Comp.Samples.Find(sample => sample.Id == sampleId) is not { } sample ||
@@ -105,6 +123,10 @@ public sealed partial class SampleSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Moves the first sample without changing its ID and notifies both containers.
+    /// Returns false without moving anything if the source is empty or the destination is full.
+    /// </summary>
     public bool MoveFirstSample(Entity<SampleContainerComponent?> source, Entity<SampleContainerComponent?> destination)
     {
         if (source.Owner == destination.Owner ||

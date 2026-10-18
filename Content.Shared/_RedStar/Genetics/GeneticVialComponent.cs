@@ -9,9 +9,15 @@ namespace Content.Shared._RedStar.Genetics;
 [RegisterComponent]
 public sealed partial class GeneticVialComponent : Component
 {
+    /// <summary>
+    /// Extracted genes available for injection. Modified only through GeneticVialSystem.
+    /// </summary>
     [DataField]
     public HashSet<ProtoId<GenePrototype>> Genes = [];
 
+    /// <summary>
+    /// Changes whenever vial contents change. An injection is cancelled if its captured revision differs.
+    /// </summary>
     public int Revision;
 }
 

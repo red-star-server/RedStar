@@ -9,6 +9,10 @@ public sealed partial class GenomeExpressionSystem : EntitySystem
     [Dependency] private IPrototypeManager _prototypes = default!;
     [Dependency] private SharedEntityEffectsSystem _effects = default!;
 
+    /// <summary>
+    /// Applies the gene's effects and returns true if any effect passes its conditions,
+    /// or if the gene has no effects. This does not guarantee that every effect was applied.
+    /// </summary>
     public bool TryExpress(EntityUid uid, ProtoId<GenePrototype> id)
     {
         var effects = _prototypes.Index(id).Effects;

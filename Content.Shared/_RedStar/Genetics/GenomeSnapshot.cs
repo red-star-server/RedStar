@@ -13,6 +13,9 @@ public sealed partial class GenomeSnapshot
     private HashSet<ProtoId<GenePrototype>> _genes = [];
 
     private FrozenSet<ProtoId<GenePrototype>>? _view;
+    /// <summary>
+    /// Read-only gene set, independent of the source collection supplied to the constructor.
+    /// </summary>
     public IReadOnlySet<ProtoId<GenePrototype>> Genes => _view ??= _genes.ToFrozenSet();
 
     [DataField]
@@ -27,6 +30,9 @@ public sealed partial class GenomeSnapshot
     }
 
     public int GeneCount => _genes.Count;
+    /// <summary>
+    /// Compares genome prototype and gene membership; gene order and expression status are irrelevant.
+    /// </summary>
     public bool SameContents(GenomeSnapshot? other) =>
         other is not null && GenomeId == other.GenomeId && Genes.SetEquals(other.Genes);
 }

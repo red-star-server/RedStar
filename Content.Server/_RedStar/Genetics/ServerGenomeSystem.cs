@@ -7,7 +7,7 @@ using Content.Shared.Cloning.Events;
 
 namespace Content.Server._RedStar.Genetics;
 
-public sealed partial class GenomeSystem : EntitySystem
+public sealed partial class ServerGenomeSystem : GenomeSystem
 {
     [Dependency] private IPrototypeManager _prototypes = default!;
     [Dependency] private GenomeExpressionSystem _expression = default!;
@@ -54,9 +54,14 @@ public sealed partial class GenomeSystem : EntitySystem
         ent.Comp.Genes = genome.Genes.ToDictionary(id => id, _ => GeneStatus.Active);
         ent.Comp.NaturalGenes = new HashSet<ProtoId<GenePrototype>>(genome.Genes);
         ent.Comp.GenomeGenerated = true;
+        Dirty(ent);
         NotifyChanged(ent.Owner, []);
     }
 
+    /// <summary>
+    /// Builds an independent snapshot of the natural genes in a genome prototype.
+    /// Returns false for an unknown prototype.
+    /// </summary>
     public bool TryGenerate(ProtoId<GenomePrototype> id, out GenomeSnapshot? genome)
     {
         genome = null;
@@ -66,6 +71,10 @@ public sealed partial class GenomeSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Copies all present genes, including dormant ones, without their expression status.
+    /// Returns false if the entity has no initialized genome.
+    /// </summary>
     public bool TryGetSnapshot(EntityUid uid, out GenomeSnapshot? snapshot)
     {
         snapshot = null;
@@ -75,9 +84,15 @@ public sealed partial class GenomeSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Checks for a present gene regardless of whether it is dormant or active.
+    /// </summary>
     public bool HasGene(EntityUid uid, ProtoId<GenePrototype> id) =>
         TryComp<GenomeComponent>(uid, out var component) && component.Genes.ContainsKey(id);
 
+    /// <summary>
+    /// Checks whether the gene is present but has not been expressed.
+    /// </summary>
     public bool IsRaw(EntityUid uid, ProtoId<GenePrototype> id) =>
         TryComp<GenomeComponent>(uid, out var component) &&
         component.Genes.TryGetValue(id, out var status) && status == GeneStatus.Raw;
@@ -85,6 +100,10 @@ public sealed partial class GenomeSystem : EntitySystem
     private int Load(GenomeComponent component, IEnumerable<ProtoId<GenePrototype>> genes) =>
         genes.Where(id => !component.NaturalGenes.Contains(id)).Sum(id => _prototypes.Index(id).Tier);
 
+    /// <summary>
+    /// Checks that all incoming genes exist and their combined acquired load fits the limit.
+    /// Genes already present are counted once; natural genes do not consume acquired load.
+    /// </summary>
     public bool CanApplyGenes(EntityUid uid, IReadOnlySet<ProtoId<GenePrototype>> incoming) =>
         TryComp<GenomeComponent>(uid, out var component) && component.GenomeGenerated &&
         incoming.All(id => _prototypes.HasIndex(id)) &&
@@ -132,6 +151,10 @@ public sealed partial class GenomeSystem : EntitySystem
         NotifyChanged(uid, activated);
     }
 
+    /// <summary>
+    /// Checks that every input is dormant, the result is absent, and the resulting load fits.
+    /// Does not consume inputs or apply gene effects.
+    /// </summary>
     public bool CanTransformGenes(EntityUid uid, IReadOnlySet<ProtoId<GenePrototype>> inputs,
         ProtoId<GenePrototype> result) =>
         inputs.Count > 0 && !inputs.Contains(result) && _prototypes.HasIndex(result) &&
@@ -139,6 +162,10 @@ public sealed partial class GenomeSystem : EntitySystem
         !component.Genes.ContainsKey(result) && inputs.All(id => IsRaw(uid, id)) &&
         Load(component, component.Genes.Keys.Except(inputs).Append(result)) <= component.MaximumLoad;
 
+    /// <summary>
+    /// Consumes the dormant input genes and adds the result, expressing it immediately.
+    /// If no effect passes its conditions, the result remains dormant; inputs are still consumed.
+    /// </summary>
     public bool TryTransformGenes(EntityUid uid, IReadOnlySet<ProtoId<GenePrototype>> inputs,
         ProtoId<GenePrototype> result)
     {

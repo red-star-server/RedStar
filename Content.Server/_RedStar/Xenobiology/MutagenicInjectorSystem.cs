@@ -24,7 +24,7 @@ public sealed partial class MutagenicInjectorSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private GenomeSystem _genomes = default!;
+    [Dependency] private ServerGenomeSystem _genomes = default!;
     [Dependency] private EntityStorageSystem _storage = default!;
 
     private bool IsValidRecipient(EntityUid recipient) =>

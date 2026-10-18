@@ -18,7 +18,7 @@ public sealed partial class SampleFactorySystem : EntitySystem
 
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private IPrototypeManager _prototypes = default!;
-    [Dependency] private GenomeSystem _genomes = default!;
+    [Dependency] private ServerGenomeSystem _genomes = default!;
     [Dependency] private SampleSystem _samples = default!;
 
     [SubscribeLocalEvent]
@@ -47,6 +47,10 @@ public sealed partial class SampleFactorySystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Creates an unassigned sample with appearance derived from its genes.
+    /// Stability depends on gene count, random variation, and the donor's cellular damage.
+    /// </summary>
     public BiologicalSample GenerateBiopsySample(GenomeSnapshot genome, float cellularDamage, SampleCollectorComponent settings)
     {
         var geneCount = genome.GeneCount;

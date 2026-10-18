@@ -21,12 +21,10 @@ public sealed class CellularFusionUiState(
     SampleView[] samples,
     NetEntity? dish,
     bool spliceInProgress,
-    double spliceDuration,
-    double spliceRemaining) : BoundUserInterfaceState
+    double spliceDuration) : BoundUserInterfaceState
 {
     public readonly SampleView[] Samples = samples;
     public readonly NetEntity? Dish = dish;
     public readonly bool SpliceInProgress = spliceInProgress;
     public readonly double SpliceDuration = spliceDuration;
-    public readonly double SpliceRemaining = spliceRemaining;
 }

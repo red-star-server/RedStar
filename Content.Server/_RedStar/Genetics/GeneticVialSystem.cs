@@ -14,9 +14,16 @@ public sealed partial class GeneticVialSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnMapInit(Entity<GeneticVialComponent> ent, ref MapInitEvent args) => UpdateVisual(ent);
 
+    /// <summary>
+    /// Returns whether the vial lacks the gene; does not validate the gene prototype or sample stability.
+    /// </summary>
     public bool CanAdd(Entity<GeneticVialComponent> vial, ProtoId<GenePrototype> id) =>
         !vial.Comp.Genes.Contains(id);
 
+    /// <summary>
+    /// Moves a gene from the selected sample into the vial if stability permits and the vial lacks it.
+    /// Observers are notified after the vial contains the gene; a rejected extraction leaves both unchanged.
+    /// </summary>
     public bool TryExtract(Entity<SampleContainerComponent> dish, int sampleId,
         Entity<GeneticVialComponent> vial, ProtoId<GenePrototype> id)
     {
@@ -38,6 +45,9 @@ public sealed partial class GeneticVialSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Removes all genes and updates the contents revision and appearance. An empty vial is unchanged.
+    /// </summary>
     public void Clear(Entity<GeneticVialComponent> vial)
     {
         if (vial.Comp.Genes.Count == 0)

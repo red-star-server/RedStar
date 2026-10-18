@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server._RedStar.Genetics;
+using Content.Shared._RedStar.Genetics;
 using Content.Server.Power.EntitySystems;
 using Content.Shared._RedStar.Genetics.Prototypes;
 using Content.Shared._RedStar.Xenobiology.Components.Machines;
@@ -28,7 +29,7 @@ public sealed partial class GrowingVatSystem : EntitySystem
     [Dependency] private ClimbSystem _climb = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedSolutionContainerSystem _solutions = default!;
-    [Dependency] private GenomeSystem _genomes = default!;
+    [Dependency] private ServerGenomeSystem _genomes = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private MobStateSystem _mobState = default!;
@@ -108,7 +109,9 @@ public sealed partial class GrowingVatSystem : EntitySystem
         if (!_solutions.TryGetSolution(vat.Owner, vat.Comp.Solution, out _, out var mixture))
             return false;
 
-        foreach (var candidate in _prototypes.EnumeratePrototypes<GeneticMutationPrototype>())
+        foreach (var candidate in _prototypes.EnumeratePrototypes<GeneticMutationPrototype>()
+                     .OrderByDescending(recipe => recipe.Priority)
+                     .ThenBy(recipe => recipe.ID, StringComparer.Ordinal))
         {
             if (!Eligible(subject, candidate, mixture))
                 continue;

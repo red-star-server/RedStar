@@ -3,7 +3,8 @@ using Robust.Shared.Serialization;
 namespace Content.Shared._RedStar.Xenobiology.UI;
 
 /// <summary>
-/// Laboratory information visible to clients without its server-owned genome.
+/// Public sample details without the genetic material.
+/// CompatibilityGroup identifies equal genomes within one UI state; it is not a persistent genome ID.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed record SampleView(int Id, string Name, Color Color, float Stability, int GeneCount,

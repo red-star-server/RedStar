@@ -9,6 +9,9 @@ public sealed partial class CellSequencerComponent : Component
     [DataField]
     public string VialSlot = "vialSlot";
 
+    /// <summary>
+    /// Stability removed from the selected sample after an incorrect sequencing attempt.
+    /// </summary>
     [DataField]
     public float IncorrectStabilityCost = 0.1f;
 }

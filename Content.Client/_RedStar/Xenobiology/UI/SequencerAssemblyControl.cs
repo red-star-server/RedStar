@@ -49,6 +49,9 @@ public sealed class SequencerAssemblyControl : Control
         MouseFilter = MouseFilterMode.Stop;
     }
 
+    /// <summary>
+    /// Replaces the available fragments and sequence prefix, clearing placement and feedback without notification.
+    /// </summary>
     public void SetFragments(string[] fragments, string prefix)
     {
         _fragments = fragments;
@@ -58,6 +61,9 @@ public sealed class SequencerAssemblyControl : Control
         Clear(false);
     }
 
+    /// <summary>
+    /// Clears placement, drag state, and feedback. Raises AssemblyChanged unless notify is false.
+    /// </summary>
     public void Clear(bool notify = true)
     {
         Array.Fill(_slots, null);
@@ -70,6 +76,9 @@ public sealed class SequencerAssemblyControl : Control
             AssemblyChanged?.Invoke();
     }
 
+    /// <summary>
+    /// Fragment indices in board order, or an empty array if any slot is unfilled.
+    /// </summary>
     public int[] OrderedFragments => _slots.All(x => x.HasValue)
         ? _slots.Select(x => x!.Value).ToArray()
         : [];
@@ -78,6 +87,9 @@ public sealed class SequencerAssemblyControl : Control
 
     public bool Complete => _slots.Length > 0 && _slots.All(slot => slot.HasValue);
 
+    /// <summary>
+    /// Displays adjacency feedback only if the submitted order still matches the current board.
+    /// </summary>
     public void SetFeedback(int[] order, bool[] matches)
     {
         _feedback = order.Length == _slots.Length && matches.Length == Math.Max(0, _slots.Length - 1) &&

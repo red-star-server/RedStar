@@ -28,7 +28,9 @@ public sealed partial class CellSequencerSystem : EntitySystem
     [Dependency] private SampleSystem _samples = default!;
     [Dependency] private IRobustRandom _random = default!;
 
+    // Discoveries are shared by every sequencer and reset at round restart.
     private readonly HashSet<ProtoId<GenePrototype>> _decoded = [];
+    // Each gene retains its puzzle for the round; family codes must be unique across genes.
     private readonly Dictionary<ProtoId<GenePrototype>, Puzzle> _puzzles = [];
     private sealed record Puzzle(string FamilyCode, string[] Fragments, int[] Order);
     private const int MaximumPuzzleAttempts = 4096;
@@ -226,6 +228,10 @@ public sealed partial class CellSequencerSystem : EntitySystem
         return new string(result);
     }
 
+    /// <summary>
+    /// Rejects any overlap except the next pair in the original sequence, including self-overlaps.
+    /// This ensures the shuffled fragments have only one valid assembly.
+    /// </summary>
     private static bool Unambiguous(string[] pieces)
     {
         for (var i = 0; i < pieces.Length; i++)

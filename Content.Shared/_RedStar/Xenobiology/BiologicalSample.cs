@@ -9,6 +9,9 @@ namespace Content.Shared._RedStar.Xenobiology;
 [DataDefinition]
 public sealed partial class BiologicalSample
 {
+    /// <summary>
+    /// Sample identity retained during transfer. Zero denotes a new sample awaiting an ID from SampleSystem.
+    /// </summary>
     [DataField]
     public int Id { get; set; }
 
@@ -18,6 +21,9 @@ public sealed partial class BiologicalSample
     [DataField, ViewVariables]
     public string Name { get; private set; } = string.Empty;
 
+    /// <summary>
+    /// Sample integrity in the range zero to one. Non-finite values are treated as zero.
+    /// </summary>
     [DataField, ViewVariables]
     public float Stability
     {
@@ -44,8 +50,14 @@ public sealed partial class BiologicalSample
         _genome = genome;
     }
 
+    /// <summary>
+    /// Returns the immutable genetic material, or null if the sample has no usable genome.
+    /// </summary>
     public GenomeSnapshot? GetGenome() => _genome;
 
+    /// <summary>
+    /// Removes a gene by replacing the immutable genome snapshot. Does not notify container observers.
+    /// </summary>
     public bool TryRemoveGene(ProtoId<GenePrototype> id)
     {
         if (_genome is null)

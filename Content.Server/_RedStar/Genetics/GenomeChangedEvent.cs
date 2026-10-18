@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server._RedStar.Genetics;
 
 /// <summary>
-/// Raised after a genome transaction. Only these genes need expression.
+/// Raised after a genome change. Activated lists genes already expressed by this transaction.
 /// </summary>
 [ByRefEvent]
 public readonly record struct GenomeChangedEvent(IReadOnlyList<ProtoId<GenePrototype>> Activated);

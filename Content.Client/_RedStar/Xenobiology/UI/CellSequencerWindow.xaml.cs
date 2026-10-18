@@ -45,6 +45,9 @@ public sealed partial class CellSequencerWindow : FancyWindow
         RefreshAssembly();
     }
 
+    /// <summary>
+    /// Refreshes samples and markers while retaining valid selections. Changing dishes clears the assembly.
+    /// </summary>
     public void UpdateState(CellSequencerUiState state)
     {
         if (_state?.Dish != state.Dish)
@@ -64,6 +67,9 @@ public sealed partial class CellSequencerWindow : FancyWindow
         BuildAssembly();
     }
 
+    /// <summary>
+    /// Applies feedback only to the currently selected sample and marker.
+    /// </summary>
     public void ShowFeedback(CellSequencerFeedbackMessage feedback)
     {
         if (_primary == feedback.SampleId && _family == feedback.Family)

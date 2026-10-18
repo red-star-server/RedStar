@@ -15,6 +15,9 @@ public sealed partial class CellInfoControl : Control
         RobustXamlLoader.Load(this);
     }
 
+    /// <summary>
+    /// Sets the localization key prefix for detail labels. Must be called before SetSample.
+    /// </summary>
     public void SetLabelPrefix(string prefix)
     {
         _labelPrefix = prefix;

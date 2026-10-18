@@ -13,6 +13,7 @@ public sealed class CellularFusionBoundUserInterface(EntityUid owner, Enum uiKey
         base.Open();
 
         _window = this.CreateWindow<CellularFusionWindow>();
+        _window.Owner = Owner;
         _window.OnSplice += (cellA, cellB) =>
             SendMessage(new CellularFusionUiSpliceMessage(cellA, cellB));
     }
