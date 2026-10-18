@@ -36,7 +36,7 @@ public sealed partial class CellularFusionWindow : FancyWindow
         SpliceButton.OnPressed += _ =>
         {
             if (_selected.Count == 2 && !_spliceInProgress)
-                OnSplice?.Invoke(_selected[0].Id, _selected[1].Id);
+                OnSplice?.Invoke(_selected[0].Sample.Id, _selected[1].Sample.Id);
         };
     }
 
@@ -77,7 +77,7 @@ public sealed partial class CellularFusionWindow : FancyWindow
         CellContainer.RemoveAllChildren();
         foreach (var t in cells)
         {
-            var entry = new CellEntryControl(t, t.Id);
+            var entry = new CellEntryControl(t);
             entry.OnSelect += SelectEntry;
             CellContainer.AddChild(entry);
         }

@@ -9,14 +9,12 @@ namespace Content.Client._RedStar.Xenobiology.UI;
 public sealed partial class CellEntryControl : Control
 {
     public readonly SampleView Sample;
-    public readonly int Id;
     public event Action<CellEntryControl>? OnSelect;
 
-    public CellEntryControl(SampleView sample, int id)
+    public CellEntryControl(SampleView sample)
     {
         RobustXamlLoader.Load(this);
         Sample = sample;
-        Id = id;
 
         CellNameLabel.Text = sample.Name;
         Color.ModulateSelfOverride = sample.Color;

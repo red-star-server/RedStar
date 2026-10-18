@@ -11,13 +11,9 @@ public sealed partial class GenomePrototype : IPrototype
     [IdDataField]
     public string ID { get; private set; } = string.Empty;
 
+    /// <summary>
+    /// Natural genes present and active when this genome is generated.
+    /// </summary>
     [DataField]
-    public List<GenomeGeneDefinition> Genes = [];
-}
-
-[DataDefinition]
-public sealed partial class GenomeGeneDefinition
-{
-    [DataField(required: true)]
-    public ProtoId<GenePrototype> Gene;
+    public List<ProtoId<GenePrototype>> Genes = [];
 }

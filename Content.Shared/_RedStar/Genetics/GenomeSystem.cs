@@ -5,6 +5,6 @@ public abstract partial class GenomeSystem : EntitySystem
     /// <summary>
     /// Returns false when the entity has no genome or its initial generation has not completed.
     /// </summary>
-    public bool IsGenerated(EntityUid uid) =>
-        TryComp<GenomeComponent>(uid, out var genome) && genome.GenomeGenerated;
+    public bool IsGenerated(Entity<GenomeComponent?> ent) =>
+        Resolve(ent, ref ent.Comp, logMissing: false) && ent.Comp.GenomeGenerated;
 }

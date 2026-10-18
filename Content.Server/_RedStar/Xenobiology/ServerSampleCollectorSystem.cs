@@ -19,12 +19,6 @@ namespace Content.Server._RedStar.Xenobiology;
 /// </summary>
 public sealed partial class ServerSampleCollectorSystem : SampleCollectorSystem
 {
-    private enum SampleCollectorDirection
-    {
-        Collection,
-        Transfer
-    }
-
     [Dependency] private AppearanceSystem _appearance = default!;
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private EntityWhitelistSystem _entityWhitelist = default!;
@@ -53,13 +47,13 @@ public sealed partial class ServerSampleCollectorSystem : SampleCollectorSystem
         if (HasComp<GenomeComponent>(args.Target.Value))
             return;
 
-        TryComp<SampleContainerComponent>(args.Target, out var containerComponent);
-        TryComp<SampleContainerComponent>(ent, out var collectorContainer);
-        var direction = collectorContainer is { Empty: true } &&
-            containerComponent is { Empty: false, AllowCollection: true }
-            ? SampleCollectorDirection.Collection
-            : SampleCollectorDirection.Transfer;
-        args.Handled = CompleteCollectorInteraction(ent, args.Target.Value, direction, args.User);
+        if (!TryComp<SampleContainerComponent>(ent, out var collector) ||
+            !TryComp<SampleContainerComponent>(args.Target, out var target) || ent.Owner == args.Target.Value)
+            return;
+
+        args.Handled = collector.Empty && target is { Empty: false, AllowCollection: true }
+            ? CollectSample((ent.Owner, collector), (args.Target.Value, target), args.User)
+            : TransferSample((ent.Owner, collector), (args.Target.Value, target), args.User);
     }
 
     [SubscribeLocalEvent]
@@ -76,7 +70,7 @@ public sealed partial class ServerSampleCollectorSystem : SampleCollectorSystem
             return;
         }
 
-        if (!_genomes.TryGetSnapshot(target, out var genome) || genome is null ||
+        if (!_genomes.TryGetSnapshot(target, out var genome) ||
             !_samples.AddSample(ent.Owner, _factory.GenerateBiopsySample(genome, damage, ent.Comp)))
             return;
 
@@ -87,33 +81,40 @@ public sealed partial class ServerSampleCollectorSystem : SampleCollectorSystem
         args.Handled = true;
     }
 
-    private bool CompleteCollectorInteraction(Entity<SampleCollectorComponent> ent, EntityUid target,
-        SampleCollectorDirection direction, EntityUid user)
+    private bool CollectSample(Entity<SampleContainerComponent> ent,
+        Entity<SampleContainerComponent> target, EntityUid user)
     {
-        if (!CollectorInteractValidate(ent, target, direction, user))
-            return false;
-
-        switch (direction)
+        if (ent.Comp.SampleCount >= ent.Comp.MaxSamples)
         {
-            case SampleCollectorDirection.Collection:
-                if (!_samples.MoveFirstSample(target, ent.Owner))
-                    return false;
-
-                _popup.PopupEntity(Loc.GetString("cell-collector-collected"), ent, user);
-
-                break;
-
-            case SampleCollectorDirection.Transfer:
-                if (!_samples.MoveFirstSample(ent.Owner, target))
-                    return false;
-
-                _popup.PopupEntity(Loc.GetString("cell-collector-transfer"), ent, user);
-                break;
-
-            default:
-                throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
+            _popup.PopupEntity(Loc.GetString("cell-collector-full"), ent, user, PopupType.SmallCaution);
+            return false;
         }
 
+        if (!_samples.MoveFirstSample((target.Owner, target.Comp), (ent.Owner, ent.Comp)))
+            return false;
+
+        _popup.PopupEntity(Loc.GetString("cell-collector-collected"), ent, user);
+        return true;
+    }
+
+    private bool TransferSample(Entity<SampleContainerComponent> ent,
+        Entity<SampleContainerComponent> target, EntityUid user)
+    {
+        if (!target.Comp.AllowTransfer || target.Comp.ToolsTransferWhitelist is null ||
+            _entityWhitelist.IsWhitelistFail(target.Comp.ToolsTransferWhitelist, ent) ||
+            target.Comp.SampleCount >= target.Comp.MaxSamples)
+            return false;
+
+        if (ent.Comp.Empty)
+        {
+            _popup.PopupEntity(Loc.GetString("cell-collector-empty"), ent, user, PopupType.SmallCaution);
+            return false;
+        }
+
+        if (!_samples.MoveFirstSample((ent.Owner, ent.Comp), (target.Owner, target.Comp)))
+            return false;
+
+        _popup.PopupEntity(Loc.GetString("cell-collector-transfer"), ent, user);
         return true;
     }
 
@@ -123,57 +124,5 @@ public sealed partial class ServerSampleCollectorSystem : SampleCollectorSystem
             return;
 
         _appearance.SetData(ent, CellCollectorVisuals.State, ent.Comp2.Empty);
-    }
-
-    private bool CollectorInteractValidate(Entity<SampleCollectorComponent, SampleContainerComponent?> ent,
-        Entity<SampleContainerComponent?> target,
-        SampleCollectorDirection direction,
-        EntityUid user)
-    {
-        if (ent.Owner == target.Owner)
-            return false;
-
-        if (!Resolve(ent, ref ent.Comp2))
-            return false;
-
-        TryComp(target.Owner, out target.Comp);
-
-        switch (direction)
-        {
-            case SampleCollectorDirection.Collection:
-                if (ent.Comp2.Samples.Count >= ent.Comp2.MaxSamples)
-                {
-                    _popup.PopupEntity(Loc.GetString("cell-collector-full"), ent, user, PopupType.SmallCaution);
-                    return false;
-                }
-
-                if (target.Comp is not { AllowCollection: true, Empty: false })
-                {
-                    _popup.PopupEntity(Loc.GetString("cell-collector-target-cant-collected"), ent, user, PopupType.SmallCaution);
-                    return false;
-                }
-
-                break;
-
-            case SampleCollectorDirection.Transfer:
-                if (target.Comp == null ||
-                    _entityWhitelist.IsWhitelistFail(target.Comp.ToolsTransferWhitelist, ent) ||
-                    target.Comp.ToolsTransferWhitelist is null ||
-                    !target.Comp.AllowTransfer ||
-                    target.Comp.Samples.Count >= target.Comp.MaxSamples)
-                    return false;
-
-                if (ent.Comp2.Empty)
-                {
-                    _popup.PopupEntity(Loc.GetString("cell-collector-empty"), ent, user, PopupType.SmallCaution);
-                    return false;
-                }
-                break;
-
-            default:
-                throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
-        }
-
-        return true;
     }
 }

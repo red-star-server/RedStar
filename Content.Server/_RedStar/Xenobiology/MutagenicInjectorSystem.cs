@@ -112,12 +112,15 @@ public sealed partial class MutagenicInjectorSystem : EntitySystem
 
         var recipient = storage.Contents.ContainedEntities[0];
         subject = recipient;
-        if (vialComponent.Genes.All(id => _genomes.HasGene(recipient, id)))
+        if (!TryComp<GenomeComponent>(recipient, out var genome))
+            return false;
+
+        if (vialComponent.Genes.All(id => _genomes.HasGene((recipient, genome), id)))
         {
             _popup.PopupEntity(Loc.GetString("mutagenic-injector-no-new-genes"), ent, user, PopupType.MediumCaution);
             return false;
         }
-        if (!_genomes.CanApplyGenes(subject, vialComponent.Genes))
+        if (!_genomes.CanApplyGenes((recipient, genome), vialComponent.Genes))
         {
             _popup.PopupEntity(Loc.GetString("mutagenic-injector-overload"), ent, user, PopupType.MediumCaution);
             return false;

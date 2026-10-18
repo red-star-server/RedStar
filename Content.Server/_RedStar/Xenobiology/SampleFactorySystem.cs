@@ -33,7 +33,7 @@ public sealed partial class SampleFactorySystem : EntitySystem
         var initial = new List<(GenomeSnapshot Genome, float Stability)>();
         foreach (var entry in ent.Comp.InitialSamples)
         {
-            if (!_genomes.TryGenerate(entry.Genome, out var genome) || genome is null)
+            if (!_genomes.TryGenerate(entry.Genome, out var genome))
                 throw new InvalidOperationException($"Unknown initial sample genome {entry.Genome} on {ToPrettyString(ent)}.");
 
             initial.Add((genome, entry.Stability));
