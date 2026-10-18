@@ -7,7 +7,7 @@
   components:
   - type: Sprite
     sprite: _Corvax/Structures/Machines/printer.rsi
-    snapCardinals: true
+    snapCardinals: false # RS14
     layers:
     - state: icon
     - state: icon-unshaded
