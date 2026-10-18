@@ -90,9 +90,6 @@
           collection: MetalGlassBreak
   - type: Machine
     board: HydroponicsTrayMachineCircuitboard
-  - type: TTS # Corvax-TTS
-    #voice: TrainingRobot
-    voice: Xenia
   - type: WiresPanel
   - type: AmbientSound
     volume: -9
