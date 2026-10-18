@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from Paradise at https://github.com/ss220-space/Paradise/blob/HEAD/icons/mob/slimes.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "pout",
+      "directions": 4
+    },
+    {
+      "name": "sad",
+      "directions": 4
+    },
+    {
+      "name": "angry",
+      "directions": 4
+    },
+    {
+      "name": "mischievous",
+      "directions": 4
+    },
+    {
+      "name": "expression-3",
+      "directions": 4
+    },
+    {
+      "name": "expression-33",
+      "directions": 4
+    }
+  ]
+}

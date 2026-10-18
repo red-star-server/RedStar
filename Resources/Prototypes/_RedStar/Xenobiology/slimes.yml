@@ -1,0 +1,352 @@
+- type: entity
+  name: gray slime
+  id: MobAdultSlimesGray
+  parent: MobAdultSlimes
+  components:
+  - type: Butcherable
+    spawned:
+    - id: GraySlimeExtract
+      amount: 1
+  - type: SlimeMutation
+    mutations:
+    - target: MobBabySlimesOrange
+      weight: 1
+      conditions:
+      - !type:SatiationCondition
+        satiationType: Hunger
+        min: 140
+    - target: MobBabySlimesPurple
+      weight: 1
+      conditions:
+      - !type:SatiationCondition
+        satiationType: Hunger
+        max: 140
+    - target: MobBabySlimesBlue
+      weight: 1
+      conditions:
+      - !type:TemperatureCondition
+        max: 290
+    - target: MobBabySlimesMetal
+      weight: 1
+      conditions:
+      - !type:TemperatureCondition
+        min: 310
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesGray
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/gray.rsi
+
+- type: entity
+  name: orange slime
+  id: MobAdultSlimesOrange
+  parent: MobAdultSlimes
+  components:
+  - type: Butcherable
+    spawned:
+    - id: OrangeSlimeExtract
+      amount: 1
+  - type: SlimeMutation
+    mutations:
+    - target: MobBabySlimesYellow
+      weight: 1
+    - target: MobBabySlimesDarkPurple
+      weight: 1
+    - target: MobBabySlimesRed
+      weight: 2
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesOrange
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/orange.rsi
+
+- type: entity
+  name: purple slime
+  id: MobAdultSlimesPurple
+  parent: MobAdultSlimes
+  components:
+  - type: Butcherable
+    spawned:
+    - id: PurpleSlimeExtract
+      amount: 1
+  - type: SlimeMutation
+    mutations:
+    - target: MobBabySlimesDarkPurple
+      weight: 1
+    - target: MobBabySlimesDarkBlue
+      weight: 1
+    - target: MobBabySlimesGreen
+      weight: 2
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesPurple
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/purple.rsi
+
+- type: entity
+  name: metal slime
+  id: MobAdultSlimesMetal
+  parent: MobAdultSlimes
+  components:
+  - type: Butcherable
+    spawned:
+    - id: MetalSlimeExtract
+      amount: 1
+  - type: SlimeMutation
+    mutations:
+    - target: MobBabySlimesYellow
+      weight: 1
+    - target: MobBabySlimesSilver
+      weight: 1
+    - target: MobBabySlimesGold
+      weight: 2
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesMetal
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/metal.rsi
+
+- type: entity
+  name: dark purple slime
+  id: MobAdultSlimesDarkPurple
+  parent: MobAdultSlimes
+  components:
+  - type: Butcherable
+    spawned:
+    - id: DarkPurpleSlimeExtract
+      amount: 1
+  - type: SlimeMutation
+    mutations:
+    - target: MobBabySlimesOrange
+      weight: 1
+    - target: MobBabySlimesPurple
+      weight: 1
+    - target: MobBabySlimesSepia
+      weight: 2
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesDarkPurple
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/dark_purple.rsi
+
+- type: entity
+  name: dark blue slime
+  id: MobAdultSlimesDarkBlue
+  parent: MobAdultSlimes
+  components:
+  - type: Butcherable
+    spawned:
+    - id: DarkBlueSlimeExtract
+      amount: 1
+  - type: SlimeMutation
+    mutations:
+    - target: MobBabySlimesPurple
+      weight: 1
+    - target: MobBabySlimesBlue
+      weight: 1
+    - target: MobBabySlimesCerulean
+      weight: 2
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesDarkBlue
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/dark_blue.rsi
+
+- type: entity
+  name: silver slime
+  id: MobAdultSlimesSilver
+  parent: MobAdultSlimes
+  components:
+  - type: Butcherable
+    spawned:
+    - id: SilverSlimeExtract
+      amount: 1
+  - type: SlimeMutation
+    mutations:
+    - target: MobBabySlimesMetal
+      weight: 1
+    - target: MobBabySlimesBlue
+      weight: 1
+    - target: MobBabySlimesPyrite
+      weight: 2
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesSilver
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/silver.rsi
+
+- type: entity
+  name: bluespace slime
+  id: MobAdultSlimesBluespace
+  parent: MobAdultSlimes
+  components:
+  - type: Butcherable
+    spawned:
+    - id: BluespaceSlimeExtract
+      amount: 1
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesBluespace
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/bluespace.rsi
+
+- type: entity
+  name: sepia slime
+  id: MobAdultSlimesSepia
+  parent: MobAdultSlimes
+  components:
+  - type: Butcherable
+    spawned:
+    - id: SepiaSlimeExtract
+      amount: 1
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesSepia
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/sepia.rsi
+
+- type: entity
+  name: cerulean slime
+  id: MobAdultSlimesCerulean
+  parent: MobAdultSlimes
+  components:
+  - type: Butcherable
+    spawned:
+    - id: CeruleanSlimeExtract
+      amount: 1
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesCerulean
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/cerulean.rsi
+
+- type: entity
+  name: pyrite slime
+  id: MobAdultSlimesPyrite
+  parent: MobAdultSlimes
+  components:
+  - type: Butcherable
+    spawned:
+    - id: PyriteSlimeExtract
+      amount: 1
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesPyrite
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/pyrite.rsi
+
+- type: entity
+  name: red slime
+  id: MobAdultSlimesRed
+  parent: MobAdultSlimes
+  components:
+  - type: Butcherable
+    spawned:
+    - id: RedSlimeExtract
+      amount: 1
+  - type: SlimeMutation
+    mutations:
+    - target: MobBabySlimesOil
+      weight: 1
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesRed
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/red.rsi
+
+- type: entity
+  name: pink slime
+  id: MobAdultSlimesPink
+  parent: MobAdultSlimes
+  components:
+  - type: Butcherable
+    spawned:
+    - id: PinkSlimeExtract
+      amount: 1
+  - type: SlimeMutation
+    mutations:
+    - target: MobBabySlimesLightPink
+      weight: 1
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesPink
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/pink.rsi
+
+- type: entity
+  name: gold slime
+  id: MobAdultSlimesGold
+  parent: MobAdultSlimes
+  components:
+  - type: Butcherable
+    spawned:
+    - id: GoldSlimeExtract
+      amount: 1
+  - type: SlimeMutation
+    mutations:
+    - target: MobBabySlimesAdamantine
+      weight: 1
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesGold
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/gold.rsi
+
+- type: entity
+  name: oil slime
+  id: MobAdultSlimesOil
+  parent: MobAdultSlimes
+  components:
+  - type: Butcherable
+    spawned:
+    - id: OilSlimeExtract
+      amount: 1
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesOil
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/oil.rsi
+
+- type: entity
+  name: black slime
+  id: MobAdultSlimesBlack
+  parent: MobAdultSlimes
+  components:
+  - type: Butcherable
+    spawned:
+    - id: BlackSlimeExtract
+      amount: 1
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesBlack
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/black.rsi
+
+- type: entity
+  name: light pink slime
+  id: MobAdultSlimesLightPink
+  parent: MobAdultSlimes
+  components:
+  - type: Butcherable
+    spawned:
+    - id: LightPinkSlimeExtract
+      amount: 1
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesLightPink
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/light_pink.rsi
+
+- type: entity
+  name: adamantine slime
+  id: MobAdultSlimesAdamantine
+  parent: MobAdultSlimes
+  components:
+  - type: Butcherable
+    spawned:
+    - id: AdamantineSlimeExtract
+      amount: 1
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesAdamantine
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/adamantine.rsi
+
+- type: entity
+  name: rainbow slime
+  id: MobAdultSlimesRainbow
+  parent: MobAdultSlimes
+  components:
+  - type: Butcherable
+    spawned:
+    - id: RainbowSlimeExtract
+      amount: 1
+  - type: PointLight
+    radius: 1
+    energy: 1
+  - type: SlimeMitosis
+    offspringPrototype: MobBabySlimesRainbow
+  - type: Sprite
+    sprite: _RedStar/Mobs/XenoSlimes/rainbow.rsi

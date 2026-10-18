@@ -1,0 +1,17 @@
+- type: htnCompound
+  id: SlimeCombatCompound
+  branches:
+  - tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:UtilityOperator
+        proto: NearbyMeleeTargets
+    - !type:HTNPrimitiveTask
+      operator: !type:MoveToOperator
+        pathfindInPlanning: false
+        removeKeyOnFinish: false
+        rangeKey: MeleeRange
+    - !type:HTNPrimitiveTask
+      operator: !type:SlimeConsumeOperator
+  - tasks:
+    - !type:HTNCompoundTask
+      task: IdleCompound
