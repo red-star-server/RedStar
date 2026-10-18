@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.Power.EntitySystems;
 using Content.Shared._RedStar.Genetics;
 using Content.Shared._RedStar.Xenobiology;
@@ -131,13 +132,13 @@ public sealed partial class CellularFusionSystem : EntitySystem
         var result = new BiologicalSample(Color.InterpolateBetween(first.Color, second.Color, 0.5f),
             first.Name, stability, genome);
         ResetSplice(ent);
-        if (_samples.ReplaceSamples((dish.Owner, (SampleContainerComponent?)dish.Comp), first.Id, second.Id, result))
+        if (_samples.ReplaceSamples(dish.AsNullable(), first.Id, second.Id, result))
             return;
 
         UpdateUI(ent);
     }
 
-    private bool CanStabilize(BiologicalSample first, BiologicalSample second, out GenomeSnapshot? genome)
+    private bool CanStabilize(BiologicalSample first, BiologicalSample second, [NotNullWhen(true)] out GenomeSnapshot? genome)
     {
         genome = null;
         if (Math.Max(first.Stability, second.Stability) >= 1f ||

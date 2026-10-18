@@ -27,7 +27,7 @@ public sealed partial class GeneticVialSystem : EntitySystem
     public bool TryExtract(Entity<SampleContainerComponent> dish, int sampleId,
         Entity<GeneticVialComponent> vial, ProtoId<GenePrototype> id)
     {
-        if (dish.Comp.Samples.Find(sample => sample.Id == sampleId) is not { } sample ||
+        if (dish.Comp.Samples.Find(candidate => candidate.Id == sampleId) is not { } sample ||
             !_prototypes.TryIndex(id, out var gene) || sample.Stability < gene.MinimumStability ||
             sample.GetGenome() is not { } genome || !genome.Genes.Contains(id) || !CanAdd(vial, id))
             return false;
@@ -35,7 +35,7 @@ public sealed partial class GeneticVialSystem : EntitySystem
         // Sample observers must see the extracted gene in the vial when rebuilding the UI.
         vial.Comp.Genes.Add(id);
         vial.Comp.Revision++;
-        if (!_samples.TryRemoveGene((dish.Owner, (SampleContainerComponent?) dish.Comp), sampleId, id))
+        if (!_samples.TryRemoveGene(dish.AsNullable(), sampleId, id))
         {
             vial.Comp.Genes.Remove(id);
             vial.Comp.Revision++;

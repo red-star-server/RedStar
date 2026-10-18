@@ -98,34 +98,41 @@ public sealed partial class MutagenicInjectorSystem : EntitySystem
     {
         subject = default;
         vial = default;
-        if (ent.Comp.InjectionEndTime is not null || !this.IsPowered(ent.Owner, EntityManager))
+        if (ent.Comp.InjectionEndTime is not null)
             return false;
 
-        var storage = Comp<EntityStorageComponent>(ent);
-        var vialUid = _itemSlots.GetItemOrNull(ent.Owner, ent.Comp.VialSlot);
-        if (storage.Open || storage.Contents.ContainedEntities.Count != 1 ||
-            !IsValidRecipient(storage.Contents.ContainedEntities.First()) ||
-            vialUid is not { } inserted ||
-            !TryComp<GeneticVialComponent>(inserted, out var vialComponent) ||
-            vialComponent.Genes.Count == 0)
+        if (!TryGetContents((ent.Owner, ent.Comp, null), out subject, out vial) ||
+            vial.Comp.Genes.Count == 0 || !IsValidRecipient(subject) ||
+            !TryComp<GenomeComponent>(subject, out var genome))
             return false;
 
-        var recipient = storage.Contents.ContainedEntities[0];
-        subject = recipient;
-        if (!TryComp<GenomeComponent>(recipient, out var genome))
-            return false;
-
-        if (vialComponent.Genes.All(id => _genomes.HasGene((recipient, genome), id)))
+        var recipient = new Entity<GenomeComponent>(subject, genome);
+        if (vial.Comp.Genes.All(id => _genomes.HasGene(recipient.AsNullable(), id)))
         {
             _popup.PopupEntity(Loc.GetString("mutagenic-injector-no-new-genes"), ent, user, PopupType.MediumCaution);
             return false;
         }
-        if (!_genomes.CanApplyGenes((recipient, genome), vialComponent.Genes))
-        {
-            _popup.PopupEntity(Loc.GetString("mutagenic-injector-overload"), ent, user, PopupType.MediumCaution);
+
+        if (_genomes.CanApplyGenes(recipient.AsNullable(), vial.Comp.Genes))
+            return true;
+
+        _popup.PopupEntity(Loc.GetString("mutagenic-injector-overload"), ent, user, PopupType.MediumCaution);
+        return false;
+    }
+
+    private bool TryGetContents(Entity<CellMutagenicInjectorComponent, EntityStorageComponent?> ent,
+        out EntityUid subject, out Entity<GeneticVialComponent> vial)
+    {
+        subject = default;
+        vial = default;
+        if (!Resolve(ent, ref ent.Comp2) || !this.IsPowered(ent.Owner, EntityManager) ||
+            ent.Comp2.Open || ent.Comp2.Contents.ContainedEntities.Count != 1 ||
+            _itemSlots.GetItemOrNull(ent.Owner, ent.Comp1.VialSlot) is not { } vialUid ||
+            !TryComp<GeneticVialComponent>(vialUid, out var contents))
             return false;
-        }
-        vial = (inserted, vialComponent);
+
+        subject = ent.Comp2.Contents.ContainedEntities[0];
+        vial = (vialUid, contents);
         return true;
     }
 
@@ -143,37 +150,30 @@ public sealed partial class MutagenicInjectorSystem : EntitySystem
             if (component.InjectionEndTime is not { } endTime)
                 continue;
 
-            if (!this.IsPowered(uid, EntityManager) ||
-                storage.Open || storage.Contents.ContainedEntities.Count != 1 ||
-                component.InjectionSubject != storage.Contents.ContainedEntities.First() ||
-                component.InjectionVial != _itemSlots.GetItemOrNull(uid, component.VialSlot) ||
-                component.InjectionVial is not { } vialUid ||
-                !TryComp<GeneticVialComponent>(vialUid, out var vial) ||
-                vial.Revision != component.InjectionVialRevision)
+            if (!TryGetContents((uid, component, storage), out var subject, out var vial) ||
+                component.InjectionSubject != subject || component.InjectionVial != vial.Owner ||
+                vial.Comp.Revision != component.InjectionVialRevision)
             {
                 CancelInjection(machine);
                 continue;
             }
 
             if (_timing.CurTime >= endTime)
-                FinishInjection(machine);
+                FinishInjection(machine, subject, vial);
         }
     }
 
-    private void FinishInjection(Entity<CellMutagenicInjectorComponent> ent)
+    private void FinishInjection(Entity<CellMutagenicInjectorComponent> ent, EntityUid subject,
+        Entity<GeneticVialComponent> vial)
     {
-        var subject = ent.Comp.InjectionSubject;
-        var vial = ent.Comp.InjectionVial;
-        if (subject is not { } mob || vial is not { } vialUid ||
-            !TryComp<GeneticVialComponent>(vialUid, out var vialComponent) ||
-            vialComponent.Revision != ent.Comp.InjectionVialRevision || vialComponent.Genes.Count == 0 ||
-            !IsValidRecipient(mob) || !_genomes.TryApplyGenes(mob, vialComponent.Genes, out var changed) || changed == 0)
+        if (vial.Comp.Genes.Count == 0 || !IsValidRecipient(subject) ||
+            !_genomes.TryApplyGenes(subject, vial.Comp.Genes, out var changed) || changed == 0)
         {
             CancelInjection(ent);
             return;
         }
 
-        _vials.Clear((vialUid, vialComponent));
+        _vials.Clear(vial);
         CancelInjection(ent);
         _storage.OpenStorage(ent.Owner);
     }

@@ -9,5 +9,5 @@ public sealed partial class ActivateGenesEntityEffectSystem : EntityEffectSystem
     [Dependency] private ServerGenomeSystem _genomes = default!;
 
     protected override void Effect(Entity<GenomeComponent> entity, ref EntityEffectEvent<ActivateGenes> args) =>
-        _genomes.ActivateGenes(entity.Owner);
+        _genomes.ActivateGenes(entity.AsNullable());
 }

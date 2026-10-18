@@ -101,7 +101,7 @@ public sealed partial class SampleSystem : EntitySystem
     /// </summary>
     public bool TryRemoveGene(Entity<SampleContainerComponent?> ent, int sampleId, ProtoId<GenePrototype> id)
     {
-        if (!Resolve(ent, ref ent.Comp) || ent.Comp.Samples.Find(sample => sample.Id == sampleId) is not { } sample ||
+        if (!Resolve(ent, ref ent.Comp) || ent.Comp.Samples.Find(candidate => candidate.Id == sampleId) is not { } sample ||
             !sample.TryRemoveGene(id))
             return false;
 
@@ -115,7 +115,7 @@ public sealed partial class SampleSystem : EntitySystem
     /// </summary>
     public bool TryReduceStability(Entity<SampleContainerComponent?> ent, int sampleId, float amount)
     {
-        if (!Resolve(ent, ref ent.Comp) || ent.Comp.Samples.Find(sample => sample.Id == sampleId) is not { } sample ||
+        if (!Resolve(ent, ref ent.Comp) || ent.Comp.Samples.Find(candidate => candidate.Id == sampleId) is not { } sample ||
             !sample.TryReduceStability(amount))
             return false;
 

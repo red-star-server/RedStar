@@ -90,7 +90,7 @@ public sealed partial class ServerSampleCollectorSystem : SampleCollectorSystem
             return false;
         }
 
-        if (!_samples.MoveFirstSample((target.Owner, target.Comp), (ent.Owner, ent.Comp)))
+        if (!_samples.MoveFirstSample(target.AsNullable(), ent.AsNullable()))
             return false;
 
         _popup.PopupEntity(Loc.GetString("cell-collector-collected"), ent, user);
@@ -111,7 +111,7 @@ public sealed partial class ServerSampleCollectorSystem : SampleCollectorSystem
             return false;
         }
 
-        if (!_samples.MoveFirstSample((ent.Owner, ent.Comp), (target.Owner, target.Comp)))
+        if (!_samples.MoveFirstSample(ent.AsNullable(), target.AsNullable()))
             return false;
 
         _popup.PopupEntity(Loc.GetString("cell-collector-transfer"), ent, user);

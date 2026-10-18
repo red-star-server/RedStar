@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server._RedStar.Genetics;
 using Content.Shared._RedStar.Genetics;
@@ -87,10 +88,11 @@ public sealed partial class GrowingVatSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnShutdown(Entity<GrowingVatComponent> ent, ref ComponentShutdown args) => Cancel(ent);
 
-    private bool IsValidSubject(EntityUid uid) =>
-        HasComp<GenomeComponent>(uid) && HasComp<MobStateComponent>(uid) && !_mobState.IsDead(uid);
+    private bool IsValidSubject(Entity<GenomeComponent?> subject) =>
+        Resolve(subject, ref subject.Comp, logMissing: false) &&
+        HasComp<MobStateComponent>(subject) && !_mobState.IsDead(subject.Owner);
 
-    private bool TryGetSubject(Entity<GrowingVatComponent> ent, out EntityUid subject)
+    private bool TryGetSubject(Entity<GrowingVatComponent> ent, out Entity<GenomeComponent> subject)
     {
         subject = default;
         if (!_containers.TryGetContainer(ent.Owner, ent.Comp.SubjectSlot, out var container) ||
@@ -98,23 +100,23 @@ public sealed partial class GrowingVatSystem : EntitySystem
             return false;
 
         var contained = container.ContainedEntities.First();
-        if (!IsValidSubject(contained))
+        if (!TryComp<GenomeComponent>(contained, out var genome) || !IsValidSubject((contained, genome)))
             return false;
 
-        subject = contained;
+        subject = (contained, genome);
         return true;
     }
 
-    private bool TryGetRecipe(Entity<GrowingVatComponent> vat, EntityUid subject,
-        out GeneticMutationPrototype? recipe)
+    private bool TryGetRecipe(Entity<GrowingVatComponent> vat, Entity<GenomeComponent> subject,
+        [NotNullWhen(true)] out GeneticMutationPrototype? recipe)
     {
         recipe = null;
         if (!_solutions.TryGetSolution(vat.Owner, vat.Comp.Solution, out _, out var mixture))
             return false;
 
         foreach (var candidate in _prototypes.EnumeratePrototypes<GeneticMutationPrototype>()
-                     .OrderByDescending(recipe => recipe.Priority)
-                     .ThenBy(recipe => recipe.ID, StringComparer.Ordinal))
+                     .OrderByDescending(prototype => prototype.Priority)
+                     .ThenBy(prototype => prototype.ID, StringComparer.Ordinal))
         {
             if (!Eligible(subject, candidate, mixture))
                 continue;
@@ -126,8 +128,8 @@ public sealed partial class GrowingVatSystem : EntitySystem
         return false;
     }
 
-    private bool Eligible(EntityUid subject, GeneticMutationPrototype recipe, Solution mixture) =>
-        _genomes.CanTransformGenes(subject, recipe.RequiredGenes, recipe.ResultGene) &&
+    private bool Eligible(Entity<GenomeComponent> subject, GeneticMutationPrototype recipe, Solution mixture) =>
+        _genomes.CanTransformGenes(subject.AsNullable(), recipe.RequiredGenes, recipe.ResultGene) &&
         recipe.RequiredReagents.All(entry => mixture.GetTotalPrototypeQuantity(entry.Key.Id) >= entry.Value);
 
     private void SpendReagents(Entity<SolutionComponent> container, GeneticMutationPrototype recipe)
@@ -140,8 +142,8 @@ public sealed partial class GrowingVatSystem : EntitySystem
         _solutions.UpdateChemicals(container);
     }
 
-    private bool TryGetActiveRecipe(Entity<GrowingVatComponent> vat, EntityUid subject,
-        out GeneticMutationPrototype? recipe, out Entity<SolutionComponent> container)
+    private bool TryGetActiveRecipe(Entity<GrowingVatComponent> vat, Entity<GenomeComponent> subject,
+        [NotNullWhen(true)] out GeneticMutationPrototype? recipe, out Entity<SolutionComponent> container)
     {
         recipe = null;
         container = default;
@@ -161,8 +163,8 @@ public sealed partial class GrowingVatSystem : EntitySystem
             Eject(vat, occupant);
 
         if (vat.Comp.Subject is { } subject && this.IsPowered(vat.Owner, EntityManager) &&
-            TryGetSubject(vat, out var contained) && subject == contained &&
-            TryGetActiveRecipe(vat, subject, out _, out _))
+            TryGetSubject(vat, out var contained) && subject == contained.Owner &&
+            TryGetActiveRecipe(vat, contained, out _, out _))
             return;
 
         Cancel(vat);
@@ -175,8 +177,8 @@ public sealed partial class GrowingVatSystem : EntitySystem
             !TryGetSubject(vat, out var subject) || !TryGetRecipe(vat, subject, out var recipe))
             return;
 
-        vat.Comp.Subject = subject;
-        vat.Comp.Recipe = recipe!.ID;
+        vat.Comp.Subject = subject.Owner;
+        vat.Comp.Recipe = recipe.ID;
         vat.Comp.EndTime = _timing.CurTime + recipe.Duration;
         UpdateVisual(vat, true);
     }
@@ -229,16 +231,16 @@ public sealed partial class GrowingVatSystem : EntitySystem
             if (component.EndTime is not { } end || _timing.CurTime < end)
                 continue;
             if (component.Subject is not { } subject || !this.IsPowered(uid, EntityManager) ||
-                !TryGetSubject(vat, out var contained) || subject != contained ||
-                !TryGetActiveRecipe(vat, subject, out var recipe, out var solution))
+                !TryGetSubject(vat, out var contained) || subject != contained.Owner ||
+                !TryGetActiveRecipe(vat, contained, out var recipe, out var solution))
             {
                 Cancel(vat);
                 continue;
             }
 
             Cancel(vat);
-            SpendReagents(solution, recipe!);
-            var success = _genomes.TryTransformGenes(subject, recipe!.RequiredGenes, recipe.ResultGene);
+            SpendReagents(solution, recipe);
+            var success = _genomes.TryTransformGenes(contained.AsNullable(), recipe.RequiredGenes, recipe.ResultGene);
             _popup.PopupEntity(Loc.GetString(success ? "growing-vat-success" : "growing-vat-failure"),
                 vat, subject, success ? PopupType.Medium : PopupType.MediumCaution);
             Eject(vat, subject);

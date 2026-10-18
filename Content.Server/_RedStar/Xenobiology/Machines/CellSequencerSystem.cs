@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Server.Power.EntitySystems;
 using Content.Server._RedStar.Genetics;
 using Content.Shared._RedStar.Genetics;
-using Content.Shared._RedStar.Xenobiology;
 using Content.Shared._RedStar.Xenobiology.Components.Container;
 using Content.Shared._RedStar.Xenobiology.Components.Machines;
 using Content.Shared._RedStar.Xenobiology.Events;
@@ -56,7 +55,6 @@ public sealed partial class CellSequencerSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnRemoved(Entity<CellSequencerComponent> ent, ref EntRemovedFromContainerMessage args)
     {
-
         UpdateUI(ent);
     }
 
@@ -71,16 +69,15 @@ public sealed partial class CellSequencerSystem : EntitySystem
     private void OnPowerChanged(Entity<CellSequencerComponent> ent, ref PowerChangedEvent args) => UpdateUI(ent);
 
     private bool TryGetMarker(Entity<CellSequencerComponent> ent, int sampleId, string family,
-        out Entity<SampleContainerComponent> dish, out BiologicalSample? sample, out ProtoId<GenePrototype> gene)
+        out Entity<SampleContainerComponent> dish, out ProtoId<GenePrototype> gene)
     {
-        sample = null;
         gene = default;
         if (!this.IsPowered(ent.Owner, EntityManager) || !TryGetDish(ent, out dish))
         {
             dish = default;
             return false;
         }
-        sample = dish.Comp.Samples.Find(s => s.Id == sampleId);
+        var sample = dish.Comp.Samples.Find(s => s.Id == sampleId);
         if (sample?.GetGenome() is not { } genome)
             return false;
         foreach (var id in genome.Genes)
@@ -96,7 +93,7 @@ public sealed partial class CellSequencerSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnDecode(Entity<CellSequencerComponent> ent, ref CellSequencerDecodeMessage args)
     {
-        if (!TryGetMarker(ent, args.SampleId, args.Family, out var dish, out var sample, out var id) ||
+        if (!TryGetMarker(ent, args.SampleId, args.Family, out var dish, out var id) ||
             _decoded.Contains(id))
             return;
         var puzzle = GetPuzzle(id);
@@ -112,7 +109,7 @@ public sealed partial class CellSequencerSystem : EntitySystem
                 puzzle.Fragments[order[i]][..SequencerPuzzle.Overlap]).ToArray();
             _userInterface.ServerSendUiMessage(ent.Owner, CellSequencerUiKey.Key,
                 new CellSequencerFeedbackMessage(args.SampleId, args.Family, order, matches), args.Actor);
-            if (!_samples.TryReduceStability((dish.Owner, (SampleContainerComponent?) dish.Comp), args.SampleId, ent.Comp.IncorrectStabilityCost))
+            if (!_samples.TryReduceStability(dish.AsNullable(), args.SampleId, ent.Comp.IncorrectStabilityCost))
                 UpdateUI(ent);
             _popup.PopupEntity(Loc.GetString("cell-sequencer-incorrect"), ent, args.Actor, PopupType.MediumCaution);
             return;
@@ -131,7 +128,7 @@ public sealed partial class CellSequencerSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnExtract(Entity<CellSequencerComponent> ent, ref CellSequencerExtractMessage args)
     {
-        if (!TryGetMarker(ent, args.SampleId, args.Family, out var dish, out var sample, out var id) ||
+        if (!TryGetMarker(ent, args.SampleId, args.Family, out var dish, out var id) ||
             !_decoded.Contains(id) || !TryGetVial(ent, out var vial) || args.Vial != GetNetEntity(vial.Owner))
             return;
 
