@@ -1,6 +1,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialDimLightAdaptation
+  categories: [ DoNotMap ]
   suffix: DimLightAdaptation
   components:
   - type: GeneticVial
@@ -9,6 +10,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialColorDiscrimination
+  categories: [ DoNotMap ]
   suffix: ColorDiscrimination
   components:
   - type: GeneticVial
@@ -17,6 +19,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialPhotosensitivity
+  categories: [ DoNotMap ]
   suffix: Photosensitivity
   components:
   - type: GeneticVial
@@ -25,6 +28,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialPoorVision
+  categories: [ DoNotMap ]
   suffix: PoorVision
   components:
   - type: GeneticVial
@@ -33,6 +37,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialAcuteHearing
+  categories: [ DoNotMap ]
   suffix: AcuteHearing
   components:
   - type: GeneticVial
@@ -41,6 +46,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialOlfactorySensitivity
+  categories: [ DoNotMap ]
   suffix: OlfactorySensitivity
   components:
   - type: GeneticVial
@@ -49,6 +55,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialVibrationSense
+  categories: [ DoNotMap ]
   suffix: VibrationSense
   components:
   - type: GeneticVial
@@ -57,6 +64,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialTactileWhiskers
+  categories: [ DoNotMap ]
   suffix: TactileWhiskers
   components:
   - type: GeneticVial
@@ -65,6 +73,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialFlexibleJoints
+  categories: [ DoNotMap ]
   suffix: FlexibleJoints
   components:
   - type: GeneticVial
@@ -73,6 +82,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialLimbGrip
+  categories: [ DoNotMap ]
   suffix: LimbGrip
   components:
   - type: GeneticVial
@@ -81,6 +91,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialVestibularBalance
+  categories: [ DoNotMap ]
   suffix: VestibularBalance
   components:
   - type: GeneticVial
@@ -89,6 +100,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialElasticTendons
+  categories: [ DoNotMap ]
   suffix: ElasticTendons
   components:
   - type: GeneticVial
@@ -97,6 +109,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialDenseMusculature
+  categories: [ DoNotMap ]
   suffix: DenseMusculature
   components:
   - type: GeneticVial
@@ -105,6 +118,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialDenseConnectiveTissue
+  categories: [ DoNotMap ]
   suffix: DenseConnectiveTissue
   components:
   - type: GeneticVial
@@ -113,6 +127,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialMineralizedTissue
+  categories: [ DoNotMap ]
   suffix: MineralizedTissue
   components:
   - type: GeneticVial
@@ -121,6 +136,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialKeratinizedCovering
+  categories: [ DoNotMap ]
   suffix: KeratinizedCovering
   components:
   - type: GeneticVial
@@ -129,6 +145,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialChitinousCovering
+  categories: [ DoNotMap ]
   suffix: ChitinousCovering
   components:
   - type: GeneticVial
@@ -137,6 +154,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialStructuralIridescence
+  categories: [ DoNotMap ]
   suffix: StructuralIridescence
   components:
   - type: GeneticVial
@@ -145,6 +163,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialPigmentPlasticity
+  categories: [ DoNotMap ]
   suffix: PigmentPlasticity
   components:
   - type: GeneticVial
@@ -153,6 +172,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialMucusSecretion
+  categories: [ DoNotMap ]
   suffix: MucusSecretion
   components:
   - type: GeneticVial
@@ -161,6 +181,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialSlowMetabolism
+  categories: [ DoNotMap ]
   suffix: SlowMetabolism
   components:
   - type: GeneticVial
@@ -169,6 +190,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialHighMetabolism
+  categories: [ DoNotMap ]
   suffix: HighMetabolism
   components:
   - type: GeneticVial
@@ -177,6 +199,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialOmnivorousDigestion
+  categories: [ DoNotMap ]
   suffix: OmnivorousDigestion
   components:
   - type: GeneticVial
@@ -185,6 +208,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialCelluloseDigestion
+  categories: [ DoNotMap ]
   suffix: CelluloseDigestion
   components:
   - type: GeneticVial
@@ -193,6 +217,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialLipidStorage
+  categories: [ DoNotMap ]
   suffix: LipidStorage
   components:
   - type: GeneticVial
@@ -201,6 +226,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialProteinSecretion
+  categories: [ DoNotMap ]
   suffix: ProteinSecretion
   components:
   - type: GeneticVial
@@ -209,6 +235,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialCellRenewal
+  categories: [ DoNotMap ]
   suffix: CellRenewal
   components:
   - type: GeneticVial
@@ -217,6 +244,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialTissuePlasticity
+  categories: [ DoNotMap ]
   suffix: TissuePlasticity
   components:
   - type: GeneticVial
@@ -225,6 +253,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialVegetativeGrowth
+  categories: [ DoNotMap ]
   suffix: VegetativeGrowth
   components:
   - type: GeneticVial
@@ -233,6 +262,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialWeakImmunity
+  categories: [ DoNotMap ]
   suffix: WeakImmunity
   components:
   - type: GeneticVial
@@ -241,6 +271,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialChemicalSensitivity
+  categories: [ DoNotMap ]
   suffix: ChemicalSensitivity
   components:
   - type: GeneticVial
@@ -249,6 +280,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialXenobioticProcessing
+  categories: [ DoNotMap ]
   suffix: XenobioticProcessing
   components:
   - type: GeneticVial
@@ -257,6 +289,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialToxinProduction
+  categories: [ DoNotMap ]
   suffix: ToxinProduction
   components:
   - type: GeneticVial
@@ -265,6 +298,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialToxinTolerance
+  categories: [ DoNotMap ]
   suffix: ToxinTolerance
   components:
   - type: GeneticVial
@@ -273,6 +307,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialOxygenStorage
+  categories: [ DoNotMap ]
   suffix: OxygenStorage
   components:
   - type: GeneticVial
@@ -281,6 +316,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialNitrogenMetabolism
+  categories: [ DoNotMap ]
   suffix: NitrogenMetabolism
   components:
   - type: GeneticVial
@@ -289,6 +325,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialColdAdaptation
+  categories: [ DoNotMap ]
   suffix: ColdAdaptation
   components:
   - type: GeneticVial
@@ -297,6 +334,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialHeatAdaptation
+  categories: [ DoNotMap ]
   suffix: HeatAdaptation
   components:
   - type: GeneticVial
@@ -305,6 +343,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialLowPressureAdaptation
+  categories: [ DoNotMap ]
   suffix: LowPressureAdaptation
   components:
   - type: GeneticVial
@@ -313,6 +352,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialPassiveTemperament
+  categories: [ DoNotMap ]
   suffix: PassiveTemperament
   components:
   - type: GeneticVial
@@ -321,6 +361,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialDefensiveAggression
+  categories: [ DoNotMap ]
   suffix: DefensiveAggression
   components:
   - type: GeneticVial
@@ -329,6 +370,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialStartleResponse
+  categories: [ DoNotMap ]
   suffix: StartleResponse
   components:
   - type: GeneticVial
@@ -337,6 +379,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialFragileBones
+  categories: [ DoNotMap ]
   suffix: FragileBones
   components:
   - type: GeneticVial
@@ -345,6 +388,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialSilkSynthesis
+  categories: [ DoNotMap ]
   suffix: SilkSynthesis
   components:
   - type: GeneticVial
@@ -353,6 +397,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialAuditoryLearning
+  categories: [ DoNotMap ]
   suffix: AuditoryLearning
   components:
   - type: GeneticVial
@@ -361,6 +406,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialEggLayer
+  categories: [ DoNotMap ]
   suffix: EggLayer
   components:
   - type: GeneticVial
@@ -369,6 +415,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialLactation
+  categories: [ DoNotMap ]
   suffix: Lactation
   components:
   - type: GeneticVial
@@ -377,6 +424,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialMessyDrinker
+  categories: [ DoNotMap ]
   suffix: MessyDrinker
   components:
   - type: GeneticVial
@@ -385,6 +433,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialBleating
+  categories: [ DoNotMap ]
   suffix: Bleating
   components:
   - type: GeneticVial
@@ -393,6 +442,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialMineralAssimilation
+  categories: [ DoNotMap ]
   suffix: MineralAssimilation
   components:
   - type: GeneticVial
@@ -401,6 +451,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialCollectiveSignaling
+  categories: [ DoNotMap ]
   suffix: CollectiveSignaling
   components:
   - type: GeneticVial
@@ -409,6 +460,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialBroodDevelopment
+  categories: [ DoNotMap ]
   suffix: BroodDevelopment
   components:
   - type: GeneticVial
@@ -417,6 +469,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialNightVision
+  categories: [ DoNotMap ]
   suffix: NightVision
   components:
   - type: GeneticVial
@@ -425,6 +478,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialMechanosensoryIntegration
+  categories: [ DoNotMap ]
   suffix: MechanosensoryIntegration
   components:
   - type: GeneticVial
@@ -433,6 +487,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialNoSlip
+  categories: [ DoNotMap ]
   suffix: NoSlip
   components:
   - type: GeneticVial
@@ -441,6 +496,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialElasticFrame
+  categories: [ DoNotMap ]
   suffix: ElasticFrame
   components:
   - type: GeneticVial
@@ -449,6 +505,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialLamellarScales
+  categories: [ DoNotMap ]
   suffix: LamellarScales
   components:
   - type: GeneticVial
@@ -457,6 +514,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialCoordinatedRepair
+  categories: [ DoNotMap ]
   suffix: CoordinatedRepair
   components:
   - type: GeneticVial
@@ -465,6 +523,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialImmuneTolerance
+  categories: [ DoNotMap ]
   suffix: ImmuneTolerance
   components:
   - type: GeneticVial
@@ -473,6 +532,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialVenomous
+  categories: [ DoNotMap ]
   suffix: Venomous
   components:
   - type: GeneticVial
@@ -481,6 +541,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialDetoxifyingMetabolism
+  categories: [ DoNotMap ]
   suffix: DetoxifyingMetabolism
   components:
   - type: GeneticVial
@@ -489,6 +550,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialTorporControl
+  categories: [ DoNotMap ]
   suffix: TorporControl
   components:
   - type: GeneticVial
@@ -497,6 +559,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialPacifism
+  categories: [ DoNotMap ]
   suffix: Pacifism
   components:
   - type: GeneticVial
@@ -505,6 +568,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialReflexDisinhibition
+  categories: [ DoNotMap ]
   suffix: ReflexDisinhibition
   components:
   - type: GeneticVial
@@ -513,6 +577,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialRadionuclideSequestration
+  categories: [ DoNotMap ]
   suffix: RadionuclideSequestration
   components:
   - type: GeneticVial
@@ -521,6 +586,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialWebSpinning
+  categories: [ DoNotMap ]
   suffix: WebSpinning
   components:
   - type: GeneticVial
@@ -529,6 +595,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialParrotSpeech
+  categories: [ DoNotMap ]
   suffix: ParrotSpeech
   components:
   - type: GeneticVial
@@ -537,6 +604,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialPhotonicLattice
+  categories: [ DoNotMap ]
   suffix: PhotonicLattice
   components:
   - type: GeneticVial
@@ -545,6 +613,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialRegeneration
+  categories: [ DoNotMap ]
   suffix: Regeneration
   components:
   - type: GeneticVial
@@ -553,6 +622,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialToxicOverproduction
+  categories: [ DoNotMap ]
   suffix: ToxicOverproduction
   components:
   - type: GeneticVial
@@ -561,6 +631,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialPressureHomeostasis
+  categories: [ DoNotMap ]
   suffix: PressureHomeostasis
   components:
   - type: GeneticVial
@@ -569,6 +640,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialSensoryOverload
+  categories: [ DoNotMap ]
   suffix: SensoryOverload
   components:
   - type: GeneticVial
@@ -577,6 +649,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialAdaptivePigmentation
+  categories: [ DoNotMap ]
   suffix: AdaptivePigmentation
   components:
   - type: GeneticVial
@@ -585,6 +658,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialRadiation
+  categories: [ DoNotMap ]
   suffix: Radiation
   components:
   - type: GeneticVial
@@ -593,6 +667,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialReflection
+  categories: [ DoNotMap ]
   suffix: Reflection
   components:
   - type: GeneticVial
@@ -601,6 +676,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialInvisibility
+  categories: [ DoNotMap ]
   suffix: Invisibility
   components:
   - type: GeneticVial
@@ -609,6 +685,7 @@
 - type: entity
   parent: GeneticVial
   id: GeneticVialSomaticHomeostasis
+  categories: [ DoNotMap ]
   suffix: SomaticHomeostasis
   components:
   - type: GeneticVial
