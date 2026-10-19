@@ -119,16 +119,7 @@ public sealed partial class MutagenicInjectorSystem : EntitySystem
             return false;
         }
 
-        if (!_genomes.CanApplyGenes(recipient.AsNullable(), vial.Comp.Genes))
-            return false;
-
-        var load = _genomes.GetLoadPercentage(recipient.AsNullable(), vial.Comp.Genes);
-        if (load > 100)
-        {
-            _popup.PopupEntity(Loc.GetString("mutagenic-injector-overload", ("load", (int) MathF.Round(load))),
-                ent, user, PopupType.MediumCaution);
-        }
-        return true;
+        return _genomes.CanApplyGenes(recipient.AsNullable(), vial.Comp.Genes);
     }
 
     private bool TryGetContents(Entity<CellMutagenicInjectorComponent, EntityStorageComponent?> ent,
