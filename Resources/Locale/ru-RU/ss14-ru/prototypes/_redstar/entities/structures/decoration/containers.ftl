@@ -60,5 +60,3 @@ ent-ShippingContainerKahramanAlt = { ent-ShippingContainerKahraman }
     .desc = { ent-ShippingContainerKahraman.desc }
 ent-ShippingContainerNanotrasenLogo = { ent-ShippingContainerNanotrasen }
     .desc = { ent-ShippingContainerNanotrasen.desc }
-ent-ShippingContainerSpawner = спавнер случайного грузового контейнера
-    .desc = Создаёт случайный декоративный грузовой контейнер.
