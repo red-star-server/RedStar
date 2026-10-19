@@ -42,9 +42,11 @@ public sealed partial class GeneticChamberSystem : EntitySystem
     /// <summary>
     /// Resolves the treatment solution in the inserted dispenser-compatible container.
     /// </summary>
-    public bool TryGetTreatmentSolution(Entity<GeneticChamberComponent> chamber, out Entity<SolutionComponent> solution)
+    public bool TryGetTreatmentSolution(Entity<GeneticChamberComponent?> chamber, out Entity<SolutionComponent> solution)
     {
         solution = default;
+        if (!Resolve(chamber, ref chamber.Comp, logMissing: false))
+            return false;
         var beaker = _slots.GetItemOrNull(chamber.Owner, chamber.Comp.BeakerSlot);
         if (beaker is null || !_solutions.TryGetFitsInDispenser(beaker.Value, out var entity, out _))
             return false;
@@ -55,12 +57,19 @@ public sealed partial class GeneticChamberSystem : EntitySystem
     /// <summary>
     /// Starts treatment of the expected occupant when the gene state and reagent dose permit it.
     /// </summary>
-    public bool TryStartProcedure(Entity<GeneticChamberComponent> chamber, EntityUid console, EntityUid patient,
-        ProtoId<GenePrototype> gene, GeneticProcedure procedure, EntityUid user)
+    public bool TryStartProcedure(
+        Entity<GeneticChamberComponent?> chamber,
+        EntityUid console,
+        EntityUid patient,
+        EntityUid user,
+        ProtoId<GenePrototype> gene,
+        GeneticProcedure procedure)
     {
-        if (chamber.Comp.Patient is not null || TerminatingOrDeleted(console) || TerminatingOrDeleted(patient) ||
+        if (!Resolve(chamber, ref chamber.Comp, logMissing: false) || TerminatingOrDeleted(chamber) ||
+            chamber.Comp.Patient is not null || TerminatingOrDeleted(console) || TerminatingOrDeleted(patient) ||
             !this.IsPowered(chamber.Owner, EntityManager) || !Transform(chamber).Anchored || GetPatient(chamber) != patient ||
             !_genomes.TryGetGeneStatus(patient, gene, out var status) || !procedure.CanProcess(status) ||
+            procedure == GeneticProcedure.Activate && !_genomes.IsGeneCompatible(patient, gene) ||
             !chamber.Comp.Procedures.TryGetValue(procedure, out var settings) ||
             settings.Duration <= TimeSpan.Zero || settings.Dose <= FixedPoint2.Zero ||
             !TryGetTreatmentSolution(chamber, out var solution) ||
@@ -86,31 +95,33 @@ public sealed partial class GeneticChamberSystem : EntitySystem
     private void OnRemoved(Entity<GeneticChamberComponent> chamber, ref EntRemovedFromContainerMessage args)
     {
         if (args.Entity == chamber.Comp.Patient || args.Entity == chamber.Comp.Beaker)
-            CancelProcedure(chamber);
+            CancelProcedure(chamber.AsNullable());
     }
 
     [SubscribeLocalEvent]
-    private void OnShutdown(Entity<GeneticChamberComponent> chamber, ref ComponentShutdown args) => CancelProcedure(chamber);
+    private void OnShutdown(Entity<GeneticChamberComponent> chamber, ref ComponentShutdown args) => CancelProcedure(chamber.AsNullable());
 
     [SubscribeLocalEvent]
     private void OnChamberPower(Entity<GeneticChamberComponent> chamber, ref PowerChangedEvent args)
     {
         if (!args.Powered)
-            CancelProcedure(chamber);
+            CancelProcedure(chamber.AsNullable());
     }
 
     [SubscribeLocalEvent]
     private void OnChamberAnchor(Entity<GeneticChamberComponent> chamber, ref AnchorStateChangedEvent args)
     {
         if (!args.Anchored)
-            CancelProcedure(chamber);
+            CancelProcedure(chamber.AsNullable());
     }
 
     /// <summary>
     /// Ends processing without refunding consumed reagent and releases the controller's active reference.
     /// </summary>
-    public void CancelProcedure(Entity<GeneticChamberComponent> chamber)
+    public void CancelProcedure(Entity<GeneticChamberComponent?> chamber)
     {
+        if (!Resolve(chamber, ref chamber.Comp, logMissing: false))
+            return;
         var console = chamber.Comp.Console;
         chamber.Comp.Patient = null;
         chamber.Comp.Console = null;
@@ -145,9 +156,10 @@ public sealed partial class GeneticChamberSystem : EntitySystem
             GetPatient(chamber) != component.Patient || component.Patient is not { } patient || TerminatingOrDeleted(patient) ||
             _slots.GetItemOrNull(chamber.Owner, component.BeakerSlot) != component.Beaker ||
             !_genomes.TryGetGeneStatus(patient, component.Gene, out var status) || status != component.InitialStatus ||
-            !component.Procedures.TryGetValue(component.Operation, out var settings) || !TryGetTreatmentSolution(chamber, out var solution))
+            component.Operation == GeneticProcedure.Activate && !_genomes.IsGeneCompatible(patient, component.Gene) ||
+            !component.Procedures.TryGetValue(component.Operation, out var settings) || !TryGetTreatmentSolution(chamber.AsNullable(), out var solution))
         {
-            CancelProcedure(chamber);
+            CancelProcedure(chamber.AsNullable());
             return;
         }
 
@@ -155,7 +167,7 @@ public sealed partial class GeneticChamberSystem : EntitySystem
         var required = FixedPoint2.New(settings.Dose.Double() * progress) - component.Consumed;
         if (solution.Comp.Solution.GetReagentQuantity(new ReagentId(settings.Reagent.Id, null)) < required)
         {
-            CancelProcedure(chamber);
+            CancelProcedure(chamber.AsNullable());
             return;
         }
         component.Consumed += _solutions.RemoveReagent(solution, settings.Reagent.Id, required);
@@ -181,6 +193,6 @@ public sealed partial class GeneticChamberSystem : EntitySystem
                 $"{ToPrettyString(chamber)} completed genetic {component.Operation} of {component.Gene} on {ToPrettyString(patient)}.");
         }
 
-        CancelProcedure(chamber);
+        CancelProcedure(chamber.AsNullable());
     }
 }

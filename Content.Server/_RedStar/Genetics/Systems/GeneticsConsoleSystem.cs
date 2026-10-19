@@ -3,14 +3,11 @@ using Content.Server._RedStar.Genetics.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared._RedStar.Genetics.Data;
 using Content.Shared._RedStar.Genetics.Events;
-using Content.Shared._RedStar.Genetics.Prototypes;
 using Content.Shared._RedStar.Genetics.UI;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.DeviceLinking.Systems;
-using Content.Shared.FixedPoint;
 using Content.Shared.Power;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Server._RedStar.Genetics.Systems;
@@ -58,7 +55,7 @@ public sealed partial class GeneticsConsoleSystem : EntitySystem
         if (console.Comp.ActiveChamber is not null || !TryGetChamber(console, out var chamber) ||
             _chambers.GetPatient(chamber) is not { } patient || GetNetEntity(patient) != args.Patient)
             return;
-        if (_chambers.TryStartProcedure(chamber, console.Owner, patient, args.Gene, args.Procedure, args.Actor))
+        if (_chambers.TryStartProcedure(chamber.AsNullable(), console.Owner, patient, args.Actor, args.Gene, args.Procedure))
             console.Comp.ActiveChamber = chamber.Owner;
         UpdateConsole(console);
     }
@@ -137,9 +134,7 @@ public sealed partial class GeneticsConsoleSystem : EntitySystem
         var procedures = new List<GeneticProcedureInfo>();
         List<ReagentQuantity>? beaker = null;
         var status = GeneticsConsoleStatus.NoChamber;
-        var busy = false;
         var progress = 0f;
-        ProtoId<GenePrototype>? gene = null;
         GeneticProcedure? operation = null;
         if (TryGetChamber(console, out var chamber))
         {
@@ -149,28 +144,25 @@ public sealed partial class GeneticsConsoleSystem : EntitySystem
                 profile = patientReport;
                 status = GeneticsConsoleStatus.Ready;
             }
-            if (_chambers.TryGetTreatmentSolution(chamber, out var solution))
+            if (_chambers.TryGetTreatmentSolution(chamber.AsNullable(), out var solution))
             {
                 beaker = solution.Comp.Solution.Contents.ToList();
             }
             foreach (var (kind, settings) in chamber.Comp.Procedures)
             {
-                procedures.Add(new GeneticProcedureInfo(kind, settings.Reagent,
-                    settings.Dose, solution.Comp is null ? FixedPoint2.Zero : solution.Comp.Solution.GetReagentQuantity(new ReagentId(settings.Reagent.Id, null)),
-                    (float) settings.Duration.TotalSeconds));
+                procedures.Add(new GeneticProcedureInfo(kind, solution.Comp is not null &&
+                    solution.Comp.Solution.GetReagentQuantity(new ReagentId(settings.Reagent.Id, null)) >= settings.Dose));
             }
 
-            busy = chamber.Comp.Patient is not null;
-            if (busy)
+            if (chamber.Comp.Patient is not null)
             {
                 status = GeneticsConsoleStatus.Working;
-                gene = chamber.Comp.Gene;
                 operation = chamber.Comp.Operation;
                 progress = (float) Math.Clamp((_timing.CurTime - chamber.Comp.Started).TotalSeconds /
                     (chamber.Comp.Ends - chamber.Comp.Started).TotalSeconds, 0, 1);
             }
         }
         _ui.SetUiState(console.Owner, GeneticsConsoleUiKey.Key,
-            new GeneticsConsoleUiState(profile, status, procedures, beaker, busy, progress, gene, operation));
+            new GeneticsConsoleUiState(profile, status, procedures, beaker, progress, operation));
     }
 }

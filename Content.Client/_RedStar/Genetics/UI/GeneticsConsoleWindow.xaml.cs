@@ -138,7 +138,7 @@ public sealed partial class GeneticsConsoleWindow : FancyWindow
                 _procedures.Add(kind, button);
             }
             button.Visible = true;
-            button.Disabled = _state.Busy || procedure.Available < procedure.Required;
+            button.Disabled = _state.Busy || !procedure.CanStart;
         }
     }
 }

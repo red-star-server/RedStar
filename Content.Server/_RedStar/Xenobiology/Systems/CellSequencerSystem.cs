@@ -35,16 +35,8 @@ public sealed partial class CellSequencerSystem : EntitySystem
     // Each gene retains its puzzle for the round; family codes must be unique across genes.
     private readonly Dictionary<ProtoId<GenePrototype>, Puzzle> _puzzles = [];
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        ResetRound();
-    }
-
     [SubscribeLocalEvent]
-    private void OnRoundRestart(RoundRestartCleanupEvent args) => ResetRound();
-
-    private void ResetRound()
+    private void OnRoundRestart(RoundRestartCleanupEvent args)
     {
         _decoded.Clear();
         _puzzles.Clear();
@@ -102,8 +94,7 @@ public sealed partial class CellSequencerSystem : EntitySystem
             return;
         var puzzle = GetPuzzle(id);
         var count = puzzle.Order.Length;
-        var order = args.Order;
-        if (order.Length != count || order.Distinct().Count() != count ||
+        if (args.Order is not { } order || order.Length != count || order.Distinct().Count() != count ||
             order.Any(index => index < 0 || index >= count))
             return;
         if (Enumerable.Range(0, count).Any(i => puzzle.Order[order[i]] != i))
