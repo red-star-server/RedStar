@@ -5,11 +5,11 @@
     "size": {
         "x": 32,
         "y": 32
-      },
-      "states": [
+    },
+    "states": [
         {
-          "name": "marmandmg",
-          "directions": 4
+            "name": "marmandmg",
+            "directions": 4
         }
-      ]
-    }
+    ]
+}
