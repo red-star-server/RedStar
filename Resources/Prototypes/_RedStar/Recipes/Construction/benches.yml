@@ -28,7 +28,7 @@
   id: BenchComfyMiddle
   graph: BenchSL
   targetNode: whiteComfBenchMid
-  
+
 # Red
 - type: construction
   parent: BaseChair
@@ -53,7 +53,7 @@
   id: BenchRedComfyMiddle
   graph: BenchSL
   targetNode: redComfBenchMid
-  
+
 # Blue
 - type: construction
   parent: BaseChair
@@ -78,7 +78,7 @@
   id: BenchBlueComfyMiddle
   graph: BenchSL
   targetNode: blueComfBenchMid
-    
+
 # Gray
 - type: construction
   parent: BaseChair
@@ -109,7 +109,7 @@
   id: BenchGrayComfyMiddle
   graph: BenchSL
   targetNode: grayComfBenchMid
-  
+
 # Green
 - type: construction
   parent: BaseChair
@@ -140,7 +140,7 @@
   id: BenchGreenComfyMiddle
   graph: BenchSL
   targetNode: greenComfBenchMid
-  
+
 # Pews
 - type: construction
   parent: BaseChair

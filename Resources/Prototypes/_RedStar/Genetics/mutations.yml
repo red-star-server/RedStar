@@ -1,6 +1,6 @@
 - type: geneticMutation
   id: NightVisionMutation
-  requiredGenes: [DimLightAdaptation, Photosensitivity]
+  requiredGenes: [ DimLightAdaptation, Photosensitivity ]
   requiredReagents:
     Nutriment: 5
     Saline: 5
@@ -9,7 +9,7 @@
 
 - type: geneticMutation
   id: MechanosensoryIntegrationMutation
-  requiredGenes: [VibrationSense, TactileWhiskers]
+  requiredGenes: [ VibrationSense, TactileWhiskers ]
   requiredReagents:
     Nutriment: 5
     Saline: 5
@@ -18,7 +18,7 @@
 
 - type: geneticMutation
   id: NoSlipMutation
-  requiredGenes: [LimbGrip, VestibularBalance, DenseMusculature]
+  requiredGenes: [ LimbGrip, VestibularBalance, DenseMusculature ]
   requiredReagents:
     Nutriment: 5
     Saline: 5
@@ -27,7 +27,7 @@
 
 - type: geneticMutation
   id: ElasticFrameMutation
-  requiredGenes: [FlexibleJoints, ElasticTendons, FragileBones, DenseConnectiveTissue]
+  requiredGenes: [ FlexibleJoints, ElasticTendons, FragileBones, DenseConnectiveTissue ]
   requiredReagents:
     Nutriment: 5
     Saline: 5
@@ -36,7 +36,7 @@
 
 - type: geneticMutation
   id: LamellarScalesMutation
-  requiredGenes: [MineralizedTissue, StructuralIridescence]
+  requiredGenes: [ MineralizedTissue, StructuralIridescence ]
   requiredReagents:
     Nutriment: 5
     Saline: 5
@@ -45,7 +45,7 @@
 
 - type: geneticMutation
   id: CoordinatedRepairMutation
-  requiredGenes: [CellRenewal, TissuePlasticity, VegetativeGrowth]
+  requiredGenes: [ CellRenewal, TissuePlasticity, VegetativeGrowth ]
   requiredReagents:
     Nutriment: 5
     Saline: 5
@@ -54,7 +54,7 @@
 
 - type: geneticMutation
   id: ImmuneToleranceMutation
-  requiredGenes: [WeakImmunity, ToxinTolerance, MucusSecretion]
+  requiredGenes: [ WeakImmunity, ToxinTolerance, MucusSecretion ]
   requiredReagents:
     Nutriment: 5
     Saline: 5
@@ -63,7 +63,7 @@
 
 - type: geneticMutation
   id: VenomousMutation
-  requiredGenes: [ToxinProduction, ProteinSecretion]
+  requiredGenes: [ ToxinProduction, ProteinSecretion ]
   requiredReagents:
     Nutriment: 5
     Saline: 5
@@ -72,7 +72,7 @@
 
 - type: geneticMutation
   id: DetoxifyingMetabolismMutation
-  requiredGenes: [XenobioticProcessing, ChemicalSensitivity, OmnivorousDigestion, CelluloseDigestion]
+  requiredGenes: [ XenobioticProcessing, ChemicalSensitivity, OmnivorousDigestion, CelluloseDigestion ]
   requiredReagents:
     Nutriment: 5
     Saline: 5
@@ -81,7 +81,7 @@
 
 - type: geneticMutation
   id: TorporControlMutation
-  requiredGenes: [SlowMetabolism, LipidStorage, ColdAdaptation]
+  requiredGenes: [ SlowMetabolism, LipidStorage, ColdAdaptation ]
   requiredReagents:
     Nutriment: 5
     Saline: 5
@@ -90,7 +90,7 @@
 
 - type: geneticMutation
   id: PacifismMutation
-  requiredGenes: [PassiveTemperament, StartleResponse, CollectiveSignaling]
+  requiredGenes: [ PassiveTemperament, StartleResponse, CollectiveSignaling ]
   requiredReagents:
     Nutriment: 5
     Saline: 5
@@ -99,7 +99,7 @@
 
 - type: geneticMutation
   id: ReflexDisinhibitionMutation
-  requiredGenes: [DefensiveAggression, HighMetabolism]
+  requiredGenes: [ DefensiveAggression, HighMetabolism ]
   requiredReagents:
     Nutriment: 5
     Saline: 5
@@ -108,7 +108,7 @@
 
 - type: geneticMutation
   id: RadionuclideSequestrationMutation
-  requiredGenes: [MineralAssimilation, XenobioticProcessing]
+  requiredGenes: [ MineralAssimilation, XenobioticProcessing ]
   requiredReagents:
     Uranium: 1
     Saline: 5
@@ -117,7 +117,7 @@
 
 - type: geneticMutation
   id: WebSpinningMutation
-  requiredGenes: [SilkSynthesis, ProteinSecretion, LimbGrip, ChitinousCovering]
+  requiredGenes: [ SilkSynthesis, ProteinSecretion, LimbGrip, ChitinousCovering ]
   requiredReagents:
     Nutriment: 5
     Saline: 5
@@ -126,7 +126,7 @@
 
 - type: geneticMutation
   id: ParrotSpeechMutation
-  requiredGenes: [AuditoryLearning, AcuteHearing]
+  requiredGenes: [ AuditoryLearning, AcuteHearing ]
   requiredReagents:
     Nutriment: 5
     Saline: 5
@@ -135,7 +135,7 @@
 
 - type: geneticMutation
   id: PhotonicLatticeMutation
-  requiredGenes: [LamellarScales, ProteinSecretion, KeratinizedCovering]
+  requiredGenes: [ LamellarScales, ProteinSecretion, KeratinizedCovering ]
   requiredReagents:
     Nutriment: 10
     Saline: 10
@@ -145,7 +145,7 @@
 
 - type: geneticMutation
   id: RegenerationMutation
-  requiredGenes: [CoordinatedRepair, ImmuneTolerance, HighMetabolism, BroodDevelopment]
+  requiredGenes: [ CoordinatedRepair, ImmuneTolerance, HighMetabolism, BroodDevelopment ]
   requiredReagents:
     Nutriment: 10
     Saline: 10
@@ -155,7 +155,7 @@
 
 - type: geneticMutation
   id: ToxicOverproductionMutation
-  requiredGenes: [Venomous, HighMetabolism, ChemicalSensitivity]
+  requiredGenes: [ Venomous, HighMetabolism, ChemicalSensitivity ]
   requiredReagents:
     Nutriment: 10
     Saline: 10
@@ -165,7 +165,7 @@
 
 - type: geneticMutation
   id: PressureHomeostasisMutation
-  requiredGenes: [TorporControl, ElasticFrame, LowPressureAdaptation]
+  requiredGenes: [ TorporControl, ElasticFrame, LowPressureAdaptation ]
   requiredReagents:
     Nutriment: 10
     Saline: 10
@@ -175,7 +175,7 @@
 
 - type: geneticMutation
   id: SensoryOverloadMutation
-  requiredGenes: [MechanosensoryIntegration, ReflexDisinhibition, Photosensitivity]
+  requiredGenes: [ MechanosensoryIntegration, ReflexDisinhibition, Photosensitivity ]
   requiredReagents:
     Nutriment: 10
     Saline: 10
@@ -185,7 +185,7 @@
 
 - type: geneticMutation
   id: AdaptivePigmentationMutation
-  requiredGenes: [PigmentPlasticity, ColorDiscrimination, TissuePlasticity, StructuralIridescence]
+  requiredGenes: [ PigmentPlasticity, ColorDiscrimination, TissuePlasticity, StructuralIridescence ]
   requiredReagents:
     Nutriment: 10
     Saline: 10
@@ -195,7 +195,7 @@
 
 - type: geneticMutation
   id: RadiationMutation
-  requiredGenes: [RadionuclideSequestration, MineralAssimilation, HighMetabolism, MineralizedTissue]
+  requiredGenes: [ RadionuclideSequestration, MineralAssimilation, HighMetabolism, MineralizedTissue ]
   requiredReagents:
     Uranium: 5
     Saline: 5
@@ -205,7 +205,7 @@
 
 - type: geneticMutation
   id: ReflectionMutation
-  requiredGenes: [PhotonicLattice, LamellarScales]
+  requiredGenes: [ PhotonicLattice, LamellarScales ]
   requiredReagents:
     Nutriment: 15
     Saline: 10
@@ -215,7 +215,7 @@
 
 - type: geneticMutation
   id: InvisibilityMutation
-  requiredGenes: [AdaptivePigmentation, PhotonicLattice]
+  requiredGenes: [ AdaptivePigmentation, PhotonicLattice ]
   requiredReagents:
     Nutriment: 15
     Saline: 10
@@ -225,7 +225,7 @@
 
 - type: geneticMutation
   id: SomaticHomeostasisMutation
-  requiredGenes: [Regeneration, DetoxifyingMetabolism]
+  requiredGenes: [ Regeneration, DetoxifyingMetabolism ]
   requiredReagents:
     Nutriment: 15
     Saline: 10

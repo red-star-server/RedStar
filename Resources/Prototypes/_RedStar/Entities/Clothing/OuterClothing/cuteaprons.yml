@@ -1,8 +1,8 @@
 ﻿- type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterApronCuteChef
-  suffix: Chef
   name: apron
+  suffix: Chef
   description: A cute frilly apron.
   components:
   - type: Sprite
@@ -13,8 +13,8 @@
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterApronCuteBar
-  suffix: Bartender
   name: apron
+  suffix: Bartender
   description: A cute frilly apron.
   components:
   - type: Sprite

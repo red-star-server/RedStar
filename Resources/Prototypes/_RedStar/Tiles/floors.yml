@@ -1,118 +1,118 @@
 - type: tile
-  id: FloorWoodParquet
   parent: FloorWood
+  id: FloorWoodParquet
   name: tiles-wood-parquet
   sprite: /Textures/_RedStar/Tiles/Wood/wood_parquet.png
   itemDrop: FloorTileItemWood
 
 - type: tile
-  id: FloorWoodBlack
   parent: FloorWood
+  id: FloorWoodBlack
   name: tiles-wood-black
   sprite: /Textures/_RedStar/Tiles/Wood/wood_black.png
   itemDrop: FloorTileItemWoodBlack
 
 - type: tile
-  id: FloorWoodLargeBlack
   parent: FloorWood
+  id: FloorWoodLargeBlack
   name: tiles-wood-large-black
   sprite: /Textures/_RedStar/Tiles/Wood/wood_large_black.png
   itemDrop: FloorTileItemWoodBlack
 
 - type: tile
-  id: FloorWoodParquetBlack
   parent: FloorWood
+  id: FloorWoodParquetBlack
   name: tiles-wood-parquet-black
   sprite: /Textures/_RedStar/Tiles/Wood/wood_parquet_black.png
   itemDrop: FloorTileItemWoodBlack
 
 - type: tile
-  id: FloorWoodChessBlack
   parent: FloorWood
+  id: FloorWoodChessBlack
   name: tiles-wood-chess-black
   sprite: /Textures/_RedStar/Tiles/Wood/wood_chess_black.png
   itemDrop: FloorTileItemWoodBlack
 
 - type: tile
-  id: FloorWoodDark
   parent: FloorWood
+  id: FloorWoodDark
   name: tiles-wood-dark
   sprite: /Textures/_RedStar/Tiles/Wood/wood_dark.png
   itemDrop: FloorTileItemWoodDark
 
 - type: tile
-  id: FloorWoodLargeDark
   parent: FloorWood
+  id: FloorWoodLargeDark
   name: tiles-wood-large-dark
   sprite: /Textures/_RedStar/Tiles/Wood/wood_large_dark.png
   itemDrop: FloorTileItemWoodDark
 
 - type: tile
-  id: FloorWoodParquetDark
   parent: FloorWood
+  id: FloorWoodParquetDark
   name: tiles-wood-parquet-dark
   sprite: /Textures/_RedStar/Tiles/Wood/wood_parquet_dark.png
   itemDrop: FloorTileItemWoodDark
 
 - type: tile
-  id: FloorWoodChessDark
   parent: FloorWood
+  id: FloorWoodChessDark
   name: tiles-wood-chess-dark
   sprite: /Textures/_RedStar/Tiles/Wood/wood_chess_dark.png
   itemDrop: FloorTileItemWoodDark
 
 - type: tile
-  id: FloorWoodLight
   parent: FloorWood
+  id: FloorWoodLight
   name: tiles-wood-light
   sprite: /Textures/_RedStar/Tiles/Wood/wood_light.png
   itemDrop: FloorTileItemWoodLight
 
 - type: tile
-  id: FloorWoodLargeLight
   parent: FloorWood
+  id: FloorWoodLargeLight
   name: tiles-wood-large-light
   sprite: /Textures/_RedStar/Tiles/Wood/wood_large_light.png
   itemDrop: FloorTileItemWoodLight
 
 - type: tile
-  id: FloorWoodParquetLight
   parent: FloorWood
+  id: FloorWoodParquetLight
   name: tiles-wood-parquet-light
   sprite: /Textures/_RedStar/Tiles/Wood/wood_parquet_light.png
   itemDrop: FloorTileItemWoodLight
 
 - type: tile
-  id: FloorWoodChessLight
   parent: FloorWood
+  id: FloorWoodChessLight
   name: tiles-wood-chess-light
   sprite: /Textures/_RedStar/Tiles/Wood/wood_chess_light.png
   itemDrop: FloorTileItemWoodLight
 
 - type: tile
-  id: FloorWoodRed
   parent: FloorWood
+  id: FloorWoodRed
   name: tiles-wood-red
   sprite: /Textures/_RedStar/Tiles/Wood/wood_red.png
   itemDrop: FloorTileItemWoodRed
 
 - type: tile
-  id: FloorWoodLargeRed
   parent: FloorWood
+  id: FloorWoodLargeRed
   name: tiles-wood-large-red
   sprite: /Textures/_RedStar/Tiles/Wood/wood_large_red.png
   itemDrop: FloorTileItemWoodRed
 
 - type: tile
-  id: FloorWoodParquetRed
   parent: FloorWood
+  id: FloorWoodParquetRed
   name: tiles-wood-parquet-red
   sprite: /Textures/_RedStar/Tiles/Wood/wood_parquet_red.png
   itemDrop: FloorTileItemWoodRed
 
 - type: tile
-  id: FloorWoodChessRed
   parent: FloorWood
+  id: FloorWoodChessRed
   name: tiles-wood-chess-red
   sprite: /Textures/_RedStar/Tiles/Wood/wood_chess_red.png
   itemDrop: FloorTileItemWoodRed

@@ -1,15 +1,15 @@
 # NanoTrasen
 - type: paperwork
   id: NTScience0
-  category: NTScience
   name: paperwork-form-title-science-0
+  category: NTScience
   template: "/Paperwork/default.xml"
   paperPrototype: PaperPrintedNTScience
 
 # USSP
 - type: paperwork
   id: USSPScience0
-  category: USSPScience
   name: paperwork-form-title-science-0
+  category: USSPScience
   template: "/Paperwork/default.xml"
   paperPrototype: PaperPrintedUSSPScience

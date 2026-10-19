@@ -2,8 +2,8 @@
   parent: ClothingUnderwearSocksBase
   id: ClothingUnderwearSocksFishnet
   name: fishnet
-  description: Comfortable hosiery for everyday wear.
   suffix: full
+  description: Comfortable hosiery for everyday wear.
   components:
   - type: Sprite
     sprite: _RedStar/Clothing/Underwear/Special/Socks/fishnetfull.rsi
@@ -12,8 +12,8 @@
   parent: ClothingUnderwearSocksBase
   id: ClothingUnderwearSocksFishnetKnee
   name: fishnet
-  description: Comfortable hosiery for everyday wear.
   suffix: knee
+  description: Comfortable hosiery for everyday wear.
   components:
   - type: Sprite
     sprite: _RedStar/Clothing/Underwear/Special/Socks/fishnetknee.rsi
@@ -22,8 +22,8 @@
   parent: ClothingUnderwearSocksBase
   id: ClothingUnderwearSocksFishnetThigh
   name: fishnet
-  description: Comfortable hosiery for everyday wear.
   suffix: thigh
+  description: Comfortable hosiery for everyday wear.
   components:
   - type: Sprite
     sprite: _RedStar/Clothing/Underwear/Special/Socks/fishnetthigh.rsi

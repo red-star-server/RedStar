@@ -12,10 +12,10 @@
     - state: icon
     - state: icon-unshaded
       shader: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
       visible: false
     - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       visible: false
   - type: Appearance
   - type: WiresVisuals
@@ -55,7 +55,7 @@
   #    - Document
   #  storage:
   #    PrinterPaper: 0
-  #- type: DocumentPrinter 
+  #- type: DocumentPrinter
   #- type: ContainerContainer
   #  containers:
   #    machine_board: !type:Container

@@ -1,7 +1,7 @@
 - type: entity
-  name: pelmeni
   parent: FoodBowlBase
   id: FoodPelmeniBowl
+  name: pelmeni
   description: Lots of meat, little dough.
   components:
   - type: FlavorProfile

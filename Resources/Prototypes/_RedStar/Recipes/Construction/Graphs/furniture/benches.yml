@@ -187,7 +187,7 @@
       - material: WoodPlank
         amount: 4
         doAfter: 1
-  
+
   #region Node-White
   - node: whiteComfBench
     entity: BenchWhiteComfy
@@ -263,7 +263,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  
+
   #region Node-Red
   - node: redComfBenchCorner
     entity: BenchRedComfyCorner
@@ -324,7 +324,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  
+
   #region Node-Blue
   - node: blueComfBenchCorner
     entity: BenchBlueComfyCorner
@@ -385,7 +385,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  
+
   #region Node-Gray
   - node: grayComfBench
     entity: BenchGrayComfy
@@ -461,7 +461,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  
+
   #region Node-Green
   - node: greenComfBench
     entity: BenchGreenComfy
@@ -537,7 +537,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-  
+
   #region Node-Wooden Pews
   - node: pewLeft
     entity: PewEndLeft

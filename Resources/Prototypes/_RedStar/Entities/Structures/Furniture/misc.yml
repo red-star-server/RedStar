@@ -1,7 +1,7 @@
 - type: entity
-  name: grandfather clock
+  parent: [ BaseStructure, StructureHealthFurniture ]
   id: ClockCabinet
-  parent: [BaseStructure, StructureHealthFurniture]
+  name: grandfather clock
   description: Tick. Tock. Tick. Tock.
   components:
   - type: Sprite

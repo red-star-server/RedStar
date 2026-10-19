@@ -1,6 +1,6 @@
 - type: reagent
-  id: Kvass
   parent: BaseDrink
+  id: Kvass
   name: reagent-name-kvass
   desc: reagent-desc-kvass
   physicalDesc: reagent-physical-desc-bubbly

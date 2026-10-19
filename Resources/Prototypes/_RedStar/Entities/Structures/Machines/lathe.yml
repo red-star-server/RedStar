@@ -1,6 +1,6 @@
 - type: entity
-  id: EngineeringTechFab
   parent: BaseLatheLube
+  id: EngineeringTechFab
   name: engineering techfab
   description: Prints equipment and circuitboards for use by engineering department.
   components:
@@ -8,15 +8,15 @@
     sprite: Structures/Machines/techfab.rsi
     layers:
     - state: icon
-      map: ["enum.LatheVisualLayers.IsRunning"]
+      map: [ "enum.LatheVisualLayers.IsRunning" ]
     - state: engi
     - state: unlit
       shader: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
     - state: inserting
-      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+      map: [ "enum.MaterialStorageVisualLayers.Inserting" ]
     - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
   - type: Machine
     board: EngineeringTechFabCircuitboard
   - type: Lathe
@@ -58,11 +58,11 @@
       - Ingot
   - type: OreSiloClient
   - type: LatheAnnouncing
-    channels: [Engineering]
+    channels: [ Engineering ]
 
 - type: entity
-  id: CargoTechFab
   parent: BaseLatheLube
+  id: CargoTechFab
   name: cargo techfab
   description: Prints equipment and circuitboards for use by cargo department.
   components:
@@ -70,15 +70,15 @@
     sprite: Structures/Machines/techfab.rsi
     layers:
     - state: icon
-      map: ["enum.LatheVisualLayers.IsRunning"]
+      map: [ "enum.LatheVisualLayers.IsRunning" ]
     - state: cargo
     - state: unlit
       shader: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
     - state: inserting
-      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+      map: [ "enum.MaterialStorageVisualLayers.Inserting" ]
     - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
   - type: Machine
     board: CargoTechFabCircuitboard
   - type: Lathe
@@ -114,11 +114,11 @@
     whitelist: *StandardMaterialWhitelist
   - type: OreSiloClient
   - type: LatheAnnouncing
-    channels: [Supply]
+    channels: [ Supply ]
 
 - type: entity
-  id: ScienceTechFab
   parent: BaseLatheLube
+  id: ScienceTechFab
   name: science techfab
   description: Prints equipment and circuitboards for use by science department.
   components:
@@ -126,15 +126,15 @@
     sprite: Structures/Machines/techfab.rsi
     layers:
     - state: icon
-      map: ["enum.LatheVisualLayers.IsRunning"]
+      map: [ "enum.LatheVisualLayers.IsRunning" ]
     - state: sci
     - state: unlit
       shader: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
     - state: inserting
-      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+      map: [ "enum.MaterialStorageVisualLayers.Inserting" ]
     - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
   - type: Machine
     board: ScienceTechFabCircuitboard
   - type: Lathe
@@ -186,11 +186,11 @@
     whitelist: *StandardMaterialWhitelist
   - type: OreSiloClient
   - type: LatheAnnouncing
-    channels: [Science]
+    channels: [ Science ]
 
 - type: entity
-  id: ServiceTechFab
   parent: BaseLatheLube
+  id: ServiceTechFab
   name: service techfab
   description: Prints equipment and circuitboards for use by service department.
   components:
@@ -198,15 +198,15 @@
     sprite: Structures/Machines/techfab.rsi
     layers:
     - state: icon
-      map: ["enum.LatheVisualLayers.IsRunning"]
+      map: [ "enum.LatheVisualLayers.IsRunning" ]
     - state: service
     - state: unlit
       shader: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
     - state: inserting
-      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+      map: [ "enum.MaterialStorageVisualLayers.Inserting" ]
     - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
   - type: Machine
     board: ServiceTechFabCircuitboard
   - type: Lathe
@@ -234,4 +234,4 @@
     whitelist: *StandardMaterialWhitelist
   - type: OreSiloClient
   - type: LatheAnnouncing
-    channels: [Service]
+    channels: [ Service ]

@@ -6,11 +6,11 @@
     default:
       type:
         !type:CategoryColoring
-          category: Hair
+        category: Hair
       fallbackTypes:
-        - !type:CategoryColoring
-          category: FacialHair
-        - !type:SkinColoring
+      - !type:CategoryColoring
+        category: FacialHair
+      - !type:SkinColoring
   sprites:
   - sprite: _RedStar/Mobs/Customization/Human/fox_parts.rsi
     state: tail_fox_stripes_prime
@@ -55,20 +55,20 @@
     default:
       type:
         !type:CategoryColoring
-          category: Hair
+        category: Hair
       fallbackTypes:
-        - !type:CategoryColoring
-          category: FacialHair
-        - !type:SkinColoring
+      - !type:CategoryColoring
+        category: FacialHair
+      - !type:SkinColoring
     layers:
       ears_horse_inner:
         type:
           !type:CategoryColoring
-            category: Hair
+          category: Hair
         fallbackTypes:
-          - !type:CategoryColoring
-            category: FacialHair
-          - !type:SkinColoring
+        - !type:CategoryColoring
+          category: FacialHair
+        - !type:SkinColoring
   sprites:
   - sprite: _RedStar/Mobs/Customization/Human/horse.rsi
     state: ears_horse_outer
@@ -83,11 +83,11 @@
     default:
       type:
         !type:CategoryColoring
-          category: Hair
+        category: Hair
       fallbackTypes:
-        - !type:CategoryColoring
-          category: FacialHair
-        - !type:SkinColoring
+      - !type:CategoryColoring
+        category: FacialHair
+      - !type:SkinColoring
   sprites:
   - sprite: _RedStar/Mobs/Customization/Human/horse.rsi
     state: tail_horse

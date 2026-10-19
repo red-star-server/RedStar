@@ -425,8 +425,6 @@
   - UnderwearBottomPantiesWarden
   - UnderwearSocksWarden
 
-
-
 # Dignitary
 - type: loadoutGroup
   id: BlueshieldOfficerUnderwear

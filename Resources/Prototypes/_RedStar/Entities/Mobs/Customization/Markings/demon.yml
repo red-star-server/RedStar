@@ -62,7 +62,7 @@
     default:
       type:
         !type:EyeColoring
-          negative: true
+        negative: true
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
     state: tattoo_eye_r
@@ -75,7 +75,7 @@
     default:
       type:
         !type:EyeColoring
-          negative: true
+        negative: true
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
     state: tattoo_eye_l
@@ -103,6 +103,7 @@
   sprites:
   - sprite: _RedStar/Mobs/Customization/Demon/custom.rsi
     state: ears_elf
+
 - type: marking
   id: DemonCowHorns
   bodyPart: HeadTop
@@ -234,10 +235,10 @@
   bodyPart: Tail
   groupWhitelist: [ Human, Slime ]
   sprites:
-    - sprite: _RedStar/Mobs/Customization/Demon/base_tail.rsi
-      state: tail
+  - sprite: _RedStar/Mobs/Customization/Demon/base_tail.rsi
+    state: tail
 
- # Corvax-Wega Animated Tail demons
+# Corvax-Wega Animated Tail demons
 - type: marking
   id: DemonTail1Animated
   bodyPart: Tail
@@ -275,5 +276,3 @@
   sprites:
   - sprite: _RedStar/Mobs/Customization/Demon/base_tail.rsi
     state: tail_waggin
-
-

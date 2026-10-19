@@ -1,6 +1,6 @@
 - type: entity
-  id: SteelDarkCenterStairs
   parent: Stairs
+  id: SteelDarkCenterStairs
   name: stairs
   suffix: Steel , center
   description: The greatest invention since rocket-propelled grenades.
@@ -26,8 +26,8 @@
         - Destruction
 
 - type: entity
-  id: WoodCenterStairs
   parent: Stairs
+  id: WoodCenterStairs
   name: stairs
   suffix: Wood, center
   description: The greatest invention since rocket-propelled grenades.
@@ -55,24 +55,24 @@
         - Destruction
 
 - type: entity
-  id: SteelDarkLeftStairs
   parent: SteelDarkCenterStairs
+  id: SteelDarkLeftStairs
   suffix: Dark, left
   components:
   - type: Sprite
     state: steel_dark_left_stairs
 
 - type: entity
-  id: SteelDarkRightStairs
   parent: SteelDarkCenterStairs
+  id: SteelDarkRightStairs
   suffix: Dark, right
   components:
   - type: Sprite
     state: steel_dark_right_stairs
 
 - type: entity
-  id: SteelDarkSingleStairs
   parent: SteelDarkCenterStairs
+  id: SteelDarkSingleStairs
   suffix: Dark, single
   components:
   - type: Sprite
@@ -82,48 +82,48 @@
     node: steelDarkSingleStairs
 
 - type: entity
-  id: SteelDarkLightLeftStairs
   parent: SteelDarkCenterStairs
+  id: SteelDarkLightLeftStairs
   suffix: Dark, light, left
   components:
   - type: Sprite
     state: steel_dark_light_left_stairs
 
 - type: entity
-  id: SteelDarkLightRightStairs
   parent: SteelDarkCenterStairs
+  id: SteelDarkLightRightStairs
   suffix: Dark, light, right
   components:
   - type: Sprite
     state: steel_dark_light_right_stairs
 
 - type: entity
-  id: SteelCenterStairs
   parent: SteelDarkCenterStairs
+  id: SteelCenterStairs
   suffix: Steel, center
   components:
   - type: Sprite
     state: steel_center_stairs
 
 - type: entity
-  id: SteelLeftStairs
   parent: SteelDarkCenterStairs
+  id: SteelLeftStairs
   suffix: Steel, left
   components:
   - type: Sprite
     state: steel_left_stairs
 
 - type: entity
-  id: SteelRightStairs
   parent: SteelDarkCenterStairs
+  id: SteelRightStairs
   suffix: Steel, right
   components:
   - type: Sprite
     state: steel_right_stairs
 
 - type: entity
-  id: SteelSingleStairs
   parent: SteelDarkCenterStairs
+  id: SteelSingleStairs
   suffix: Steel, single
   components:
   - type: Sprite
@@ -133,48 +133,48 @@
     node: steelSingleStairs
 
 - type: entity
-  id: SteelLightLeftStairs
   parent: SteelDarkCenterStairs
+  id: SteelLightLeftStairs
   suffix: Steel, light, left
   components:
   - type: Sprite
     state: steel_light_left_stairs
 
 - type: entity
-  id: SteelLightRightStairs
   parent: SteelDarkCenterStairs
+  id: SteelLightRightStairs
   suffix: Steel, light, right
   components:
   - type: Sprite
     state: steel_light_right_stairs
 
 - type: entity
-  id: SteelWhiteCenterStairs
   parent: SteelDarkCenterStairs
+  id: SteelWhiteCenterStairs
   suffix: White, center
   components:
   - type: Sprite
     state: steel_white_center_stairs
 
 - type: entity
-  id: SteelWhiteLeftStairs
   parent: SteelDarkCenterStairs
+  id: SteelWhiteLeftStairs
   suffix: White, left
   components:
   - type: Sprite
     state: steel_white_left_stairs
 
 - type: entity
-  id: SteelWhiteRightStairs
   parent: SteelDarkCenterStairs
+  id: SteelWhiteRightStairs
   suffix: White, right
   components:
   - type: Sprite
     state: steel_white_right_stairs
 
 - type: entity
-  id: SteelWhiteSingleStairs
   parent: SteelDarkCenterStairs
+  id: SteelWhiteSingleStairs
   suffix: White, single
   components:
   - type: Sprite
@@ -184,48 +184,48 @@
     node: steelWhiteSingleStairs
 
 - type: entity
-  id: SteelWhiteLightLeftStairs
   parent: SteelDarkCenterStairs
+  id: SteelWhiteLightLeftStairs
   suffix: White, left
   components:
   - type: Sprite
     state: steel_white_light_left_stairs
 
 - type: entity
-  id: SteelWhiteLightRightStairs
   parent: SteelDarkCenterStairs
+  id: SteelWhiteLightRightStairs
   suffix: White, right
   components:
   - type: Sprite
     state: steel_white_light_right_stairs
 
 - type: entity
-  id: WoodBlackCenterStairs
   parent: WoodCenterStairs
+  id: WoodBlackCenterStairs
   suffix: Wood, black, center
   components:
   - type: Sprite
     state: wood_black_center_stairs
 
 - type: entity
-  id: WoodBlackLeftStairs
   parent: WoodCenterStairs
+  id: WoodBlackLeftStairs
   suffix: Wood, black, left
   components:
   - type: Sprite
     state: wood_black_left_stairs
 
 - type: entity
-  id: WoodBlackRightStairs
   parent: WoodCenterStairs
+  id: WoodBlackRightStairs
   suffix: Wood, black, right
   components:
   - type: Sprite
     state: wood_black_right_stairs
 
 - type: entity
-  id: WoodBlackSingleStairs
   parent: WoodCenterStairs
+  id: WoodBlackSingleStairs
   suffix: Wood, black, single
   components:
   - type: Sprite
@@ -235,32 +235,32 @@
     node: woodBlackSingleStairs
 
 - type: entity
-  id: WoodDarkCenterStairs
   parent: WoodCenterStairs
+  id: WoodDarkCenterStairs
   suffix: Wood, dark, center
   components:
   - type: Sprite
     state: wood_dark_center_stairs
 
 - type: entity
-  id: WoodDarkLeftStairs
   parent: WoodCenterStairs
+  id: WoodDarkLeftStairs
   suffix: Wood, dark, left
   components:
   - type: Sprite
     state: wood_dark_left_stairs
 
 - type: entity
-  id: WoodDarkRightStairs
   parent: WoodCenterStairs
+  id: WoodDarkRightStairs
   suffix: Wood, dark, right
   components:
   - type: Sprite
     state: wood_dark_right_stairs
 
 - type: entity
-  id: WoodDarkSingleStairs
   parent: WoodCenterStairs
+  id: WoodDarkSingleStairs
   suffix: Wood, dark, single
   components:
   - type: Sprite
@@ -270,24 +270,24 @@
     node: woodDarkSingleStairs
 
 - type: entity
-  id: WoodLeftStairs
   parent: WoodCenterStairs
+  id: WoodLeftStairs
   suffix: Wood, left
   components:
   - type: Sprite
     state: wood_left_stairs
 
 - type: entity
-  id: WoodRightStairs
   parent: WoodCenterStairs
+  id: WoodRightStairs
   suffix: Wood, right
   components:
   - type: Sprite
     state: wood_right_stairs
 
 - type: entity
-  id: WoodSingleStairs
   parent: WoodCenterStairs
+  id: WoodSingleStairs
   suffix: Wood, single
   components:
   - type: Sprite
@@ -297,32 +297,32 @@
     node: woodSingleStairs
 
 - type: entity
-  id: WoodLightCenterStairs
   parent: WoodCenterStairs
+  id: WoodLightCenterStairs
   suffix: Wood, light, center
   components:
   - type: Sprite
     state: wood_light_center_stairs
 
 - type: entity
-  id: WoodLightLeftStairs
   parent: WoodCenterStairs
+  id: WoodLightLeftStairs
   suffix: Wood, light, left
   components:
   - type: Sprite
     state: wood_light_left_stairs
 
 - type: entity
-  id: WoodLightRightStairs
   parent: WoodCenterStairs
+  id: WoodLightRightStairs
   suffix: Wood, light, right
   components:
   - type: Sprite
     state: wood_light_right_stairs
 
 - type: entity
-  id: WoodLightSingleStairs
   parent: WoodCenterStairs
+  id: WoodLightSingleStairs
   suffix: Wood, light, single
   components:
   - type: Sprite
@@ -332,32 +332,32 @@
     node: woodLightSingleStairs
 
 - type: entity
-  id: WoodRedCenterStairs
   parent: WoodCenterStairs
+  id: WoodRedCenterStairs
   suffix: Wood, red, center
   components:
   - type: Sprite
     state: wood_red_center_stairs
 
 - type: entity
-  id: WoodRedLeftStairs
   parent: WoodCenterStairs
+  id: WoodRedLeftStairs
   suffix: Wood, red, left
   components:
   - type: Sprite
     state: wood_red_left_stairs
 
 - type: entity
-  id: WoodRedRightStairs
   parent: WoodCenterStairs
+  id: WoodRedRightStairs
   suffix: Wood, red, right
   components:
   - type: Sprite
     state: wood_red_right_stairs
 
 - type: entity
-  id: WoodRedSingleStairs
   parent: WoodCenterStairs
+  id: WoodRedSingleStairs
   suffix: Wood, red, single
   components:
   - type: Sprite

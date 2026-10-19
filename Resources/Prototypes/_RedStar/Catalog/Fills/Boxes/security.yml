@@ -1,7 +1,7 @@
 ﻿- type: entity
-  name: tape recorder box
   parent: BoxCardboard
   id: BoxTapeRecorder
+  name: tape recorder box
   description: A box with colorful cassette tapes and a tape recorder.
   components:
   - type: StorageFill

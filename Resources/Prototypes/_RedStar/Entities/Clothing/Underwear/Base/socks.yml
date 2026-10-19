@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [SolutionFood, Clothing]
+  parent: [ SolutionFood, Clothing ]
   id: ClothingUnderwearSocksBase
   name: based socks
   description: You should not see this. If you see it, let Neko Dar#8948 know.
@@ -10,7 +10,7 @@
   - type: Item
     size: Small
   - type: Clothing
-    slots: [socks]
+    slots: [ socks ]
   - type: Edible
     requiresSpecialDigestion: true
   - type: Solution
@@ -21,7 +21,7 @@
         Quantity: 5
   - type: Tag
     tags:
-      - ClothMade
+    - ClothMade
   - type: PhysicalComposition
     materialComposition:
       Cloth: 100

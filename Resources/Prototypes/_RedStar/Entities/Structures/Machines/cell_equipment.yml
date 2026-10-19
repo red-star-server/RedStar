@@ -1,7 +1,7 @@
 - type: entity
-  id: BaseCellProcessingMachine
   abstract: true
   parent: [ BaseMachinePowered, SmallConstructibleMachine, BaseSmallConstructibleMachineDestructible ]
+  id: BaseCellProcessingMachine
   components:
   - type: Fixtures
     fixtures:
@@ -45,8 +45,8 @@
     - Science
 
 - type: entity
-  id: CellSequencer
   parent: BaseCellProcessingMachine
+  id: CellSequencer
   name: cell sequencer
   description: Deciphers genetic markers in samples from an inserted Petri dish.
   components:
@@ -89,8 +89,8 @@
     board: CellSequencerCircuitboard
 
 - type: entity
-  id: CellularFusion
   parent: BaseCellProcessingMachine
+  id: CellularFusion
   name: cell stabilizer
   description: Improves the stability of identical samples in a Petri dish.
   components:
@@ -117,8 +117,8 @@
     board: CellularFusionCircuitboard
 
 - type: entity
-  id: MutagenicCellInjector
   parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
+  id: MutagenicCellInjector
   name: mutagenic cell injector
   description: Best not to let your fingers get stuck...
   components:

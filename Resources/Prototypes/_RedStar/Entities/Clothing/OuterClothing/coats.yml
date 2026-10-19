@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ClothingOuterStorageBase, BaseSecurityContraband]
+  parent: [ ClothingOuterStorageBase, BaseSecurityContraband ]
   id: ClothingOuterCoatSecurityOvercoat
   name: security overcoat
   description: Lightly armored leather overcoat meant as casual wear for high-ranking officers. Bears the crest of Nanotrasen Security.
@@ -17,7 +17,7 @@
         Heat: 0.9
 
 - type: entity
-  parent: [ClothingOuterStorageBase, BaseCommandContraband]
+  parent: [ ClothingOuterStorageBase, BaseCommandContraband ]
   id: ClothingOuterCoatCaptain
   name: captain's jacket
   description: Captain's formal jacket, inlaid with gold.
@@ -35,7 +35,7 @@
         Heat: 0.5
 
 - type: entity
-  parent: [ClothingOuterStorageBase, BaseCommandContraband]
+  parent: [ ClothingOuterStorageBase, BaseCommandContraband ]
   id: ClothingOuterCoatHOP
   name: head of personnel's jacket
   description: Business jacket of the HOP for a professional look.
@@ -52,7 +52,7 @@
         Piercing: 0.8
 
 - type: entity
-  parent: [BaseEngineeringContraband, ClothingOuterStorageBase]
+  parent: [ BaseEngineeringContraband, ClothingOuterStorageBase ]
   id: ClothingAtmosphericsOveralls
   name: atmospherics overalls
   description: A set of fireproof overalls, good for protecting thinner clothes from gas leaks.

@@ -1,13 +1,13 @@
 - type: entity
   abstract: true
-  name: sofa
-  id: SofaBase
   parent: BaseUpholsteredChair
+  id: SofaBase
+  name: sofa
 
 - type: entity
-  name: white sofa left side
-  id: SofaWhiteLeftSide
   parent: SofaBase
+  id: SofaWhiteLeftSide
+  name: white sofa left side
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_white.rsi
@@ -17,9 +17,9 @@
     node: sofaWhiteLeftSide
 
 - type: entity
-  name: white sofa right side
-  id: SofaWhiteRightSide
   parent: SofaBase
+  id: SofaWhiteRightSide
+  name: white sofa right side
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_white.rsi
@@ -29,9 +29,9 @@
     node: sofaWhiteRightSide
 
 - type: entity
-  name: white sofa left side
-  id: SofaWhiteLeftSide2
   parent: SofaBase
+  id: SofaWhiteLeftSide2
+  name: white sofa left side
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_white.rsi
@@ -41,9 +41,9 @@
     node: sofaWhiteLeftSide2
 
 - type: entity
-  name: white sofa right side
-  id: SofaWhiteRightSide2
   parent: SofaBase
+  id: SofaWhiteRightSide2
+  name: white sofa right side
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_white.rsi
@@ -53,9 +53,9 @@
     node: sofaWhiteRightSide2
 
 - type: entity
-  name: white sofa middle
-  id: SofaWhiteMiddle
   parent: SofaBase
+  id: SofaWhiteMiddle
+  name: white sofa middle
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_white.rsi
@@ -65,9 +65,9 @@
     node: sofaWhiteMiddle
 
 - type: entity
-  name: white sofa right corner
-  id: SofaWhiteRightCorner
   parent: SofaBase
+  id: SofaWhiteRightCorner
+  name: white sofa right corner
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_white.rsi
@@ -77,9 +77,9 @@
     node: sofaWhiteRightCorner
 
 - type: entity
-  name: white sofa left corner
-  id: SofaWhiteLeftCorner
   parent: SofaBase
+  id: SofaWhiteLeftCorner
+  name: white sofa left corner
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_white.rsi
@@ -89,9 +89,9 @@
     node: sofaWhiteLeftCorner
 
 - type: entity
-  name: blue sofa left side
-  id: SofaBlueLeftSide
   parent: SofaBase
+  id: SofaBlueLeftSide
+  name: blue sofa left side
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_blue.rsi
@@ -101,9 +101,9 @@
     node: sofaBlueLeftSide
 
 - type: entity
-  name: blue sofa right side
-  id: SofaBlueRightSide
   parent: SofaBase
+  id: SofaBlueRightSide
+  name: blue sofa right side
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_blue.rsi
@@ -113,9 +113,9 @@
     node: sofaBlueRightSide
 
 - type: entity
-  name: blue sofa left side
-  id: SofaBlueLeftSide2
   parent: SofaBase
+  id: SofaBlueLeftSide2
+  name: blue sofa left side
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_blue.rsi
@@ -125,9 +125,9 @@
     node: sofaBlueLeftSide2
 
 - type: entity
-  name: blue sofa right side
-  id: SofaBlueRightSide2
   parent: SofaBase
+  id: SofaBlueRightSide2
+  name: blue sofa right side
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_blue.rsi
@@ -137,9 +137,9 @@
     node: sofaBlueRightSide2
 
 - type: entity
-  name: blue sofa middle
-  id: SofaBlueMiddle
   parent: SofaBase
+  id: SofaBlueMiddle
+  name: blue sofa middle
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_blue.rsi
@@ -149,9 +149,9 @@
     node: sofaBlueMiddle
 
 - type: entity
-  name: blue sofa right corner
-  id: SofaBlueRightCorner
   parent: SofaBase
+  id: SofaBlueRightCorner
+  name: blue sofa right corner
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_blue.rsi
@@ -161,9 +161,9 @@
     node: sofaBlueRightCorner
 
 - type: entity
-  name: blue sofa left corner
-  id: SofaBlueLeftCorner
   parent: SofaBase
+  id: SofaBlueLeftCorner
+  name: blue sofa left corner
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_blue.rsi
@@ -173,9 +173,9 @@
     node: sofaBlueLeftCorner
 
 - type: entity
-  name: brown sofa left side
-  id: SofaBrownLeftSide
   parent: SofaBase
+  id: SofaBrownLeftSide
+  name: brown sofa left side
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_brown.rsi
@@ -185,9 +185,9 @@
     node: sofaBrownLeftSide
 
 - type: entity
-  name: brown sofa right side
-  id: SofaBrownRightSide
   parent: SofaBase
+  id: SofaBrownRightSide
+  name: brown sofa right side
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_brown.rsi
@@ -197,9 +197,9 @@
     node: sofaBrownRightSide
 
 - type: entity
-  name: brown sofa left side
-  id: SofaBrownLeftSide2
   parent: SofaBase
+  id: SofaBrownLeftSide2
+  name: brown sofa left side
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_brown.rsi
@@ -209,9 +209,9 @@
     node: sofaBrownLeftSide2
 
 - type: entity
-  name: brown sofa right side
-  id: SofaBrownRightSide2
   parent: SofaBase
+  id: SofaBrownRightSide2
+  name: brown sofa right side
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_brown.rsi
@@ -221,9 +221,9 @@
     node: sofaBrownRightSide2
 
 - type: entity
-  name: brown sofa middle
-  id: SofaBrownMiddle
   parent: SofaBase
+  id: SofaBrownMiddle
+  name: brown sofa middle
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_brown.rsi
@@ -233,9 +233,9 @@
     node: sofaBrownMiddle
 
 - type: entity
-  name: brown sofa right corner
-  id: SofaBrownRightCorner
   parent: SofaBase
+  id: SofaBrownRightCorner
+  name: brown sofa right corner
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_brown.rsi
@@ -245,9 +245,9 @@
     node: sofaBrownRightCorner
 
 - type: entity
-  name: brown sofa left corner
-  id: SofaBrownLeftCorner
   parent: SofaBase
+  id: SofaBrownLeftCorner
+  name: brown sofa left corner
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_brown.rsi
@@ -257,9 +257,9 @@
     node: sofaBrownLeftCorner
 
 - type: entity
-  name: black office sofa left side
-  id: SofaOfficeBlackLeftSide
   parent: SofaBase
+  id: SofaOfficeBlackLeftSide
+  name: black office sofa left side
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/black_office_sofa.rsi
@@ -269,9 +269,9 @@
     node: sofaOfficeBlackLeftSide
 
 - type: entity
-  name: black office sofa right side
-  id: SofaOfficeBlackRightSide
   parent: SofaBase
+  id: SofaOfficeBlackRightSide
+  name: black office sofa right side
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/black_office_sofa.rsi
@@ -281,9 +281,9 @@
     node: sofaOfficeBlackRightSide
 
 - type: entity
-  name: black office sofa middle
-  id: SofaOfficeBlackMiddle
   parent: SofaBase
+  id: SofaOfficeBlackMiddle
+  name: black office sofa middle
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/black_office_sofa.rsi
@@ -293,9 +293,9 @@
     node: sofaOfficeBlackMiddle
 
 - type: entity
-  name: black office sofa right corner
-  id: SofaOfficeBlackRightCorner
   parent: SofaBase
+  id: SofaOfficeBlackRightCorner
+  name: black office sofa right corner
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/black_office_sofa.rsi
@@ -305,9 +305,9 @@
     node: sofaOfficeBlackRightCorner
 
 - type: entity
-  name: black office sofa left corner
-  id: SofaOfficeBlackLeftCorner
   parent: SofaBase
+  id: SofaOfficeBlackLeftCorner
+  name: black office sofa left corner
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/black_office_sofa.rsi
@@ -317,9 +317,9 @@
     node: sofaOfficeBlackLeftCorner
 
 - type: entity
-  name: white office sofa left side
-  id: SofaOfficeWhiteLeftSide
   parent: SofaBase
+  id: SofaOfficeWhiteLeftSide
+  name: white office sofa left side
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/white_office_sofa.rsi
@@ -329,9 +329,9 @@
     node: sofaOfficeWhiteLeftSide
 
 - type: entity
-  name: white office sofa right side
-  id: SofaOfficeWhiteRightSide
   parent: SofaBase
+  id: SofaOfficeWhiteRightSide
+  name: white office sofa right side
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/white_office_sofa.rsi
@@ -341,9 +341,9 @@
     node: sofaOfficeWhiteRightSide
 
 - type: entity
-  name: white office sofa middle
-  id: SofaOfficeWhiteMiddle
   parent: SofaBase
+  id: SofaOfficeWhiteMiddle
+  name: white office sofa middle
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/white_office_sofa.rsi
@@ -353,9 +353,9 @@
     node: sofaOfficeWhiteMiddle
 
 - type: entity
-  name: white office sofa right corner
-  id: SofaOfficeWhiteRightCorner
   parent: SofaBase
+  id: SofaOfficeWhiteRightCorner
+  name: white office sofa right corner
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/white_office_sofa.rsi
@@ -365,9 +365,9 @@
     node: sofaOfficeWhiteRightCorner
 
 - type: entity
-  name: white office sofa left corner
-  id: SofaOfficeWhiteLeftCorner
   parent: SofaBase
+  id: SofaOfficeWhiteLeftCorner
+  name: white office sofa left corner
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/white_office_sofa.rsi
@@ -377,9 +377,9 @@
     node: sofaOfficeWhiteLeftCorner
 
 - type: entity
-  name: black sofa left side
-  id: SofaCutBlackLeftSide
   parent: SofaBase
+  id: SofaCutBlackLeftSide
+  name: black sofa left side
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_black_cut.rsi
@@ -389,9 +389,9 @@
     node: sofaCutBlackLeftSide
 
 - type: entity
-  name: black sofa middle
-  id: SofaCutBlackMiddle
   parent: SofaBase
+  id: SofaCutBlackMiddle
+  name: black sofa middle
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_black_cut.rsi
@@ -401,9 +401,9 @@
     node: sofaCutBlackMiddle
 
 - type: entity
-  name: black sofa right side
-  id: SofaCutBlackRightSide
   parent: SofaBase
+  id: SofaCutBlackRightSide
+  name: black sofa right side
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_black_cut.rsi
@@ -413,9 +413,9 @@
     node: sofaCutBlackRightSide
 
 - type: entity
-  name: black sofa left corner
-  id: SofaCutBlackLeftCorner
   parent: SofaBase
+  id: SofaCutBlackLeftCorner
+  name: black sofa left corner
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_black_cut.rsi
@@ -425,9 +425,9 @@
     node: sofaCutBlackLeftCorner
 
 - type: entity
-  name: black sofa right corner
-  id: SofaCutBlackRightCorner
   parent: SofaBase
+  id: SofaCutBlackRightCorner
+  name: black sofa right corner
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_black_cut.rsi
@@ -437,9 +437,9 @@
     node: sofaCutBlackRightCorner
 
 - type: entity
-  name: comfy sofa left side
-  id: SofaCutComfyLeftSide
   parent: SofaBase
+  id: SofaCutComfyLeftSide
+  name: comfy sofa left side
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_comfy_cut.rsi
@@ -449,9 +449,9 @@
     node: sofaCutComfyLeftSide
 
 - type: entity
-  name: comfy sofa middle
-  id: SofaCutComfyMiddle
   parent: SofaBase
+  id: SofaCutComfyMiddle
+  name: comfy sofa middle
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_comfy_cut.rsi
@@ -461,9 +461,9 @@
     node: sofaCutComfyMiddle
 
 - type: entity
-  name: comfy sofa right side
-  id: SofaCutComfyRightSide
   parent: SofaBase
+  id: SofaCutComfyRightSide
+  name: comfy sofa right side
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_comfy_cut.rsi
@@ -473,9 +473,9 @@
     node: sofaCutComfyRightSide
 
 - type: entity
-  name: comfy sofa left corner
-  id: SofaCutComfyLeftCorner
   parent: SofaBase
+  id: SofaCutComfyLeftCorner
+  name: comfy sofa left corner
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_comfy_cut.rsi
@@ -485,9 +485,9 @@
     node: sofaCutComfyLeftCorner
 
 - type: entity
-  name: comfy sofa right corner
-  id: SofaCutComfyRightCorner
   parent: SofaBase
+  id: SofaCutComfyRightCorner
+  name: comfy sofa right corner
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_comfy_cut.rsi
@@ -497,9 +497,9 @@
     node: sofaCutComfyRightCorner
 
 - type: entity
-  name: dainer sofa left side
-  id: SofaCutDainerLeftSide
   parent: SofaBase
+  id: SofaCutDainerLeftSide
+  name: dainer sofa left side
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_dainer_cut.rsi
@@ -509,9 +509,9 @@
     node: sofaCutDainerLeftSide
 
 - type: entity
-  name: dainer sofa middle
-  id: SofaCutDainerMiddle
   parent: SofaBase
+  id: SofaCutDainerMiddle
+  name: dainer sofa middle
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_dainer_cut.rsi
@@ -521,9 +521,9 @@
     node: sofaCutDainerMiddle
 
 - type: entity
-  name: dainer sofa right side
-  id: SofaCutDainerRightSide
   parent: SofaBase
+  id: SofaCutDainerRightSide
+  name: dainer sofa right side
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_dainer_cut.rsi
@@ -533,9 +533,9 @@
     node: sofaCutDainerRightSide
 
 - type: entity
-  name: dainer sofa left corner
-  id: SofaCutDainerLeftCorner
   parent: SofaBase
+  id: SofaCutDainerLeftCorner
+  name: dainer sofa left corner
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_dainer_cut.rsi
@@ -545,9 +545,9 @@
     node: sofaCutDainerLeftCorner
 
 - type: entity
-  name: dainer sofa right corner
-  id: SofaCutDainerRightCorner
   parent: SofaBase
+  id: SofaCutDainerRightCorner
+  name: dainer sofa right corner
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Sofas/sofa_dainer_cut.rsi

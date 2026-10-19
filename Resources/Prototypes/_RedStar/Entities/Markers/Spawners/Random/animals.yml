@@ -1,7 +1,7 @@
 - type: entity
-  name: random animal spawner
-  id: AnimalRandomSpawner
   parent: MarkerBase
+  id: AnimalRandomSpawner
+  name: random animal spawner
   components:
   - type: Sprite
     layers:

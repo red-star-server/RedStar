@@ -15,7 +15,7 @@
   name: head of security cap
   description: The robust standard-issue cap of the Head of Security. For showing the officers who's in charge.
   components:
-    - type: Sprite
-      sprite: _RedStar/Clothing/Head/Hats/hoshat.rsi
-    - type: Clothing
-      sprite: _RedStar/Clothing/Head/Hats/hoshat.rsi
+  - type: Sprite
+    sprite: _RedStar/Clothing/Head/Hats/hoshat.rsi
+  - type: Clothing
+    sprite: _RedStar/Clothing/Head/Hats/hoshat.rsi

@@ -2,8 +2,8 @@
   parent: SheetMetalBase
   id: SheetPlastitanium
   name: plastitanium
-  description: A sturdy alloy of titanium and plasma.
   suffix: Full
+  description: A sturdy alloy of titanium and plasma.
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -20,7 +20,7 @@
     state: plastitanium_3
     layers:
     - state: plastitanium_3
-      map: ["base"]
+      map: [ "base" ]
   - type: Item
     sprite: _RedStar/Objects/Materials/metal.rsi
     heldPrefix: plastitanium
@@ -39,8 +39,8 @@
   parent: SheetGlassBase
   id: SheetTitaniumGlass
   name: titanium glass
-  description: A glass sheet reinforced with titanium.
   suffix: Full
+  description: A glass sheet reinforced with titanium.
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -57,7 +57,7 @@
     state: titaniumglass_3
     layers:
     - state: titaniumglass_3
-      map: ["base"]
+      map: [ "base" ]
   - type: Item
     sprite: _RedStar/Objects/Materials/glass.rsi
     heldPrefix: titaniumglass
@@ -76,8 +76,8 @@
   parent: SheetGlassBase
   id: SheetPlastitaniumGlass
   name: plastitanium glass
-  description: A glass sheet reinforced with plastitanium.
   suffix: Full
+  description: A glass sheet reinforced with plastitanium.
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -94,7 +94,7 @@
     state: plastitaniumglass_3
     layers:
     - state: plastitaniumglass_3
-      map: ["base"]
+      map: [ "base" ]
   - type: Item
     sprite: _RedStar/Objects/Materials/glass.rsi
     heldPrefix: plastitaniumglass

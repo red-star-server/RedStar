@@ -1,6 +1,6 @@
 - type: entity
-  id: SmartFridgeGenetics
   parent: SmartFridge
+  id: SmartFridgeGenetics
   name: genetics smart fridge
   description: A refrigerated storage unit for Petri dishes.
   components:

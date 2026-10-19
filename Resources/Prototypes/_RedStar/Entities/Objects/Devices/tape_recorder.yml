@@ -9,7 +9,7 @@
     layers:
     - state: taperecorder_empty
     - state: taperecorder_idle
-      map: ["tape"]
+      map: [ "tape" ]
       visible: false
   - type: Item
     size: Small
@@ -34,14 +34,14 @@
     visuals:
       enum.TapeRecorderVisuals.Mode:
         tape:
-          Stopped: {state: "taperecorder_idle"}
-          Playing: {state: "taperecorder_playing"}
-          Recording: {state: "taperecorder_recording"}
-          Rewinding: {state: "taperecorder_rewinding"}
+          Stopped: { state: "taperecorder_idle" }
+          Playing: { state: "taperecorder_playing" }
+          Recording: { state: "taperecorder_recording" }
+          Rewinding: { state: "taperecorder_rewinding" }
       enum.TapeRecorderVisuals.TapeInserted:
         tape:
-          True: {visible: true}
-          False: {visible: false}
+          True: { visible: true }
+          False: { visible: false }
   - type: ActivatableUI
     key: enum.TapeRecorderUIKey.Key
     inHandsOnly: true
@@ -61,9 +61,9 @@
     sprite: _RedStar/Objects/Devices/cassette_tapes.rsi
     layers:
     - state: tape_greyscale
-      map: ["enum.DamageStateVisualLayers.Base"]
+      map: [ "enum.DamageStateVisualLayers.Base" ]
     - state: tape_ribbonoverlay
-      map: ["enum.ToggleableVisuals.Layer"]
+      map: [ "enum.ToggleableVisuals.Layer" ]
       visible: false
   - type: Item
     size: Tiny
@@ -80,17 +80,17 @@
     visuals:
       enum.ToggleableVisuals.Enabled:
         enum.ToggleableVisuals.Layer:
-          True: {visible: true}
-          False: {visible: false}
+          True: { visible: true }
+          False: { visible: false }
   - type: RandomSprite
     available:
     - enum.DamageStateVisualLayers.Base:
         tape_greyscale: Rainbow
 
 - type: entity
-  suffix: Interview with Garry Smosh
   parent: CassetteTape
   id: CassetteTapeInterview
+  suffix: Interview with Garry Smosh
   components:
   - type: Label
     localizedLabel: tape-recorder-interview-label

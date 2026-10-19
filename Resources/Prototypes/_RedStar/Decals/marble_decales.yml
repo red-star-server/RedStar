@@ -1,132 +1,132 @@
 ﻿- type: decal
   id: marBox
-  tags: ["marble"]
+  tags: [ "marble" ]
   sprite:
     sprite: _RedStar/Decals/Marble/marble_decals.rsi
     state: marble_box
 
 - type: decal
   id: MarbleCornerNw
-  tags: ["marble"]
+  tags: [ "marble" ]
   sprite:
     sprite: _RedStar/Decals/Marble/marble_decals.rsi
     state: marble_corner_nw
 
 - type: decal
   id: MarbleCornerNe
-  tags: ["marble"]
+  tags: [ "marble" ]
   sprite:
     sprite: _RedStar/Decals/Marble/marble_decals.rsi
     state: marble_corner_ne
 
 - type: decal
   id: MarbleCornerSe
-  tags: ["marble"]
+  tags: [ "marble" ]
   sprite:
     sprite: _RedStar/Decals/Marble/marble_decals.rsi
     state: marble_corner_se
 
 - type: decal
   id: MarbleCornerSw
-  tags: ["marble"]
+  tags: [ "marble" ]
   sprite:
     sprite: _RedStar/Decals/Marble/marble_decals.rsi
     state: marble_corner_sw
 
 - type: decal
   id: MarbleEndE
-  tags: ["marble"]
+  tags: [ "marble" ]
   sprite:
     sprite: _RedStar/Decals/Marble/marble_decals.rsi
     state: marble_end_e
 
 - type: decal
   id: MarbleEndS
-  tags: ["marble"]
+  tags: [ "marble" ]
   sprite:
     sprite: _RedStar/Decals/Marble/marble_decals.rsi
     state: marble_end_s
 
 - type: decal
   id: MarbleEndN
-  tags: ["marble"]
+  tags: [ "marble" ]
   sprite:
     sprite: _RedStar/Decals/Marble/marble_decals.rsi
     state: marble_end_n
 
 - type: decal
   id: MarbleEndW
-  tags: ["marble"]
+  tags: [ "marble" ]
   sprite:
     sprite: _RedStar/Decals/Marble/marble_decals.rsi
     state: marble_end_w
 
 - type: decal
   id: MarbleInnerNe
-  tags: ["marble"]
+  tags: [ "marble" ]
   sprite:
     sprite: _RedStar/Decals/Marble/marble_decals.rsi
     state: marble_inner_ne
 
 - type: decal
   id: MarbleInnerNw
-  tags: ["marble"]
+  tags: [ "marble" ]
   sprite:
     sprite: _RedStar/Decals/Marble/marble_decals.rsi
     state: marble_inner_nw
 
 - type: decal
   id: MarbleInnerSe
-  tags: ["marble"]
+  tags: [ "marble" ]
   sprite:
     sprite: _RedStar/Decals/Marble/marble_decals.rsi
     state: marble_inner_se
 
 - type: decal
   id: MarbleInnerSw
-  tags: ["marble"]
+  tags: [ "marble" ]
   sprite:
     sprite: _RedStar/Decals/Marble/marble_decals.rsi
     state: marble_inner_sw
 
 - type: decal
   id: MarbleLineE
-  tags: ["marble"]
+  tags: [ "marble" ]
   sprite:
     sprite: _RedStar/Decals/Marble/marble_decals.rsi
     state: marble_line_e
 
 - type: decal
   id: MarbleLineS
-  tags: ["marble"]
+  tags: [ "marble" ]
   sprite:
     sprite: _RedStar/Decals/Marble/marble_decals.rsi
     state: marble_line_s
 
 - type: decal
   id: MarbleLineW
-  tags: ["marble"]
+  tags: [ "marble" ]
   sprite:
     sprite: _RedStar/Decals/Marble/marble_decals.rsi
     state: marble_line_w
 
 - type: decal
   id: MarbleLineN
-  tags: ["marble"]
+  tags: [ "marble" ]
   sprite:
     sprite: _RedStar/Decals/Marble/marble_decals.rsi
     state: marble_line_n
 
 - type: decal
   id: MarbleLineNwse
-  tags: ["marble"]
+  tags: [ "marble" ]
   sprite:
     sprite: _RedStar/Decals/Marble/marble_decals.rsi
     state: marble_line_nwse
 
 - type: decal
   id: MarbleLineSwne
-  tags: ["marble"]
+  tags: [ "marble" ]
   sprite:
     sprite: _RedStar/Decals/Marble/marble_decals.rsi
     state: marble_line_swne

@@ -1,6 +1,6 @@
 - type: entity
+  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
   id: GrowingVat
-  parent: [BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible]
   name: growing vat
   description: Cultivates an organism in a controlled nutrient medium.
   components:
@@ -11,31 +11,31 @@
     - state: growing_vat
     - state: vat_reagent1
       visible: false
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
     - state: vat_bubbles
       visible: false
-      map: ["enum.GrowingVatVisuals.BubblesLayer"]
+      map: [ "enum.GrowingVatVisuals.BubblesLayer" ]
     - state: growing_vat_glow
       visible: false
       shader: unshaded
-      map: ["enum.GrowingVatVisuals.GlowLayer"]
+      map: [ "enum.GrowingVatVisuals.GlowLayer" ]
     - state: growing_vat_off
       shader: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
-          True: {state: growing_vat_on}
-          False: {state: growing_vat_off}
+          True: { state: growing_vat_on }
+          False: { state: growing_vat_off }
       enum.GrowingVatVisuals.Processing:
         enum.GrowingVatVisuals.BubblesLayer:
-          True: {visible: true}
-          False: {visible: false}
+          True: { visible: true }
+          False: { visible: false }
         enum.GrowingVatVisuals.GlowLayer:
-          True: {visible: true}
-          False: {visible: false}
+          True: { visible: true }
+          False: { visible: false }
   - type: GrowingVat
     processSound:
       path: /Audio/Ambience/bubbling.ogg
@@ -80,10 +80,9 @@
     fillBaseName: vat_reagent
 
 - type: entity
-  id: SolutionGrowingVat
   parent: SolutionLarge
-  categories: [HideSpawnMenu]
+  id: SolutionGrowingVat
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     id: vat
-

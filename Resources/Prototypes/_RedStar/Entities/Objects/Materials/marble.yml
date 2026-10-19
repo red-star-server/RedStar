@@ -1,9 +1,9 @@
 - type: entity
-  id: MaterialMarble
   parent: MaterialBase
+  id: MaterialMarble
   name: marble
-  description: A slab of polished marble.
   suffix: Full
+  description: A slab of polished marble.
   components:
   - type: Item
     heldPrefix: marble

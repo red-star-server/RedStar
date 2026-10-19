@@ -1,6 +1,6 @@
 - type: entity
-  id: BaseStationGoal
   abstract: true
+  id: BaseStationGoal
   components:
   - type: StationGoal
     goals:

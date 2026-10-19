@@ -1,7 +1,7 @@
 - type: entity
-  name: parquet wood floor
   parent: FloorTileItemBase
   id: FloorTileItemWoodParquet
+  name: parquet wood floor
   components:
   - type: Sprite
     sprite: _RedStar/Objects/Tiles/wood.rsi
@@ -17,9 +17,9 @@
     stackType: FloorTileItemWoodParquet
 
 - type: entity
-  name: black wood floor
   parent: FloorTileItemBase
   id: FloorTileItemWoodBlack
+  name: black wood floor
   components:
   - type: Sprite
     sprite: _RedStar/Objects/Tiles/wood.rsi
@@ -35,9 +35,9 @@
     stackType: FloorTileItemWoodBlack
 
 - type: entity
-  name: dark wood floor
   parent: FloorTileItemBase
   id: FloorTileItemWoodDark
+  name: dark wood floor
   components:
   - type: Sprite
     sprite: _RedStar/Objects/Tiles/wood.rsi
@@ -53,9 +53,9 @@
     stackType: FloorTileItemWoodDark
 
 - type: entity
-  name: light wood floor
   parent: FloorTileItemBase
   id: FloorTileItemWoodLight
+  name: light wood floor
   components:
   - type: Sprite
     sprite: _RedStar/Objects/Tiles/wood.rsi
@@ -71,9 +71,9 @@
     stackType: FloorTileItemWoodLight
 
 - type: entity
-  name: red wood floor
   parent: FloorTileItemBase
   id: FloorTileItemWoodRed
+  name: red wood floor
   components:
   - type: Sprite
     sprite: _RedStar/Objects/Tiles/wood.rsi
@@ -89,9 +89,9 @@
     stackType: FloorTileItemWoodRed
 
 - type: entity
-  name: large black wood floor
   parent: FloorTileItemBase
   id: FloorTileItemWoodLargeBlack
+  name: large black wood floor
   components:
   - type: Sprite
     sprite: _RedStar/Objects/Tiles/wood.rsi
@@ -107,9 +107,9 @@
     stackType: FloorTileItemWoodLargeBlack
 
 - type: entity
-  name: large dark wood floor
   parent: FloorTileItemBase
   id: FloorTileItemWoodLargeDark
+  name: large dark wood floor
   components:
   - type: Sprite
     sprite: _RedStar/Objects/Tiles/wood.rsi
@@ -125,9 +125,9 @@
     stackType: FloorTileItemWoodLargeDark
 
 - type: entity
-  name: large light wood floor
   parent: FloorTileItemBase
   id: FloorTileItemWoodLargeLight
+  name: large light wood floor
   components:
   - type: Sprite
     sprite: _RedStar/Objects/Tiles/wood.rsi
@@ -143,9 +143,9 @@
     stackType: FloorTileItemWoodLargeLight
 
 - type: entity
-  name: large red wood floor
   parent: FloorTileItemBase
   id: FloorTileItemWoodLargeRed
+  name: large red wood floor
   components:
   - type: Sprite
     sprite: _RedStar/Objects/Tiles/wood.rsi
@@ -161,9 +161,9 @@
     stackType: FloorTileItemWoodLargeRed
 
 - type: entity
-  name: black parquet wood floor
   parent: FloorTileItemBase
   id: FloorTileItemWoodParquetBlack
+  name: black parquet wood floor
   components:
   - type: Sprite
     sprite: _RedStar/Objects/Tiles/wood.rsi
@@ -179,9 +179,9 @@
     stackType: FloorTileItemWoodParquetBlack
 
 - type: entity
-  name: dark parquet wood floor
   parent: FloorTileItemBase
   id: FloorTileItemWoodParquetDark
+  name: dark parquet wood floor
   components:
   - type: Sprite
     sprite: _RedStar/Objects/Tiles/wood.rsi
@@ -197,9 +197,9 @@
     stackType: FloorTileItemWoodParquetDark
 
 - type: entity
-  name: light parquet wood floor
   parent: FloorTileItemBase
   id: FloorTileItemWoodParquetLight
+  name: light parquet wood floor
   components:
   - type: Sprite
     sprite: _RedStar/Objects/Tiles/wood.rsi
@@ -215,9 +215,9 @@
     stackType: FloorTileItemWoodParquetLight
 
 - type: entity
-  name: red parquet wood floor
   parent: FloorTileItemBase
   id: FloorTileItemWoodParquetRed
+  name: red parquet wood floor
   components:
   - type: Sprite
     sprite: _RedStar/Objects/Tiles/wood.rsi
@@ -233,9 +233,9 @@
     stackType: FloorTileItemWoodParquetRed
 
 - type: entity
-  name: black chess wood floor
   parent: FloorTileItemBase
   id: FloorTileItemWoodChessBlack
+  name: black chess wood floor
   components:
   - type: Sprite
     sprite: _RedStar/Objects/Tiles/wood.rsi
@@ -251,9 +251,9 @@
     stackType: FloorTileItemWoodChessBlack
 
 - type: entity
-  name: dark chess wood floor
   parent: FloorTileItemBase
   id: FloorTileItemWoodChessDark
+  name: dark chess wood floor
   components:
   - type: Sprite
     sprite: _RedStar/Objects/Tiles/wood.rsi
@@ -269,9 +269,9 @@
     stackType: FloorTileItemWoodChessDark
 
 - type: entity
-  name: light chess wood floor
   parent: FloorTileItemBase
   id: FloorTileItemWoodChessLight
+  name: light chess wood floor
   components:
   - type: Sprite
     sprite: _RedStar/Objects/Tiles/wood.rsi
@@ -287,9 +287,9 @@
     stackType: FloorTileItemWoodChessLight
 
 - type: entity
-  name: red chess wood floor
   parent: FloorTileItemBase
   id: FloorTileItemWoodChessRed
+  name: red chess wood floor
   components:
   - type: Sprite
     sprite: _RedStar/Objects/Tiles/wood.rsi

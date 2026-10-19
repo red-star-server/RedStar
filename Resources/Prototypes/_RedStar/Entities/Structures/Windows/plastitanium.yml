@@ -1,6 +1,6 @@
 ﻿- type: entity
-  id: TitaniumWindow
   parent: PlastitaniumWindow
+  id: TitaniumWindow
   name: titanium window
   components:
   - type: Construction
@@ -33,8 +33,8 @@
             max: 2
 
 - type: entity
-  id: TitaniumWindowDiagonalPlain
   parent: PlastitaniumWindowDiagonal
+  id: TitaniumWindowDiagonalPlain
   name: titanium window
   components:
   - type: Construction

@@ -10,7 +10,7 @@
   - type: Clothing
     sprite: _RedStar/Clothing/Neck/Misc/pins.rsi
     equippedPrefix: comm
- 
+
 - type: entity
   parent: ClothingNeckPinBase
   id: ClothingNeckDonkPin

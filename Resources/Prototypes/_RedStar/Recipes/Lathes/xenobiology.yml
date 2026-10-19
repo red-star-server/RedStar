@@ -21,35 +21,27 @@
 - type: latheRecipe
   parent: BaseToolRecipe
   id: BiopsyTool
+  categories: [ Tools, Research ]
   result: BiopsyTool
-  categories:
-  - Tools
-  - Research
 
 - type: latheRecipe
   parent: HandheldHealthAnalyzer
   id: HandheldGeneticAnalyzer
+  categories: [ Tools, Research ]
   result: HandheldGeneticAnalyzer
-  categories:
-  - Tools
-  - Research
 
 - type: latheRecipe
   id: PetriDish
+  categories: [ Tools, Research ]
   result: PetriDish
-  categories:
-  - Tools
-  - Research
   completetime: 2
   materials:
     Glass: 200
 
 - type: latheRecipe
   id: GeneticVial
+  categories: [ Tools, Research ]
   result: GeneticVial
-  categories:
-  - Tools
-  - Research
   completetime: 2
   materials:
     Glass: 200

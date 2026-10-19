@@ -1,6 +1,6 @@
 - type: entity
-  id: CellSequencerCircuitboard
   parent: BaseMachineCircuitboard
+  id: CellSequencerCircuitboard
   name: cell sequencer machine board
   components:
   - type: MachineBoard
@@ -9,8 +9,8 @@
       Manipulator: 2
 
 - type: entity
-  id: CellularFusionCircuitboard
   parent: BaseMachineCircuitboard
+  id: CellularFusionCircuitboard
   name: cellular fusion machine board
   components:
   - type: MachineBoard
@@ -19,8 +19,8 @@
       Manipulator: 2
 
 - type: entity
-  id: MutagenicCellInjectorCircuitboard
   parent: BaseMachineCircuitboard
+  id: MutagenicCellInjectorCircuitboard
   name: mutagenic cell injector machine board
   components:
   - type: MachineBoard
@@ -29,8 +29,8 @@
       Manipulator: 2
 
 - type: entity
-  id: GrowingVatCircuitboard
   parent: BaseMachineCircuitboard
+  id: GrowingVatCircuitboard
   name: growing vat machine board
   components:
   - type: MachineBoard

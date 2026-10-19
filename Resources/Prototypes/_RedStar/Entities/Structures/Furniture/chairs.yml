@@ -1,10 +1,10 @@
 - type: entity
   abstract: true
-  name: chair
-  id: BaseUpholsteredChair
   parent:
   - ChairBase
   - StructureHealthFurniture
+  id: BaseUpholsteredChair
+  name: chair
   description: It looks comfy.
   components:
   - type: HealOnBuckle
@@ -17,9 +17,9 @@
     rotation: 0
 
 - type: entity
-  name: pizzeria chair
-  id: ChairPizzeria
   parent: BaseUpholsteredChair
+  id: ChairPizzeria
+  name: pizzeria chair
   description: It looks spooky.
   components:
   - type: Sprite
@@ -30,9 +30,9 @@
     node: chairPizzeria
 
 - type: entity
-  name: red chair
-  id: ChairRed
   parent: BaseUpholsteredChair
+  id: ChairRed
+  name: red chair
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Chairs/chairs.rsi
@@ -42,9 +42,9 @@
     node: chairRed
 
 - type: entity
-  name: white chair
-  id: ChairWhite
   parent: BaseUpholsteredChair
+  id: ChairWhite
+  name: white chair
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Chairs/chairs.rsi
@@ -54,9 +54,9 @@
     node: chairWhite
 
 - type: entity
-  name: bar stool
-  id: ChairBarStool
   parent: BaseUpholsteredChair
+  id: ChairBarStool
+  name: bar stool
   description: This is a chair.
   components:
   - type: Sprite
@@ -67,9 +67,9 @@
     node: chairBarStool
 
 - type: entity
-  name: bar stool
-  id: ChairBarStool2
   parent: BaseUpholsteredChair
+  id: ChairBarStool2
+  name: bar stool
   description: This is a chair.
   components:
   - type: Sprite
@@ -80,9 +80,9 @@
     node: chairBarStool2
 
 - type: entity
-  name: comfy black chair
-  id: ChairComfyBlack
   parent: BaseUpholsteredChair
+  id: ChairComfyBlack
+  name: comfy black chair
   description: This is a chair.
   components:
   - type: Sprite
@@ -93,9 +93,9 @@
     node: chairComfyBlack
 
 - type: entity
-  name: comfy maroon chair
-  id: ChairComfyMaroon
   parent: BaseUpholsteredChair
+  id: ChairComfyMaroon
+  name: comfy maroon chair
   description: This is a chair.
   components:
   - type: Sprite
@@ -106,9 +106,9 @@
     node: chairComfyMaroon
 
 - type: entity
-  name: comfy white chair
-  id: ChairComfyWhite
   parent: BaseUpholsteredChair
+  id: ChairComfyWhite
+  name: comfy white chair
   description: This is a chair.
   components:
   - type: Sprite
@@ -119,9 +119,9 @@
     node: chairComfyWhite
 
 - type: entity
-  name: king chair
-  id: ChairKing
   parent: BaseUpholsteredChair
+  id: ChairKing
+  name: king chair
   description: This is a chair.
   components:
   - type: Sprite
@@ -134,9 +134,9 @@
     node: chairKing
 
 - type: entity
-  name: rich chair
-  id: ChairRich
   parent: BaseUpholsteredChair
+  id: ChairRich
+  name: rich chair
   description: This is a chair.
   components:
   - type: Sprite
@@ -149,9 +149,9 @@
     node: chairRich
 
 - type: entity
-  name: rich white chair
-  id: ChairRichWhite
   parent: BaseUpholsteredChair
+  id: ChairRichWhite
+  name: rich white chair
   description: This is a chair.
   components:
   - type: Sprite
@@ -164,9 +164,9 @@
     node: chairRichWhite
 
 - type: entity
-  name: style chair
-  id: ChairStyle
   parent: BaseUpholsteredChair
+  id: ChairStyle
+  name: style chair
   description: This is a chair.
   components:
   - type: Sprite
@@ -177,9 +177,9 @@
     node: chairStyle
 
 - type: entity
-  name: wooden stool
-  id: ChairWoodenStool
   parent: BaseUpholsteredChair
+  id: ChairWoodenStool
+  name: wooden stool
   description: This is a chair.
   components:
   - type: Sprite
@@ -190,9 +190,9 @@
     node: chairWoodenStool
 
 - type: entity
-  name: wooden stool
-  id: ChairWoodenStool2
   parent: BaseUpholsteredChair
+  id: ChairWoodenStool2
+  name: wooden stool
   description: This is a chair.
   components:
   - type: Sprite
@@ -203,9 +203,9 @@
     node: chairWoodenStool2
 
 - type: entity
-  name: white armchair
-  id: ArmchairWhite
   parent: BaseUpholsteredChair
+  id: ArmchairWhite
+  name: white armchair
   description: It looks comfy.
   components:
   - type: Sprite
@@ -216,9 +216,9 @@
     node: armchairWhite
 
 - type: entity
-  name: white armchair
-  id: ArmchairWhite2
   parent: BaseUpholsteredChair
+  id: ArmchairWhite2
+  name: white armchair
   description: It looks comfy.
   components:
   - type: Sprite
@@ -229,9 +229,9 @@
     node: armchairWhite2
 
 - type: entity
-  name: brown armchair
-  id: ArmchairBrown
   parent: BaseUpholsteredChair
+  id: ArmchairBrown
+  name: brown armchair
   description: It looks comfy.
   components:
   - type: Sprite
@@ -242,9 +242,9 @@
     node: armchairBrown
 
 - type: entity
-  name: brown armchair
-  id: ArmchairBrown2
   parent: BaseUpholsteredChair
+  id: ArmchairBrown2
+  name: brown armchair
   description: It looks comfy.
   components:
   - type: Sprite
@@ -255,9 +255,9 @@
     node: armchairBrown2
 
 - type: entity
-  name: blue armchair
-  id: ArmchairBlue
   parent: BaseUpholsteredChair
+  id: ArmchairBlue
+  name: blue armchair
   description: It looks comfy.
   components:
   - type: Sprite
@@ -268,9 +268,9 @@
     node: armchairBlue
 
 - type: entity
-  name: blue armchair
-  id: ArmchairBlue2
   parent: BaseUpholsteredChair
+  id: ArmchairBlue2
+  name: blue armchair
   description: It looks comfy.
   components:
   - type: Sprite
@@ -281,9 +281,9 @@
     node: armchairBlue2
 
 - type: entity
-  name: carp chair
-  id: ChairCarp
   parent: ChairBase
+  id: ChairCarp
+  name: carp chair
   description: A luxurious chair, the many purple scales reflect the light in a most pleasing manner.
   components:
   - type: Sprite

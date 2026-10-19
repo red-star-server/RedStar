@@ -1,9 +1,9 @@
 ﻿- type: pairedEmote
   id: HighFive
+  name: paired-emote-high-five-name
   approachOffset: 0.08
   icon: _RedStar/Interface/Emotes/highfive.png
   alert: PairedHighFiveOffer
-  name: paired-emote-high-five-name
   initiatorAnimation: PairedHighFiveInitiator
   targetAnimation: PairedHighFiveTarget
   range: 1.5
@@ -18,10 +18,10 @@
 
 - type: pairedEmote
   id: FistBump
+  name: paired-emote-fist-bump-name
   approachOffset: 0.05
   icon: _RedStar/Interface/Emotes/fistbump.png
   alert: PairedFistBumpOffer
-  name: paired-emote-fist-bump-name
   initiatorAnimation: PairedFistBumpInitiator
   targetAnimation: PairedFistBumpTarget
   range: 1.5
@@ -36,10 +36,10 @@
 
 - type: pairedEmote
   id: Handshake
+  name: paired-emote-handshake-name
   approachOffset: 0.1
   icon: _RedStar/Interface/Emotes/handshake.png
   alert: PairedHandshakeOffer
-  name: paired-emote-handshake-name
   initiatorAnimation: PairedHandshakeInitiator
   targetAnimation: PairedHandshakeTarget
   range: 1.5
@@ -54,8 +54,8 @@
 
 - type: pairedEmote
   id: Hug
-  approachOffset: 0.24
   name: paired-emote-hug-name
+  approachOffset: 0.24
   icon: _RedStar/Interface/Emotes/hug.png
   alert: PairedHugOffer
   initiatorAnimation: PairedHugInitiator

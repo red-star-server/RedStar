@@ -1,367 +1,367 @@
 - type: construction
   parent: BaseChair
-  name: construction-name-black-sofa-left-side
   id: SofaCutBlackLeftSideRecipe
+  name: construction-name-black-sofa-left-side
+  description: construction-desc-cut-black-sofa-left-side
   graph: UpholsteredSeatGraph
   targetNode: sofaCutBlackLeftSide
-  description: construction-desc-cut-black-sofa-left-side
 
 - type: construction
   parent: BaseChair
-  name: construction-name-black-sofa-middle
   id: SofaCutBlackMiddleRecipe
+  name: construction-name-black-sofa-middle
+  description: construction-desc-cut-black-sofa-middle
   graph: UpholsteredSeatGraph
   targetNode: sofaCutBlackMiddle
-  description: construction-desc-cut-black-sofa-middle
 
 - type: construction
   parent: BaseChair
-  name: construction-name-black-sofa-right-side
   id: SofaCutBlackRightSideRecipe
+  name: construction-name-black-sofa-right-side
+  description: construction-desc-cut-black-sofa-right-side
   graph: UpholsteredSeatGraph
   targetNode: sofaCutBlackRightSide
-  description: construction-desc-cut-black-sofa-right-side
 
 - type: construction
   parent: BaseChair
-  name: construction-name-black-sofa-left-corner
   id: SofaCutBlackLeftCornerRecipe
+  name: construction-name-black-sofa-left-corner
+  description: construction-desc-cut-black-sofa-left-corner
   graph: UpholsteredSeatGraph
   targetNode: sofaCutBlackLeftCorner
-  description: construction-desc-cut-black-sofa-left-corner
 
 - type: construction
   parent: BaseChair
-  name: construction-name-black-sofa-right-corner
   id: SofaCutBlackRightCornerRecipe
+  name: construction-name-black-sofa-right-corner
+  description: construction-desc-cut-black-sofa-right-corner
   graph: UpholsteredSeatGraph
   targetNode: sofaCutBlackRightCorner
-  description: construction-desc-cut-black-sofa-right-corner
 
 - type: construction
   parent: BaseChair
-  name: construction-name-comfy-sofa-left-side
   id: SofaCutComfyLeftSideRecipe
+  name: construction-name-comfy-sofa-left-side
+  description: construction-desc-cut-comfy-sofa-left-side
   graph: UpholsteredSeatGraph
   targetNode: sofaCutComfyLeftSide
-  description: construction-desc-cut-comfy-sofa-left-side
 
 - type: construction
   parent: BaseChair
-  name: construction-name-comfy-sofa-middle
   id: SofaCutComfyMiddleRecipe
+  name: construction-name-comfy-sofa-middle
+  description: construction-desc-cut-comfy-sofa-middle
   graph: UpholsteredSeatGraph
   targetNode: sofaCutComfyMiddle
-  description: construction-desc-cut-comfy-sofa-middle
 
 - type: construction
   parent: BaseChair
-  name: construction-name-comfy-sofa-right-side
   id: SofaCutComfyRightSideRecipe
+  name: construction-name-comfy-sofa-right-side
+  description: construction-desc-cut-comfy-sofa-right-side
   graph: UpholsteredSeatGraph
   targetNode: sofaCutComfyRightSide
-  description: construction-desc-cut-comfy-sofa-right-side
 
 - type: construction
   parent: BaseChair
-  name: construction-name-comfy-sofa-left-corner
   id: SofaCutComfyLeftCornerRecipe
+  name: construction-name-comfy-sofa-left-corner
+  description: construction-desc-cut-comfy-sofa-left-corner
   graph: UpholsteredSeatGraph
   targetNode: sofaCutComfyLeftCorner
-  description: construction-desc-cut-comfy-sofa-left-corner
 
 - type: construction
   parent: BaseChair
-  name: construction-name-comfy-sofa-right-corner
   id: SofaCutComfyRightCornerRecipe
+  name: construction-name-comfy-sofa-right-corner
+  description: construction-desc-cut-comfy-sofa-right-corner
   graph: UpholsteredSeatGraph
   targetNode: sofaCutComfyRightCorner
-  description: construction-desc-cut-comfy-sofa-right-corner
 
 - type: construction
   parent: BaseChair
-  name: construction-name-dainer-sofa-left-side
   id: SofaCutDainerLeftSideRecipe
+  name: construction-name-dainer-sofa-left-side
+  description: construction-desc-cut-dainer-sofa-left-side
   graph: UpholsteredSeatGraph
   targetNode: sofaCutDainerLeftSide
-  description: construction-desc-cut-dainer-sofa-left-side
 
 - type: construction
   parent: BaseChair
-  name: construction-name-dainer-sofa-middle
   id: SofaCutDainerMiddleRecipe
+  name: construction-name-dainer-sofa-middle
+  description: construction-desc-cut-dainer-sofa-middle
   graph: UpholsteredSeatGraph
   targetNode: sofaCutDainerMiddle
-  description: construction-desc-cut-dainer-sofa-middle
 
 - type: construction
   parent: BaseChair
-  name: construction-name-dainer-sofa-right-side
   id: SofaCutDainerRightSideRecipe
+  name: construction-name-dainer-sofa-right-side
+  description: construction-desc-cut-dainer-sofa-right-side
   graph: UpholsteredSeatGraph
   targetNode: sofaCutDainerRightSide
-  description: construction-desc-cut-dainer-sofa-right-side
 
 - type: construction
   parent: BaseChair
-  name: construction-name-dainer-sofa-left-corner
   id: SofaCutDainerLeftCornerRecipe
+  name: construction-name-dainer-sofa-left-corner
+  description: construction-desc-cut-dainer-sofa-left-corner
   graph: UpholsteredSeatGraph
   targetNode: sofaCutDainerLeftCorner
-  description: construction-desc-cut-dainer-sofa-left-corner
 
 - type: construction
   parent: BaseChair
-  name: construction-name-dainer-sofa-right-corner
   id: SofaCutDainerRightCornerRecipe
+  name: construction-name-dainer-sofa-right-corner
+  description: construction-desc-cut-dainer-sofa-right-corner
   graph: UpholsteredSeatGraph
   targetNode: sofaCutDainerRightCorner
-  description: construction-desc-cut-dainer-sofa-right-corner
 
 - type: construction
   parent: BaseChair
-  name: construction-name-white-sofa-left-side
   id: SofaWhiteLeftSideRecipe
+  name: construction-name-white-sofa-left-side
+  description: construction-desc-white-sofa-left-side
   graph: UpholsteredSeatGraph
   targetNode: sofaWhiteLeftSide
-  description: construction-desc-white-sofa-left-side
 
 - type: construction
   parent: BaseChair
-  name: construction-name-white-sofa-right-side
   id: SofaWhiteRightSideRecipe
+  name: construction-name-white-sofa-right-side
+  description: construction-desc-white-sofa-right-side
   graph: UpholsteredSeatGraph
   targetNode: sofaWhiteRightSide
-  description: construction-desc-white-sofa-right-side
 
 - type: construction
   parent: BaseChair
-  name: construction-name-white-sofa-left-side-2
   id: SofaWhiteLeftSideRecipe2
+  name: construction-name-white-sofa-left-side-2
+  description: construction-desc-white-sofa-left-side-2
   graph: UpholsteredSeatGraph
   targetNode: sofaWhiteLeftSide2
-  description: construction-desc-white-sofa-left-side-2
 
 - type: construction
   parent: BaseChair
-  name: construction-name-white-sofa-right-side-2
   id: SofaWhiteRightSideRecipe2
+  name: construction-name-white-sofa-right-side-2
+  description: construction-desc-white-sofa-right-side-2
   graph: UpholsteredSeatGraph
   targetNode: sofaWhiteRightSide2
-  description: construction-desc-white-sofa-right-side-2
 
 - type: construction
   parent: BaseChair
-  name: construction-name-white-sofa-middle
   id: SofaWhiteMiddleRecipe
+  name: construction-name-white-sofa-middle
+  description: construction-desc-white-sofa-middle
   graph: UpholsteredSeatGraph
   targetNode: sofaWhiteMiddle
-  description: construction-desc-white-sofa-middle
 
 - type: construction
   parent: BaseChair
-  name: construction-name-white-sofa-left-corner
   id: SofaWhiteLeftCornerRecipe
+  name: construction-name-white-sofa-left-corner
+  description: construction-desc-white-sofa-left-corner
   graph: UpholsteredSeatGraph
   targetNode: sofaWhiteLeftCorner
-  description: construction-desc-white-sofa-left-corner
 
 - type: construction
   parent: BaseChair
-  name: construction-name-white-sofa-right-corner
   id: SofaWhiteRightCornerRecipe
+  name: construction-name-white-sofa-right-corner
+  description: construction-desc-white-sofa-right-corner
   graph: UpholsteredSeatGraph
   targetNode: sofaWhiteRightCorner
-  description: construction-desc-white-sofa-right-corner
 
 - type: construction
   parent: BaseChair
-  name: construction-name-blue-sofa-left-side
   id: SofaBlueLeftSideRecipe
+  name: construction-name-blue-sofa-left-side
+  description: construction-desc-blue-sofa-left-side
   graph: UpholsteredSeatGraph
   targetNode: sofaBlueLeftSide
-  description: construction-desc-blue-sofa-left-side
 
 - type: construction
   parent: BaseChair
-  name: construction-name-blue-sofa-right-side
   id: SofaBlueRightSideRecipe
+  name: construction-name-blue-sofa-right-side
+  description: construction-desc-blue-sofa-right-side
   graph: UpholsteredSeatGraph
   targetNode: sofaBlueRightSide
-  description: construction-desc-blue-sofa-right-side
 
 - type: construction
   parent: BaseChair
-  name: construction-name-blue-sofa-left-side-2
   id: SofaBlueLeftSideRecipe2
+  name: construction-name-blue-sofa-left-side-2
+  description: construction-desc-blue-sofa-left-side-2
   graph: UpholsteredSeatGraph
   targetNode: sofaBlueLeftSide2
-  description: construction-desc-blue-sofa-left-side-2
 
 - type: construction
   parent: BaseChair
-  name: construction-name-blue-sofa-right-side-2
   id: SofaBlueRightSideRecipe2
+  name: construction-name-blue-sofa-right-side-2
+  description: construction-desc-blue-sofa-right-side-2
   graph: UpholsteredSeatGraph
   targetNode: sofaBlueRightSide2
-  description: construction-desc-blue-sofa-right-side-2
 
 - type: construction
   parent: BaseChair
-  name: construction-name-blue-sofa-middle
   id: SofaBlueMiddleRecipe
+  name: construction-name-blue-sofa-middle
+  description: construction-desc-blue-sofa-middle
   graph: UpholsteredSeatGraph
   targetNode: sofaBlueMiddle
-  description: construction-desc-blue-sofa-middle
 
 - type: construction
   parent: BaseChair
-  name: construction-name-blue-sofa-left-corner
   id: SofaBlueLeftCornerRecipe
+  name: construction-name-blue-sofa-left-corner
+  description: construction-desc-blue-sofa-left-corner
   graph: UpholsteredSeatGraph
   targetNode: sofaBlueLeftCorner
-  description: construction-desc-blue-sofa-left-corner
 
 - type: construction
   parent: BaseChair
-  name: construction-name-blue-sofa-right-corner
   id: SofaBlueRightCornerRecipe
+  name: construction-name-blue-sofa-right-corner
+  description: construction-desc-blue-sofa-right-corner
   graph: UpholsteredSeatGraph
   targetNode: sofaBlueRightCorner
-  description: construction-desc-blue-sofa-right-corner
 
 - type: construction
   parent: BaseChair
-  name: construction-name-brown-sofa-left-side
   id: SofabrownLeftSideRecipe
+  name: construction-name-brown-sofa-left-side
+  description: construction-desc-brown-sofa-left-side
   graph: UpholsteredSeatGraph
   targetNode: sofaBrownLeftSide
-  description: construction-desc-brown-sofa-left-side
 
 - type: construction
   parent: BaseChair
-  name: construction-name-brown-sofa-right-side
   id: SofabrownRightSideRecipe
+  name: construction-name-brown-sofa-right-side
+  description: construction-desc-brown-sofa-right-side
   graph: UpholsteredSeatGraph
   targetNode: sofaBrownRightSide
-  description: construction-desc-brown-sofa-right-side
 
 - type: construction
   parent: BaseChair
-  name: construction-name-brown-sofa-left-side-2
   id: SofabrownLeftSideRecipe2
+  name: construction-name-brown-sofa-left-side-2
+  description: construction-desc-brown-sofa-left-side-2
   graph: UpholsteredSeatGraph
   targetNode: sofaBrownLeftSide2
-  description: construction-desc-brown-sofa-left-side-2
 
 - type: construction
   parent: BaseChair
-  name: construction-name-brown-sofa-right-side-2
   id: SofabrownRightSideRecipe2
+  name: construction-name-brown-sofa-right-side-2
+  description: construction-desc-brown-sofa-right-side-2
   graph: UpholsteredSeatGraph
   targetNode: sofaBrownRightSide2
-  description: construction-desc-brown-sofa-right-side-2
 
 - type: construction
   parent: BaseChair
-  name: construction-name-brown-sofa-middle
   id: SofabrownMiddleRecipe
+  name: construction-name-brown-sofa-middle
+  description: construction-desc-brown-sofa-middle
   graph: UpholsteredSeatGraph
   targetNode: sofaBrownMiddle
-  description: construction-desc-brown-sofa-middle
 
 - type: construction
   parent: BaseChair
-  name: construction-name-brown-sofa-left-corner
   id: SofabrownLeftCornerRecipe
+  name: construction-name-brown-sofa-left-corner
+  description: construction-desc-brown-sofa-left-corner
   graph: UpholsteredSeatGraph
   targetNode: sofaBrownLeftCorner
-  description: construction-desc-brown-sofa-left-corner
 
 - type: construction
   parent: BaseChair
-  name: construction-name-brown-sofa-right-corner
   id: SofabrownRightCornerRecipe
+  name: construction-name-brown-sofa-right-corner
+  description: construction-desc-brown-sofa-right-corner
   graph: UpholsteredSeatGraph
   targetNode: sofaBrownRightCorner
-  description: construction-desc-brown-sofa-right-corner
 
 - type: construction
   parent: BaseChair
-  name: construction-name-black-office-sofa-left-side
   id: SofaOfficeBlackLeftSideRecipe
+  name: construction-name-black-office-sofa-left-side
+  description: construction-desc-black-office-sofa-left-side
   graph: UpholsteredSeatGraph
   targetNode: sofaOfficeBlackLeftSide
-  description: construction-desc-black-office-sofa-left-side
 
 - type: construction
   parent: BaseChair
-  name: construction-name-black-office-sofa-right-side
   id: SofaOfficeBlackRightSideRecipe
+  name: construction-name-black-office-sofa-right-side
+  description: construction-desc-black-office-sofa-right-side
   graph: UpholsteredSeatGraph
   targetNode: sofaOfficeBlackRightSide
-  description: construction-desc-black-office-sofa-right-side
 
 - type: construction
   parent: BaseChair
-  name: construction-name-black-office-sofa-middle
   id: SofaOfficeBlackMiddleRecipe
+  name: construction-name-black-office-sofa-middle
+  description: construction-desc-black-office-sofa-middle
   graph: UpholsteredSeatGraph
   targetNode: sofaOfficeBlackMiddle
-  description: construction-desc-black-office-sofa-middle
 
 - type: construction
   parent: BaseChair
-  name: construction-name-black-office-sofa-left-corner
   id: SofaOfficeBlackLeftCornerRecipe
+  name: construction-name-black-office-sofa-left-corner
+  description: construction-desc-black-office-sofa-left-corner
   graph: UpholsteredSeatGraph
   targetNode: sofaOfficeBlackLeftCorner
-  description: construction-desc-black-office-sofa-left-corner
 
 - type: construction
   parent: BaseChair
-  name: construction-name-black-office-sofa-right-corner
   id: SofaOfficeBlackRightCornerRecipe
+  name: construction-name-black-office-sofa-right-corner
+  description: construction-desc-black-office-sofa-right-corner
   graph: UpholsteredSeatGraph
   targetNode: sofaOfficeBlackRightCorner
-  description: construction-desc-black-office-sofa-right-corner
 
 - type: construction
   parent: BaseChair
-  name: construction-name-white-office-sofa-left-side
   id: SofaOfficeWhiteLeftSideRecipe
+  name: construction-name-white-office-sofa-left-side
+  description: construction-desc-white-office-sofa-left-side
   graph: UpholsteredSeatGraph
   targetNode: sofaOfficeWhiteLeftSide
-  description: construction-desc-white-office-sofa-left-side
 
 - type: construction
   parent: BaseChair
-  name: construction-name-white-office-sofa-right-side
   id: SofaOfficeWhiteRightSideRecipe
+  name: construction-name-white-office-sofa-right-side
+  description: construction-desc-white-office-sofa-right-side
   graph: UpholsteredSeatGraph
   targetNode: sofaOfficeWhiteRightSide
-  description: construction-desc-white-office-sofa-right-side
 
 - type: construction
   parent: BaseChair
-  name: construction-name-white-office-sofa-middle
   id: SofaOfficeWhiteMiddleRecipe
+  name: construction-name-white-office-sofa-middle
+  description: construction-desc-white-office-sofa-middle
   graph: UpholsteredSeatGraph
   targetNode: sofaOfficeWhiteMiddle
-  description: construction-desc-white-office-sofa-middle
 
 - type: construction
   parent: BaseChair
-  name: construction-name-white-office-sofa-left-corner
   id: SofaOfficeWhiteLeftCornerRecipe
+  name: construction-name-white-office-sofa-left-corner
+  description: construction-desc-white-office-sofa-left-corner
   graph: UpholsteredSeatGraph
   targetNode: sofaOfficeWhiteLeftCorner
-  description: construction-desc-white-office-sofa-left-corner
 
 - type: construction
   parent: BaseChair
-  name: construction-name-white-office-sofa-right-corner
   id: SofaOfficeWhiteRightCornerRecipe
+  name: construction-name-white-office-sofa-right-corner
+  description: construction-desc-white-office-sofa-right-corner
   graph: UpholsteredSeatGraph
   targetNode: sofaOfficeWhiteRightCorner
-  description: construction-desc-white-office-sofa-right-corner

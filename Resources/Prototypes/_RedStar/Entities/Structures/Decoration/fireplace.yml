@@ -1,7 +1,7 @@
 - type: entity
-  id: FireplaceBase
   abstract: true
-  parent: [BaseStructure, StructureHealthFurnitureStrong]
+  parent: [ BaseStructure, StructureHealthFurnitureStrong ]
+  id: FireplaceBase
   components:
   - type: Appearance
   - type: AmbientSound
@@ -26,8 +26,8 @@
   - type: AlwaysHot
 
 - type: entity
-  id: FireplaceWhite
   parent: FireplaceBase
+  id: FireplaceWhite
   name: white fireplace
   description: An elegant white fireplace that fills the room with warmth.
   components:
@@ -44,8 +44,8 @@
     node: fireplaceWhite
 
 - type: entity
-  id: FireplaceWooden
   parent: FireplaceBase
+  id: FireplaceWooden
   name: wooden fireplace
   description: An elegant wooden fireplace that fills the room with warmth.
   components:

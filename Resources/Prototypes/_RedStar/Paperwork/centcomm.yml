@@ -1,15 +1,15 @@
 # NanoTrasen
 - type: paperwork
   id: NTCentcomm0
-  category: NTCentcomm
   name: paperwork-form-title-centcomm-0
+  category: NTCentcomm
   template: "/Paperwork/default.xml"
   paperPrototype: PaperPrintedNTCentcomm
 
 # USSP
 - type: paperwork
   id: USSPCentcomm0
-  category: USSPCentcomm
   name: paperwork-form-title-centcomm-0
+  category: USSPCentcomm
   template: "/Paperwork/default.xml"
   paperPrototype: PaperPrintedUSSPCentcomm

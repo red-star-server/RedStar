@@ -1,10 +1,10 @@
 # Chapel (Shrine) Pew
 
 - type: entity
-  name: Pew Base
-  id: PewBase
   abstract: true
   parent: [ ChairBase, StructureHealthFurniture ]
+  id: PewBase
+  name: Pew Base
   components:
   - type: Damageable
     damageModifierSet: WoodMod
@@ -28,10 +28,10 @@
     price: 250
 
 - type: entity
+  parent: PewBase
+  id: PewEndLeft
   name: Wood Pew
   suffix: End Left
-  id: PewEndLeft
-  parent: PewBase
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Benches/pew_end_left.rsi
@@ -41,10 +41,10 @@
     node: pewLeft
 
 - type: entity
+  parent: PewBase
+  id: PewEndRight
   name: Wood Pew
   suffix: End Right
-  id: PewEndRight
-  parent: PewBase
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Benches/pew_end_right.rsi
@@ -54,10 +54,10 @@
     node: pewRight
 
 - type: entity
+  parent: PewBase
+  id: PewMiddle
   name: Wood Pew
   suffix: Middle
-  id: PewMiddle
-  parent: PewBase
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Benches/pew_middle.rsi
@@ -68,17 +68,17 @@
 
 #region Bench White
 - type: entity
-  id: BenchWhiteComfy
   parent: BenchComfy
+  id: BenchWhiteComfy
   components:
   - type: Construction
     graph: BenchSL
     node: whiteComfBench
 
 - type: entity
-  suffix: Corner. White
-  id: BenchComfyCorner
   parent: BenchComfy
+  id: BenchComfyCorner
+  suffix: Corner. White
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Benches/bench_corner.rsi
@@ -91,9 +91,9 @@
     node: whiteComfBenchCorner
 
 - type: entity
-  suffix: End Left. White
-  id: BenchComfyEndLeft
   parent: BenchComfy
+  id: BenchComfyEndLeft
+  suffix: End Left. White
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Benches/bench_end_left.rsi
@@ -106,9 +106,9 @@
     node: whiteComfBenchLeft
 
 - type: entity
-  suffix: End Right. White
-  id: BenchComfyEndRight
   parent: BenchComfy
+  id: BenchComfyEndRight
+  suffix: End Right. White
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Benches/bench_end_right.rsi
@@ -121,9 +121,9 @@
     node: whiteComfBenchRight
 
 - type: entity
-  suffix: Middle. White
-  id: BenchComfyMiddle
   parent: BenchComfy
+  id: BenchComfyMiddle
+  suffix: Middle. White
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Benches/bench_middle.rsi
@@ -137,9 +137,9 @@
 
 #region Bench Red
 - type: entity
+  parent: BenchComfy
   id: BenchRedComfyCorner
   suffix: Corner. Red
-  parent: BenchComfy
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Benches/bench_corner.rsi
@@ -153,9 +153,9 @@
     node: redComfBenchCorner
 
 - type: entity
+  parent: BenchComfy
   id: BenchRedComfyEndLeft
   suffix: End Left. Red
-  parent: BenchComfy
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Benches/bench_end_left.rsi
@@ -169,9 +169,9 @@
     node: redComfBenchLeft
 
 - type: entity
+  parent: BenchComfy
   id: BenchRedComfyEndRight
   suffix: End Right. Red
-  parent: BenchComfy
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Benches/bench_end_right.rsi
@@ -185,9 +185,9 @@
     node: redComfBenchRight
 
 - type: entity
+  parent: BenchComfy
   id: BenchRedComfyMiddle
   suffix: Middle. Red
-  parent: BenchComfy
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Benches/bench_middle.rsi
@@ -202,9 +202,9 @@
 
 #region Bench Blue
 - type: entity
+  parent: BenchComfy
   id: BenchBlueComfyCorner
   suffix: Corner. Blue
-  parent: BenchComfy
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Benches/bench_corner.rsi
@@ -218,9 +218,9 @@
     node: blueComfBenchCorner
 
 - type: entity
+  parent: BenchComfy
   id: BenchBlueComfyEndLeft
   suffix: End Left. Blue
-  parent: BenchComfy
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Benches/bench_end_left.rsi
@@ -234,9 +234,9 @@
     node: blueComfBenchLeft
 
 - type: entity
+  parent: BenchComfy
   id: BenchBlueComfyEndRight
   suffix: End Right. Blue
-  parent: BenchComfy
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Benches/bench_end_right.rsi
@@ -250,9 +250,9 @@
     node: blueComfBenchRight
 
 - type: entity
+  parent: BenchComfy
   id: BenchBlueComfyMiddle
   suffix: Middle. Blue
-  parent: BenchComfy
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Benches/bench_middle.rsi
@@ -267,9 +267,9 @@
 
 #region Bench Gray
 - type: entity
+  parent: BenchComfy
   id: BenchGrayComfy
   suffix: Solo. Gray
-  parent: BenchComfy
   components:
   - type: Sprite
     layers:
@@ -282,9 +282,9 @@
     node: grayComfBench
 
 - type: entity
+  parent: BenchComfy
   id: BenchGrayComfyCorner
   suffix: Corner. Gray
-  parent: BenchComfy
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Benches/bench_corner.rsi
@@ -298,9 +298,9 @@
     node: grayComfBenchCorner
 
 - type: entity
+  parent: BenchComfy
   id: BenchGrayComfyEndLeft
   suffix: End Left. Gray
-  parent: BenchComfy
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Benches/bench_end_left.rsi
@@ -314,9 +314,9 @@
     node: grayComfBenchLeft
 
 - type: entity
+  parent: BenchComfy
   id: BenchGrayComfyEndRight
   suffix: End Right. Gray
-  parent: BenchComfy
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Benches/bench_end_right.rsi
@@ -330,9 +330,9 @@
     node: grayComfBenchRight
 
 - type: entity
+  parent: BenchComfy
   id: BenchGrayComfyMiddle
   suffix: Middle. Gray
-  parent: BenchComfy
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Benches/bench_middle.rsi
@@ -347,9 +347,9 @@
 
 #region Bench Green
 - type: entity
+  parent: BenchComfy
   id: BenchGreenComfy
   suffix: Solo. Green
-  parent: BenchComfy
   components:
   - type: Sprite
     layers:
@@ -362,9 +362,9 @@
     node: greenComfBench
 
 - type: entity
+  parent: BenchComfy
   id: BenchGreenComfyCorner
   suffix: Corner. Green
-  parent: BenchComfy
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Benches/bench_corner.rsi
@@ -378,9 +378,9 @@
     node: greenComfBenchCorner
 
 - type: entity
+  parent: BenchComfy
   id: BenchGreenComfyEndLeft
   suffix: End Left. Green
-  parent: BenchComfy
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Benches/bench_end_left.rsi
@@ -394,9 +394,9 @@
     node: greenComfBenchLeft
 
 - type: entity
+  parent: BenchComfy
   id: BenchGreenComfyEndRight
   suffix: End Right. Green
-  parent: BenchComfy
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Benches/bench_end_right.rsi
@@ -410,9 +410,9 @@
     node: greenComfBenchRight
 
 - type: entity
+  parent: BenchComfy
   id: BenchGreenComfyMiddle
   suffix: Middle. Green
-  parent: BenchComfy
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/Benches/bench_middle.rsi

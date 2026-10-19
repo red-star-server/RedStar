@@ -1,9 +1,9 @@
 - type: entity
   abstract: true
-  id: BaseRoundTable
   parent:
   - BaseStructure
   - StructureHealthFurniture
+  id: BaseRoundTable
   components:
   - type: Animateable
   - type: PlaceableSurface
@@ -36,8 +36,8 @@
     - ForceFixRotations
 
 - type: entity
-  id: TableRoundPlastic
   parent: BaseRoundTable
+  id: TableRoundPlastic
   name: plastic round table
   description: Do not apply fire to this. Rumour says it burns easily.
   components:
@@ -67,8 +67,8 @@
     node: tableRoundPlastic
 
 - type: entity
-  id: TableRoundWood
   parent: TableRoundPlastic
+  id: TableRoundWood
   name: wood round table
   description: Do not apply fire to this. Rumour says it burns easily.
   components:
@@ -93,8 +93,8 @@
     node: tableRoundWood
 
 - type: entity
-  id: TableRoundGlass
   parent: TableRoundPlastic
+  id: TableRoundGlass
   name: glass round table
   description: Do not apply fire to this. Rumour says it burns easily.
   components:
@@ -125,8 +125,8 @@
     node: tableRoundGlass
 
 - type: entity
-  id: TableRoundFrame
   parent: BaseRoundTable
+  id: TableRoundFrame
   name: round table frame
   description: Pieces of metal that make the frame of a round table.
   components:
@@ -156,8 +156,8 @@
     node: tableRoundFrame
 
 - type: entity
-  id: TableRoundGeneric
   parent: TableRoundPlastic
+  id: TableRoundGeneric
   name: round table
   description: A round piece of metal standing on a metal leg.
   components:
@@ -169,8 +169,8 @@
     node: tableRoundGeneric
 
 - type: entity
-  id: TableRoundCarpet
   parent: TableRoundPlastic
+  id: TableRoundCarpet
   name: gambling round table
   description: Play em' cowboy.
   components:
@@ -218,8 +218,8 @@
     node: tableRoundCarpet
 
 - type: entity
-  id: TableRoundPlasma
   parent: TableRoundPlastic
+  id: TableRoundPlasma
   name: plasma round table
   description: A round piece of plasma glass, standing on a metal leg. Pretty!
   components:
@@ -259,10 +259,10 @@
     node: tableRoundPlasma
 
 - type: entity
-  id: TablePlastic
   parent:
   - TableBase
   - StructureHealthFurniture
+  id: TablePlastic
   name: plastic table
   description: A square piece of plastic, standing on four metal legs.
   components:
@@ -306,10 +306,10 @@
       collection: FootstepTile
 
 - type: entity
-  id: TableUraniumGlass
   parent:
   - TableBase
   - StructureHealthFurniture
+  id: TableUraniumGlass
   name: uranium glass table
   description: A square piece of uranium glass, standing on four metal legs. Radioactive!
   components:
@@ -366,10 +366,10 @@
       collection: FootstepTile
 
 - type: entity
-  id: TableReinforcedPlasmaGlass
   parent:
   - TableBase
   - StructureHealthFurniture
+  id: TableReinforcedPlasmaGlass
   name: reinforced plasma glass table
   description: A square piece of reinforced plasma glass, standing on four metal legs. Extra robust and pretty!
   components:
@@ -429,10 +429,10 @@
       collection: FootstepTile
 
 - type: entity
-  id: TableReinforcedUraniumGlass
   parent:
   - TableBase
   - StructureHealthFurniture
+  id: TableReinforcedUraniumGlass
   name: reinforced uranium glass table
   description: A square piece of reinforced uranium glass, standing on four metal legs. Extra robust and radioactive!
   components:
@@ -492,8 +492,8 @@
       collection: FootstepTile
 
 - type: entity
-  id: TableCounterRetroSteel
   parent: [ CounterBase, StructureHealthFurniture ]
+  id: TableCounterRetroSteel
   name: retro steel counter
   description: Looks like a good place to put a drink down.
   components:
@@ -529,8 +529,8 @@
     node: CounterRetroSteel
 
 - type: entity
-  id: TableCounterRetroWood
   parent: [ CounterBase, StructureHealthFurniture ]
+  id: TableCounterRetroWood
   name: retro wood counter
   description: Looks like a good place to put a drink down.
   components:
@@ -569,8 +569,8 @@
     node: CounterRetroWood
 
 - type: entity
-  id: TableCounterRetroKitchen
   parent: TableCounterRetroSteel
+  id: TableCounterRetroKitchen
   name: retro kitchen counter
   components:
   - type: Sprite
@@ -588,8 +588,8 @@
     node: CounterRetroKitchen
 
 - type: entity
-  id: TableCounterRetroSteelWood
   parent: TableCounterRetroSteel
+  id: TableCounterRetroSteelWood
   name: retro steel and wood counter
   components:
   - type: Sprite
@@ -607,8 +607,8 @@
     node: CounterRetroSteelWood
 
 - type: entity
-  id: TableCounterRetroWhiteOrange
   parent: TableCounterRetroSteel
+  id: TableCounterRetroWhiteOrange
   name: retro white and orange counter
   components:
   - type: Sprite
@@ -626,8 +626,8 @@
     node: CounterRetroWhiteOrange
 
 - type: entity
-  id: TableCounterRetroWhiteTeal
   parent: TableCounterRetroSteel
+  id: TableCounterRetroWhiteTeal
   name: retro white and teal counter
   components:
   - type: Sprite
@@ -645,8 +645,8 @@
     node: CounterRetroWhiteTeal
 
 - type: entity
-  id: TableCounterRetroDiner
   parent: TableCounterRetroSteel
+  id: TableCounterRetroDiner
   name: retro diner counter
   components:
   - type: Sprite

@@ -1,103 +1,103 @@
 - type: parallax
   id: Water
   layers:
-    - texture:
+  - texture:
         !type:ImageParallaxTextureSource
-        path: "/Textures/_RedStar/Parallaxes/shoreline_water.png"
-      slowness: 0.5
-      scrolling: "0.1, 0"
-      tiled: true
-      shader: ""
-    - texture:
+      path: "/Textures/_RedStar/Parallaxes/shoreline_water.png"
+    slowness: 0.5
+    scrolling: "0.1, 0"
+    tiled: true
+    shader: ""
+  - texture:
         !type:ImageParallaxTextureSource
-        path: "/Textures/_RedStar/Parallaxes/shoreline_water.png"
-      slowness: 0
-      scrolling: "-0.1, 0"
-      tiled: true
-      shader: ""
+      path: "/Textures/_RedStar/Parallaxes/shoreline_water.png"
+    slowness: 0
+    scrolling: "-0.1, 0"
+    tiled: true
+    shader: ""
   layersLQ:
-    - texture:
+  - texture:
         !type:ImageParallaxTextureSource
-        path: "/Textures/_RedStar/Parallaxes/shoreline_water.png"
-      slowness: 0
-      scrolling: "-0.1, 0"
-      tiled: true
-      shader: ""
+      path: "/Textures/_RedStar/Parallaxes/shoreline_water.png"
+    slowness: 0
+    scrolling: "-0.1, 0"
+    tiled: true
+    shader: ""
   layersLQUseHQ: false
 
 - type: parallax
   id: IceWater
   layers:
-    - texture:
+  - texture:
         !type:ImageParallaxTextureSource
-        path: "/Textures/_RedStar/Parallaxes/shoreline_water.png"
-      slowness: 0.5
-      scrolling: "0.1, 0"
-      tiled: true
-      shader: ""
-    - texture:
+      path: "/Textures/_RedStar/Parallaxes/shoreline_water.png"
+    slowness: 0.5
+    scrolling: "0.1, 0"
+    tiled: true
+    shader: ""
+  - texture:
         !type:ImageParallaxTextureSource
-        path: "/Textures/_RedStar/Parallaxes/shoreline_water.png"
-      slowness: 0
-      scrolling: "-0.1, 0"
-      tiled: true
-      shader: ""
-    - texture:
+      path: "/Textures/_RedStar/Parallaxes/shoreline_water.png"
+    slowness: 0
+    scrolling: "-0.1, 0"
+    tiled: true
+    shader: ""
+  - texture:
         !type:ImageParallaxTextureSource
-        path: "/Textures/_RedStar/Parallaxes/IceParallax.png"
-      slowness: 0
-      scrolling: "0, 0"
-      tiled: true
-      shader: ""
+      path: "/Textures/_RedStar/Parallaxes/IceParallax.png"
+    slowness: 0
+    scrolling: "0, 0"
+    tiled: true
+    shader: ""
   layersLQ:
-    - texture:
+  - texture:
         !type:ImageParallaxTextureSource
-        path: "/Textures/_RedStar/Parallaxes/IceParallax.png"
-      slowness: 0
-      scrolling: "0, 0"
-      tiled: true
-      shader: ""
+      path: "/Textures/_RedStar/Parallaxes/IceParallax.png"
+    slowness: 0
+    scrolling: "0, 0"
+    tiled: true
+    shader: ""
   layersLQUseHQ: false
 
 - type: parallax
   id: Ice
   layers:
-    - texture:
+  - texture:
         !type:ImageParallaxTextureSource
-        path: "/Textures/Tiles/Ice/ice.png"
-      slowness: 0
-      scrolling: "0, 0"
-      tiled: true
-      shader: ""
+      path: "/Textures/Tiles/Ice/ice.png"
+    slowness: 0
+    scrolling: "0, 0"
+    tiled: true
+    shader: ""
   layersLQ:
-    - texture:
+  - texture:
         !type:ImageParallaxTextureSource
-        path: "/Textures/Tiles/Ice/ice.png"
-      slowness: 0
-      scrolling: "-0, 0"
-      tiled: true
-      shader: ""
+      path: "/Textures/Tiles/Ice/ice.png"
+    slowness: 0
+    scrolling: "-0, 0"
+    tiled: true
+    shader: ""
   layersLQUseHQ: false
 
 - type: parallax
   id: Lava
   layers:
-    - texture:
+  - texture:
         !type:ImageParallaxTextureSource
-        path: "/Textures/_RedStar/Parallaxes/LavaParallax.png"
-      slowness: 0
-      scrolling: "0.1, 0"
-      tiled: true
-      shader: ""
+      path: "/Textures/_RedStar/Parallaxes/LavaParallax.png"
+    slowness: 0
+    scrolling: "0.1, 0"
+    tiled: true
+    shader: ""
   layersLQUseHQ: true
 
 - type: parallax
   id: LavaLight
   layers:
-    - texture:
+  - texture:
         !type:ImageParallaxTextureSource
-        path: "/Textures/_RedStar/Parallaxes/LavaLightParallax.png"
-      slowness: 0
-      scrolling: "0.1, 0"
-      tiled: true
+      path: "/Textures/_RedStar/Parallaxes/LavaLightParallax.png"
+    slowness: 0
+    scrolling: "0.1, 0"
+    tiled: true
   layersLQUseHQ: true

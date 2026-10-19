@@ -1,8 +1,8 @@
 # Base
 - type: entity
   abstract: true
+  parent: [ StorageTankBig, StructureWheeled ]
   id: YellowTankBase
-  parent: [StorageTankBig, StructureWheeled]
   name: yellow tank
   description: That iconic barrel of refreshing nectar.
   components:
@@ -23,8 +23,8 @@
 
 # Kvass
 - type: entity
-  id: KvassTank
   parent: YellowTankBase
+  id: KvassTank
   suffix: Empty
   components:
   - type: Sprite
@@ -45,8 +45,8 @@
 
 # Beer
 - type: entity
-  id: BeerTank
   parent: YellowTankBase
+  id: BeerTank
   suffix: Empty
   components:
   - type: Sprite

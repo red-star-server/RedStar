@@ -51,60 +51,60 @@
   bodyPart: HeadTop
   groupWhitelist: [ Reptilian ]
   sprites:
-    - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_ears.rsi
-      state: sylveon_primary
-    - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_ears.rsi
-      state: sylveon_secondary
-    - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_ears.rsi
-      state: sylveon_tertiary
+  - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_ears.rsi
+    state: sylveon_primary
+  - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_ears.rsi
+    state: sylveon_secondary
+  - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_ears.rsi
+    state: sylveon_tertiary
 
 - type: marking
   id: EarsResomi
   bodyPart: HeadTop
   groupWhitelist: [ Reptilian ]
   sprites:
-    - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_ears.rsi
-      state: avali_inner
-    - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_ears.rsi
-      state: avali_outer
+  - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_ears.rsi
+    state: avali_inner
+  - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_ears.rsi
+    state: avali_outer
 
 - type: marking
   id: EarsChemlight
   bodyPart: HeadTop
   groupWhitelist: [ Reptilian ]
   sprites:
-    - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_ears.rsi
-      state: chemlight_outer
-    - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_ears.rsi
-      state: chemlight_inner
+  - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_ears.rsi
+    state: chemlight_outer
+  - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_ears.rsi
+    state: chemlight_inner
 
 - type: marking
   id: EarsDragonLong
   bodyPart: HeadTop
   groupWhitelist: [ Reptilian ]
   sprites:
-    - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_ears.rsi
-      state: dragonlong
+  - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_ears.rsi
+    state: dragonlong
 
 - type: marking
   id: EarsEasternD
   bodyPart: HeadTop
   groupWhitelist: [ Reptilian ]
   sprites:
-    - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_ears.rsi
-      state: easternd_ears
-    - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_ears.rsi
-      state: easternd_horns
+  - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_ears.rsi
+    state: easternd_ears
+  - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_ears.rsi
+    state: easternd_horns
 
 - type: marking
   id: EarsMagus
   bodyPart: HeadTop
   groupWhitelist: [ Reptilian ]
   sprites:
-    - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_ears.rsi
-      state: magus_ears
-    - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_ears.rsi
-      state: magus_neck
+  - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_ears.rsi
+    state: magus_ears
+  - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_ears.rsi
+    state: magus_neck
 
 - type: marking
   id: ReptilianHornsBaran
@@ -185,6 +185,7 @@
   sprites:
   - sprite: _RedStar/Mobs/Customization/Reptilian/custom.rsi
     state: horns_twoago
+
 - type: marking
   id: ReptilianImplantCybersunArmL
   bodyPart: LArm
@@ -254,82 +255,82 @@
   bodyPart: Tail
   groupWhitelist: [ Reptilian ]
   sprites:
-    - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
-      state: axolotl
+  - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
+    state: axolotl
 
 - type: marking
   id: TailDatashark
   bodyPart: Tail
   groupWhitelist: [ Reptilian ]
   sprites:
-    - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
-      state: datashark_ears_inner
-    - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
-      state: datashark_ears
-    - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
-      state: datashark_fin
-    - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
-      state: datashark_tail
-    - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
-      state: datashark_taildata
+  - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
+    state: datashark_ears_inner
+  - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
+    state: datashark_ears
+  - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
+    state: datashark_fin
+  - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
+    state: datashark_tail
+  - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
+    state: datashark_taildata
 
 - type: marking
   id: TailEasternDragon
   bodyPart: Tail
   groupWhitelist: [ Reptilian ]
   sprites:
-    - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
-      state: easternd_primary
-    - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
-      state: easternd_secondary
+  - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
+    state: easternd_primary
+  - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
+    state: easternd_secondary
 
 - type: marking
   id: TailFish
   bodyPart: Tail
   groupWhitelist: [ Reptilian ]
   sprites:
-    - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
-      state: fish_primary
-    - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
-      state: fish_secondary
+  - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
+    state: fish_primary
+  - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
+    state: fish_secondary
 
 - type: marking
   id: TailGecko
   bodyPart: Tail
   groupWhitelist: [ Reptilian ]
   sprites:
-    - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
-      state: gecko_primary
-    - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
-      state: gecko_secondary
-    - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
-      state: gecko_tertiary
+  - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
+    state: gecko_primary
+  - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
+    state: gecko_secondary
+  - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
+    state: gecko_tertiary
 
 - type: marking
   id: TailMaw
   bodyPart: Tail
   groupWhitelist: [ Reptilian ]
   sprites:
-    - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
-      state: maw
+  - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
+    state: maw
 
 - type: marking
   id: TailShark
   bodyPart: Tail
   groupWhitelist: [ Reptilian ]
   sprites:
-    - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
-      state: shark_fin
-    - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
-      state: shark_tail
+  - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
+    state: shark_fin
+  - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
+    state: shark_tail
 
 - type: marking
   id: TailSnake
   bodyPart: Tail
   groupWhitelist: [ Reptilian ]
   sprites:
-    - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
-      state: snake
+  - sprite: _RedStar/Mobs/Customization/Reptilian/reptilian_tails.rsi
+    state: snake
 
 - type: marking
   id: ReptilianTattoSkeletArmL

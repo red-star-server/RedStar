@@ -1,6 +1,6 @@
 ﻿- type: entity
-  id: CrateMaterialMarble
   parent: CrateGenericSteel
+  id: CrateMaterialMarble
   name: marble crate
   description: 30 blocks of marble.
   components:

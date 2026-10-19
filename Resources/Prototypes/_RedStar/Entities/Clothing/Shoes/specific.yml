@@ -20,7 +20,7 @@
     state: icon
   - type: Clothing
     sprite: _RedStar/Clothing/Shoes/Specific/white_footwraps.rsi
-    slots: [FEET, gloves]
+    slots: [ FEET, gloves ]
 
 - type: entity
   parent: ClothingFootWrapsBase
@@ -33,7 +33,7 @@
     state: icon
   - type: Clothing
     sprite: _RedStar/Clothing/Shoes/Specific/black_footwraps.rsi
-    slots: [FEET, gloves]
+    slots: [ FEET, gloves ]
 
 - type: entity
   parent: ClothingFootWrapsBase
@@ -46,7 +46,7 @@
     state: icon
   - type: Clothing
     sprite: _RedStar/Clothing/Shoes/Specific/blackhigh_footwraps.rsi
-    slots: [FEET, gloves]
+    slots: [ FEET, gloves ]
 
 - type: entity
   parent: ClothingFootWrapsBase
@@ -59,7 +59,7 @@
     state: icon
   - type: Clothing
     sprite: _RedStar/Clothing/Shoes/Specific/whitehigh_footwraps.rsi
-    slots: [FEET, gloves]
+    slots: [ FEET, gloves ]
 
 - type: entity
   parent: ClothingFootWrapsBase
@@ -72,7 +72,7 @@
     state: icon
   - type: Clothing
     sprite: _RedStar/Clothing/Shoes/Specific/brown_footwraps.rsi
-    slots: [FEET, gloves]
+    slots: [ FEET, gloves ]
 
 - type: entity
   parent: ClothingFootWrapsBase
@@ -85,4 +85,4 @@
     state: icon
   - type: Clothing
     sprite: _RedStar/Clothing/Shoes/Specific/brownhigh_footwraps.rsi
-    slots: [FEET, gloves]
+    slots: [ FEET, gloves ]

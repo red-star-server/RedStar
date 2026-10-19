@@ -1,7 +1,7 @@
 ﻿- type: entity
-  name: deli stand
-  id: DeliStand
   parent: [ BaseStructureDynamic, StructureHealthFurniture ]
+  id: DeliStand
+  name: deli stand
   description: A counter for displaying food in a deli.
   components:
   - type: InteractionOutline
@@ -9,7 +9,7 @@
     sprite: _RedStar/Structures/Furniture/deli_stand.rsi
     layers:
     - state: deli_stand
-    - map: ["enum.StorageFillLayers.Fill"]
+    - map: [ "enum.StorageFillLayers.Fill" ]
       state: fill-0
     noRot: true
     offset: 0, 0.25
