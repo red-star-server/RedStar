@@ -3,3 +3,15 @@
   id: MarbleWall
   graph: StoneWalls
   targetNode: marbleWall
+
+- type: construction
+  parent: Girder
+  id: PlastitaniumWall
+  targetNode: plastitaniumWall
+
+- type: construction
+  parent: Girder
+  id: DiagonalPlastitaniumWall
+  name: construction-recipe-diagonal-plastitanium-wall
+  targetNode: diagonalPlastitaniumWall
+  canRotate: true

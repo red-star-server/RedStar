@@ -30,7 +30,7 @@ public sealed class OfferItemIndicatorsOverlay : Overlay
         _offer = offerSys;
 
         var spriteSys = entMan.EntitySysManager.GetEntitySystem<SpriteSystem>();
-        _sight = spriteSys.Frame0(new SpriteSpecifier.Rsi(new ResPath("/Textures/_Floof/Interface/Misc/give_item.rsi"), "give_item"));
+        _sight = spriteSys.Frame0(new SpriteSpecifier.Rsi(new ResPath("/Textures/_RedStar/Interface/Misc/give_item.rsi"), "give_item"));
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
