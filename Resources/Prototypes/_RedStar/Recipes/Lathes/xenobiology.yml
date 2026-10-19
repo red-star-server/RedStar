@@ -27,7 +27,7 @@
 - type: latheRecipe
   parent: HandheldHealthAnalyzer
   id: HandheldGeneticAnalyzer
-  categories: [ Tools, Research ]
+  categories: [ Tools ]
   result: HandheldGeneticAnalyzer
 
 - type: latheRecipe
@@ -47,11 +47,11 @@
     Glass: 200
 
 - type: latheRecipe
-  parent: [BaseCircuitboardRecipe, BaseResearchMachineRecipeCategory]
+  parent: [BaseCircuitboardRecipe, BaseMedicalMachineRecipeCategory]
   id: GeneticChamberCircuitboard
   result: GeneticChamberCircuitboard
 
 - type: latheRecipe
-  parent: [BaseCircuitboardRecipe, BaseResearchMachineRecipeCategory]
+  parent: [BaseCircuitboardRecipe, BaseMedicalMachineRecipeCategory]
   id: GeneticsConsoleCircuitboard
   result: GeneticsConsoleCircuitboard

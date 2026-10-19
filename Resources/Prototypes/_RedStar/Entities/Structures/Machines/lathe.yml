@@ -159,7 +159,6 @@
     - ElectronicsStatic
     - SurgeryStatic
     - ScienceBoardsStatic
-    - XenobiologyBoardsStatic
     - XenobiologyToolsStatic
     - ScienceExplosives
     dynamicPacks:
@@ -176,6 +175,7 @@
     - EngineeringBoards
     - SharedBoards
     - ScienceBoards
+    - XenobiologyBoards
     - ShuttleBoards
     - MechBoardsScience
   - type: EmagLatheRecipes
