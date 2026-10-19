@@ -26,6 +26,16 @@ public sealed partial class GeneticProfileControl : BoxContainer
     /// When enabled, gene names select a target for equipment procedures.
     /// </summary>
     public bool Selectable { get; set; }
+
+    /// <summary>
+    /// Displays the handheld analyzer's live connection indicator when applicable to the host interface.
+    /// </summary>
+    public bool ShowConnection
+    {
+        get => Connection.Visible;
+        set => Connection.Visible = value;
+    }
+
     public event Action<ProtoId<GenePrototype>>? GeneSelected;
 
     public GeneticProfileControl()
@@ -40,7 +50,30 @@ public sealed partial class GeneticProfileControl : BoxContainer
         };
         LoadBar.BackgroundStyleBoxOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#171C24") };
         Search.OnTextChanged += _ => FilterGenes();
+        Clear();
+    }
+
+    /// <summary>
+    /// Clears patient readings while retaining the profile, load and gene list layout.
+    /// </summary>
+    public void Clear()
+    {
+        _state = null;
+        _rows.Clear();
+        GeneList.RemoveAllChildren();
+        PatientSprite.Visible = false;
+        NoPatient.Visible = true;
         PatientName.Text = Loc.GetString("genetic-analyzer-no-data");
+        Species.Text = string.Empty;
+        Connection.Text = string.Empty;
+        LoadValue.Text = "\u2014";
+        LoadValue.FontColorOverride = Color.Gray;
+        LoadBar.Value = 0;
+        LoadStatus.Text = Loc.GetString("genetic-analyzer-no-data");
+        GeneCount.Text = Loc.GetString("genetic-analyzer-count", ("count", 0));
+        Search.Text = string.Empty;
+        Search.Editable = false;
+        FilterGenes();
     }
 
     /// <summary>
@@ -51,6 +84,7 @@ public sealed partial class GeneticProfileControl : BoxContainer
         var changedPatient = _state?.Target != state.Target;
         var changedGenes = _state is null || !_state.Genes.SequenceEqual(state.Genes) || _state.MaximumLoad != state.MaximumLoad;
         _state = state;
+        Search.Editable = true;
 
         var target = _entities.GetEntity(state.Target);
         var available = target is { } uid && !_entities.Deleted(uid);
@@ -105,7 +139,8 @@ public sealed partial class GeneticProfileControl : BoxContainer
             row.Visible = row.GeneName.Contains(query, StringComparison.CurrentCultureIgnoreCase);
         }
 
-        Empty.Visible = _state is not null && !_rows.Values.Any(row => row.Visible);
+        Empty.Text = Loc.GetString(_state is null ? "genetic-analyzer-no-data" : "genetic-analyzer-empty");
+        Empty.Visible = _state is null || !_rows.Values.Any(row => row.Visible);
     }
 
     private sealed class GeneRow : PanelContainer

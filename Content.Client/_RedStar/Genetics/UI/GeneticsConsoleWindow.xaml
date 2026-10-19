@@ -4,15 +4,15 @@
     Title="{Loc 'genetics-console-title'}" MinSize="850 560" SetSize="950 650">
     <BoxContainer SeparationOverride="12" Margin="0 0 10 10">
         <genetics:GeneticProfileControl Name="Profile" HorizontalExpand="True" MinWidth="460" />
-        <BoxContainer Orientation="Vertical" SeparationOverride="10" MinWidth="290" MaxWidth="330" Margin="0 10 0 0">
-            <Label Name="Status" StyleClasses="LabelHeading" />
+        <BoxContainer Orientation="Vertical" SeparationOverride="10" MinWidth="330" MaxWidth="330" Margin="0 10 0 0">
+            <Label Name="Status" ClipText="True" StyleClasses="LabelHeading" />
             <PanelContainer StyleClasses="PanelInsetDeep">
                 <BoxContainer Orientation="Vertical" SeparationOverride="6" Margin="10">
                     <Label Text="{Loc 'genetics-console-beaker'}" StyleClasses="LabelHeading" />
                     <RichTextLabel Name="Beaker" />
                 </BoxContainer>
             </PanelContainer>
-            <Label Name="SelectedName" StyleClasses="LabelHeading" />
+            <Label Name="SelectedName" ClipText="True" StyleClasses="LabelHeading" />
             <RichTextLabel Name="Description" />
             <Label Name="GeneState" StyleClasses="LabelSubText" />
             <BoxContainer Name="Procedures" Orientation="Vertical" SeparationOverride="8" />

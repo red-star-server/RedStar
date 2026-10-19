@@ -28,6 +28,7 @@ public sealed partial class GeneticsConsoleWindow : FancyWindow
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
         Profile.Selectable = true;
+        Profile.ShowConnection = false;
         Profile.GeneSelected += gene => { _selected = gene; RefreshSelection(); };
         Cancel.OnPressed += _ => CancelRequested?.Invoke();
     }
@@ -40,9 +41,10 @@ public sealed partial class GeneticsConsoleWindow : FancyWindow
         if (_state?.Profile?.Target != state.Profile?.Target)
             _selected = null;
         _state = state;
-        Profile.Visible = state.Profile is not null;
         if (state.Profile is { } profile)
             Profile.UpdateState(profile);
+        else
+            Profile.Clear();
         Status.Text = Loc.GetString(state.Status switch
         {
             GeneticsConsoleStatus.NoChamber => "genetics-console-no-chamber",
