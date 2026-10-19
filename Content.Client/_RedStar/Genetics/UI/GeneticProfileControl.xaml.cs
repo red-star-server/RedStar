@@ -153,6 +153,7 @@ public sealed partial class GeneticProfileControl : BoxContainer
         {
             GeneName = Loc.GetString($"gene-{gene.ID}-name");
             var color = CategoryColor(gene.Category);
+            var inactive = status is GeneStatus.Raw or GeneStatus.Suppressed;
             PanelOverride = new StyleBoxFlat
             {
                 BackgroundColor = Color.FromHex("#252B35"),
@@ -161,7 +162,7 @@ public sealed partial class GeneticProfileControl : BoxContainer
             };
             var body = new BoxContainer
             {
-                Orientation = BoxContainer.LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 SeparationOverride = 6,
                 Margin = new Thickness(9, 7),
                 HorizontalExpand = true
@@ -180,23 +181,18 @@ public sealed partial class GeneticProfileControl : BoxContainer
             header.AddChild(new Label
             {
                 Text = Loc.GetString($"genetic-analyzer-category-{gene.Category.ToString().ToLowerInvariant()}"),
-                FontColorOverride = color
+                FontColorOverride = inactive ? Color.FromHex("#E0B773") : color,
+                ToolTip = inactive
+                    ? Loc.GetString(status == GeneStatus.Raw ? "genetic-analyzer-dormant" : "genetic-analyzer-suppressed")
+                    : null
             });
             var toggle = new Button { Text = expanded ? "\u2212" : "+", MinWidth = 28, ToggleMode = true, Pressed = expanded };
             toggle.ToolTip = Loc.GetString("genetic-analyzer-details");
             header.AddChild(toggle);
             toggle.Visible = selected is null;
-            if (status is GeneStatus.Raw or GeneStatus.Suppressed)
-            {
-                body.AddChild(new Label
-                {
-                    Text = Loc.GetString(status == GeneStatus.Raw ? "genetic-analyzer-dormant" : "genetic-analyzer-suppressed"),
-                    FontColorOverride = Color.FromHex("#E0B773")
-                });
-            }
             _details = new BoxContainer
             {
-                Orientation = BoxContainer.LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 SeparationOverride = 6,
                 Visible = expanded && selected is null
             };
