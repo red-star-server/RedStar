@@ -66,3 +66,5 @@ ent-PaperPrintedNukeopsSyndicateToNT = { ent-PaperPrintedSyndicate }
 ent-PaperPrintedNukeopsSyndicateToUSSP = { ent-PaperPrintedSyndicate }
     .desc = { ent-PaperPrintedSyndicate.desc }
     .suffix = Синдикат-СССП, Ядерные оперативники
+ent-TapeRecorderTranscript = расшифровка записи
+    .desc = { ent-Paper.desc }

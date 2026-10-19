@@ -92,4 +92,3 @@ ent-SofaCutDainerLeftCorner = диван для закусочной, левый
     .desc = { ent-SofaBase.desc }
 ent-SofaCutDainerRightCorner = диван для закусочной, правый угол
     .desc = { ent-SofaBase.desc }
-

@@ -13,3 +13,6 @@ ent-ScienceTechFabCircuitboard = научный техфаб (машинная �
 ent-ServiceTechFabCircuitboard = сервисный техфаб (машинная плата)
     .desc = Машинная печатная плата сервисного ТехФаба.
     .suffix = { ent-BaseDepartmentTechFabCircuitboard.suffix }
+ent-PrinterDocMachineCircuitboard = принтер документов (машинная плата)
+    .desc = Машинная плата принтера документов.
+    .suffix = { ent-BaseMachineCircuitboard.suffix }
