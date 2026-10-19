@@ -1,0 +1,45 @@
+- type: entity
+  parent: MarkerBase
+  id: ShippingContainerSpawner
+  name: random shipping container spawner
+  description: Spawns a random decorative shipping container.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: _RedStar/Objects/Decoration/containers.rsi
+    state: random_container
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - id: ShippingContainerBlank
+      - id: ShippingContainerConarex
+      - id: ShippingContainerDeforest
+      - id: ShippingContainerKahraman
+      - id: ShippingContainerKosmologistika
+      - id: ShippingContainerInterdyne
+      - id: ShippingContainerNakamura
+      - id: ShippingContainerNanotrasen
+      - id: ShippingContainerVitezstvi
+      - id: ShippingContainerCybersun
+      - id: ShippingContainerDonkCo
+      - id: ShippingContainerGorlex
+      - id: ShippingContainerGorlexRed
+      - id: ShippingContainerAmsco
+      - id: ShippingContainerBiosustain
+      - id: ShippingContainerExagon
+      - id: ShippingContainerGreatNorthern
+      - id: ShippingContainerOms
+      - id: ShippingContainerSaibasan
+      - id: ShippingContainerSunda
+      - id: ShippingContainerTigerCoop
+      - id: ShippingContainerBlue
+      - id: ShippingContainerGreen
+      - id: ShippingContainerMagenta
+      - id: ShippingContainerOrange
+      - id: ShippingContainerPurple
+      - id: ShippingContainerRed
+      - id: ShippingContainerYellow
+      - id: ShippingContainerKahramanAlt
+      - id: ShippingContainerNanotrasenLogo
+    offset: 0.0

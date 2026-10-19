@@ -11,7 +11,7 @@
             "name": "conarex"
         },
         {
-            "name": "container_blank"
+            "name": "blank"
         },
         {
             "name": "cybersun"
@@ -51,6 +51,54 @@
         },
         {
             "name": "vitezstvi"
+        },
+        {
+            "name": "amsco"
+        },
+        {
+            "name": "biosustain"
+        },
+        {
+            "name": "blue"
+        },
+        {
+            "name": "exagon"
+        },
+        {
+            "name": "great_northern"
+        },
+        {
+            "name": "green"
+        },
+        {
+            "name": "magenta"
+        },
+        {
+            "name": "oms"
+        },
+        {
+            "name": "orange"
+        },
+        {
+            "name": "purple"
+        },
+        {
+            "name": "random_container"
+        },
+        {
+            "name": "red"
+        },
+        {
+            "name": "saibasan"
+        },
+        {
+            "name": "sunda"
+        },
+        {
+            "name": "tiger_coop"
+        },
+        {
+            "name": "yellow"
         }
     ]
 }

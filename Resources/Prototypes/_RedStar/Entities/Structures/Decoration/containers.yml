@@ -49,7 +49,7 @@
   description: A standard-measure shipping container for bulk transport of goods. This one is blank, offering no clue as to its contents.
   components:
   - type: Sprite
-    state: container_blank
+    state: blank
 
 - type: entity
   parent: BaseShippingContainer
@@ -156,3 +156,152 @@
   components:
   - type: Sprite
     state: gorlex_red
+
+- type: entity
+  parent: BaseShippingContainer
+  id: ShippingContainerAmsco
+  name: Amsco shipping container
+  description: A standard-measure shipping container for bulk transport of goods, bearing the Amsco logo. The markings give no indication of what is inside.
+  components:
+  - type: Sprite
+    state: amsco
+
+- type: entity
+  parent: BaseShippingContainer
+  id: ShippingContainerBiosustain
+  name: BioSustain shipping container
+  description: A standard-measure shipping container for bulk transport of goods, bearing the BioSustain logo. The markings give no indication of what is inside.
+  components:
+  - type: Sprite
+    state: biosustain
+
+- type: entity
+  parent: BaseShippingContainer
+  id: ShippingContainerExagon
+  name: Exagon shipping container
+  description: A standard-measure shipping container for bulk transport of goods, bearing the Exagon logo. The markings give no indication of what is inside.
+  components:
+  - type: Sprite
+    state: exagon
+
+- type: entity
+  parent: BaseShippingContainer
+  id: ShippingContainerGreatNorthern
+  name: Great Northern shipping container
+  description: A standard-measure shipping container for bulk transport of goods, bearing the Great Northern logo. The markings give no indication of what is inside.
+  components:
+  - type: Sprite
+    state: great_northern
+
+- type: entity
+  parent: BaseShippingContainer
+  id: ShippingContainerOms
+  name: OMS shipping container
+  description: A standard-measure shipping container for bulk transport of goods, bearing the OMS logo. The markings give no indication of what is inside.
+  components:
+  - type: Sprite
+    state: oms
+
+- type: entity
+  parent: BaseShippingContainer
+  id: ShippingContainerSaibasan
+  name: Saibasan shipping container
+  description: A standard-measure shipping container for bulk transport of goods, bearing the Saibasan logo. The markings give no indication of what is inside.
+  components:
+  - type: Sprite
+    state: saibasan
+
+- type: entity
+  parent: BaseShippingContainer
+  id: ShippingContainerSunda
+  name: Sunda shipping container
+  description: A standard-measure shipping container for bulk transport of goods, bearing the Sunda logo. The markings give no indication of what is inside.
+  components:
+  - type: Sprite
+    state: sunda
+
+- type: entity
+  parent: BaseShippingContainer
+  id: ShippingContainerTigerCoop
+  name: Tiger Cooperative shipping container
+  description: A standard-measure shipping container for bulk transport of goods, bearing the Tiger Cooperative logo. The markings give no indication of what is inside.
+  components:
+  - type: Sprite
+    state: tiger_coop
+
+- type: entity
+  parent: BaseShippingContainer
+  id: ShippingContainerBlue
+  name: blue shipping container
+  description: A standard-measure shipping container for bulk transport of goods, painted blue. There are no company markings to hint at its contents.
+  components:
+  - type: Sprite
+    state: blue
+
+- type: entity
+  parent: BaseShippingContainer
+  id: ShippingContainerGreen
+  name: green shipping container
+  description: A standard-measure shipping container for bulk transport of goods, painted green. There are no company markings to hint at its contents.
+  components:
+  - type: Sprite
+    state: green
+
+- type: entity
+  parent: BaseShippingContainer
+  id: ShippingContainerMagenta
+  name: magenta shipping container
+  description: A standard-measure shipping container for bulk transport of goods, painted magenta. There are no company markings to hint at its contents.
+  components:
+  - type: Sprite
+    state: magenta
+
+- type: entity
+  parent: BaseShippingContainer
+  id: ShippingContainerOrange
+  name: orange shipping container
+  description: A standard-measure shipping container for bulk transport of goods, painted orange. There are no company markings to hint at its contents.
+  components:
+  - type: Sprite
+    state: orange
+
+- type: entity
+  parent: BaseShippingContainer
+  id: ShippingContainerPurple
+  name: purple shipping container
+  description: A standard-measure shipping container for bulk transport of goods, painted purple. There are no company markings to hint at its contents.
+  components:
+  - type: Sprite
+    state: purple
+
+- type: entity
+  parent: BaseShippingContainer
+  id: ShippingContainerRed
+  name: red shipping container
+  description: A standard-measure shipping container for bulk transport of goods, painted red. There are no company markings to hint at its contents.
+  components:
+  - type: Sprite
+    state: red
+
+- type: entity
+  parent: BaseShippingContainer
+  id: ShippingContainerYellow
+  name: yellow shipping container
+  description: A standard-measure shipping container for bulk transport of goods, painted yellow. There are no company markings to hint at its contents.
+  components:
+  - type: Sprite
+    state: yellow
+
+- type: entity
+  parent: ShippingContainerKahraman
+  id: ShippingContainerKahramanAlt
+  components:
+  - type: Sprite
+    state: kahraman_alt
+
+- type: entity
+  parent: ShippingContainerNanotrasen
+  id: ShippingContainerNanotrasenLogo
+  components:
+  - type: Sprite
+    state: nanotrasen
