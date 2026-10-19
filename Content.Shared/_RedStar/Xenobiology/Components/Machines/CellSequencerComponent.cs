@@ -13,5 +13,5 @@ public sealed partial class CellSequencerComponent : Component
     /// Stability removed from the selected sample after an incorrect sequencing attempt.
     /// </summary>
     [DataField]
-    public float IncorrectStabilityCost = 0.1f;
+    public float IncorrectStabilityCost = 0.03f;
 }
