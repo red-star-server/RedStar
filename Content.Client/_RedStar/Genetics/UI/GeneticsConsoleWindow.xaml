@@ -1,0 +1,25 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:genetics="clr-namespace:Content.Client._RedStar.Genetics.UI"
+    Title="{Loc 'genetics-console-title'}" MinSize="850 560" SetSize="950 650">
+    <BoxContainer SeparationOverride="12" Margin="0 0 10 10">
+        <genetics:GeneticProfileControl Name="Profile" HorizontalExpand="True" MinWidth="460" />
+        <BoxContainer Orientation="Vertical" SeparationOverride="10" MinWidth="290" MaxWidth="330" Margin="0 10 0 0">
+            <Label Name="Status" StyleClasses="LabelHeading" />
+            <PanelContainer StyleClasses="PanelInsetDeep">
+                <BoxContainer Orientation="Vertical" SeparationOverride="6" Margin="10">
+                    <Label Text="{Loc 'genetics-console-beaker'}" StyleClasses="LabelHeading" />
+                    <RichTextLabel Name="Beaker" />
+                </BoxContainer>
+            </PanelContainer>
+            <Label Name="SelectedName" StyleClasses="LabelHeading" />
+            <RichTextLabel Name="Description" />
+            <Label Name="GeneState" StyleClasses="LabelSubText" />
+            <BoxContainer Name="Procedures" Orientation="Vertical" SeparationOverride="8" />
+            <Control VerticalExpand="True" />
+            <RichTextLabel Name="Working" />
+            <ProgressBar Name="Progress" MinValue="0" MaxValue="1" MinHeight="12" />
+            <Button Name="Cancel" Text="{Loc 'genetics-console-cancel'}" />
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>

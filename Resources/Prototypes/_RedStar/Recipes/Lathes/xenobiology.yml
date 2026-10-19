@@ -45,3 +45,13 @@
   completetime: 2
   materials:
     Glass: 200
+
+- type: latheRecipe
+  parent: [BaseCircuitboardRecipe, BaseResearchMachineRecipeCategory]
+  id: GeneticChamberCircuitboard
+  result: GeneticChamberCircuitboard
+
+- type: latheRecipe
+  parent: [BaseCircuitboardRecipe, BaseResearchMachineRecipeCategory]
+  id: GeneticsConsoleCircuitboard
+  result: GeneticsConsoleCircuitboard

@@ -39,8 +39,10 @@ public sealed partial class CellSequencerSystem : EntitySystem
     {
         base.Initialize();
         ResetRound();
-        SubscribeLocalEvent<RoundRestartCleanupEvent>(_ => ResetRound());
     }
+
+    [SubscribeLocalEvent]
+    private void OnRoundRestart(RoundRestartCleanupEvent args) => ResetRound();
 
     private void ResetRound()
     {

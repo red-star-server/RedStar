@@ -16,7 +16,7 @@ public enum GeneStatus : byte
     Active = 1,
 
     /// <summary>
-    /// Present genetic material with expression disabled; bulk activation leaves it suppressed.
+    /// Present genetic material whose expression can be restored without repeating initial effects.
     /// </summary>
     Suppressed = 2
 }

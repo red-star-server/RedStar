@@ -9,3 +9,25 @@
       amount: 1
   products:
     Genezine: 2
+
+- type: reaction
+  id: Genestatin
+  reactants:
+    Genezine:
+      amount: 1
+    ChloralHydrate:
+      amount: 1
+    Saline:
+      amount: 1
+  products:
+    Genestatin: 3
+
+- type: reaction
+  id: Genolysin
+  reactants:
+    Genestatin:
+      amount: 1
+    Phalanximine:
+      amount: 2
+  products:
+    Genolysin: 2

@@ -185,15 +185,10 @@ public sealed partial class ServerGenomeSystem : GenomeSystem
         Resolve(ent, ref ent.Comp, logMissing: false) ? Load(ent.Comp.Genes.Keys) : 0;
 
     /// <summary>
-    /// Returns load relative to safe capacity, optionally including incoming genes. Existing genes count once.
+    /// Returns acquired load as a percentage of the organism's safe capacity.
     /// </summary>
-    public float GetLoadPercentage(Entity<GenomeComponent?> ent, IReadOnlySet<ProtoId<GenePrototype>>? incoming = null)
-    {
-        if (!Resolve(ent, ref ent.Comp, logMissing: false))
-            return 0;
-        var genes = incoming is null ? ent.Comp.Genes.Keys.AsEnumerable() : ent.Comp.Genes.Keys.Union(incoming);
-        return CalculateLoadPercentage(Load(genes), ent.Comp.MaximumLoad);
-    }
+    public float GetLoadPercentage(Entity<GenomeComponent?> ent) =>
+        Resolve(ent, ref ent.Comp, logMissing: false) ? CalculateLoadPercentage(Load(ent.Comp.Genes.Keys), ent.Comp.MaximumLoad) : 0;
 
     /// <summary>
     /// Checks readiness and organism compatibility. Exceeding safe load is allowed and causes overload symptoms.
@@ -221,26 +216,18 @@ public sealed partial class ServerGenomeSystem : GenomeSystem
     }
 
     /// <summary>
-    /// Expresses compatible dormant genes once. Suppressed genes remain suppressed; load is unchanged.
+    /// Activates one acquired dormant gene, applying its initial effects exactly once.
     /// </summary>
-    public void ActivateGenes(Entity<GenomeComponent?> ent)
+    public bool TryActivateGene(Entity<GenomeComponent?> ent, ProtoId<GenePrototype> id)
     {
-        if (!Resolve(ent, ref ent.Comp, logMissing: false) || !ent.Comp.GenomeGenerated)
-            return;
+        if (!Resolve(ent, ref ent.Comp, logMissing: false) || !ent.Comp.GenomeGenerated ||
+            !ent.Comp.Genes.TryGetValue(id, out var state) || state != GeneStatus.Raw ||
+            !TryExpress(ent.Owner, id, firstActivation: true))
+            return false;
 
-        var raw = ent.Comp.Genes.Where(gene => gene.Value == GeneStatus.Raw).Select(gene => gene.Key).ToArray();
-        var changed = false;
-        foreach (var id in raw)
-        {
-            if (!TryExpress(ent.Owner, id, firstActivation: true))
-                continue;
-            ent.Comp.Genes[id] = GeneStatus.Active;
-            changed = true;
-        }
-        if (!changed)
-            return;
-
+        ent.Comp.Genes[id] = GeneStatus.Active;
         NotifyChanged(ent.Owner);
+        return true;
     }
 
     /// <summary>
