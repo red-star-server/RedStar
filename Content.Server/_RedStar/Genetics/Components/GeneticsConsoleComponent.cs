@@ -13,4 +13,9 @@ public sealed partial class GeneticsConsoleComponent : Component
     /// </summary>
     [DataField]
     public float MaxDistance = 4;
+
+    /// <summary>
+    /// Chamber executing this console's current procedure. Cleared on completion or cancellation.
+    /// </summary>
+    public EntityUid? ActiveChamber;
 }

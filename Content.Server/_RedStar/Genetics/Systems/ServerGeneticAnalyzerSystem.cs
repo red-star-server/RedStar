@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared._RedStar.Genetics.Components;
 using Content.Shared._RedStar.Genetics.Systems;
 using Content.Shared._RedStar.Genetics.UI;
@@ -39,18 +38,13 @@ public sealed partial class ServerGeneticAnalyzerSystem : GeneticAnalyzerSystem
     {
         if (analyzer.Comp.Target is not { } target || TerminatingOrDeleted(target) ||
             !_transform.InRange(Transform(analyzer).Coordinates, Transform(target).Coordinates, analyzer.Comp.MaxScanRange) ||
-            !_genomes.TryGetSnapshot(target, out var snapshot))
+            !_genomes.TryGetReport(target, out var report))
         {
             PauseReport(analyzer);
             return;
         }
 
-        var genome = Comp<GenomeComponent>(target);
-        var genes = snapshot.Genes.OrderBy(id => id.Id, StringComparer.Ordinal)
-            .Select(id => new GeneticAnalyzerGene(id, _genomes.TryGetGeneStatus(target, id, out var status) ? status : null))
-            .ToList();
-        _ui.SetUiState(analyzer.Owner, GeneticAnalyzerUiKey.Key,
-            new GeneticAnalyzerUiState(GetNetEntity(target), true, _genomes.GetLoad(target), genome.MaximumLoad, genes));
+        _ui.SetUiState(analyzer.Owner, GeneticAnalyzerUiKey.Key, report);
     }
 
     private void PauseReport(Entity<GeneticAnalyzerComponent> analyzer)
