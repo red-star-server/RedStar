@@ -9,28 +9,22 @@ public enum CellularFusionUiKey
 }
 
 [Serializable, NetSerializable]
-public sealed class CellularFusionUiSpliceMessage(int cellAId, int cellBId) : BoundUserInterfaceMessage
+public sealed class CellularFusionUiSpliceMessage(int sampleAId, int sampleBId)
+    : BoundUserInterfaceMessage
 {
-    public readonly int CellAId = cellAId;
-    public readonly int CellBId = cellBId;
+    public readonly int SampleAId = sampleAId;
+    public readonly int SampleBId = sampleBId;
 }
 
 [Serializable, NetSerializable]
 public sealed class CellularFusionUiState(
-    CellEntry[] remoteCells,
-    int material,
-    int spliceCost = 0,
-    bool spliceInProgress = false,
-    double spliceDuration = 0,
-    double spliceRemaining = 0,
-    Cell? lastResult = null)
-    : BoundUserInterfaceState
+    SampleView[] samples,
+    NetEntity? dish,
+    bool spliceInProgress,
+    double spliceDuration) : BoundUserInterfaceState
 {
-    public readonly CellEntry[] RemoteCells = remoteCells;
-    public readonly int Material = material;
-    public readonly int SpliceCost = spliceCost;
+    public readonly SampleView[] Samples = samples;
+    public readonly NetEntity? Dish = dish;
     public readonly bool SpliceInProgress = spliceInProgress;
     public readonly double SpliceDuration = spliceDuration;
-    public readonly double SpliceRemaining = spliceRemaining;
-    public readonly Cell? LastResult = lastResult;
 }

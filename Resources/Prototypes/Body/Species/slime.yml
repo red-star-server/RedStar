@@ -90,6 +90,10 @@
   id: MobSlimePerson
   name: Urist McWobble
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Slime
+  # RS14-end
   - type: Storage
     clickInsert: false
     grid:

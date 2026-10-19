@@ -1,19 +1,15 @@
-using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 using Robust.Shared.Audio;
 
 namespace Content.Shared._RedStar.Xenobiology.Components.Machines;
 
 /// <summary>
-/// Injects cells from a Petri dish into a specimen.
+/// Injects genetic material from a vial into a specimen.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
+[RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class CellMutagenicInjectorComponent : Component
 {
-    public const string BodyContainerId = "injector-bodyContainer";
-
     [DataField]
-    public string DishSlot = "dishSlot";
+    public string VialSlot = "vialSlot";
 
     [DataField]
     public TimeSpan InjectionDelay = TimeSpan.FromSeconds(5);
@@ -21,20 +17,29 @@ public sealed partial class CellMutagenicInjectorComponent : Component
     [DataField]
     public SoundSpecifier? ProcessSound;
 
+    /// <summary>
+    /// Completion time in simulation time, shifted after a pause. Null while idle.
+    /// </summary>
     [ViewVariables, AutoPausedField]
     public TimeSpan? InjectionEndTime;
 
+    /// <summary>
+    /// Recipient captured at startup. Replacing or removing it cancels the injection.
+    /// </summary>
     [ViewVariables]
     public EntityUid? InjectionSubject;
 
+    /// <summary>
+    /// Vial captured at startup. Replacing or removing it cancels the injection.
+    /// </summary>
     [ViewVariables]
-    public EntityUid? InjectionDish;
+    public EntityUid? InjectionVial;
 
+    /// <summary>
+    /// Vial contents revision captured at startup; a mismatch cancels the injection.
+    /// </summary>
     [ViewVariables]
-    public int InjectionDishRevision;
+    public int InjectionVialRevision;
 
     public EntityUid? AudioStream;
-
-    [ViewVariables]
-    public ContainerSlot BodyContainer = default!;
 }

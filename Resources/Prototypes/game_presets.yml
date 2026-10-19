@@ -1,5 +1,6 @@
 - type: gamePreset
   id: Survival
+  minPlayers: 15 # RS14
   alias:
     - survival
   name: survival-title

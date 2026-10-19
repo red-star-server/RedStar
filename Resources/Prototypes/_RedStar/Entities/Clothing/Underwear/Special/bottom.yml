@@ -1,0 +1,171 @@
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomFishnet
+  name: pants
+  description: Soft underwear with a distinctive design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Bottom/Man/fishnet.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomHearts
+  name: pants
+  description: Soft underwear with a distinctive design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Bottom/Man/hearts.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomMankiny
+  name: man thong
+  description: Soft underwear with a distinctive design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Bottom/Man/mankiny.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomMBriefs
+  name: briefs
+  description: Soft underwear with a distinctive design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Bottom/Man/mbriefs.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomMKinky
+  name: pants
+  description: Soft underwear with a distinctive design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Bottom/Man/mkinky.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomSport
+  name: pants
+  description: Soft underwear with a distinctive design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Bottom/Man/sport.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomStripe
+  name: pants
+  description: Soft underwear with a distinctive design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Bottom/Man/stripe.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomFBriefs
+  name: briefs
+  description: Soft underwear with a distinctive design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Bottom/Women/fbriefs.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomFKinky
+  name: pants
+  description: Soft underwear with a distinctive design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Bottom/Women/fkinky.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomLace
+  name: pants
+  description: Soft underwear with a distinctive design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Bottom/Women/lace.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomLatex
+  name: latex pants
+  description: Soft underwear with a distinctive design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Bottom/Women/latex.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomLizard
+  name: pants
+  description: Soft underwear with a distinctive design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Bottom/Women/lizarded.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomNekoBlack
+  name: pants
+  description: Soft underwear with a distinctive design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Bottom/Women/nekoblack.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomNekoWhite
+  name: pants
+  description: Soft underwear with a distinctive design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Bottom/Women/nekowhite.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomNinja
+  name: fundosi
+  description: Soft underwear with a distinctive design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Bottom/Women/ninja.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPanties
+  name: pants
+  description: Soft underwear with a distinctive design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Bottom/Women/panties.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomStrippedPanties
+  name: pants
+  description: Soft underwear with a distinctive design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Bottom/Women/strippedpanties.rsi
+  - type: Clothing
+    clothingVisuals:
+      underwearb:
+      - state: equipped-UNDERWEARBOTTOM
+        sprite: _RedStar/Clothing/Underwear/Special/Bottom/Women/strippedpanties.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomThong
+  name: thong
+  description: Soft underwear with a distinctive design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Bottom/Women/thong.rsi
+  - type: Clothing
+    clothingVisuals:
+      underwearb:
+      - state: equipped-UNDERWEARBOTTOM
+        sprite: _RedStar/Clothing/Underwear/Special/Bottom/Women/thong.rsi

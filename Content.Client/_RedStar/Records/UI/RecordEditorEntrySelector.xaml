@@ -1,0 +1,14 @@
+<Control xmlns="https://spacestation14.io" HorizontalExpand="True">
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+        <ItemList Name="EntrySelector" HorizontalExpand="True" VerticalExpand="True" MinSize="300 200" />
+        <BoxContainer Orientation="Horizontal">
+            <Button Name="AddButton" StyleClasses="OpenBoth" Text="{Loc 'character-dossier-editor-add-entry'}" />
+            <Button Name="EditButton" StyleClasses="OpenBoth" Text="{Loc 'character-dossier-editor-edit-entry'}" />
+            <Button Name="ViewButton" StyleClasses="OpenBoth" Text="{Loc 'character-dossier-editor-view-entry'}" />
+            <Button Name="RemoveButton" StyleClasses="OpenLeft" Text="{Loc 'character-dossier-editor-remove-entry'}" />
+            <Control HorizontalExpand="True" />
+            <Button Name="UpButton" HorizontalAlignment="Right" StyleClasses="OpenRight" Text="{Loc 'character-dossier-editor-up'}" />
+            <Button Name="DownButton" HorizontalAlignment="Right" StyleClasses="OpenBoth" Text="{Loc 'character-dossier-editor-down'}" />
+        </BoxContainer>
+    </BoxContainer>
+</Control>

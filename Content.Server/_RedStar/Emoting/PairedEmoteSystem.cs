@@ -1,7 +1,11 @@
 using Content.Server._RedStar.Emoting.Components;
+using Content.Server.Chat.Systems;
+using Content.Shared._DV.Carrying;
 using Content.Shared._RedStar.Emoting;
 using Content.Shared._RedStar.Emoting.Events;
 using Content.Shared._RedStar.Emoting.Prototypes;
+using Content.Shared.Alert;
+using Content.Shared.Chat;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs;
 using Content.Shared.Movement.Events;
@@ -18,33 +22,37 @@ public sealed partial class PairedEmoteSystem : SharedPairedEmoteSystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedInteractionSystem _interaction = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private AlertsSystem _alerts = default!;
+    [Dependency] private ChatSystem _chat = default!;
     [Dependency] private RotateToFaceSystem _rotate = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
     [SubscribeLocalEvent]
-    private void OnInteractHand(Entity<PairedEmoteOfferComponent> ent, ref InteractHandEvent args)
+    private void OnAcceptAlert(Entity<PairedEmoteReceivingComponent> ent, ref AcceptPairedEmoteAlertEvent args)
     {
-        if (args.Handled || args.User != ent.Comp.Target)
+        if (args.Handled || args.User != ent.Owner ||
+            !TryComp<PairedEmoteOfferComponent>(ent.Comp.Initiator, out var offer) ||
+            offer.Target != ent.Owner || args.AlertId != ent.Comp.Alert)
             return;
 
-        if (ent.Comp.ExpiresAt <= _timing.CurTime ||
-            !ProtoMan.TryIndex(ent.Comp.Emote, out var prototype) ||
+        var initiator = ent.Comp.Initiator;
+        if (offer.ExpiresAt <= _timing.CurTime ||
+            !ProtoMan.TryIndex(offer.Emote, out var prototype) ||
+            !CanPerformPairedEmote(initiator) ||
             !CanPerformPairedEmote(ent.Owner) ||
-            !CanPerformPairedEmote(args.User) ||
             !_interaction.InRangeUnobstructed(
-                args.User,
                 ent.Owner,
+                initiator,
                 prototype.Range,
                 popup: false))
         {
-            CancelOffer(ent);
+            CancelOffer((initiator, offer));
             return;
         }
 
         args.Handled = true;
-
-        PerformEmote(ent.Owner, args.User, prototype);
-        CancelOffer(ent);
+        CancelOffer((initiator, offer));
+        PerformEmote(initiator, ent.Owner, prototype);
     }
 
     [SubscribeLocalEvent]
@@ -63,6 +71,44 @@ public sealed partial class PairedEmoteSystem : SharedPairedEmoteSystem
             return;
 
         CancelOffer(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnRecipientMobStateChanged(Entity<PairedEmoteReceivingComponent> ent, ref MobStateChangedEvent args)
+    {
+        if (args.NewMobState == MobState.Alive)
+            return;
+
+        if (TryComp<PairedEmoteOfferComponent>(ent.Comp.Initiator, out var offer))
+            CancelOffer((ent.Comp.Initiator, offer));
+    }
+
+    [SubscribeLocalEvent]
+    private void OnStartedCarrying(Entity<CarryingComponent> ent, ref ComponentStartup args)
+    {
+        CancelOffersInvolving(ent.Owner);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnBecameCarried(Entity<BeingCarriedComponent> ent, ref ComponentStartup args)
+    {
+        CancelOffersInvolving(ent.Owner);
+    }
+
+    private void CancelOffersInvolving(EntityUid uid)
+    {
+        if (TryComp<PairedEmoteOfferComponent>(uid, out var offer))
+            CancelOffer((uid, offer));
+
+        if (TryComp<PairedEmoteReceivingComponent>(uid, out var receiving) &&
+            TryComp(receiving.Initiator, out offer))
+            CancelOffer((receiving.Initiator, offer));
+    }
+
+    [SubscribeLocalEvent]
+    private void OnOfferShutdown(Entity<PairedEmoteOfferComponent> ent, ref ComponentShutdown args)
+    {
+        ClearReceiving(ent.Owner, ent.Comp.Target);
     }
 
     protected override void TryOffer(
@@ -86,7 +132,7 @@ public sealed partial class PairedEmoteSystem : SharedPairedEmoteSystem
             return;
         }
 
-        if (HasComp<PairedEmoteOfferComponent>(initiator))
+        if (HasActiveOffer(initiator) || HasActiveOffer(target))
             return;
 
         var offer = EnsureComp<PairedEmoteOfferComponent>(initiator);
@@ -95,10 +141,13 @@ public sealed partial class PairedEmoteSystem : SharedPairedEmoteSystem
         offer.Emote = prototype.ID;
         offer.ExpiresAt = _timing.CurTime + prototype.OfferDuration;
 
+        var receiving = EnsureComp<PairedEmoteReceivingComponent>(target);
+        receiving.Initiator = initiator;
+        receiving.Alert = prototype.Alert;
+        _alerts.ShowAlert(target, prototype.Alert);
+
         _popup.PopupEntity(
-            Loc.GetString(
-                prototype.AttemptSelf,
-                ("target", target)),
+            Loc.GetString(prototype.AttemptSelf, ("target", target)),
             initiator,
             initiator,
             PopupType.Medium);
@@ -126,17 +175,13 @@ public sealed partial class PairedEmoteSystem : SharedPairedEmoteSystem
         var filter = Filter.Pvs(initiator, entityManager: EntityManager)
             .Merge(Filter.Pvs(target, entityManager: EntityManager));
 
-        var message = Loc.GetString(
-            prototype.Success,
-            ("initiator", initiator),
-            ("target", target));
-
-        _popup.PopupEntity(
-            message,
+        _chat.TrySendInGameICMessage(
             initiator,
-            filter,
-            true,
-            PopupType.Medium);
+            Loc.GetString(prototype.Success, ("target", target)),
+            InGameICChatType.Emote,
+            ChatTransmitRange.Normal,
+            checkRadioPrefix: false,
+            ignoreActionBlocker: true);
 
         if (prototype.Sound is { } sound)
             _audio.PlayPvs(sound, initiator);
@@ -151,11 +196,23 @@ public sealed partial class PairedEmoteSystem : SharedPairedEmoteSystem
             filter);
     }
 
-    protected override bool HasActiveOffer(EntityUid uid) => HasComp<PairedEmoteOfferComponent>(uid);
+    protected override bool HasActiveOffer(EntityUid uid) =>
+        HasComp<PairedEmoteOfferComponent>(uid) || HasComp<PairedEmoteReceivingComponent>(uid);
 
     private void CancelOffer(Entity<PairedEmoteOfferComponent> ent)
     {
+        ClearReceiving(ent.Owner, ent.Comp.Target);
         RemCompDeferred<PairedEmoteOfferComponent>(ent);
+    }
+
+    private void ClearReceiving(EntityUid initiator, EntityUid target)
+    {
+        if (!TryComp<PairedEmoteReceivingComponent>(target, out var receiving) ||
+            receiving.Initiator != initiator)
+            return;
+
+        _alerts.ClearAlert(target, receiving.Alert);
+        RemCompDeferred<PairedEmoteReceivingComponent>(target);
     }
 
     public override void Update(float frameTime)
@@ -167,6 +224,13 @@ public sealed partial class PairedEmoteSystem : SharedPairedEmoteSystem
 
         while (query.MoveNext(out var uid, out var offer))
         {
+            if (!TryComp<PairedEmoteReceivingComponent>(offer.Target, out var receiving) ||
+                receiving.Initiator != uid)
+            {
+                CancelOffer((uid, offer));
+                continue;
+            }
+
             if (time < offer.ExpiresAt)
                 continue;
 
@@ -176,7 +240,7 @@ public sealed partial class PairedEmoteSystem : SharedPairedEmoteSystem
                 uid,
                 PopupType.SmallCaution);
 
-            RemCompDeferred<PairedEmoteOfferComponent>(uid);
+            CancelOffer((uid, offer));
         }
     }
 }

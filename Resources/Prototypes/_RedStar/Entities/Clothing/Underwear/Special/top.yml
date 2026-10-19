@@ -1,0 +1,209 @@
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBikini
+  name: bikini
+  description: Comfortable lingerie with a distinctive design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Top/bikini.rsi
+  - type: Clothing
+    clothingVisuals:
+      underweart:
+      - state: equipped-UNDERWEARTOP
+        sprite: _RedStar/Clothing/Underwear/Special/Top/bikini.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraLatex
+  name: latex bra
+  description: Comfortable lingerie with a distinctive design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Top/bralatex.rsi
+  - type: Clothing
+    clothingVisuals:
+      underweart:
+      - state: equipped-UNDERWEARTOP
+        sprite: _RedStar/Clothing/Underwear/Special/Top/bralatex.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBralete
+  name: bralette
+  description: Comfortable lingerie with a distinctive design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Top/bralete.rsi
+  - type: Clothing
+    clothingVisuals:
+      underweart:
+      - state: equipped-UNDERWEARTOP
+        sprite: _RedStar/Clothing/Underwear/Special/Top/bralete.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraStripped
+  name: stripped bra
+  description: Comfortable lingerie with a distinctive design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Top/brastripped.rsi
+  - type: Clothing
+    clothingVisuals:
+      underweart:
+      - state: equipped-UNDERWEARTOP
+        sprite: _RedStar/Clothing/Underwear/Special/Top/brastripped.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopCorset
+  name: corset
+  description: Comfortable lingerie with a distinctive design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Top/corset.rsi
+  - type: Clothing
+    clothingVisuals:
+      underweart:
+      - state: equipped-UNDERWEARTOP
+        sprite: _RedStar/Clothing/Underwear/Special/Top/corset.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraFishnet
+  name: fishnet bra
+  description: Comfortable lingerie with a distinctive design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Top/fishnetbody.rsi
+  - type: Clothing
+    clothingVisuals:
+      underweart:
+      - state: equipped-UNDERWEARTOP
+        sprite: _RedStar/Clothing/Underwear/Special/Top/fishnetbody.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraKinky
+  name: bra
+  description: Comfortable lingerie with a distinctive design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Top/kinky.rsi
+  - type: Clothing
+    clothingVisuals:
+      underweart:
+      - state: equipped-UNDERWEARTOP
+        sprite: _RedStar/Clothing/Underwear/Special/Top/kinky.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraLace
+  name: bra
+  description: Comfortable lingerie with a distinctive design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Top/lace.rsi
+  - type: Clothing
+    clothingVisuals:
+      underweart:
+      - state: equipped-UNDERWEARTOP
+        sprite: _RedStar/Clothing/Underwear/Special/Top/lace.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraLizard
+  name: bra
+  description: Comfortable lingerie with a distinctive design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Top/lizarded.rsi
+  - type: Clothing
+    clothingVisuals:
+      underweart:
+      - state: equipped-UNDERWEARTOP
+        sprite: _RedStar/Clothing/Underwear/Special/Top/lizarded.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraNekoBlack
+  name: bra
+  description: Comfortable lingerie with a distinctive design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Top/nekoblack.rsi
+  - type: Clothing
+    clothingVisuals:
+      underweart:
+      - state: equipped-UNDERWEARTOP
+        sprite: _RedStar/Clothing/Underwear/Special/Top/nekoblack.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraNekoWhite
+  name: bra
+  description: Comfortable lingerie with a distinctive design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Top/nekowhite.rsi
+  - type: Clothing
+    clothingVisuals:
+      underweart:
+      - state: equipped-UNDERWEARTOP
+        sprite: _RedStar/Clothing/Underwear/Special/Top/nekowhite.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraPasties
+  name: bra
+  description: Comfortable lingerie with a distinctive design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Top/pasties.rsi
+  - type: Clothing
+    clothingVisuals:
+      underweart:
+      - state: equipped-UNDERWEARTOP
+        sprite: _RedStar/Clothing/Underwear/Special/Top/pasties.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraSport
+  name: bra
+  description: Comfortable lingerie with a distinctive design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Top/sport.rsi
+  - type: Clothing
+    clothingVisuals:
+      underweart:
+      - state: equipped-UNDERWEARTOP
+        sprite: _RedStar/Clothing/Underwear/Special/Top/sport.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraStrapless
+  name: strapless bra
+  description: Comfortable lingerie with a distinctive design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Top/strapless.rsi
+  - type: Clothing
+    clothingVisuals:
+      underweart:
+      - state: equipped-UNDERWEARTOP
+        sprite: _RedStar/Clothing/Underwear/Special/Top/strapless.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraThong
+  name: bra
+  description: Comfortable lingerie with a distinctive design.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Top/thong.rsi
+  - type: Clothing
+    clothingVisuals:
+      underweart:
+      - state: equipped-UNDERWEARTOP
+        sprite: _RedStar/Clothing/Underwear/Special/Top/thong.rsi

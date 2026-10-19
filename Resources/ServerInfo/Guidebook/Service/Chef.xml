@@ -52,7 +52,7 @@
 Попросите нужные растения у ботаников. Если их нет, выращивать растения придётся самостоятельно.
 <Box>
 <GuideEntityEmbed Entity="SignHydro1" Caption=" "/>
-<GuideEntityEmbed Entity="hydroponicsTray"/>
+<GuideEntityEmbed Entity="HydroponicsTray"/>
 <GuideEntityEmbed Entity="WheatBushel"/>
 </Box>
 ## Получение молока

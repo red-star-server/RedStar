@@ -5,6 +5,10 @@
   name: basic slime
   description: It looks so much like jelly. I wonder what it tastes like?
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Slime
+  # RS14-end
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/slimes.rsi

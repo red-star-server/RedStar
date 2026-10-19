@@ -572,3 +572,12 @@
   components:
   - type: ChildOrgan
   - type: InternalChildOrgan
+  # RS14-start
+  - type: Extractable
+    grindableSolutionName: food
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: UncookedAnimalProteins
+        Quantity: 20
+  # RS14-end

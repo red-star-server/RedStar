@@ -3,7 +3,6 @@
     <Label Name="CellNameLabel" StyleClasses="LabelHeading" Margin="0 0 0 4" />
     <PanelContainer StyleClasses="LowDivider" Margin="0 0 0 8" />
     <Label Name="CellStabilityLabel" Margin="0 0 0 4" />
-    <Label Name="CellCostLabel" Margin="0 0 0 4" />
     <PanelContainer StyleClasses="LowDivider" Margin="0 8 0 8" />
     <Label Name="TraitsLabel" StyleClasses="LabelHeading" Margin="0 0 0 4" />
     <RichTextLabel Name="CellTraitsText" />

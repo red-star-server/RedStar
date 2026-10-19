@@ -1,0 +1,55 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/Skyrat-SS13/Skyrat-tg/commits/e507f9120bb0c3beecfe169d14193d90e7229a58/icons/obj/science/vatgrowing.dmi",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "growing_vat"
+        },
+        {
+            "name": "growing_vat_emagged",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "vat_reagent1"
+        },
+        {
+            "name": "vat_reagent2"
+        },
+        {
+            "name": "vat_bubbles",
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "growing_vat_glow"
+        },
+        {
+            "name": "growing_vat_on"
+        },
+        {
+            "name": "growing_vat_off"
+        }
+    ]
+}

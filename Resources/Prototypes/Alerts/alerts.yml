@@ -28,6 +28,12 @@
     - alertType: Pacified
     - alertType: Stealthy
     - alertType: Offer # RS14
+    # RS14-start
+    - alertType: PairedHighFiveOffer
+    - alertType: PairedFistBumpOffer
+    - alertType: PairedHandshakeOffer
+    - alertType: PairedHugOffer
+    # RS14-end
 
 - type: entity
   id: AlertSpriteView

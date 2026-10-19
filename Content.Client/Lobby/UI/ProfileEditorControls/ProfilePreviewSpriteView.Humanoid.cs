@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Shared.Body;
 using Content.Shared.Clothing;
+using Content.Shared.Humanoid; // RS14
 using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
 using Content.Shared.Preferences;
@@ -25,6 +26,10 @@ public sealed partial class ProfilePreviewSpriteView
             return;
 
         EntMan.System<SharedVisualBodySystem>().ApplyProfileTo(PreviewDummy, humanoid);
+        // RS14-start
+        EntMan.EnsureComponent<HumanoidProfileComponent>(PreviewDummy);
+        EntMan.System<HumanoidProfileSystem>().ApplyHeightTo(PreviewDummy, humanoid);
+        // RS14-end
     }
 
     /// <summary>
@@ -55,6 +60,14 @@ public sealed partial class ProfilePreviewSpriteView
         {
             PreviewDummy = EntMan.SpawnEntity(_prototypeManager.Index(HumanoidCharacterProfile.DefaultSpecies).DollPrototype, MapCoordinates.Nullspace);
         }
+
+        // RS14-start
+        if (humanoid is not null && EntMan.HasComponent<VisualBodyComponent>(PreviewDummy))
+        {
+            EntMan.EnsureComponent<HumanoidProfileComponent>(PreviewDummy);
+            EntMan.System<HumanoidProfileSystem>().ApplyHeightTo(PreviewDummy, humanoid);
+        }
+        // RS14-end
 
         if (humanoid != null && jobClothes)
         {

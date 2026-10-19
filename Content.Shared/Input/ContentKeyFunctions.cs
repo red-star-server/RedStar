@@ -47,7 +47,6 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction TryPullObject = "TryPullObject";
         public static readonly BoundKeyFunction MovePulledObject = "MovePulledObject";
         public static readonly BoundKeyFunction ReleasePulledObject = "ReleasePulledObject";
-        public static readonly BoundKeyFunction MouseMiddle = "MouseMiddle";
         public static readonly BoundKeyFunction RotateObjectClockwise = "RotateObjectClockwise";
         public static readonly BoundKeyFunction RotateObjectCounterclockwise = "RotateObjectCounterclockwise";
         public static readonly BoundKeyFunction FlipObject = "FlipObject";
@@ -65,6 +64,16 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction ZoomOut = "ZoomOut";
         public static readonly BoundKeyFunction ZoomIn = "ZoomIn";
         public static readonly BoundKeyFunction ResetZoom = "ResetZoom";
+
+        // RS14-start
+        public static readonly BoundKeyFunction TogglePosing = "TogglePosing";
+        public static readonly BoundKeyFunction PosingOffsetLeft = "PosingOffsetLeft";
+        public static readonly BoundKeyFunction PosingOffsetRight = "PosingOffsetRight";
+        public static readonly BoundKeyFunction PosingOffsetUp = "PosingOffsetUp";
+        public static readonly BoundKeyFunction PosingOffsetDown = "PosingOffsetDown";
+        public static readonly BoundKeyFunction PosingRotateNegative = "PosingRotateNegative";
+        public static readonly BoundKeyFunction PosingRotatePositive = "PosingRotatePositive";
+        // RS14-end
 
         public static readonly BoundKeyFunction ArcadeUp = "ArcadeUp";
         public static readonly BoundKeyFunction ArcadeDown = "ArcadeDown";

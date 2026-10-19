@@ -3,6 +3,7 @@
 import argparse
 import json
 import re
+from html import unescape
 from pathlib import Path
 
 HEADER_RE = re.compile(r"^\s*(?::cl:|🆑)\s*$", re.IGNORECASE)
@@ -22,6 +23,41 @@ SECTION_TITLES = {
 
 FIELD_VALUE_LIMIT = 1024
 
+MEDIA_HEADING_RE = re.compile(r"^ {0,3}(#{1,6})[ \t]+(.+?)\s*#*\s*$")
+IMAGE_RE = re.compile(
+    r'!\[[^\]\n]*\]\(\s*(?:<(?P<angle>https?://[^>\s]+)>|'
+    r'(?P<markdown>https?://(?:[^\s()]+|\([^\s()]*\))+))'
+    r'(?:[ \t]+["\'][^\n]*?["\'])?\s*\)'
+    r'|<img\b[^>]*?\bsrc\s*=\s*(?:"(?P<double>[^"]+)"|\x27(?P<single>[^\x27]+)\x27)[^>]*>',
+    re.IGNORECASE,
+)
+IMAGE_URL_LIMIT = 2048
+
+
+def parse_media_image(body: str) -> str | None:
+    lines = COMMENT_RE.sub("", body).splitlines()
+    media_lines: list[str] = []
+    media_level = None
+    for line in lines:
+        heading = MEDIA_HEADING_RE.match(line)
+        if heading:
+            level = len(heading[1])
+            if media_level is not None and level <= media_level:
+                break
+            if media_level is None and heading[2].casefold() == "медиа":
+                media_level = level
+                continue
+        if media_level is not None:
+            media_lines.append(line)
+
+    for match in IMAGE_RE.finditer("\n".join(media_lines)):
+        url = unescape(next(value for value in match.groups() if value is not None)).strip()
+        if not re.match(r"^https?://[^\s]+$", url, re.IGNORECASE):
+            continue
+        if len(url) > IMAGE_URL_LIMIT:
+            continue
+        return url
+    return None
 
 def parse_changes(body: str) -> dict[str, list[str]]:
     body = COMMENT_RE.sub("", body).replace("\r\n", "\n").replace("\r", "\n")
@@ -100,6 +136,10 @@ def main() -> int:
             }
         ],
     }
+
+    image = parse_media_image(pull_request.get("body") or "")
+    if image:
+        payload["embeds"][0]["image"] = {"url": image}
 
     if args.role_id:
         payload["content"] = f"<@&{args.role_id}>"

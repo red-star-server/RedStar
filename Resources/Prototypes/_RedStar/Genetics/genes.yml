@@ -1,0 +1,597 @@
+- type: gene
+  id: DimLightAdaptation
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: ColorDiscrimination
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: Photosensitivity
+  tier: 1
+  loadCost: 1
+  category: Pathological
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: PoorVision
+  tier: 1
+  loadCost: 1
+  category: Pathological
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: AcuteHearing
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: OlfactorySensitivity
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: VibrationSense
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: TactileWhiskers
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: FlexibleJoints
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: LimbGrip
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: VestibularBalance
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: ElasticTendons
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: DenseMusculature
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: DenseConnectiveTissue
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: MineralizedTissue
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: KeratinizedCovering
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: ChitinousCovering
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: StructuralIridescence
+  tier: 1
+  loadCost: 1
+  category: Cosmetic
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: PigmentPlasticity
+  tier: 1
+  loadCost: 1
+  category: Cosmetic
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: MucusSecretion
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: SlowMetabolism
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: HighMetabolism
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: OmnivorousDigestion
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: CelluloseDigestion
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: LipidStorage
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: ProteinSecretion
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: CellRenewal
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: TissuePlasticity
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: VegetativeGrowth
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: WeakImmunity
+  tier: 1
+  loadCost: 1
+  category: Pathological
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: ChemicalSensitivity
+  tier: 1
+  loadCost: 1
+  category: Pathological
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: XenobioticProcessing
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: ToxinProduction
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: ToxinTolerance
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: OxygenStorage
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: NitrogenMetabolism
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: ColdAdaptation
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: HeatAdaptation
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: LowPressureAdaptation
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: PassiveTemperament
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: DefensiveAggression
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: StartleResponse
+  tier: 1
+  loadCost: 1
+  category: Pathological
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: FragileBones
+  tier: 1
+  loadCost: 1
+  category: Pathological
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: SilkSynthesis
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: AuditoryLearning
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: EggLayer
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+  expression: GeneExpressionEggLayer
+
+- type: gene
+  id: Lactation
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+  expression: GeneExpressionLactation
+
+- type: gene
+  id: MessyDrinker
+  tier: 1
+  loadCost: 1
+  category: Pathological
+  fragmentCount: 4
+  minimumStability: 0.5
+  expression: GeneExpressionMessyDrinker
+
+- type: gene
+  id: Bleating
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+  expression: GeneExpressionBleating
+
+- type: gene
+  id: MineralAssimilation
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: CollectiveSignaling
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: BroodDevelopment
+  tier: 1
+  loadCost: 1
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: NightVision
+  tier: 2
+  loadCost: 2
+  category: Beneficial
+  fragmentCount: 5
+  minimumStability: 0.6
+  expression: GeneExpressionNightVision
+
+- type: gene
+  id: MechanosensoryIntegration
+  tier: 2
+  loadCost: 2
+  category: Beneficial
+  fragmentCount: 5
+  minimumStability: 0.6
+
+- type: gene
+  id: NoSlip
+  tier: 2
+  loadCost: 2
+  category: Beneficial
+  fragmentCount: 5
+  minimumStability: 0.6
+  expression: GeneExpressionNoSlip
+
+- type: gene
+  id: ElasticFrame
+  tier: 2
+  loadCost: 2
+  category: Beneficial
+  fragmentCount: 5
+  minimumStability: 0.6
+
+- type: gene
+  id: LamellarScales
+  tier: 2
+  loadCost: 2
+  category: Beneficial
+  fragmentCount: 5
+  minimumStability: 0.6
+
+# TODO: Add slow mechanical healing outside combat.
+- type: gene
+  id: CoordinatedRepair
+  tier: 2
+  loadCost: 2
+  category: Beneficial
+  fragmentCount: 5
+  minimumStability: 0.6
+  effects: []
+
+- type: gene
+  id: ImmuneTolerance
+  tier: 2
+  loadCost: 2
+  category: Beneficial
+  fragmentCount: 5
+  minimumStability: 0.6
+
+- type: gene
+  id: Venomous
+  tier: 2
+  loadCost: 2
+  category: Beneficial
+  fragmentCount: 5
+  minimumStability: 0.6
+  expression: GeneExpressionVenomous
+
+- type: gene
+  id: DetoxifyingMetabolism
+  tier: 2
+  loadCost: 2
+  category: Beneficial
+  fragmentCount: 5
+  minimumStability: 0.6
+
+- type: gene
+  id: TorporControl
+  tier: 2
+  loadCost: 2
+  category: Beneficial
+  fragmentCount: 5
+  minimumStability: 0.6
+
+- type: gene
+  id: Pacifism
+  tier: 2
+  loadCost: 2
+  fragmentCount: 5
+  minimumStability: 0.6
+  expression: GeneExpressionPacifism
+
+- type: gene
+  id: ReflexDisinhibition
+  tier: 2
+  loadCost: 2
+  category: Beneficial
+  fragmentCount: 5
+  minimumStability: 0.6
+
+- type: gene
+  id: RadionuclideSequestration
+  tier: 2
+  loadCost: 2
+  category: Beneficial
+  fragmentCount: 5
+  minimumStability: 0.6
+
+- type: gene
+  id: WebSpinning
+  tier: 2
+  loadCost: 2
+  category: Beneficial
+  fragmentCount: 5
+  minimumStability: 0.6
+  expression: GeneExpressionWebSpinning
+
+- type: gene
+  id: ParrotSpeech
+  tier: 2
+  loadCost: 2
+  category: Beneficial
+  fragmentCount: 5
+  minimumStability: 0.6
+  expression: GeneExpressionParrotSpeech
+
+- type: gene
+  id: PhotonicLattice
+  tier: 3
+  loadCost: 3
+  category: Beneficial
+  fragmentCount: 6
+  minimumStability: 0.65
+
+# TODO: Add periodic mechanical healing.
+- type: gene
+  id: Regeneration
+  tier: 3
+  loadCost: 3
+  category: Beneficial
+  fragmentCount: 6
+  minimumStability: 0.65
+  effects: []
+
+# TODO: Add venom secretion and periodic self-poisoning.
+- type: gene
+  id: ToxicOverproduction
+  tier: 3
+  loadCost: 3
+  category: Mixed
+  fragmentCount: 6
+  minimumStability: 0.65
+  effects: []
+
+- type: gene
+  id: PressureHomeostasis
+  tier: 3
+  loadCost: 3
+  category: Beneficial
+  fragmentCount: 6
+  minimumStability: 0.65
+  expression: GeneExpressionPressureHomeostasis
+
+# TODO: Add periodic episodes of impaired movement and speech.
+
+- type: gene
+  id: SensoryOverload
+  tier: 3
+  loadCost: 3
+  category: Pathological
+  fragmentCount: 6
+  minimumStability: 0.65
+  effects: []
+
+- type: gene
+  id: AdaptivePigmentation
+  tier: 3
+  loadCost: 3
+  category: Cosmetic
+  fragmentCount: 6
+  minimumStability: 0.65
+
+- type: gene
+  id: Radiation
+  tier: 3
+  loadCost: 3
+  category: Pathological
+  fragmentCount: 6
+  minimumStability: 0.65
+  expression: GeneExpressionRadiation
+
+- type: gene
+  id: Reflection
+  tier: 4
+  loadCost: 4
+  category: Beneficial
+  fragmentCount: 7
+  minimumStability: 0.7
+  expression: GeneExpressionReflection
+
+- type: gene
+  id: Invisibility
+  tier: 4
+  loadCost: 4
+  category: Beneficial
+  fragmentCount: 7
+  minimumStability: 0.7
+  expression: GeneExpressionInvisibility
+
+# TODO: Add periodic mechanical and thermal healing.
+
+- type: gene
+  id: SomaticHomeostasis
+  tier: 4
+  loadCost: 4
+  category: Beneficial
+  fragmentCount: 7
+  minimumStability: 0.7
+  effects: []

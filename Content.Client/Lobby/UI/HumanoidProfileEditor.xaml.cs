@@ -107,6 +107,7 @@ namespace Content.Client.Lobby.UI
             _allowFlavorText = _cfgManager.GetCVar(CCVars.FlavorText);
 
             Markings.SetModel(_markingsModel);
+            InitializeDossierEditor(); // RS14
 
             ImportButton.OnPressed += args =>
             {
@@ -152,6 +153,8 @@ namespace Content.Client.Lobby.UI
             #region Appearance
 
             TabContainer.SetTabTitle(0, Loc.GetString("humanoid-profile-editor-appearance-tab"));
+
+            InitializeHeightControls(); // RS14
 
             #region Sex
 
@@ -201,6 +204,7 @@ namespace Content.Client.Lobby.UI
             #endregion Gender
 
             RefreshSpecies();
+            UpdateHeightControls(); // RS14
 
             SpeciesButton.OnItemSelected += args =>
             {
@@ -375,6 +379,7 @@ namespace Content.Client.Lobby.UI
         public void SetProfile(HumanoidCharacterProfile? profile, int? slot)
         {
             Profile = profile?.Clone();
+            UpdateDossierEditor(); // RS14
             CharacterSlot = slot;
             IsDirty = false;
             JobOverride = null;
@@ -387,6 +392,7 @@ namespace Content.Client.Lobby.UI
             UpdateSkinColor();
             UpdateSpawnPriorityControls();
             UpdateAgeEdit();
+            UpdateHeightControls(); // RS14
             UpdateEyePickers();
             UpdateSaveButton();
             UpdateMarkings();

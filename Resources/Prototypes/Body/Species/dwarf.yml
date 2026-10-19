@@ -123,6 +123,10 @@
   id: MobDwarf
   name: Urist McHands the Dwarf
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Dwarf
+  # RS14-end
   - type: Fixtures
     fixtures: # TODO: This needs a second fixture just for mob collisions.
       fix1:

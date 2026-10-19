@@ -333,6 +333,8 @@ namespace Content.Server.Database
         public string FlavorText { get; set; } = null!;
         public int ErpStatus { get; set; } // RS14
         public int Age { get; set; }
+        public float Height { get; set; } = 1f; // RS14
+        [Column(TypeName = "jsonb")] public JsonDocument? Dossier { get; set; } // RS14
         public string Sex { get; set; } = null!;
         public string? Voice { get; set; } = null!; // If null, the voice gets defaulted to the sex associated value
         public string Gender { get; set; } = null!;

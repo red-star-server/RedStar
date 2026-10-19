@@ -1,6 +1,3 @@
-using Content.Shared.Materials;
-using Robust.Shared.Prototypes;
-
 namespace Content.Shared._RedStar.Xenobiology.Components.Machines;
 
 [RegisterComponent]
@@ -10,5 +7,11 @@ public sealed partial class CellSequencerComponent : Component
     public string DishSlot = "dishSlot";
 
     [DataField]
-    public ProtoId<MaterialPrototype> RequiredMaterial = "Plasma";
+    public string VialSlot = "vialSlot";
+
+    /// <summary>
+    /// Stability removed from the selected sample after an incorrect sequencing attempt.
+    /// </summary>
+    [DataField]
+    public float IncorrectStabilityCost = 0.1f;
 }

@@ -47,6 +47,9 @@
                        Align="Center"
                        FontColorOverride="DarkGray" />
                 <!-- Selected record info -->
+                <!-- RS14-start -->
+                <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
+                <!-- RS14-end -->
                 <BoxContainer Name="PersonContainer"
                         Orientation="Vertical"
                         VerticalExpand="True"
@@ -107,7 +110,11 @@
                     <Button Name="HistoryButton"
                             Text="{Loc 'criminal-records-console-crime-history'}"
                             Margin="0 5" />
+                    <BoxContainer Name="DossierContainer" Orientation="Vertical" /> <!-- RS14 -->
                 </BoxContainer>
+                <!-- RS14-start -->
+                </ScrollContainer>
+                <!-- RS14-end -->
             </BoxContainer>
             <BoxContainer Orientation="Horizontal"
                           Margin="0 0 0 5">

@@ -13,12 +13,15 @@
   - CellSequencerCircuitboard
   - CellularFusionCircuitboard
   - MutagenicCellInjectorCircuitboard
+  - GrowingVatCircuitboard
 
 - type: latheRecipePack
   id: XenobiologyToolsStatic
   recipes:
   - BiopsyTool
   - PetriDish
+  - GeneticVial
+  - HandheldGeneticAnalyzer
 
 - type: latheRecipePack
   id: MiningToolsStatic

@@ -14,6 +14,11 @@
   result: MutagenicCellInjectorCircuitboard
 
 - type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseResearchMachineRecipeCategory ]
+  id: GrowingVatCircuitboard
+  result: GrowingVatCircuitboard
+
+- type: latheRecipe
   parent: BaseToolRecipe
   id: BiopsyTool
   result: BiopsyTool
@@ -22,8 +27,26 @@
   - Research
 
 - type: latheRecipe
+  parent: HandheldHealthAnalyzer
+  id: HandheldGeneticAnalyzer
+  result: HandheldGeneticAnalyzer
+  categories:
+  - Tools
+  - Research
+
+- type: latheRecipe
   id: PetriDish
   result: PetriDish
+  categories:
+  - Tools
+  - Research
+  completetime: 2
+  materials:
+    Glass: 200
+
+- type: latheRecipe
+  id: GeneticVial
+  result: GeneticVial
   categories:
   - Tools
   - Research

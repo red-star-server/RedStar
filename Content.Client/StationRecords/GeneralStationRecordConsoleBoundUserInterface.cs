@@ -60,6 +60,7 @@ public sealed partial class GeneralStationRecordConsoleBoundUserInterface : Boun
 
         comp.ActiveKey = key;
         Update();
+        RequestDossier(key); // RS14
     }
 
     private void SetStationRecordFilter(StationRecordFilterType type, string value)

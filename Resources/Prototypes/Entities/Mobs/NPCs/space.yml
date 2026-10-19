@@ -77,6 +77,10 @@
   parent: [MobSpaceBasic, BaseSlicingRefinableButchering, BaseMobDestructible]
   description: It looks friendly. Why don't you give it a hug?
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: SpaceBear
+  # RS14-end
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Animals/bear.rsi
@@ -126,6 +130,10 @@
   parent: [MobSpaceBasic, StripableInventoryBase, BaseSlicingRefinableButchering, BaseMobDestructible]
   description: It looks friendly. Why don't you give it a hug?
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: SpaceKangaroo
+  # RS14-end
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Animals/kangaroo.rsi
@@ -260,8 +268,8 @@
   - type: NoSlip
   - type: IgnoreSpiderWeb
   # RS14-start
-  - type: CellTraitSource
-    traits: [ NightVision, NoSlip, Venomous ]
+  - type: Genome
+    genomeId: SpaceSpider
   # RS14-end
   - type: Speech
     speechVerb: Arachnid
@@ -379,11 +387,8 @@
       passiveVisibilityRate: -0.25
       movementVisibilityRate: 0.25
   # RS14-start
-    - type: CellTraitSource
-      traits:
-      - Invisibility
-      - NightVision
-      - Venomous
+    - type: Genome
+      genomeId: SpaceCobra
   # RS14-end
 
 - type: entity
@@ -410,17 +415,20 @@
   name: space sheep
   description: A sheep... in space!
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: SpaceOvine
+  # RS14-end
   - type: Sprite
+    sprite: Mobs/Animals/spacesheep.rsi
     drawdepth: Mobs
     layers:
     - state: space_sheep_bare
       map: [ "enum.DamageStateVisualLayers.Base" ]
       visible: true
-      sprite: Mobs/Animals/sheep.rsi
     - state: space_sheep_wool_glowmask
       map: [ "wooly" ]
       visible: true
-      sprite: Mobs/Animals/sheep.rsi
   - type: GenericVisualizer
     visuals:
       enum.ShearableVisuals.Shearable:
@@ -451,7 +459,7 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: space_sheep_harvested
+        Base: space_sheep_bare
       Critical:
         Base: space_sheep_dead
       Dead:
@@ -515,6 +523,10 @@
   name: snail
   description: Revolting unless you're french.
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: SpaceSnail
+  # RS14-end
   - type: GhostRole
     makeSentient: true
     allowSpeech: false

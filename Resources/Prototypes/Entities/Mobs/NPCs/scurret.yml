@@ -7,6 +7,10 @@
   parent: MobBaseAncestor
   abstract: true
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Scurret
+  # RS14-end
   # Custom names
   - type: ReplacementAccent
     accent: scurret

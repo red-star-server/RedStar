@@ -43,4 +43,4 @@
   announcer: admin-announce-preset-warning-aliens-announcer
   message: admin-announce-preset-warning-aliens-message
   sound:
-    path: /Audio/Announcements/aliens.ogg
+    path: /Audio/_Corvax/Announcements/aliens.ogg

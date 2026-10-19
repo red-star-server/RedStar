@@ -222,6 +222,7 @@ public sealed partial class HumanoidProfileEditor
         UpdateVoiceControls();
         UpdateTTSVoicesControls(); // Corvax-TTS
         UpdateSpeciesGuidebookIcon();
+        UpdateHeightControls(); // RS14
         ReloadPreview();
     }
 

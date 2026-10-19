@@ -1,0 +1,41 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    Title="{Loc 'genetic-analyzer-title'}"
+    MinSize="460 440" SetSize="510 580">
+    <BoxContainer Orientation="Vertical" SeparationOverride="8" Margin="10">
+        <PanelContainer Name="PatientPanel">
+            <BoxContainer SeparationOverride="12" Margin="12">
+                <PanelContainer StyleClasses="PanelInsetDeep" SetSize="76 76">
+                    <SpriteView Name="PatientSprite" OverrideDirection="South" Scale="2 2" Visible="False" />
+                    <TextureRect Name="NoPatient" TexturePath="/Textures/Interface/Misc/health_analyzer_out_of_range.png"
+                        Stretch="KeepAspectCentered" SetSize="64 64" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </PanelContainer>
+                <BoxContainer Orientation="Vertical" SeparationOverride="3" HorizontalExpand="True" VerticalAlignment="Center">
+                    <Label Text="{Loc 'genetic-analyzer-profile'}" StyleClasses="LabelSubText" />
+                    <Label Name="PatientName" StyleClasses="LabelHeading" ClipText="True" />
+                    <Label Name="Species" StyleClasses="LabelSubText" ClipText="True" />
+                </BoxContainer>
+                <Label Name="Connection" VerticalAlignment="Top" />
+            </BoxContainer>
+        </PanelContainer>
+        <PanelContainer StyleClasses="PanelInsetDeep">
+            <BoxContainer Orientation="Vertical" SeparationOverride="6" Margin="12 9">
+                <BoxContainer>
+                    <Label Text="{Loc 'genetic-analyzer-load'}" HorizontalExpand="True" />
+                    <Label Name="LoadValue" StyleClasses="LabelHeading" />
+                </BoxContainer>
+                <ProgressBar Name="LoadBar" MinValue="0" MaxValue="1" MinHeight="8" />
+                <Label Name="LoadStatus" StyleClasses="LabelSubText" />
+            </BoxContainer>
+        </PanelContainer>
+        <BoxContainer Margin="2 3" SeparationOverride="8">
+            <Label Text="{Loc 'genetic-analyzer-genes'}" StyleClasses="LabelHeading" HorizontalExpand="True" />
+            <Label Name="GeneCount" StyleClasses="LabelSubText" />
+        </BoxContainer>
+        <LineEdit Name="Search" PlaceHolder="{Loc 'genetic-analyzer-search'}" />
+        <ScrollContainer VerticalExpand="True" HorizontalExpand="True" HScrollEnabled="False">
+            <BoxContainer Name="GeneList" Orientation="Vertical" SeparationOverride="5" HorizontalExpand="True" />
+        </ScrollContainer>
+        <Label Name="Empty" Text="{Loc 'genetic-analyzer-empty'}" Visible="False" StyleClasses="LabelSubText" />
+    </BoxContainer>
+</controls:FancyWindow>

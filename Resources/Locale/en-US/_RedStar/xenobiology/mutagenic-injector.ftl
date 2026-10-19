@@ -1,5 +1,4 @@
-mutagenic-injector-success = Cells injected. Sample traits: {$traits}
-mutagenic-injector-no-dish = No dish inserted!
-mutagenic-injector-no-cells = The dish is empty!
-mutagenic-injector-no-traits = None of these cells has any traits to transfer.
-mutagenic-injector-no-target = No specimen inside the injector!
+mutagenic-injector-start = Start injection
+mutagenic-injector-overload = The recipient cannot support this genetic load.
+mutagenic-injector-no-new-genes = The recipient already has all the genes in this vial.
+mutagenic-injector-incompatible = Some genes in the vial are incompatible with the recipient.

@@ -1,0 +1,234 @@
+- type: geneticMutation
+  id: NightVisionMutation
+  requiredGenes: [DimLightAdaptation, Photosensitivity]
+  requiredReagents:
+    Nutriment: 5
+    Saline: 5
+  resultGene: NightVision
+  duration: 60
+
+- type: geneticMutation
+  id: MechanosensoryIntegrationMutation
+  requiredGenes: [VibrationSense, TactileWhiskers]
+  requiredReagents:
+    Nutriment: 5
+    Saline: 5
+  resultGene: MechanosensoryIntegration
+  duration: 60
+
+- type: geneticMutation
+  id: NoSlipMutation
+  requiredGenes: [LimbGrip, VestibularBalance, DenseMusculature]
+  requiredReagents:
+    Nutriment: 5
+    Saline: 5
+  resultGene: NoSlip
+  duration: 60
+
+- type: geneticMutation
+  id: ElasticFrameMutation
+  requiredGenes: [FlexibleJoints, ElasticTendons, FragileBones, DenseConnectiveTissue]
+  requiredReagents:
+    Nutriment: 5
+    Saline: 5
+  resultGene: ElasticFrame
+  duration: 60
+
+- type: geneticMutation
+  id: LamellarScalesMutation
+  requiredGenes: [MineralizedTissue, StructuralIridescence]
+  requiredReagents:
+    Nutriment: 5
+    Saline: 5
+  resultGene: LamellarScales
+  duration: 60
+
+- type: geneticMutation
+  id: CoordinatedRepairMutation
+  requiredGenes: [CellRenewal, TissuePlasticity, VegetativeGrowth]
+  requiredReagents:
+    Nutriment: 5
+    Saline: 5
+  resultGene: CoordinatedRepair
+  duration: 60
+
+- type: geneticMutation
+  id: ImmuneToleranceMutation
+  requiredGenes: [WeakImmunity, ToxinTolerance, MucusSecretion]
+  requiredReagents:
+    Nutriment: 5
+    Saline: 5
+  resultGene: ImmuneTolerance
+  duration: 60
+
+- type: geneticMutation
+  id: VenomousMutation
+  requiredGenes: [ToxinProduction, ProteinSecretion]
+  requiredReagents:
+    Nutriment: 5
+    Saline: 5
+  resultGene: Venomous
+  duration: 60
+
+- type: geneticMutation
+  id: DetoxifyingMetabolismMutation
+  requiredGenes: [XenobioticProcessing, ChemicalSensitivity, OmnivorousDigestion, CelluloseDigestion]
+  requiredReagents:
+    Nutriment: 5
+    Saline: 5
+  resultGene: DetoxifyingMetabolism
+  duration: 60
+
+- type: geneticMutation
+  id: TorporControlMutation
+  requiredGenes: [SlowMetabolism, LipidStorage, ColdAdaptation]
+  requiredReagents:
+    Nutriment: 5
+    Saline: 5
+  resultGene: TorporControl
+  duration: 60
+
+- type: geneticMutation
+  id: PacifismMutation
+  requiredGenes: [PassiveTemperament, StartleResponse, CollectiveSignaling]
+  requiredReagents:
+    Nutriment: 5
+    Saline: 5
+  resultGene: Pacifism
+  duration: 60
+
+- type: geneticMutation
+  id: ReflexDisinhibitionMutation
+  requiredGenes: [DefensiveAggression, HighMetabolism]
+  requiredReagents:
+    Nutriment: 5
+    Saline: 5
+  resultGene: ReflexDisinhibition
+  duration: 60
+
+- type: geneticMutation
+  id: RadionuclideSequestrationMutation
+  requiredGenes: [MineralAssimilation, XenobioticProcessing]
+  requiredReagents:
+    Uranium: 1
+    Saline: 5
+  resultGene: RadionuclideSequestration
+  duration: 60
+
+- type: geneticMutation
+  id: WebSpinningMutation
+  requiredGenes: [SilkSynthesis, ProteinSecretion, LimbGrip, ChitinousCovering]
+  requiredReagents:
+    Nutriment: 5
+    Saline: 5
+  resultGene: WebSpinning
+  duration: 60
+
+- type: geneticMutation
+  id: ParrotSpeechMutation
+  requiredGenes: [AuditoryLearning, AcuteHearing]
+  requiredReagents:
+    Nutriment: 5
+    Saline: 5
+  resultGene: ParrotSpeech
+  duration: 60
+
+- type: geneticMutation
+  id: PhotonicLatticeMutation
+  requiredGenes: [LamellarScales, ProteinSecretion, KeratinizedCovering]
+  requiredReagents:
+    Nutriment: 10
+    Saline: 10
+    UnstableMutagen: 5
+  resultGene: PhotonicLattice
+  duration: 90
+
+- type: geneticMutation
+  id: RegenerationMutation
+  requiredGenes: [CoordinatedRepair, ImmuneTolerance, HighMetabolism, BroodDevelopment]
+  requiredReagents:
+    Nutriment: 10
+    Saline: 10
+    UnstableMutagen: 5
+  resultGene: Regeneration
+  duration: 90
+
+- type: geneticMutation
+  id: ToxicOverproductionMutation
+  requiredGenes: [Venomous, HighMetabolism, ChemicalSensitivity]
+  requiredReagents:
+    Nutriment: 10
+    Saline: 10
+    UnstableMutagen: 5
+  resultGene: ToxicOverproduction
+  duration: 90
+
+- type: geneticMutation
+  id: PressureHomeostasisMutation
+  requiredGenes: [TorporControl, ElasticFrame, LowPressureAdaptation]
+  requiredReagents:
+    Nutriment: 10
+    Saline: 10
+    UnstableMutagen: 5
+  resultGene: PressureHomeostasis
+  duration: 90
+
+- type: geneticMutation
+  id: SensoryOverloadMutation
+  requiredGenes: [MechanosensoryIntegration, ReflexDisinhibition, Photosensitivity]
+  requiredReagents:
+    Nutriment: 10
+    Saline: 10
+    UnstableMutagen: 5
+  resultGene: SensoryOverload
+  duration: 90
+
+- type: geneticMutation
+  id: AdaptivePigmentationMutation
+  requiredGenes: [PigmentPlasticity, ColorDiscrimination, TissuePlasticity, StructuralIridescence]
+  requiredReagents:
+    Nutriment: 10
+    Saline: 10
+    UnstableMutagen: 5
+  resultGene: AdaptivePigmentation
+  duration: 90
+
+- type: geneticMutation
+  id: RadiationMutation
+  requiredGenes: [RadionuclideSequestration, MineralAssimilation, HighMetabolism, MineralizedTissue]
+  requiredReagents:
+    Uranium: 5
+    Saline: 5
+    UnstableMutagen: 5
+  resultGene: Radiation
+  duration: 90
+
+- type: geneticMutation
+  id: ReflectionMutation
+  requiredGenes: [PhotonicLattice, LamellarScales]
+  requiredReagents:
+    Nutriment: 15
+    Saline: 10
+    UnstableMutagen: 10
+  resultGene: Reflection
+  duration: 120
+
+- type: geneticMutation
+  id: InvisibilityMutation
+  requiredGenes: [AdaptivePigmentation, PhotonicLattice]
+  requiredReagents:
+    Nutriment: 15
+    Saline: 10
+    UnstableMutagen: 10
+  resultGene: Invisibility
+  duration: 120
+
+- type: geneticMutation
+  id: SomaticHomeostasisMutation
+  requiredGenes: [Regeneration, DetoxifyingMetabolism]
+  requiredReagents:
+    Nutriment: 15
+    Saline: 10
+    UnstableMutagen: 10
+  resultGene: SomaticHomeostasis
+  duration: 120

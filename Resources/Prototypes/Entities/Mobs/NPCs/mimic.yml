@@ -4,6 +4,10 @@
   parent: [ SimpleMobBase, MobCombat, BaseSlicingRefinableButchering, BaseMobDestructible ]
   description: Surprise. # When this gets a proper write this should use the object's actual description >:)
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Mimic
+  # RS14-end
   - type: Tag
     tags:
     - FootstepSound

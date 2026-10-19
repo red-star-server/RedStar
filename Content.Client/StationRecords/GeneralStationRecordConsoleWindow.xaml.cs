@@ -80,6 +80,7 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
         StationRecordsFilter? filter,
         bool canDeleteEntries)
     {
+        UpdateDossierSelection(selectedKey); // RS14
         if (filter != null)
         {
             if (filter.Type != _currentFilterType)
@@ -151,6 +152,8 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
         newRecord.OnDeletePressed = OnDeleted;
 
         RecordContainer.AddChild(newRecord);
+
+        AddDossierView(); // RS14
     }
 
     private void FilterListingOfRecords(string text = "")

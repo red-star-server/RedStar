@@ -1,4 +1,5 @@
-vending-machine-category-top = Бра
-vending-machine-category-bottom = Трусы
-vending-machine-category-socks = Носки
-vending-machine-category-swimwear = Купальники
+vending-machine-category-top = Р‘СЂР°
+vending-machine-category-boxers = Боксеры
+vending-machine-category-panties = Трусики
+vending-machine-category-socks = РќРѕСЃРєРё
+vending-machine-category-swimwear = РљСѓРїР°Р»СЊРЅРёРєРё

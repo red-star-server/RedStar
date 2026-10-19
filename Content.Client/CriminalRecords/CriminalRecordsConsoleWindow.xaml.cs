@@ -194,6 +194,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         if (state is { CriminalRecord: not null, StationRecord: not null })
         {
             PopulateRecordContainer(state.StationRecord, state.CriminalRecord);
+            UpdateDossier(state.Dossier); // RS14
             OnHistoryUpdated?.Invoke(state.CriminalRecord, _access, false);
             _selectedRecord = state.CriminalRecord;
         }

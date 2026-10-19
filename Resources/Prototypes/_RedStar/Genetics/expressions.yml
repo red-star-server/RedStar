@@ -1,0 +1,159 @@
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionEggLayer
+  components:
+  - type: GeneExpression
+    gene: EggLayer
+    components:
+    - type: EntityProducerAction
+      insufficientSatiationPopup: action-popup-lay-egg-too-hungry
+      userPopup: action-popup-lay-egg-user
+      othersPopup: action-popup-lay-egg-others
+    - type: SatiationProduction
+      delay: 60
+      delayMax: 120
+      satiationUsage: 60
+      minimumSatiation: 60
+      automaticForPlayers: false
+    - type: EntityProducer
+      table:
+        id: FoodEgg
+    actions:
+    - ActionAnimalLayEgg
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionLactation
+  components:
+  - type: GeneExpression
+    gene: Lactation
+    components:
+    - type: HarvestableSolution
+      solutionName: udder
+      verbText: udder-system-verb-milk
+      emptyMessage: udder-system-dry
+      successMessage: udder-system-success
+    solutions:
+      udder: SolutionUdder
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionMessyDrinker
+  components:
+  - type: GeneExpression
+    gene: MessyDrinker
+    components:
+    - type: MessyDrinker
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionBleating
+  components:
+  - type: GeneExpression
+    gene: Bleating
+    components:
+    - type: BleatingAccent
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionNightVision
+  components:
+  - type: GeneExpression
+    gene: NightVision
+    components:
+    - type: NightVision
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionNoSlip
+  components:
+  - type: GeneExpression
+    gene: NoSlip
+    components:
+    - type: NoSlip
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionVenomous
+  components:
+  - type: GeneExpression
+    gene: Venomous
+    components:
+    - type: MeleeChemicalInjector
+      transferAmount: 1
+      solution: melee
+    solutions:
+      melee: SolutionVenomSpider
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionPacifism
+  components:
+  - type: GeneExpression
+    gene: Pacifism
+    components:
+    - type: Pacified
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionWebSpinning
+  components:
+  - type: GeneExpression
+    gene: WebSpinning
+    components:
+    - type: Spider
+      spawnsWebsAsNonPlayer: false
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionParrotSpeech
+  components:
+  - type: GeneExpression
+    gene: ParrotSpeech
+    components:
+    - type: ActiveListener
+    - type: ParrotMemory
+    - type: ParrotListener
+    - type: Vocalizer
+
+- type: entity
+  parent: StatusEffectPressureImmunity
+  id: GeneExpressionPressureHomeostasis
+  components:
+  - type: GeneExpression
+    gene: PressureHomeostasis
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionRadiation
+  components:
+  - type: GeneExpression
+    gene: Radiation
+    components:
+    - type: RadiationSource
+      intensity: 0.25
+      slope: 0.5
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionReflection
+  components:
+  - type: GeneExpression
+    gene: Reflection
+    components:
+    - type: Reflect
+      reflects: Energy
+      reflectProb: 0.25
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionInvisibility
+  components:
+  - type: GeneExpression
+    gene: Invisibility
+    components:
+    - type: Stealth
+      enabledOnDeath: false
+    - type: StealthOnMove
+      passiveVisibilityRate: -0.1
+      movementVisibilityRate: 0.5

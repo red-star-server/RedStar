@@ -76,6 +76,7 @@
   - GrowlingAccent # Corvax
   - TTS # Corvax-TTS
   eventComponents:
+  - Genome # RS14
   - Damageable # Sprites and damage modifier
   - Flammable # Displacements
   - CreamPied # Displacements

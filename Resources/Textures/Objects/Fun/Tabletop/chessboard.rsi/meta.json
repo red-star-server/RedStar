@@ -1,10 +1,10 @@
-{
+﻿{
     "version": 1,
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Visne",
+    "license": "CC0-1.0",
+    "copyright": "By AraiMaia for Funky Station",
     "size": {
-        "x": 18,
-        "y": 18
+        "x": 32,
+        "y": 32
     },
     "states": [
         {

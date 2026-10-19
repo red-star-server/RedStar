@@ -169,6 +169,10 @@
   id: MobVulpkanin
   name: Urist McArfArf
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Vulpkanin
+  # RS14-end
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:
