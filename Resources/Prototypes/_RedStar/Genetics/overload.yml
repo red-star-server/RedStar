@@ -1,0 +1,8 @@
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: GeneticOverloadStatusEffect
+  name: genetic overload
+  components:
+  - type: MovementModStatusEffect
+    walkSpeedModifier: 0.95
+    sprintSpeedModifier: 0.85

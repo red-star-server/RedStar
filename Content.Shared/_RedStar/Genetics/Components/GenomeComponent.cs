@@ -22,10 +22,10 @@ public sealed partial class GenomeComponent : Component
     public bool GenomeGenerated;
 
     /// <summary>
-    /// Maximum combined load cost of acquired genes, including dormant and suppressed genes.
+    /// Safe load capacity, represented as 100% on the analyzer. Acquired genes can exceed it.
     /// </summary>
     [DataField]
-    public int MaximumLoad = 6;
+    public int MaximumLoad = 100;
 
     /// <summary>
     /// Acquired genes and their expression status. Catalogue entries do not activate effects or consume load.

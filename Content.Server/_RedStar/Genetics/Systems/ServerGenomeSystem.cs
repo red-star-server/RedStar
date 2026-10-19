@@ -51,8 +51,8 @@ public sealed partial class ServerGenomeSystem : GenomeSystem
 
     private void NotifyChanged(EntityUid uid)
     {
-        var changed = new GenomeChangedEvent();
-        RaiseLocalEvent(uid, ref changed);
+        var changed = new GenomeChangedEvent(uid);
+        RaiseLocalEvent(uid, ref changed, broadcast: true);
     }
 
     private bool TryExpress(EntityUid uid, ProtoId<GenePrototype> id, bool firstActivation)
@@ -86,7 +86,11 @@ public sealed partial class ServerGenomeSystem : GenomeSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnShutdown(Entity<GenomeComponent> ent, ref ComponentShutdown args) => StopExpressions(ent);
+    private void OnShutdown(Entity<GenomeComponent> ent, ref ComponentShutdown args)
+    {
+        StopExpressions(ent);
+        NotifyChanged(ent);
+    }
 
     [SubscribeLocalEvent]
     private void OnExpressionEnded(Entity<GenomeComponent> ent, ref GeneExpressionEndedEvent args)
@@ -181,13 +185,22 @@ public sealed partial class ServerGenomeSystem : GenomeSystem
         Resolve(ent, ref ent.Comp, logMissing: false) ? Load(ent.Comp.Genes.Keys) : 0;
 
     /// <summary>
-    /// Checks that incoming genes are compatible and their combined acquired load fits the limit.
-    /// Acquired genes are counted once; donor catalogue entries do not consume load.
+    /// Returns load relative to safe capacity, optionally including incoming genes. Existing genes count once.
+    /// </summary>
+    public float GetLoadPercentage(Entity<GenomeComponent?> ent, IReadOnlySet<ProtoId<GenePrototype>>? incoming = null)
+    {
+        if (!Resolve(ent, ref ent.Comp, logMissing: false))
+            return 0;
+        var genes = incoming is null ? ent.Comp.Genes.Keys.AsEnumerable() : ent.Comp.Genes.Keys.Union(incoming);
+        return CalculateLoadPercentage(Load(genes), ent.Comp.MaximumLoad);
+    }
+
+    /// <summary>
+    /// Checks readiness and organism compatibility. Exceeding safe load is allowed and causes overload symptoms.
     /// </summary>
     public bool CanApplyGenes(Entity<GenomeComponent?> ent, IReadOnlySet<ProtoId<GenePrototype>> incoming) =>
         Resolve(ent, ref ent.Comp, logMissing: false) && ent.Comp.GenomeGenerated &&
-        incoming.All(id => IsGeneCompatible(ent.Owner, id)) &&
-        Load(ent.Comp.Genes.Keys.Union(incoming)) <= ent.Comp.MaximumLoad;
+        incoming.All(id => IsGeneCompatible(ent.Owner, id));
 
     /// <summary>
     /// Acquired genes remain raw until activated. Existing genes retain their expression state.
@@ -274,7 +287,7 @@ public sealed partial class ServerGenomeSystem : GenomeSystem
     }
 
     /// <summary>
-    /// Checks that inputs are dormant, the result is absent and compatible, and the resulting load fits.
+    /// Checks that inputs are dormant and the result is absent and compatible. Overload does not block conversion.
     /// Does not consume inputs or apply gene effects.
     /// </summary>
     public bool CanTransformGenes(Entity<GenomeComponent?> ent, IReadOnlySet<ProtoId<GenePrototype>> inputs,
@@ -282,8 +295,7 @@ public sealed partial class ServerGenomeSystem : GenomeSystem
         inputs.Count > 0 && !inputs.Contains(result) && IsGeneCompatible(ent.Owner, result) &&
         Resolve(ent, ref ent.Comp, logMissing: false) && ent.Comp.GenomeGenerated &&
         !ent.Comp.Genes.ContainsKey(result) &&
-        inputs.All(id => ent.Comp.Genes.TryGetValue(id, out var status) && status == GeneStatus.Raw) &&
-        Load(ent.Comp.Genes.Keys.Except(inputs).Append(result)) <= ent.Comp.MaximumLoad;
+        inputs.All(id => ent.Comp.Genes.TryGetValue(id, out var status) && status == GeneStatus.Raw);
 
     /// <summary>
     /// Consumes the dormant input genes and adds the result, expressing it immediately.

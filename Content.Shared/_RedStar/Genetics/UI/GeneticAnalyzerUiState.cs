@@ -1,5 +1,6 @@
 using Content.Shared._RedStar.Genetics.Data;
 using Content.Shared._RedStar.Genetics.Prototypes;
+using Content.Shared._RedStar.Genetics.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -27,6 +28,7 @@ public sealed class GeneticAnalyzerUiState(
     public readonly int Load = load;
     public readonly int MaximumLoad = maximumLoad;
     public readonly List<GeneticAnalyzerGene> Genes = genes;
+    public float LoadPercentage => GenomeSystem.CalculateLoadPercentage(Load, MaximumLoad);
 }
 
 /// <summary>

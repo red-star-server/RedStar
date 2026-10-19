@@ -1,13 +1,10 @@
-ent-HandheldGeneticAnalyzer = генетический анализатор
-    .desc = Ручной сканер для определения генов организма и генетической нагрузки.
-
 genetic-analyzer-title = Генетический анализатор
 genetic-analyzer-profile = ГЕНЕТИЧЕСКИЙ ПРОФИЛЬ
 genetic-analyzer-organism = Биологический организм
 genetic-analyzer-connected = Активен
 genetic-analyzer-disconnected = Неактивен
 genetic-analyzer-load = Генетическая нагрузка
-genetic-analyzer-load-value = { $load } / { $maximum }
+genetic-analyzer-load-value = { $load }%
 genetic-analyzer-normal = Нагрузка в пределах нормы
 genetic-analyzer-full = Достигнут предел нагрузки
 genetic-analyzer-overloaded = Генетическая перегрузка
@@ -19,7 +16,10 @@ genetic-analyzer-no-data = Нет результатов сканировани�
 genetic-analyzer-details = Показать описание гена
 genetic-analyzer-dormant = Неактивен
 genetic-analyzer-suppressed = Подавлен
-genetic-analyzer-gene-load = Нагрузка при введении: { $load }
+genetic-analyzer-gene-load = Нагрузка при введении: { $load }%
+genetic-overload-weakness = Вы чувствуете слабость от генетической перегрузки.
+ent-GeneticOverloadStatusEffect = генетическая перегрузка
+    .desc = Организм не справляется с приобретёнными генетическими изменениями.
 genetic-analyzer-category-beneficial = Полезный
 genetic-analyzer-category-pathological = Вредный
 genetic-analyzer-category-mixed = Смешанный

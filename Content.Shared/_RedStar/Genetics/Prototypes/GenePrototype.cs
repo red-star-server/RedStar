@@ -19,7 +19,7 @@ public sealed partial class GenePrototype : IPrototype
 
     /// <summary>
     /// Load reserved by an acquired gene, including while dormant or suppressed.
-    /// Natural genes do not consume acquired load.
+    /// Measured against a standard safe capacity of 100. Natural genes do not consume acquired load.
     /// </summary>
     [DataField]
     public int LoadCost
@@ -30,7 +30,7 @@ public sealed partial class GenePrototype : IPrototype
             ArgumentOutOfRangeException.ThrowIfNegative(value);
             field = value;
         }
-    } = 1;
+    } = 5;
 
     /// <summary>
     /// Describes the gene's manifestations independently of its research tier and load.
