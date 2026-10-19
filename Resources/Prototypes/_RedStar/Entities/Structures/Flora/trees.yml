@@ -7,16 +7,6 @@
   - type: Sprite
     sprite: _RedStar/Structures/Flora/flora_treepalm.rsi
     state: treepalm01
-  - type: Destructible
-    thresholds:
-    - trigger: !type:DamageTrigger
-        damage: 50
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          Log:
-            min: 2
-            max: 5
 
 - type: entity
   parent: FloraPalmTree01

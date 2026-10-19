@@ -1,8 +1,6 @@
 - type: entity
   abstract: true
-  parent:
-  - BaseStructure
-  - StructureHealthFurniture
+  parent: BaseStructure
   id: BaseRoundTable
   components:
   - type: Animateable
@@ -19,8 +17,15 @@
         - TableLayer
   - type: SpriteFade
   - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Tables/roundtable.rsi
     noRot: true
   - type: Icon
+    sprite: _RedStar/Structures/Furniture/Tables/roundtable.rsi
+  - type: Damageable
+    damageModifierSet: SteelStaticMod
+  - type: Construction
+    graph: FurnitureTableGraph
+    node: start
   - type: Climbable
   - type: Bonkable
     bonkDamage:
@@ -36,38 +41,28 @@
     - ForceFixRotations
 
 - type: entity
-  parent: BaseRoundTable
+  parent: [ BaseRoundTable, StructureHealthFurniture ]
   id: TableRoundPlastic
   name: plastic round table
   description: Do not apply fire to this. Rumour says it burns easily.
   components:
-  - type: Damageable
-    damageModifierSet: SteelStaticMod
-  - type: Injurable
-    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 15
+        damage: 40
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/metal_break1.ogg
-      - !type:DoActsBehavior
-        acts:
-        - Destruction
   - type: Sprite
-    sprite: _RedStar/Structures/Furniture/Tables/roundtable.rsi
     state: round_plastic
   - type: Icon
-    sprite: _RedStar/Structures/Furniture/Tables/roundtable.rsi
     state: round_plastic
   - type: Construction
-    graph: FurnitureTableGraph
     node: tableRoundPlastic
 
 - type: entity
-  parent: TableRoundPlastic
+  parent: [ BaseRoundTable, StructureHealthFurniture ]
   id: TableRoundWood
   name: wood round table
   description: Do not apply fire to this. Rumour says it burns easily.
@@ -77,14 +72,11 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 15
+        damage: 40
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: WoodDestroy
-      - !type:DoActsBehavior
-        acts:
-        - Destruction
   - type: Sprite
     state: round_wood
   - type: Icon
@@ -93,11 +85,13 @@
     node: tableRoundWood
 
 - type: entity
-  parent: TableRoundPlastic
+  parent: [ BaseRoundTable, StructureHealthFurnitureWeak ]
   id: TableRoundGlass
   name: glass round table
   description: Do not apply fire to this. Rumour says it burns easily.
   components:
+  - type: Damageable
+    damageModifierSet: GlassMod
   - type: GlassTable
     climberDamage:
       types:
@@ -109,14 +103,11 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 15
+        damage: 5
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/glass_break2.ogg
-      - !type:DoActsBehavior
-        acts:
-        - Destruction
   - type: Sprite
     state: round_glass
   - type: Icon
@@ -125,34 +116,24 @@
     node: tableRoundGlass
 
 - type: entity
-  parent: BaseRoundTable
+  parent: [ BaseRoundTable, StructureHealthFurnitureWeak ]
   id: TableRoundFrame
   name: round table frame
   description: Pieces of metal that make the frame of a round table.
   components:
-  - type: Damageable
-    damageModifierSet: SteelStaticMod
-  - type: Injurable
-    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 15
+        damage: 5
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/metal_break1.ogg
-      - !type:DoActsBehavior
-        acts:
-        - Destruction
   - type: Sprite
-    sprite: _RedStar/Structures/Furniture/Tables/roundtable.rsi
     state: round_frame
   - type: Icon
-    sprite: _RedStar/Structures/Furniture/Tables/roundtable.rsi
     state: round_frame
   - type: Construction
-    graph: FurnitureTableGraph
     node: tableRoundFrame
 
 - type: entity
@@ -169,7 +150,7 @@
     node: tableRoundGeneric
 
 - type: entity
-  parent: TableRoundPlastic
+  parent: [ BaseRoundTable, StructureHealthFurniture ]
   id: TableRoundCarpet
   name: gambling round table
   description: Play em' cowboy.
@@ -183,16 +164,7 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
-      - !type:DoActsBehavior
-        acts:
-        - Destruction
-    - trigger: !type:DamageTrigger
-        damage: 15
+        damage: 40
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -205,9 +177,6 @@
           MaterialCloth1:
             min: 1
             max: 1
-      - !type:DoActsBehavior
-        acts:
-        - Destruction
   - type: Tag
     tags:
     - Wooden
@@ -218,11 +187,13 @@
     node: tableRoundCarpet
 
 - type: entity
-  parent: TableRoundPlastic
+  parent: [ BaseRoundTable, StructureHealthFurniture ]
   id: TableRoundPlasma
   name: plasma round table
   description: A round piece of plasma glass, standing on a metal leg. Pretty!
   components:
+  - type: Damageable
+    damageModifierSet: GlassPlasmaMod
   - type: GlassTable
     climberDamage:
       types:
@@ -234,23 +205,11 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 250
-      behaviors:
-      - !type:DoActsBehavior
-        acts:
-        - Destruction
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
-    - trigger: !type:DamageTrigger
-        damage: 50
+        damage: 40
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
-      - !type:DoActsBehavior
-        acts:
-        - Destruction
   - type: Sprite
     state: round_plasma
   - type: Icon
@@ -275,7 +234,7 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 25
+        damage: 40
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -289,9 +248,6 @@
             max: 1
       - !type:ChangeConstructionNodeBehavior
         node: TableFrame
-      - !type:DoActsBehavior
-        acts:
-        - Destruction
   - type: IconSmooth
     key: plastictable
     states:
@@ -308,7 +264,7 @@
 - type: entity
   parent:
   - TableBase
-  - StructureHealthFurniture
+  - StructureHealthFurnitureWeak
   id: TableUraniumGlass
   name: uranium glass table
   description: A square piece of uranium glass, standing on four metal legs. Radioactive!
@@ -317,6 +273,8 @@
     sprite: _RedStar/Structures/Furniture/Tables/uranium.rsi
   - type: Icon
     sprite: _RedStar/Structures/Furniture/Tables/uranium.rsi
+  - type: Damageable
+    damageModifierSet: GlassMod
   - type: GlassTable
     climberDamage:
       types:
@@ -327,15 +285,6 @@
     tableMassLimit: 160
   - type: Destructible
     thresholds:
-    - trigger: !type:DamageTrigger
-        damage: 25
-      behaviors:
-      - !type:DoActsBehavior
-        acts:
-        - Destruction
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
     - trigger: !type:DamageTrigger
         damage: 5
       behaviors:
@@ -349,9 +298,6 @@
             max: 1
       - !type:ChangeConstructionNodeBehavior
         node: TableFrame
-      - !type:DoActsBehavior
-        acts:
-        - Destruction
   - type: IconSmooth
     key: uraniumglasstable
     states:
@@ -377,6 +323,8 @@
     sprite: _RedStar/Structures/Furniture/Tables/r_plasma.rsi
   - type: Icon
     sprite: _RedStar/Structures/Furniture/Tables/r_plasma.rsi
+  - type: Damageable
+    damageModifierSet: GlassReinforcedPlasmaMod
   - type: GlassTable
     climberDamage:
       types:
@@ -388,16 +336,7 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 250
-      behaviors:
-      - !type:DoActsBehavior
-        acts:
-        - Destruction
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
-    - trigger: !type:DamageTrigger
-        damage: 50
+        damage: 40
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -412,9 +351,6 @@
           PartRodMetal1:
             min: 1
             max: 1
-      - !type:DoActsBehavior
-        acts:
-        - Destruction
   - type: IconSmooth
     key: reinforcedplasmaglasstable
     states:
@@ -440,6 +376,8 @@
     sprite: _RedStar/Structures/Furniture/Tables/r_uran.rsi
   - type: Icon
     sprite: _RedStar/Structures/Furniture/Tables/r_uran.rsi
+  - type: Damageable
+    damageModifierSet: GlassReinforcedMod
   - type: GlassTable
     climberDamage:
       types:
@@ -451,16 +389,7 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 250
-      behaviors:
-      - !type:DoActsBehavior
-        acts:
-        - Destruction
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
-    - trigger: !type:DamageTrigger
-        damage: 50
+        damage: 40
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -475,9 +404,6 @@
           PartRodMetal1:
             min: 1
             max: 1
-      - !type:DoActsBehavior
-        acts:
-        - Destruction
   - type: IconSmooth
     key: reinforceduraniumglasstable
     states:

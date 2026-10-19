@@ -146,21 +146,13 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 150
+        damage: 80
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialMarble1:
             min: 4
             max: 6
-      - !type:DoActsBehavior
-        acts:
-        - Destruction
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/break_stone.ogg
-          params:
-            volume: -2
   - type: Sprite
     sprite: _RedStar/Structures/Decoration/Statues/marble_lady.rsi
     state: marlady
@@ -207,21 +199,13 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 100
+        damage: 80
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialMarble1:
             min: 3
             max: 5
-      - !type:DoActsBehavior
-        acts:
-        - Destruction
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/break_stone.ogg
-          params:
-            volume: -2
   - type: Construction
     graph: DecorativeStatueGraph
     node: marbleStand
@@ -331,21 +315,13 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 100
+        damage: 80
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialMarble1:
             min: 3
             max: 4
-      - !type:DoActsBehavior
-        acts:
-        - Destruction
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/break_stone.ogg
-          params:
-            volume: -2
   - type: Construction
     graph: DecorativeStatueGraph
     node: birdMarble
@@ -375,21 +351,13 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 100
+        damage: 80
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialMarble1:
             min: 4
             max: 5
-      - !type:DoActsBehavior
-        acts:
-        - Destruction
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/break_stone.ogg
-          params:
-            volume: -2
   - type: Construction
     graph: DecorativeStatueGraph
     node: scientistMarble
@@ -406,21 +374,13 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 100
+        damage: 80
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialMarble1:
             min: 4
             max: 5
-      - !type:DoActsBehavior
-        acts:
-        - Destruction
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/break_stone.ogg
-          params:
-            volume: -2
   - type: Construction
     graph: DecorativeStatueGraph
     node: eyeMarble
@@ -437,21 +397,13 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 100
+        damage: 80
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialMarble1:
             min: 3
             max: 5
-      - !type:DoActsBehavior
-        acts:
-        - Destruction
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/break_stone.ogg
-          params:
-            volume: -2
   - type: Construction
     graph: DecorativeStatueGraph
     node: ancestorMarble
