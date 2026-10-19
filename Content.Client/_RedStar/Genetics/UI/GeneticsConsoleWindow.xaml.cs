@@ -34,6 +34,14 @@ public sealed partial class GeneticsConsoleWindow : FancyWindow
             BorderColor = Color.FromHex("#6A9BA6"),
             BorderThickness = new Thickness(2, 0, 0, 0)
         };
+        ProcedurePanel.PanelOverride = new StyleBoxFlat
+        {
+            BackgroundColor = Color.FromHex("#252B35"),
+            BorderColor = Color.FromHex("#6A9BA6"),
+            BorderThickness = new Thickness(2, 0, 0, 0)
+        };
+        Progress.BackgroundStyleBoxOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#171C24") };
+        Progress.ForegroundStyleBoxOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#85D5CA") };
         BeakerPanel.PanelOverride = new StyleBoxFlat
         {
             BackgroundColor = Color.FromHex("#202832"),
@@ -74,14 +82,10 @@ public sealed partial class GeneticsConsoleWindow : FancyWindow
                         ("reagent", _prototypes.Index<ReagentPrototype>(reagent.Reagent.Prototype).LocalizedName),
                         ("amount", reagent.Quantity))));
         Beaker.SetMessage(FormattedMessage.EscapeText(beaker));
-        Progress.Visible = Cancel.Visible = Working.Visible = state.Busy;
+        ProcedurePanel.Visible = state.Busy;
         Progress.Value = state.Progress;
-        if (state.Busy && state.WorkingGene is { } gene && state.Operation is { } operation)
-        {
-            Working.SetMessage(Loc.GetString("genetics-console-progress",
-                ("gene", Loc.GetString($"gene-{gene}-name")),
-                ("procedure", Loc.GetString($"genetics-console-{operation.ToString().ToLowerInvariant()}"))));
-        }
+        if (state.Busy && state.Operation is { } operation)
+            Working.Text = Loc.GetString($"genetics-console-progress-{operation.ToString().ToLowerInvariant()}");
 
         RefreshSelection();
     }
@@ -89,7 +93,10 @@ public sealed partial class GeneticsConsoleWindow : FancyWindow
     private void RefreshSelection()
     {
         foreach (var button in _procedures.Values)
+        {
             button.Visible = false;
+        }
+
         Description.Visible = GeneState.Visible = false;
         Procedures.Visible = false;
         Description.SetMessage(string.Empty);

@@ -1,0 +1,307 @@
+ent-GeneticVialDimLightAdaptation = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-DimLightAdaptation-name }
+
+ent-GeneticVialColorDiscrimination = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-ColorDiscrimination-name }
+
+ent-GeneticVialPhotosensitivity = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-Photosensitivity-name }
+
+ent-GeneticVialPoorVision = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-PoorVision-name }
+
+ent-GeneticVialAcuteHearing = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-AcuteHearing-name }
+
+ent-GeneticVialOlfactorySensitivity = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-OlfactorySensitivity-name }
+
+ent-GeneticVialVibrationSense = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-VibrationSense-name }
+
+ent-GeneticVialTactileWhiskers = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-TactileWhiskers-name }
+
+ent-GeneticVialFlexibleJoints = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-FlexibleJoints-name }
+
+ent-GeneticVialLimbGrip = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-LimbGrip-name }
+
+ent-GeneticVialVestibularBalance = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-VestibularBalance-name }
+
+ent-GeneticVialElasticTendons = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-ElasticTendons-name }
+
+ent-GeneticVialDenseMusculature = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-DenseMusculature-name }
+
+ent-GeneticVialDenseConnectiveTissue = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-DenseConnectiveTissue-name }
+
+ent-GeneticVialMineralizedTissue = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-MineralizedTissue-name }
+
+ent-GeneticVialKeratinizedCovering = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-KeratinizedCovering-name }
+
+ent-GeneticVialChitinousCovering = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-ChitinousCovering-name }
+
+ent-GeneticVialStructuralIridescence = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-StructuralIridescence-name }
+
+ent-GeneticVialPigmentPlasticity = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-PigmentPlasticity-name }
+
+ent-GeneticVialMucusSecretion = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-MucusSecretion-name }
+
+ent-GeneticVialSlowMetabolism = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-SlowMetabolism-name }
+
+ent-GeneticVialHighMetabolism = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-HighMetabolism-name }
+
+ent-GeneticVialOmnivorousDigestion = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-OmnivorousDigestion-name }
+
+ent-GeneticVialCelluloseDigestion = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-CelluloseDigestion-name }
+
+ent-GeneticVialLipidStorage = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-LipidStorage-name }
+
+ent-GeneticVialProteinSecretion = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-ProteinSecretion-name }
+
+ent-GeneticVialCellRenewal = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-CellRenewal-name }
+
+ent-GeneticVialTissuePlasticity = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-TissuePlasticity-name }
+
+ent-GeneticVialVegetativeGrowth = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-VegetativeGrowth-name }
+
+ent-GeneticVialWeakImmunity = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-WeakImmunity-name }
+
+ent-GeneticVialChemicalSensitivity = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-ChemicalSensitivity-name }
+
+ent-GeneticVialXenobioticProcessing = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-XenobioticProcessing-name }
+
+ent-GeneticVialToxinProduction = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-ToxinProduction-name }
+
+ent-GeneticVialToxinTolerance = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-ToxinTolerance-name }
+
+ent-GeneticVialOxygenStorage = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-OxygenStorage-name }
+
+ent-GeneticVialNitrogenMetabolism = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-NitrogenMetabolism-name }
+
+ent-GeneticVialColdAdaptation = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-ColdAdaptation-name }
+
+ent-GeneticVialHeatAdaptation = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-HeatAdaptation-name }
+
+ent-GeneticVialLowPressureAdaptation = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-LowPressureAdaptation-name }
+
+ent-GeneticVialPassiveTemperament = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-PassiveTemperament-name }
+
+ent-GeneticVialDefensiveAggression = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-DefensiveAggression-name }
+
+ent-GeneticVialStartleResponse = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-StartleResponse-name }
+
+ent-GeneticVialFragileBones = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-FragileBones-name }
+
+ent-GeneticVialSilkSynthesis = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-SilkSynthesis-name }
+
+ent-GeneticVialAuditoryLearning = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-AuditoryLearning-name }
+
+ent-GeneticVialEggLayer = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-EggLayer-name }
+
+ent-GeneticVialLactation = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-Lactation-name }
+
+ent-GeneticVialMessyDrinker = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-MessyDrinker-name }
+
+ent-GeneticVialBleating = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-Bleating-name }
+
+ent-GeneticVialMineralAssimilation = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-MineralAssimilation-name }
+
+ent-GeneticVialCollectiveSignaling = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-CollectiveSignaling-name }
+
+ent-GeneticVialBroodDevelopment = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-BroodDevelopment-name }
+
+ent-GeneticVialNightVision = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-NightVision-name }
+
+ent-GeneticVialMechanosensoryIntegration = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-MechanosensoryIntegration-name }
+
+ent-GeneticVialNoSlip = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-NoSlip-name }
+
+ent-GeneticVialElasticFrame = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-ElasticFrame-name }
+
+ent-GeneticVialLamellarScales = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-LamellarScales-name }
+
+ent-GeneticVialCoordinatedRepair = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-CoordinatedRepair-name }
+
+ent-GeneticVialImmuneTolerance = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-ImmuneTolerance-name }
+
+ent-GeneticVialVenomous = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-Venomous-name }
+
+ent-GeneticVialDetoxifyingMetabolism = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-DetoxifyingMetabolism-name }
+
+ent-GeneticVialTorporControl = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-TorporControl-name }
+
+ent-GeneticVialPacifism = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-Pacifism-name }
+
+ent-GeneticVialReflexDisinhibition = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-ReflexDisinhibition-name }
+
+ent-GeneticVialRadionuclideSequestration = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-RadionuclideSequestration-name }
+
+ent-GeneticVialWebSpinning = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-WebSpinning-name }
+
+ent-GeneticVialParrotSpeech = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-ParrotSpeech-name }
+
+ent-GeneticVialPhotonicLattice = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-PhotonicLattice-name }
+
+ent-GeneticVialRegeneration = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-Regeneration-name }
+
+ent-GeneticVialToxicOverproduction = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-ToxicOverproduction-name }
+
+ent-GeneticVialPressureHomeostasis = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-PressureHomeostasis-name }
+
+ent-GeneticVialSensoryOverload = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-SensoryOverload-name }
+
+ent-GeneticVialAdaptivePigmentation = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-AdaptivePigmentation-name }
+
+ent-GeneticVialRadiation = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-Radiation-name }
+
+ent-GeneticVialReflection = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-Reflection-name }
+
+ent-GeneticVialInvisibility = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-Invisibility-name }
+
+ent-GeneticVialSomaticHomeostasis = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-SomaticHomeostasis-name }

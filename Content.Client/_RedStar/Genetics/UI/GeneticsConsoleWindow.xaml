@@ -15,9 +15,13 @@
                 </BoxContainer>
             </PanelContainer>
             <Control VerticalExpand="True" />
-            <RichTextLabel Name="Working" />
-            <ProgressBar Name="Progress" MinValue="0" MaxValue="1" MinHeight="12" />
-            <Button Name="Cancel" Text="{Loc 'genetics-console-cancel'}" />
+            <PanelContainer Name="ProcedurePanel" Visible="False">
+                <BoxContainer Orientation="Vertical" SeparationOverride="10" Margin="12 10">
+                    <Label Name="Working" HorizontalAlignment="Center" />
+                    <ProgressBar Name="Progress" MinValue="0" MaxValue="1" MinHeight="8" />
+                    <Button Name="Cancel" MinHeight="32" Text="{Loc 'genetics-console-cancel'}" />
+                </BoxContainer>
+            </PanelContainer>
             <PanelContainer Name="BeakerPanel">
                 <BoxContainer Orientation="Vertical" SeparationOverride="8" Margin="12 10">
                     <Label Text="{Loc 'genetics-console-beaker'}" StyleClasses="LabelSubText" />
