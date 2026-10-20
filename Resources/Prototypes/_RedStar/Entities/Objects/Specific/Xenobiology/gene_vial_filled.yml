@@ -753,3 +753,39 @@
   components:
   - type: GeneticVial
     genes: [FabricDigestion]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialPressureResistantMembranes
+  categories: [ DoNotMap ]
+  suffix: PressureResistantMembranes
+  components:
+  - type: GeneticVial
+    genes: [PressureResistantMembranes]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialLoadBearingTissue
+  categories: [ DoNotMap ]
+  suffix: LoadBearingTissue
+  components:
+  - type: GeneticVial
+    genes: [LoadBearingTissue]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialPhotoreactiveTissue
+  categories: [ DoNotMap ]
+  suffix: PhotoreactiveTissue
+  components:
+  - type: GeneticVial
+    genes: [PhotoreactiveTissue]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialRegenerativeBudding
+  categories: [ DoNotMap ]
+  suffix: RegenerativeBudding
+  components:
+  - type: GeneticVial
+    genes: [RegenerativeBudding]

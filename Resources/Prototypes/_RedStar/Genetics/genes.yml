@@ -709,3 +709,31 @@
   fragmentCount: 4
   minimumStability: 0.5
   expression: GeneExpressionFabricDigestion
+
+- type: gene
+  id: PressureResistantMembranes
+  tier: 1
+  loadCost: 5
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: LoadBearingTissue
+  tier: 1
+  loadCost: 5
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: PhotoreactiveTissue
+  tier: 1
+  loadCost: 4
+  fragmentCount: 4
+  minimumStability: 0.5
+
+- type: gene
+  id: RegenerativeBudding
+  tier: 1
+  loadCost: 6
+  fragmentCount: 4
+  minimumStability: 0.5

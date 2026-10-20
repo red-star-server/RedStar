@@ -124,7 +124,6 @@
   - LowPressureAdaptation
   - ColdAdaptation
   - TactileWhiskers
-  - PressureHomeostasis
   - NightVision
 
 - type: genome
@@ -246,7 +245,7 @@
   - LowPressureAdaptation
   - ColdAdaptation
   - LipidStorage
-  - PressureHomeostasis
+  - LoadBearingTissue
 
 - type: genome
   id: SpaceBear
@@ -256,8 +255,8 @@
   - LowPressureAdaptation
   - ColdAdaptation
   - DefensiveAggression
-  - PressureHomeostasis
   - ElasticFrame
+  - LoadBearingTissue
 
 - type: genome
   id: Bovine
@@ -294,7 +293,7 @@
   - LowPressureAdaptation
   - ColdAdaptation
   - ProteinSecretion
-  - PressureHomeostasis
+  - PressureResistantMembranes
 
 - type: genome
   id: Porcine
@@ -397,7 +396,6 @@
   - ToxinTolerance
   - LowPressureAdaptation
   - StructuralIridescence
-  - PressureHomeostasis
   - Venomous
 
 - type: genome
@@ -435,7 +433,8 @@
   - SlowMetabolism
   - LowPressureAdaptation
   - ChemicalSensitivity
-  - PressureHomeostasis
+  - PressureResistantMembranes
+  - MineralAssimilation
 
 - type: genome
   id: Bee
@@ -503,7 +502,6 @@
   - ToxinTolerance
   - LowPressureAdaptation
   - LimbGrip
-  - PressureHomeostasis
   - Venomous
 
 - type: genome
@@ -514,7 +512,7 @@
   - ProteinSecretion
   - LowPressureAdaptation
   - HighMetabolism
-  - PressureHomeostasis
+  - RegenerativeBudding
 
 - type: genome
   id: Carp
@@ -524,8 +522,8 @@
   - LowPressureAdaptation
   - ColdAdaptation
   - DefensiveAggression
-  - PressureHomeostasis
   - CarnivorousDigestion
+  - PressureResistantMembranes
 
 - type: genome
   id: Shark
@@ -535,7 +533,7 @@
   - LowPressureAdaptation
   - ProteinSecretion
   - DefensiveAggression
-  - PressureHomeostasis
+  - LoadBearingTissue
 
 - type: genome
   id: Dragon
@@ -561,6 +559,7 @@
   - ElasticFrame
   - NoSlip
   - CompositeCarapace
+  - LoadBearingTissue
 
 - type: genome
   id: Hivelord
@@ -571,6 +570,7 @@
   - HighMetabolism
   - ProteinSecretion
   - Regeneration
+  - RegenerativeBudding
 
 - type: genome
   id: Basilisk
@@ -582,6 +582,7 @@
   - DefensiveAggression
   - LamellarScales
   - Reflection
+  - PhotoreactiveTissue
 
 - type: genome
   id: Watcher
@@ -592,6 +593,7 @@
   - MineralizedTissue
   - HeatAdaptation
   - PhotonicLattice
+  - PhotoreactiveTissue
 
 - type: genome
   id: Argocyte
@@ -611,6 +613,7 @@
   - WeakImmunity
   - DefensiveAggression
   - CoordinatedRepair
+  - RegenerativeBudding
 
 - type: genome
   id: Mimic
@@ -633,6 +636,7 @@
   - AcuteHearing
   - PhotonicLattice
   - PhotonicEmission
+  - PhotoreactiveTissue
 
 - type: genome
   id: KillerTomato
