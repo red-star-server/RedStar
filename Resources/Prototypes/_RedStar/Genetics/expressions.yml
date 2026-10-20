@@ -60,8 +60,9 @@
   components:
   - type: GeneExpression
     gene: NightVision
-    components:
-    - type: NightVision
+  - type: NightVision
+    relayOverlay: true
+    prioritized: true
 
 - type: entity
   parent: StatusEffectBase
@@ -443,3 +444,48 @@
   - type: GeneResistance
     reductions:
       Poison: 0.1
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionDimLightAdaptation
+  components:
+  - type: GeneExpression
+    gene: DimLightAdaptation
+  - type: NightVision
+    relayOverlay: true
+    prioritized: false
+    lightingColor: "#ffffff0a"
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionLowPressureAdaptation
+  components:
+  - type: GeneExpression
+    gene: LowPressureAdaptation
+    components:
+    - type: PressureProtection
+      lowPressureMultiplier: 2
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionSilkSynthesis
+  components:
+  - type: GeneExpression
+    gene: SilkSynthesis
+  - type: SatiationProduction
+    producer: Parent
+    delay: 90
+    satiationUsage: 8
+    minimumSatiationThreshold: Peckish
+  - type: EntityProducer
+    table:
+      id: MaterialWebSilk1
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionPhotonicEmission
+  components:
+  - type: GeneExpression
+    gene: PhotonicEmission
+    actions:
+    - ActionGenePhotonicEmission

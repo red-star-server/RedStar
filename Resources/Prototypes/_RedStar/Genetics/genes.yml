@@ -5,6 +5,7 @@
   category: Beneficial
   fragmentCount: 4
   minimumStability: 0.5
+  expression: GeneExpressionDimLightAdaptation
 
 - type: gene
   id: ColorDiscrimination
@@ -315,6 +316,7 @@
   category: Beneficial
   fragmentCount: 4
   minimumStability: 0.5
+  expression: GeneExpressionLowPressureAdaptation
 
 - type: gene
   id: PassiveTemperament
@@ -353,6 +355,10 @@
   loadCost: 4
   fragmentCount: 4
   minimumStability: 0.5
+  whitelist:
+    components:
+    - Satiation
+  expression: GeneExpressionSilkSynthesis
 
 - type: gene
   id: AuditoryLearning
@@ -682,3 +688,4 @@
   category: Beneficial
   fragmentCount: 7
   minimumStability: 0.7
+  expression: GeneExpressionPhotonicEmission
