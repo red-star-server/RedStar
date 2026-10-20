@@ -166,3 +166,280 @@
     gene: DragonBreath
     actions:
     - ActionDragonsBreath
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionCellRenewal
+  components:
+  - type: GeneExpression
+    gene: CellRenewal
+  - type: PeriodicEntityEffects
+    interval: 10
+    conditions:
+    - !type:MobStateCondition
+      mobstate: Alive
+    - !type:SatiationCondition
+      satiationType: Hunger
+      min: 50
+    - !type:DamageTypesCondition
+      types: [Blunt, Slash, Piercing]
+    effects:
+    - !type:HealDamageTypes
+      types: [Blunt, Slash, Piercing]
+      amount: 0.5
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionChemicalSensitivity
+  components:
+  - type: GeneExpression
+    gene: ChemicalSensitivity
+  - type: GeneResistance
+    reductions:
+      Poison: -0.15
+      Caustic: -0.15
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionChitinousCovering
+  components:
+  - type: GeneExpression
+    gene: ChitinousCovering
+  - type: GeneResistance
+    reductions:
+      Piercing: 0.1
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionCompositeCarapace
+  components:
+  - type: GeneExpression
+    gene: CompositeCarapace
+  - type: GeneResistance
+    reductions:
+      Blunt: 0.1
+      Slash: 0.1
+      Piercing: 0.1
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionCoordinatedRepair
+  components:
+  - type: GeneExpression
+    gene: CoordinatedRepair
+  - type: PeriodicEntityEffects
+    interval: 10
+    delayAfterMovement: 5
+    delayAfterDamage: 10
+    conditions:
+    - !type:MobStateCondition
+      mobstate: Alive
+    - !type:SatiationCondition
+      satiationType: Hunger
+      min: 50
+    - !type:DamageTypesCondition
+      types: [Blunt, Slash, Piercing]
+    effects:
+    - !type:HealDamageTypes
+      types: [Blunt, Slash, Piercing]
+      amount: 2
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionDenseConnectiveTissue
+  components:
+  - type: GeneExpression
+    gene: DenseConnectiveTissue
+  - type: GeneResistance
+    reductions:
+      Blunt: 0.1
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionDetoxifyingMetabolism
+  components:
+  - type: GeneExpression
+    gene: DetoxifyingMetabolism
+  - type: GeneResistance
+    reductions:
+      Poison: 0.1
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionElasticFrame
+  components:
+  - type: GeneExpression
+    gene: ElasticFrame
+  - type: GeneResistance
+    reductions:
+      Blunt: 0.1
+      Slash: 0.1
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionFragileBones
+  components:
+  - type: GeneExpression
+    gene: FragileBones
+  - type: GeneResistance
+    reductions:
+      Blunt: -0.2
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionHighMetabolism
+  components:
+  - type: GeneExpression
+    gene: HighMetabolism
+  - type: GeneMetabolism
+    intervalModifier: -0.2
+  - type: PeriodicEntityEffects
+    interval: 10
+    conditions:
+    - !type:MobStateCondition
+      mobstate: Alive
+    effects:
+    - !type:Satiate
+      satiationType: Hunger
+      factor: -0.04
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionKeratinizedCovering
+  components:
+  - type: GeneExpression
+    gene: KeratinizedCovering
+  - type: GeneResistance
+    reductions:
+      Slash: 0.1
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionLamellarScales
+  components:
+  - type: GeneExpression
+    gene: LamellarScales
+  - type: GeneResistance
+    reductions:
+      Heat: 0.1
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionMineralizedTissue
+  components:
+  - type: GeneExpression
+    gene: MineralizedTissue
+  - type: GeneResistance
+    reductions:
+      Piercing: 0.1
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionPhotonicLattice
+  components:
+  - type: GeneExpression
+    gene: PhotonicLattice
+  - type: GeneResistance
+    reductions:
+      Heat: 0.1
+      Shock: 0.1
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionRegeneration
+  components:
+  - type: GeneExpression
+    gene: Regeneration
+  - type: PeriodicEntityEffects
+    interval: 10
+    conditions:
+    - !type:MobStateCondition
+      mobstate: Alive
+    - !type:SatiationCondition
+      satiationType: Hunger
+      min: 50
+    - !type:DamageTypesCondition
+      types: [Blunt, Slash, Piercing]
+    effects:
+    - !type:Satiate
+      satiationType: Hunger
+      factor: -0.05
+    - !type:HealDamageTypes
+      types: [Blunt, Slash, Piercing]
+      amount: 1.5
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionSomaticHomeostasis
+  components:
+  - type: GeneExpression
+    gene: SomaticHomeostasis
+  - type: PeriodicEntityEffects
+    interval: 10
+    conditions:
+    - !type:MobStateCondition
+      mobstate: Alive
+    - !type:SatiationCondition
+      satiationType: Hunger
+      min: 50
+    - !type:DamageTypesCondition
+      types: [Blunt, Slash, Piercing, Heat, Cold]
+    effects:
+    - !type:Satiate
+      satiationType: Hunger
+      factor: -0.07
+    - !type:HealDamageTypes
+      types: [Blunt, Slash, Piercing]
+      amount: 1.5
+    - !type:HealDamageTypes
+      types: [Heat, Cold]
+      amount: 1
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionThermalRepair
+  components:
+  - type: GeneExpression
+    gene: ThermalRepair
+  - type: PeriodicEntityEffects
+    interval: 10
+    conditions:
+    - !type:MobStateCondition
+      mobstate: Alive
+    - !type:SatiationCondition
+      satiationType: Hunger
+      min: 50
+    - !type:DamageTypesCondition
+      types: [Heat, Cold]
+    effects:
+    - !type:HealDamageTypes
+      types: [Heat, Cold]
+      amount: 1
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionTissuePlasticity
+  components:
+  - type: GeneExpression
+    gene: TissuePlasticity
+  - type: PeriodicEntityEffects
+    interval: 10
+    conditions:
+    - !type:MobStateCondition
+      mobstate: Alive
+    - !type:SatiationCondition
+      satiationType: Hunger
+      min: 50
+    effects:
+    - !type:ModifyBleed
+      amount: -0.1
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionToxinTolerance
+  components:
+  - type: GeneExpression
+    gene: ToxinTolerance
+  - type: GeneResistance
+    reductions:
+      Poison: 0.1

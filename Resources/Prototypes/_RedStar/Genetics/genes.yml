@@ -108,6 +108,7 @@
   category: Beneficial
   fragmentCount: 4
   minimumStability: 0.5
+  expression: GeneExpressionDenseConnectiveTissue
 
 - type: gene
   id: MineralizedTissue
@@ -116,6 +117,7 @@
   category: Beneficial
   fragmentCount: 4
   minimumStability: 0.5
+  expression: GeneExpressionMineralizedTissue
 
 - type: gene
   id: KeratinizedCovering
@@ -124,6 +126,7 @@
   category: Beneficial
   fragmentCount: 4
   minimumStability: 0.5
+  expression: GeneExpressionKeratinizedCovering
 
 - type: gene
   id: ChitinousCovering
@@ -132,6 +135,7 @@
   category: Beneficial
   fragmentCount: 4
   minimumStability: 0.5
+  expression: GeneExpressionChitinousCovering
 
 - type: gene
   id: StructuralIridescence
@@ -172,6 +176,7 @@
   category: Mixed
   fragmentCount: 4
   minimumStability: 0.5
+  expression: GeneExpressionHighMetabolism
 
 - type: gene
   id: OmnivorousDigestion
@@ -211,6 +216,7 @@
   category: Beneficial
   fragmentCount: 4
   minimumStability: 0.5
+  expression: GeneExpressionCellRenewal
 
 - type: gene
   id: TissuePlasticity
@@ -219,6 +225,7 @@
   category: Beneficial
   fragmentCount: 4
   minimumStability: 0.5
+  expression: GeneExpressionTissuePlasticity
 
 - type: gene
   id: VegetativeGrowth
@@ -243,6 +250,7 @@
   category: Pathological
   fragmentCount: 4
   minimumStability: 0.5
+  expression: GeneExpressionChemicalSensitivity
 
 - type: gene
   id: XenobioticProcessing
@@ -266,6 +274,7 @@
   category: Beneficial
   fragmentCount: 4
   minimumStability: 0.5
+  expression: GeneExpressionToxinTolerance
 
 - type: gene
   id: OxygenStorage
@@ -336,6 +345,7 @@
   category: Pathological
   fragmentCount: 4
   minimumStability: 0.5
+  expression: GeneExpressionFragileBones
 
 - type: gene
   id: SilkSynthesis
@@ -441,6 +451,7 @@
   category: Beneficial
   fragmentCount: 5
   minimumStability: 0.6
+  expression: GeneExpressionElasticFrame
 
 - type: gene
   id: LamellarScales
@@ -449,8 +460,8 @@
   category: Beneficial
   fragmentCount: 5
   minimumStability: 0.6
+  expression: GeneExpressionLamellarScales
 
-# TODO: Add slow mechanical healing outside combat.
 - type: gene
   id: CoordinatedRepair
   tier: 2
@@ -458,7 +469,7 @@
   category: Beneficial
   fragmentCount: 5
   minimumStability: 0.6
-  effects: []
+  expression: GeneExpressionCoordinatedRepair
 
 - type: gene
   id: ImmuneTolerance
@@ -484,6 +495,7 @@
   category: Mixed
   fragmentCount: 5
   minimumStability: 0.6
+  expression: GeneExpressionDetoxifyingMetabolism
 
 - type: gene
   id: TorporControl
@@ -543,8 +555,8 @@
   category: Beneficial
   fragmentCount: 6
   minimumStability: 0.65
+  expression: GeneExpressionPhotonicLattice
 
-# TODO: Add periodic mechanical healing.
 - type: gene
   id: Regeneration
   tier: 3
@@ -552,7 +564,7 @@
   category: Mixed
   fragmentCount: 6
   minimumStability: 0.65
-  effects: []
+  expression: GeneExpressionRegeneration
 
 # TODO: Add venom secretion and periodic self-poisoning.
 - type: gene
@@ -619,8 +631,6 @@
   minimumStability: 0.7
   expression: GeneExpressionInvisibility
 
-# TODO: Add periodic mechanical and thermal healing.
-
 - type: gene
   id: SomaticHomeostasis
   tier: 4
@@ -628,7 +638,7 @@
   category: Mixed
   fragmentCount: 7
   minimumStability: 0.7
-  effects: []
+  expression: GeneExpressionSomaticHomeostasis
 
 - type: gene
   id: DragonBreath
@@ -646,6 +656,7 @@
   category: Beneficial
   fragmentCount: 5
   minimumStability: 0.6
+  expression: GeneExpressionThermalRepair
 
 - type: gene
   id: CompositeCarapace
@@ -654,6 +665,7 @@
   category: Beneficial
   fragmentCount: 6
   minimumStability: 0.65
+  expression: GeneExpressionCompositeCarapace
 
 - type: gene
   id: ThermalHomeostasis
