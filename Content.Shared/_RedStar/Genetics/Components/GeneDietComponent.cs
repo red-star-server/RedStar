@@ -1,3 +1,4 @@
+using Content.Shared._RedStar.Genetics.Systems;
 using Content.Shared.Metabolism;
 using Content.Shared.Tag;
 using Robust.Shared.GameStates;
@@ -10,6 +11,7 @@ namespace Content.Shared._RedStar.Genetics.Components;
 /// Ordinary-food permission takes precedence over acquired restrictions; extra foods remain additive.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
+[Access(typeof(GeneDietSystem))]
 public sealed partial class GeneDietComponent : Component
 {
     /// <summary>

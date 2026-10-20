@@ -10,7 +10,7 @@ namespace Content.Shared._RedStar.Genetics.Components;
 /// Stores the native diet and replicated effective diet of a genetically adapted stomach.
 /// Metabolism ownership records contain only types actually introduced by this adaptation.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(raiseAfterAutoHandleState: true)]
 [Access(typeof(GeneDietSystem))]
 public sealed partial class GeneDietOrganComponent : Component
 {

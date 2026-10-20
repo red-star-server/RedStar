@@ -17,7 +17,7 @@ public sealed partial class GeneResistanceSystem : EntitySystem
         if (!args.Damage.AnyPositive() || !TryComp<StatusEffectContainerComponent>(ent, out var container))
             return;
 
-        var reductions = new Dictionary<ProtoId<DamageTypePrototype>, float>();
+        Dictionary<ProtoId<DamageTypePrototype>, float>? reductions = null;
         var minimumMultiplier = 0f;
         foreach (var uid in container.ActiveStatusEffects?.ContainedEntities ?? [])
         {
@@ -25,6 +25,7 @@ public sealed partial class GeneResistanceSystem : EntitySystem
                 !TryComp<StatusEffectComponent>(uid, out var status) || !status.Applied || TerminatingOrDeleted(uid))
                 continue;
 
+            reductions ??= new();
             minimumMultiplier = MathF.Max(minimumMultiplier, resistance.MinimumMultiplier);
             foreach (var (type, reduction) in resistance.Reductions)
             {
@@ -32,7 +33,7 @@ public sealed partial class GeneResistanceSystem : EntitySystem
             }
         }
 
-        if (reductions.Count == 0)
+        if (reductions is null || reductions.Count == 0)
             return;
 
         var damage = new DamageSpecifier(args.Damage);

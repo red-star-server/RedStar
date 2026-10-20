@@ -42,10 +42,31 @@ public sealed partial class GeneDietSystem : EntitySystem
     private void OnState(Entity<GeneDietOrganComponent> ent, ref AfterAutoHandleStateEvent args) => Apply(ent);
 
     [SubscribeLocalEvent]
-    private void OnStomachStartup(Entity<StomachComponent> ent, ref ComponentStartup args)
+    private void OnStomachStartup(Entity<StomachComponent> ent, ref ComponentStartup args) => RefreshOrgan(ent);
+
+    [SubscribeLocalEvent]
+    private void OnStomachShutdown(Entity<StomachComponent> ent, ref ComponentShutdown args)
+    {
+        if (_net.IsServer)
+            RemComp<GeneDietOrganComponent>(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnMetabolizerStartup(Entity<MetabolizerComponent> ent, ref ComponentStartup args) => RefreshOrgan(ent);
+
+    [SubscribeLocalEvent]
+    private void OnMetabolizerShutdown(Entity<MetabolizerComponent> ent, ref ComponentShutdown args)
     {
         if (TryComp<GeneDietOrganComponent>(ent, out var diet))
-            Apply((ent, diet));
+            diet.AppliedMetabolizers.Clear();
+    }
+
+    private void RefreshOrgan(EntityUid organ)
+    {
+        if (TryComp<GeneDietOrganComponent>(organ, out var diet))
+            Apply((organ, diet));
+        if (TryComp<OrganComponent>(organ, out var attached) && attached.Body is { } body)
+            QueueRefresh(body);
     }
 
     [SubscribeLocalEvent]

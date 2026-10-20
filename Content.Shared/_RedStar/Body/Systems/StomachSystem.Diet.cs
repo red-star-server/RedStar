@@ -8,6 +8,7 @@ public sealed partial class StomachSystem
     /// <summary>
     /// Sets the stomach's special-food whitelist and whether it also accepts ordinary food.
     /// Callers that provide temporary diets must retain and restore the original settings.
+    /// These fields are not networked by the stomach component; callers must synchronize their overrides.
     /// </summary>
     public void SetDiet(Entity<StomachComponent?> ent, EntityWhitelist? whitelist, bool exclusive)
     {
