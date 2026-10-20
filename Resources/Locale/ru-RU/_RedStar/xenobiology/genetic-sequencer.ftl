@@ -1,0 +1,14 @@
+genetic-sequencer-menu-title = Генетический секвенатор
+genetic-sequencer-samples = ОБРАЗЦЫ
+genetic-sequencer-map = ГЕНОМ
+genetic-sequencer-assembly = РЕКОНСТРУКЦИЯ
+genetic-sequencer-reset = Сброс
+genetic-sequencer-submit = Расшифровать
+genetic-sequencer-extract = Извлечь
+genetic-sequencer-sample-stability = Стабильность: {$stability}%
+genetic-sequencer-status-known = РАСШИФРОВАНО
+genetic-sequencer-status-unknown = НЕИЗВЕСТНО
+genetic-sequencer-incorrect = Сборка последовательности не подтверждена.
+genetic-sequencer-discovered = Расшифровано: {$gene}.
+genetic-sequencer-reads = ФРАГМЕНТЫ
+genetic-sequencer-board = ПОСЛЕДОВАТЕЛЬНОСТЬ

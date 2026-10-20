@@ -103,3 +103,11 @@ SpawnMobWatcherPride: SpawnMobWatcherLavaland
 # 2026-10-05
 PottedPlantAlt7: PottedPlantAlt5
 PottedPlantAlt8: PottedPlantAlt6
+
+# 2026-10-20
+CellSequencer: GeneticSequencer
+CellSequencerCircuitboard: GeneticSequencerCircuitboard
+CellularFusion: SampleStabilizer
+CellularFusionCircuitboard: SampleStabilizerCircuitboard
+MutagenicCellInjector: MutagenicInjector
+MutagenicCellInjectorCircuitboard: MutagenicInjectorCircuitboard

@@ -32,7 +32,7 @@ public sealed partial class MutagenicInjectorSystem : EntitySystem
         HasComp<GenomeComponent>(recipient);
 
     [SubscribeLocalEvent]
-    private void OnInsertAttempt(Entity<CellMutagenicInjectorComponent> ent,
+    private void OnInsertAttempt(Entity<MutagenicInjectorComponent> ent,
         ref EntityStorageInsertedIntoAttemptEvent args)
     {
         if (!IsValidRecipient(args.ItemToInsert))
@@ -40,20 +40,20 @@ public sealed partial class MutagenicInjectorSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnOpened(Entity<CellMutagenicInjectorComponent> ent, ref StorageAfterOpenEvent args)
+    private void OnOpened(Entity<MutagenicInjectorComponent> ent, ref StorageAfterOpenEvent args)
     {
         CancelInjection(ent);
     }
 
     [SubscribeLocalEvent]
-    private void OnPowerChanged(Entity<CellMutagenicInjectorComponent> ent, ref PowerChangedEvent args)
+    private void OnPowerChanged(Entity<MutagenicInjectorComponent> ent, ref PowerChangedEvent args)
     {
         if (!args.Powered)
             CancelInjection(ent);
     }
 
     [SubscribeLocalEvent]
-    private void OnGetAltVerbs(Entity<CellMutagenicInjectorComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
+    private void OnGetAltVerbs(Entity<MutagenicInjectorComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || args.Using is not null ||
             Comp<EntityStorageComponent>(ent).Open || ent.Comp.InjectionEndTime is not null)
@@ -69,19 +69,19 @@ public sealed partial class MutagenicInjectorSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnContainerRemoved(Entity<CellMutagenicInjectorComponent> ent, ref EntRemovedFromContainerMessage args)
+    private void OnContainerRemoved(Entity<MutagenicInjectorComponent> ent, ref EntRemovedFromContainerMessage args)
     {
         if (args.Container.ID == ent.Comp.VialSlot || args.Container.ID == SharedEntityStorageSystem.ContainerName)
             CancelInjection(ent);
     }
 
     [SubscribeLocalEvent]
-    private void OnShutdown(Entity<CellMutagenicInjectorComponent> ent, ref ComponentShutdown args)
+    private void OnShutdown(Entity<MutagenicInjectorComponent> ent, ref ComponentShutdown args)
     {
         CancelInjection(ent);
     }
 
-    private void TryStartInjection(Entity<CellMutagenicInjectorComponent> ent, EntityUid user)
+    private void TryStartInjection(Entity<MutagenicInjectorComponent> ent, EntityUid user)
     {
         if (!TryGetReadyInjection(ent, user, out var subject, out var vial))
             return;
@@ -93,7 +93,7 @@ public sealed partial class MutagenicInjectorSystem : EntitySystem
         ent.Comp.AudioStream = _audio.PlayPvs(ent.Comp.ProcessSound, ent.Owner)?.Entity;
     }
 
-    private bool TryGetReadyInjection(Entity<CellMutagenicInjectorComponent> ent, EntityUid user, out EntityUid subject,
+    private bool TryGetReadyInjection(Entity<MutagenicInjectorComponent> ent, EntityUid user, out EntityUid subject,
         out Entity<GeneticVialComponent> vial)
     {
         subject = default;
@@ -122,7 +122,7 @@ public sealed partial class MutagenicInjectorSystem : EntitySystem
         return _genomes.CanApplyGenes(recipient.AsNullable(), vial.Comp.Genes);
     }
 
-    private bool TryGetContents(Entity<CellMutagenicInjectorComponent, EntityStorageComponent?> ent,
+    private bool TryGetContents(Entity<MutagenicInjectorComponent, EntityStorageComponent?> ent,
         out EntityUid subject, out Entity<GeneticVialComponent> vial)
     {
         subject = default;
@@ -142,13 +142,13 @@ public sealed partial class MutagenicInjectorSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<CellMutagenicInjectorComponent, EntityStorageComponent, MetaDataComponent>();
+        var query = EntityQueryEnumerator<MutagenicInjectorComponent, EntityStorageComponent, MetaDataComponent>();
         while (query.MoveNext(out var uid, out var component, out var storage, out var metadata))
         {
             if (metadata.EntityPaused)
                 continue;
 
-            var machine = new Entity<CellMutagenicInjectorComponent>(uid, component);
+            var machine = new Entity<MutagenicInjectorComponent>(uid, component);
             if (component.InjectionEndTime is not { } endTime)
                 continue;
 
@@ -165,7 +165,7 @@ public sealed partial class MutagenicInjectorSystem : EntitySystem
         }
     }
 
-    private void FinishInjection(Entity<CellMutagenicInjectorComponent> ent, EntityUid subject,
+    private void FinishInjection(Entity<MutagenicInjectorComponent> ent, EntityUid subject,
         Entity<GeneticVialComponent> vial)
     {
         if (vial.Comp.Genes.Count == 0 || !IsValidRecipient(subject) ||
@@ -180,7 +180,7 @@ public sealed partial class MutagenicInjectorSystem : EntitySystem
         _storage.OpenStorage(ent.Owner);
     }
 
-    private void CancelInjection(Entity<CellMutagenicInjectorComponent> ent)
+    private void CancelInjection(Entity<MutagenicInjectorComponent> ent)
     {
         if (ent.Comp.InjectionEndTime is null)
             return;

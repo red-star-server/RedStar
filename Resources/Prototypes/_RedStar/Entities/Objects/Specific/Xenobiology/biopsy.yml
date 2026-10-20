@@ -2,13 +2,13 @@
   parent: BaseItem
   id: BiopsyTool
   name: biopsy tool
-  description: Used to retrieve cell lines from organisms. Don't worry, it won't sting.
+  description: Used to retrieve biological samples from organisms. Don't worry, it won't sting.
   components:
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.CellCollectorVisuals.State:
-        enum.CellCollectorVisuals.Layer:
+      enum.SampleCollectorVisuals.State:
+        enum.SampleCollectorVisuals.Layer:
           True:
             state: icon
           False:
@@ -16,7 +16,7 @@
   - type: Sprite
     sprite: _RedStar/Objects/Specific/Xenobiology/biopsy_tool.rsi
     layers:
-    - map: [ "enum.CellCollectorVisuals.Layer" ]
+    - map: [ "enum.SampleCollectorVisuals.Layer" ]
       state: icon
   - type: Item
     sprite: _RedStar/Objects/Specific/Xenobiology/biopsy_tool.rsi

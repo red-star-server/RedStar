@@ -1,17 +1,17 @@
 - type: latheRecipe
   parent: [ BaseCircuitboardRecipe, BaseResearchMachineRecipeCategory ]
-  id: CellSequencerCircuitboard
-  result: CellSequencerCircuitboard
+  id: GeneticSequencerCircuitboard
+  result: GeneticSequencerCircuitboard
 
 - type: latheRecipe
   parent: [ BaseCircuitboardRecipe, BaseResearchMachineRecipeCategory ]
-  id: CellularFusionCircuitboard
-  result: CellularFusionCircuitboard
+  id: SampleStabilizerCircuitboard
+  result: SampleStabilizerCircuitboard
 
 - type: latheRecipe
   parent: [ BaseCircuitboardRecipe, BaseResearchMachineRecipeCategory ]
-  id: MutagenicCellInjectorCircuitboard
-  result: MutagenicCellInjectorCircuitboard
+  id: MutagenicInjectorCircuitboard
+  result: MutagenicInjectorCircuitboard
 
 - type: latheRecipe
   parent: [ BaseCircuitboardRecipe, BaseResearchMachineRecipeCategory ]

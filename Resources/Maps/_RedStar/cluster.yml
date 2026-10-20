@@ -23394,14 +23394,14 @@ entities:
     - type: Transform
       parent: 1
       pos: 16.576576,27.750107
-- proto: CellSequencer
+- proto: GeneticSequencer
   entities:
   - uid: 3537
     components:
     - type: Transform
       parent: 1
       pos: -28.5,-9.5
-- proto: CellularFusion
+- proto: SampleStabilizer
   entities:
   - uid: 706
     components:
@@ -60265,7 +60265,7 @@ entities:
     - type: Transform
       parent: 1
       pos: -14.30331,-8.459229
-- proto: MutagenicCellInjector
+- proto: MutagenicInjector
   entities:
   - uid: 8538
     components:

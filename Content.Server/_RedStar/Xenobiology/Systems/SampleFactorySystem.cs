@@ -13,8 +13,8 @@ namespace Content.Server._RedStar.Xenobiology.Systems;
 
 public sealed partial class SampleFactorySystem : EntitySystem
 {
-    private static readonly ProtoId<LocalizedDatasetPrototype> SamplePrefixes = "CellPrefixes";
-    private static readonly ProtoId<LocalizedDatasetPrototype> SampleSuffixes = "CellSuffixes";
+    private static readonly ProtoId<LocalizedDatasetPrototype> SamplePrefixes = "SamplePrefixes";
+    private static readonly ProtoId<LocalizedDatasetPrototype> SampleSuffixes = "SampleSuffixes";
 
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private IPrototypeManager _prototypes = default!;

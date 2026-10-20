@@ -75,9 +75,9 @@ public abstract partial class SampleCollectorSystem : EntitySystem
             return false;
 
         if (collector.Comp2.SampleCount >= collector.Comp2.MaxSamples)
-            failure = "cell-collector-full";
+            failure = "sample-collector-full";
         else if (!_genomes.IsGenerated(target))
-            failure = "cell-collector-target-cant-collected";
+            failure = "sample-collector-target-cant-collected";
         else
         {
             if (TryComp<DamageableComponent>(target, out var damageable) &&
@@ -85,7 +85,7 @@ public abstract partial class SampleCollectorSystem : EntitySystem
                 cellularDamage = (float) damage;
 
             if (cellularDamage >= collector.Comp1.MaximumCellularDamage)
-                failure = "cell-collector-sample-damaged";
+                failure = "sample-collector-sample-damaged";
         }
 
         return failure is null;

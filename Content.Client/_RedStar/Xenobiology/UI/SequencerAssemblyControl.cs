@@ -216,18 +216,18 @@ public sealed class SequencerAssemblyControl : Control
         handle.DrawRect(PixelSizeBox, Back);
         if (_fragments.Length == 0)
             return;
-        Text(handle, Loc.GetString("cell-sequencer-reads"), new Vector2(Left, 16), Muted);
-        Text(handle, Loc.GetString("cell-sequencer-board"), new Vector2(Left, 115), Muted);
+        Text(handle, Loc.GetString("genetic-sequencer-reads"), new Vector2(Left, 16), Muted);
+        Text(handle, Loc.GetString("genetic-sequencer-board"), new Vector2(Left, 115), Muted);
         for (var i = 0; i < _fragments.Length; i++)
         {
             var trayPos = TilePos(i, TrayY);
             var trayBusy = _slots.Contains(i);
             DrawTile(handle, trayPos, trayBusy ? Card : Outline, trayBusy ? "" : _fragments[i], trayBusy);
             var pos = TilePos(i, BoardY);
-            var cell = _slots[i];
-            var fill = cell.HasValue ? Card : Back;
-            DrawTile(handle, pos, fill, cell is { } index ? _fragments[index] : $"{i + 1:00}", !cell.HasValue);
-            if (!_feedback || i <= 0 || cell is null || _slots[i - 1] is null)
+            var slot = _slots[i];
+            var fill = slot.HasValue ? Card : Back;
+            DrawTile(handle, pos, fill, slot is { } index ? _fragments[index] : $"{i + 1:00}", !slot.HasValue);
+            if (!_feedback || i <= 0 || slot is null || _slots[i - 1] is null)
                 continue;
 
             var matches = _decoded || _matches[i - 1];

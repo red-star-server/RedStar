@@ -35,9 +35,9 @@
 - type: latheRecipePack
   id: XenobiologyBoards
   recipes:
-  - CellSequencerCircuitboard
-  - CellularFusionCircuitboard
-  - MutagenicCellInjectorCircuitboard
+  - GeneticSequencerCircuitboard
+  - SampleStabilizerCircuitboard
+  - MutagenicInjectorCircuitboard
   - GrowingVatCircuitboard
 
 - type: latheRecipePack

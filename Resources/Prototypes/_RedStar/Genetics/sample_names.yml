@@ -1,0 +1,11 @@
+- type: localizedDataset
+  id: SamplePrefixes
+  values:
+    prefix: sample-prefix-
+    count: 25
+
+- type: localizedDataset
+  id: SampleSuffixes
+  values:
+    prefix: sample-suffix-
+    count: 25

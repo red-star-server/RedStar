@@ -1,7 +1,7 @@
 namespace Content.Shared._RedStar.Xenobiology.Events;
 
 /// <summary>
-/// Raised after the contents of a cell container change.
+/// Raised after the contents of a sample container change.
 /// </summary>
 [ByRefEvent]
 public readonly record struct SampleContainerChangedEvent;

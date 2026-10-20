@@ -77,7 +77,7 @@ public sealed partial class ServerSampleCollectorSystem : SampleCollectorSystem
         if (ent.Comp.Damage is not null)
             _damageable.TryChangeDamage(target, ent.Comp.Damage, origin: args.Args.User);
 
-        _popup.PopupEntity(Loc.GetString("cell-collector-collected"), ent, args.Args.User);
+        _popup.PopupEntity(Loc.GetString("sample-collector-collected"), ent, args.Args.User);
         args.Handled = true;
     }
 
@@ -86,14 +86,14 @@ public sealed partial class ServerSampleCollectorSystem : SampleCollectorSystem
     {
         if (ent.Comp.SampleCount >= ent.Comp.MaxSamples)
         {
-            _popup.PopupEntity(Loc.GetString("cell-collector-full"), ent, user, PopupType.SmallCaution);
+            _popup.PopupEntity(Loc.GetString("sample-collector-full"), ent, user, PopupType.SmallCaution);
             return false;
         }
 
         if (!_samples.MoveFirstSample(target.AsNullable(), ent.AsNullable()))
             return false;
 
-        _popup.PopupEntity(Loc.GetString("cell-collector-collected"), ent, user);
+        _popup.PopupEntity(Loc.GetString("sample-collector-collected"), ent, user);
         return true;
     }
 
@@ -107,14 +107,14 @@ public sealed partial class ServerSampleCollectorSystem : SampleCollectorSystem
 
         if (ent.Comp.Empty)
         {
-            _popup.PopupEntity(Loc.GetString("cell-collector-empty"), ent, user, PopupType.SmallCaution);
+            _popup.PopupEntity(Loc.GetString("sample-collector-empty"), ent, user, PopupType.SmallCaution);
             return false;
         }
 
         if (!_samples.MoveFirstSample(ent.AsNullable(), target.AsNullable()))
             return false;
 
-        _popup.PopupEntity(Loc.GetString("cell-collector-transfer"), ent, user);
+        _popup.PopupEntity(Loc.GetString("sample-collector-transfer"), ent, user);
         return true;
     }
 
@@ -123,6 +123,6 @@ public sealed partial class ServerSampleCollectorSystem : SampleCollectorSystem
         if (!Resolve(ent, ref ent.Comp2, logMissing: false))
             return;
 
-        _appearance.SetData(ent, CellCollectorVisuals.State, ent.Comp2.Empty);
+        _appearance.SetData(ent, SampleCollectorVisuals.State, ent.Comp2.Empty);
     }
 }
