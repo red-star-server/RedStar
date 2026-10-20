@@ -69,6 +69,7 @@
   - AcuteHearing
   - HighMetabolism
   - BroodDevelopment
+  - FabricDigestion
 
 - type: genome
   id: Arachnid
@@ -524,6 +525,7 @@
   - ColdAdaptation
   - DefensiveAggression
   - PressureHomeostasis
+  - CarnivorousDigestion
 
 - type: genome
   id: Shark

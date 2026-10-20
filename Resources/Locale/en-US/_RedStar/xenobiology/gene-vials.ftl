@@ -235,19 +235,21 @@ ent-GeneticVialSomaticHomeostasis = { ent-GeneticVial }
 ent-GeneticVialDragonBreath = { ent-GeneticVial }
     .desc = { ent-GeneticVial.desc }
     .suffix = { gene-DragonBreath-name }
-
 ent-GeneticVialThermalRepair = { ent-GeneticVial }
     .desc = { ent-GeneticVial.desc }
     .suffix = { gene-ThermalRepair-name }
-
 ent-GeneticVialCompositeCarapace = { ent-GeneticVial }
     .desc = { ent-GeneticVial.desc }
     .suffix = { gene-CompositeCarapace-name }
-
 ent-GeneticVialThermalHomeostasis = { ent-GeneticVial }
     .desc = { ent-GeneticVial.desc }
     .suffix = { gene-ThermalHomeostasis-name }
-
 ent-GeneticVialPhotonicEmission = { ent-GeneticVial }
     .desc = { ent-GeneticVial.desc }
     .suffix = { gene-PhotonicEmission-name }
+ent-GeneticVialCarnivorousDigestion = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-CarnivorousDigestion-name }
+ent-GeneticVialFabricDigestion = { ent-GeneticVial }
+    .desc = { ent-GeneticVial.desc }
+    .suffix = { gene-FabricDigestion-name }

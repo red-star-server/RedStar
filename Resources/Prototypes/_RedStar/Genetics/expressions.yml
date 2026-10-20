@@ -489,3 +489,40 @@
     gene: PhotonicEmission
     actions:
     - ActionGenePhotonicEmission
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionOmnivorousDigestion
+  components:
+  - type: GeneExpression
+    gene: OmnivorousDigestion
+  - type: GeneDiet
+    allowNormalFood: true
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionCelluloseDigestion
+  components:
+  - type: GeneExpression
+    gene: CelluloseDigestion
+  - type: GeneDiet
+    additionalFoodTags: [Ruminant, Wheat, BananaPeel]
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionCarnivorousDigestion
+  components:
+  - type: GeneExpression
+    gene: CarnivorousDigestion
+  - type: GeneDiet
+    restrictedFoodTags: [Meat, Pill]
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionFabricDigestion
+  components:
+  - type: GeneExpression
+    gene: FabricDigestion
+  - type: GeneDiet
+    additionalFoodTags: [ClothMade, Paper]
+    metabolizerTypes: [Moth]

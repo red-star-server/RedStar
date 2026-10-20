@@ -735,3 +735,21 @@
   components:
   - type: GeneticVial
     genes: [PhotonicEmission]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialCarnivorousDigestion
+  categories: [ DoNotMap ]
+  suffix: CarnivorousDigestion
+  components:
+  - type: GeneticVial
+    genes: [CarnivorousDigestion]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialFabricDigestion
+  categories: [ DoNotMap ]
+  suffix: FabricDigestion
+  components:
+  - type: GeneticVial
+    genes: [FabricDigestion]

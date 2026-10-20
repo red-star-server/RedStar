@@ -98,8 +98,8 @@ gene-PigmentPlasticity-desc = Regulates pigment distribution in the covering, al
 gene-MucusSecretion-desc = Production of mucus by the natural carrier's surface glands.
 gene-SlowMetabolism-desc = Slows nutritional expenditure and substance processing. Drugs and toxins may remain active longer.
 gene-HighMetabolism-desc = Accelerates substance processing and nutritional expenditure. Does not amplify every source of healing.
-gene-OmnivorousDigestion-desc = Digestive traits of organisms with a mixed diet.
-gene-CelluloseDigestion-desc = Traits associated with digesting fibre-rich plant food.
+gene-OmnivorousDigestion-desc = Allows ordinary food while retaining the organism's special diet.
+gene-CelluloseDigestion-desc = Expands the diet to plant matter digestible by ruminants.
 gene-LipidStorage-desc = Formation of fat reserves as an energy source.
 gene-ProteinSecretion-desc = Production of protein secretions by specialized tissues.
 gene-CellRenewal-desc = Replaces worn-out cells and maintains tissue renewal throughout the body.
@@ -155,15 +155,15 @@ gene-Invisibility-desc = Gradually conceals a stationary organism. Movement disr
 gene-SomaticHomeostasis-desc = Coordinates repair of physical and thermal injuries at an increased nutritional cost. Does not protect against further injury.
 gene-DragonBreath-name = Dragon's breath
 gene-DragonBreath-desc = Allows the organism to breathe dragon fire. Does not protect the bearer from fire or heat.
-
 gene-ThermalRepair-name = Thermal repair
 gene-ThermalRepair-desc = Repairs tissue damaged by burns and extreme cold. Does not repair physical injuries or protect against further heating.
-
 gene-CompositeCarapace-name = Composite carapace
 gene-CompositeCarapace-desc = Combines resilient, keratinous and chitinous tissues to reduce blunt, slashing and piercing injuries.
-
 gene-ThermalHomeostasis-name = Thermal homeostasis
 gene-ThermalHomeostasis-desc = Coordinates heat loss and retention to tolerate hot and cold environments. Does not grant fire immunity.
-
 gene-PhotonicEmission-name = Photonic emission
 gene-PhotonicEmission-desc = Allows the organism to fire directed laser pulses with a recovery period.
+gene-CarnivorousDigestion-name = Carnivorous digestion
+gene-CarnivorousDigestion-desc = Restricts solid food to meat. Medicines and drinks remain available.
+gene-FabricDigestion-name = Fabric digestion
+gene-FabricDigestion-desc = Allows nutrition from fabric and paper by digesting their fibers.

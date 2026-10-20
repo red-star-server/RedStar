@@ -186,6 +186,7 @@
   category: Beneficial
   fragmentCount: 4
   minimumStability: 0.5
+  expression: GeneExpressionOmnivorousDigestion
 
 - type: gene
   id: CelluloseDigestion
@@ -194,6 +195,7 @@
   category: Beneficial
   fragmentCount: 4
   minimumStability: 0.5
+  expression: GeneExpressionCelluloseDigestion
 
 - type: gene
   id: LipidStorage
@@ -689,3 +691,21 @@
   fragmentCount: 7
   minimumStability: 0.7
   expression: GeneExpressionPhotonicEmission
+
+- type: gene
+  id: CarnivorousDigestion
+  tier: 1
+  loadCost: 3
+  category: Pathological
+  fragmentCount: 4
+  minimumStability: 0.5
+  expression: GeneExpressionCarnivorousDigestion
+
+- type: gene
+  id: FabricDigestion
+  tier: 1
+  loadCost: 6
+  category: Beneficial
+  fragmentCount: 4
+  minimumStability: 0.5
+  expression: GeneExpressionFabricDigestion
