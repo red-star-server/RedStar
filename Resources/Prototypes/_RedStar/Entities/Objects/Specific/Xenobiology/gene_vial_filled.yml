@@ -690,3 +690,48 @@
   components:
   - type: GeneticVial
     genes: [SomaticHomeostasis]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialDragonBreath
+  categories: [ DoNotMap ]
+  suffix: DragonBreath
+  components:
+  - type: GeneticVial
+    genes: [DragonBreath]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialThermalRepair
+  categories: [ DoNotMap ]
+  suffix: ThermalRepair
+  components:
+  - type: GeneticVial
+    genes: [ThermalRepair]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialCompositeCarapace
+  categories: [ DoNotMap ]
+  suffix: CompositeCarapace
+  components:
+  - type: GeneticVial
+    genes: [CompositeCarapace]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialThermalHomeostasis
+  categories: [ DoNotMap ]
+  suffix: ThermalHomeostasis
+  components:
+  - type: GeneticVial
+    genes: [ThermalHomeostasis]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialPhotonicEmission
+  categories: [ DoNotMap ]
+  suffix: PhotonicEmission
+  components:
+  - type: GeneticVial
+    genes: [PhotonicEmission]

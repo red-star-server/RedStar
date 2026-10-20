@@ -157,3 +157,12 @@
     - type: StealthOnMove
       passiveVisibilityRate: -0.1
       movementVisibilityRate: 0.5
+
+- type: entity
+  parent: StatusEffectBase
+  id: GeneExpressionDragonBreath
+  components:
+  - type: GeneExpression
+    gene: DragonBreath
+    actions:
+    - ActionDragonsBreath

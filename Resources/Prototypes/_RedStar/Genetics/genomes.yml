@@ -107,26 +107,6 @@
   - AuditoryLearning
 
 - type: genome
-  id: Horror
-  genes:
-  - TissuePlasticity
-  - DenseMusculature
-  - CellRenewal
-  - HighMetabolism
-  - DefensiveAggression
-  - ToxinTolerance
-
-- type: genome
-  id: ChangelingLarva
-  genes:
-  - TissuePlasticity
-  - MucusSecretion
-  - HighMetabolism
-  - ProteinSecretion
-  - BroodDevelopment
-  - ToxinTolerance
-
-- type: genome
   id: Feline
   genes:
   - DimLightAdaptation
@@ -143,6 +123,8 @@
   - LowPressureAdaptation
   - ColdAdaptation
   - TactileWhiskers
+  - PressureHomeostasis
+  - NightVision
 
 - type: genome
   id: Canid
@@ -179,6 +161,8 @@
   - ChemicalSensitivity
   - MineralAssimilation
   - XenobioticProcessing
+  - RadionuclideSequestration
+  - Radiation
 
 - type: genome
   id: Rat
@@ -242,6 +226,7 @@
   - PoorVision
   - CelluloseDigestion
   - PassiveTemperament
+  - TorporControl
 
 - type: genome
   id: Kangaroo
@@ -260,6 +245,7 @@
   - LowPressureAdaptation
   - ColdAdaptation
   - LipidStorage
+  - PressureHomeostasis
 
 - type: genome
   id: SpaceBear
@@ -269,6 +255,8 @@
   - LowPressureAdaptation
   - ColdAdaptation
   - DefensiveAggression
+  - PressureHomeostasis
+  - ElasticFrame
 
 - type: genome
   id: Bovine
@@ -305,6 +293,7 @@
   - LowPressureAdaptation
   - ColdAdaptation
   - ProteinSecretion
+  - PressureHomeostasis
 
 - type: genome
   id: Porcine
@@ -332,6 +321,7 @@
   - FragileBones
   - HighMetabolism
   - LimbGrip
+  - NightVision
 
 - type: genome
   id: Fowl
@@ -377,6 +367,7 @@
   - ColorDiscrimination
   - EggLayer
   - KeratinizedCovering
+  - ParrotSpeech
 
 - type: genome
   id: Lizard
@@ -405,6 +396,8 @@
   - ToxinTolerance
   - LowPressureAdaptation
   - StructuralIridescence
+  - PressureHomeostasis
+  - Venomous
 
 - type: genome
   id: PurpleSnake
@@ -415,6 +408,7 @@
   - KeratinizedCovering
   - LowPressureAdaptation
   - DefensiveAggression
+  - Venomous
 
 - type: genome
   id: Frog
@@ -440,6 +434,7 @@
   - SlowMetabolism
   - LowPressureAdaptation
   - ChemicalSensitivity
+  - PressureHomeostasis
 
 - type: genome
   id: Bee
@@ -495,6 +490,8 @@
   - ToxinProduction
   - LimbGrip
   - CellRenewal
+  - WebSpinning
+  - Venomous
 
 - type: genome
   id: SpaceSpider
@@ -505,6 +502,8 @@
   - ToxinTolerance
   - LowPressureAdaptation
   - LimbGrip
+  - PressureHomeostasis
+  - Venomous
 
 - type: genome
   id: SpaceTick
@@ -514,6 +513,7 @@
   - ProteinSecretion
   - LowPressureAdaptation
   - HighMetabolism
+  - PressureHomeostasis
 
 - type: genome
   id: Carp
@@ -523,6 +523,7 @@
   - LowPressureAdaptation
   - ColdAdaptation
   - DefensiveAggression
+  - PressureHomeostasis
 
 - type: genome
   id: Shark
@@ -532,6 +533,7 @@
   - LowPressureAdaptation
   - ProteinSecretion
   - DefensiveAggression
+  - PressureHomeostasis
 
 - type: genome
   id: Dragon
@@ -542,6 +544,9 @@
   - DenseMusculature
   - LowPressureAdaptation
   - DefensiveAggression
+  - PressureHomeostasis
+  - DragonBreath
+  - ThermalHomeostasis
 
 - type: genome
   id: Goliath
@@ -551,6 +556,9 @@
   - MineralizedTissue
   - LimbGrip
   - DefensiveAggression
+  - ElasticFrame
+  - NoSlip
+  - CompositeCarapace
 
 - type: genome
   id: Hivelord
@@ -560,6 +568,7 @@
   - TissuePlasticity
   - HighMetabolism
   - ProteinSecretion
+  - Regeneration
 
 - type: genome
   id: Basilisk
@@ -569,6 +578,8 @@
   - KeratinizedCovering
   - ColdAdaptation
   - DefensiveAggression
+  - LamellarScales
+  - Reflection
 
 - type: genome
   id: Watcher
@@ -578,6 +589,7 @@
   - LowPressureAdaptation
   - MineralizedTissue
   - HeatAdaptation
+  - PhotonicLattice
 
 - type: genome
   id: Argocyte
@@ -596,6 +608,7 @@
   - HighMetabolism
   - WeakImmunity
   - DefensiveAggression
+  - CoordinatedRepair
 
 - type: genome
   id: Mimic
@@ -605,6 +618,8 @@
   - ProteinSecretion
   - SlowMetabolism
   - DefensiveAggression
+  - ElasticFrame
+  - AdaptivePigmentation
 
 - type: genome
   id: LaserRaptor
@@ -614,6 +629,8 @@
   - KeratinizedCovering
   - HighMetabolism
   - AcuteHearing
+  - PhotonicLattice
+  - PhotonicEmission
 
 - type: genome
   id: KillerTomato
@@ -633,6 +650,8 @@
   - TissuePlasticity
   - HighMetabolism
   - ToxinTolerance
+  - SomaticHomeostasis
+  - ThermalHomeostasis
 
 - type: genome
   id: Xeno
@@ -643,3 +662,4 @@
   - CollectiveSignaling
   - BroodDevelopment
   - LowPressureAdaptation
+  - ImmuneTolerance
