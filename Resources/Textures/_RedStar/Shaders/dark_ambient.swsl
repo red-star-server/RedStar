@@ -19,10 +19,10 @@ void fragment() {
     highp float highlightProtection = smoothstep(0.55, 0.95, luminance);
     gain = mix(min(gain, 1.0), 1.0, highlightProtection);
 
-    // Warm neutral shadows and midtones; retain the hue of saturated light.
-    highp float shadow = 1.0 - smoothstep(0.02, 0.7, luminance);
-    highp float tintWeight = shadow * (1.0 - saturation) * clamp(Warmth, 0.0, 1.0);
-    highp vec3 tint = mix(vec3(1.0), vec3(1.0, 0.90, 0.78), tintWeight);
+    // Warm shadows and midtones, protecting bright colored signals rather than all colored surfaces.
+    highp float shadow = 1.0 - smoothstep(0.2, 0.9, luminance);
+    highp float tintWeight = shadow * (1.0 - signal) * clamp(Warmth, 0.0, 1.0);
+    highp vec3 tint = mix(vec3(1.0), vec3(1.0, 0.80, 0.55), tintWeight);
     highp vec3 graded = source.rgb * gain * tint;
 
     // No additive light: black, transparency, and bright endpoints are preserved.

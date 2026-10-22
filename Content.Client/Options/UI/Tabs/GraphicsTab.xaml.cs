@@ -32,7 +32,11 @@ public sealed partial class GraphicsTab : Control
         var darkAmbient = Control.AddOptionCheckBox(DarkAmbientCVars.Enabled, DarkAmbientCheckBox);
         Control.AddOptionSlider(DarkAmbientCVars.Strength, DarkAmbientStrengthSlider, 0, 100,
             (_, value) => Loc.GetString("ui-options-value-percent", ("value", value / 100f)));
-        darkAmbient.ImmediateValueChanged += _ => DarkAmbientStrengthSlider.Visible = DarkAmbientCheckBox.Pressed;
+        Control.AddOptionSlider(DarkAmbientCVars.ShadowDepth, DarkAmbientShadowDepthSlider, 0, 100,
+            (_, value) => Loc.GetString("ui-options-value-percent", ("value", value / 100f)));
+        Control.AddOptionSlider(DarkAmbientCVars.Warmth, DarkAmbientWarmthSlider, 0, 100,
+            (_, value) => Loc.GetString("ui-options-value-percent", ("value", value / 100f)));
+        darkAmbient.ImmediateValueChanged += _ => UpdateDarkAmbientVisibility();
         // RS14-end
         Control.AddOption(new OptionFullscreen(Control, _cfg, FullscreenCheckBox));
         Control.AddOption(new OptionLightingQuality(Control, _cfg, DropDownLightingQuality));
@@ -96,7 +100,7 @@ public sealed partial class GraphicsTab : Control
         Control.Initialize();
         // RS14-start
         LightBloomStrengthSlider.Visible = LightBloomCheckBox.Pressed;
-        DarkAmbientStrengthSlider.Visible = DarkAmbientCheckBox.Pressed;
+        UpdateDarkAmbientVisibility();
         // RS14-end
 
         _cfg.OnValueChanged(CCVars.ViewportMinimumWidth, _ => UpdateViewportWidthRange());
@@ -106,6 +110,16 @@ public sealed partial class GraphicsTab : Control
         UpdateViewportSettingsVisibility();
         UpdateMaxFpsEnabled();
     }
+
+    // RS14-start
+    private void UpdateDarkAmbientVisibility()
+    {
+        var visible = DarkAmbientCheckBox.Pressed;
+        DarkAmbientStrengthSlider.Visible = visible;
+        DarkAmbientShadowDepthSlider.Visible = visible;
+        DarkAmbientWarmthSlider.Visible = visible;
+    }
+    // RS14-end
 
     private void UpdateMaxFpsEnabled()
     {

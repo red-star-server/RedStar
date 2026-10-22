@@ -114,6 +114,8 @@ ui-options-light-bloom = Свечение ламп
 ui-options-light-bloom-strength = Интенсивность свечения:
 ui-options-dark-ambient = Глубокие тени
 ui-options-dark-ambient-strength = Интенсивность затемнения:
+ui-options-dark-ambient-shadow-depth = Глубина теней:
+ui-options-dark-ambient-warmth = Теплота теней:
 ## RS14-end
 ui-options-fps-counter = Показать счётчик FPS
 ui-options-vp-width = Ширина окна игры:

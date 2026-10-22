@@ -114,6 +114,8 @@ ui-options-light-bloom = Fixture glow
 ui-options-light-bloom-strength = Glow intensity:
 ui-options-dark-ambient = Warm shadows
 ui-options-dark-ambient-strength = Shadow grading intensity:
+ui-options-dark-ambient-shadow-depth = Shadow depth:
+ui-options-dark-ambient-warmth = Shadow warmth:
 ## RS14-end
 ui-options-fps-counter = Show FPS counter
 ui-options-vp-width = Viewport width:

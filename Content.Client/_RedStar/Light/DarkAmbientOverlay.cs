@@ -51,6 +51,8 @@ public sealed partial class DarkAmbientOverlay : Overlay
 
         _shader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
         _shader.SetParameter("Intensity", Math.Clamp(_config.GetCVar(DarkAmbientCVars.Strength), 0, 100) / 100f);
+        _shader.SetParameter("ShadowDepth", Math.Clamp(_config.GetCVar(DarkAmbientCVars.ShadowDepth), 0, 100) / 100f);
+        _shader.SetParameter("Warmth", Math.Clamp(_config.GetCVar(DarkAmbientCVars.Warmth), 0, 100) / 100f);
 
         var handle = args.WorldHandle;
         handle.UseShader(_shader);

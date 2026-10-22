@@ -29,6 +29,8 @@
                 <ui:OptionSlider Name="LightBloomStrengthSlider" Title="{Loc 'ui-options-light-bloom-strength'}" />
                 <CheckBox Name="DarkAmbientCheckBox" Text="{Loc 'ui-options-dark-ambient'}" />
                 <ui:OptionSlider Name="DarkAmbientStrengthSlider" Title="{Loc 'ui-options-dark-ambient-strength'}" />
+                <ui:OptionSlider Name="DarkAmbientShadowDepthSlider" Title="{Loc 'ui-options-dark-ambient-shadow-depth'}" />
+                <ui:OptionSlider Name="DarkAmbientWarmthSlider" Title="{Loc 'ui-options-dark-ambient-warmth'}" />
                 <!-- RS14-end -->
                 <ui:OptionSlider Name="SharpnessSlider" Title="{Loc 'ui-options-sharpness'}" />
 
