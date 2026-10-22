@@ -2,6 +2,9 @@
   id: BloomLightMask
   kind: source
   path: "/Textures/_RedStar/Shaders/bloom_light_mask.swsl"
+  params:
+    Saturation: 1.12
+    HazeAmount: 0.1
 
 - type: shader
   id: BloomLightComposite

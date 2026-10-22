@@ -92,6 +92,11 @@ public sealed partial class BloomLightOverlay : Overlay
         var scale = viewport.RenderScale * (target.Size / (Vector2) viewport.Size);
         var worldToTarget = target.GetWorldToLocalMatrix(viewport.Eye!, scale);
         var handle = args.WorldHandle;
+        foreach (var mask in _textures.Values)
+        {
+            mask.Shader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
+        }
+
         handle.RenderInRenderTarget(target, () =>
         {
             foreach (var light in _visible)

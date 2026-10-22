@@ -10,7 +10,7 @@ void fragment() {
     // A shared soft knee limits dense overlaps without shifting their RGB proportions.
     glow *= 0.35 / (0.35 + glowPeak);
     highp float peak = max(max(scene.r, scene.g), scene.b);
-    highp float headroom = 1.0 - smoothstep(0.4, 0.95, peak);
+    highp float headroom = 1.0 - smoothstep(0.65, 0.98, peak);
 
     // Screen blending preserves the scene outside masks and bounds overlapping sources.
     COLOR = vec4(scene.rgb + (vec3(1.0) - scene.rgb) * glow * headroom, scene.a);
