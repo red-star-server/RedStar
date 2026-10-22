@@ -114,7 +114,10 @@ public sealed partial class BloomLightOverlay : Overlay
         _resources.Dispose();
         _composite.Dispose();
         foreach (var mask in _textures.Values)
+        {
             mask.Shader.Dispose();
+        }
+
         base.DisposeBehavior();
     }
 
@@ -148,11 +151,11 @@ public sealed partial class BloomLightOverlay : Overlay
         var color = point.Color * bloom.Tint;
         foreach (var layer in bloom.Layers)
         {
-            if (layer.Opacity <= 0f || layer.Scale.X <= 0f || layer.Scale.Y <= 0f)
+            if (layer.Opacity <= 0f)
                 continue;
 
             var mask = overlay.GetMask(layer.Mask);
-            var size = new Vector2(mask.Texture.Width, mask.Texture.Height) * layer.Scale / EyeManager.PixelsPerMeter;
+            var size = new Vector2(mask.Texture.Width, mask.Texture.Height) / EyeManager.PixelsPerMeter;
             var bounds = Box2.FromDimensions(layer.Offset - size / 2f, size);
             overlay._visible.Add(new LightToDraw(matrix, mask, bounds,
                 color.WithAlpha(Math.Clamp(color.A * layer.Opacity * energy * state.Strength, 0f, 1f))));

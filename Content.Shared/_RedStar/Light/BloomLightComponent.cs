@@ -18,7 +18,7 @@ public sealed partial class BloomLightComponent : Component, IComponentTreeEntry
     public Color Tint = Color.White;
 
     [DataField]
-    public List<BloomLightLayer> Layers = new();
+    public List<BloomLightLayer> Layers = [];
 
     public EntityUid? TreeUid { get; set; }
     public DynamicTree<ComponentTreeEntry<BloomLightComponent>>? Tree { get; set; }
@@ -37,9 +37,6 @@ public sealed partial class BloomLightLayer
 
     [DataField]
     public Vector2 Offset;
-
-    [DataField]
-    public Vector2 Scale = Vector2.One;
 
     [DataField]
     public float Opacity = 0.05f;

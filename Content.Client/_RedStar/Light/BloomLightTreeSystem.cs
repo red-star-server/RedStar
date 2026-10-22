@@ -21,7 +21,7 @@ public sealed partial class BloomLightTreeSystem : ComponentTreeSystem<BloomLigh
         foreach (var layer in entry.Component.Layers)
         {
             var texture = _sprites.Frame0(layer.Mask);
-            var size = new Vector2(texture.Width, texture.Height) * layer.Scale / EyeManager.PixelsPerMeter;
+            var size = new Vector2(texture.Width, texture.Height) / EyeManager.PixelsPerMeter;
             radius = Math.Max(radius, size.Length() / 2f + layer.Offset.Length());
         }
 

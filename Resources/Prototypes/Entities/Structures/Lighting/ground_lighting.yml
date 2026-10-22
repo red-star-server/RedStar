@@ -40,12 +40,7 @@
     layers:
     - mask: { sprite: "_RedStar/Effects/LightMasks/64.rsi", state: light_circle }
       offset: 0, 0.05
-      scale: 1.15, 1.15
-      opacity: 0.04
-    - mask: { sprite: "_RedStar/Effects/LightMasks/64.rsi", state: light_point }
-      offset: 0, 0.05
-      scale: 0.35, 0.35
-      opacity: 0.16
+      opacity: 0.05
   # RS14-end
   - type: Anchorable
   - type: InteractionOutline
