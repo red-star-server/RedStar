@@ -21,8 +21,14 @@ highp vec3 maskSample(highp vec2 offset, highp vec2 uvDx, highp vec2 uvDy, highp
 }
 
 void fragment() {
+#ifdef HAS_DFDX
     highp vec2 uvDx = dFdx(UV);
     highp vec2 uvDy = dFdy(UV);
+#else
+    // Match the texture-pixel filter on renderers without screen-space derivatives.
+    highp vec2 uvDx = vec2(TEXTURE_PIXEL_SIZE.x, 0.0);
+    highp vec2 uvDy = vec2(0.0, TEXTURE_PIXEL_SIZE.y);
+#endif
     highp vec3 mask = maskSample(vec2(0.0), uvDx, uvDy, FRAGCOORD.xy) * 0.2;
     mask += maskSample(vec2(1.0, 0.0), uvDx, uvDy, FRAGCOORD.xy) * 0.0625;
     mask += maskSample(vec2(-1.0, 0.0), uvDx, uvDy, FRAGCOORD.xy) * 0.0625;

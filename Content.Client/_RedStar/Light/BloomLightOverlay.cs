@@ -147,24 +147,19 @@ public sealed partial class BloomLightOverlay : Overlay
             return true;
 
         var bloom = entry.Component;
-        if (!bloom.Enabled)
+        if (!bloom.Enabled || bloom.MaskOpacity <= 0f)
             return true;
 
         var (_, _, matrix) = overlay._transforms.GetWorldPositionRotationMatrix(entry.Transform);
         // Follow flicker/fades without allowing high-energy lamps to produce unbounded haze.
         var energy = 2f * point.Energy / (1f + point.Energy);
         var color = point.Color * bloom.Tint;
-        foreach (var layer in bloom.Layers)
-        {
-            if (layer.Opacity <= 0f)
-                continue;
+        var mask = overlay.GetMask(bloom.Mask);
+        var size = new Vector2(mask.Texture.Width, mask.Texture.Height) / EyeManager.PixelsPerMeter;
+        var bounds = Box2.FromDimensions(bloom.MaskOffset - size / 2f, size);
+        var opacity = Math.Clamp(color.A * bloom.MaskOpacity * energy * state.Strength, 0f, 1f);
+        overlay._visible.Add(new LightToDraw(matrix, mask, bounds, color.WithAlpha(opacity)));
 
-            var mask = overlay.GetMask(layer.Mask);
-            var size = new Vector2(mask.Texture.Width, mask.Texture.Height) / EyeManager.PixelsPerMeter;
-            var bounds = Box2.FromDimensions(layer.Offset - size / 2f, size);
-            overlay._visible.Add(new LightToDraw(matrix, mask, bounds,
-                color.WithAlpha(Math.Clamp(color.A * layer.Opacity * energy * state.Strength, 0f, 1f))));
-        }
         return true;
     }
 
