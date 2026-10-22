@@ -1,4 +1,0 @@
-- type: shader
-  id: LightToneMapping
-  kind: source
-  path: "/Textures/_RedStar/Shaders/light_tone_mapping.swsl"

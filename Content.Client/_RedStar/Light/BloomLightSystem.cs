@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Light;
 
-public sealed partial class LightingPostProcessSystem : EntitySystem
+public sealed partial class BloomLightSystem : EntitySystem
 {
     [Dependency] private IConfigurationManager _config = default!;
     [Dependency] private IOverlayManager _overlays = default!;
@@ -15,14 +15,11 @@ public sealed partial class LightingPostProcessSystem : EntitySystem
     [Dependency] private SpriteSystem _sprites = default!;
     [Dependency] private TransformSystem _transforms = default!;
 
-    private LightToneMappingOverlay _toneMapping = default!;
     private BloomLightOverlay? _bloom;
 
     public override void Initialize()
     {
         base.Initialize();
-        _toneMapping = new LightToneMappingOverlay();
-        _overlays.AddOverlay(_toneMapping);
         Subs.CVar(_config, LightingCVars.BloomEnabled, SetBloomEnabled, true);
     }
 
@@ -54,8 +51,6 @@ public sealed partial class LightingPostProcessSystem : EntitySystem
 
     public override void Shutdown()
     {
-        _overlays.RemoveOverlay(_toneMapping);
-        _toneMapping.Dispose();
         SetBloomEnabled(false);
         base.Shutdown();
     }
