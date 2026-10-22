@@ -67,7 +67,7 @@ public sealed partial class BloomLightOverlay : Overlay
             !_entities.TryGetComponent(args.MapUid, out MapComponent? map) || !map.LightingEnabled)
             return false;
 
-        var strength = Math.Clamp(_config.GetCVar(LightingCVars.BloomStrength), 0, 200) / 100f;
+        var strength = Math.Clamp(_config.GetCVar(LightingCVars.BloomStrength), 0, 100) / 100f;
         var state = new QueryState(this, strength);
         _tree.QueryAabb(ref state, Collect, args.MapId, args.WorldAABB);
         return _visible.Count > 0;

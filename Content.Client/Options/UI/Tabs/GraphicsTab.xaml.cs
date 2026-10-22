@@ -26,9 +26,13 @@ public sealed partial class GraphicsTab : Control
         Control.AddOptionCheckBox(CCVars.AmbientOcclusion, AmbientOcclusionCheckBox);
         // RS14-start
         var bloom = Control.AddOptionCheckBox(LightingCVars.BloomEnabled, LightBloomCheckBox);
-        Control.AddOptionSlider(LightingCVars.BloomStrength, LightBloomStrengthSlider, 0, 200,
-            (_, value) => Loc.GetString("ui-options-value-percent", ("value", value)));
+        Control.AddOptionSlider(LightingCVars.BloomStrength, LightBloomStrengthSlider, 0, 100,
+            (_, value) => Loc.GetString("ui-options-value-percent", ("value", value / 100f)));
         bloom.ImmediateValueChanged += _ => LightBloomStrengthSlider.Visible = LightBloomCheckBox.Pressed;
+        var darkAmbient = Control.AddOptionCheckBox(DarkAmbientCVars.Enabled, DarkAmbientCheckBox);
+        Control.AddOptionSlider(DarkAmbientCVars.Strength, DarkAmbientStrengthSlider, 0, 100,
+            (_, value) => Loc.GetString("ui-options-value-percent", ("value", value / 100f)));
+        darkAmbient.ImmediateValueChanged += _ => DarkAmbientStrengthSlider.Visible = DarkAmbientCheckBox.Pressed;
         // RS14-end
         Control.AddOption(new OptionFullscreen(Control, _cfg, FullscreenCheckBox));
         Control.AddOption(new OptionLightingQuality(Control, _cfg, DropDownLightingQuality));
@@ -90,7 +94,10 @@ public sealed partial class GraphicsTab : Control
         Control.AddOptionCheckBox(CCVars.HudFpsCounterVisible, FpsCounterCheckBox);
 
         Control.Initialize();
-        LightBloomStrengthSlider.Visible = LightBloomCheckBox.Pressed; // RS14
+        // RS14-start
+        LightBloomStrengthSlider.Visible = LightBloomCheckBox.Pressed;
+        DarkAmbientStrengthSlider.Visible = DarkAmbientCheckBox.Pressed;
+        // RS14-end
 
         _cfg.OnValueChanged(CCVars.ViewportMinimumWidth, _ => UpdateViewportWidthRange());
         _cfg.OnValueChanged(CCVars.ViewportMaximumWidth, _ => UpdateViewportWidthRange());

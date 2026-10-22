@@ -112,6 +112,8 @@ ui-options-ambient-occlusion = Show Ambient Occlusion
 ## RS14-start
 ui-options-light-bloom = Fixture glow
 ui-options-light-bloom-strength = Glow intensity:
+ui-options-dark-ambient = Warm shadows
+ui-options-dark-ambient-strength = Shadow grading intensity:
 ## RS14-end
 ui-options-fps-counter = Show FPS counter
 ui-options-vp-width = Viewport width:
