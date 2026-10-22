@@ -23,6 +23,7 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
+    reoccurrenceDelay: 45 # RS14
     earliestStart: 15
     weight: 6
     duration: 50
@@ -67,6 +68,7 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
+    reoccurrenceDelay: 45 # RS14
     weight: 6
     duration: 50
   - type: VentCrittersRule
@@ -83,6 +85,7 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
+    reoccurrenceDelay: 45 # RS14
     weight: 6
     duration: 50
   - type: VentCrittersRule
@@ -126,7 +129,7 @@
     weight: 6 # Slightly more common than other hordes
     duration: 5
     maxDuration: 20
-    reoccurrenceDelay: 15 # Shorter because this event is basically a nat zero on the round. It only exists to potentially confuse security or the crew
+    reoccurrenceDelay: 45 # RS14
   - type: VentHordeRule
     table: !type:GroupSelector
       rolls: 3,5

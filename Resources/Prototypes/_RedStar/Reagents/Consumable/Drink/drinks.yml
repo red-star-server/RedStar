@@ -1,0 +1,9 @@
+- type: reagent
+  parent: BaseDrink
+  id: Kvass
+  name: reagent-name-kvass
+  desc: reagent-desc-kvass
+  physicalDesc: reagent-physical-desc-bubbly
+  flavor: bread
+  color: "#381600"
+  recognizable: true

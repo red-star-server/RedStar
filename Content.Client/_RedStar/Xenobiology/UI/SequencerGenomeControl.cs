@@ -35,6 +35,9 @@ public sealed class SequencerGenomeControl : Control
         MouseFilter = MouseFilterMode.Stop;
     }
 
+    /// <summary>
+    /// Replaces the displayed marker list. Selected is its highlighted index, or -1 for no selection.
+    /// </summary>
     public void SetMarkers(SequencerMarkerView[] markers, int selected)
     {
         _markers = markers;

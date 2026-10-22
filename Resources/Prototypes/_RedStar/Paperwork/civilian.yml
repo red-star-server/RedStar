@@ -1,15 +1,15 @@
 # NanoTrasen
 - type: paperwork
   id: NTCivilian0
-  category: NTCivilian
   name: paperwork-form-title-civilian-0
+  category: NTCivilian
   template: "/Paperwork/default.xml"
   paperPrototype: PaperPrintedNTCivilian
 
 # USSP
 - type: paperwork
   id: USSPCivilian0
-  category: USSPCivilian
   name: paperwork-form-title-civilian-0
+  category: USSPCivilian
   template: "/Paperwork/default.xml"
   paperPrototype: PaperPrintedUSSPCivilian

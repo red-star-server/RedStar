@@ -1,7 +1,7 @@
 ﻿- type: entity
+  parent: LockerMime
   id: LockerMimeFilled
   suffix: Filled
-  parent: LockerMime
   components:
   - type: EntityTableContainerFill
     containers:
@@ -15,9 +15,9 @@
     - id: RubberStampMime
 
 - type: entity
+  parent: LockerClown
   id: LockerClownFilled
   suffix: Filled
-  parent: LockerClown
   components:
   - type: EntityTableContainerFill
     containers:

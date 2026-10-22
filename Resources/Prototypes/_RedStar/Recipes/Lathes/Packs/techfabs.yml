@@ -8,19 +8,16 @@
   - CircuitImprinterMachineCircuitboard
 
 - type: latheRecipePack
-  id: XenobiologyBoardsStatic
-  recipes:
-  - CellSequencerCircuitboard
-  - CellularFusionCircuitboard
-  - MutagenicCellInjectorCircuitboard
-  - GrowingVatCircuitboard
-
-- type: latheRecipePack
   id: XenobiologyToolsStatic
   recipes:
   - BiopsyTool
   - PetriDish
   - GeneticVial
+
+- type: latheRecipePack
+  id: GeneticsToolsStatic
+  recipes:
+  - HandheldGeneticAnalyzer
 
 - type: latheRecipePack
   id: MiningToolsStatic
@@ -34,6 +31,20 @@
   - SeismicCharge
 
 ## Dynamic
+
+- type: latheRecipePack
+  id: XenobiologyBoards
+  recipes:
+  - GeneticSequencerCircuitboard
+  - SampleStabilizerCircuitboard
+  - MutagenicInjectorCircuitboard
+  - GrowingVatCircuitboard
+
+- type: latheRecipePack
+  id: GeneticsBoards
+  recipes:
+  - GeneticChamberCircuitboard
+  - GeneticsConsoleCircuitboard
 
 - type: latheRecipePack
   id: SharedBoards

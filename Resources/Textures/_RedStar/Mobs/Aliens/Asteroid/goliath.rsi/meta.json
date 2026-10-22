@@ -9,7 +9,7 @@
     "states": [
         {
             "name": "goliath",
-			"directions": 4
+            "directions": 4
         },
         {
             "name": "goliath_dead"

@@ -10,8 +10,8 @@
     node: dresserBox
 
 - type: entity
-  id: DresserBoxFilled
   parent: DresserBox
+  id: DresserBoxFilled
   suffix: Filled
   components:
   - type: EntityTableContainerFill #TODO: make these tables in any way consistent
@@ -26,11 +26,11 @@
           tableId: DresserThirdLootEntityTable
 
 - type: entity
-  id: FancyWardrobe
   parent: Dresser
+  id: FancyWardrobe
   name: wardrobe
-  description: A large fancy wardrobe. Its in pretty good condition.
   suffix: Empty
+  description: A large fancy wardrobe. Its in pretty good condition.
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Furniture/wardrobe.rsi
@@ -44,8 +44,8 @@
     node: fancyWardrobe
 
 - type: entity
-  id: FancyWardrobeFilled
   parent: FancyWardrobe
+  id: FancyWardrobeFilled
   suffix: Filled
   components:
   - type: EntityTableContainerFill #TODO: make these tables in any way consistent

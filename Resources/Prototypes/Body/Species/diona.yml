@@ -72,6 +72,10 @@
   id: MobDiona
   name: Urist McPlants
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Diona
+  # RS14-end
   - type: Respirator
     damage:
       types:

@@ -120,6 +120,10 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
+    # RS14-start
+    reoccurrenceDelay: 60
+    minimumPlayers: 15
+    # RS14-end
     startAnnouncementColor: "#18abf5"
     startAudio:
       path: /Audio/_Corvax/Announcements/flux.ogg # RS14
@@ -138,6 +142,10 @@
       min:  30
       max:  30
   - type: StationEvent
+    # RS14-start
+    reoccurrenceDelay: 60
+    minimumPlayers: 10
+    # RS14-end
     startAnnouncementColor: "#18abf5"
     startAudio:
       path: /Audio/_Corvax/Announcements/blusp_anomalies.ogg # RS14
@@ -153,7 +161,7 @@
   components:
   - type: StationEvent
     weight: 2
-    reoccurrenceDelay: 5
+    reoccurrenceDelay: 30 # RS14
     earliestStart: 1
     duration: 1
   - type: BluespaceLockerRule
@@ -211,6 +219,7 @@
   id: ClosetSkeleton
   components:
   - type: StationEvent
+    reoccurrenceDelay: 45 # RS14
     weight: 5
     duration: 1
     occursDuringRoundEnd: false
@@ -380,6 +389,10 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
+    # RS14-start
+    reoccurrenceDelay: 45
+    minimumPlayers: 10
+    # RS14-end
     startAnnouncement: station-event-gas-leak-start-announcement
     startAudio:
       path: /Audio/_Corvax/Announcements/gasleak_start.ogg # RS14
@@ -409,6 +422,10 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
+    # RS14-start
+    reoccurrenceDelay: 60
+    minimumPlayers: 5
+    # RS14-end
     weight: 5
     startAnnouncement: station-event-power-grid-check-start-announcement
     endAnnouncement: station-event-power-grid-check-end-announcement
@@ -427,6 +444,7 @@
   id: SolarFlare
   components:
   - type: StationEvent
+    reoccurrenceDelay: 60 # RS14
     weight: 8
     startAnnouncement: station-event-solar-flare-start-announcement
     endAnnouncement: station-event-solar-flare-end-announcement
@@ -457,6 +475,7 @@
   id: VendorMalfunction
   components:
   - type: StationEvent
+    reoccurrenceDelay: 45 # RS14
     startAnnouncement: station-event-vendor-malfunction-announcement
     startAudio:
       path: /Audio/Announcements/announce.ogg
@@ -649,10 +668,11 @@
   parent: BaseGameRule
   components:
   - type: StationEvent
+    maxOccurrences: 1 # RS14
     weight: 7
     duration: 150
     maxDuration: 300
-    reoccurrenceDelay: 30
+    reoccurrenceDelay: 60 # RS14
   - type: MassHallucinationsRule
     minTimeBetweenIncidents: 0.1
     maxTimeBetweenIncidents: 300
@@ -668,7 +688,7 @@
   components:
   - type: StationEvent
     weight: 8
-    reoccurrenceDelay: 20
+    reoccurrenceDelay: 45 # RS14
     duration: 1
     startAudio:
       path: /Audio/_Corvax/Announcements/i-storm1.ogg # RS14

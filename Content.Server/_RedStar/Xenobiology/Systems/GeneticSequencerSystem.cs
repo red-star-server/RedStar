@@ -1,0 +1,194 @@
+using System.Linq;
+using Content.Server.Power.EntitySystems;
+using Content.Server._RedStar.Genetics.Systems;
+using Content.Server._RedStar.Xenobiology.Helpers;
+using Content.Shared.Containers.ItemSlots;
+using Content.Shared.GameTicking;
+using Content.Shared.Popups;
+using Content.Shared.Power;
+using Content.Shared.UserInterface;
+using Content.Shared._RedStar.Genetics.Components;
+using Content.Shared._RedStar.Genetics.Prototypes;
+using Content.Shared._RedStar.Xenobiology.Components.Container;
+using Content.Shared._RedStar.Xenobiology.Components.Machines;
+using Content.Shared._RedStar.Xenobiology.Events;
+using Content.Shared._RedStar.Xenobiology.UI;
+using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using Puzzle = Content.Server._RedStar.Xenobiology.Helpers.SequencerPuzzleGenerator.Puzzle;
+
+namespace Content.Server._RedStar.Xenobiology.Systems;
+
+public sealed partial class GeneticSequencerSystem : EntitySystem
+{
+    [Dependency] private ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private IPrototypeManager _prototypes = default!;
+    [Dependency] private GeneticVialSystem _vials = default!;
+    [Dependency] private SampleSystem _samples = default!;
+    [Dependency] private IRobustRandom _random = default!;
+
+    // Discoveries are shared by every sequencer and reset at round restart.
+    private readonly HashSet<ProtoId<GenePrototype>> _decoded = [];
+    // Each gene retains its puzzle for the round; family codes must be unique across genes.
+    private readonly Dictionary<ProtoId<GenePrototype>, Puzzle> _puzzles = [];
+
+    [SubscribeLocalEvent]
+    private void OnRoundRestart(RoundRestartCleanupEvent args)
+    {
+        _decoded.Clear();
+        _puzzles.Clear();
+    }
+
+    [SubscribeLocalEvent]
+    private void OnOpened(Entity<GeneticSequencerComponent> ent, ref AfterActivatableUIOpenEvent args) => UpdateUI(ent);
+
+    [SubscribeLocalEvent]
+    private void OnInserted(Entity<GeneticSequencerComponent> ent, ref EntInsertedIntoContainerMessage args) => UpdateUI(ent);
+
+    [SubscribeLocalEvent]
+    private void OnRemoved(Entity<GeneticSequencerComponent> ent, ref EntRemovedFromContainerMessage args)
+    {
+        UpdateUI(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnSampleChanged(Entity<GeneticSequencerComponent> ent, ref ContainedSamplesChangedEvent args)
+    {
+        if (TryGetDish(ent, out var dish) && dish.Owner == args.SampleContainer)
+            UpdateUI(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnPowerChanged(Entity<GeneticSequencerComponent> ent, ref PowerChangedEvent args) => UpdateUI(ent);
+
+    private bool TryGetMarker(Entity<GeneticSequencerComponent> ent, int sampleId, string family,
+        out Entity<SampleContainerComponent> dish, out ProtoId<GenePrototype> gene)
+    {
+        gene = default;
+        if (!this.IsPowered(ent.Owner, EntityManager) || !TryGetDish(ent, out dish))
+        {
+            dish = default;
+            return false;
+        }
+        var sample = dish.Comp.Samples.Find(s => s.Id == sampleId);
+        if (sample?.GetGenome() is not { } genome)
+            return false;
+        foreach (var id in genome.Genes)
+        {
+            if (GetPuzzle(id).FamilyCode != family)
+                continue;
+            gene = id;
+            return true;
+        }
+        return false;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnDecode(Entity<GeneticSequencerComponent> ent, ref GeneticSequencerDecodeMessage args)
+    {
+        if (!TryGetMarker(ent, args.SampleId, args.Family, out var dish, out var id) ||
+            _decoded.Contains(id))
+            return;
+        var puzzle = GetPuzzle(id);
+        var count = puzzle.Order.Length;
+        if (args.Order is not { } order || order.Length != count || order.Distinct().Count() != count ||
+            order.Any(index => index < 0 || index >= count))
+            return;
+        if (Enumerable.Range(0, count).Any(i => puzzle.Order[order[i]] != i))
+        {
+            var matches = Enumerable.Range(1, count - 1).Select(i =>
+                puzzle.Fragments[order[i - 1]][SequencerPuzzle.Step..] ==
+                puzzle.Fragments[order[i]][..SequencerPuzzle.Overlap]).ToArray();
+            _userInterface.ServerSendUiMessage(ent.Owner, GeneticSequencerUiKey.Key,
+                new GeneticSequencerFeedbackMessage(args.SampleId, args.Family, order, matches), args.Actor);
+            if (!_samples.TryReduceStability(dish.AsNullable(), args.SampleId, ent.Comp.IncorrectStabilityCost))
+                UpdateUI(ent);
+            _popup.PopupEntity(Loc.GetString("genetic-sequencer-incorrect"), ent, args.Actor, PopupType.MediumCaution);
+            return;
+        }
+
+        _decoded.Add(id);
+        _popup.PopupEntity(Loc.GetString("genetic-sequencer-discovered", ("gene", Loc.GetString($"gene-{id}-name"))),
+            ent, args.Actor, PopupType.Medium);
+        var query = EntityQueryEnumerator<GeneticSequencerComponent>();
+        while (query.MoveNext(out var uid, out var component))
+        {
+            UpdateUI((uid, component));
+        }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnExtract(Entity<GeneticSequencerComponent> ent, ref GeneticSequencerExtractMessage args)
+    {
+        if (!TryGetMarker(ent, args.SampleId, args.Family, out var dish, out var id) ||
+            !_decoded.Contains(id) || !TryGetVial(ent, out var vial) || args.Vial != GetNetEntity(vial.Owner))
+            return;
+
+        if (!_vials.TryExtract(dish, args.SampleId, vial, id))
+            UpdateUI(ent);
+    }
+
+    private bool TryGetDish(Entity<GeneticSequencerComponent> ent, out Entity<SampleContainerComponent> dish)
+    {
+        dish = default;
+        var uid = _itemSlots.GetItemOrNull(ent.Owner, ent.Comp.DishSlot);
+        if (uid is not { } dishUid || !TryComp<SampleContainerComponent>(dishUid, out var container))
+            return false;
+        dish = (dishUid, container);
+        return true;
+    }
+
+    private bool TryGetVial(Entity<GeneticSequencerComponent> ent, out Entity<GeneticVialComponent> vial)
+    {
+        vial = default;
+        var uid = _itemSlots.GetItemOrNull(ent.Owner, ent.Comp.VialSlot);
+        if (uid is not { } vialUid || !TryComp<GeneticVialComponent>(vialUid, out var component))
+            return false;
+        vial = (vialUid, component);
+        return true;
+    }
+
+    private void UpdateUI(Entity<GeneticSequencerComponent> ent)
+    {
+        if (TerminatingOrDeleted(ent))
+            return;
+        if (!this.IsPowered(ent.Owner, EntityManager) || !TryGetDish(ent, out var dish))
+        {
+            _userInterface.SetUiState(ent.Owner, GeneticSequencerUiKey.Key,
+                new GeneticSequencerUiState([], null, null));
+            return;
+        }
+        Entity<GeneticVialComponent>? vial = TryGetVial(ent, out var insertedVial) ? insertedVial : null;
+        var samples = dish.Comp.Samples.Select(sample => new SequencerSampleView(new SampleView(sample),
+            sample.GetGenome() is { } genome
+                ? genome.Genes.OrderBy(id => id.Id, StringComparer.Ordinal)
+                    .Select(id => Marker(id, sample.Stability, vial)).ToArray()
+                : [])).ToArray();
+        _userInterface.SetUiState(ent.Owner, GeneticSequencerUiKey.Key,
+            new GeneticSequencerUiState(samples, GetNetEntity(dish.Owner),
+                vial is { } present ? GetNetEntity(present.Owner) : null));
+    }
+
+    private SequencerMarkerView Marker(ProtoId<GenePrototype> id, float stability, Entity<GeneticVialComponent>? vial)
+    {
+        var puzzle = GetPuzzle(id);
+        var known = _decoded.Contains(id);
+        return new SequencerMarkerView(puzzle.FamilyCode, puzzle.Fragments, known,
+            known ? Loc.GetString($"gene-{id}-name") : string.Empty,
+            known && stability >= _prototypes.Index(id).MinimumStability &&
+            vial is { } inserted && _vials.CanAdd(inserted, id));
+    }
+
+    private Puzzle GetPuzzle(ProtoId<GenePrototype> id)
+    {
+        if (_puzzles.TryGetValue(id, out var cached))
+            return cached;
+        var puzzle = SequencerPuzzleGenerator.Generate(_random, _prototypes.Index(id).FragmentCount,
+            family => _puzzles.Values.Any(existing => existing.FamilyCode == family));
+        _puzzles.Add(id, puzzle);
+        return puzzle;
+    }
+}

@@ -1,15 +1,15 @@
 # NanoTrasen
 - type: paperwork
   id: NTCommand0
-  category: NTCommand
   name: paperwork-form-title-command-0
+  category: NTCommand
   template: "/Paperwork/default.xml"
   paperPrototype: PaperPrintedNTCommand
 
 # USSP
 - type: paperwork
   id: USSPCommand0
-  category: USSPCommand
   name: paperwork-form-title-command-0
+  category: USSPCommand
   template: "/Paperwork/default.xml"
   paperPrototype: PaperPrintedUSSPCommand

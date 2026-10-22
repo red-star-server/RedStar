@@ -2,8 +2,8 @@
   parent: MaterialBase
   id: MaterialBlueSpaceCrystal
   name: bluespace crystal
-  description: A crystal with unusual spatial properties.
   suffix: Full
+  description: A crystal with unusual spatial properties.
   components:
   - type: Stack
     stackType: BlueSpaceCrystal
@@ -17,7 +17,7 @@
     state: bluespace_crystal
     layers:
     - state: bluespace_crystal
-      map: ["base"]
+      map: [ "base" ]
   - type: Item
     sprite: _RedStar/Objects/Materials/ore.rsi
     heldPrefix: bluespace
@@ -40,8 +40,8 @@
   parent: MaterialBase
   id: MaterialRedSpaceCrystal
   name: redspace crystal
-  description: A crystal with unstable spatial properties.
   suffix: Full
+  description: A crystal with unstable spatial properties.
   components:
   - type: Stack
     stackType: RedSpaceCrystal
@@ -55,7 +55,7 @@
     state: redspace_crystal
     layers:
     - state: redspace_crystal
-      map: ["base"]
+      map: [ "base" ]
   - type: Item
     sprite: _RedStar/Objects/Materials/ore.rsi
     heldPrefix: redspace
@@ -78,8 +78,8 @@
   parent: SheetMetalBase
   id: SheetTitanium
   name: titanium
-  description: A lightweight, strong metal refined from titanium ore.
   suffix: Full
+  description: A lightweight, strong metal refined from titanium ore.
   components:
   - type: Stack
     stackType: Titanium
@@ -93,7 +93,7 @@
     state: titanium_3
     layers:
     - state: titanium_3
-      map: ["base"]
+      map: [ "base" ]
   - type: Item
     sprite: _RedStar/Objects/Materials/metal.rsi
     heldPrefix: titanium

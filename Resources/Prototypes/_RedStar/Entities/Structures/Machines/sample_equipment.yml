@@ -1,0 +1,200 @@
+- type: entity
+  abstract: true
+  parent: [ BaseMachinePowered, SmallConstructibleMachine, BaseSmallConstructibleMachineDestructible ]
+  id: BaseSampleProcessingMachine
+  components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.4,0.25,0.4"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: ActivatableUIRequiresPower
+  - type: ApcPowerReceiver
+    powerLoad: 250
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+      enum.WiresVisuals.MaintenancePanelState:
+        enum.WiresVisualLayers.MaintenancePanel:
+          True: { visible: true }
+          False: { visible: false }
+  - type: WiresPanel
+  - type: ContainerContainer
+    containers:
+      dishSlot: !type:ContainerSlot
+      machine_board: !type:Container
+      machine_parts: !type:Container
+  - type: ItemSlots
+    slots:
+      dishSlot:
+        whitelist:
+          tags:
+          - Dish
+  - type: GuideHelp
+    guides:
+    - Science
+
+- type: entity
+  parent: BaseSampleProcessingMachine
+  id: GeneticSequencer
+  name: genetic sequencer
+  description: Deciphers genetic markers in samples from an inserted Petri dish.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Machines/Xenobiology/genetic_sequencer.rsi
+    layers:
+    - state: base
+    - state: unlit
+      shader: unshaded
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+    - state: panel
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+  - type: Icon
+    sprite: _RedStar/Structures/Machines/Xenobiology/genetic_sequencer.rsi
+    state: base
+  - type: ActivatableUI
+    key: enum.GeneticSequencerUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.GeneticSequencerUiKey.Key:
+        type: GeneticSequencerBoundUserInterface
+  - type: GeneticSequencer
+  - type: ContainerContainer
+    containers:
+      dishSlot: !type:ContainerSlot
+      vialSlot: !type:ContainerSlot
+      machine_board: !type:Container
+      machine_parts: !type:Container
+  - type: ItemSlots
+    slots:
+      dishSlot:
+        whitelist:
+          tags:
+          - Dish
+      vialSlot:
+        whitelist:
+          components:
+          - GeneticVial
+  - type: Machine
+    board: GeneticSequencerCircuitboard
+
+- type: entity
+  parent: BaseSampleProcessingMachine
+  id: SampleStabilizer
+  name: sample stabilizer
+  description: Improves the stability of identical samples in a Petri dish.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Machines/Xenobiology/sample_stabilizer.rsi
+    layers:
+    - state: base
+    - state: unlit
+      shader: unshaded
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+    - state: panel
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+  - type: Icon
+    sprite: _RedStar/Structures/Machines/Xenobiology/sample_stabilizer.rsi
+    state: base
+  - type: ActivatableUI
+    key: enum.SampleStabilizerUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.SampleStabilizerUiKey.Key:
+        type: SampleStabilizerBoundUserInterface
+  - type: SampleStabilizer
+  - type: Machine
+    board: SampleStabilizerCircuitboard
+
+- type: entity
+  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
+  id: MutagenicInjector
+  name: mutagenic injector
+  description: Best not to let your fingers get stuck...
+  components:
+  - type: Machine
+    board: MutagenicInjectorCircuitboard
+  - type: WiresPanel
+  - type: Sprite
+    sprite: _RedStar/Structures/Machines/Xenobiology/mutagenic_injector.rsi
+    layers:
+    - state: base
+      map: [ "base" ]
+    - state: door-closed
+      map: [ "enum.StorageVisualLayers.Door" ]
+    - state: unlit
+      shader: unshaded
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+    - state: panel
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 50
+        mask:
+        - HighImpassable
+        layer:
+        - HighImpassable
+  - type: Construction
+    containers:
+    - machine_board
+    - machine_parts
+    - entity_storage
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      vialSlot: !type:ContainerSlot
+      entity_storage: !type:Container
+  - type: EmptyOnMachineDeconstruct
+    containers:
+    - entity_storage
+  - type: ItemSlots
+    slots:
+      vialSlot:
+        whitelist:
+          components:
+          - GeneticVial
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.StorageVisuals.Open:
+        enum.StorageVisualLayers.Door:
+          True: { visible: false }
+          False: { visible: true }
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+      enum.WiresVisuals.MaintenancePanelState:
+        enum.WiresVisualLayers.MaintenancePanel:
+          True: { visible: true }
+          False: { visible: false }
+  - type: MutagenicInjector
+    processSound:
+      path: /Audio/Machines/microwave_loop.ogg
+      params:
+        loop: true
+        maxDistance: 5
+  - type: ResistLocker
+  - type: EntityStorage
+    capacity: 1
+    whitelist:
+      components:
+      - MobState
+  - type: GuideHelp
+    guides:
+    - Science

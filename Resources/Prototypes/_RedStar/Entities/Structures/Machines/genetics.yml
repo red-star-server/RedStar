@@ -1,0 +1,96 @@
+- type: entity
+  parent: MedicalScanner
+  id: GeneticChamber
+  name: genetic chamber
+  description: A controlled environment for targeted treatment of acquired genetic modifications.
+  components:
+  - type: GeneticChamber
+    procedures:
+      Activate:
+        reagent: Genezine
+        dose: 10
+        duration: 20
+      Suppress:
+        reagent: Genestatin
+        dose: 5
+        duration: 10
+      Remove:
+        reagent: Genolysin
+        dose: 15
+        duration: 30
+  - type: Sprite
+    sprite: _RedStar/Structures/Machines/scanner.rsi
+  - type: DeviceLinkSink
+    ports: [GeneticChamberReceiver]
+  - type: ItemSlots
+    slots:
+      beakerSlot:
+        whitelist:
+          components: [FitsInDispenser]
+  - type: ContainerContainer
+    containers:
+      beakerSlot: !type:ContainerSlot {}
+  - type: Machine
+    board: GeneticChamberCircuitboard
+  - type: EmptyOnMachineDeconstruct
+    containers: [scanner-bodyContainer, beakerSlot]
+  - type: ApcPowerReceiver
+    powerLoad: 1500
+  - type: GuideHelp
+    guides: [GeneticMutations]
+
+- type: entity
+  parent: BaseComputerAiAccess
+  id: ComputerGeneticsConsole
+  name: genetics console
+  description: Controls targeted gene activation, suppression and removal in a connected genetic chamber.
+  components:
+  - type: GeneticsConsole
+  - type: Computer
+    board: GeneticsConsoleCircuitboard
+  - type: ComputerVisuals
+    stateScreen: dna
+  - type: DeviceLinkSource
+    range: 4
+    ports: [GeneticChamberSender]
+  - type: ActivatableUI
+    key: enum.GeneticsConsoleUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+      enum.GeneticsConsoleUiKey.Key:
+        type: GeneticsConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: GuideHelp
+    guides: [GeneticMutations]
+
+- type: sourcePort
+  id: GeneticChamberSender
+  name: signal-port-name-genetic-chamber
+  description: signal-port-description-genetic-chamber
+  defaultLinks: [GeneticChamberReceiver]
+
+- type: sinkPort
+  id: GeneticChamberReceiver
+  name: signal-port-name-genetic-chamber
+  description: signal-port-description-genetic-chamber
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: GeneticChamberCircuitboard
+  name: genetic chamber machine board
+  components:
+  - type: MachineBoard
+    prototype: GeneticChamber
+    stackRequirements:
+      Manipulator: 2
+      Glass: 5
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: GeneticsConsoleCircuitboard
+  name: genetics console computer board
+  components:
+  - type: ComputerBoard
+    prototype: ComputerGeneticsConsole

@@ -26,6 +26,7 @@ public sealed class SequencerAssemblyControl : Control
     private Vector2 _cursor;
     private bool _held;
     private bool _feedback;
+    private bool[] _matches = [];
     private bool _decoded;
     public bool IsDecoded => _decoded;
 
@@ -48,6 +49,9 @@ public sealed class SequencerAssemblyControl : Control
         MouseFilter = MouseFilterMode.Stop;
     }
 
+    /// <summary>
+    /// Replaces the available fragments and sequence prefix, clearing placement and feedback without notification.
+    /// </summary>
     public void SetFragments(string[] fragments, string prefix)
     {
         _fragments = fragments;
@@ -57,6 +61,9 @@ public sealed class SequencerAssemblyControl : Control
         Clear(false);
     }
 
+    /// <summary>
+    /// Clears placement, drag state, and feedback. Raises AssemblyChanged unless notify is false.
+    /// </summary>
     public void Clear(bool notify = true)
     {
         Array.Fill(_slots, null);
@@ -69,6 +76,9 @@ public sealed class SequencerAssemblyControl : Control
             AssemblyChanged?.Invoke();
     }
 
+    /// <summary>
+    /// Fragment indices in board order, or an empty array if any slot is unfilled.
+    /// </summary>
     public int[] OrderedFragments => _slots.All(x => x.HasValue)
         ? _slots.Select(x => x!.Value).ToArray()
         : [];
@@ -77,9 +87,14 @@ public sealed class SequencerAssemblyControl : Control
 
     public bool Complete => _slots.Length > 0 && _slots.All(slot => slot.HasValue);
 
-    public void SetFeedback(int[] order)
+    /// <summary>
+    /// Displays adjacency feedback only if the submitted order still matches the current board.
+    /// </summary>
+    public void SetFeedback(int[] order, bool[] matches)
     {
-        _feedback = _decoded || order.Length == _slots.Length && OrderedFragments.SequenceEqual(order);
+        _feedback = order.Length == _slots.Length && matches.Length == Math.Max(0, _slots.Length - 1) &&
+            OrderedFragments.SequenceEqual(order);
+        _matches = matches;
     }
 
     /// <summary>
@@ -201,21 +216,21 @@ public sealed class SequencerAssemblyControl : Control
         handle.DrawRect(PixelSizeBox, Back);
         if (_fragments.Length == 0)
             return;
-        Text(handle, Loc.GetString("cell-sequencer-reads"), new Vector2(Left, 16), Muted);
-        Text(handle, Loc.GetString("cell-sequencer-board"), new Vector2(Left, 115), Muted);
+        Text(handle, Loc.GetString("genetic-sequencer-reads"), new Vector2(Left, 16), Muted);
+        Text(handle, Loc.GetString("genetic-sequencer-board"), new Vector2(Left, 115), Muted);
         for (var i = 0; i < _fragments.Length; i++)
         {
             var trayPos = TilePos(i, TrayY);
             var trayBusy = _slots.Contains(i);
             DrawTile(handle, trayPos, trayBusy ? Card : Outline, trayBusy ? "" : _fragments[i], trayBusy);
             var pos = TilePos(i, BoardY);
-            var cell = _slots[i];
-            var fill = cell.HasValue ? Card : Back;
-            DrawTile(handle, pos, fill, cell is { } index ? _fragments[index] : $"{i + 1:00}", !cell.HasValue);
-            if (!_feedback || i <= 0 || cell is not { } current || _slots[i - 1] is not { } previous)
+            var slot = _slots[i];
+            var fill = slot.HasValue ? Card : Back;
+            DrawTile(handle, pos, fill, slot is { } index ? _fragments[index] : $"{i + 1:00}", !slot.HasValue);
+            if (!_feedback || i <= 0 || slot is null || _slots[i - 1] is null)
                 continue;
 
-            var matches = _fragments[previous][SequencerPuzzle.Step..] == _fragments[current][..SequencerPuzzle.Overlap];
+            var matches = _decoded || _matches[i - 1];
             handle.DrawRect(new UIBox2(pos.X - 8 * UIScale, pos.Y + 13 * UIScale,
                 pos.X - 4 * UIScale, pos.Y + 39 * UIScale), matches ? Good : Bad);
         }

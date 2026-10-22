@@ -195,3 +195,9 @@
   components:
   - type: PaperVisuals
     headerImagePath: "/Textures/_RedStar/Interface/Paper/paper_heading_syndicate_ussp.svg.96dpi.png"
+
+- type: entity
+  parent: Paper
+  id: TapeRecorderTranscript
+  name: record transcript
+# TODO: could have a unique sprite in the future

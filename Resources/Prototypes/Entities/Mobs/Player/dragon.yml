@@ -6,6 +6,10 @@
   description: A flying leviathan, loosely related to space carps.
   abstract: true
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Dragon
+  # RS14-end
   - type: Bloodstream
     bloodReferenceSolution:
       reagents:

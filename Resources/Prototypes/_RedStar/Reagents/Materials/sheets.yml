@@ -1,7 +1,7 @@
 - type: material
   id: Plastitanium
-  stackEntity: SheetPlastitanium1
   name: materials-plastitanium
+  stackEntity: SheetPlastitanium1
   unit: materials-unit-sheet
   icon: { sprite: _RedStar/Objects/Materials/metal.rsi, state: plastitanium }
   color: "#4f4f52"
@@ -9,8 +9,8 @@
 
 - type: material
   id: TitaniumGlass
-  stackEntity: SheetTitaniumGlass1
   name: materials-titaniumglass
+  stackEntity: SheetTitaniumGlass1
   unit: materials-unit-sheet
   icon: { sprite: _RedStar/Objects/Materials/glass.rsi, state: titaniumglass }
   color: "#6d7074"
@@ -18,8 +18,8 @@
 
 - type: material
   id: PlastitaniumGlass
-  stackEntity: SheetPlastitaniumGlass1
   name: materials-plastitaniumglass
+  stackEntity: SheetPlastitaniumGlass1
   unit: materials-unit-sheet
   icon: { sprite: _RedStar/Objects/Materials/glass.rsi, state: plastitaniumglass }
   color: "#5e6574"

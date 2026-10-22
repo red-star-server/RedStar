@@ -390,8 +390,8 @@
   name: admin-smite-locker-stuff-name
   description: admin-smite-locker-stuff-description
   icon:
-    sprite: Structures/Storage/closet.rsi
-    state: generic
+    sprite: Structures/Storage/Closets/generic.rsi
+    state: closed
   effects:
   - !type:TrapInContainer
     entity: ClosetMaintenanceWelded
@@ -601,7 +601,7 @@
   name: admin-smite-monkeyify-name
   description: admin-smite-monkeyify-description
   icon:
-    sprite: Mobs/Animals/monkey.rsi
+    sprite: Mobs/Animals/Ancestors/monkey.rsi
     state: monkey
   effects:
   - !type:Polymorph

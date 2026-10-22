@@ -7,6 +7,10 @@
   - Xenoarchaeology
   - Technologies
   - Robotics
+  # RS14-start
+  - GeneticCatalogue
+  - GeneticMutations
+  # RS14-end
 
 - type: guideEntry
   id: Technologies

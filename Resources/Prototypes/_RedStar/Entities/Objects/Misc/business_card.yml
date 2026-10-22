@@ -1,7 +1,7 @@
 # Valentine
 - type: entity
-  id: ValentineCard
   parent: Paper
+  id: ValentineCard
   name: valentine card
   description: The template for this Valentine's card was developed by the Ministry of Labor and Social Protection. It is said that these Valentine's cards can help overcome the demographic crisis.
   components:
@@ -10,10 +10,10 @@
     layers:
     - state: valentine_card
     - state: valentine_card
-      map: ["enum.PaperVisualLayers.Writing"]
+      map: [ "enum.PaperVisualLayers.Writing" ]
       visible: false
     - state: paper_stamp-generic
-      map: ["enum.PaperVisualLayers.Stamp"]
+      map: [ "enum.PaperVisualLayers.Stamp" ]
       visible: false
   - type: PaperVisuals
     headerImagePath: "/Textures/_RedStar/Interface/Paper/paper_heading_valentine_heart.svg.96dpi.png"

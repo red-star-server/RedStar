@@ -5,6 +5,10 @@
   parent: [ SimpleSpaceMobBase, MobNightVision, BaseMobDestructible ]
   description: They mostly come at night. Mostly.
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Xeno
+  # RS14-end
   - type: Insulated
   - type: CombatMode
   - type: InputMover
@@ -362,6 +366,10 @@
   id: MobPurpleSnake
   description: A menacing purple snake from Kepler-283c.
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: PurpleSnake
+  # RS14-end
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/purple_snake.rsi
@@ -470,6 +478,10 @@
   parent: [SimpleSpaceMobBase, BaseMobDestructible]
   id: MobXenoLonePraetorianNoGhost
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Xeno
+  # RS14-end
   - type: Insulated
   - type: CombatMode
   - type: InputMover

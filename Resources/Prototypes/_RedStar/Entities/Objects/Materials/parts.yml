@@ -21,7 +21,7 @@
     state: shuttlerods-5
     layers:
     - state: shuttlerods-5
-      map: ["base"]
+      map: [ "base" ]
   - type: Item
     sprite: _RedStar/Objects/Materials/parts.rsi
     heldPrefix: shuttlerods

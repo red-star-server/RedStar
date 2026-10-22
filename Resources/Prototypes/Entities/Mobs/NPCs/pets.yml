@@ -278,6 +278,10 @@
   name: Bingus
   description: Bingus my beloved...
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Feline
+  # RS14-end
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/bingus.rsi
@@ -336,6 +340,10 @@
   name: McGriff
   description: This dog can tell something smells around here, and that something is CRIME!
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Canid
+  # RS14-end
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/mcgriff.rsi
@@ -447,6 +455,10 @@
   name: Walter
   description: He likes chems and treats. Walter.
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Canid
+  # RS14-end
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/walter.rsi

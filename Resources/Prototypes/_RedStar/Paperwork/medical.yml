@@ -1,15 +1,15 @@
 # NanoTrasen
 - type: paperwork
   id: NTMedical0
-  category: NTMedical
   name: paperwork-form-title-medical-0
+  category: NTMedical
   template: "/Paperwork/default.xml"
   paperPrototype: PaperPrintedNTMedical
 
 # USSP
 - type: paperwork
   id: USSPMedical0
-  category: USSPMedical
   name: paperwork-form-title-medical-0
+  category: USSPMedical
   template: "/Paperwork/default.xml"
   paperPrototype: PaperPrintedUSSPMedical

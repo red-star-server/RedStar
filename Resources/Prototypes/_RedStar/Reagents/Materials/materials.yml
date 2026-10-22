@@ -1,7 +1,7 @@
 - type: material
   id: BlueSpaceCrystal
-  stackEntity: MaterialBlueSpaceCrystal1
   name: materials-bluespace-crystal
+  stackEntity: MaterialBlueSpaceCrystal1
   unit: materials-unit-piece
   icon: { sprite: _RedStar/Objects/Materials/materials.rsi, state: bluespace_crystal }
   color: "#80ffff"
@@ -9,8 +9,8 @@
 
 - type: material
   id: Titanium
-  stackEntity: SheetTitanium1
   name: materials-titanium
+  stackEntity: SheetTitanium1
   unit: materials-unit-sheet
   icon: { sprite: _RedStar/Objects/Materials/metal.rsi, state: titanium }
   color: "#bfbfbf"
@@ -18,9 +18,16 @@
 
 - type: material
   id: RedSpaceCrystal
-  stackEntity: MaterialRedSpaceCrystal1
   name: materials-redspace-crystal
+  stackEntity: MaterialRedSpaceCrystal1
   unit: materials-unit-piece
   icon: { sprite: _RedStar/Objects/Materials/materials.rsi, state: redspace_crystal }
   color: "#ff0000"
   price: 0.1175
+
+- type: material
+  id: Marble
+  name: materials-marble
+  stackEntity: MaterialMarble1
+  icon: { sprite: _RedStar/Objects/Materials/marble.rsi, state: icon }
+  price: 0.375 # RS14

@@ -1,0 +1,47 @@
+- type: construction
+  parent: BaseStructureFullTile
+  id: SteelDarkSingleStairs
+  graph: StairsGraph
+  targetNode: steelDarkSingleStairs
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: SteelSingleStairs
+  graph: StairsGraph
+  targetNode: steelSingleStairs
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: SteelWhiteSingleStairs
+  graph: StairsGraph
+  targetNode: steelWhiteSingleStairs
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: WoodBlackSingleStairs
+  graph: StairsGraph
+  targetNode: woodBlackSingleStairs
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: WoodDarkSingleStairs
+  graph: StairsGraph
+  targetNode: woodDarkSingleStairs
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: WoodSingleStairs
+  graph: StairsGraph
+  targetNode: woodSingleStairs
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: WoodLightSingleStairs
+  graph: StairsGraph
+  targetNode: woodLightSingleStairs
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: WoodRedSingleStairs
+  graph: StairsGraph
+  targetNode: woodRedSingleStairs

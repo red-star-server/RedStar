@@ -108,6 +108,11 @@
       ClothingHandsGlovesColorGreen: 2
       ClothingHandsGlovesColorOrange: 2
       ClothingHandsGlovesColorPurple: 2
+      # RS14-start
+      ClothingHandsCatPawsBrown: 2
+      ClothingHandsCatPawsBlack: 2
+      ClothingHandsCatPawsBlackWhite: 2
+      # RS14-end
       ClothingEyesGlassesCheapSunglasses: 3
     contrabandInventory:
       ClothingMaskNeckGaiter: 2

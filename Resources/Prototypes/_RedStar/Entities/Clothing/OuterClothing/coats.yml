@@ -1,0 +1,70 @@
+- type: entity
+  parent: [ ClothingOuterStorageBase, BaseSecurityContraband ]
+  id: ClothingOuterCoatSecurityOvercoat
+  name: security overcoat
+  description: Lightly armored leather overcoat meant as casual wear for high-ranking officers. Bears the crest of Nanotrasen Security.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/OuterClothing/Coats/sec_jacket.rsi
+  - type: Clothing
+    sprite: _RedStar/Clothing/OuterClothing/Coats/sec_jacket.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.6
+        Heat: 0.9
+
+- type: entity
+  parent: [ ClothingOuterStorageBase, BaseCommandContraband ]
+  id: ClothingOuterCoatCaptain
+  name: captain's jacket
+  description: Captain's formal jacket, inlaid with gold.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/OuterClothing/Coats/captain_jacket.rsi
+  - type: Clothing
+    sprite: _RedStar/Clothing/OuterClothing/Coats/captain_jacket.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.6
+        Heat: 0.5
+
+- type: entity
+  parent: [ ClothingOuterStorageBase, BaseCommandContraband ]
+  id: ClothingOuterCoatHOP
+  name: head of personnel's jacket
+  description: Business jacket of the HOP for a professional look.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/OuterClothing/Coats/hop_jacket.rsi
+  - type: Clothing
+    sprite: _RedStar/Clothing/OuterClothing/Coats/hop_jacket.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.8
+
+- type: entity
+  parent: [ BaseEngineeringContraband, ClothingOuterStorageBase ]
+  id: ClothingAtmosphericsOveralls
+  name: atmospherics overalls
+  description: A set of fireproof overalls, good for protecting thinner clothes from gas leaks.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/OuterClothing/Coats/atmos_overalls.rsi
+  - type: Clothing
+    sprite: _RedStar/Clothing/OuterClothing/Coats/atmos_overalls.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-unshaded
+        shader: unshaded
+      - state: equipped-OUTERCLOTHING-unshaded
+        shader: shaded

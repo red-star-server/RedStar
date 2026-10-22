@@ -1,0 +1,367 @@
+- type: entity
+  parent: Stairs
+  id: SteelDarkCenterStairs
+  name: stairs
+  suffix: Steel , center
+  description: The greatest invention since rocket-propelled grenades.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/stairs.rsi
+    state: steel_dark_center_stairs
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepTile
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts:
+        - Destruction
+
+- type: entity
+  parent: Stairs
+  id: WoodCenterStairs
+  name: stairs
+  suffix: Wood, center
+  description: The greatest invention since rocket-propelled grenades.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/stairs.rsi
+    state: wood_center_stairs
+  - type: Damageable
+    damageModifierSet: WoodMod
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepWood
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts:
+        - Destruction
+
+- type: entity
+  parent: SteelDarkCenterStairs
+  id: SteelDarkLeftStairs
+  suffix: Dark, left
+  components:
+  - type: Sprite
+    state: steel_dark_left_stairs
+
+- type: entity
+  parent: SteelDarkCenterStairs
+  id: SteelDarkRightStairs
+  suffix: Dark, right
+  components:
+  - type: Sprite
+    state: steel_dark_right_stairs
+
+- type: entity
+  parent: SteelDarkCenterStairs
+  id: SteelDarkSingleStairs
+  suffix: Dark, single
+  components:
+  - type: Sprite
+    state: steel_dark_single_stairs
+  - type: Construction
+    graph: StairsGraph
+    node: steelDarkSingleStairs
+
+- type: entity
+  parent: SteelDarkCenterStairs
+  id: SteelDarkLightLeftStairs
+  suffix: Dark, light, left
+  components:
+  - type: Sprite
+    state: steel_dark_light_left_stairs
+
+- type: entity
+  parent: SteelDarkCenterStairs
+  id: SteelDarkLightRightStairs
+  suffix: Dark, light, right
+  components:
+  - type: Sprite
+    state: steel_dark_light_right_stairs
+
+- type: entity
+  parent: SteelDarkCenterStairs
+  id: SteelCenterStairs
+  suffix: Steel, center
+  components:
+  - type: Sprite
+    state: steel_center_stairs
+
+- type: entity
+  parent: SteelDarkCenterStairs
+  id: SteelLeftStairs
+  suffix: Steel, left
+  components:
+  - type: Sprite
+    state: steel_left_stairs
+
+- type: entity
+  parent: SteelDarkCenterStairs
+  id: SteelRightStairs
+  suffix: Steel, right
+  components:
+  - type: Sprite
+    state: steel_right_stairs
+
+- type: entity
+  parent: SteelDarkCenterStairs
+  id: SteelSingleStairs
+  suffix: Steel, single
+  components:
+  - type: Sprite
+    state: steel_single_stairs
+  - type: Construction
+    graph: StairsGraph
+    node: steelSingleStairs
+
+- type: entity
+  parent: SteelDarkCenterStairs
+  id: SteelLightLeftStairs
+  suffix: Steel, light, left
+  components:
+  - type: Sprite
+    state: steel_light_left_stairs
+
+- type: entity
+  parent: SteelDarkCenterStairs
+  id: SteelLightRightStairs
+  suffix: Steel, light, right
+  components:
+  - type: Sprite
+    state: steel_light_right_stairs
+
+- type: entity
+  parent: SteelDarkCenterStairs
+  id: SteelWhiteCenterStairs
+  suffix: White, center
+  components:
+  - type: Sprite
+    state: steel_white_center_stairs
+
+- type: entity
+  parent: SteelDarkCenterStairs
+  id: SteelWhiteLeftStairs
+  suffix: White, left
+  components:
+  - type: Sprite
+    state: steel_white_left_stairs
+
+- type: entity
+  parent: SteelDarkCenterStairs
+  id: SteelWhiteRightStairs
+  suffix: White, right
+  components:
+  - type: Sprite
+    state: steel_white_right_stairs
+
+- type: entity
+  parent: SteelDarkCenterStairs
+  id: SteelWhiteSingleStairs
+  suffix: White, single
+  components:
+  - type: Sprite
+    state: steel_white_single_stairs
+  - type: Construction
+    graph: StairsGraph
+    node: steelWhiteSingleStairs
+
+- type: entity
+  parent: SteelDarkCenterStairs
+  id: SteelWhiteLightLeftStairs
+  suffix: White, left
+  components:
+  - type: Sprite
+    state: steel_white_light_left_stairs
+
+- type: entity
+  parent: SteelDarkCenterStairs
+  id: SteelWhiteLightRightStairs
+  suffix: White, right
+  components:
+  - type: Sprite
+    state: steel_white_light_right_stairs
+
+- type: entity
+  parent: WoodCenterStairs
+  id: WoodBlackCenterStairs
+  suffix: Wood, black, center
+  components:
+  - type: Sprite
+    state: wood_black_center_stairs
+
+- type: entity
+  parent: WoodCenterStairs
+  id: WoodBlackLeftStairs
+  suffix: Wood, black, left
+  components:
+  - type: Sprite
+    state: wood_black_left_stairs
+
+- type: entity
+  parent: WoodCenterStairs
+  id: WoodBlackRightStairs
+  suffix: Wood, black, right
+  components:
+  - type: Sprite
+    state: wood_black_right_stairs
+
+- type: entity
+  parent: WoodCenterStairs
+  id: WoodBlackSingleStairs
+  suffix: Wood, black, single
+  components:
+  - type: Sprite
+    state: wood_black_single_stairs
+  - type: Construction
+    graph: StairsGraph
+    node: woodBlackSingleStairs
+
+- type: entity
+  parent: WoodCenterStairs
+  id: WoodDarkCenterStairs
+  suffix: Wood, dark, center
+  components:
+  - type: Sprite
+    state: wood_dark_center_stairs
+
+- type: entity
+  parent: WoodCenterStairs
+  id: WoodDarkLeftStairs
+  suffix: Wood, dark, left
+  components:
+  - type: Sprite
+    state: wood_dark_left_stairs
+
+- type: entity
+  parent: WoodCenterStairs
+  id: WoodDarkRightStairs
+  suffix: Wood, dark, right
+  components:
+  - type: Sprite
+    state: wood_dark_right_stairs
+
+- type: entity
+  parent: WoodCenterStairs
+  id: WoodDarkSingleStairs
+  suffix: Wood, dark, single
+  components:
+  - type: Sprite
+    state: wood_dark_single_stairs
+  - type: Construction
+    graph: StairsGraph
+    node: woodDarkSingleStairs
+
+- type: entity
+  parent: WoodCenterStairs
+  id: WoodLeftStairs
+  suffix: Wood, left
+  components:
+  - type: Sprite
+    state: wood_left_stairs
+
+- type: entity
+  parent: WoodCenterStairs
+  id: WoodRightStairs
+  suffix: Wood, right
+  components:
+  - type: Sprite
+    state: wood_right_stairs
+
+- type: entity
+  parent: WoodCenterStairs
+  id: WoodSingleStairs
+  suffix: Wood, single
+  components:
+  - type: Sprite
+    state: wood_single_stairs
+  - type: Construction
+    graph: StairsGraph
+    node: woodSingleStairs
+
+- type: entity
+  parent: WoodCenterStairs
+  id: WoodLightCenterStairs
+  suffix: Wood, light, center
+  components:
+  - type: Sprite
+    state: wood_light_center_stairs
+
+- type: entity
+  parent: WoodCenterStairs
+  id: WoodLightLeftStairs
+  suffix: Wood, light, left
+  components:
+  - type: Sprite
+    state: wood_light_left_stairs
+
+- type: entity
+  parent: WoodCenterStairs
+  id: WoodLightRightStairs
+  suffix: Wood, light, right
+  components:
+  - type: Sprite
+    state: wood_light_right_stairs
+
+- type: entity
+  parent: WoodCenterStairs
+  id: WoodLightSingleStairs
+  suffix: Wood, light, single
+  components:
+  - type: Sprite
+    state: wood_light_single_stairs
+  - type: Construction
+    graph: StairsGraph
+    node: woodLightSingleStairs
+
+- type: entity
+  parent: WoodCenterStairs
+  id: WoodRedCenterStairs
+  suffix: Wood, red, center
+  components:
+  - type: Sprite
+    state: wood_red_center_stairs
+
+- type: entity
+  parent: WoodCenterStairs
+  id: WoodRedLeftStairs
+  suffix: Wood, red, left
+  components:
+  - type: Sprite
+    state: wood_red_left_stairs
+
+- type: entity
+  parent: WoodCenterStairs
+  id: WoodRedRightStairs
+  suffix: Wood, red, right
+  components:
+  - type: Sprite
+    state: wood_red_right_stairs
+
+- type: entity
+  parent: WoodCenterStairs
+  id: WoodRedSingleStairs
+  suffix: Wood, red, single
+  components:
+  - type: Sprite
+    state: wood_red_single_stairs
+  - type: Construction
+    graph: StairsGraph
+    node: woodRedSingleStairs

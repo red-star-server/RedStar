@@ -163,6 +163,10 @@
   id: MobVox
   name: Urist McVox
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Vox
+  # RS14-end
   - type: Damageable
     damageModifierSet: Vox
   - type: Speech

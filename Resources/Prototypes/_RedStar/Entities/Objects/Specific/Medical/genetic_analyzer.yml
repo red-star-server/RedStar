@@ -1,0 +1,26 @@
+- type: entity
+  parent: BaseItem
+  id: HandheldGeneticAnalyzer
+  name: genetic analyzer
+  description: A handheld scanner that identifies an organism's genes and genetic load.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Objects/Specific/Medical/geneanalyzer.rsi
+    layers:
+    - state: icon
+    - state: analyzer
+      shader: unshaded
+  - type: Item
+    heldPrefix: analyzer
+    storedRotation: -90
+  - type: ActivatableUI
+    key: enum.GeneticAnalyzerUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.GeneticAnalyzerUiKey.Key:
+        type: GeneticAnalyzerBoundUserInterface
+  - type: GeneticAnalyzer
+  - type: GuideHelp
+    guides:
+    - GeneticCatalogue
+    - GeneticMutations

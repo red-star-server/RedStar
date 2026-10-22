@@ -1,0 +1,14 @@
+genetic-sequencer-menu-title = Genetic sequencer
+genetic-sequencer-samples = SAMPLES
+genetic-sequencer-map = GENOME
+genetic-sequencer-assembly = RECONSTRUCTION
+genetic-sequencer-reset = Reset
+genetic-sequencer-submit = Decode
+genetic-sequencer-extract = Extract
+genetic-sequencer-sample-stability = Stability: {$stability}%
+genetic-sequencer-status-known = DECODED
+genetic-sequencer-status-unknown = UNKNOWN
+genetic-sequencer-incorrect = Sequence assembly could not be verified.
+genetic-sequencer-discovered = Decoded: {$gene}.
+genetic-sequencer-reads = READS
+genetic-sequencer-board = ASSEMBLY

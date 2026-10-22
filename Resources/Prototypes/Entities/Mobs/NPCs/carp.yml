@@ -91,6 +91,10 @@
   parent: BaseMobCarp
   id: MobCarp
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Carp
+  # RS14-end
   - type: Sprite
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
@@ -111,6 +115,10 @@
   name: magicarp
   description: Looks like some kind of fish. Might be magical.
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Carp
+  # RS14-end
   - type: Sprite
     sprite: Mobs/Aliens/Carps/magic.rsi
   - type: TypingIndicator
@@ -196,6 +204,10 @@
   name: sharkminnow
   description: A dangerous shark from the blackness of endless space, who loves to drink blood.
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Shark
+  # RS14-end
   - type: Sprite
     sprite: Mobs/Aliens/Carps/sharkminnow.rsi
     layers:

@@ -1,15 +1,15 @@
 # NanoTrasen
 - type: paperwork
   id: NTCargo0
-  category: NTCargo
   name: paperwork-form-title-cargo-0
+  category: NTCargo
   template: "/Paperwork/default.xml"
   paperPrototype: PaperPrintedNTCargo
 
 # USSP
 - type: paperwork
   id: USSPCargo0
-  category: USSPCargo
   name: paperwork-form-title-cargo-0
+  category: USSPCargo
   template: "/Paperwork/default.xml"
   paperPrototype: PaperPrintedUSSPCargo

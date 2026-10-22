@@ -74,6 +74,10 @@
   id: MobArachnid
   name: Urist McWebs
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Arachnid
+  # RS14-end
   - type: Respirator
     damage:
       types:

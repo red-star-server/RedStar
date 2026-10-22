@@ -1,22 +1,16 @@
+using Content.Shared._RedStar.Xenobiology.Data;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared._RedStar.Xenobiology.UI;
 
 /// <summary>
-/// Laboratory information visible to clients without its server-owned genome.
+/// Public sample details without the genetic material.
+/// CompatibilityGroup identifies equal genomes within one UI state; it is not a persistent genome ID.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class SampleView(BiologicalSample sample, int? compatibilityGroup = null)
+public sealed record SampleView(int Id, string Name, Color Color, float Stability, int GeneCount,
+    bool HasGenome, int? CompatibilityGroup)
 {
-    public readonly int Id = sample.Id;
-    public readonly string Name = sample.Name;
-    public readonly Color Color = sample.Color;
-    public readonly float Stability = sample.Stability;
-    public readonly int GeneCount = sample.GeneCount;
-    public readonly bool HasGenome = sample.HasGenome;
-    public readonly int? CompatibilityGroup = compatibilityGroup;
-
-    public bool SameDisplay(SampleView other) =>
-        Id == other.Id && Name == other.Name && Color == other.Color && Stability.Equals(other.Stability) &&
-        GeneCount == other.GeneCount && HasGenome == other.HasGenome && CompatibilityGroup == other.CompatibilityGroup;
+    public SampleView(BiologicalSample sample, int? compatibilityGroup = null)
+        : this(sample.Id, sample.Name, sample.Color, sample.Stability, sample.GeneCount, sample.HasGenome, compatibilityGroup) { }
 }

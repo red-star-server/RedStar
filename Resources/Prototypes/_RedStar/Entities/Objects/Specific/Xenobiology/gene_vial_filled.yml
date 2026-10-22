@@ -1,0 +1,791 @@
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialDimLightAdaptation
+  categories: [ DoNotMap ]
+  suffix: DimLightAdaptation
+  components:
+  - type: GeneticVial
+    genes: [DimLightAdaptation]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialColorDiscrimination
+  categories: [ DoNotMap ]
+  suffix: ColorDiscrimination
+  components:
+  - type: GeneticVial
+    genes: [ColorDiscrimination]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialPhotosensitivity
+  categories: [ DoNotMap ]
+  suffix: Photosensitivity
+  components:
+  - type: GeneticVial
+    genes: [Photosensitivity]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialPoorVision
+  categories: [ DoNotMap ]
+  suffix: PoorVision
+  components:
+  - type: GeneticVial
+    genes: [PoorVision]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialAcuteHearing
+  categories: [ DoNotMap ]
+  suffix: AcuteHearing
+  components:
+  - type: GeneticVial
+    genes: [AcuteHearing]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialOlfactorySensitivity
+  categories: [ DoNotMap ]
+  suffix: OlfactorySensitivity
+  components:
+  - type: GeneticVial
+    genes: [OlfactorySensitivity]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialVibrationSense
+  categories: [ DoNotMap ]
+  suffix: VibrationSense
+  components:
+  - type: GeneticVial
+    genes: [VibrationSense]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialTactileWhiskers
+  categories: [ DoNotMap ]
+  suffix: TactileWhiskers
+  components:
+  - type: GeneticVial
+    genes: [TactileWhiskers]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialFlexibleJoints
+  categories: [ DoNotMap ]
+  suffix: FlexibleJoints
+  components:
+  - type: GeneticVial
+    genes: [FlexibleJoints]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialLimbGrip
+  categories: [ DoNotMap ]
+  suffix: LimbGrip
+  components:
+  - type: GeneticVial
+    genes: [LimbGrip]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialVestibularBalance
+  categories: [ DoNotMap ]
+  suffix: VestibularBalance
+  components:
+  - type: GeneticVial
+    genes: [VestibularBalance]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialElasticTendons
+  categories: [ DoNotMap ]
+  suffix: ElasticTendons
+  components:
+  - type: GeneticVial
+    genes: [ElasticTendons]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialDenseMusculature
+  categories: [ DoNotMap ]
+  suffix: DenseMusculature
+  components:
+  - type: GeneticVial
+    genes: [DenseMusculature]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialDenseConnectiveTissue
+  categories: [ DoNotMap ]
+  suffix: DenseConnectiveTissue
+  components:
+  - type: GeneticVial
+    genes: [DenseConnectiveTissue]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialMineralizedTissue
+  categories: [ DoNotMap ]
+  suffix: MineralizedTissue
+  components:
+  - type: GeneticVial
+    genes: [MineralizedTissue]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialKeratinizedCovering
+  categories: [ DoNotMap ]
+  suffix: KeratinizedCovering
+  components:
+  - type: GeneticVial
+    genes: [KeratinizedCovering]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialChitinousCovering
+  categories: [ DoNotMap ]
+  suffix: ChitinousCovering
+  components:
+  - type: GeneticVial
+    genes: [ChitinousCovering]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialStructuralIridescence
+  categories: [ DoNotMap ]
+  suffix: StructuralIridescence
+  components:
+  - type: GeneticVial
+    genes: [StructuralIridescence]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialPigmentPlasticity
+  categories: [ DoNotMap ]
+  suffix: PigmentPlasticity
+  components:
+  - type: GeneticVial
+    genes: [PigmentPlasticity]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialMucusSecretion
+  categories: [ DoNotMap ]
+  suffix: MucusSecretion
+  components:
+  - type: GeneticVial
+    genes: [MucusSecretion]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialSlowMetabolism
+  categories: [ DoNotMap ]
+  suffix: SlowMetabolism
+  components:
+  - type: GeneticVial
+    genes: [SlowMetabolism]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialHighMetabolism
+  categories: [ DoNotMap ]
+  suffix: HighMetabolism
+  components:
+  - type: GeneticVial
+    genes: [HighMetabolism]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialOmnivorousDigestion
+  categories: [ DoNotMap ]
+  suffix: OmnivorousDigestion
+  components:
+  - type: GeneticVial
+    genes: [OmnivorousDigestion]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialCelluloseDigestion
+  categories: [ DoNotMap ]
+  suffix: CelluloseDigestion
+  components:
+  - type: GeneticVial
+    genes: [CelluloseDigestion]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialLipidStorage
+  categories: [ DoNotMap ]
+  suffix: LipidStorage
+  components:
+  - type: GeneticVial
+    genes: [LipidStorage]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialProteinSecretion
+  categories: [ DoNotMap ]
+  suffix: ProteinSecretion
+  components:
+  - type: GeneticVial
+    genes: [ProteinSecretion]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialCellRenewal
+  categories: [ DoNotMap ]
+  suffix: CellRenewal
+  components:
+  - type: GeneticVial
+    genes: [CellRenewal]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialTissuePlasticity
+  categories: [ DoNotMap ]
+  suffix: TissuePlasticity
+  components:
+  - type: GeneticVial
+    genes: [TissuePlasticity]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialVegetativeGrowth
+  categories: [ DoNotMap ]
+  suffix: VegetativeGrowth
+  components:
+  - type: GeneticVial
+    genes: [VegetativeGrowth]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialWeakImmunity
+  categories: [ DoNotMap ]
+  suffix: WeakImmunity
+  components:
+  - type: GeneticVial
+    genes: [WeakImmunity]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialChemicalSensitivity
+  categories: [ DoNotMap ]
+  suffix: ChemicalSensitivity
+  components:
+  - type: GeneticVial
+    genes: [ChemicalSensitivity]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialXenobioticProcessing
+  categories: [ DoNotMap ]
+  suffix: XenobioticProcessing
+  components:
+  - type: GeneticVial
+    genes: [XenobioticProcessing]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialToxinProduction
+  categories: [ DoNotMap ]
+  suffix: ToxinProduction
+  components:
+  - type: GeneticVial
+    genes: [ToxinProduction]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialToxinTolerance
+  categories: [ DoNotMap ]
+  suffix: ToxinTolerance
+  components:
+  - type: GeneticVial
+    genes: [ToxinTolerance]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialOxygenStorage
+  categories: [ DoNotMap ]
+  suffix: OxygenStorage
+  components:
+  - type: GeneticVial
+    genes: [OxygenStorage]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialNitrogenMetabolism
+  categories: [ DoNotMap ]
+  suffix: NitrogenMetabolism
+  components:
+  - type: GeneticVial
+    genes: [NitrogenMetabolism]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialColdAdaptation
+  categories: [ DoNotMap ]
+  suffix: ColdAdaptation
+  components:
+  - type: GeneticVial
+    genes: [ColdAdaptation]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialHeatAdaptation
+  categories: [ DoNotMap ]
+  suffix: HeatAdaptation
+  components:
+  - type: GeneticVial
+    genes: [HeatAdaptation]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialLowPressureAdaptation
+  categories: [ DoNotMap ]
+  suffix: LowPressureAdaptation
+  components:
+  - type: GeneticVial
+    genes: [LowPressureAdaptation]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialPassiveTemperament
+  categories: [ DoNotMap ]
+  suffix: PassiveTemperament
+  components:
+  - type: GeneticVial
+    genes: [PassiveTemperament]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialDefensiveAggression
+  categories: [ DoNotMap ]
+  suffix: DefensiveAggression
+  components:
+  - type: GeneticVial
+    genes: [DefensiveAggression]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialStartleResponse
+  categories: [ DoNotMap ]
+  suffix: StartleResponse
+  components:
+  - type: GeneticVial
+    genes: [StartleResponse]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialFragileBones
+  categories: [ DoNotMap ]
+  suffix: FragileBones
+  components:
+  - type: GeneticVial
+    genes: [FragileBones]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialSilkSynthesis
+  categories: [ DoNotMap ]
+  suffix: SilkSynthesis
+  components:
+  - type: GeneticVial
+    genes: [SilkSynthesis]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialAuditoryLearning
+  categories: [ DoNotMap ]
+  suffix: AuditoryLearning
+  components:
+  - type: GeneticVial
+    genes: [AuditoryLearning]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialEggLayer
+  categories: [ DoNotMap ]
+  suffix: EggLayer
+  components:
+  - type: GeneticVial
+    genes: [EggLayer]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialLactation
+  categories: [ DoNotMap ]
+  suffix: Lactation
+  components:
+  - type: GeneticVial
+    genes: [Lactation]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialMessyDrinker
+  categories: [ DoNotMap ]
+  suffix: MessyDrinker
+  components:
+  - type: GeneticVial
+    genes: [MessyDrinker]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialBleating
+  categories: [ DoNotMap ]
+  suffix: Bleating
+  components:
+  - type: GeneticVial
+    genes: [Bleating]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialMineralAssimilation
+  categories: [ DoNotMap ]
+  suffix: MineralAssimilation
+  components:
+  - type: GeneticVial
+    genes: [MineralAssimilation]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialCollectiveSignaling
+  categories: [ DoNotMap ]
+  suffix: CollectiveSignaling
+  components:
+  - type: GeneticVial
+    genes: [CollectiveSignaling]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialBroodDevelopment
+  categories: [ DoNotMap ]
+  suffix: BroodDevelopment
+  components:
+  - type: GeneticVial
+    genes: [BroodDevelopment]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialNightVision
+  categories: [ DoNotMap ]
+  suffix: NightVision
+  components:
+  - type: GeneticVial
+    genes: [NightVision]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialMechanosensoryIntegration
+  categories: [ DoNotMap ]
+  suffix: MechanosensoryIntegration
+  components:
+  - type: GeneticVial
+    genes: [MechanosensoryIntegration]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialNoSlip
+  categories: [ DoNotMap ]
+  suffix: NoSlip
+  components:
+  - type: GeneticVial
+    genes: [NoSlip]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialElasticFrame
+  categories: [ DoNotMap ]
+  suffix: ElasticFrame
+  components:
+  - type: GeneticVial
+    genes: [ElasticFrame]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialLamellarScales
+  categories: [ DoNotMap ]
+  suffix: LamellarScales
+  components:
+  - type: GeneticVial
+    genes: [LamellarScales]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialCoordinatedRepair
+  categories: [ DoNotMap ]
+  suffix: CoordinatedRepair
+  components:
+  - type: GeneticVial
+    genes: [CoordinatedRepair]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialImmuneTolerance
+  categories: [ DoNotMap ]
+  suffix: ImmuneTolerance
+  components:
+  - type: GeneticVial
+    genes: [ImmuneTolerance]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialVenomous
+  categories: [ DoNotMap ]
+  suffix: Venomous
+  components:
+  - type: GeneticVial
+    genes: [Venomous]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialDetoxifyingMetabolism
+  categories: [ DoNotMap ]
+  suffix: DetoxifyingMetabolism
+  components:
+  - type: GeneticVial
+    genes: [DetoxifyingMetabolism]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialTorporControl
+  categories: [ DoNotMap ]
+  suffix: TorporControl
+  components:
+  - type: GeneticVial
+    genes: [TorporControl]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialPacifism
+  categories: [ DoNotMap ]
+  suffix: Pacifism
+  components:
+  - type: GeneticVial
+    genes: [Pacifism]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialReflexDisinhibition
+  categories: [ DoNotMap ]
+  suffix: ReflexDisinhibition
+  components:
+  - type: GeneticVial
+    genes: [ReflexDisinhibition]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialRadionuclideSequestration
+  categories: [ DoNotMap ]
+  suffix: RadionuclideSequestration
+  components:
+  - type: GeneticVial
+    genes: [RadionuclideSequestration]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialWebSpinning
+  categories: [ DoNotMap ]
+  suffix: WebSpinning
+  components:
+  - type: GeneticVial
+    genes: [WebSpinning]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialParrotSpeech
+  categories: [ DoNotMap ]
+  suffix: ParrotSpeech
+  components:
+  - type: GeneticVial
+    genes: [ParrotSpeech]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialPhotonicLattice
+  categories: [ DoNotMap ]
+  suffix: PhotonicLattice
+  components:
+  - type: GeneticVial
+    genes: [PhotonicLattice]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialRegeneration
+  categories: [ DoNotMap ]
+  suffix: Regeneration
+  components:
+  - type: GeneticVial
+    genes: [Regeneration]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialToxicOverproduction
+  categories: [ DoNotMap ]
+  suffix: ToxicOverproduction
+  components:
+  - type: GeneticVial
+    genes: [ToxicOverproduction]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialPressureHomeostasis
+  categories: [ DoNotMap ]
+  suffix: PressureHomeostasis
+  components:
+  - type: GeneticVial
+    genes: [PressureHomeostasis]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialSensoryOverload
+  categories: [ DoNotMap ]
+  suffix: SensoryOverload
+  components:
+  - type: GeneticVial
+    genes: [SensoryOverload]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialAdaptivePigmentation
+  categories: [ DoNotMap ]
+  suffix: AdaptivePigmentation
+  components:
+  - type: GeneticVial
+    genes: [AdaptivePigmentation]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialRadiation
+  categories: [ DoNotMap ]
+  suffix: Radiation
+  components:
+  - type: GeneticVial
+    genes: [Radiation]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialReflection
+  categories: [ DoNotMap ]
+  suffix: Reflection
+  components:
+  - type: GeneticVial
+    genes: [Reflection]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialInvisibility
+  categories: [ DoNotMap ]
+  suffix: Invisibility
+  components:
+  - type: GeneticVial
+    genes: [Invisibility]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialSomaticHomeostasis
+  categories: [ DoNotMap ]
+  suffix: SomaticHomeostasis
+  components:
+  - type: GeneticVial
+    genes: [SomaticHomeostasis]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialDragonBreath
+  categories: [ DoNotMap ]
+  suffix: DragonBreath
+  components:
+  - type: GeneticVial
+    genes: [DragonBreath]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialThermalRepair
+  categories: [ DoNotMap ]
+  suffix: ThermalRepair
+  components:
+  - type: GeneticVial
+    genes: [ThermalRepair]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialCompositeCarapace
+  categories: [ DoNotMap ]
+  suffix: CompositeCarapace
+  components:
+  - type: GeneticVial
+    genes: [CompositeCarapace]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialThermalHomeostasis
+  categories: [ DoNotMap ]
+  suffix: ThermalHomeostasis
+  components:
+  - type: GeneticVial
+    genes: [ThermalHomeostasis]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialPhotonicEmission
+  categories: [ DoNotMap ]
+  suffix: PhotonicEmission
+  components:
+  - type: GeneticVial
+    genes: [PhotonicEmission]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialCarnivorousDigestion
+  categories: [ DoNotMap ]
+  suffix: CarnivorousDigestion
+  components:
+  - type: GeneticVial
+    genes: [CarnivorousDigestion]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialFabricDigestion
+  categories: [ DoNotMap ]
+  suffix: FabricDigestion
+  components:
+  - type: GeneticVial
+    genes: [FabricDigestion]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialPressureResistantMembranes
+  categories: [ DoNotMap ]
+  suffix: PressureResistantMembranes
+  components:
+  - type: GeneticVial
+    genes: [PressureResistantMembranes]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialLoadBearingTissue
+  categories: [ DoNotMap ]
+  suffix: LoadBearingTissue
+  components:
+  - type: GeneticVial
+    genes: [LoadBearingTissue]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialPhotoreactiveTissue
+  categories: [ DoNotMap ]
+  suffix: PhotoreactiveTissue
+  components:
+  - type: GeneticVial
+    genes: [PhotoreactiveTissue]
+
+- type: entity
+  parent: GeneticVial
+  id: GeneticVialRegenerativeBudding
+  categories: [ DoNotMap ]
+  suffix: RegenerativeBudding
+  components:
+  - type: GeneticVial
+    genes: [RegenerativeBudding]

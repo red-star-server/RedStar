@@ -10,8 +10,8 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.CellContainerVisuals.DishVisibility:
-        enum.CellContainerVisuals.DishLayer:
+      enum.SampleContainerVisuals.DishVisibility:
+        enum.SampleContainerVisuals.DishLayer:
           True:
             visible: true
           False:
@@ -20,8 +20,8 @@
     sprite: _RedStar/Objects/Specific/Xenobiology/petri_dish.rsi
     layers:
     - state: icon-back
-    - map: [ "enum.CellContainerVisuals.DishLayer" ]
-      state: cells
+    - map: [ "enum.SampleContainerVisuals.DishLayer" ]
+      state: samples
       visible: false
     - state: icon
   - type: Item
@@ -31,79 +31,87 @@
     toolsTransferWhitelist:
       components:
       - SampleCollector
-  - type: CellContainerVisuals
+  - type: SampleContainerVisuals
 
 - type: entity
   parent: PetriDish
   id: PetriDishMurine
+  categories: [ DoNotMap ]
   suffix: Murine
   components:
-  - type: SampleGeneration
-    samples:
-    - genome: NocturnalAnimal
+  - type: SampleContainer
+    initialSamples:
+    - genome: Mouse
 
 - type: entity
   parent: PetriDish
   id: PetriDishGalliform
+  categories: [ DoNotMap ]
   suffix: Galliform
   components:
-  - type: SampleGeneration
-    samples:
+  - type: SampleContainer
+    initialSamples:
     - genome: Fowl
       stability: 0.97
 
 - type: entity
   parent: PetriDish
   id: PetriDishBovine
+  categories: [ DoNotMap ]
   suffix: Bovine
   components:
-  - type: SampleGeneration
-    samples:
+  - type: SampleContainer
+    initialSamples:
     - genome: Bovine
       stability: 0.95
 
 - type: entity
   parent: PetriDish
   id: PetriDishCanid
+  categories: [ DoNotMap ]
   suffix: Canid
   components:
-  - type: SampleGeneration
-    samples:
+  - type: SampleContainer
+    initialSamples:
     - genome: Canid
 
 - type: entity
   parent: PetriDish
   id: PetriDishSpaceCobra
+  categories: [ DoNotMap ]
   suffix: Space Cobra
   components:
-  - type: SampleGeneration
-    samples:
+  - type: SampleContainer
+    initialSamples:
     - genome: SpaceCobra
 
 - type: entity
   parent: PetriDish
   id: PetriDishPsittacine
+  categories: [ DoNotMap ]
   suffix: Psittacine
   components:
-  - type: SampleGeneration
-    samples:
+  - type: SampleContainer
+    initialSamples:
     - genome: Parrot
 
 - type: entity
   parent: PetriDish
   id: PetriDishBasilisk
+  categories: [ DoNotMap ]
   suffix: Basilisk
   components:
-  - type: SampleGeneration
-    samples:
+  - type: SampleContainer
+    initialSamples:
     - genome: Basilisk
       stability: 0.8
 
 - type: entity
   parent: PetriDish
   id: PetriDishCaprine
+  categories: [ DoNotMap ]
   suffix: Caprine
   components:
-  - type: SampleGeneration
-    samples:
+  - type: SampleContainer
+    initialSamples:
     - genome: Caprine

@@ -1,11 +1,11 @@
 - type: entity
   abstract: true
-  id: BaseDepartmentTechFabCircuitboard
   parent: BaseMachineCircuitboard
+  id: BaseDepartmentTechFabCircuitboard
 
 - type: entity
-  id: EngineeringTechFabCircuitboard
   parent: BaseDepartmentTechFabCircuitboard
+  id: EngineeringTechFabCircuitboard
   name: engineering techfab machine board
   description: A machine printed circuit board for an engineering techfab.
   components:
@@ -24,8 +24,8 @@
     - EngineeringTechFabCircuitboard
 
 - type: entity
-  id: CargoTechFabCircuitboard
   parent: BaseDepartmentTechFabCircuitboard
+  id: CargoTechFabCircuitboard
   name: cargo techfab machine board
   description: A machine printed circuit board for a cargo techfab.
   components:
@@ -44,8 +44,8 @@
     - CargoTechFabCircuitboard
 
 - type: entity
-  id: ScienceTechFabCircuitboard
   parent: BaseDepartmentTechFabCircuitboard
+  id: ScienceTechFabCircuitboard
   name: science techfab machine board
   description: A machine printed circuit board for a science techfab.
   components:
@@ -64,8 +64,8 @@
     - ScienceTechFabCircuitboard
 
 - type: entity
-  id: ServiceTechFabCircuitboard
   parent: BaseDepartmentTechFabCircuitboard
+  id: ServiceTechFabCircuitboard
   name: service techfab machine board
   description: A machine printed circuit board for a service techfab.
   components:
@@ -82,3 +82,15 @@
   - type: StealTarget
     stealGroup:
     - ServiceTechFabCircuitboard
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: PrinterDocMachineCircuitboard
+  name: document printer machine board
+  description: A machine printed circuit board for an document printer
+  components:
+  - type: MachineBoard
+    prototype: PrinterDoc
+    stackRequirements:
+      Manipulator: 4
+      Glass: 1

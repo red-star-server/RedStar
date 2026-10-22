@@ -1,0 +1,11 @@
+- type: guideEntry
+  id: GeneticMutations
+  name: guide-entry-genetic-mutations
+  text: "/ServerInfo/_RedStar/Guidebook/Science/GeneticMutations.xml"
+  filterEnabled: true
+
+- type: guideEntry
+  id: GeneticCatalogue
+  name: guide-entry-genetic-catalogue
+  text: "/ServerInfo/_RedStar/Guidebook/Science/GeneticCatalogue.xml"
+  filterEnabled: true

@@ -9,5 +9,30 @@
   metabolisms:
     Bloodstream:
       metabolismRate: 0.5
-      effects:
-      - !type:ActivateGenes
+      effects: []
+
+- type: reagent
+  id: Genestatin
+  name: reagent-name-genestatin
+  group: Medicine
+  desc: reagent-desc-genestatin
+  physicalDesc: reagent-physical-desc-translucent
+  flavor: medicine
+  color: "#8E9AD1"
+  metabolisms:
+    Bloodstream:
+      metabolismRate: 0.5
+      effects: []
+
+- type: reagent
+  id: Genolysin
+  name: reagent-name-genolysin
+  group: Medicine
+  desc: reagent-desc-genolysin
+  physicalDesc: reagent-physical-desc-translucent
+  flavor: medicine
+  color: "#D47994"
+  metabolisms:
+    Bloodstream:
+      metabolismRate: 0.5
+      effects: []

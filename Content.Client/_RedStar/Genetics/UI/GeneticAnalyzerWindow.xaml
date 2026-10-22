@@ -1,0 +1,6 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:genetics="clr-namespace:Content.Client._RedStar.Genetics.UI"
+    Title="{Loc 'genetic-analyzer-title'}" MinSize="460 440" SetSize="510 580">
+    <genetics:GeneticProfileControl Name="Profile" />
+</controls:FancyWindow>

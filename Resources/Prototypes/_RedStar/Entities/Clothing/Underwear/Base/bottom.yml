@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [SolutionFood, Clothing]
+  parent: [ SolutionFood, Clothing ]
   id: ClothingUnderwearBottomBase
   name: based underwearb
   description: You should not see this.
@@ -10,7 +10,7 @@
   - type: Item
     size: Small
   - type: Clothing
-    slots: [underwearb]
+    slots: [ underwearb ]
   - type: Edible
     requiresSpecialDigestion: true
   - type: Solution
@@ -21,7 +21,7 @@
         Quantity: 5
   - type: Tag
     tags:
-      - ClothMade
+    - ClothMade
   - type: PhysicalComposition
     materialComposition:
       Cloth: 100

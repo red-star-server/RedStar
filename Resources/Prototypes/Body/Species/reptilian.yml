@@ -63,28 +63,28 @@
       jumpsuit:
         sizeMaps:
           32:
-            sprite: _Corvax/Mobs/Species/displacement.rsi
+            sprite: _RedStar/Mobs/Species/displacement.rsi # RS14
             state: jumpsuit-female
       head:
         sizeMaps:
           32:
-            sprite: _Corvax/Mobs/Species/displacement.rsi
+            sprite: _RedStar/Mobs/Species/displacement.rsi # RS14
             state: head
       mask:
         sizeMaps:
           32:
-            sprite: _Corvax/Mobs/Species/displacement.rsi
+            sprite: _RedStar/Mobs/Species/displacement.rsi # RS14
             state: mask
     displacements:
       head:
         sizeMaps:
           32:
-            sprite: _Corvax/Mobs/Species/displacement.rsi
+            sprite: _RedStar/Mobs/Species/displacement.rsi # RS14
             state: head
       mask:
         sizeMaps:
           32:
-            sprite: _Corvax/Mobs/Species/displacement.rsi
+            sprite: _RedStar/Mobs/Species/displacement.rsi # RS14
             state: mask
   - type: InitialBody
     organs:
@@ -118,6 +118,10 @@
   id: MobReptilian
   name: Urist McScales
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: Reptilian
+  # RS14-end
   - type: Puller
     needsHands: false
   - type: Butcherable

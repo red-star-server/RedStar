@@ -1,0 +1,557 @@
+- type: entity
+  abstract: true
+  parent: BaseUpholsteredChair
+  id: SofaBase
+  name: sofa
+
+- type: entity
+  parent: SofaBase
+  id: SofaWhiteLeftSide
+  name: white sofa left side
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_white.rsi
+    state: whitesofa_left
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaWhiteLeftSide
+
+- type: entity
+  parent: SofaBase
+  id: SofaWhiteRightSide
+  name: white sofa right side
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_white.rsi
+    state: whitesofa_right
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaWhiteRightSide
+
+- type: entity
+  parent: SofaBase
+  id: SofaWhiteLeftSide2
+  name: white sofa left side
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_white.rsi
+    state: whitesofa_left_02
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaWhiteLeftSide2
+
+- type: entity
+  parent: SofaBase
+  id: SofaWhiteRightSide2
+  name: white sofa right side
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_white.rsi
+    state: whitesofa_right_02
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaWhiteRightSide2
+
+- type: entity
+  parent: SofaBase
+  id: SofaWhiteMiddle
+  name: white sofa middle
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_white.rsi
+    state: whitesofa_middle
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaWhiteMiddle
+
+- type: entity
+  parent: SofaBase
+  id: SofaWhiteRightCorner
+  name: white sofa right corner
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_white.rsi
+    state: whitesofa_rightcorner
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaWhiteRightCorner
+
+- type: entity
+  parent: SofaBase
+  id: SofaWhiteLeftCorner
+  name: white sofa left corner
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_white.rsi
+    state: whitesofa_leftcorner
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaWhiteLeftCorner
+
+- type: entity
+  parent: SofaBase
+  id: SofaBlueLeftSide
+  name: blue sofa left side
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_blue.rsi
+    state: bluesofa_left
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaBlueLeftSide
+
+- type: entity
+  parent: SofaBase
+  id: SofaBlueRightSide
+  name: blue sofa right side
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_blue.rsi
+    state: bluesofa_right
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaBlueRightSide
+
+- type: entity
+  parent: SofaBase
+  id: SofaBlueLeftSide2
+  name: blue sofa left side
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_blue.rsi
+    state: bluesofa_left_02
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaBlueLeftSide2
+
+- type: entity
+  parent: SofaBase
+  id: SofaBlueRightSide2
+  name: blue sofa right side
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_blue.rsi
+    state: bluesofa_right_02
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaBlueRightSide2
+
+- type: entity
+  parent: SofaBase
+  id: SofaBlueMiddle
+  name: blue sofa middle
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_blue.rsi
+    state: bluesofa_middle
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaBlueMiddle
+
+- type: entity
+  parent: SofaBase
+  id: SofaBlueRightCorner
+  name: blue sofa right corner
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_blue.rsi
+    state: bluesofa_rightcorner
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaBlueRightCorner
+
+- type: entity
+  parent: SofaBase
+  id: SofaBlueLeftCorner
+  name: blue sofa left corner
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_blue.rsi
+    state: bluesofa_leftcorner
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaBlueLeftCorner
+
+- type: entity
+  parent: SofaBase
+  id: SofaBrownLeftSide
+  name: brown sofa left side
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_brown.rsi
+    state: brownsofa_left
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaBrownLeftSide
+
+- type: entity
+  parent: SofaBase
+  id: SofaBrownRightSide
+  name: brown sofa right side
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_brown.rsi
+    state: brownsofa_right
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaBrownRightSide
+
+- type: entity
+  parent: SofaBase
+  id: SofaBrownLeftSide2
+  name: brown sofa left side
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_brown.rsi
+    state: brownsofa_left_02
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaBrownLeftSide2
+
+- type: entity
+  parent: SofaBase
+  id: SofaBrownRightSide2
+  name: brown sofa right side
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_brown.rsi
+    state: brownsofa_right_02
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaBrownRightSide2
+
+- type: entity
+  parent: SofaBase
+  id: SofaBrownMiddle
+  name: brown sofa middle
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_brown.rsi
+    state: brownsofa_middle
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaBrownMiddle
+
+- type: entity
+  parent: SofaBase
+  id: SofaBrownRightCorner
+  name: brown sofa right corner
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_brown.rsi
+    state: brownsofa_rightcorner
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaBrownRightCorner
+
+- type: entity
+  parent: SofaBase
+  id: SofaBrownLeftCorner
+  name: brown sofa left corner
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_brown.rsi
+    state: brownsofa_leftcorner
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaBrownLeftCorner
+
+- type: entity
+  parent: SofaBase
+  id: SofaOfficeBlackLeftSide
+  name: black office sofa left side
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/black_office_sofa.rsi
+    state: sofa_left
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaOfficeBlackLeftSide
+
+- type: entity
+  parent: SofaBase
+  id: SofaOfficeBlackRightSide
+  name: black office sofa right side
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/black_office_sofa.rsi
+    state: sofa_right
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaOfficeBlackRightSide
+
+- type: entity
+  parent: SofaBase
+  id: SofaOfficeBlackMiddle
+  name: black office sofa middle
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/black_office_sofa.rsi
+    state: sofa_middle
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaOfficeBlackMiddle
+
+- type: entity
+  parent: SofaBase
+  id: SofaOfficeBlackRightCorner
+  name: black office sofa right corner
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/black_office_sofa.rsi
+    state: sofa_rightcorner
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaOfficeBlackRightCorner
+
+- type: entity
+  parent: SofaBase
+  id: SofaOfficeBlackLeftCorner
+  name: black office sofa left corner
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/black_office_sofa.rsi
+    state: sofa_leftcorner
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaOfficeBlackLeftCorner
+
+- type: entity
+  parent: SofaBase
+  id: SofaOfficeWhiteLeftSide
+  name: white office sofa left side
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/white_office_sofa.rsi
+    state: sofa_left
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaOfficeWhiteLeftSide
+
+- type: entity
+  parent: SofaBase
+  id: SofaOfficeWhiteRightSide
+  name: white office sofa right side
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/white_office_sofa.rsi
+    state: sofa_right
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaOfficeWhiteRightSide
+
+- type: entity
+  parent: SofaBase
+  id: SofaOfficeWhiteMiddle
+  name: white office sofa middle
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/white_office_sofa.rsi
+    state: sofa_middle
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaOfficeWhiteMiddle
+
+- type: entity
+  parent: SofaBase
+  id: SofaOfficeWhiteRightCorner
+  name: white office sofa right corner
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/white_office_sofa.rsi
+    state: sofa_rightcorner
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaOfficeWhiteRightCorner
+
+- type: entity
+  parent: SofaBase
+  id: SofaOfficeWhiteLeftCorner
+  name: white office sofa left corner
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/white_office_sofa.rsi
+    state: sofa_leftcorner
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaOfficeWhiteLeftCorner
+
+- type: entity
+  parent: SofaBase
+  id: SofaCutBlackLeftSide
+  name: black sofa left side
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_black_cut.rsi
+    state: sofa_left
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaCutBlackLeftSide
+
+- type: entity
+  parent: SofaBase
+  id: SofaCutBlackMiddle
+  name: black sofa middle
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_black_cut.rsi
+    state: sofa_middle
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaCutBlackMiddle
+
+- type: entity
+  parent: SofaBase
+  id: SofaCutBlackRightSide
+  name: black sofa right side
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_black_cut.rsi
+    state: sofa_right
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaCutBlackRightSide
+
+- type: entity
+  parent: SofaBase
+  id: SofaCutBlackLeftCorner
+  name: black sofa left corner
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_black_cut.rsi
+    state: sofa_corner
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaCutBlackLeftCorner
+
+- type: entity
+  parent: SofaBase
+  id: SofaCutBlackRightCorner
+  name: black sofa right corner
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_black_cut.rsi
+    state: sofa_corner
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaCutBlackRightCorner
+
+- type: entity
+  parent: SofaBase
+  id: SofaCutComfyLeftSide
+  name: comfy sofa left side
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_comfy_cut.rsi
+    state: sofa_left
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaCutComfyLeftSide
+
+- type: entity
+  parent: SofaBase
+  id: SofaCutComfyMiddle
+  name: comfy sofa middle
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_comfy_cut.rsi
+    state: sofa_middle
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaCutComfyMiddle
+
+- type: entity
+  parent: SofaBase
+  id: SofaCutComfyRightSide
+  name: comfy sofa right side
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_comfy_cut.rsi
+    state: sofa_right
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaCutComfyRightSide
+
+- type: entity
+  parent: SofaBase
+  id: SofaCutComfyLeftCorner
+  name: comfy sofa left corner
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_comfy_cut.rsi
+    state: sofa_corner
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaCutComfyLeftCorner
+
+- type: entity
+  parent: SofaBase
+  id: SofaCutComfyRightCorner
+  name: comfy sofa right corner
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_comfy_cut.rsi
+    state: sofa_corner
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaCutComfyRightCorner
+
+- type: entity
+  parent: SofaBase
+  id: SofaCutDainerLeftSide
+  name: dainer sofa left side
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_dainer_cut.rsi
+    state: sofa_left
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaCutDainerLeftSide
+
+- type: entity
+  parent: SofaBase
+  id: SofaCutDainerMiddle
+  name: dainer sofa middle
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_dainer_cut.rsi
+    state: sofa_middle
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaCutDainerMiddle
+
+- type: entity
+  parent: SofaBase
+  id: SofaCutDainerRightSide
+  name: dainer sofa right side
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_dainer_cut.rsi
+    state: sofa_right
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaCutDainerRightSide
+
+- type: entity
+  parent: SofaBase
+  id: SofaCutDainerLeftCorner
+  name: dainer sofa left corner
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_dainer_cut.rsi
+    state: sofa_corner
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaCutDainerLeftCorner
+
+- type: entity
+  parent: SofaBase
+  id: SofaCutDainerRightCorner
+  name: dainer sofa right corner
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Sofas/sofa_dainer_cut.rsi
+    state: sofa_corner
+  - type: Construction
+    graph: UpholsteredSeatGraph
+    node: sofaCutDainerRightCorner

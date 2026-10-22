@@ -1,0 +1,426 @@
+# Chapel (Shrine) Pew
+
+- type: entity
+  abstract: true
+  parent: [ ChairBase, StructureHealthFurniture ]
+  id: PewBase
+  name: Pew Base
+  components:
+  - type: Damageable
+    damageModifierSet: WoodMod
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 40
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 1
+            max: 1
+  - type: Tag
+    tags:
+    - Wooden
+  - type: StaticPrice
+    price: 250
+
+- type: entity
+  parent: PewBase
+  id: PewEndLeft
+  name: Wood Pew
+  suffix: End Left
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Benches/pew_end_left.rsi
+    state: base
+  - type: Construction
+    graph: BenchSL
+    node: pewLeft
+
+- type: entity
+  parent: PewBase
+  id: PewEndRight
+  name: Wood Pew
+  suffix: End Right
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Benches/pew_end_right.rsi
+    state: base
+  - type: Construction
+    graph: BenchSL
+    node: pewRight
+
+- type: entity
+  parent: PewBase
+  id: PewMiddle
+  name: Wood Pew
+  suffix: Middle
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Benches/pew_middle.rsi
+    state: base
+  - type: Construction
+    graph: BenchSL
+    node: pewMid
+
+#region Bench White
+- type: entity
+  parent: BenchComfy
+  id: BenchWhiteComfy
+  components:
+  - type: Construction
+    graph: BenchSL
+    node: whiteComfBench
+
+- type: entity
+  parent: BenchComfy
+  id: BenchComfyCorner
+  suffix: Corner. White
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Benches/bench_corner.rsi
+    layers:
+    - state: base
+      color: "#767e82"
+    - state: cover
+  - type: Construction
+    graph: BenchSL
+    node: whiteComfBenchCorner
+
+- type: entity
+  parent: BenchComfy
+  id: BenchComfyEndLeft
+  suffix: End Left. White
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Benches/bench_end_left.rsi
+    layers:
+    - state: base
+      color: "#767e82"
+    - state: cover
+  - type: Construction
+    graph: BenchSL
+    node: whiteComfBenchLeft
+
+- type: entity
+  parent: BenchComfy
+  id: BenchComfyEndRight
+  suffix: End Right. White
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Benches/bench_end_right.rsi
+    layers:
+    - state: base
+      color: "#767e82"
+    - state: cover
+  - type: Construction
+    graph: BenchSL
+    node: whiteComfBenchRight
+
+- type: entity
+  parent: BenchComfy
+  id: BenchComfyMiddle
+  suffix: Middle. White
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Benches/bench_middle.rsi
+    layers:
+    - state: base
+      color: "#767e82"
+    - state: cover
+  - type: Construction
+    graph: BenchSL
+    node: whiteComfBenchMid
+
+#region Bench Red
+- type: entity
+  parent: BenchComfy
+  id: BenchRedComfyCorner
+  suffix: Corner. Red
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Benches/bench_corner.rsi
+    layers:
+    - state: base
+      color: "#767e82"
+    - state: cover
+      color: "#8c4141"
+  - type: Construction
+    graph: BenchSL
+    node: redComfBenchCorner
+
+- type: entity
+  parent: BenchComfy
+  id: BenchRedComfyEndLeft
+  suffix: End Left. Red
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Benches/bench_end_left.rsi
+    layers:
+    - state: base
+      color: "#767e82"
+    - state: cover
+      color: "#8c4141"
+  - type: Construction
+    graph: BenchSL
+    node: redComfBenchLeft
+
+- type: entity
+  parent: BenchComfy
+  id: BenchRedComfyEndRight
+  suffix: End Right. Red
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Benches/bench_end_right.rsi
+    layers:
+    - state: base
+      color: "#767e82"
+    - state: cover
+      color: "#8c4141"
+  - type: Construction
+    graph: BenchSL
+    node: redComfBenchRight
+
+- type: entity
+  parent: BenchComfy
+  id: BenchRedComfyMiddle
+  suffix: Middle. Red
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Benches/bench_middle.rsi
+    layers:
+    - state: base
+      color: "#767e82"
+    - state: cover
+      color: "#8c4141"
+  - type: Construction
+    graph: BenchSL
+    node: redComfBenchMid
+
+#region Bench Blue
+- type: entity
+  parent: BenchComfy
+  id: BenchBlueComfyCorner
+  suffix: Corner. Blue
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Benches/bench_corner.rsi
+    layers:
+    - state: base
+      color: "#767e82"
+    - state: cover
+      color: "#334e6d"
+  - type: Construction
+    graph: BenchSL
+    node: blueComfBenchCorner
+
+- type: entity
+  parent: BenchComfy
+  id: BenchBlueComfyEndLeft
+  suffix: End Left. Blue
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Benches/bench_end_left.rsi
+    layers:
+    - state: base
+      color: "#767e82"
+    - state: cover
+      color: "#334e6d"
+  - type: Construction
+    graph: BenchSL
+    node: blueComfBenchLeft
+
+- type: entity
+  parent: BenchComfy
+  id: BenchBlueComfyEndRight
+  suffix: End Right. Blue
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Benches/bench_end_right.rsi
+    layers:
+    - state: base
+      color: "#767e82"
+    - state: cover
+      color: "#334e6d"
+  - type: Construction
+    graph: BenchSL
+    node: blueComfBenchRight
+
+- type: entity
+  parent: BenchComfy
+  id: BenchBlueComfyMiddle
+  suffix: Middle. Blue
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Benches/bench_middle.rsi
+    layers:
+    - state: base
+      color: "#767e82"
+    - state: cover
+      color: "#334e6d"
+  - type: Construction
+    graph: BenchSL
+    node: blueComfBenchMid
+
+#region Bench Gray
+- type: entity
+  parent: BenchComfy
+  id: BenchGrayComfy
+  suffix: Solo. Gray
+  components:
+  - type: Sprite
+    layers:
+    - state: bench_solo_base
+      color: "#767e82"
+    - state: bench_solo_cover
+      color: "#767e82"
+  - type: Construction
+    graph: BenchSL
+    node: grayComfBench
+
+- type: entity
+  parent: BenchComfy
+  id: BenchGrayComfyCorner
+  suffix: Corner. Gray
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Benches/bench_corner.rsi
+    layers:
+    - state: base
+      color: "#767e82"
+    - state: cover
+      color: "#767e82"
+  - type: Construction
+    graph: BenchSL
+    node: grayComfBenchCorner
+
+- type: entity
+  parent: BenchComfy
+  id: BenchGrayComfyEndLeft
+  suffix: End Left. Gray
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Benches/bench_end_left.rsi
+    layers:
+    - state: base
+      color: "#767e82"
+    - state: cover
+      color: "#767e82"
+  - type: Construction
+    graph: BenchSL
+    node: grayComfBenchLeft
+
+- type: entity
+  parent: BenchComfy
+  id: BenchGrayComfyEndRight
+  suffix: End Right. Gray
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Benches/bench_end_right.rsi
+    layers:
+    - state: base
+      color: "#767e82"
+    - state: cover
+      color: "#767e82"
+  - type: Construction
+    graph: BenchSL
+    node: grayComfBenchRight
+
+- type: entity
+  parent: BenchComfy
+  id: BenchGrayComfyMiddle
+  suffix: Middle. Gray
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Benches/bench_middle.rsi
+    layers:
+    - state: base
+      color: "#767e82"
+    - state: cover
+      color: "#767e82"
+  - type: Construction
+    graph: BenchSL
+    node: grayComfBenchMid
+
+#region Bench Green
+- type: entity
+  parent: BenchComfy
+  id: BenchGreenComfy
+  suffix: Solo. Green
+  components:
+  - type: Sprite
+    layers:
+    - state: bench_solo_base
+      color: "#767e82"
+    - state: bench_solo_cover
+      color: "#3c9950"
+  - type: Construction
+    graph: BenchSL
+    node: greenComfBench
+
+- type: entity
+  parent: BenchComfy
+  id: BenchGreenComfyCorner
+  suffix: Corner. Green
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Benches/bench_corner.rsi
+    layers:
+    - state: base
+      color: "#767e82"
+    - state: cover
+      color: "#3c9950"
+  - type: Construction
+    graph: BenchSL
+    node: greenComfBenchCorner
+
+- type: entity
+  parent: BenchComfy
+  id: BenchGreenComfyEndLeft
+  suffix: End Left. Green
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Benches/bench_end_left.rsi
+    layers:
+    - state: base
+      color: "#767e82"
+    - state: cover
+      color: "#3c9950"
+  - type: Construction
+    graph: BenchSL
+    node: greenComfBenchLeft
+
+- type: entity
+  parent: BenchComfy
+  id: BenchGreenComfyEndRight
+  suffix: End Right. Green
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Benches/bench_end_right.rsi
+    layers:
+    - state: base
+      color: "#767e82"
+    - state: cover
+      color: "#3c9950"
+  - type: Construction
+    graph: BenchSL
+    node: greenComfBenchRight
+
+- type: entity
+  parent: BenchComfy
+  id: BenchGreenComfyMiddle
+  suffix: Middle. Green
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Furniture/Benches/bench_middle.rsi
+    layers:
+    - state: base
+      color: "#767e82"
+    - state: cover
+      color: "#3c9950"
+  - type: Construction
+    graph: BenchSL
+    node: greenComfBenchMid

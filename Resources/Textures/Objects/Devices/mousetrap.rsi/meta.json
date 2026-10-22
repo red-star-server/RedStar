@@ -1,8 +1,8 @@
 {
     "version": 1,
 
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from https://github.com/tgstation/tgstation/commit/4323540b6bec3ae93bbf13d685c2dbe0cb40a36e",
+    "license": "CC0-1.0",
+    "copyright": "By AraiMaia for Funky Station",
 
     "size": {
         "x": 32,
@@ -11,13 +11,11 @@
 
     "states": [
         {
-            "name": "mousetrap",
-            "directions": 4
+            "name": "mousetrap"
         },
 
         {
-            "name": "mousetraparmed",
-            "directions": 4
+            "name": "mousetraparmed"
         }
     ]
 }

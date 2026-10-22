@@ -1,0 +1,74 @@
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksFishnet
+  name: fishnet
+  suffix: full
+  description: Comfortable hosiery for everyday wear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Socks/fishnetfull.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksFishnetKnee
+  name: fishnet
+  suffix: knee
+  description: Comfortable hosiery for everyday wear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Socks/fishnetknee.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksFishnetThigh
+  name: fishnet
+  suffix: thigh
+  description: Comfortable hosiery for everyday wear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Socks/fishnetthigh.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksGraynee
+  name: graynee socks
+  description: Comfortable hosiery for everyday wear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Socks/graynee.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksGraynorm
+  name: graynorm socks
+  description: Comfortable hosiery for everyday wear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Socks/graynorm.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksGrayshort
+  name: grayshort socks
+  description: Comfortable hosiery for everyday wear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Socks/grayshort.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksGraythigh
+  name: graythigh socks
+  description: Comfortable hosiery for everyday wear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Socks/graythigh.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksPantyhose
+  name: pantyhose
+  description: Comfortable hosiery for everyday wear.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Underwear/Special/Socks/pantyhose.rsi

@@ -1,17 +1,17 @@
 - type: latheRecipe
   parent: [ BaseCircuitboardRecipe, BaseResearchMachineRecipeCategory ]
-  id: CellSequencerCircuitboard
-  result: CellSequencerCircuitboard
+  id: GeneticSequencerCircuitboard
+  result: GeneticSequencerCircuitboard
 
 - type: latheRecipe
   parent: [ BaseCircuitboardRecipe, BaseResearchMachineRecipeCategory ]
-  id: CellularFusionCircuitboard
-  result: CellularFusionCircuitboard
+  id: SampleStabilizerCircuitboard
+  result: SampleStabilizerCircuitboard
 
 - type: latheRecipe
   parent: [ BaseCircuitboardRecipe, BaseResearchMachineRecipeCategory ]
-  id: MutagenicCellInjectorCircuitboard
-  result: MutagenicCellInjectorCircuitboard
+  id: MutagenicInjectorCircuitboard
+  result: MutagenicInjectorCircuitboard
 
 - type: latheRecipe
   parent: [ BaseCircuitboardRecipe, BaseResearchMachineRecipeCategory ]
@@ -21,27 +21,37 @@
 - type: latheRecipe
   parent: BaseToolRecipe
   id: BiopsyTool
+  categories: [ Tools, Research ]
   result: BiopsyTool
-  categories:
-  - Tools
-  - Research
+
+- type: latheRecipe
+  parent: HandheldHealthAnalyzer
+  id: HandheldGeneticAnalyzer
+  categories: [ Tools ]
+  result: HandheldGeneticAnalyzer
 
 - type: latheRecipe
   id: PetriDish
+  categories: [ Tools, Research ]
   result: PetriDish
-  categories:
-  - Tools
-  - Research
   completetime: 2
   materials:
     Glass: 200
 
 - type: latheRecipe
   id: GeneticVial
+  categories: [ Tools, Research ]
   result: GeneticVial
-  categories:
-  - Tools
-  - Research
   completetime: 2
   materials:
     Glass: 200
+
+- type: latheRecipe
+  parent: [BaseCircuitboardRecipe, BaseMedicalMachineRecipeCategory]
+  id: GeneticChamberCircuitboard
+  result: GeneticChamberCircuitboard
+
+- type: latheRecipe
+  parent: [BaseCircuitboardRecipe, BaseMedicalMachineRecipeCategory]
+  id: GeneticsConsoleCircuitboard
+  result: GeneticsConsoleCircuitboard

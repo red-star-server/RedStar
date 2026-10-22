@@ -1,0 +1,23 @@
+- type: entity
+  abstract: true
+  id: BaseStationGoal
+  components:
+  - type: StationGoal
+    goals:
+    - Singularity
+    - SolarPanels
+    - Artifacts
+    - Bank
+    - Zoo
+    - MiningOutpost
+    - Tesla
+    - SecurityTraining
+    - ShuttleMed
+    - ShuttleSec
+    - ShuttleRnd
+    - ShuttleSrv
+    - ShuttleEmergency
+    - Theatre
+    - CellAI
+    - Botany
+    - Bunker

@@ -5,6 +5,10 @@
   description: A shambling mass of flesh, animated through anomalous energy.
   abstract: true
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: AberrantFlesh
+  # RS14-end
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
@@ -211,6 +215,10 @@
   description: A shambling mass of flesh, animated through anomalous energy.
   abstract: true
   components:
+  # RS14-start
+  - type: Genome
+    genomeId: AberrantFlesh
+  # RS14-end
   - type: HTN
     rootTask:
       task: SimpleHostileCompound

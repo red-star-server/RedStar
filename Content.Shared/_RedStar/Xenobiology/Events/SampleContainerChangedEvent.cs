@@ -1,9 +1,10 @@
 namespace Content.Shared._RedStar.Xenobiology.Events;
 
 /// <summary>
-/// Raised after the contents of a cell container change.
+/// Raised after the contents of a sample container change.
 /// </summary>
-public sealed class SampleContainerChangedEvent : EntityEventArgs;
+[ByRefEvent]
+public readonly record struct SampleContainerChangedEvent;
 
 /// <summary>
 /// Relayed to the entity holding a sample container after its contents change.

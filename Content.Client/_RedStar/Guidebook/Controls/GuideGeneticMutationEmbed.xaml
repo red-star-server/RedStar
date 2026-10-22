@@ -1,0 +1,38 @@
+<PanelContainer xmlns="https://spacestation14.io"
+                xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+                Margin="5">
+    <PanelContainer.PanelOverride>
+        <gfx:StyleBoxFlat BorderThickness="1" BorderColor="#777777" />
+    </PanelContainer.PanelOverride>
+    <BoxContainer Orientation="Vertical">
+        <PanelContainer>
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#393c3f" />
+            </PanelContainer.PanelOverride>
+            <BoxContainer Margin="10 6" SeparationOverride="10">
+                <RichTextLabel Name="ResultName" HorizontalExpand="True" VerticalAlignment="Center" />
+                <Label Name="TierLabel" VerticalAlignment="Center" />
+            </BoxContainer>
+        </PanelContainer>
+        <Label Name="PropertiesLabel" Margin="10 8 10 0" />
+        <RichTextLabel Name="Description" Margin="10 8 10 0" />
+        <GridContainer Columns="2" Margin="10" HorizontalExpand="True">
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="4" Margin="0 0 12 0">
+                <Label Text="{Loc 'guidebook-genetic-mutation-genes'}" />
+                <BoxContainer Name="Genes" Orientation="Vertical" SeparationOverride="3" />
+            </BoxContainer>
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="4">
+                <Label Text="{Loc 'guidebook-genetic-mutation-reagents'}" />
+                <GridContainer Name="Reagents" Columns="2" HorizontalExpand="True" />
+            </BoxContainer>
+        </GridContainer>
+        <PanelContainer>
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#2b2e31" />
+            </PanelContainer.PanelOverride>
+            <BoxContainer Margin="10 6" SeparationOverride="12">
+                <Label Name="DurationLabel" HorizontalExpand="True" />
+            </BoxContainer>
+        </PanelContainer>
+    </BoxContainer>
+</PanelContainer>

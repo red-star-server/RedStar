@@ -1,7 +1,7 @@
 - type: entity
+  parent: PoweredStrobeLightEmpty
   id: PoweredStrobeLight
   suffix: Filled, Enabled
-  parent: PoweredStrobeLightEmpty
   components:
   - type: PoweredLight
     hasLampOnSpawn: LightBulb
@@ -9,9 +9,9 @@
     on: true
 
 - type: entity
+  parent: PoweredStrobeLightPolice
   id: PoweredStrobeLightPoliceEnabled
   suffix: Filled, Enabled, Police
-  parent: PoweredStrobeLightPolice
   components:
   - type: PoweredLight
     hasLampOnSpawn: LightBulb
@@ -19,19 +19,19 @@
     on: true
 
 - type: entity
+  parent: PoweredStrobeLightSiren
   id: PoweredStrobeLightSirenEnabled
   suffix: Filled, Enabled, Siren
-  parent: PoweredStrobeLightSiren
   components:
   - type: PoweredLight
     hasLampOnSpawn: LightBulb
     bulb: Bulb
     on: true
-    
+
 - type: entity
+  parent: PoweredStrobeLightEpsilon
   id: PoweredStrobeLightEpsilonEnabled
   suffix: Filled, Enabled, Epsilon
-  parent: PoweredStrobeLightEpsilon
   components:
   - type: PoweredLight
     hasLampOnSpawn: LightBulb

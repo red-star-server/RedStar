@@ -1,0 +1,21 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadCaptainHat
+  name: captain's hat
+  description: A special hat made to order for the captain.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Head/Hats/caphat.rsi
+  - type: Clothing
+    sprite: _RedStar/Clothing/Head/Hats/caphat.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCapHoS
+  name: head of security cap
+  description: The robust standard-issue cap of the Head of Security. For showing the officers who's in charge.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Head/Hats/hoshat.rsi
+  - type: Clothing
+    sprite: _RedStar/Clothing/Head/Hats/hoshat.rsi

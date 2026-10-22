@@ -1,15 +1,15 @@
 # NanoTrasen
 - type: paperwork
   id: NTLaw0
-  category: NTLaw
   name: paperwork-form-title-law-0
+  category: NTLaw
   template: "/Paperwork/default.xml"
   paperPrototype: PaperPrintedNTLaw
 
 # USSP
 - type: paperwork
   id: USSPLaw0
-  category: USSPLaw
   name: paperwork-form-title-law-0
+  category: USSPLaw
   template: "/Paperwork/default.xml"
   paperPrototype: PaperPrintedUSSPLaw
