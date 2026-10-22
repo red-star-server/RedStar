@@ -1,0 +1,17 @@
+light_mode unshaded;
+blend_mode none;
+
+uniform sampler2D SCREEN_TEXTURE;
+
+void fragment() {
+    highp vec4 scene = zTextureSpec(SCREEN_TEXTURE, Pos);
+    highp vec3 glow = clamp(vec3(1.0) - zTexture(UV).rgb, 0.0, 1.0);
+    highp float glowPeak = max(max(glow.r, glow.g), glow.b);
+    // A shared soft knee limits dense overlaps without shifting their RGB proportions.
+    glow *= 0.35 / (0.35 + glowPeak);
+    highp float peak = max(max(scene.r, scene.g), scene.b);
+    highp float headroom = 1.0 - smoothstep(0.4, 0.95, peak);
+
+    // Screen blending preserves the scene outside masks and bounds overlapping sources.
+    COLOR = vec4(scene.rgb + (vec3(1.0) - scene.rgb) * glow * headroom, scene.a);
+}

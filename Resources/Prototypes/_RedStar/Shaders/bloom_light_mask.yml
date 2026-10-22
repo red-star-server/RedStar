@@ -2,3 +2,8 @@
   id: BloomLightMask
   kind: source
   path: "/Textures/_RedStar/Shaders/bloom_light_mask.swsl"
+
+- type: shader
+  id: BloomLightComposite
+  kind: source
+  path: "/Textures/_RedStar/Shaders/bloom_light_composite.swsl"

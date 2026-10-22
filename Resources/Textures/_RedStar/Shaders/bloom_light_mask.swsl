@@ -1,20 +1,33 @@
-uniform sampler2D SCREEN_TEXTURE;
+blend_mode multiply;
+
+uniform highp vec2 MaskSize;
+
+highp vec3 maskSample(highp vec2 offset) {
+    // RSI frames may share an atlas. Keep the filter within this frame.
+    highp vec2 pixel = TEXTURE_PIXEL_SIZE;
+    highp vec2 start = UV - UV2 * MaskSize * pixel;
+    highp vec4 texel = zTexture(clamp(UV + offset * pixel, start + pixel * 0.5, start + (MaskSize - 0.5) * pixel));
+    return texel.rgb * texel.a;
+}
 
 void fragment() {
-    lowp vec4 mask = zTexture(UV);
-    if (mask.a <= 0.001)
-        discard;
+    highp vec3 mask = maskSample(vec2(0.0)) * 0.25;
+    mask += maskSample(vec2(1.0, 0.0)) * 0.125;
+    mask += maskSample(vec2(-1.0, 0.0)) * 0.125;
+    mask += maskSample(vec2(0.0, 1.0)) * 0.125;
+    mask += maskSample(vec2(0.0, -1.0)) * 0.125;
+    mask += maskSample(vec2(1.0, 1.0)) * 0.0625;
+    mask += maskSample(vec2(-1.0, 1.0)) * 0.0625;
+    mask += maskSample(vec2(1.0, -1.0)) * 0.0625;
+    mask += maskSample(vec2(-1.0, -1.0)) * 0.0625;
 
-    highp vec2 pixel = TEXTURE_PIXEL_SIZE;
-    lowp float alpha = mask.a * 0.6;
-    alpha += zTexture(UV + vec2(pixel.x, 0.0)).a * 0.1;
-    alpha += zTexture(UV - vec2(pixel.x, 0.0)).a * 0.1;
-    alpha += zTexture(UV + vec2(0.0, pixel.y)).a * 0.1;
-    alpha += zTexture(UV - vec2(0.0, pixel.y)).a * 0.1;
+    // Use illumination for visibility, not a second tint of the lamp's RGB.
+    highp float illumination = max(max(lightSample.r, lightSample.g), lightSample.b);
+    highp float visibility = smoothstep(0.02, 0.2, illumination);
+    highp vec3 glow = mask * MODULATE.rgb * MODULATE.a * visibility;
 
-    lowp vec3 scene = zTextureSpec(SCREEN_TEXTURE, FRAGCOORD.xy * SCREEN_PIXEL_SIZE).rgb;
-    lowp float luminance = dot(scene, vec3(0.2126, 0.7152, 0.0722));
-    lowp float headroom = 1.0 - smoothstep(0.4, 0.9, luminance);
-
-    COLOR = vec4(mask.rgb, alpha * headroom);
+    // T = product(1 - glow): bounded, order-independent accumulation over a white buffer.
+    COLOR = vec4(vec3(1.0) - clamp(glow, 0.0, 1.0), 1.0);
+    MODULATE = vec4(1.0);
+    lightSample = vec3(1.0);
 }

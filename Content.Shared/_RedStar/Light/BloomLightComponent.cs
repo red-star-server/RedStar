@@ -12,16 +12,35 @@ namespace Content.Shared.Light;
 public sealed partial class BloomLightComponent : Component, IComponentTreeEntry<BloomLightComponent>
 {
     [DataField]
-    public SpriteSpecifier Mask = new SpriteSpecifier.Rsi(new ResPath("_RedStar/Effects/LightMasks/128.rsi"), "light_cone");
+    public bool Enabled = true;
 
     [DataField]
-    public Vector2 MaskOffset = new(0f, -0.2f);
+    public Color Tint = Color.White;
 
     [DataField]
-    public float MaskOpacity = 0.05f;
+    public List<BloomLightLayer> Layers = new();
 
     public EntityUid? TreeUid { get; set; }
     public DynamicTree<ComponentTreeEntry<BloomLightComponent>>? Tree { get; set; }
-    public bool AddToTree => true;
+    public bool AddToTree => Enabled;
     public bool TreeUpdateQueued { get; set; }
+}
+
+/// <summary>
+/// A local glow layer. Size and offset rotate with the fixture, independently of its light radius.
+/// </summary>
+[DataDefinition]
+public sealed partial class BloomLightLayer
+{
+    [DataField(required: true)]
+    public SpriteSpecifier Mask = default!;
+
+    [DataField]
+    public Vector2 Offset;
+
+    [DataField]
+    public Vector2 Scale = Vector2.One;
+
+    [DataField]
+    public float Opacity = 0.05f;
 }

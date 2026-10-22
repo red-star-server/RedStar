@@ -111,6 +111,7 @@ ui-options-parallax-low-quality = Низкокачественный парал�
 ui-options-ambient-occlusion = Отображать окружающее затенение
 ## RS14-start
 ui-options-light-bloom = Свечение ламп
+ui-options-light-bloom-strength = Интенсивность свечения:
 ## RS14-end
 ui-options-fps-counter = Показать счётчик FPS
 ui-options-vp-width = Ширина окна игры:

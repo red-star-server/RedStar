@@ -35,7 +35,22 @@
     energy: 0.8
     radius: 10
     softness: 1.5 # RS14
-  - type: BloomLight # RS14
+  # RS14-start
+  - type: BloomLight
+    layers:
+    - mask: { sprite: "_RedStar/Effects/LightMasks/cone.rsi", state: cone_curve }
+      offset: 0, -0.55
+      scale: 0.25, 0.25
+      opacity: 0.045
+    - mask: { sprite: "_RedStar/Effects/LightMasks/64.rsi", state: light_point }
+      offset: 0, 0.95
+      scale: 0.95, 0.55
+      opacity: 0.055
+    - mask: { sprite: "_RedStar/Effects/LightMasks/64.rsi", state: light_point }
+      offset: 0, 0.95
+      scale: 0.7, 0.18
+      opacity: 0.2
+  # RS14-end
 #    offset: "0, 0.25"
   - type: RCDDeconstructable
     cost: 4
@@ -263,9 +278,15 @@
   components:
     # RS14-start
     - type: BloomLight
-      mask: { sprite: "_RedStar/Effects/LightMasks/64.rsi", state: light_point }
-      maskOffset: 0, 0.45
-      maskOpacity: 0.1
+      layers:
+      - mask: { sprite: "_RedStar/Effects/LightMasks/64.rsi", state: light_point }
+        offset: 0, 0.45
+        scale: 0.85, 0.85
+        opacity: 0.06
+      - mask: { sprite: "_RedStar/Effects/LightMasks/64.rsi", state: light_point }
+        offset: 0, 0.45
+        scale: 0.35, 0.35
+        opacity: 0.18
     # RS14-end
     - type: AmbientSound
       volume: -15

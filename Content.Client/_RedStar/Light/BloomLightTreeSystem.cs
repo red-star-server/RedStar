@@ -17,9 +17,14 @@ public sealed partial class BloomLightTreeSystem : ComponentTreeSystem<BloomLigh
 
     protected override Box2 ExtractAabb(in ComponentTreeEntry<BloomLightComponent> entry, Vector2 pos, Angle rot)
     {
-        var texture = _sprites.Frame0(entry.Component.Mask);
-        var size = new Vector2(texture.Width, texture.Height) / EyeManager.PixelsPerMeter;
-        var radius = size.Length() / 2f + entry.Component.MaskOffset.Length();
+        var radius = 0f;
+        foreach (var layer in entry.Component.Layers)
+        {
+            var texture = _sprites.Frame0(layer.Mask);
+            var size = new Vector2(texture.Width, texture.Height) * layer.Scale / EyeManager.PixelsPerMeter;
+            radius = Math.Max(radius, size.Length() / 2f + layer.Offset.Length());
+        }
+
         var half = new Vector2(radius);
         return new Box2(pos - half, pos + half);
     }
