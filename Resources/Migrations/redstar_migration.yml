@@ -111,3 +111,6 @@ CellularFusion: SampleStabilizer
 CellularFusionCircuitboard: SampleStabilizerCircuitboard
 MutagenicCellInjector: MutagenicInjector
 MutagenicCellInjectorCircuitboard: MutagenicInjectorCircuitboard
+
+# 2026-10-23
+ComputerTechnologyDiskTerminal: ComputerResearchPointDiskTerminal
