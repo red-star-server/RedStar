@@ -240,14 +240,17 @@ public sealed class BodyTest : GameTest
     }
 
     [Test]
-    [RunOnSide(Side.Server)]
-    public void DeletingRootPartQueuesBodyDeletion()
+    public async Task DeletingRootPartQueuesBodyDeletion()
     {
-        var body = SSpawn("TraumaTestBody");
-        var torso = _body.GetOrgan(body, "Torso").Value;
-        SEntMan.EnsureComponent<UnremoveableOrganComponent>(torso);
-        SEntMan.DeleteEntity(torso);
-        Assert.That(SEntMan.IsQueuedForDeletion(body), Is.True);
+        var map = await Pair.CreateTestMap();
+        await Server.WaitAssertion(() =>
+        {
+            var body = SSpawnAtPosition("TraumaTestBody", map.GridCoords);
+            var torso = _body.GetOrgan(body, "Torso").Value;
+            SEntMan.EnsureComponent<UnremoveableOrganComponent>(torso);
+            SEntMan.DeleteEntity(torso);
+            Assert.That(SEntMan.IsQueuedForDeletion(body), Is.True);
+        });
     }
 
     [Test]
