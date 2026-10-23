@@ -92,8 +92,8 @@ public sealed partial class TTSSystem : EntitySystem
 
     private static readonly ProtoId<TTSVoicePrototype> AnnouncementSpeaker = "Xenia";
 
-    private const SoundTraits NormalTraits = SoundTraits.RateFast | SoundTraits.PitchMedium;
-    private const SoundTraits WhisperTraits = SoundTraits.RateSlow | SoundTraits.PitchVerylow | SoundTraits.VolumeXSoft;
+    private const SoundTraits NormalTraits = SoundTraits.None;
+    private const SoundTraits WhisperTraits = SoundTraits.RateSlow | SoundTraits.PitchVerylow;
 
     private const int MaxMessageChars = 100 * 2; // same as SingleBubbleCharLimit * 2
     private const float AnnouncementDelay = 2.25f;
@@ -122,8 +122,7 @@ public sealed partial class TTSSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnRoundRestartCleanup(RoundRestartCleanupEvent ev)
-        => _ttsManager.ResetCache();
+    private void OnRoundRestartCleanup(RoundRestartCleanupEvent ev) => _ttsManager.ResetCache();
 
     [SubscribeNetworkEvent]
     private async void OnRequestPreviewTTS(RequestPreviewTTSEvent ev, EntitySessionEventArgs args)
