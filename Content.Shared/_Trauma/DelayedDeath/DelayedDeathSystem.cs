@@ -22,7 +22,6 @@ public sealed partial class DelayedDeathSystem : EntitySystem
         base.Initialize();
 
         _mobQuery = GetEntityQuery<MobStateComponent>();
-
     }
 
     public override void Update(float frameTime)

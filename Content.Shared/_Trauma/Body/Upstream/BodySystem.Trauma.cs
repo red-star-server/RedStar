@@ -14,7 +14,7 @@ public sealed partial class BodySystem
     [Dependency] private CommonBodyCacheSystem _cache = default!;
     [Dependency] private CommonBodyPartSystem _part = default!;
     [Dependency] private OrganRelationSystem _relation = default!;
-    [Dependency] private EntityQuery<InternalChildOrganComponent> _internalQuery = default!;
+    [Dependency] private EntityQuery<InternalChildOrganComponent> _internalQuery;
 
     /// <summary>
     /// Body parts' organ categories.
@@ -43,7 +43,7 @@ public sealed partial class BodySystem
         {BodyPartType.Arm, [ "ArmLeft", "ArmRight" ]},
         {BodyPartType.Hand, [ "HandLeft", "HandRight" ]},
         {BodyPartType.Leg, [ "LegLeft", "LegRight" ]},
-        {BodyPartType.Foot, [" FootLeft", "FootRight" ]},
+        {BodyPartType.Foot, [ "FootLeft", "FootRight" ]},
         {BodyPartType.Tail, [ "Tail" ]},
         {BodyPartType.Wings, [ "Wings" ]}
     };
@@ -108,28 +108,31 @@ public sealed partial class BodySystem
     }
 
     /// <summary>
-    /// Non-dogshit version of TryGetOrgansWithComponent
+    /// Gets the body's organs which have the requested component.
     /// </summary>
     public List<Entity<T>> GetOrgans<T>(Entity<BodyComponent?> body, bool logMissing = false) where T : Component
     {
         if (!_bodyQuery.Resolve(body, ref body.Comp, logMissing))
             return [];
 
-        TryGetOrgansWithComponent<T>(body, out var organs);
+        var organs = new List<Entity<T>>();
+        foreach (var organ in body.Comp.Organs?.ContainedEntities ?? [])
+        {
+            if (TryComp<T>(organ, out var comp))
+                organs.Add((organ, comp));
+        }
         return organs;
     }
 
     /// <summary>
     /// Get all organs in a body, both internal and external.
     /// </summary>
-    public List<Entity<OrganComponent>> GetOrgans(Entity<BodyComponent?> body, bool logMissing = false)
-        => GetOrgans<OrganComponent>(body, logMissing);
+    public List<Entity<OrganComponent>> GetOrgans(Entity<BodyComponent?> body, bool logMissing = false) => GetOrgans<OrganComponent>(body, logMissing);
 
     /// <summary>
     /// Get all internal organs in a body.
     /// </summary>
-    public List<Entity<InternalChildOrganComponent>> GetInternalOrgans(Entity<BodyComponent?> body, bool logMissing = false)
-        => GetOrgans<InternalChildOrganComponent>(body, logMissing);
+    public List<Entity<InternalChildOrganComponent>> GetInternalOrgans(Entity<BodyComponent?> body, bool logMissing = false) => GetOrgans<InternalChildOrganComponent>(body, logMissing);
 
     /// <summary>
     /// Get all external organs in a body.
@@ -253,21 +256,18 @@ public sealed partial class BodySystem
     /// <summary>
     /// Returns an entity's organ category, or null if it isn't an organ.
     /// </summary>
-    public ProtoId<OrganCategoryPrototype>? GetCategory(Entity<OrganComponent?> organ)
-        => _organQuery.Resolve(organ, ref organ.Comp) ? organ.Comp.Category : null;
+    public ProtoId<OrganCategoryPrototype>? GetCategory(Entity<OrganComponent?> organ) => _organQuery.Resolve(organ, ref organ.Comp) ? organ.Comp.Category : null;
 
     /// <summary>
     /// Gets an organ in a certain slot of the body, or null if it's missing.
     /// Helper to use body cache system.
     /// </summary>
-    public EntityUid? GetOrgan(EntityUid body, ProtoId<OrganCategoryPrototype> category)
-        => _cache.GetOrgan(body, category);
+    public EntityUid? GetOrgan(EntityUid body, ProtoId<OrganCategoryPrototype> category) => _cache.GetOrgan(body, category);
 
     /// <summary>
     /// Gets the body of an organ, returning null if it isn't an organ or is detached.
     /// </summary>
-    public EntityUid? GetBody(EntityUid organ)
-        => _organQuery.CompOrNull(organ)?.Body;
+    public EntityUid? GetBody(EntityUid organ) => _organQuery.CompOrNull(organ)?.Body;
 
     /// <summary>
     /// Tries to insert an organ into a body.
@@ -424,6 +424,5 @@ public sealed partial class BodySystem
         return true;
     }
 
-    private bool IsDetached(EntityUid uid)
-        => (MetaData(uid).Flags & MetaDataFlags.Detached) != 0;
+    private bool IsDetached(EntityUid uid) => (MetaData(uid).Flags & MetaDataFlags.Detached) != 0;
 }

@@ -17,14 +17,12 @@ public sealed partial class BodyPartSystem
     /// Returns true if a part matches a given type and symmetry.
     /// A null parameter means allow any value.
     /// </summary>
-    public static bool PartMatches(BodyPartComponent part, BodyPartType? partType = null, BodyPartSymmetry? symmetry = null)
-        => (partType == null || part.PartType == partType) && (symmetry == null || part.Symmetry == symmetry);
+    public static bool PartMatches(BodyPartComponent part, BodyPartType? partType = null, BodyPartSymmetry? symmetry = null) => (partType == null || part.PartType == partType) && (symmetry == null || part.Symmetry == symmetry);
 
     /// <summary>
     /// Get a list of every body part attached to a body.
     /// </summary>
-    public List<Entity<BodyPartComponent>> GetBodyParts(Entity<BodyComponent?> body)
-        => _body.GetOrgans<BodyPartComponent>(body);
+    public List<Entity<BodyPartComponent>> GetBodyParts(Entity<BodyComponent?> body) => _body.GetOrgans<BodyPartComponent>(body);
 
     public override List<EntityUid> GetBodyParts(EntityUid body, BodyPartType? partType, BodyPartSymmetry? symmetry = null)
     {
@@ -56,8 +54,7 @@ public sealed partial class BodyPartSystem
         return organs;
     }
 
-    public EntityUid? GetParentPart(Entity<ChildOrganComponent?> organ)
-        => _childQuery.Resolve(organ, ref organ.Comp, false) ? organ.Comp.Parent : null;
+    public EntityUid? GetParentPart(Entity<ChildOrganComponent?> organ) => _childQuery.Resolve(organ, ref organ.Comp, false) ? organ.Comp.Parent : null;
 
     /// <summary>
     /// Get the outermost organ for the given organ.
@@ -87,20 +84,17 @@ public sealed partial class BodyPartSystem
     /// <summary>
     /// Checks whether the part is valid and has a slot for a given organ category.
     /// </summary>
-    public bool HasOrganSlot(Entity<BodyPartComponent?> ent, [ForbidLiteral] ProtoId<OrganCategoryPrototype> category)
-        => _query.Resolve(ent, ref ent.Comp) && ent.Comp.Slots.Contains(category);
+    public bool HasOrganSlot(Entity<BodyPartComponent?> ent, [ForbidLiteral] ProtoId<OrganCategoryPrototype> category) => _query.Resolve(ent, ref ent.Comp) && ent.Comp.Slots.Contains(category);
 
     /// <summary>
     /// Checks whether the part is valid and has an organ for a given category.
     /// </summary>
-    public bool HasOrgan(Entity<BodyPartComponent?> ent, [ForbidLiteral] ProtoId<OrganCategoryPrototype> category)
-        => _query.Resolve(ent, ref ent.Comp) && ent.Comp.Children.ContainsKey(category);
+    public bool HasOrgan(Entity<BodyPartComponent?> ent, [ForbidLiteral] ProtoId<OrganCategoryPrototype> category) => _query.Resolve(ent, ref ent.Comp) && ent.Comp.Children.ContainsKey(category);
 
     /// <summary>
     /// Tries to get an organ from a part's slots.
     /// </summary>
-    public EntityUid? GetOrgan(Entity<BodyPartComponent?> ent, [ForbidLiteral] ProtoId<OrganCategoryPrototype> category)
-        => _query.Resolve(ent, ref ent.Comp) && ent.Comp.Children.TryGetValue(category, out var organ)
+    public EntityUid? GetOrgan(Entity<BodyPartComponent?> ent, [ForbidLiteral] ProtoId<OrganCategoryPrototype> category) => _query.Resolve(ent, ref ent.Comp) && ent.Comp.Children.TryGetValue(category, out var organ)
             ? organ
             : null;
 
@@ -118,17 +112,14 @@ public sealed partial class BodyPartSystem
         return true;
     }
 
-    public override bool TryAddSlot(EntityUid uid, [ForbidLiteral] string category)
-        => _query.TryComp(uid, out var comp) && TryAddSlot((uid, comp), category);
+    public override bool TryAddSlot(EntityUid uid, [ForbidLiteral] string category) => _query.TryComp(uid, out var comp) && TryAddSlot((uid, comp), category);
 
-    public override BodyPartType? GetPartType(EntityUid uid)
-        => _query.CompOrNull(uid)?.PartType;
+    public override BodyPartType? GetPartType(EntityUid uid) => _query.CompOrNull(uid)?.PartType;
 
-    public override BodyPartSymmetry GetSymmetry(EntityUid uid)
-        => _query.CompOrNull(uid)?.Symmetry ?? BodyPartSymmetry.None;
+    public override BodyPartSymmetry GetSymmetry(EntityUid uid) => _query.CompOrNull(uid)?.Symmetry ?? BodyPartSymmetry.None;
 
-    public override TargetBodyPart? GetTargetBodyPart(EntityUid uid)
-        => _query.TryComp(uid, out var part)
+    public override TargetBodyPart? GetTargetBodyPart(EntityUid uid) =>
+        _query.TryComp(uid, out var part)
             ? _body.GetTargetBodyPart(part.PartType, part.Symmetry)
             : null;
 
@@ -147,13 +138,13 @@ public sealed partial class BodyPartSystem
 
         DirtyField(ent, ent.Comp, nameof(BodyPartComponent.Slots));
 
-        if (ent.Comp.Children.TryGetValue(category, out var organ))
-        {
-            if (_body.GetBody(ent.Owner) is {} body && !_body.RemoveOrgan(body, organ))
-                Log.Error($"When removing organ slot {category} from {ToPrettyString(body)}'s {ToPrettyString(ent)}, {ToPrettyString(organ)} could not be removed!");
-            // TODO SHITMED: also eject if it's in the severed container
-            OrganRemoved(ent, organ); // incase there is no body or it somehow failed to call it
-        }
+        if (!ent.Comp.Children.TryGetValue(category, out var organ))
+            return true;
+
+        if (_body.GetBody(ent.Owner) is {} body && !_body.RemoveOrgan(body, organ))
+            Log.Error($"When removing organ slot {category} from {ToPrettyString(body)}'s {ToPrettyString(ent)}, {ToPrettyString(organ)} could not be removed!");
+        // TODO SHITMED: also eject if it's in the severed container
+        OrganRemoved(ent, organ); // incase there is no body or it somehow failed to call it
 
         return true;
     }
@@ -259,7 +250,7 @@ public sealed partial class BodyPartSystem
         DebugTools.Assert(_body.GetCategory(organ) == slot, $"Organ {ToPrettyString(organ)} for {ToPrettyString(body)}'s initial {slot} organ had the wrong category!");
         if (!InsertOrgan(part, organ))
         {
-            PredictedDel(organ);
+            Del(organ);
             return false; // some system prevented inserting it
         }
 
@@ -302,26 +293,25 @@ public sealed partial class BodyPartSystem
         if (_body.GetCategory(organ) is not {} category)
         {
             Log.Error($"Tried to insert invalid organ {ToPrettyString(organ)} into {ToPrettyString(part)}!");
-            PredictedDel(organ);
+            Del(organ);
             return false;
         }
 
         if (!part.Comp.Slots.Contains(category))
         {
             Log.Error($"Tried to insert organ {ToPrettyString(organ)} into {ToPrettyString(part)} which has no {category} slot!");
-            PredictedDel(organ);
+            Del(organ);
             return false;
         }
 
-        if (!InsertOrgan(part, organ))
-        {
-            // not an error as the slot may just be occupied etc
-            Log.Warning($"Failed to insert organ {ToPrettyString(organ)} into {ToPrettyString(part)}'s {category} slot.");
-            PredictedDel(organ);
-            return false;
-        }
+        if (InsertOrgan(part, organ))
+            return true;
 
-        return true;
+        // not an error as the slot may just be occupied etc
+        Log.Warning($"Failed to insert organ {ToPrettyString(organ)} into {ToPrettyString(part)}'s {category} slot.");
+        Del(organ);
+        return false;
+
     }
 
     /// <summary>

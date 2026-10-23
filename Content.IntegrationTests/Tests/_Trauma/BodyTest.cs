@@ -6,7 +6,7 @@ using Content.Shared._Trauma.DelayedDeath;
 using Content.Shared.Body;
 using Content.Shared.Body.Components;
 using Content.Shared.Eye.Blinding.Components;
-using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests._Trauma;
 
@@ -100,7 +100,7 @@ public sealed class BodyTest : GameTest
     [SidedDependency(Side.Server)] private BodySystem _body = default!;
     [SidedDependency(Side.Server)] private BodyPartSystem _parts = default!;
     [SidedDependency(Side.Server)] private BodyRestoreSystem _restore = default!;
-    [SidedDependency(Side.Server)] private SharedContainerSystem _containers = default!;
+    private static readonly ProtoId<OrganCategoryPrototype> HandLeftCategory = "HandLeft";
 
     [TestCase("MobHuman")]
     [TestCase("MobDwarf")]
@@ -127,6 +127,9 @@ public sealed class BodyTest : GameTest
         {
             Assert.That(_body.GetBody(organ), Is.EqualTo(body), category.ToString());
             Assert.That(SEntMan.HasComponent<EnabledOrganComponent>(organ), Is.True, category.ToString());
+            if (SEntMan.TryGetComponent<BodyPartComponent>(organ, out var part))
+                Assert.That(BodySystem.PartTypeOrgans[part.PartType], Does.Contain(category), category.ToString());
+
             if (!SEntMan.TryGetComponent<ChildOrganComponent>(organ, out var child))
                 continue;
 
@@ -192,7 +195,7 @@ public sealed class BodyTest : GameTest
         Assert.That(SComp<BodyCacheComponent>(body).Organs, Has.Count.EqualTo(6));
         Assert.That(SComp<ChildOrganComponent>(arm).Parent, Is.EqualTo(torso));
         Assert.That(SComp<ChildOrganComponent>(hand).Parent, Is.EqualTo(arm));
-        Assert.That(_parts.GetOrgan(arm, "HandLeft"), Is.EqualTo(hand));
+        Assert.That(_parts.GetOrgan(arm, HandLeftCategory), Is.EqualTo(hand));
         Assert.That(SEntMan.HasComponent<EnabledOrganComponent>(hand), Is.True);
     }
 
@@ -213,7 +216,7 @@ public sealed class BodyTest : GameTest
         Assert.That(_body.InsertOrgan(body, arm), Is.True);
         Assert.That(_body.GetOrgan(body, "HandLeft"), Is.EqualTo(hand));
         Assert.That(SComp<ChildOrganComponent>(hand).Parent, Is.EqualTo(arm));
-        Assert.That(_parts.GetOrgan(arm, "HandLeft"), Is.EqualTo(hand));
+        Assert.That(_parts.GetOrgan(arm, HandLeftCategory), Is.EqualTo(hand));
         Assert.That(SEntMan.HasComponent<EnabledOrganComponent>(hand), Is.True);
     }
 
@@ -243,7 +246,7 @@ public sealed class BodyTest : GameTest
         var restoredArm = _body.GetOrgan(body, "ArmLeft").Value;
         var restoredHand = _body.GetOrgan(body, "HandLeft").Value;
         Assert.That(restoredArm, Is.Not.EqualTo(arm));
-        Assert.That(_parts.GetOrgan(restoredArm, "HandLeft"), Is.EqualTo(restoredHand));
+        Assert.That(_parts.GetOrgan(restoredArm, HandLeftCategory), Is.EqualTo(restoredHand));
         Assert.That(SComp<BodyCacheComponent>(body).Organs, Has.Count.EqualTo(6));
     }
 
