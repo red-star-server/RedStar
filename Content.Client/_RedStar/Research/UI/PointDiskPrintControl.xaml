@@ -1,0 +1,6 @@
+<PanelContainer xmlns="https://spacestation14.io" StyleClasses="PanelDeep">
+    <BoxContainer Orientation="Horizontal" SeparationOverride="12" Margin="8">
+        <Label Name="PointsLabel" HorizontalExpand="True" />
+        <Button Name="PrintButton" Text="{Loc 'point-disk-console-print'}" />
+    </BoxContainer>
+</PanelContainer>
