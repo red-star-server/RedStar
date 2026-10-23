@@ -2,6 +2,7 @@ using System.Numerics;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Content.Shared._Trauma.Common.Body; // RS14
 
 namespace Content.Shared.Body;
 
@@ -50,8 +51,14 @@ public sealed partial class InitialBodySystem : EntitySystem
             spawned[part] = spawn;
         }
 
+        // RS14-start
         if (ent.Comp.Relationships is null)
+        {
+            var ev = new BodyInitEvent();
+            RaiseLocalEvent(ent, ref ev);
             return;
+        }
+        // RS14-end
 
         foreach (var (partId, parentUid) in spawned)
         {
@@ -66,5 +73,9 @@ public sealed partial class InitialBodySystem : EntitySystem
                 _organRelation.Relate(parentUid, childUid);
             }
         }
+        // RS14-start
+        var bodyInit = new BodyInitEvent();
+        RaiseLocalEvent(ent, ref bodyInit);
+        // RS14-end
     }
 }
