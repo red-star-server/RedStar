@@ -1,43 +1,16 @@
-using System.Text.RegularExpressions;
-
 namespace Content.Server._Corvax.TTS;
 
 // ReSharper disable once InconsistentNaming
 public sealed partial class TTSSystem
 {
-    private static readonly Regex UpperCaseWordRegex = new(
-        @"(?<![\p{L}\p{N}_+])[А-ЯЁ]{4,}(?![\p{L}\p{N}_+])", RegexOptions.Compiled);
-    private static readonly Regex WhitespaceRegex = new(@"\s+", RegexOptions.Compiled);
-
-    /// <summary>
-    /// Converts text into valid SSML with pauses and emphasis.
-    /// </summary>
     private static string ToSsmlText(string text, SoundTraits traits = NormalTraits)
     {
-        text = XmlEscape(WhitespaceRegex.Replace(text, " ").Trim());
+        text = XmlEscape(text);
         var attrs = BuildProsodyAttributes(traits);
-
-        if (attrs.Length == 0)
-        {
-            text = UpperCaseWordRegex.Replace(text, match => ShouldEmphasize(match.Value)
-                ? $"<prosody pitch=\"high\">{match.Value.ToLowerInvariant()}</prosody>"
-                : match.Value);
-        }
 
         return attrs.Length > 0
             ? $"<speak><prosody {attrs}>{text}</prosody></speak>"
             : $"<speak>{text}</speak>";
-    }
-
-    private static bool ShouldEmphasize(string word)
-    {
-        foreach (var c in word)
-        {
-            if ("АЕЁИОУЫЭЮЯ".Contains(c))
-                return true;
-        }
-
-        return false;
     }
 
     private static string XmlEscape(string text)
