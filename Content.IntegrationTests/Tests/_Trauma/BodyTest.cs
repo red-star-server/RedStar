@@ -1,5 +1,6 @@
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
+using Content.IntegrationTests.Tests.Helpers;
 using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared._Trauma.DelayedDeath;
@@ -19,6 +20,8 @@ namespace Content.IntegrationTests.Tests._Trauma;
 [TestOf(typeof(BodyPartSystem))]
 public sealed class BodyTest : GameTest
 {
+    private sealed class OrganRemovalListenerSystem : TestListenerSystem<OrganRemovedFromPartEvent>;
+
     [TestPrototypes]
     private const string Prototypes = @"
 - type: entity
@@ -347,6 +350,70 @@ public sealed class BodyTest : GameTest
         var arm = _body.GetOrgan(body, "ArmLeft").Value;
         Assert.That(_body.RemoveOrgan(body, arm), Is.True);
         Assert.That(_body.InsertOrgan(body, spare), Is.False);
+    }
+
+    [Test]
+    [RunOnSide(Side.Server)]
+    public void RemovingSlotPreservesOrganWhenRemovalIsBlocked()
+    {
+        var body = SSpawn("TraumaTestBody");
+        var arm = _body.GetOrgan(body, "ArmLeft").Value;
+        var hand = _body.GetOrgan(body, "HandLeft").Value;
+        var part = SComp<BodyPartComponent>(arm);
+        var listener = SEntMan.EnsureComponent<TestListenerComponent>(arm);
+        SEntMan.EnsureComponent<UnremoveableOrganComponent>(hand);
+
+        Assert.That(_parts.TryRemoveSlot(arm, HandLeftCategory), Is.False);
+        Assert.That(part.Slots, Does.Contain(HandLeftCategory));
+        Assert.That(part.Children[HandLeftCategory], Is.EqualTo(hand));
+        Assert.That(_body.GetOrgan(body, "HandLeft"), Is.EqualTo(hand));
+        Assert.That(SComp<ChildOrganComponent>(hand).Parent, Is.EqualTo(arm));
+        Assert.That(listener.Events.ContainsKey(typeof(OrganRemovedFromPartEvent)), Is.False);
+    }
+
+    [Test]
+    [RunOnSide(Side.Server)]
+    public void RemovingOccupiedSlotRaisesOneRemovalEvent()
+    {
+        var body = SSpawn("TraumaTestBody");
+        var arm = _body.GetOrgan(body, "ArmLeft").Value;
+        var hand = _body.GetOrgan(body, "HandLeft").Value;
+        var part = SComp<BodyPartComponent>(arm);
+        var listener = SEntMan.EnsureComponent<TestListenerComponent>(arm);
+
+        Assert.That(_parts.TryRemoveSlot(arm, HandLeftCategory), Is.True);
+        Assert.That(part.Slots, Does.Not.Contain(HandLeftCategory));
+        Assert.That(part.Children.ContainsKey(HandLeftCategory), Is.False);
+        Assert.That(_body.GetOrgan(body, "HandLeft"), Is.Null);
+        Assert.That(SComp<ChildOrganComponent>(hand).Parent, Is.Null);
+        Assert.That(listener.Events[typeof(OrganRemovedFromPartEvent)], Has.Count.EqualTo(1));
+        Assert.That(_parts.TryRemoveSlot(arm, HandLeftCategory), Is.False);
+        Assert.That(listener.Events[typeof(OrganRemovedFromPartEvent)], Has.Count.EqualTo(1));
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    [RunOnSide(Side.Server)]
+    public void RemovingSlotClearsChildWhenBodyRemovalRaisesNoEvent(bool severed)
+    {
+        var body = SSpawn("TraumaTestBody");
+        var arm = _body.GetOrgan(body, "ArmLeft").Value;
+        var hand = _body.GetOrgan(body, "HandLeft").Value;
+        if (severed)
+            Assert.That(_body.RemoveOrgan(body, arm), Is.True);
+        else
+            Assert.That(_body.RemoveOrgan(body, hand), Is.True);
+
+        var part = SComp<BodyPartComponent>(arm);
+        // The attached case reproduces a stale index after the organ has already left the body.
+        // The severed case retains its hand, but has no body to raise the removal event.
+        part.Children[HandLeftCategory] = hand;
+        var listener = SEntMan.EnsureComponent<TestListenerComponent>(arm);
+
+        Assert.That(_parts.TryRemoveSlot(arm, HandLeftCategory), Is.True);
+        Assert.That(part.Slots, Does.Not.Contain(HandLeftCategory));
+        Assert.That(part.Children.ContainsKey(HandLeftCategory), Is.False);
+        Assert.That(listener.Events[typeof(OrganRemovedFromPartEvent)], Has.Count.EqualTo(1));
     }
 
     [Test]

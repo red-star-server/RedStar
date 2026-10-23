@@ -127,24 +127,29 @@ public sealed partial class BodyPartSystem
     /// Tries to remove an organ slot from this bodypart.
     /// The slot can be for internal and external organs.
     /// </summary>
-    /// <returns>true if the part is valid and previously had the slot</returns>
+    /// <returns>true if the slot was removed; false if it did not exist or its organ could not be removed</returns>
     public bool TryRemoveSlot(Entity<BodyPartComponent?> ent, [ForbidLiteral] ProtoId<OrganCategoryPrototype> category)
     {
         if (!_query.Resolve(ent, ref ent.Comp))
             return false;
 
-        if (!ent.Comp.Slots.Remove(category))
+        if (!ent.Comp.Slots.Contains(category))
             return false;
 
+        if (ent.Comp.Children.TryGetValue(category, out var organ))
+        {
+            if (_body.GetBody(ent.Owner) is {} body && !_body.RemoveOrgan(body, organ))
+                return false;
+
+            // Normal removal already clears this through OrganGotRemovedEvent.
+            // If the organ was already absent, or the part has no body, clear it here.
+            // TODO SHITMED: also eject if it's in the severed container
+            if (ent.Comp.Children.TryGetValue(category, out var remaining) && remaining == organ)
+                OrganRemoved(ent, organ);
+        }
+
+        ent.Comp.Slots.Remove(category);
         DirtyField(ent, ent.Comp, nameof(BodyPartComponent.Slots));
-
-        if (!ent.Comp.Children.TryGetValue(category, out var organ))
-            return true;
-
-        if (_body.GetBody(ent.Owner) is {} body && !_body.RemoveOrgan(body, organ))
-            Log.Error($"When removing organ slot {category} from {ToPrettyString(body)}'s {ToPrettyString(ent)}, {ToPrettyString(organ)} could not be removed!");
-        // TODO SHITMED: also eject if it's in the severed container
-        OrganRemoved(ent, organ); // incase there is no body or it somehow failed to call it
 
         return true;
     }
