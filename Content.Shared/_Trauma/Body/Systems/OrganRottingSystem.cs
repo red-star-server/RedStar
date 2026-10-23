@@ -12,6 +12,6 @@ public sealed partial class OrganRottingSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnIsRotting(Entity<OrganComponent> ent, ref IsRottingEvent args)
     {
-        args.Handled |= ent.Comp.Body == null;
+        args.Handled |= ent.Comp.Body != null;
     }
 }

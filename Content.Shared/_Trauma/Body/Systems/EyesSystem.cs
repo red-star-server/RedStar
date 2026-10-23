@@ -21,8 +21,7 @@ public sealed partial class EyesSystem : EntitySystem
             !TryComp(args.Body, out BlindableComponent? blindable))
             return;
 
-        // We add the current eye damage since in any context, the organ being enabled means that it was
-        // either removed or disabled, so the BlindableComponent must have some prior damage already.
+        // Replace the body's eye damage with the enabled organ's current damage.
         var adjustment = (int)(organ.IntegrityCap - organ.OrganIntegrity);
         _blindable.SetEyeDamage((args.Body, blindable), adjustment);
     }
@@ -41,7 +40,7 @@ public sealed partial class EyesSystem : EntitySystem
         if (TerminatingOrDeleted(body))
             return;
 
-        if (_body.GetOrgan(body, EyesCategory) != null)
+        if (_body.GetOrgan(body, EyesCategory) is {} eyes && HasComp<EnabledOrganComponent>(eyes))
             return;
 
         // can't see without eyes

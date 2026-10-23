@@ -1,6 +1,7 @@
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared.Body;
 using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 
 namespace Content.Shared._Trauma.Body;
 
@@ -9,7 +10,8 @@ namespace Content.Shared._Trauma.Body;
 /// </summary>
 public sealed partial class BodyGodmodeSystem : EntitySystem
 {
-    [Dependency] private EntityQuery<BodyComponent> _bodyQuery = default!;
+    [Dependency] private EntityQuery<BodyComponent> _bodyQuery;
+    [Dependency] private SharedGodmodeSystem _godmode = default!;
 
     [SubscribeLocalEvent]
     private void OnStartup(Entity<GodmodeComponent> ent, ref ComponentStartup args)
@@ -19,7 +21,7 @@ public sealed partial class BodyGodmodeSystem : EntitySystem
 
         foreach (var organ in organs.ContainedEntities)
         {
-            EnsureComp<GodmodeComponent>(organ);
+            _godmode.EnableGodmode(organ);
         }
     }
 
@@ -31,8 +33,14 @@ public sealed partial class BodyGodmodeSystem : EntitySystem
 
         foreach (var organ in organs.ContainedEntities)
         {
-            RemComp<GodmodeComponent>(organ);
+            _godmode.DisableGodmode(organ);
         }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnOrganInserted(Entity<GodmodeComponent> ent, ref OrganInsertedIntoEvent args)
+    {
+        _godmode.EnableGodmode(args.Organ);
     }
 
     [SubscribeLocalEvent]

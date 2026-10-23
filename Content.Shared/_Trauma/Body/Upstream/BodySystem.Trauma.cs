@@ -116,10 +116,9 @@ public sealed partial class BodySystem
             return [];
 
         var organs = new List<Entity<T>>();
-        foreach (var organ in body.Comp.Organs?.ContainedEntities ?? [])
+        foreach (var organ in EnumerateOrgans<T>(body))
         {
-            if (TryComp<T>(organ, out var comp))
-                organs.Add((organ, comp));
+            organs.Add((organ.Owner, organ.Comp2));
         }
         return organs;
     }

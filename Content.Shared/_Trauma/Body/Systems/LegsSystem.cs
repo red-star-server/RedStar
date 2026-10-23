@@ -1,11 +1,7 @@
 using Content.Shared.Body;
-using Content.Shared.Containers;
-using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Pulling.Events;
 using Content.Shared.Standing;
-using Content.Shared.Stunnable;
-using Content.Shared.Traits.Assorted;
 
 namespace Content.Shared._Trauma.Body;
 
@@ -23,7 +19,6 @@ public sealed partial class LegsSystem : EntitySystem
 
         _query = GetEntityQuery<LegsComponent>();
         _legQuery = GetEntityQuery<LegComponent>();
-
     }
 
     [SubscribeLocalEvent]
@@ -95,7 +90,7 @@ public sealed partial class LegsSystem : EntitySystem
 
         // missing a leg makes you move at half speed
         // somehow having 3+ legs makes you fast
-        var scale = 1f / ent.Comp.Required;
+        var scale = ent.Comp.Required > 0 ? 1f / ent.Comp.Required : 1f;
         walkSpeed *= scale;
         sprintSpeed *= scale;
         acceleration *= scale;

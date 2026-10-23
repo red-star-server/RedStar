@@ -6,6 +6,11 @@ using Content.Shared._Trauma.DelayedDeath;
 using Content.Shared.Body;
 using Content.Shared.Body.Components;
 using Content.Shared.Eye.Blinding.Components;
+using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.Rotting;
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
+using Content.Shared.Movement.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests._Trauma;
@@ -95,11 +100,36 @@ public sealed class BodyTest : GameTest
     partType: Hand
     symmetry: Left
     slots: []
+
+- type: entity
+  id: TraumaTestAlternativeParentBody
+  parent: TraumaTestBody
+  components:
+  - type: InitialBody
+    organs: !Clear
+      Torso: TraumaTestTorso
+      Brain: TraumaTestAlternativeParentBrain
+      Head: TraumaTestHead
+
+- type: entity
+  id: TraumaTestAlternativeParentBrain
+  parent: TraumaTestBrain
+  components:
+  - type: ChildOrgan
+    parents: [Torso, Head]
+
+- type: entity
+  id: TraumaTestZeroLegRequirement
+  parent: MobHuman
+  components:
+  - type: Legs
+    required: 0
 ";
 
     [SidedDependency(Side.Server)] private BodySystem _body = default!;
     [SidedDependency(Side.Server)] private BodyPartSystem _parts = default!;
     [SidedDependency(Side.Server)] private BodyRestoreSystem _restore = default!;
+    [SidedDependency(Side.Server)] private SharedGodmodeSystem _godmode = default!;
     private static readonly ProtoId<OrganCategoryPrototype> HandLeftCategory = "HandLeft";
 
     [TestCase("MobHuman")]
@@ -166,6 +196,89 @@ public sealed class BodyTest : GameTest
         Assert.That(_body.InsertOrgan(body, eyes), Is.True);
         Assert.That(SComp<BlindableComponent>(body).EyeDamage, Is.Zero);
         Assert.That(SComp<BlindableComponent>(body).IsBlind, Is.False);
+    }
+
+    [Test]
+    [RunOnSide(Side.Server)]
+    public void DisabledEyesBlindHumanUntilEnabled()
+    {
+        var body = SSpawn("MobHuman");
+        var eyes = _body.GetOrgan(body, "Eyes").Value;
+        Assert.That(_body.DisableOrgan(eyes), Is.True);
+        Assert.That(SComp<BlindableComponent>(body).IsBlind, Is.True);
+        Assert.That(_body.GetOrgan(body, "Eyes"), Is.EqualTo(eyes));
+
+        Assert.That(_body.EnableOrgan(eyes), Is.True);
+        Assert.That(SComp<BlindableComponent>(body).IsBlind, Is.False);
+    }
+
+    [Test]
+    [RunOnSide(Side.Server)]
+    public void InitialBodySelectsParentWithCompatibleSlot()
+    {
+        var body = SSpawn("TraumaTestAlternativeParentBody");
+        var brain = _body.GetOrgan(body, "Brain").Value;
+        var head = _body.GetOrgan(body, "Head").Value;
+        Assert.That(SComp<ChildOrganComponent>(brain).Parent, Is.EqualTo(head));
+        Assert.That(SComp<BodyPartComponent>(head).Children.Values, Does.Contain(brain));
+    }
+
+    [Test]
+    [RunOnSide(Side.Server)]
+    public void DetachedOrgansCanRot()
+    {
+        var body = SSpawn("TraumaTestBody");
+        var hand = _body.GetOrgan(body, "HandLeft").Value;
+        var attached = new IsRottingEvent();
+        SEntMan.EventBus.RaiseLocalEvent(hand, ref attached);
+        Assert.That(attached.Handled, Is.True);
+
+        Assert.That(_body.RemoveOrgan(body, hand), Is.True);
+        var detached = new IsRottingEvent();
+        SEntMan.EventBus.RaiseLocalEvent(hand, ref detached);
+        Assert.That(detached.Handled, Is.False);
+    }
+
+    [Test]
+    [RunOnSide(Side.Server)]
+    public void DeletingRootPartQueuesBodyDeletion()
+    {
+        var body = SSpawn("TraumaTestBody");
+        var torso = _body.GetOrgan(body, "Torso").Value;
+        SEntMan.EnsureComponent<UnremoveableOrganComponent>(torso);
+        SEntMan.DeleteEntity(torso);
+        Assert.That(SEntMan.IsQueuedForDeletion(body), Is.True);
+    }
+
+    [Test]
+    [RunOnSide(Side.Server)]
+    public void ZeroRequiredLegsKeepsMovementFinite()
+    {
+        var body = SSpawn("TraumaTestZeroLegRequirement");
+        var leg = _body.GetOrgan(body, "LegLeft").Value;
+        Assert.That(_body.RemoveOrgan(body, leg), Is.True);
+        var movement = SComp<MovementSpeedModifierComponent>(body);
+        Assert.That(float.IsFinite(movement.BaseWalkSpeed), Is.True);
+        Assert.That(float.IsFinite(movement.BaseSprintSpeed), Is.True);
+        Assert.That(float.IsFinite(movement.BaseAcceleration), Is.True);
+    }
+
+    [Test]
+    [RunOnSide(Side.Server)]
+    public void GodmodePropagatesToOrgansInsertedLater()
+    {
+        var body = SSpawn(null);
+        SEntMan.EnsureComponent<BodyComponent>(body);
+        _godmode.EnableGodmode(body);
+        var torso = SSpawn("TraumaTestTorso");
+        var pressure = SEntMan.EnsureComponent<MovedByPressureComponent>(torso);
+        Assert.That(pressure.Enabled, Is.True);
+
+        Assert.That(_body.InsertOrgan(body, torso), Is.True);
+        Assert.That(SEntMan.HasComponent<GodmodeComponent>(torso), Is.True);
+        Assert.That(pressure.Enabled, Is.False);
+        _godmode.DisableGodmode(body);
+        Assert.That(SEntMan.HasComponent<GodmodeComponent>(torso), Is.False);
     }
 
     [Test]

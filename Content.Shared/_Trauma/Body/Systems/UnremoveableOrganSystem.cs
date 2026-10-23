@@ -25,10 +25,11 @@ public sealed partial class UnremoveableOrganSystem : EntitySystem
             return; // all good if it's being deleted or leaving pvs range
 
         // if you intentionally deleted the root part, please delete the body instead chud
-        if (!TerminatingOrDeleted(ent) && !HasComp<ChildOrganComponent>(ent))
+        if (!HasComp<ChildOrganComponent>(ent))
         {
-            Log.Warning($"{ToPrettyString(ent)} was deleted instead of the body, {ToPrettyString(args.Target)}!");
+            Log.Warning($"Root part {ToPrettyString(ent)} was removed from {ToPrettyString(args.Target)}; deleting the body.");
             QueueDel(args.Target);
+            return;
         }
 
         Log.Warning($"{ToPrettyString(ent)} somehow got removed from {ToPrettyString(args.Target)}!");
