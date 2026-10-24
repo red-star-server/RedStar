@@ -1,0 +1,14 @@
+markings-organ-Tail = Хвост
+markings-organ-Wings = Крылья
+markings-organ-Brain = Мозг
+markings-organ-Tongue = Язык
+markings-organ-Appendix = Аппендикс
+markings-organ-Ears = Уши
+markings-organ-Lungs = Лёгкие
+markings-organ-Heart = Сердце
+markings-organ-Stomach = Желудок
+markings-organ-Liver = Печень
+markings-organ-Kidneys = Почки
+
+ent-OrganDionaTongue = язык
+ent-OrganSlimePersonTongue = язык

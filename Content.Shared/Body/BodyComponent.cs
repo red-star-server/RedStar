@@ -25,22 +25,22 @@ public sealed partial class BodyComponent : Component
 /// Raised on organ entity, when it is inserted into a body
 /// </summary>
 [ByRefEvent]
-public readonly record struct OrganGotInsertedEvent(EntityUid Target);
+public readonly record struct OrganGotInsertedEvent(Entity<BodyComponent> Target, OrganComponent Organ); // RS14
 
 /// <summary>
 /// Raised on organ entity, when it is removed from a body
 /// </summary>
 [ByRefEvent]
-public readonly record struct OrganGotRemovedEvent(EntityUid Target);
+public readonly record struct OrganGotRemovedEvent(Entity<BodyComponent> Target, OrganComponent Organ); // RS14
 
 /// <summary>
 /// Raised on body entity, when an organ is inserted into it
 /// </summary>
 [ByRefEvent]
-public readonly record struct OrganInsertedIntoEvent(EntityUid Organ);
+public readonly record struct OrganInsertedIntoEvent(Entity<OrganComponent> Organ); // RS14
 
 /// <summary>
 /// Raised on body entity, when an organ is removed from it
 /// </summary>
 [ByRefEvent]
-public readonly record struct OrganRemovedFromEvent(EntityUid Organ);
+public readonly record struct OrganRemovedFromEvent(Entity<OrganComponent> Organ); // RS14

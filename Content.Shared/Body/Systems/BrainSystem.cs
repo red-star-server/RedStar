@@ -15,13 +15,13 @@ public sealed partial class BrainSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<BrainComponent, OrganGotInsertedEvent>((uid, _, args) => HandleMind(args.Target, uid));
-        SubscribeLocalEvent<BrainComponent, OrganGotRemovedEvent>((uid, _, args) => HandleMind(uid, args.Target));
+        // RS14: Organ lifecycle subscriptions are declared in _Trauma.
         SubscribeLocalEvent<BrainComponent, PointAttemptEvent>(OnPointAttempt);
     }
 
     private void HandleMind(EntityUid newEntity, EntityUid oldEntity)
     {
+        if (_timing.ApplyingState) return; // RS14
         if (TerminatingOrDeleted(newEntity) || TerminatingOrDeleted(oldEntity))
             return;
 

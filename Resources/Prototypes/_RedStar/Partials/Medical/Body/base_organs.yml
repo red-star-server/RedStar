@@ -1,0 +1,176 @@
+- type: entity
+  id: OrganBaseParent
+  parent: OrganBase
+  components:
+  - !Remove type: DetachableOrgan
+
+- type: entity
+  id: OrganBaseChildExternal
+  parent: OrganBaseExternal
+
+- type: entity
+  id: OrganBaseTorso
+  parent: !Clear [ OrganBase, OrganBaseParent, OrganBaseExternal ]
+  components:
+  - type: BodyPart
+    partType: Torso
+    slots:
+    - Head
+    - ArmLeft
+    - ArmRight
+    - LegLeft
+    - LegRight
+    - Appendix
+    - Lungs
+    - Heart
+    - Stomach
+    - Liver
+    - Kidneys
+  - type: UnremoveableOrgan
+
+- type: entity
+  id: OrganBaseHead
+  components:
+  - type: BodyPart
+    partType: Head
+    slots: [ Brain, Eyes, Tongue, Ears ]
+  - type: ChildOrgan
+    parents: [ Torso ]
+
+- type: entity
+  id: OrganBaseArmLeft
+  parent: !Clear [ OrganBaseArm, OrganBase, OrganBaseParent, OrganBaseChildExternal ]
+  components:
+  - type: BodyPart
+    symmetry: Left
+    slots: [ HandLeft ]
+
+- type: entity
+  id: OrganBaseArmRight
+  parent: !Clear [ OrganBaseArm, OrganBase, OrganBaseParent, OrganBaseChildExternal ]
+  components:
+  - type: BodyPart
+    symmetry: Right
+    slots: [ HandRight ]
+
+- type: entity
+  id: OrganBaseHandLeft
+  parent: !Clear [ OrganBaseHand, OrganBase, OrganBaseChildExternal ]
+  components:
+  - type: BodyPart
+    symmetry: Left
+  - type: ChildOrgan
+    parents: [ ArmLeft ]
+
+- type: entity
+  id: OrganBaseHandRight
+  parent: !Clear [ OrganBaseHand, OrganBase, OrganBaseChildExternal ]
+  components:
+  - type: BodyPart
+    symmetry: Right
+  - type: ChildOrgan
+    parents: [ ArmRight ]
+
+- type: entity
+  id: OrganBaseLegLeft
+  parent: !Clear [ OrganBaseLeg, OrganBase, OrganBaseParent, OrganBaseChildExternal ]
+  components:
+  - type: BodyPart
+    symmetry: Left
+    slots: [ FootLeft ]
+
+- type: entity
+  id: OrganBaseLegRight
+  parent: !Clear [ OrganBaseLeg, OrganBase, OrganBaseParent, OrganBaseChildExternal ]
+  components:
+  - type: BodyPart
+    symmetry: Right
+    slots: [ FootRight ]
+
+- type: entity
+  id: OrganBaseFootLeft
+  parent: !Clear [ OrganBaseFoot, OrganBase, OrganBaseChildExternal ]
+  components:
+  - type: BodyPart
+    symmetry: Left
+  - type: ChildOrgan
+    parents: [ LegLeft ]
+
+- type: entity
+  id: OrganBaseFootRight
+  parent: !Clear [ OrganBaseFoot, OrganBase, OrganBaseChildExternal ]
+  components:
+  - type: BodyPart
+    symmetry: Right
+  - type: ChildOrgan
+    parents: [ LegRight ]
+
+- type: entity
+  id: OrganBaseBrain
+  components:
+  - type: InternalChildOrgan
+    intCap: 28
+    integrity: 28
+    integrityThresholds:
+      Normal: 28
+      Damaged: 16
+      Destroyed: 0
+  - type: ChildOrgan
+    parents: [ Head ]
+
+- type: entity
+  id: OrganBaseEyes
+  components:
+  - type: ChildOrgan
+    parents: [ Head ]
+  - type: Eyes
+
+- type: entity
+  id: OrganBaseTongue
+  components:
+  - type: ChildOrgan
+    parents: [ Head ]
+
+- type: entity
+  id: OrganBaseEars
+  components:
+  - type: ChildOrgan
+    parents: [ Head ]
+
+- type: entity
+  id: OrganBaseAppendix
+  components:
+  - type: ChildOrgan
+    parents: [ Torso ]
+
+- type: entity
+  id: OrganBaseLungs
+  components:
+  - type: ChildOrgan
+    parents: [ Torso ]
+
+- type: entity
+  id: OrganBaseHeart
+  components:
+  - type: ChildOrgan
+    parents: [ Torso ]
+  - type: Heart
+
+- type: entity
+  id: OrganBaseStomach
+  components:
+  - type: ChildOrgan
+    parents: [ Torso ]
+
+- type: entity
+  id: OrganBaseLiver
+  components:
+  - type: ChildOrgan
+    parents: [ Torso ]
+  - type: Liver
+
+- type: entity
+  id: OrganBaseKidneys
+  components:
+  - type: ChildOrgan
+    parents: [ Torso ]
