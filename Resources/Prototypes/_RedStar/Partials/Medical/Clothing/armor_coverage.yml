@@ -5,12 +5,14 @@
     coverage: &id004
     - Torso
     modifiers: {}
+
 - type: entity
   id: ContentsExplosionResistanceBase
   components:
   - type: Armor
     coverage: []
     modifiers: {}
+
 - type: entity
   id: ClothingBeltBase
   components:
@@ -27,6 +29,7 @@
       OrganDamage: 0.05
       BoneDamage: 0.05
       VeinsDamage: 0
+
 - type: entity
   id: ClothingHeadset
   components:
@@ -38,6 +41,7 @@
         Blunt: 0.95
         Slash: 0.95
         Piercing: 0.95
+
 - type: entity
   id: ClothingEyesBase
   components:
@@ -49,6 +53,7 @@
         Blunt: 0.95
         Slash: 0.95
         Piercing: 0.95
+
 - type: entity
   id: ClothingEyesGlassesSecurity
   components:
@@ -66,6 +71,7 @@
       OrganDamage: 0.13
       BoneDamage: 0.13
       VeinsDamage: 0
+
 - type: entity
   id: ClothingEyesGlassesMercenary
   components:
@@ -83,6 +89,7 @@
         Blunt: 0.9
         Slash: 0.9
         Piercing: 0.9
+
 - type: entity
   id: ClothingEyesGlassesThermal
   components:
@@ -100,6 +107,7 @@
       OrganDamage: 0.13
       BoneDamage: 0.13
       VeinsDamage: 0
+
 - type: entity
   id: ClothingEyesVisorNinja
   components:
@@ -117,6 +125,7 @@
       OrganDamage: 0.07
       BoneDamage: 0.07
       VeinsDamage: 0
+
 - type: entity
   id: ClothingHandsBase
   components:
@@ -128,6 +137,7 @@
         Blunt: 0.95
         Slash: 0.95
         Piercing: 0.95
+
 - type: entity
   id: ClothingHandsGlovesColorYellowBudget
   components:
@@ -138,6 +148,7 @@
         Slash: 0.95
         Piercing: 0.95
     coverage: *id001
+
 - type: entity
   id: ClothingHandsGlovesCaptain
   components:
@@ -149,6 +160,7 @@
         Piercing: 0.95
         Shock: 0.75
     coverage: *id001
+
 - type: entity
   id: ClothingHandsGlovesHop
   components:
@@ -159,6 +171,7 @@
         Slash: 0.8
         Piercing: 0.95
     coverage: *id001
+
 - type: entity
   id: ClothingHandsGlovesCombat
   components:
@@ -170,6 +183,9 @@
         Piercing: 0.9
         Shock: 0.75
     coverage: *id001
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+
 - type: entity
   id: ClothingHandsTacticalMaidGloves
   components:
@@ -181,6 +197,7 @@
         Piercing: 0.9
         Shock: 0.75
     coverage: *id001
+
 - type: entity
   id: ClothingHeadHardsuitBase
   components:
@@ -199,12 +216,14 @@
       OrganDamage: 0.2
       BoneDamage: 0.2
       VeinsDamage: 0
+
 - type: entity
   id: ClothingHeadHatHoodWinterBase
   components:
   - type: Armor
     modifiers:
       coefficients: {}
+
 - type: entity
   id: ClothingHeadHelmetSyndicate
   components:
@@ -217,6 +236,7 @@
         Slash: 0.8
         Piercing: 0.8
         Radiation: 0.5
+
 - type: entity
   id: ClothingHeadHelmetVoidParamed
   components:
@@ -233,6 +253,7 @@
       OrganDamage: 0.14
       BoneDamage: 0.14
       VeinsDamage: 0
+
 - type: entity
   id: ClothingHeadHatHardhatBase
   components:
@@ -250,6 +271,7 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+
 - type: entity
   id: ClothingHeadHatHardhatArmored
   components:
@@ -267,6 +289,7 @@
         Slash: 0.75
         Piercing: 0.75
         Heat: 0.7
+
 - type: entity
   id: ClothingHeadHelmetHardsuitAtmos
   components:
@@ -279,6 +302,9 @@
         Heat: 0.8
         Radiation: 0.15
     coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+
 - type: entity
   id: ClothingHeadHelmetHardsuitEngineering
   components:
@@ -289,6 +315,9 @@
         Caustic: 0.7
         Radiation: 0.05
     coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+
 - type: entity
   id: ClothingHeadHelmetHardsuitSpatio
   components:
@@ -301,6 +330,7 @@
         Radiation: 0.5
         Caustic: 0.8
     coverage: *id002
+
 - type: entity
   id: ClothingHeadHelmetHardsuitSalvage
   components:
@@ -314,6 +344,9 @@
         Radiation: 0.1
         Caustic: 0.7
     coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+
 - type: entity
   id: ClothingHeadHelmetHardsuitGoliath
   components:
@@ -327,6 +360,9 @@
         Radiation: 0.1
         Caustic: 0.8
     coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+
 - type: entity
   id: ClothingHeadHelmetHardsuitMaxim
   components:
@@ -344,6 +380,9 @@
         Heat: 0.35
         Radiation: 0.01
     coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
+
 - type: entity
   id: ClothingHeadHelmetHardsuitSecurity
   components:
@@ -364,6 +403,9 @@
       flatReductions:
         Ballistic: 2
     coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+
 - type: entity
   id: ClothingHeadHelmetHardsuitBrigmedic
   components:
@@ -380,6 +422,9 @@
       flatReductions:
         Ballistic: 2
     coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.7
+
 - type: entity
   id: ClothingHeadHelmetHardsuitWarden
   components:
@@ -400,6 +445,9 @@
       flatReductions:
         Ballistic: 3
     coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+
 - type: entity
   id: ClothingHeadHelmetHardsuitCap
   components:
@@ -419,6 +467,9 @@
         Radiation: 0.15
         Caustic: 0.65
     coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.65
+
 - type: entity
   id: ClothingHeadHelmetHardsuitEngineeringWhite
   components:
@@ -432,6 +483,9 @@
         Radiation: 0.0
         Caustic: 0.7
     coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
+
 - type: entity
   id: ClothingHeadHelmetHardsuitMedical
   components:
@@ -440,6 +494,7 @@
       coefficients:
         Caustic: 0.1
     coverage: *id002
+
 - type: entity
   id: ClothingHeadHelmetHardsuitRd
   components:
@@ -453,6 +508,9 @@
         Radiation: 0.05
         Caustic: 0.4
     coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.55
+
 - type: entity
   id: ClothingHeadHelmetHardsuitSecurityRed
   components:
@@ -474,6 +532,9 @@
       flatReductions:
         Ballistic: 3
     coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+
 - type: entity
   id: ClothingHeadHelmetHardsuitLuxury
   components:
@@ -486,6 +547,9 @@
         Radiation: 0.15
         Caustic: 0.8
     coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+
 - type: entity
   id: ClothingHeadHelmetHardsuitSyndie
   components:
@@ -506,6 +570,9 @@
       flatReductions:
         Ballistic: 3
     coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+
 - type: entity
   id: ClothingHeadHelmetHardsuitSyndieElite
   components:
@@ -526,6 +593,9 @@
       flatReductions:
         Ballistic: 2
     coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
+
 - type: entity
   id: ClothingHeadHelmetHardsuitSyndieCommander
   components:
@@ -547,6 +617,9 @@
       flatReductions:
         Ballistic: 3
     coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+
 - type: entity
   id: ClothingHeadHelmetHardsuitCybersun
   components:
@@ -567,6 +640,9 @@
       flatReductions:
         Ballistic: 3
     coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
+
 - type: entity
   id: ClothingHeadHelmetHardsuitWizard
   components:
@@ -588,6 +664,9 @@
       flatReductions:
         Ballistic: 3
     coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
+
 - type: entity
   id: ClothingHeadHelmetHardsuitLing
   components:
@@ -596,6 +675,9 @@
       coefficients:
         Heat: 0.5
     coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
+
 - type: entity
   id: ClothingHeadHelmetHardsuitPirateEVA
   components:
@@ -609,6 +691,9 @@
         Heat: 0.4
         Caustic: 0.75
     coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.7
+
 - type: entity
   id: ClothingHeadHelmetHardsuitPirateCap
   components:
@@ -622,6 +707,9 @@
         Heat: 0.4
         Caustic: 0.75
     coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.6
+
 - type: entity
   id: ClothingHeadHelmetCBURN
   components:
@@ -637,6 +725,9 @@
         Radiation: 0.1
         Caustic: 0.1
     coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.7
+
 - type: entity
   id: ClothingHeadHelmetHardsuitDeathsquad
   components:
@@ -658,6 +749,9 @@
         Radiation: 0.1
         Caustic: 0.1
     coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
+
 - type: entity
   id: ClothingHeadHelmetHardsuitClown
   components:
@@ -674,6 +768,9 @@
         Piercing: 0.9
         Caustic: 0.8
     coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
+
 - type: entity
   id: ClothingHeadHelmetHardsuitMime
   components:
@@ -690,6 +787,7 @@
         Piercing: 0.9
         Caustic: 0.8
     coverage: *id002
+
 - type: entity
   id: ClothingHeadHelmetHardsuitSanta
   components:
@@ -701,6 +799,9 @@
         Piercing: 0.85
         Caustic: 0.8
     coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.85
+
 - type: entity
   id: ClothingHeadHatWatermelon
   components:
@@ -710,6 +811,7 @@
     modifiers:
       coefficients:
         Blunt: 0.9
+
 - type: entity
   id: ClothingHeadHatHolyWatermelon
   components:
@@ -720,12 +822,14 @@
       coefficients:
         Caustic: 0.9
         Radiation: 0.9
+
 - type: entity
   id: ClothingHeadHelmetBase
   components:
   - type: Armor
     coverage: &id003
     - Head
+
 - type: entity
   id: ClothingHeadHelmetArmoredBase
   components:
@@ -745,6 +849,7 @@
       flatReductions:
         Ballistic: 3.5
     coverage: *id003
+
 - type: entity
   id: ClothingHeadHelmetSwat
   components:
@@ -764,6 +869,9 @@
       flatReductions:
         Ballistic: 3.5
     coverage: *id003
+  - type: ExplosionResistance
+    damageCoefficient: 0.25
+
 - type: entity
   id: ClothingHeadHelmetRiot
   components:
@@ -774,6 +882,7 @@
         Slash: 0.1
         Piercing: 0.1
     coverage: *id003
+
 - type: entity
   id: ClothingHeadHelmetBombSuit
   components:
@@ -785,6 +894,9 @@
         Slash: 0.9
         Piercing: 0.9
     coverage: *id003
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
+
 - type: entity
   id: ClothingHeadHelmetCult
   components:
@@ -797,6 +909,7 @@
         Heat: 0.45
         Ballistic: 0.45
     coverage: *id003
+
 - type: entity
   id: ClothingHeadHelmetSpaceNinja
   components:
@@ -808,6 +921,7 @@
         Piercing: 0.8
         Heat: 0.8
     coverage: *id004
+
 - type: entity
   id: ClothingHeadHelmetWizardHelm
   components:
@@ -820,6 +934,7 @@
         Heat: 0.45
         Ballistic: 0.45
     coverage: *id003
+
 - type: entity
   id: ClothingHeadHelmetFire
   components:
@@ -835,6 +950,7 @@
         Heat: 0.85
         Cold: 0.85
     coverage: *id003
+
 - type: entity
   id: ClothingHeadHelmetAtmosFire
   components:
@@ -850,6 +966,7 @@
         Heat: 0.8
         Cold: 0.8
     coverage: *id003
+
 - type: entity
   id: ClothingHeadHelmetLing
   components:
@@ -868,6 +985,7 @@
         Heat: 0.5
         Caustic: 0.5
     coverage: *id003
+
 - type: entity
   id: ClothingHeadHelmetRaid
   components:
@@ -888,6 +1006,7 @@
       flatReductions:
         Ballistic: 3.5
     coverage: *id003
+
 - type: entity
   id: CardHelmet
   components:
@@ -897,6 +1016,7 @@
     modifiers:
       coefficients:
         Blunt: 0.95
+
 - type: entity
   id: ClothingHeadHatHoodBioGeneral
   components:
@@ -906,6 +1026,7 @@
     modifiers:
       coefficients:
         Caustic: 0.75
+
 - type: entity
   id: ClothingHeadHatHoodBioSecurity
   components:
@@ -919,6 +1040,7 @@
         Piercing: 0.7
         Heat: 0.8
         Caustic: 0.8
+
 - type: entity
   id: ClothingHeadHatHoodRad
   components:
@@ -929,6 +1051,7 @@
       coefficients:
         Heat: 0.85
         Radiation: 0.01
+
 - type: entity
   id: ClothingHeadHelmetScrap
   components:
@@ -941,6 +1064,7 @@
         Slash: 0.4
         Piercing: 0.4
         Heat: 0.9
+
 - type: entity
   id: ClothingHeadHatSecsoft
   components:
@@ -958,6 +1082,7 @@
         Slash: 0.7
         Piercing: 0.7
         Heat: 0.8
+
 - type: entity
   id: ClothingMaskBase
   components:
@@ -974,6 +1099,7 @@
       OrganDamage: 0.05
       BoneDamage: 0.05
       VeinsDamage: 0
+
 - type: entity
   id: ClothingMaskGasSecurity
   components:
@@ -986,6 +1112,7 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+
 - type: entity
   id: ClothingMaskGasSyndicate
   components:
@@ -998,6 +1125,7 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+
 - type: entity
   id: ClothingMaskGasAtmos
   components:
@@ -1007,6 +1135,7 @@
     modifiers:
       coefficients:
         Heat: 0.5
+
 - type: entity
   id: ClothingMaskGasExplorer
   components:
@@ -1019,6 +1148,7 @@
         Slash: 0.8
         Piercing: 0.9
         Heat: 0.9
+
 - type: entity
   id: ClothingMaskBreathMedicalSecurity
   components:
@@ -1032,6 +1162,7 @@
         Piercing: 0.9
         Heat: 0.9
         Caustic: 0.9
+
 - type: entity
   id: ClothingMaskClownSecurity
   components:
@@ -1044,6 +1175,7 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+
 - type: entity
   id: ClothingMaskGasSwat
   components:
@@ -1056,6 +1188,7 @@
         Slash: 0.8
         Piercing: 0.9
         Heat: 0.9
+
 - type: entity
   id: ClothingMaskGasMerc
   components:
@@ -1068,6 +1201,7 @@
         Slash: 0.8
         Piercing: 0.8
         Heat: 0.8
+
 - type: entity
   id: ClothingMaskGasERT
   components:
@@ -1080,6 +1214,7 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+
 - type: entity
   id: ClothingMaskGasDeathSquad
   components:
@@ -1092,6 +1227,7 @@
         Slash: 0.75
         Piercing: 0.75
         Heat: 0.75
+
 - type: entity
   id: ClothingMaskMimeSecurity
   components:
@@ -1103,6 +1239,7 @@
         Piercing: 0.95
         Heat: 0.95
     coverage: *id005
+
 - type: entity
   id: ClothingOuterArmorBase
   components:
@@ -1123,6 +1260,9 @@
         Heat: 0.80
       flatReductions:
         Ballistic: 2
+  - type: ExplosionResistance
+    damageCoefficient: 0.75
+
 - type: entity
   id: ClothingOuterArmorBulletproof
   components:
@@ -1144,6 +1284,9 @@
         Heat: 0.8
       flatReductions:
         Ballistic: 3
+  - type: ExplosionResistance
+    damageCoefficient: 0.65
+
 - type: entity
   id: ClothingOuterArmorReflective
   components:
@@ -1156,6 +1299,7 @@
         Slash: 0.8
         Piercing: 0.8
         Heat: 0.3
+
 - type: entity
   id: ClothingOuterArmorCaptainCarapace
   components:
@@ -1174,6 +1318,9 @@
         Piercing: 0.6
         Ballistic: 0.3
         Heat: 0.5
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+
 - type: entity
   id: ClothingOuterVestWeb
   components:
@@ -1194,6 +1341,7 @@
         Heat: 0.8
       flatReductions:
         Ballistic: 3
+
 - type: entity
   id: ClothingOuterVestWebElite
   components:
@@ -1213,6 +1361,9 @@
         Ballistic: 0.8
         Heat: 0.3
         Caustic: 0.3
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+
 - type: entity
   id: ClothingOuterVestWebMerc
   components:
@@ -1233,6 +1384,7 @@
         Heat: 0.8
       flatReductions:
         Ballistic: 3
+
 - type: entity
   id: ClothingOuterArmorRaid
   components:
@@ -1258,6 +1410,9 @@
         Heat: 0.5
       flatReductions:
         Ballistic: 3
+  - type: ExplosionResistance
+    damageCoefficient: 0.35
+
 - type: entity
   id: ClothingOuterArmorRiot
   components:
@@ -1278,6 +1433,9 @@
         Slash: 0.35
         Piercing: 0.35
         Heat: 0.8
+  - type: ExplosionResistance
+    damageCoefficient: 0.75
+
 - type: entity
   id: ClothingOuterArmorCult
   components:
@@ -1299,6 +1457,9 @@
         Piercing: 0.4
         Ballistic: 0.5
         Heat: 0.5
+  - type: ExplosionResistance
+    damageCoefficient: 0.75
+
 - type: entity
   id: ClothingOuterArmorHeavy
   components:
@@ -1325,6 +1486,9 @@
         Radiation: 0
       flatReductions:
         Ballistic: 3
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+
 - type: entity
   id: ClothingOuterArmorMagusblue
   components:
@@ -1341,6 +1505,9 @@
       flatReductions:
         Ballistic: 3
     coverage: *id006
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+
 - type: entity
   id: ClothingOuterArmorChangeling
   components:
@@ -1366,6 +1533,9 @@
         Ballistic: 0.5
         Heat: 0.5
         Caustic: 0.5
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+
 - type: entity
   id: ClothingOuterArmorBone
   components:
@@ -1385,6 +1555,9 @@
         Blunt: 0.7
         Slash: 0.7
         Piercing: 0.7
+  - type: ExplosionResistance
+    damageCoefficient: 0.35
+
 - type: entity
   id: ClothingOuterArmorPodWars
   components:
@@ -1405,6 +1578,7 @@
         Slash: 0.3
         Piercing: 0.3
         Heat: 0.7
+
 - type: entity
   id: CardArmour
   components:
@@ -1413,6 +1587,7 @@
       coefficients:
         Blunt: 0.9
     coverage: *id007
+
 - type: entity
   id: ClothingOuterHardsuitBase
   components:
@@ -1437,6 +1612,7 @@
         Piercing: 0.95
         Heat: 0.90
         Radiation: 0.25
+
 - type: entity
   id: ClothingOuterBioGeneral
   components:
@@ -1453,6 +1629,7 @@
         Caustic: 0.2
       flatReductions:
         Slash: 1
+
 - type: entity
   id: ClothingOuterBioJanitor
   components:
@@ -1461,6 +1638,7 @@
       coefficients:
         Caustic: 0.4
     coverage: *id008
+
 - type: entity
   id: ClothingOuterBioSecurity
   components:
@@ -1480,6 +1658,7 @@
         Ballistic: 0.7
         Heat: 0.8
         Caustic: 0.2
+
 - type: entity
   id: ClothingOuterCoatDetective
   components:
@@ -1496,6 +1675,7 @@
         Piercing: 0.7
         Ballistic: 0.7
         Heat: 0.8
+
 - type: entity
   id: ClothingOuterArmorHoS
   components:
@@ -1515,6 +1695,7 @@
         Caustic: 0.6
       flatReductions:
         Ballistic: 3
+
 - type: entity
   id: ClothingOuterArmorWarden
   components:
@@ -1532,6 +1713,7 @@
         Ballistic: 0.6
         Heat: 0.7
         Caustic: 0.9
+
 - type: entity
   id: ClothingOuterCoatTrench
   components:
@@ -1544,6 +1726,7 @@
     modifiers:
       coefficients:
         Slash: 0.95
+
 - type: entity
   id: ClothingOuterCoatLab
   components:
@@ -1556,6 +1739,7 @@
     modifiers:
       coefficients:
         Caustic: 0.65
+
 - type: entity
   id: ClothingOuterCoatLabChem
   components:
@@ -1568,6 +1752,7 @@
     modifiers:
       coefficients:
         Caustic: 0.65
+
 - type: entity
   id: ClothingOuterCoatLabViro
   components:
@@ -1580,6 +1765,7 @@
     modifiers:
       coefficients:
         Caustic: 0.65
+
 - type: entity
   id: ClothingOuterCoatLabGene
   components:
@@ -1592,6 +1778,7 @@
     modifiers:
       coefficients:
         Caustic: 0.65
+
 - type: entity
   id: ClothingOuterCoatLabCmo
   components:
@@ -1606,6 +1793,7 @@
         Slash: 0.9
         Heat: 0.9
         Caustic: 0.4
+
 - type: entity
   id: ClothingOuterCoatRnd
   components:
@@ -1618,6 +1806,7 @@
     modifiers:
       coefficients:
         Caustic: 0.65
+
 - type: entity
   id: ClothingOuterCoatRobo
   components:
@@ -1630,6 +1819,7 @@
     modifiers:
       coefficients:
         Caustic: 0.65
+
 - type: entity
   id: ClothingOuterCoatRD
   components:
@@ -1643,6 +1833,7 @@
       coefficients:
         Caustic: 0.6
         Radiation: 0.6
+
 - type: entity
   id: ClothingOuterDogi
   components:
@@ -1657,6 +1848,7 @@
         Blunt: 0.7
         Slash: 0.7
         Piercing: 0.7
+
 - type: entity
   id: ClothingOuterCoatAMG
   components:
@@ -1672,6 +1864,7 @@
         Ballistic: 0.7
         Heat: 0.8
         Caustic: 0.4
+
 - type: entity
   id: ClothingOuterCoatLabSeniorResearcher
   components:
@@ -1684,6 +1877,7 @@
     modifiers:
       coefficients:
         Caustic: 0.65
+
 - type: entity
   id: ClothingOuterCoatLabSeniorPhysician
   components:
@@ -1696,6 +1890,7 @@
     modifiers:
       coefficients:
         Caustic: 0.65
+
 - type: entity
   id: ClothingOuterHardsuitAtmos
   components:
@@ -1705,6 +1900,7 @@
         Heat: 0.2
         Radiation: 0.15
     coverage: *id009
+
 - type: entity
   id: ClothingOuterHardsuitEngineering
   components:
@@ -1715,6 +1911,7 @@
         Heat: 0.7
         Radiation: 0.05
     coverage: *id009
+
 - type: entity
   id: ClothingOuterHardsuitSpatio
   components:
@@ -1727,6 +1924,7 @@
         Piercing: 0.9
         Caustic: 0.8
     coverage: *id009
+
 - type: entity
   id: ClothingOuterHardsuitSalvage
   components:
@@ -1739,6 +1937,9 @@
         Heat: 0.8
         Radiation: 0.1
     coverage: *id009
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+
 - type: entity
   id: ClothingOuterHardsuitGoliath
   components:
@@ -1751,6 +1952,9 @@
         Heat: 0.7
         Radiation: 0.1
     coverage: *id009
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+
 - type: entity
   id: ClothingOuterHardsuitMaxim
   components:
@@ -1768,6 +1972,7 @@
         Heat: 0.6
         Radiation: 0.01
     coverage: *id009
+
 - type: entity
   id: ClothingOuterHardsuitSecurity
   components:
@@ -1787,6 +1992,9 @@
       flatReductions:
         Ballistic: 3
     coverage: *id009
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+
 - type: entity
   id: ClothingOuterHardsuitBrigmedic
   components:
@@ -1803,6 +2011,9 @@
       flatReductions:
         Ballistic: 2
     coverage: *id009
+  - type: ExplosionResistance
+    damageCoefficient: 0.7
+
 - type: entity
   id: ClothingOuterHardsuitWarden
   components:
@@ -1822,6 +2033,9 @@
       flatReductions:
         Ballistic: 3
     coverage: *id009
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+
 - type: entity
   id: ClothingOuterHardsuitCap
   components:
@@ -1840,6 +2054,9 @@
         Heat: 0.7
         Radiation: 0.05
     coverage: *id009
+  - type: ExplosionResistance
+    damageCoefficient: 0.65
+
 - type: entity
   id: ClothingOuterHardsuitEngineeringWhite
   components:
@@ -1852,6 +2069,7 @@
         Heat: 0.2
         Radiation: 0.0
     coverage: *id009
+
 - type: entity
   id: ClothingOuterHardsuitMedical
   components:
@@ -1860,6 +2078,7 @@
       coefficients:
         Caustic: 0.0
     coverage: *id009
+
 - type: entity
   id: ClothingOuterHardsuitRd
   components:
@@ -1872,6 +2091,9 @@
         Heat: 0.4
         Radiation: 0.05
     coverage: *id009
+  - type: ExplosionResistance
+    damageCoefficient: 0.55
+
 - type: entity
   id: ClothingOuterHardsuitSecurityRed
   components:
@@ -1892,6 +2114,7 @@
       flatReductions:
         Ballistic: 3
     coverage: *id009
+
 - type: entity
   id: ClothingOuterHardsuitLuxury
   components:
@@ -1904,6 +2127,9 @@
         Heat: 0.8
         Radiation: 0.1
     coverage: *id009
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+
 - type: entity
   id: ClothingOuterHardsuitSyndie
   components:
@@ -1924,6 +2150,7 @@
       flatReductions:
         Ballistic: 3
     coverage: *id009
+
 - type: entity
   id: ClothingOuterHardsuitSyndieElite
   components:
@@ -1944,6 +2171,9 @@
       flatReductions:
         Ballistic: 2
     coverage: *id009
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
+
 - type: entity
   id: ClothingOuterHardsuitSyndieCommander
   components:
@@ -1964,6 +2194,9 @@
       flatReductions:
         Ballistic: 3
     coverage: *id009
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+
 - type: entity
   id: ClothingOuterHardsuitJuggernaut
   components:
@@ -1984,6 +2217,9 @@
       flatReductions:
         Ballistic: 3
     coverage: *id009
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
+
 - type: entity
   id: ClothingOuterHardsuitWizard
   components:
@@ -2004,6 +2240,9 @@
       flatReductions:
         Ballistic: 3
     coverage: *id009
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
+
 - type: entity
   id: ClothingOuterHardsuitLing
   components:
@@ -2015,6 +2254,7 @@
         Piercing: 1
         Heat: 0.5
     coverage: *id009
+
 - type: entity
   id: ClothingOuterHardsuitPirateEVA
   components:
@@ -2027,6 +2267,7 @@
         Ballistic: 0.7
         Heat: 0.5
     coverage: *id009
+
 - type: entity
   id: ClothingOuterHardsuitPirateCap
   components:
@@ -2040,6 +2281,7 @@
         Heat: 0.4
         Caustic: 0.75
     coverage: *id009
+
 - type: entity
   id: ClothingOuterHardsuitDeathsquad
   components:
@@ -2061,6 +2303,9 @@
         Radiation: 0.1
         Caustic: 0.1
     coverage: *id009
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
+
 - type: entity
   id: ClothingOuterHardsuitCBURN
   components:
@@ -2073,6 +2318,7 @@
         Radiation: 0.1
         Caustic: 0.5
     coverage: *id009
+
 - type: entity
   id: ClothingOuterHardsuitClown
   components:
@@ -2084,6 +2330,7 @@
         Piercing: 0.9
         Caustic: 0.8
     coverage: *id009
+
 - type: entity
   id: ClothingOuterHardsuitSanta
   components:
@@ -2095,6 +2342,7 @@
         Piercing: 0.85
         Caustic: 0.8
     coverage: *id009
+
 - type: entity
   id: ClothingOuterArmorScrap
   components:
@@ -2106,6 +2354,9 @@
         Piercing: 0.8
         Heat: .9
     coverage: *id004
+  - type: ExplosionResistance
+    damageCoefficient: 0.7
+
 - type: entity
   id: ClothingOuterHardsuitVoidParamed
   components:
@@ -2122,6 +2373,7 @@
       coefficients:
         Radiation: 0.1
         Caustic: 0.5
+
 - type: entity
   id: ClothingOuterChameleon
   components:
@@ -2134,6 +2386,7 @@
       coefficients:
         Slash: 0.9
         Heat: 0.8
+
 - type: entity
   id: ClothingOuterSuitBomb
   components:
@@ -2152,6 +2405,9 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.8
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
+
 - type: entity
   id: ClothingOuterSuitFire
   components:
@@ -2174,6 +2430,7 @@
         Slash: 0.9
         Heat: 0.5
         Cold: 0.8
+
 - type: entity
   id: ClothingOuterSuitAtmosFire
   components:
@@ -2198,6 +2455,7 @@
         Heat: 0.6
         Cold: 0.8
         Piercing: 0.85
+
 - type: entity
   id: ClothingOuterSuitRad
   components:
@@ -2214,6 +2472,7 @@
       coefficients:
         Heat: 0.85
         Radiation: 0.01
+
 - type: entity
   id: ClothingOuterSuitSpaceNinja
   components:
@@ -2232,6 +2491,7 @@
         Slash: 0.8
         Piercing: 0.8
         Heat: 0.8
+
 - type: entity
   id: ClothingOuterWinterCoat
   components:
@@ -2244,6 +2504,7 @@
       coefficients:
         Slash: 0.9
         Heat: 0.8
+
 - type: entity
   id: ClothingOuterWinterChem
   components:
@@ -2254,6 +2515,7 @@
         Heat: 0.8
         Caustic: 0.6
     coverage: *id010
+
 - type: entity
   id: ClothingOuterWinterCMO
   components:
@@ -2264,6 +2526,7 @@
         Heat: 0.8
         Caustic: 0.6
     coverage: *id010
+
 - type: entity
   id: ClothingOuterWinterGen
   components:
@@ -2274,6 +2537,7 @@
         Heat: 0.8
         Caustic: 0.8
     coverage: *id010
+
 - type: entity
   id: ClothingOuterWinterHoS
   components:
@@ -2285,6 +2549,7 @@
         Piercing: 0.7
         Heat: 0.8
     coverage: *id011
+
 - type: entity
   id: ClothingOuterWinterJani
   components:
@@ -2295,6 +2560,7 @@
         Heat: 0.8
         Caustic: 0.8
     coverage: *id010
+
 - type: entity
   id: ClothingOuterWinterMed
   components:
@@ -2305,6 +2571,7 @@
         Heat: 0.8
         Caustic: 0.8
     coverage: *id010
+
 - type: entity
   id: ClothingOuterWinterPara
   components:
@@ -2315,6 +2582,7 @@
         Heat: 0.65
         Caustic: 0.8
     coverage: *id010
+
 - type: entity
   id: ClothingOuterWinterRD
   components:
@@ -2325,6 +2593,7 @@
         Heat: 0.8
         Caustic: 0.8
     coverage: *id010
+
 - type: entity
   id: ClothingOuterWinterSci
   components:
@@ -2335,6 +2604,7 @@
         Heat: 0.8
         Caustic: 0.8
     coverage: *id010
+
 - type: entity
   id: ClothingOuterWinterViro
   components:
@@ -2345,6 +2615,7 @@
         Heat: 0.8
         Caustic: 0.8
     coverage: *id010
+
 - type: entity
   id: ClothingOuterWinterWarden
   components:
@@ -2356,6 +2627,7 @@
         Piercing: 0.7
         Heat: 0.8
     coverage: *id012
+
 - type: entity
   id: ClothingShoesBase
   components:
@@ -2367,6 +2639,7 @@
         Blunt: 0.95
         Slash: 0.95
         Piercing: 0.95
+
 - type: entity
   id: ClothingShoesMilitaryBase
   components:
@@ -2382,3 +2655,39 @@
         Slash: 0.9
         Piercing: 0.9
     coverage: *id013
+
+- type: entity
+  id: ClothingBackpackDeathSquad
+  components:
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+
+- type: entity
+  id: ClothingBackpackDuffelCBURN
+  components:
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+
+- type: entity
+  id: ClothingBeltMilitaryWebbingMed
+  components:
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
+
+- type: entity
+  id: ClothingHandsMercGlovesCombat
+  components:
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+
+- type: entity
+  id: ClothingShoesBootsJack
+  components:
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+
+- type: entity
+  id: ClothingShoesBootsCombat
+  components:
+  - type: ExplosionResistance
+    damageCoefficient: 0.5

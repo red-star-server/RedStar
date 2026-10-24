@@ -1,4 +1,5 @@
 using Content.Shared._Trauma.Traumas;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 
 using Content.Shared._Trauma.Common.Body;
@@ -47,13 +48,20 @@ public sealed partial class EyesSystem : EntitySystem
             organ.OrganIntegrity <= 0) // eyes should be disabled for blinding
             return;
 
-        _blindable.SetEyeDamage((body, blindable), (int) organ.OrganIntegrity);
+        _blindable.SetEyeDamage((body, blindable), (int) (organ.IntegrityCap - organ.OrganIntegrity));
     }
 
     [SubscribeLocalEvent]
     private void OnEyesDamaged(Entity<EyesComponent> ent, ref BodyRelayedEvent<EyesDamagedEvent> args)
     {
-        _trauma.TryCreateOrganDamageModifier(ent.Owner, args.Args.Damage, args.Args.Body, "BlindableDamage");
+        if (!TryComp<InternalChildOrganComponent>(ent, out var organ))
+            return;
+
+        const string identifier = "BlindableDamage";
+        var previous = organ.IntegrityModifiers.GetValueOrDefault((identifier, args.Args.Body));
+        var change = FixedPoint2.Max(previous + args.Args.Damage, 0) - previous;
+        if (!_trauma.TryChangeOrganDamageModifier(ent.Owner, change, args.Args.Body, identifier))
+            _trauma.TryCreateOrganDamageModifier(ent.Owner, change, args.Args.Body, identifier);
     }
 
     private void CheckMissingEyes(EntityUid body)

@@ -4,6 +4,7 @@ using Content.Shared._Trauma.Wounds;
 using Content.Shared.Body;
 using Content.Shared.FixedPoint;
 using Content.Shared.Popups;
+using Content.Shared.Rejuvenate;
 
 namespace Content.Shared._Trauma.Traumas;
 
@@ -12,6 +13,13 @@ public partial class TraumaSystem
     [Dependency] private EntityQuery<InternalChildOrganComponent> _internalQuery;
 
     #region Event handling
+
+    [SubscribeLocalEvent]
+    private void OnRejuvenate(Entity<InternalChildOrganComponent> organ, ref RejuvenateEvent args)
+    {
+        organ.Comp.IntegrityModifiers.Clear();
+        UpdateOrganIntegrity(organ.AsNullable());
+    }
 
     [SubscribeLocalEvent]
     private void OnOrganIntegrityChanged(Entity<InternalChildOrganComponent> organ, ref OrganIntegrityChangedEvent args)
@@ -129,13 +137,9 @@ public partial class TraumaSystem
 
         var oldIntegrity = ent.Comp.OrganIntegrity;
 
-        if (ent.Comp.IntegrityModifiers.Count > 0)
-        {
-            ent.Comp.OrganIntegrity = FixedPoint2.Clamp(ent.Comp.IntegrityModifiers
-                    .Aggregate(FixedPoint2.Zero, (current, modifier) => current + modifier.Value),
-                0,
-                ent.Comp.IntegrityCap);
-        }
+        var damage = ent.Comp.IntegrityModifiers
+            .Aggregate(FixedPoint2.Zero, (current, modifier) => current + modifier.Value);
+        ent.Comp.OrganIntegrity = FixedPoint2.Clamp(ent.Comp.IntegrityCap - damage, 0, ent.Comp.IntegrityCap);
 
         if (oldIntegrity == ent.Comp.OrganIntegrity)
             return;
@@ -145,7 +149,8 @@ public partial class TraumaSystem
         var ev = new OrganIntegrityChangedEvent(oldIntegrity, ent.Comp.OrganIntegrity);
         RaiseLocalEvent(ent, ref ev);
 
-        var nearestSeverity = ent.Comp.OrganSeverity;
+        var oldSeverity = ent.Comp.OrganSeverity;
+        var nearestSeverity = oldSeverity;
         foreach (var (severity, value) in ent.Comp.IntegrityThresholds.OrderByDescending(kv => kv.Value))
         {
             if (ent.Comp.OrganIntegrity < value)
@@ -161,11 +166,13 @@ public partial class TraumaSystem
         ent.Comp.OrganSeverity = nearestSeverity;
         DirtyField(ent, ent.Comp, nameof(InternalChildOrganComponent.OrganSeverity));
 
-        var sevEv = new OrganDamageSeverityChanged(ent.Comp.OrganSeverity, nearestSeverity);
+        var sevEv = new OrganDamageSeverityChanged(oldSeverity, nearestSeverity);
         RaiseLocalEvent(ent, ref sevEv);
-        if (!_container.TryGetContainingContainer(ent.Owner, out var container)) return;
-        var ev1 = new OrganDamageSeverityChangedOnWoundable((ent, ent.Comp), ent.Comp.OrganSeverity, nearestSeverity);
-        RaiseLocalEvent(container.Owner, ref ev1);
+        if (_part.GetParentPart(ent.Owner) is not {} parent)
+            return;
+
+        var ev1 = new OrganDamageSeverityChangedOnWoundable((ent, ent.Comp), oldSeverity, nearestSeverity);
+        RaiseLocalEvent(parent, ref ev1);
     }
 
     #endregion

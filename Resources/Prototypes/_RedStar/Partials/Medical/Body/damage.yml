@@ -17,17 +17,20 @@
     damageGroupSprites:
       Brute: _RedStar/Medical/Mobs/Effects/brute_damage.rsi
       Burn: _RedStar/Medical/Mobs/Effects/burn_damage.rsi
+
 - type: entity
   id: OrganBaseLimb
   components:
   - type: WoundableVisuals
     bleedingOverlay: _RedStar/Medical/Mobs/Effects/bleeding_damage.rsi
+
 - type: entity
   id: OrganBase
   components:
   - type: Damageable
   - type: Injurable
     damageContainer: Biological
+
 - type: entity
   id: OrganBaseTorso
   components:
@@ -43,6 +46,7 @@
       Mangled: 0
   - type: WoundableVisuals
     bleedingOverlay: _RedStar/Medical/Mobs/Effects/bleeding_damage.rsi
+
 - type: entity
   id: OrganBaseHead
   components:
@@ -67,6 +71,7 @@
       Dismemberment: 0.8
   - type: WoundableVisuals
     bleedingOverlay: _RedStar/Medical/Mobs/Effects/bleeding_damage.rsi
+
 - type: entity
   id: OrganBaseBrain
   components:
@@ -77,10 +82,12 @@
       Normal: 28
       Damaged: 16
       Destroyed: 0
+
 - type: entity
   id: OrganBaseChildInternal
   components:
   - type: InternalChildOrgan
+
 - type: entity
   id: OrganBaseExternal
   components:
@@ -88,6 +95,7 @@
   - type: ContainerContainer
     containers:
       Wounds: !type:Container ''
+
 - type: entity
   id: OrganBase
   components:

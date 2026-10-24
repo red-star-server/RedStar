@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared._Trauma.Common.Targeting;
 using Content.Shared._Trauma.Body;
 using Content.Shared.Body;
@@ -49,7 +50,7 @@ public abstract partial class SharedTargetingSystem : EntitySystem
 
     public void SetTarget(EntityUid user, TargetBodyPart target)
     {
-        if (!_query.TryComp(user, out var comp) || comp.Target == target)
+        if (!ValidParts.Contains(target) || !_query.TryComp(user, out var comp) || comp.Target == target)
             return;
 
         comp.Target = target;

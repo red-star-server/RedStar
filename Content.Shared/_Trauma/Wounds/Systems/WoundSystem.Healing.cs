@@ -22,6 +22,10 @@ public partial class WoundSystem
     private void OnRejuvenate(Entity<WoundableComponent> ent, ref RejuvenateEvent args)
     {
         _container.CleanContainer(ent.Comp.Wounds); // no more wounds
+        ent.Comp.Bleeds = FixedPoint2.Zero;
+        DirtyField(ent, ent.Comp, nameof(WoundableComponent.Bleeds));
+        UpdateWoundableIntegrity(ent.AsNullable());
+        CheckWoundableSeverityThresholds(ent.AsNullable());
     }
 
     #region Public API
@@ -82,12 +86,12 @@ public partial class WoundSystem
                 break;
 
             FixedPoint2 modifiedBleed;
-            bool didHeal = TryHealBleedingWounds(woundable, -remainingHealAmount, out modifiedBleed);
+            bool didHeal = TryHealBleedingWounds(woundable, remainingHealAmount, out modifiedBleed);
             if (!didHeal)
                 continue;
 
             anyHealed = true;
-            healed += -modifiedBleed - remainingHealAmount;
+            healed += modifiedBleed;
             remainingHealAmount -= (float) modifiedBleed;
         }
 
@@ -97,29 +101,37 @@ public partial class WoundSystem
     public bool TryHealBleedingWounds(Entity<WoundableComponent?> part, FixedPoint2 bleedStopAbility, out FixedPoint2 modifiedBleed)
     {
         modifiedBleed = FixedPoint2.Zero;
+        if (bleedStopAbility <= 0)
+            return false;
+
         foreach (var wound in GetWoundableWounds(part))
         {
             if (!_bleedQuery.TryComp(wound, out var bleeds) || !bleeds.IsBleeding)
                 continue;
 
-            DirtyField(wound, bleeds, nameof(BleedInflicterComponent.BleedingAmountRaw));
+            var previous = bleeds.BleedingAmount;
+            if (previous <= 0)
+                continue;
 
-            if (bleedStopAbility <= bleeds.BleedingAmount)
+            var amount = FixedPoint2.Min(bleedStopAbility, previous);
+            bleeds.BleedingAmountRaw = FixedPoint2.Max(bleeds.BleedingAmountRaw - amount / bleeds.Scaling, 0);
+            var healed = previous - bleeds.BleedingAmount;
+            modifiedBleed += healed;
+            bleedStopAbility -= healed;
+
+            if (bleeds.BleedingAmountRaw == 0)
             {
-                bleeds.BleedingAmountRaw += bleedStopAbility;
-                modifiedBleed += bleedStopAbility;
-                break; // cant heal anymore
+                bleeds.IsBleeding = false;
+                bleeds.Scaling = 0;
             }
 
-            bleedStopAbility -= bleeds.BleedingAmount;
-            modifiedBleed += bleeds.BleedingAmount;
-            bleeds.BleedingAmountRaw = 0;
-            bleeds.IsBleeding = false;
-            bleeds.Scaling = 0;
-            DirtyFields(wound, bleeds, null, nameof(BleedInflicterComponent.IsBleeding), nameof(BleedInflicterComponent.Scaling));
+            DirtyFields(wound, bleeds, null, nameof(BleedInflicterComponent.BleedingAmountRaw),
+                nameof(BleedInflicterComponent.IsBleeding), nameof(BleedInflicterComponent.Scaling));
+            if (bleedStopAbility <= 0)
+                break;
         }
 
-        return modifiedBleed >= FixedPoint2.Zero;
+        return modifiedBleed > FixedPoint2.Zero;
     }
 
     public bool TryHealWounds(Entity<WoundableComponent?> part,

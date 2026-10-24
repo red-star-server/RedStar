@@ -1,4 +1,3 @@
-using Content.Shared._Trauma.Common.Targeting;
 using Content.Shared.Body;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
@@ -10,19 +9,14 @@ public sealed partial class PartDamageSystem : EntitySystem
     [Dependency] private DamageableSystem _damage = default!;
 
 
-    [SubscribeLocalEvent]
+    [SubscribeLocalEvent(after: new[] { typeof(InitialBodySystem) })]
     private void OnMapInit(Entity<DamageableComponent> ent, ref MapInitEvent args)
     {
-        var damage = _damage.GetAllDamage(ent.AsNullable());
-        if (damage.GetTotal() == 0)
-            return;
-
         // update e.g. unidentified corpse part damage when they spawn
-        _damage.ApplyDamageToBodyParts(ent, damage, origin: null,
-            ignoreResistances: true, interruptsDoAfters: false, partMultiplier: 1f, targetPart: TargetBodyPart.Chest, canMiss: false);
+        _damage.ApplyInitialBodyDamage(ent);
     }
 
-    [SubscribeLocalEvent]
+    [SubscribeLocalEvent(after: new[] { typeof(DamageableSystem) })]
     private void OnDamageDealt(Entity<OrganComponent> ent, ref DamageDealtEvent args)
     {
         if (ent.Comp.Body is not { } body)

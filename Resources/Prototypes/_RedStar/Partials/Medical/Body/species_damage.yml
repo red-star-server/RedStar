@@ -3,72 +3,88 @@
   components:
   - type: Damageable
     damageModifierSet: Diona
+
 - type: entity
   id: MobDwarf
   components:
   - type: Damageable
     displacement: Dwarfism
+
 - type: entity
   id: OrganDwarfTorso
   components:
   - &id001
     type: WoundableVisuals
     displacement: Dwarfism
+
 - type: entity
   id: OrganDwarfHead
   components:
   - *id001
+
 - type: entity
   id: OrganDwarfArmLeft
   components:
   - *id001
+
 - type: entity
   id: OrganDwarfArmRight
   components:
   - *id001
+
 - type: entity
   id: OrganDwarfHandRight
   components:
   - *id001
+
 - type: entity
   id: OrganDwarfHandLeft
   components:
   - *id001
+
 - type: entity
   id: OrganDwarfLegLeft
   components:
   - *id001
+
 - type: entity
   id: OrganDwarfLegRight
   components:
   - *id001
+
 - type: entity
   id: OrganDwarfFootLeft
   components:
   - *id001
+
 - type: entity
   id: OrganDwarfFootRight
   components:
   - *id001
+
 - type: entity
   id: MobGingerbread
   components:
   - type: Damageable
     damageModifierSet: Gingerbread
+
 - type: entity
   id: OrganHumanInternal
   components:
   - type: InternalChildOrgan
+
 - type: entity
   id: MobMoth
   components:
   - type: Damageable
     damageModifierSet: Moth
+
 - type: entity
   id: MobReptilian
   components:
   - type: Damageable
     damageModifierSet: Scale
+
 - type: entity
   id: MobSkeletonPerson
   components:
@@ -76,30 +92,36 @@
     damageModifierSet: Skeleton
   - type: Injurable
     damageContainer: BiologicalMetaphysical
+
 - type: entity
   id: MobSlimePerson
   components:
   - type: Damageable
     damageModifierSet: Slime
+
 - type: entity
   id: OrganSlimePersonExternal
   components:
   - type: Boneless
+
 - type: entity
   id: MobVox
   components:
   - type: Damageable
     damageModifierSet: Vox
+
 - type: entity
   id: MobVulpkanin
   components:
   - type: Damageable
     damageModifierSet: Vulpkanin
+
 - type: entity
   id: OrganVulpkanin
   components:
   - type: Injurable
     damageContainer: Vulpkanin
+
 - type: entity
   id: BaseSpeciesMobNoCrawl
   components:

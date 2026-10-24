@@ -253,9 +253,9 @@ public sealed partial class DamageableSystem
             damage -= vitalDamage;
 
             damage = ApplyDamageToBodyParts(ent, damage, origin, ignoreResistances,
-                interruptsDoAfters, targetPart, partMultiplier, ignoreBlockers, splitDamage, canMiss, increaseOnly) +
+                interruptsDoAfters, targetPart, partMultiplier, ignoreBlockers, splitDamage, canMiss, increaseOnly, ignoreGlobalModifiers) +
                 ApplyDamageToBodyParts(ent, vitalDamage, origin, ignoreResistances,
-                interruptsDoAfters, TargetBodyPart.Vital, partMultiplier, ignoreBlockers, splitDamage, canMiss, increaseOnly);
+                interruptsDoAfters, TargetBodyPart.Vital, partMultiplier, ignoreBlockers, splitDamage, canMiss, increaseOnly, ignoreGlobalModifiers);
 
             var ev = new DamageDealtEvent(damage, origin, interruptsDoAfters, ignoreBlockers, damage);
             RaiseLocalEvent(ent, ref ev);

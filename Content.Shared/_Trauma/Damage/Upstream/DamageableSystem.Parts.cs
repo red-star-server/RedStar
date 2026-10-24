@@ -14,6 +14,21 @@ namespace Content.Shared.Damage.Systems;
 
 public sealed partial class DamageableSystem
 {
+    public void ApplyInitialBodyDamage(Entity<DamageableComponent> ent)
+    {
+        if (!UsesBodyPartDamage(ent))
+            return;
+
+        var damage = ent.Comp.Damage.Clone();
+        if (damage.GetTotal() == 0)
+            return;
+
+        ApplyDamageToBodyParts(ent, damage, origin: null,
+            ignoreResistances: true, interruptsDoAfters: false,
+            targetPart: TargetBodyPart.Chest, partMultiplier: 1f,
+            canMiss: false, ignoreGlobalModifiers: true);
+    }
+
     [Dependency] private BodySystem _body = default!;
     [Dependency] private IGameTiming _timing = default!;
 
@@ -51,7 +66,8 @@ public sealed partial class DamageableSystem
         bool ignoreBlockers = false,
         SplitDamageBehavior splitDamageBehavior = SplitDamageBehavior.Split,
         bool canMiss = true,
-        bool increaseOnly = false)
+        bool increaseOnly = false,
+        bool ignoreGlobalModifiers = false)
     {
         damage.TrimZeros();
         if (damage.Empty)
@@ -118,7 +134,8 @@ public sealed partial class DamageableSystem
 
                 // Apply damage to this part
                 var partDamageResult = ChangeDamage((partId, partDamageable), modifiedDamage, ignoreResistances,
-                    interruptsDoAfters, origin, ignoreBlockers: ignoreBlockers);
+                    interruptsDoAfters, origin, ignoreBlockers: ignoreBlockers,
+                    increaseOnly: increaseOnly, ignoreGlobalModifiers: ignoreGlobalModifiers);
 
                 if (partDamageResult.Empty)
                     continue;
@@ -179,7 +196,8 @@ public sealed partial class DamageableSystem
         var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(uid));
         var chosenTarget = rand.Pick(possibleTargets);
         return ChangeDamage(chosenTarget, adjustedDamage, ignoreResistances,
-            interruptsDoAfters, origin, ignoreBlockers: ignoreBlockers, increaseOnly: increaseOnly);
+            interruptsDoAfters, origin, ignoreBlockers: ignoreBlockers, increaseOnly: increaseOnly,
+            ignoreGlobalModifiers: ignoreGlobalModifiers);
     }
 
     private List<float> _weights = new();

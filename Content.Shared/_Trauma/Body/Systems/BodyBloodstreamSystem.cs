@@ -6,7 +6,6 @@ using Content.Shared._Trauma.Traumas;
 using Content.Shared.Alert;
 using Content.Shared.Body;
 using Content.Shared.Body.Components;
-using Content.Shared.Body.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Popups;
 using Robust.Shared.Audio;
@@ -23,7 +22,6 @@ public sealed partial class BodyBloodstreamSystem : EntitySystem
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private BloodstreamSystem _bloodstream = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private WoundSystem _wound = default!;
     [Dependency] private EntityQuery<BleedInflicterComponent> _bleedQuery;
@@ -225,8 +223,9 @@ public sealed partial class BodyBloodstreamSystem : EntitySystem
 
         Dirty(uid, component);
 
-        if (_body.GetBody(args.Component.HoldingWoundable) is { } body)
-            _bloodstream.TryModifyBleedAmount(body, component.BleedingAmountRaw.Float());
+        if (_body.GetBody(args.Component.HoldingWoundable) is not { } body || !HasComp<BloodstreamComponent>(body)) return;
+        var update = new BloodstreamUpdateEvent();
+        RaiseLocalEvent(body, ref update);
     }
 
     [SubscribeLocalEvent]

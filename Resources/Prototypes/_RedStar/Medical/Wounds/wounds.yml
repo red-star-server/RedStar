@@ -8,6 +8,7 @@
     containers:
       Traumas: !type:Container
         ents: []
+
 - type: entity
   id: WoundBlunt
   parent: WoundBase
@@ -36,6 +37,7 @@
       VeinsDamage: 0
     mangledMultipliers:
       BoneDamage: 1
+
 - type: entity
   parent: WoundBlunt
   id: Fracture
@@ -50,6 +52,7 @@
       VeinsDamage: 0
     mangledMultipliers:
       BoneDamage: 1.2
+
 - type: entity
   id: Piercing
   parent: WoundBase
@@ -81,6 +84,7 @@
   - type: BleedInflicter
     severityThreshold: 9
     scalingSpeed: 0.5
+
 - type: entity
   parent: Piercing
   id: Puncture
@@ -98,6 +102,7 @@
   - type: BleedInflicter
     severityThreshold: 0
     scalingSpeed: 0.8
+
 - type: entity
   id: Ballistic
   parent: WoundBase
@@ -127,6 +132,7 @@
   - type: BleedInflicter
     severityThreshold: 9
     scalingSpeed: 0.5
+
 - type: entity
   id: Slash
   parent: WoundBase
@@ -153,6 +159,7 @@
       BoneDamage: 0.2
   - type: BleedInflicter
     scalingSpeed: 1.7
+
 - type: entity
   parent: Slash
   id: Laceration
@@ -169,6 +176,7 @@
       BoneDamage: 0.3
   - type: BleedInflicter
     scalingSpeed: 2
+
 - type: entity
   id: Heat
   parent: WoundBase
@@ -192,6 +200,7 @@
       VeinsDamage: 0.34
   - type: BleedRemover
     severityThreshold: 3
+
 - type: entity
   parent: Heat
   id: Burns
@@ -204,6 +213,7 @@
       OrganDamage: -0.1
       BoneDamage: 0
       VeinsDamage: 0.45
+
 - type: entity
   id: Ion
   parent: WoundBase
@@ -220,6 +230,7 @@
       OrganDamage: 0
       BoneDamage: 0
       VeinsDamage: 0
+
 - type: entity
   id: Cold
   parent: WoundBase
@@ -237,6 +248,7 @@
       OrganDamage: 0
       BoneDamage: 0
       VeinsDamage: 0.5
+
 - type: entity
   id: Holy
   parent: WoundBase
@@ -252,6 +264,7 @@
       OrganDamage: 0
       BoneDamage: 0
       VeinsDamage: 0
+
 - type: entity
   id: Shock
   parent: WoundBase
@@ -270,6 +283,7 @@
       OrganDamage: 0
       BoneDamage: 0
       VeinsDamage: 0.34
+
 - type: entity
   id: Cellular
   parent: WoundBase
@@ -288,6 +302,7 @@
       OrganDamage: 0
       BoneDamage: 0
       VeinsDamage: 0.17
+
 - type: entity
   id: Caustic
   parent: WoundBase
@@ -305,6 +320,7 @@
       OrganDamage: 0
       BoneDamage: 0
       VeinsDamage: 0.5
+
 - type: entity
   id: Radiation
   parent: WoundBase
@@ -324,6 +340,7 @@
       OrganDamage: 0.34
       BoneDamage: 0
       VeinsDamage: 0.34
+
 - type: entity
   id: Poison
   parent: WoundBase
@@ -340,21 +357,25 @@
       OrganDamage: -0.34
       BoneDamage: 0
       VeinsDamage: 0.12
+
 - type: entity
   id: BoneDamage
   components:
   - type: Trauma
     traumaType: BoneDamage
+
 - type: entity
   id: OrganDamage
   components:
   - type: Trauma
     traumaType: OrganDamage
+
 - type: entity
   id: VeinsDamage
   components:
   - type: Trauma
     traumaType: VeinsDamage
+
 - type: entity
   id: Dismemberment
   components:

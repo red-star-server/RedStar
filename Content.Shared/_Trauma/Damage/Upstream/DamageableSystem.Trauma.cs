@@ -46,6 +46,7 @@ public sealed partial class DamageableSystem
     public DamageSpecifier GetVitalDamage(DamageSpecifier damage)
     {
         var vitalDamage = new DamageSpecifier();
+        vitalDamage.CopyMetadata(damage);
         foreach (var type in _vitalOnlyDamageTypes)
         {
             if (damage.DamageDict.TryGetValue(type, out var amount))
