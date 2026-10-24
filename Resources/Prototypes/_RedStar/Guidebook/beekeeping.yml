@@ -1,0 +1,17 @@
+- type: guideEntry
+  id: Beekeeping
+  name: guide-entry-beekeeping
+  text: "/ServerInfo/_RedStar/Guidebook/Service/Beekeeping.xml"
+  children:
+  - BeekeepingAnalyzer
+  - BeekeepingQueen
+
+- type: guideEntry
+  id: BeekeepingAnalyzer
+  name: guide-entry-beekeeping-analyzer
+  text: "/ServerInfo/_RedStar/Guidebook/Service/BeekeepingAnalyzer.xml"
+
+- type: guideEntry
+  id: BeekeepingQueen
+  name: guide-entry-beekeeping-queen
+  text: "/ServerInfo/_RedStar/Guidebook/Service/BeekeepingQueen.xml"

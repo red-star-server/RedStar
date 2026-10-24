@@ -1,0 +1,14 @@
+- files: ["beehive.ogg"]
+  license: "CC0-1.0"
+  copyright: "\"Bees in hive (beehive)\" by tom_woysky (freesound.org). Trimmed to a loop by KAVALDi (github); loop point crossfaded, converted to mono OGG."
+  source: "https://freesound.org/people/tom_woysky/sounds/243011/"
+
+- files: ["bee_flying.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "\"R4_00334-1_FR_FlyInRoom.wav\" by kevp888 (Kevin Luce, freesound.org). Heavily trimmed and looped by KAVALDi (github), converted to mono OGG."
+  source: "https://freesound.org/people/kevp888/sounds/635188/"
+
+- files: ["bee_in_hand.ogg"]
+  license: "CC0-1.0"
+  copyright: "\"Bee flying loop\" by fury12 (freesound.org), based on \"Bee-Buzzing-Against-Window\" by Sonicquinn (CC0, https://freesound.org/people/Sonicquinn/sounds/435820/). Converted to mono OGG."
+  source: "https://freesound.org/people/fury12/sounds/496237/"

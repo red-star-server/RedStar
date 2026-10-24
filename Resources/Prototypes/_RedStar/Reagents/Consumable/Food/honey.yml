@@ -1,0 +1,32 @@
+- type: reagent
+  id: Honey
+  name: reagent-name-honey
+  group: Foods
+  desc: reagent-desc-honey
+  physicalDesc: reagent-physical-desc-gloopy
+  flavor: honey
+  flavorMinimum: 0.05
+  color: "#E79A3F"
+  viscosity: 0.5
+  recognizable: true
+  metabolisms:
+    Digestion:
+      effects:
+      - !type:Satiate
+        satiationType: Hunger
+        conditions:
+        - !type:ReagentCondition # Only satiates when eaten with nutriment, like sugar.
+          reagent: Nutriment
+          min: 0.1
+        factor: 1
+      # Heals a little.
+      - !type:EvenHealthChange
+        probability: 0.5
+        damage:
+          Brute: -0.6
+          Burn: -0.6
+  footstepSound:
+    collection: FootstepSticky
+    params:
+      volume: 6
+  pricePerUnit: 2
