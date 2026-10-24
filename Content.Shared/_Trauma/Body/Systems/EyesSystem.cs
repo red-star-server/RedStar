@@ -1,3 +1,4 @@
+using Content.Shared._Trauma.Traumas;
 using Robust.Shared.Prototypes;
 
 using Content.Shared._Trauma.Common.Body;
@@ -11,6 +12,7 @@ public sealed partial class EyesSystem : EntitySystem
 {
     [Dependency] private BlindableSystem _blindable = default!;
     [Dependency] private BodySystem _body = default!;
+    [Dependency] private TraumaSystem _trauma = default!;
 
     public static readonly ProtoId<OrganCategoryPrototype> EyesCategory = "Eyes";
 
@@ -33,6 +35,25 @@ public sealed partial class EyesSystem : EntitySystem
             return; // can't see anyway if you are being deleted
 
         CheckMissingEyes(args.Body);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnOrganIntegrityChanged(Entity<EyesComponent> ent, ref OrganIntegrityChangedEvent args)
+    {
+        if (args.NewIntegrity <= 0 ||
+            _body.GetBody(ent.Owner) is not {} body ||
+            !TryComp<InternalChildOrganComponent>(ent, out var organ) ||
+            !TryComp<BlindableComponent>(body, out var blindable) ||
+            organ.OrganIntegrity <= 0) // eyes should be disabled for blinding
+            return;
+
+        _blindable.SetEyeDamage((body, blindable), (int) organ.OrganIntegrity);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnEyesDamaged(Entity<EyesComponent> ent, ref BodyRelayedEvent<EyesDamagedEvent> args)
+    {
+        _trauma.TryCreateOrganDamageModifier(ent.Owner, args.Args.Damage, args.Args.Body, "BlindableDamage");
     }
 
     private void CheckMissingEyes(EntityUid body)

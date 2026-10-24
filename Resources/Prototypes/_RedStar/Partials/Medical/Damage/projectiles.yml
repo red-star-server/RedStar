@@ -1,0 +1,257 @@
+- type: entity
+  id: BulletAntiMateriel
+  components:
+  - type: Projectile
+    damage:
+      types: !Clear
+        Ballistic: 75
+        Structural: 100 # Required by the existing Wizards penetrationDamageTypeRequirement.
+      armorPenetration: 0.5
+    ignoreResistances: false
+- type: entity
+  id: BaseBullet
+  components:
+  - type: Projectile
+    damage:
+      types: !Clear
+        Ballistic: 14
+    ignoreResistances: false
+- type: entity
+  id: BaseBulletIncendiary
+  components:
+  - type: Projectile
+    damage:
+      types: !Clear
+        Ballistic: 10
+        Heat: 4
+    ignoreResistances: false
+- type: entity
+  id: BaseBulletAP
+  components:
+  - type: Projectile
+    damage:
+      types: !Clear
+        Ballistic: 11
+    increaseOnly: true
+    ignoreResistances: false
+- type: entity
+  id: BulletCaselessRifle
+  components:
+  - type: Projectile
+    damage:
+      types: !Clear
+        Ballistic: 14
+      armorPenetration: -0.39
+    ignoreResistances: false
+- type: entity
+  id: BulletHeavyRifle
+  components:
+  - type: Projectile
+    damage:
+      types: !Clear
+        Ballistic: 19
+    ignoreResistances: false
+- type: entity
+  id: BulletMinigun
+  components:
+  - type: Projectile
+    damage:
+      types: !Clear
+        Ballistic: 5
+    ignoreResistances: false
+- type: entity
+  id: BulletLightRifle
+  components:
+  - type: Projectile
+    damage:
+      types: !Clear
+        Ballistic: 15
+    ignoreResistances: false
+- type: entity
+  id: BulletLightRifleIncendiary
+  components:
+  - type: Projectile
+    damage:
+      types: !Clear
+        Ballistic: 11
+    ignoreResistances: false
+- type: entity
+  id: BulletLightRifleUranium
+  components:
+  - type: Projectile
+    damage:
+      types: !Clear
+        Ballistic: 11
+      armorPenetration: 0.5
+    ignoreResistances: false
+- type: entity
+  id: BulletMagnum
+  components:
+  - type: Projectile
+    damage:
+      types: !Clear
+        Ballistic: 20
+    ignoreResistances: false
+- type: entity
+  id: BulletMagnumIncendiary
+  components:
+  - type: Projectile
+    damage:
+      types: !Clear
+        Ballistic: 17
+    ignoreResistances: false
+- type: entity
+  id: BulletMagnumAP
+  components:
+  - type: Projectile
+    damage:
+      types: !Clear
+        Ballistic: 20
+      armorPenetration: 0.75
+    ignoreResistances: false
+- type: entity
+  id: BulletMagnumUranium
+  components:
+  - type: Projectile
+    damage:
+      types: !Clear
+        Ballistic: 17
+      armorPenetration: 0.5
+    ignoreResistances: false
+- type: entity
+  id: BulletPistol
+  components:
+  - type: Projectile
+    damage:
+      types: !Clear
+        Ballistic: 11
+    ignoreResistances: false
+- type: entity
+  id: BulletPistolIncendiary
+  components:
+  - type: Projectile
+    damage:
+      types: !Clear
+        Ballistic: 9
+    ignoreResistances: false
+- type: entity
+  id: BulletPistolUranium
+  components:
+  - type: Projectile
+    damage:
+      types: !Clear
+        Ballistic: 9
+      armorPenetration: 0.5
+    ignoreResistances: false
+- type: entity
+  id: BulletRifle
+  components:
+  - type: Projectile
+    damage:
+      types: !Clear
+        Ballistic: 13
+    ignoreResistances: false
+- type: entity
+  id: BulletRifleIncendiary
+  components:
+  - type: Projectile
+    damage:
+      types: !Clear
+        Ballistic: 10
+    ignoreResistances: false
+- type: entity
+  id: BulletRifleUranium
+  components:
+  - type: Projectile
+    damage:
+      armorPenetration: 0.5
+      types: !Clear
+        Ballistic: 10
+    ignoreResistances: false
+- type: entity
+  id: PelletShotgunSlug
+  components:
+  - type: Projectile
+    damage:
+      types: !Clear
+        Ballistic: 40
+        Structural: 15
+    ignoreResistances: false
+- type: entity
+  id: PelletShotgun
+  components:
+  - type: Projectile
+    damage:
+      types: !Clear
+        Ballistic: 3
+        Structural: 6
+    ignoreResistances: false
+- type: entity
+  id: PelletShotgunIncendiary
+  components:
+  - type: Projectile
+    damage:
+      types: !Clear
+        Ballistic: 2
+    ignoreResistances: false
+- type: entity
+  id: PelletShotgunImprovised
+  components:
+  - type: Projectile
+    damage:
+      types: !Clear
+        Ballistic: 1.5
+        Slash: 1.5
+    ignoreResistances: false
+- type: entity
+  id: PelletShotgunUranium
+  components:
+  - type: Projectile
+    damage:
+      types: !Clear
+        Ballistic: 4
+      armorPenetration: 0.5
+    ignoreResistances: false
+- type: entity
+  id: PelletGrapeshot
+  components:
+  - type: Projectile
+    damage:
+      types: !Clear
+        Ballistic: 25
+        Structural: 5
+    ignoreResistances: false
+- type: entity
+  id: BulletInstakillMagic
+  components:
+  - type: Projectile
+    damage:
+      types: !Clear
+        Ballistic: 300
+    ignoreResistances: true
+- type: entity
+  id: ProjectileIcicle
+  components:
+  - type: Projectile
+    damage:
+      types: !Clear
+        Ballistic: 20
+        Cold: 20
+        Structural: 50
+    ignoreResistances: false
+- type: entity
+  id: BulletHivebot
+  components:
+  - type: Projectile
+    damage:
+      types: !Clear
+        Ballistic: 10
+    ignoreResistances: false
+- type: entity
+  id: BulletCap
+  components:
+  - type: Projectile
+    damage:
+      types: !Clear
+        Ballistic: 0
+    ignoreResistances: false

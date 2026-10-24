@@ -1,0 +1,105 @@
+- type: entity
+  id: OrganBaseExternal
+  components:
+  - type: Bone
+  - type: CoveredPart
+  - type: Woundable
+    integrity: 120
+    integrityCap: 120
+    thresholds:
+      Minor: 100
+      Moderate: 75
+      Severe: 38
+      Critical: 15
+      Mangled: 0
+  - type: WoundableVisuals
+    thresholds: [100, 70, 50, 30, 20, 10]
+    damageGroupSprites:
+      Brute: _RedStar/Medical/Mobs/Effects/brute_damage.rsi
+      Burn: _RedStar/Medical/Mobs/Effects/burn_damage.rsi
+- type: entity
+  id: OrganBaseLimb
+  components:
+  - type: WoundableVisuals
+    bleedingOverlay: _RedStar/Medical/Mobs/Effects/bleeding_damage.rsi
+- type: entity
+  id: OrganBase
+  components:
+  - type: Damageable
+  - type: Injurable
+    damageContainer: Biological
+- type: entity
+  id: OrganBaseTorso
+  components:
+  - type: Woundable
+    canRemove: false
+    integrity: 200
+    integrityCap: 200
+    thresholds:
+      Minor: 180
+      Moderate: 120
+      Severe: 60
+      Critical: 30
+      Mangled: 0
+  - type: WoundableVisuals
+    bleedingOverlay: _RedStar/Medical/Mobs/Effects/bleeding_damage.rsi
+- type: entity
+  id: OrganBaseHead
+  components:
+  - type: Bone
+    integrityCap: 100
+    boneIntegrity: 100
+  - type: Woundable
+    integrity: 200
+    integrityCap: 200
+    thresholds:
+      Minor: 180
+      Moderate: 120
+      Severe: 60
+      Critical: 30
+      Mangled: 0
+    damageOnAmputate:
+      types:
+        Bloodloss: 45
+        Asphyxiation: 45
+        Slash: 45
+    traumaDeductions:
+      Dismemberment: 0.8
+  - type: WoundableVisuals
+    bleedingOverlay: _RedStar/Medical/Mobs/Effects/bleeding_damage.rsi
+- type: entity
+  id: OrganBaseBrain
+  components:
+  - type: InternalChildOrgan
+    intCap: 28
+    integrity: 28
+    integrityThresholds:
+      Normal: 28
+      Damaged: 16
+      Destroyed: 0
+- type: entity
+  id: OrganBaseChildInternal
+  components:
+  - type: InternalChildOrgan
+- type: entity
+  id: OrganBaseExternal
+  components:
+  - type: Appearance
+  - type: ContainerContainer
+    containers:
+      Wounds: !type:Container ''
+- type: entity
+  id: OrganBase
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTypeTrigger
+        damageType: Piercing
+        damage: 600
+      behaviors:
+      - !type:GibBehavior ''
+    - trigger: !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 400
+      behaviors:
+      - !type:GibBehavior ''

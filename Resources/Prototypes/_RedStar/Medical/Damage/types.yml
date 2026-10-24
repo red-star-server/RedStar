@@ -1,0 +1,15 @@
+- type: damageType
+  id: Ballistic
+  name: damage-type-ballistic
+  armorCoefficientPrice: 1
+  armorFlatPrice: 1
+- type: damageType
+  id: Ion
+  name: damage-type-ion
+  armorCoefficientPrice: 1
+  armorFlatPrice: 1
+- type: damageGroup
+  id: Electronic
+  name: damage-group-electronic
+  damageTypes:
+  - Ion

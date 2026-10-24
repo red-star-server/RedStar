@@ -1,3 +1,8 @@
+using Content.Shared.Mobs.Systems;
+using Content.Shared.Random.Helpers;
+using Content.Shared.Standing;
+using Robust.Shared.Timing;
+using Robust.Shared.Random;
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared._Trauma.Common.Targeting;
 using Content.Shared.Humanoid.Markings;
@@ -11,6 +16,11 @@ namespace Content.Shared.Body;
 /// </summary>
 public sealed partial class BodySystem
 {
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private MobStateSystem _mob = default!;
+    [Dependency] private StandingStateSystem _standing = default!;
+    private readonly List<EntityUid> _extremities = [];
+
     [Dependency] private CommonBodyCacheSystem _cache = default!;
     [Dependency] private CommonBodyPartSystem _part = default!;
     [Dependency] private OrganRelationSystem _relation = default!;
@@ -422,6 +432,125 @@ public sealed partial class BodySystem
 
         return true;
     }
+
+    #region Targeting
+
+    /// <summary>
+    /// This override fetches a random body part for an entity based on the attacker's selected part, which introduces a random chance to miss
+    /// so long as the entity isnt incapacitated or laying down.
+    /// </summary>
+    /// <param name="target"></param>
+    /// <param name="attacker"></param>
+    /// <param name="targetComp"></param>
+    /// <param name="attackerComp"></param>
+    /// <returns></returns>
+    public TargetBodyPart? GetRandomBodyPart(EntityUid target,
+        EntityUid attacker,
+        TargetingComponent? targetComp = null,
+        TargetingComponent? attackerComp = null)
+    {
+        if (!Resolve(target, ref targetComp, false)
+            || !Resolve(attacker, ref attackerComp, false))
+            return TargetBodyPart.Chest;
+
+        return GetRandomBodyPart(target, attackerComp.Target, targetComp);
+    }
+
+    public TargetBodyPart GetRandomBodyPart(EntityUid target,
+        TargetBodyPart targetPart = TargetBodyPart.Chest,
+        TargetingComponent? targetComp = null)
+    {
+        if (!Resolve(target, ref targetComp, false))
+            return TargetBodyPart.Chest;
+
+        if (_mob.IsIncapacitated(target)
+            || _standing.IsDown(target))
+            return targetPart;
+
+        var totalWeight = targetComp.TargetOdds[targetPart].Values.Sum();
+        var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(target));
+        var randomValue = rand.NextFloat() * totalWeight;
+
+        foreach (var (part, weight) in targetComp.TargetOdds[targetPart])
+        {
+            if (randomValue <= weight)
+                return part;
+            randomValue -= weight;
+        }
+
+        return TargetBodyPart.Chest;
+    }
+
+    public TargetBodyPart GetRandomBodyPart(EntityUid target)
+    {
+        var children = GetVitalParts(target);
+        if (children.Count == 0)
+            return TargetBodyPart.Chest;
+
+        var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(target));
+        return _part.GetTargetBodyPart(rand.Pick(children)) ?? TargetBodyPart.Chest;
+    }
+
+    public TargetBodyPart GetRandomBodyPart(EntityUid target,
+        EntityUid? attacker,
+        TargetBodyPart? targetPart = null,
+        TargetingComponent? targetComp = null)
+    {
+        if (!Resolve(target, ref targetComp, false))
+            return TargetBodyPart.Chest;
+
+        if (targetPart.HasValue)
+            return GetRandomBodyPart(target, targetPart: targetPart.Value);
+
+        if (attacker.HasValue
+            && TryComp(attacker.Value, out TargetingComponent? attackerComp))
+            return GetRandomBodyPart(target, targetPart: attackerComp.Target);
+
+        return GetRandomBodyPart(target);
+    }
+
+    public TargetBodyPart GetTargetBodyPart(EntityUid target,
+        EntityUid? attacker,
+        TargetBodyPart? targetPart = null,
+        TargetingComponent? targetComp = null)
+    {
+        if (!Resolve(target, ref targetComp, false))
+            return TargetBodyPart.Chest;
+
+        if (targetPart.HasValue)
+            return targetPart.Value;
+
+        if (attacker.HasValue
+            && TryComp(attacker.Value, out TargetingComponent? attackerComp))
+            return attackerComp.Target;
+
+        return GetRandomBodyPart(target);
+    }
+
+    /// <summary>
+    /// Gets a random bodypart that has no child parts, like a hand or an arm with no hand attached.
+    /// </summary>
+    public TargetBodyPart GetRandomExtremity(Entity<BodyComponent?> body)
+    {
+        if (!_bodyQuery.Resolve(body, ref body.Comp, false))
+            return TargetBodyPart.Chest;
+
+        _extremities.Clear();
+        foreach (var part in GetExternalOrgans(body))
+        {
+            if (IsExtremity(part))
+                _extremities.Add(part);
+        }
+
+        if (_extremities.Count == 0)
+            return TargetBodyPart.Chest; // should never happen...
+
+        var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(body));
+        var picked = rand.Pick(_extremities);
+        return _part.GetTargetBodyPart(picked) ?? TargetBodyPart.Chest;
+    }
+
+    #endregion
 
     private bool IsDetached(EntityUid uid) => (MetaData(uid).Flags & MetaDataFlags.Detached) != 0;
 }

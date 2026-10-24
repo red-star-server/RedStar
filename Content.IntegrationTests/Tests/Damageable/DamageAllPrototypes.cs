@@ -1,3 +1,6 @@
+using System.Linq; // RS14
+using Content.Shared.Body; // RS14
+using Content.Shared._Trauma.Body; // RS14
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Utility;
@@ -50,16 +53,25 @@ public sealed class DamageAllPrototypesTest : GameTest
                         if (!_damageableSystem.CanBeDamagedBy(entity, type))
                             continue;
 
+                        // RS14-start: body-level Injurable describes the old model; parts have their own containers.
+                        var parts = SEntMan.System<BodyPartSystem>();
+                        if (parts.GetRootPart(entity) != null && !SEntMan.System<BodySystem>()
+                                .GetExternalOrgans(entity).Any(part => _damageableSystem.CanBeDamagedBy(part.Owner, type)))
+                            continue;
+                        // RS14-end
                         canBeDamaged = true;
 
                         await Server.WaitAssertion(() =>
                         {
-                            var damage = new DamageSpecifier(type, FixedPoint2.Epsilon);
+                            // RS14-start: vital damage is split between torso and head; one epsilon rounds to zero.
+                            var testDamage = FixedPoint2.Epsilon * 2;
+                            var damage = new DamageSpecifier(type, testDamage);
+                            // RS14-end
                             var previousDamage = _damageableSystem.GetTotalDamage(entity);
                             _damageableSystem.ChangeDamage(entity, damage, ignoreResistances: true);
                             Assert.That(
                                 _damageableSystem.GetTotalDamage(entity),
-                                Is.EqualTo(FixedPoint2.Epsilon + previousDamage),
+                                Is.EqualTo(testDamage + previousDamage), // RS14
                                 $"{injurable} should take {type.ID} damage.");
 
                             _damageableSystem.ClearAllDamage(entity);

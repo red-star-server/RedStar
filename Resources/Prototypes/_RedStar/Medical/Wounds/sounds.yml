@@ -1,0 +1,20 @@
+- type: soundCollection
+  id: BoneGone
+  files:
+  - /Audio/_RedStar/Medical/Bone/BoneGone1.ogg
+  - /Audio/_RedStar/Medical/Bone/BoneGone2.ogg
+  - /Audio/_RedStar/Medical/Bone/BoneGone3.ogg
+  - /Audio/_RedStar/Medical/Bone/BoneGone4.ogg
+  - /Audio/_RedStar/Medical/Bone/BoneGone5.ogg
+- type: soundCollection
+  id: WoundableDestroyed
+  files:
+  - /Audio/_RedStar/Medical/Woundables/WoundableDestroyed1.ogg
+  - /Audio/_RedStar/Medical/Woundables/WoundableDestroyed2.ogg
+- type: soundCollection
+  id: WoundableDelimbed
+  files:
+  - /Audio/_RedStar/Medical/Woundables/WoundableAmputated1.ogg
+  - /Audio/_RedStar/Medical/Woundables/WoundableAmputated2.ogg
+  - /Audio/_RedStar/Medical/Woundables/WoundableAmputated3.ogg
+  - /Audio/_RedStar/Medical/Woundables/WoundableAmputated4.ogg

@@ -452,7 +452,12 @@ public sealed partial class ExplosionSystem
                     continue;
 
                 // TODO EXPLOSIONS turn explosions into entities, and pass the the entity in as the damage origin.
-                _damageableSystem.ChangeDamage((entity, damageable), damage);
+                // RS14-start
+                if (TryComp<Content.Shared.Body.BodyComponent>(entity, out var body) && _bodyParts.GetRootPart(entity) != null)
+                    DamageBody((entity, body), originalDamage, id);
+                else
+                    _damageableSystem.ChangeDamage((entity, damageable), damage);
+                // RS14-end
 
                 if (_actorQuery.HasComp(entity))
                 {
@@ -800,6 +805,7 @@ sealed class Explosion
                            * _damageable.UniversalExplosionDamageModifier
                            * _damageable.UniversalAllDamageModifier;
             _currentDamage = ExplosionType.DamagePerIntensity * modifier;
+            _system.ModifyWoundSeverities(_currentDamage); // RS14
 
             // only throw if either the explosion is small, or if this is the outer ring of a large explosion.
             var doThrow = Area < _system.ThrowLimit || CurrentIteration > _tileSetIntensity.Count - 6;
