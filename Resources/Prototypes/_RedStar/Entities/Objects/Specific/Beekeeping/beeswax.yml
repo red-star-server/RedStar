@@ -1,0 +1,36 @@
+- type: entity
+  parent: BaseItem
+  id: Beeswax
+  name: beeswax
+  description: Wax cut from a capped hive frame. Good for candles and new frames.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Objects/Specific/Beekeeping/wax.rsi
+    state: icon
+  - type: Item
+    size: Small
+  - type: Stack
+    stackType: Beeswax
+    count: 1
+  - type: StackPrice
+    price: 5
+  - type: Tag
+    tags:
+    - Beeswax
+  - type: GuideHelp
+    guides:
+    - Beekeeping
+
+# A beeswax candle is an ordinary candle that remembers its recipe. The crafting test needs the result to carry Construction.
+- type: entity
+  parent: Candle
+  id: CandleBeeswax
+  name: beeswax candle
+  description: A candle made from beeswax. Smells faintly of honey.
+  components:
+  - type: Construction
+    graph: BeeswaxCandle
+    node: candle
+  - type: GuideHelp
+    guides:
+    - Beekeeping

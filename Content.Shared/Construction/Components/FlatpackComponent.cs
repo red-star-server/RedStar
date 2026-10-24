@@ -37,6 +37,14 @@ public sealed partial class FlatpackComponent : Component
     /// </summary>
     [DataField]
     public Dictionary<string, Color> BoardColors = new();
+
+    // RS14-start
+    /// <summary>
+    /// Examine line that says which tool unpacks it.
+    /// </summary>
+    [DataField]
+    public LocId ExamineText = "flatpack-examine";
+    // RS14-end
 }
 
 [Serializable, NetSerializable]

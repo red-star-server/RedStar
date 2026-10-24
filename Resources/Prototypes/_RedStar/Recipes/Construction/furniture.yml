@@ -1,0 +1,8 @@
+- type: construction
+  parent: BaseFurniture
+  id: Beehive
+  graph: Beehive
+  targetNode: beehive
+  canRotate: false
+  conditions:
+  - !type:TileNotBlocked
