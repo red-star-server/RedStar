@@ -223,6 +223,7 @@
     - PartsStatic
     - ChemistryStatic
     - HydroponicsStatic
+    - BeekeepingStatic
     dynamicPacks:
     - Janitor
     - Instruments

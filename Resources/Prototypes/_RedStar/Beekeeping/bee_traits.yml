@@ -1,0 +1,196 @@
+# Bee traits. Unstable mutagen injected into a queen rolls them: "weight" to gain a trait she lacks, "lossWeight"
+# to lose one she has. Effects add up across traits. Numbers are starting values, to be tuned in play.
+
+# The cargo queen has it from the start. Innate: takes no slot; mutagen can take it away or give it back.
+- type: beeTrait
+  id: PestControl
+  name: bee-trait-pest-control
+  description: bee-trait-pest-control-desc
+  color: "#7CC46A"
+  innate: true
+  pestControl: true
+
+# Payload: with a sting, reagents injected into the queen go into her bees' stings and into the combs.
+- type: beeTrait
+  id: Sting
+  name: bee-trait-sting
+  description: bee-trait-sting-desc
+  color: "#D9534F"
+  sting: true
+
+- type: beeTrait
+  id: Aggressive
+  name: bee-trait-aggressive
+  description: bee-trait-aggressive-desc
+  color: "#E0603A"
+  aggressive: true
+
+# Combs faster, but each comb costs more nectar.
+- type: beeTrait
+  id: Productive
+  name: bee-trait-productive
+  description: bee-trait-productive-desc
+  color: "#F2C14E"
+  combRate: 1.5
+  combCost: 1.25
+
+- type: beeTrait
+  id: EfficientForaging
+  name: bee-trait-efficient-foraging
+  description: bee-trait-efficient-foraging-desc
+  color: "#E79A3F"
+  nectarPerVisit: 1.5
+
+# A better chance to double the harvest, one pollination less per bee.
+- type: beeTrait
+  id: ImprovedPollination
+  name: bee-trait-improved-pollination
+  description: bee-trait-improved-pollination-desc
+  color: "#B58BD8"
+  pollinationChance: 2
+  pollinatorCharges: -1
+
+# The scout brings home up to three trays from one flight: the one it lands on and the ones next to it.
+- type: beeTrait
+  id: KeenScout
+  name: bee-trait-keen-scout
+  description: bee-trait-keen-scout-desc
+  color: "#6FB8E0"
+  scoutFinds: 2
+
+# New bees cost less nectar and the queen lays more often: the colony grows faster.
+- type: beeTrait
+  id: Fertile
+  name: bee-trait-fertile
+  description: bee-trait-fertile-desc
+  color: "#F2A0C0"
+  beeCost: 0.6
+  layRate: 1.5
+
+# Bees taken out of the hive live half as long again.
+- type: beeTrait
+  id: Hardy
+  name: bee-trait-hardy
+  description: bee-trait-hardy-desc
+  color: "#A0C878"
+  lifetime: 1.5
+
+# Each pollination works on the plant like 1u of unstable mutagen poured into the tray.
+- type: beeTrait
+  id: MutagenicPollination
+  name: bee-trait-mutagenic-pollination
+  description: bee-trait-mutagenic-pollination-desc
+  color: "#5FE08A"
+  pollinationMutation: 1
+
+# A colony that loses this queen raises a new, plain one by itself.
+- type: beeTrait
+  id: EmergencyQueen
+  name: bee-trait-emergency-queen
+  description: bee-trait-emergency-queen-desc
+  color: "#E8D36F"
+  emergencyQueen: true
+
+# Bad traits: mutagen can give these too.
+
+# Workers build combs slowly.
+- type: beeTrait
+  id: Lazy
+  bad: true
+  name: bee-trait-lazy
+  description: bee-trait-lazy-desc
+  color: "#9A9A9A"
+  combRate: 0.6
+
+# Each comb eats more nectar.
+- type: beeTrait
+  id: Gluttonous
+  bad: true
+  name: bee-trait-gluttonous
+  description: bee-trait-gluttonous-desc
+  color: "#C07A4A"
+  combCost: 1.5
+
+# Bees taken out of the hive die sooner.
+- type: beeTrait
+  id: Frail
+  bad: true
+  name: bee-trait-frail
+  description: bee-trait-frail-desc
+  color: "#B0A0D0"
+  lifetime: 0.6
+
+# Pollination doubles the harvest half as often.
+- type: beeTrait
+  id: Clumsy
+  bad: true
+  name: bee-trait-clumsy
+  description: bee-trait-clumsy-desc
+  color: "#A08070"
+  pollinationChance: 0.5
+
+# Each visit brings less nectar.
+- type: beeTrait
+  id: Sluggish
+  bad: true
+  name: bee-trait-sluggish
+  description: bee-trait-sluggish-desc
+  color: "#7A8A9A"
+  nectarPerVisit: 0.6
+
+# Egg traits: they change how soon a full colony lays the queen's egg, how long it lives and how soon the next comes.
+- type: beeTrait
+  id: EarlyEgg
+  name: bee-trait-early-egg
+  description: bee-trait-early-egg-desc
+  color: "#F5E6A8"
+  eggWait: 0.5
+
+- type: beeTrait
+  id: HardyEgg
+  name: bee-trait-hardy-egg
+  description: bee-trait-hardy-egg-desc
+  color: "#C9E4A0"
+  eggLife: 1.6
+
+- type: beeTrait
+  id: SwiftQueen
+  name: bee-trait-swift-queen
+  description: bee-trait-swift-queen-desc
+  color: "#9FD6F2"
+  eggCooldown: 0.5
+
+- type: beeTrait
+  id: LazyQueen
+  name: bee-trait-lazy-queen
+  description: bee-trait-lazy-queen-desc
+  color: "#8F7FA8"
+  bad: true
+  eggWait: 1.6
+
+- type: beeTrait
+  id: FragileEgg
+  name: bee-trait-fragile-egg
+  description: bee-trait-fragile-egg-desc
+  color: "#D8A7A7"
+  bad: true
+  eggLife: 0.5
+
+# Every hit on the hive lets two bees out instead of one, and a smaller blow lets another out.
+- type: beeTrait
+  id: Hotheaded
+  name: bee-trait-hotheaded
+  description: bee-trait-hotheaded-desc
+  color: "#FF7043"
+  bad: true
+  angryPerHit: 1
+  angryDamageStep: 0.5
+
+# Rarer than the others: the scout comes out of the hive last when the bees are angry.
+- type: beeTrait
+  id: GuardedScout
+  name: bee-trait-guarded-scout
+  description: bee-trait-guarded-scout-desc
+  color: "#4FC3F7"
+  weight: 0.5
+  guardedScout: true

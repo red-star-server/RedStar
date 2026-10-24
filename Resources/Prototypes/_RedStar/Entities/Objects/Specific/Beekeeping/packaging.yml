@@ -1,0 +1,42 @@
+# What the beekeeping crate holds: a hive that fits back into the crate and a queen that comes alive when unwrapped.
+
+- type: entity
+  parent: BaseFlatpack
+  id: BeehiveFlatpack
+  name: beehive flatpack
+  description: A flat-packed beehive.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Objects/Specific/Beekeeping/beehive-flatpack.rsi
+    layers:
+    - state: icon
+  - type: Flatpack
+    entity: Beehive
+    qualityNeeded: Prying
+    examineText: beekeeping-flatpack-examine
+  - type: StaticPrice
+    price: 100
+  - type: GuideHelp
+    guides:
+    - Beekeeping
+
+- type: entity
+  parent: BaseItem
+  id: BeeQueenPackage
+  name: packaged queen bee
+  description: A queen bee asleep in a breathable box. Open it in hand to wake her.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Objects/Specific/Beekeeping/queen-package.rsi
+    state: icon
+  - type: Item
+    size: Small
+  - type: SpawnItemsOnUse
+    items:
+    - id: BeeQueen
+    # The same tear as opening a bag of sugar or salt.
+    sound:
+      collection: packetOpenSounds
+  - type: GuideHelp
+    guides:
+    - Beekeeping

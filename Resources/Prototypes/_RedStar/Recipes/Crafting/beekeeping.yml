@@ -1,0 +1,11 @@
+- type: construction
+  parent: BaseItemMisc
+  id: BeeFrame
+  graph: BeeFrame
+  targetNode: frame
+
+- type: construction
+  parent: BaseItemMisc
+  id: BeeswaxCandle
+  graph: BeeswaxCandle
+  targetNode: candle
