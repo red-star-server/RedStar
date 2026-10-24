@@ -9,6 +9,8 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
+using Robust.Shared.GameObjects; // RS14
+using Robust.Shared.Prototypes; // RS14
 
 namespace Content.IntegrationTests.Tests.Damageable;
 
@@ -50,13 +52,13 @@ public sealed class DamageAllPrototypesTest : GameTest
 
                     foreach (var type in SProtoMan.EnumeratePrototypes<DamageTypePrototype>())
                     {
-                        if (!_damageableSystem.CanBeDamagedBy(entity, type))
+                        if (!SupportsDamageType(entity, type)) // RS14
                             continue;
 
                         // RS14-start: body-level Injurable describes the old model; parts have their own containers.
                         var parts = SEntMan.System<BodyPartSystem>();
                         if (parts.GetRootPart(entity) != null && !SEntMan.System<BodySystem>()
-                                .GetExternalOrgans(entity).Any(part => _damageableSystem.CanBeDamagedBy(part.Owner, type)))
+                                .GetExternalOrgans(entity).Any(part => SupportsDamageType(part.Owner, type)))
                             continue;
                         // RS14-end
                         canBeDamaged = true;
@@ -92,4 +94,20 @@ public sealed class DamageAllPrototypesTest : GameTest
             await Server.WaitPost(() => SEntMan.DeleteEntity(map.MapUid));
         }
     }
+
+    // RS14-start
+    // Validate the Injurable container's declared types, rather than predicting arbitrary damage events.
+    private bool SupportsDamageType(EntityUid uid, ProtoId<DamageTypePrototype> type)
+    {
+        if (!SEntMan.TryGetComponent<InjurableComponent>(uid, out var injurable))
+            return false;
+
+        if (injurable.DamageContainer is not { } id)
+            return true;
+
+        var container = SProtoMan.Index(id);
+        return container.SupportedTypes.Contains(type)
+            || container.SupportedGroups.Any(group => SProtoMan.Index(group).DamageTypes.Contains(type));
+    }
+    // RS14-end
 }

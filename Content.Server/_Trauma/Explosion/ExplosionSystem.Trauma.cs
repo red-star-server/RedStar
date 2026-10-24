@@ -44,9 +44,9 @@ public sealed partial class ExplosionSystem
             RaiseLocalEvent(part, ref resistanceEv);
             resistanceEv.DamageCoefficient = Math.Max(0, resistanceEv.DamageCoefficient);
 
-            var partDamage = resistanceEv.DamageCoefficient != 1
-                ? damage * resistanceEv.DamageCoefficient
-                : damage;
+            var partDamage = resistanceEv.DamageCoefficient.Equals(1f)
+                ? damage
+                : damage * resistanceEv.DamageCoefficient;
 
             partDamage *= multipliers[i];
             _damageableSystem.ChangeDamage(part.Owner, partDamage, ignoreResistances: true, ignoreGlobalModifiers: true);

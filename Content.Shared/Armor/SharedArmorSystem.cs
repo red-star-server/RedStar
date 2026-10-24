@@ -60,7 +60,7 @@ public abstract partial class SharedArmorSystem : EntitySystem
             return;
 
         var modifierSet = DamageSpecifier.PenetrateArmor(component.Modifiers, args.Args.Damage.ArmorPenetration);
-        if (mult == 1f)
+        if (mult.Equals(1f))
         {
             args.Args.Damage = DamageSpecifier.ApplyModifierSet(args.Args.Damage, modifierSet);
             return;

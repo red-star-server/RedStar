@@ -457,7 +457,7 @@ public sealed partial class BodySystem
     }
 
     public TargetBodyPart GetRandomBodyPart(EntityUid target,
-        TargetBodyPart targetPart = TargetBodyPart.Chest,
+        TargetBodyPart targetPart,
         TargetingComponent? targetComp = null)
     {
         if (!Resolve(target, ref targetComp, false))
