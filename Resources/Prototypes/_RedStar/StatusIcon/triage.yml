@@ -1,0 +1,34 @@
+- type: statusIcon
+  id: MedicalTriageIconBase
+  abstract: true
+  priority: 4
+  locationPreference: Left
+  isShaded: true
+
+- type: statusIcon
+  parent: MedicalTriageIconBase
+  id: MedicalTriageIconMinor
+  icon:
+    sprite: /Textures/_RedStar/Interface/Misc/triage_icons.rsi
+    state: minor
+
+- type: statusIcon
+  parent: MedicalTriageIconBase
+  id: MedicalTriageIconDelayed
+  icon:
+    sprite: /Textures/_RedStar/Interface/Misc/triage_icons.rsi
+    state: delayed
+
+- type: statusIcon
+  parent: MedicalTriageIconBase
+  id: MedicalTriageIconImmediate
+  icon:
+    sprite: /Textures/_RedStar/Interface/Misc/triage_icons.rsi
+    state: immediate
+
+- type: statusIcon
+  parent: MedicalTriageIconBase
+  id: MedicalTriageIconExpectant
+  icon:
+    sprite: /Textures/_RedStar/Interface/Misc/triage_icons.rsi
+    state: expectant

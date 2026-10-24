@@ -1,4 +1,5 @@
 using Content.Shared._RedStar.Records;
+using Content.Shared.Access.Systems;
 using Content.Shared.Station.Systems;
 using Content.Shared.StationRecords;
 using Content.Shared.StationRecords.Components;
@@ -12,7 +13,9 @@ public sealed partial class MedicalRecordsConsoleSystem : EntitySystem
 {
     [Dependency] private CharacterDossierSystem _dossiers = default!;
     [Dependency] private StationRecordsSystem _records = default!;
+    [Dependency] private MedicalTriageSystem _triage = default!;
     [Dependency] private StationSystem _station = default!;
+    [Dependency] private AccessReaderSystem _access = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
     [Dependency] private EntityQuery<StationRecordsComponent> _stationRecordsQuery;
 
@@ -23,13 +26,11 @@ public sealed partial class MedicalRecordsConsoleSystem : EntitySystem
         {
             events.Event<BoundUIOpenedEvent>(OnOpened);
             events.Event<MedicalRecordSelectMessage>(OnSelected);
+            events.Event<MedicalTriageSetPriorityMessage>(OnSetPriority);
         });
     }
 
-    private void OnOpened(Entity<MedicalRecordsConsoleComponent> ent, ref BoundUIOpenedEvent args)
-    {
-        UpdateUi(ent);
-    }
+    private void OnOpened(Entity<MedicalRecordsConsoleComponent> ent, ref BoundUIOpenedEvent args) => UpdateUi(ent);
 
     private void OnSelected(Entity<MedicalRecordsConsoleComponent> ent, ref MedicalRecordSelectMessage args)
     {
@@ -37,20 +38,50 @@ public sealed partial class MedicalRecordsConsoleSystem : EntitySystem
         UpdateUi(ent);
     }
 
-    [SubscribeLocalEvent]
-    private void OnRecordModified(Entity<MedicalRecordsConsoleComponent> ent, ref RecordModifiedEvent args) => UpdateUi(ent);
-
-    [SubscribeLocalEvent]
-    private void OnGeneralRecordCreated(Entity<MedicalRecordsConsoleComponent> ent, ref GeneralRecordCreatedEvent args) => UpdateUi(ent);
-
-    [SubscribeLocalEvent]
-    private void OnRecordRemoved(Entity<MedicalRecordsConsoleComponent> ent, ref RecordRemovedEvent args) => UpdateUi(ent);
-
-    [SubscribeLocalEvent]
-    private void OnDossierModified(Entity<MedicalRecordsConsoleComponent> ent, ref CharacterDossierModifiedEvent args)
+    private bool TryGetEditableKey(Entity<MedicalRecordsConsoleComponent> ent, EntityUid actor,
+        out StationRecordKey key)
     {
-        if (_station.GetOwningStation(ent.Owner) == args.Key.OriginStation)
-            UpdateUi(ent);
+        key = default;
+        if (!_access.IsAllowed(actor, ent.Owner) ||
+            _station.GetOwningStation(ent.Owner) is not { } station ||
+            ent.Comp.ActiveKey is not { } id)
+            return false;
+
+        key = new StationRecordKey(id, station);
+        return true;
+    }
+
+    private void OnSetPriority(Entity<MedicalRecordsConsoleComponent> ent, ref MedicalTriageSetPriorityMessage args)
+    {
+        if (TryGetEditableKey(ent, args.Actor, out var key))
+            _triage.SetPriority(key, args.Priority, args.Actor);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnRecordModified(ref RecordModifiedEvent args) => UpdateOpenConsoles(args.Key.OriginStation);
+
+    [SubscribeLocalEvent]
+    private void OnGeneralRecordCreated(ref GeneralRecordCreatedEvent args) => UpdateOpenConsoles(args.Station);
+
+    [SubscribeLocalEvent]
+    private void OnRecordRemoved(ref RecordRemovedEvent args) => UpdateOpenConsoles(args.Station);
+
+    [SubscribeLocalEvent]
+    private void OnDossierModified(CharacterDossierModifiedEvent args) => UpdateOpenConsoles(args.Key.OriginStation);
+
+    [SubscribeLocalEvent]
+    private void OnTriageChanged(MedicalTriageChangedEvent args) => UpdateOpenConsoles(args.Key.OriginStation);
+
+    private void UpdateOpenConsoles(EntityUid station)
+    {
+        var query = EntityQueryEnumerator<MedicalRecordsConsoleComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            if (_station.GetOwningStation(uid) != station)
+                continue;
+
+            UpdateUi((uid, comp));
+        }
     }
 
     private void UpdateUi(Entity<MedicalRecordsConsoleComponent> ent)
@@ -69,15 +100,20 @@ public sealed partial class MedicalRecordsConsoleSystem : EntitySystem
         var listing = _records.BuildListing((station, stationRecords), null);
         GeneralStationRecord? general = null;
         CharacterDossier? dossier = null;
+        MedicalTriagePriority? triage = null;
         if (ent.Comp.ActiveKey is { } id)
         {
             var key = new StationRecordKey(id, station);
             _records.TryGetRecord(key, out general, stationRecords);
-            if (_dossiers.TryGet(key, out var stored))
-                dossier = stored.ForSection(DossierSection.Medical);
+            if (general != null)
+            {
+                if (_dossiers.TryGet(key, out var stored))
+                    dossier = stored.ForSection(DossierSection.Medical);
+                triage = _triage.Get(key);
+            }
         }
 
         _ui.SetUiState(ent.Owner, MedicalRecordsConsoleKey.Key,
-            new MedicalRecordsConsoleState(listing, ent.Comp.ActiveKey, general, dossier));
+            new MedicalRecordsConsoleState(listing, ent.Comp.ActiveKey, general, dossier, triage));
     }
 }
