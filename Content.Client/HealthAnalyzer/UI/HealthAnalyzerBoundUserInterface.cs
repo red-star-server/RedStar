@@ -16,6 +16,7 @@ public sealed partial class HealthAnalyzerBoundUserInterface(EntityUid owner, En
         base.Open();
 
         _window = this.CreateWindow<HealthAnalyzerWindow>();
+        InitializeTriage(); // RS14
         _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
     }
 
@@ -28,6 +29,7 @@ public sealed partial class HealthAnalyzerBoundUserInterface(EntityUid owner, En
         if (_window == null || state is not HealthAnalyzerUiState cast)
             return;
 
+        UpdateTriageTarget(cast); // RS14
         _window.Populate(cast);
     }
 }

@@ -11,10 +11,12 @@ public sealed partial class HealthAnalyzerWindow : FancyWindow
     public HealthAnalyzerWindow()
     {
         RobustXamlLoader.Load(this);
+        InitializeTriage(); // RS14
     }
 
     public void Populate(HealthAnalyzerUiState state)
     {
         HealthAnalyzer.Populate(state);
+        UpdateTriage(state); // RS14
     }
 }

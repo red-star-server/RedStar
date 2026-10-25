@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "license": "CC0-1.0",
+    "copyright": "delayed, expectant, immediate, minor by Janet Blackquill <uhhadd@gmail.com> 2025; sourced from DeltaV-Station/Delta-v commit e2c63a83b35a3983dad46082d77e18aafbfd4392",
+    "size": {
+        "x": 8,
+        "y": 8
+    },
+    "states": [
+        {
+            "name": "minor"
+        },
+        {
+            "name": "delayed"
+        },
+        {
+            "name": "immediate"
+        },
+        {
+            "name": "expectant"
+        }
+    ]
+}
