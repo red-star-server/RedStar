@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Medical.Cryogenics;
 
 [RegisterComponent]
-[NetworkedComponent]
+[NetworkedComponent, AutoGenerateComponentState] // RS14
 public sealed partial class InsideCryoPodComponent: Component
 {
     [ViewVariables]

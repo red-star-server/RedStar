@@ -198,8 +198,13 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
         }
         else
         {
+            var insidePod = ent.Comp.BodyContainer.ContainedEntity; // RS14
             RemComp<ActiveCryoPodComponent>(ent);
             UI.CloseUi(ent.Owner, HealthAnalyzerUiKey.Key);
+            // RS14-start
+            if (insidePod is {} patient)
+                _sleeping.TryWaking(patient);
+            // RS14-end
         }
 
         UpdateAppearance(ent.Owner, ent.Comp);

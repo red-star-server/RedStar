@@ -142,7 +142,11 @@ public sealed partial class RespiratorSystem : EntitySystem
         if (ev.Gas is null)
             return;
 
-        var gas = ev.Gas.RemoveVolume(entity.Comp.BreathVolume);
+        // RS14-start
+        var volumeEv = new Content.Shared._Trauma.Common.Body.ModifyInhaledVolumeEvent(entity.Comp.BreathVolume);
+        RaiseLocalEvent(entity, ref volumeEv);
+        var gas = ev.Gas.RemoveVolume(volumeEv.Volume);
+        // RS14-end
 
         var inhaleEv = new InhaledGasEvent(gas);
         RaiseLocalEvent(entity, ref inhaleEv);
@@ -187,7 +191,7 @@ public sealed partial class RespiratorSystem : EntitySystem
     /// </summary>
     public bool IsBreathing(Entity<RespiratorComponent?> ent)
     {
-        if (_mobState.IsIncapacitated(ent))
+        if (_mobState.IsIncapacitated(ent) && !_mobState.IsSoftCrit(ent.Owner)) // RS14
             return false;
 
         if (!Resolve(ent, ref ent.Comp))

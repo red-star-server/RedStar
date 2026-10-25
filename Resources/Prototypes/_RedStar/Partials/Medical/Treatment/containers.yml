@@ -1,0 +1,13 @@
+- type: entity
+  id: PillCanister
+  description: Holds up to 15 pills.
+  components:
+  - type: Storage
+    grid: !Clear
+    - 0,0,4,2
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/_RedStar/Medical/Items/Handling/pillbottle_pickup.ogg
+  - type: EmitSoundOnDrop
+    sound:
+      path: /Audio/_RedStar/Medical/Items/Handling/pillbottle_drop.ogg

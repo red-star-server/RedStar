@@ -1,3 +1,7 @@
+// RS14-start
+using Content.Shared._Trauma.Common.EntityEffects;
+using Content.Shared.Temperature.Components;
+// RS14-end
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
@@ -20,7 +24,19 @@ public sealed partial class EvenHealthChangeEntityEffectSystem : EntityEffectSys
     {
         foreach (var (group, amount) in args.Effect.Damage)
         {
-            _damageable.HealEvenly(entity.AsNullable(), amount * args.Scale, group);
+            // RS14-start - pass healing to HealEvenly, modify it with temperature if set to
+            var healing = amount * args.Scale;
+            if (args.Effect.ScaleByTemperature is {} scaleTemp)
+            {
+                if (!TryComp<TemperatureComponent>(entity, out var temp))
+                    return; // condition stays the same so this is actually a good return in loop
+
+                healing *= scaleTemp.GetEfficiencyMultiplier(temp.Temperature, args.Scale, false);
+                if (healing >= 0)
+                    continue; // efficiency multiplier was 0? skip
+            }
+            _damageable.HealEvenly(entity.AsNullable(), healing, group);
+            // RS14-end
         }
     }
 }
@@ -39,6 +55,14 @@ public sealed partial class EvenHealthChange : EntityEffectBase<EvenHealthChange
     /// </summary>
     [DataField]
     public bool IgnoreResistances = true;
+    // RS14-start
+
+    /// <summary>
+    /// Shitmed - How to scale the effect based on the temperature of the target entity.
+    /// </summary>
+    [DataField]
+    public TemperatureScaling? ScaleByTemperature;
+    // RS14-end
 
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
     {

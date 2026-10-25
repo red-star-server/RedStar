@@ -329,7 +329,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     }
 
     public void TakeStaminaDamage(EntityUid uid, float value, StaminaComponent? component = null,
-        EntityUid? source = null, EntityUid? with = null, bool visual = true, SoundSpecifier? sound = null, bool ignoreResist = false)
+        EntityUid? source = null, EntityUid? with = null, bool visual = true, SoundSpecifier? sound = null, bool ignoreResist = false, bool immediate = true) // RS14
     {
         if (!Resolve(uid, ref component, false))
             return;
@@ -378,7 +378,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         {
             if (component.StaminaDamage >= component.CritThreshold)
             {
-                EnterStamCrit(uid, component);
+                EnterStamCrit(uid, component, immediate); // RS14
             }
         }
         else
@@ -452,11 +452,20 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         }
     }
 
-    private void EnterStamCrit(EntityUid uid, StaminaComponent? component = null)
+    private void EnterStamCrit(EntityUid uid, StaminaComponent? component = null, bool hardStun = true) // RS14
     {
         if (!Resolve(uid, ref component) ||
             component.Critical)
         {
+            // RS14-start
+            return;
+        }
+
+        if (!hardStun)
+        {
+            if (!HasComp<KnockedDownComponent>(uid))
+                StunSystem.TryKnockdown(uid, component.StunTime, true);
+            // RS14-end
             return;
         }
 

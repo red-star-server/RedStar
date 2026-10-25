@@ -51,5 +51,7 @@ ent-Pill = таблетка
     .desc = Это не свеча.
 ent-SolutionPill = { ent-SolutionFood }
     .desc = { ent-SolutionFood.desc }
+# RS14-start
 ent-PillCanister = баночка для таблеток
-    .desc = Вмещает до 10 таблеток.
+    .desc = Вмещает до 15 таблеток.
+# RS14-end

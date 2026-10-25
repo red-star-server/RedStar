@@ -122,6 +122,7 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
             new DoAfterArgs(EntityManager, user, ent.Comp.DoAfterDuration, new DefibrillatorZapDoAfterEvent(),
             ent.Owner, target, ent.Owner)
             {
+                MultiplyDelay = false, // RS14
                 NeedHand = true,
                 BreakOnMove = !ent.Comp.AllowDoAfterMovement
             });
@@ -203,12 +204,16 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
         {
             TryComp<MobStateComponent>(target, out var targetMobState);
 
-            _damageable.TryChangeDamage(target, ent.Comp.ZapHeal, true, origin: user);
+            // RS14-start
+            _damageable.TryChangeDamage(target, ent.Comp.ZapHeal, true, origin: user,
+                targetPart: Content.Shared._Trauma.Common.Targeting.TargetBodyPart.All,
+                splitDamage: Content.Shared._Trauma.Common.Damage.SplitDamageBehavior.SplitEnsureAll);
+            // RS14-end
 
             if (_mobState.IsDead(target, targetMobState) && // is the target currently dead
                 TryComp<MobThresholdsComponent>(target, out var targetThresholds) && //do they have a threshold
                 _mobThreshold.TryGetThresholdForState(target, MobState.Dead, out var threshold, targetThresholds) &&
-                _damageable.GetTotalDamage(target) < threshold) //is their current health above their death threshold
+                _mobThreshold.CheckVitalDamage(target) < threshold) //is their current health above their death threshold // RS14
             {
                 _mobState.ChangeMobState(target, MobState.Critical, targetMobState, user); //if so revive them
                 failedRevive = false;

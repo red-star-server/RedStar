@@ -1,0 +1,18 @@
+- type: entityCondition
+  id: MobCritical
+  condition: !type:AnyCondition
+    conditions:
+    - !type:MobStateCondition
+      mobstate: SoftCrit
+    - !type:MobStateCondition
+      mobstate: Critical
+
+- type: entityCondition
+  id: NoPressureProtection
+  condition: !type:InventoryAnyNestedCondition
+    inverted: true
+    condition: !type:WhitelistCondition
+      whitelist:
+        components:
+        - PressureProtection
+      guidebookText: entity-condition-guidebook-pressure-protection

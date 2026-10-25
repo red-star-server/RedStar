@@ -1,0 +1,495 @@
+using System.Globalization;
+using System.Linq;
+using System.Numerics;
+using Content.Shared._Trauma.Common.Body;
+using Content.Shared._Trauma.Common.Traumas;
+using Content.Shared._Trauma.Common.Wounds;
+using Content.Shared._Trauma.Traumas;
+using Content.Shared._Trauma.Wounds;
+using Content.Shared.Atmos.Rotting;
+using Content.Shared.Body;
+using Content.Shared.Body.Components;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Damage.Components;
+using Content.Shared.FixedPoint;
+using Content.Shared.Humanoid;
+using Content.Shared.IdentityManagement;
+using Content.Shared.MedicalScanner;
+using Content.Shared._Trauma.Common.Medical.HealthAnalyzer;
+using Robust.Client.GameObjects;
+using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
+
+namespace Content.Client.HealthAnalyzer.UI;
+
+// TODO: use ui injection
+public sealed partial class HealthAnalyzerControl
+{
+    private BodySystem _body = default!;
+    private SharedSolutionContainerSystem _solution = default!;
+    private TraumaSystem _trauma = default!;
+
+    private EntityQuery<AmputationTraumaComponent> _amputationQuery = default!;
+    private EntityQuery<BoneComponent> _boneQuery = default!;
+
+    public event Action<ProtoId<OrganCategoryPrototype>?, EntityUid>? OnBodyPartSelected;
+
+    private HealthAnalyzerUiState _lastState = new();
+    private HealthAnalyzerMode _mode = HealthAnalyzerMode.Body;
+    private EntityUid? _target;
+    private EntityUid? _spriteViewEntity;
+    private Dictionary<ProtoId<OrganCategoryPrototype>, TextureButton> _bodyPartControls = default!;
+
+    private static readonly EntProtoId _bodyView = "AlertSpriteView";
+
+    private void InitializeTrauma()
+    {
+        _body = _entityManager.System<BodySystem>();
+        _solution = _entityManager.System<SharedSolutionContainerSystem>();
+        _trauma = _entityManager.System<TraumaSystem>();
+
+        _amputationQuery = _entityManager.GetEntityQuery<AmputationTraumaComponent>();
+        _boneQuery = _entityManager.GetEntityQuery<BoneComponent>();
+
+        _bodyPartControls = new Dictionary<ProtoId<OrganCategoryPrototype>, TextureButton>
+        {
+            { "Head", HeadButton },
+            { "Torso", TorsoButton },
+            { "ArmLeft", LeftArmButton },
+            { "HandLeft", LeftHandButton },
+            { "ArmRight", RightArmButton },
+            { "HandRight", RightHandButton },
+            { "LegLeft", LeftLegButton },
+            { "FootLeft", LeftFootButton },
+            { "LegRight", RightLegButton },
+            { "FootRight", RightFootButton },
+        };
+
+        foreach (var (part, button) in _bodyPartControls)
+        {
+            button.MouseFilter = MouseFilterMode.Stop;
+            button.OnPressed += _ => SetActiveBodyPart(part);
+        }
+        ReturnButton.OnPressed += _ => ResetBodyPart();
+        BodyButton.OnPressed += _ => SetMode(HealthAnalyzerMode.Body);
+        OrgansButton.OnPressed += _ => SetMode(HealthAnalyzerMode.Organs);
+        ChemicalsButton.OnPressed += _ => SetMode(HealthAnalyzerMode.Chemicals);
+    }
+
+    public void SetActiveBodyPart(ProtoId<OrganCategoryPrototype> part)
+    {
+        if (_target is {} target)
+        {
+            _mode = HealthAnalyzerMode.Body;
+            OnBodyPartSelected?.Invoke(part, target);
+        }
+    }
+
+    public void SetMode(HealthAnalyzerMode mode)
+    {
+        _mode = mode;
+        if (_target is { } target)
+            PopulateTrauma(target, ref _lastState);
+    }
+
+    public void ResetBodyPart()
+    {
+        if (_target is {} target)
+            OnBodyPartSelected?.Invoke(null, target);
+    }
+
+    public void SetActiveButtons(bool isHumanoid)
+    {
+        foreach (var button in _bodyPartControls.Values)
+            button.Visible = isHumanoid;
+    }
+
+    public void PopulateTrauma(EntityUid target, ref HealthAnalyzerUiState state)
+    {
+        _lastState = state;
+        _target = target;
+        var humanoid = _entityManager.HasComponent<HumanoidProfileComponent>(target);
+        SetActiveButtons(humanoid);
+
+        // Patient Information
+
+        DamageLabelVital.Text = state.VitalDamage.ToString();
+
+        if (humanoid)
+            SpriteView.SetEntity(SetupIcon(state.Body, state.Bleeding));
+
+        PartView.Visible = SpriteView.Visible;
+
+        var bloodLevelLow = !float.IsNaN(state.BloodLevel) &&
+                            _entityManager.TryGetComponent<BloodstreamComponent>(target, out var bloodstream) &&
+                            state.BloodLevel < bloodstream.BloodlossThreshold;
+
+        switch (_mode)
+        {
+            case HealthAnalyzerMode.Body:
+                PopulateBody(target, ref state, bloodLevelLow);
+                break;
+            case HealthAnalyzerMode.Organs:
+                PopulateOrgans(target);
+                break;
+            case HealthAnalyzerMode.Chemicals:
+                PopulateChemicals(target);
+                break;
+        }
+
+        if (ConditionsListContainer.ChildCount == 0)
+        {
+            ConditionsListContainer.AddChild(new RichTextLabel
+            {
+                Text = Loc.GetString("condition-none"),
+                Margin = new Thickness(0, 4),
+            });
+        }
+    }
+
+    #region Scan state populate methods
+
+    public void PopulateBody(EntityUid target, ref HealthAnalyzerUiState state, bool bloodLevelLow = false)
+    {
+        var selectedPart = _entityManager.GetEntity(state.Part);
+        if (selectedPart != null)
+            target = selectedPart.Value;
+        var isPart = selectedPart != null;
+
+        if (!_entityManager.TryGetComponent<DamageableComponent>(target, out var damageable))
+            return;
+
+        ReturnButton.Visible = isPart;
+        PartNameLabel.Visible = isPart;
+        DamageLabelHeading.Visible = true;
+        DamageLabel.Visible = true;
+        var damage = _damageable.GetAllDamage((target, damageable));
+        DamageLabel.Text = damage.GetTotal().ToString();
+
+        var identity = Identity.Name(target, _entityManager);
+        if (isPart)
+            PartNameLabel.Text = identity;
+
+        var damageSortedGroups = _damageable.GetDamagePerGroup((target, damageable))
+            .OrderByDescending(damage => damage.Value)
+            .ToDictionary(x => x.Key, x => x.Value);
+
+        var damagePerType = damage.DamageDict;
+
+        DrawDiagnosticGroups(damageSortedGroups, damagePerType);
+
+
+        ConditionsListContainer.RemoveAllChildren();
+
+        if (state.Unrevivable == true)
+            ConditionsListContainer.AddChild(new RichTextLabel
+            {
+                Text = Loc.GetString("condition-body-unrevivable", ("entity", identity)),
+                Margin = new Thickness(0, 4),
+            });
+
+        if (bloodLevelLow)
+            ConditionsListContainer.AddChild(new RichTextLabel
+            {
+                Text = Loc.GetString("condition-body-low-blood", ("entity", identity)),
+                Margin = new Thickness(0, 4),
+            });
+
+        foreach (var bleeding in state.Bleeding)
+        {
+            var name = _prototypes.Index(bleeding).Name.ToLowerInvariant();
+            var locString = Loc.GetString("condition-body-part-bleeding", ("entity", identity), ("part", name));
+
+            ConditionsListContainer.AddChild(new RichTextLabel
+            {
+                Text = locString,
+                Margin = new Thickness(0, 4),
+            });
+        }
+
+        foreach (var part in _body.GetOrgans<WoundableComponent>(target))
+        {
+            if (isPart && part.Owner != selectedPart)
+                continue;
+
+            if (!_trauma.GetPartTraumas(part.AsNullable(), out var traumas))
+                continue;
+
+            foreach (var trauma in traumas)
+            {
+                string locString;
+                if (_amputationQuery.TryComp(trauma, out var amputation))
+                {
+                    var source = _prototypes.Index(amputation.Source).Name.ToLower();
+                    locString = Loc.GetString($"condition-body-trauma-{trauma.Comp.TraumaType}", ("source", source));
+                }
+                else
+                {
+                    var suffix = trauma.Comp.TraumaType == TraumaType.BoneDamage
+                        ? $"-{_boneQuery.Comp(part).BoneSeverity}"
+                        : "";
+                    locString = Loc.GetString($"condition-body-trauma-{trauma.Comp.TraumaType}{suffix}", ("woundable", part));
+                }
+
+                ConditionsListContainer.AddChild(new RichTextLabel
+                {
+                    Text = locString,
+                    Margin = new Thickness(0, 4),
+                });
+            }
+        }
+    }
+
+    public void PopulateOrgans(EntityUid body)
+    {
+        ReturnButton.Visible = false;
+        PartNameLabel.Visible = false;
+        DamageLabelHeading.Visible = false;
+        DamageLabel.Visible = false;
+
+        ConditionsListContainer.RemoveAllChildren();
+        GroupsContainer.RemoveAllChildren();
+        foreach (var organ in _body.GetInternalOrgans(body))
+        {
+            if (organ.Comp.IntegrityCap == 0) // avoid division by zero
+                continue;
+
+            DrawOrganDiagnostics(organ, 100 * organ.Comp.OrganIntegrity / organ.Comp.IntegrityCap);
+
+            if (_entityManager.HasComponent<RottingComponent>(organ))
+            {
+                ConditionsListContainer.AddChild(new RichTextLabel
+                {
+                    Text = Loc.GetString("condition-organ-rotting", ("organ", organ)),
+                    Margin = new Thickness(0, 4),
+                });
+            }
+
+            ConditionsListContainer.AddChild(new RichTextLabel
+            {
+                Text = Loc.GetString($"condition-organ-damage-{organ.Comp.OrganSeverity}", ("organ", organ)),
+                Margin = new Thickness(0, 4),
+            });
+        }
+
+        if (ConditionsListContainer.ChildCount == 0)
+        {
+            ConditionsListContainer.AddChild(new RichTextLabel
+            {
+                Text = Loc.GetString("condition-none"),
+                Margin = new Thickness(0, 4),
+            });
+        }
+    }
+
+    public void PopulateChemicals(EntityUid body)
+    {
+        ReturnButton.Visible = false;
+        PartNameLabel.Visible = false;
+        DamageLabelHeading.Visible = false;
+        DamageLabel.Visible = false;
+
+        ConditionsListContainer.RemoveAllChildren();
+        GroupsContainer.RemoveAllChildren();
+
+        var solutions = new List<EntityUid>();
+
+        if (_entityManager.TryGetComponent<BloodstreamComponent>(body, out var blood) &&
+            _solution.ResolveSolution(body, blood.BloodSolutionName, ref blood.BloodSolution, out _))
+        {
+            solutions.Add(blood.BloodSolution.Value);
+        }
+
+        foreach (var stomach in _body.GetOrgans<StomachComponent>(body))
+        {
+            if (stomach.Comp.Solution is { } solution)
+                solutions.Add(solution);
+        }
+
+        DrawSolutionDiagnostics(solutions);
+
+        ConditionsListContainer.AddChild(new RichTextLabel
+        {
+            Text = Loc.GetString("condition-none"),
+            Margin = new Thickness(0, 4),
+        });
+    }
+
+    #endregion
+
+    private bool TryGetEntityName(NetEntity ent, out string name)
+    {
+        name = Loc.GetString("health-analyzer-window-entity-unknown-value-text");
+        var targetedEnt = _entityManager.GetEntity(ent);
+
+        if (!_entityManager.HasComponent<MetaDataComponent>(targetedEnt))
+            return false;
+
+        name = Identity.Name(targetedEnt, _entityManager);
+        return true;
+    }
+
+    private bool TryGetEntityName(EntityUid ent, out string name)
+    {
+        name = Loc.GetString("health-analyzer-window-entity-unknown-value-text");
+
+        if (!_entityManager.HasComponent<MetaDataComponent>(ent))
+            return false;
+
+        name = Identity.Name(ent, _entityManager);
+        return true;
+    }
+
+    /// <summary>
+    /// Sets up the Body Doll using Alert Entity to use in Health Analyzer.
+    /// </summary>
+    private EntityUid? SetupIcon(Dictionary<ProtoId<OrganCategoryPrototype>, WoundableSeverity>? body,
+        HashSet<ProtoId<OrganCategoryPrototype>> bleeding)
+    {
+        if (body is null)
+            return null;
+
+        if (!_entityManager.Deleted(_spriteViewEntity))
+            _entityManager.QueueDeleteEntity(_spriteViewEntity);
+
+        _spriteViewEntity = _entityManager.Spawn(_bodyView);
+
+        if (!_entityManager.TryGetComponent<SpriteComponent>(_spriteViewEntity, out var sprite))
+            return null;
+
+        int layer = 0;
+        foreach (var (part, integrity) in body)
+        {
+            // TODO: PartStatusUIController and make it use layers instead of TextureRects when EE refactors alerts.
+            var name = part.ToString().ToLowerInvariant();
+            int enumValue = (int) integrity;
+            var baseRsiPath = new ResPath($"/Textures/_RedStar/Medical/Interface/Targeting/Status/{name}.rsi");
+            var rsi = new SpriteSpecifier.Rsi(baseRsiPath, $"{enumValue}");
+            // Shitcode with love from Russia :)
+            // fuck you mocho
+            CreateOrAddToLayer((_spriteViewEntity.Value, sprite), rsi, layer);
+            layer++;
+
+            if (bleeding.Contains(part))
+            {
+                var bleedRsi = new SpriteSpecifier.Rsi(baseRsiPath, "bleed");
+                CreateOrAddToLayer((_spriteViewEntity.Value, sprite), bleedRsi, layer);
+                layer++;
+            }
+        }
+
+        return _spriteViewEntity;
+    }
+
+    private void CreateOrAddToLayer(Entity<SpriteComponent> sprite, SpriteSpecifier rsi, int layer)
+    {
+        if (!_spriteSystem.TryGetLayer(sprite.AsNullable(), layer, out _, false))
+            _spriteSystem.AddTextureLayer(sprite.AsNullable(), _spriteSystem.Frame0(rsi));
+        else
+            _spriteSystem.LayerSetTexture(sprite.AsNullable(), layer, _spriteSystem.Frame0(rsi));
+
+        _spriteSystem.LayerSetScale(sprite.AsNullable(), layer, new Vector2(3f, 3f));
+    }
+
+    #region Drawing
+
+    private void DrawOrganDiagnostics(EntityUid ent, FixedPoint2 damage)
+    {
+        TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+        var name = _entityManager.GetComponent<MetaDataComponent>(ent).EntityName;
+        var groupTitleText = Loc.GetString("group-organ-status",
+            ("organ", textInfo.ToTitleCase(name)),
+            ("capacity", damage));
+
+        var groupContainer = new BoxContainer
+        {
+            Align = BoxContainer.AlignMode.Begin,
+            Orientation = BoxContainer.LayoutOrientation.Vertical,
+        };
+
+        groupContainer.AddChild(CreateDiagnosticGroupTitle(groupTitleText, ent));
+
+        GroupsContainer.AddChild(groupContainer);
+    }
+
+    private void DrawSolutionDiagnostics(List<EntityUid> sources)
+    {
+        TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+        foreach (var uid in sources)
+        {
+            foreach (var (name, ent) in _solution.EnumerateSolutions(uid))
+            {
+                var groupTitleText = Loc.GetString("group-solution-name",
+                    ("solution", name ?? Loc.GetString("group-solution-unknown")));
+
+                var groupContainer = new BoxContainer
+                {
+                    Align = BoxContainer.AlignMode.Begin,
+                    Orientation = BoxContainer.LayoutOrientation.Vertical,
+                };
+
+                groupContainer.AddChild(CreateDiagnosticGroupTitle(textInfo.ToTitleCase(groupTitleText), "metaphysical"));
+
+                GroupsContainer.AddChild(groupContainer);
+
+                foreach (var reagent in ent.Comp.Solution.Contents)
+                {
+                    if (reagent.Quantity == 0)
+                        continue;
+
+                    var reagentName = Loc.GetString("chem-master-window-unknown-reagent-text");
+                    if (_prototypes.Resolve<ReagentPrototype>(reagent.Reagent.Prototype, out var proto))
+                        reagentName = proto.LocalizedName;
+
+                    var reagentString = $"{Loc.GetString(
+                        "group-solution-contents",
+                        ("reagent", textInfo.ToTitleCase(reagentName)),
+                        ("quantity", reagent.Quantity)
+                    )}";
+
+                    groupContainer.AddChild(CreateDiagnosticItemLabel(reagentString.Insert(0, " · ")));
+                }
+            }
+        }
+    }
+
+    #endregion
+
+    private BoxContainer CreateDiagnosticGroupTitle(string text, EntityUid ent, string? textureOverride = null)
+    {
+        var rootContainer = new BoxContainer
+        {
+            Margin = new Thickness(0, 6, 0, 0),
+            VerticalAlignment = VAlignment.Bottom,
+            Orientation = BoxContainer.LayoutOrientation.Horizontal,
+        };
+
+        if (textureOverride != null)
+        {
+            rootContainer.AddChild(new TextureRect
+            {
+                SetSize = new Vector2(30, 30),
+                Texture = GetTexture(textureOverride.ToLower())
+            });
+        }
+        else
+        {
+            var spriteView = new SpriteView
+            {
+                SetSize = new Vector2(30, 30),
+                OverrideDirection = Direction.South,
+            };
+
+            spriteView.SetEntity(ent);
+
+            rootContainer.AddChild(spriteView);
+        }
+
+        rootContainer.AddChild(CreateDiagnosticItemLabel(text));
+
+        return rootContainer;
+    }
+}
