@@ -42,7 +42,7 @@ public sealed partial class AugmentSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnAccessibleOverride(Entity<InstalledAugmentsComponent> ent, ref AccessibleOverrideEvent args)
     {
-        if (GetBody(args.Target) is not {} body || body != args.User)
+        if (!HasComp<AugmentComponent>(args.Target) || GetBody(args.Target) is not {} body || body != args.User)
             return;
 
         // let the user interact with their installed augments

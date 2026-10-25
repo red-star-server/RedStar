@@ -32,7 +32,7 @@ public sealed partial class AugmentPowerCellSystem : EntitySystem
 
     public static readonly ProtoId<OrganCategoryPrototype> SlotCategory = "AugmentPowerCell";
 
-public override void Update(float frameTime)
+    public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
@@ -51,11 +51,8 @@ public override void Update(float frameTime)
 
             if (!_powerCell.TryGetBatteryFromSlot(augment.Owner, out var battery))
             {
-                if (_alerts.IsShowingAlert(uid, augment.Comp.BatteryAlert))
-                {
-                    _alerts.ClearAlert(uid, augment.Comp.BatteryAlert);
-                    _alerts.ShowAlert(uid, augment.Comp.NoBatteryAlert);
-                }
+                _alerts.ClearAlert(uid, augment.Comp.BatteryAlert);
+                _alerts.ShowAlert(uid, augment.Comp.NoBatteryAlert);
                 continue;
             }
 
@@ -90,6 +87,9 @@ public override void Update(float frameTime)
     [SubscribeLocalEvent]
     private void OnOrganDisabled(Entity<AugmentPowerCellSlotComponent> ent, ref OrganDisabledEvent args)
     {
+        _alerts.ClearAlert(args.Body, ent.Comp.BatteryAlert);
+        _alerts.ClearAlert(args.Body, ent.Comp.NoBatteryAlert);
+
         if (!_cellDrawQuery.TryComp(ent, out var draw))
             return;
 
@@ -103,6 +103,13 @@ public override void Update(float frameTime)
             if (_drawQuery.HasComp(augment))
                 _body.DisableOrgan(augment);
         }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnRemoved(Entity<AugmentPowerCellSlotComponent> ent, ref OrganGotRemovedEvent args)
+    {
+        _alerts.ClearAlert(args.Target, ent.Comp.BatteryAlert);
+        _alerts.ClearAlert(args.Target, ent.Comp.NoBatteryAlert);
     }
 
     [SubscribeLocalEvent]

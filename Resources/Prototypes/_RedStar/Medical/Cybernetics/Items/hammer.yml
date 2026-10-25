@@ -1,0 +1,79 @@
+- type: tool
+  id: Hammering
+  name: tool-quality-hammering-name
+  toolName: tool-quality-hammering-tool-name
+  spawn: MeleeHammer
+  icon: { sprite: _RedStar/Medical/Cybernetics/hammer.rsi, state: icon }
+
+- type: entity
+  name: hammer
+  parent: BaseItem
+  id: MeleeHammer
+  description: 3 steel 2 wood
+  components:
+  - type: Sprite
+    sprite: _RedStar/Medical/Cybernetics/hammer.rsi
+    state: icon
+  - type: MeleeWeapon
+    animationRotation: -90
+    wideAnimationRotation: -135
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 10
+    soundHit:
+      path: /Audio/_RedStar/Medical/Cybernetics/tink.ogg
+  - type: Item
+    size: Small
+    sprite: _RedStar/Medical/Cybernetics/hammer.rsi
+    storedOffset: 1,-1
+    storedRotation: -45
+  - type: Tag
+    tags:
+    - Hammer
+  - type: Tool
+    qualities:
+    - Hammering
+    useSound:
+      path: /Audio/Items/trayhit2.ogg
+  - type: Construction
+    graph: Hammer
+    node: hammer
+
+- type: construction
+  id: Hammer
+  graph: Hammer
+  category: construction-category-weapons
+  targetNode: hammer
+  objectType: Item
+
+- type: constructionGraph
+  id: Hammer
+  graph:
+  - node: start
+    edges:
+    - to: handle
+      steps:
+      - material: WoodPlank
+        amount: 2
+        doAfter: 5
+  - node: handle
+    entity: WoodenHandleHammer
+    edges:
+    - to: hammer
+      steps:
+      - material: Screw
+        amount: 2
+        doAfter: 2
+      - tool: Screwing
+        doAfter: 1
+      - material: Steel
+        amount: 2
+        doAfter: 2
+      - tool: Screwing
+        doAfter: 1
+  - node: hammer
+    entity: MeleeHammer
+
+- type: Tag
+  id: Hammer

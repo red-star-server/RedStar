@@ -152,3 +152,5 @@ ent-SurgeryStepInsertAugmentPowerCellCharger = Вставить зарядник
 
 ent-SurgeryStepInsertAugmentArm = Вставить аугмент руки
     .desc = { "" }
+
+augment-tool-panel-retract = Убрать

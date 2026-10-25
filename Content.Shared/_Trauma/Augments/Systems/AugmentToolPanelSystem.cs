@@ -45,11 +45,24 @@ public sealed partial class AugmentToolPanelSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnSwitchTool(Entity<AugmentToolPanelComponent> augment, ref AugmentToolPanelSwitchMessage args)
     {
-        if (_augment.GetBody(augment) is not {} body ||
-            !_augmentPowerCell.TryUseChargeBody(body, augment.Comp.SwitchCharge))
+        if (_augment.GetBody(augment) is not {} body || !TryGetHand(augment, body, out var hand))
             return;
 
-        SwitchTool(augment, GetEntity(args.DesiredTool), body);
+        var desiredTool = GetEntity(args.DesiredTool);
+        if (_hands.GetHeldItem(body, hand) is {} held && !HasComp<AugmentToolPanelActiveItemComponent>(held))
+        {
+            _popup.PopupEntity(Loc.GetString("augment-tool-panel-hand-full"), body, body, PopupType.SmallCaution);
+            return;
+        }
+
+        if (desiredTool is {} tool &&
+            (!_container.TryGetContainingContainer(tool, out var container) || container.Owner != augment.Owner))
+            return;
+
+        if (!_augmentPowerCell.TryUseChargeBody(body, augment.Comp.SwitchCharge))
+            return;
+
+        SwitchTool(augment, desiredTool, body, hand);
     }
 
     /// <summary>
@@ -57,33 +70,37 @@ public sealed partial class AugmentToolPanelSystem : EntitySystem
     /// </summary>
     public void SwitchTool(Entity<AugmentToolPanelComponent> augment, EntityUid? tool, EntityUid body)
     {
-        if (!_handsQuery.TryComp(body, out var handsComp))
-            return;
+        if (TryGetHand(augment, body, out var hand))
+            SwitchTool(augment, tool, body, hand);
+    }
 
-        if (_childQuery.Comp(augment).Parent is not {} partUid || TerminatingOrDeleted(partUid))
-            return;
+    private bool TryGetHand(Entity<AugmentToolPanelComponent> augment, EntityUid body, out string hand)
+    {
+        hand = string.Empty;
+        if (!_handsQuery.TryComp(body, out var handsComp) ||
+            !_childQuery.TryComp(augment, out var child) ||
+            child.Parent is not {} partUid || TerminatingOrDeleted(partUid))
+            return false;
 
-        // the arm's symmetry is the same as the hand
-        var part = _partQuery.Comp(partUid);
-        var location = part.Symmetry switch
+        // The arm's symmetry is the same as the hand.
+        var location = _partQuery.Comp(partUid).Symmetry switch
         {
-            BodyPartSymmetry.None => HandLocation.Middle,
             BodyPartSymmetry.Left => HandLocation.Left,
             BodyPartSymmetry.Right => HandLocation.Right,
             _ => HandLocation.Middle,
         };
 
-        foreach (var (hand, handLocation) in handsComp.Hands)
+        foreach (var (name, data) in handsComp.Hands)
         {
-            if (handLocation.Location == location)
-            {
-                SwitchTool(augment, tool, body, hand);
-                return;
-            }
+            if (data.Location != location)
+                continue;
+
+            hand = name;
+            return true;
         }
 
-        // no hand found rip bozo
         _popup.PopupEntity(Loc.GetString("augment-tool-panel-no-hand"), body, body, PopupType.LargeCaution);
+        return false;
     }
 
     /// <summary>

@@ -30,7 +30,8 @@ public sealed partial class AugmentPowerDrawSystem : EntitySystem
     {
         if (_augment.GetBody(ent) is not {} body ||
             _augmentPower.GetBodyAugment(body) is not {} slot ||
-            !_powerCell.HasActivatableCharge(slot.Owner))
+            !_powerCell.HasDrawCharge(slot.Owner) ||
+            !_powerCell.HasCharge(slot.Owner, ent.Comp.Draw))
         {
             args.Cancelled = true;
         }

@@ -59,8 +59,15 @@ public sealed partial class AugmentToolPanelMenu : RadialMenu
         var nilButton = new RadialMenuButtonWithSector()
         {
             SetSize = new Vector2(64f, 64f),
+            ToolTip = Loc.GetString("augment-tool-panel-retract"),
         };
 
+        nilButton.AddChild(new Label
+        {
+            Text = Loc.GetString("augment-tool-panel-retract"),
+            HorizontalAlignment = HAlignment.Center,
+            VerticalAlignment = VAlignment.Center,
+        });
         Main.AddChild(nilButton);
 
         nilButton.OnButtonUp += _ =>

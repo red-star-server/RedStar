@@ -152,3 +152,5 @@ ent-SurgeryStepInsertAugmentPowerCellCharger = Add power cell charger
 
 ent-SurgeryStepInsertAugmentArm = Add arm augment
     .desc = { "" }
+
+augment-tool-panel-retract = Retract

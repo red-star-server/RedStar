@@ -46,7 +46,7 @@
       storagebase: !type:Container
         ents: []
   - type: ItemToggle
-    activated: true # needs to be activated for installation
+    activated: false
     onUse: false
     onActivate: false
   - type: AugmentPowerDraw
@@ -185,7 +185,7 @@
       - Welder
       - PowerCell
       - Geiger
-      - TrayScanner
+      - TRayScanner
       - GasAnalyzer
   - type: Construction
     node: "utility tools panel"
