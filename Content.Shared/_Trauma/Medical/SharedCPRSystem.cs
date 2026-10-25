@@ -144,7 +144,7 @@ public abstract partial class SharedCPRSystem : EntitySystem
         }
 
         // popups done in ingestion system
-        return _ingestion.HasMouthAvailable(ent, ent) || !_ingestion.HasMouthAvailable(ent, target);
+        return _ingestion.HasMouthAvailable(ent, ent) && _ingestion.HasMouthAvailable(ent, target);
     }
 
     [SubscribeLocalEvent]

@@ -489,6 +489,7 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
     {
         if (args.Container.ID == CryoPodComponent.BodyContainerName)
         {
+            ResetAnalyzedPart(cryoPod); // RS14
             ClearInjectionBuffer(cryoPod);
         }
 
@@ -500,6 +501,7 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
         if (args.Container.ID == CryoPodComponent.BodyContainerName)
         {
             UI.CloseUi(cryoPod.Owner, CryoPodUiKey.Key, args.Entity);
+            ResetAnalyzedPart(cryoPod); // RS14
             ClearInjectionBuffer(cryoPod);
         }
 

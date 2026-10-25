@@ -10,7 +10,7 @@ condition-body-trauma-BoneDamage-Broken = • The {$woundable}'s bone is broken!
 
 condition-body-trauma-BoneDamage-Cracked = • The {$woundable}'s bone looks almost broken...
 
-condition-body-trauma-BoneDamage-Damaged = • The {$woundable}'s has some bone damage.
+condition-body-trauma-BoneDamage-Damaged = • The {$woundable} has some bone damage.
 
 condition-body-trauma-BoneDamage-Normal = • The {$woundable} has some very minor bone damage.
 
@@ -164,7 +164,7 @@ reagent-desc-sarin = A brutal neurotoxin that creates nasty caustic burns on con
 
 reagent-desc-stasizium = An unstable fluid of future capable of restoring the patient's body to its original state. However, an overdose can tear the body apart.
 
-reagent-desc-suffocatium = An icy-blue flame suppressant that smothers fires from the inside out and cools the body. Without a fire to fight, it smothers the patient instead. High doses crystallize in the bloodstream, inhibiting bloodcells.
+reagent-desc-suffocatium = An icy-blue flame suppressant that smothers fires from the inside out and cools the body. Without a fire to fight, it smothers the patient instead. High doses crystallize in the bloodstream, inhibiting blood cells.
 
 reagent-desc-synthcells = Artificially produced "cells" that quickly destroy and replace any dysfunctional cells. Works both through external and internal application. Works on dead.
 
@@ -183,7 +183,7 @@ reagent-effect-condition-guidebook-stamina-damage-threshold =
                  }
     }
 
-reagent-effect-condition-guidebook-typed-damage-threshold = the target has at most { $changes } damage
+reagent-effect-condition-guidebook-typed-damage-threshold = the target exceeds the damage threshold: { $changes }
 
 reagent-effect-condition-guidebook-unique-bloodstream-chem-threshold =
     { $max ->
@@ -295,7 +295,7 @@ reagent-desc-cyanide = Easy to make toxin, and with deadly potential at average 
 
 reagent-name-heroin = heroin
 
-reagent-desc-heroin = An illegal street drug that was once used in medicine, but replace by tramadol.
+reagent-desc-heroin = An illegal street drug that was once used in medicine, but replaced by tramadol.
 
 reagent-name-methanol = methanol
 
@@ -323,25 +323,31 @@ reagent-desc-genecide = Blows genetic damage away, literally. Make sure to monit
 
 reagent-name-methane = methane
 
-reagent-desc-methane = A colorless, odorless, and flammable gas, being the simplest alkane. Do not breath.
+reagent-desc-methane = A colorless, odorless, and flammable gas, being the simplest alkane. Do not breathe.
 
 ent-PillCanisterIbuprofen = pill canister
     .suffix = Ibuprofen 10u, 15
+    .desc = Holds up to 15 pills.
 
 ent-PillCanisterOxycodone = pill canister
     .suffix = Oxycodone 5u, 15
+    .desc = Holds up to 15 pills.
 
 ent-PillCanisterTramadol = pill canister
     .suffix = Tramadol 7.5u, 15
+    .desc = Holds up to 15 pills.
 
 ent-PillIbuprofen = pill
     .suffix = Ibuprofen 10u, 15
+    .desc = It's not a suppository.
 
 ent-PillOxycodone = pill
     .suffix = Oxycodone 5u
+    .desc = It's not a suppository.
 
 ent-PillTramadol = pill
     .suffix = Tramadol 7.5u
+    .desc = It's not a suppository.
 
 ent-SyringeIbuprofen = syringe
     .suffix = Ibuprofen 15u

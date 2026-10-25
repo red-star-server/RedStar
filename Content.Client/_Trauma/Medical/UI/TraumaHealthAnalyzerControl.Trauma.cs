@@ -352,10 +352,8 @@ public sealed partial class TraumaHealthAnalyzerControl
         if (body is null)
             return null;
 
-        if (!_entityManager.Deleted(_spriteViewEntity))
-            _entityManager.QueueDeleteEntity(_spriteViewEntity);
-
-        _spriteViewEntity = _entityManager.Spawn(_bodyView);
+        if (_entityManager.Deleted(_spriteViewEntity))
+            _spriteViewEntity = _entityManager.Spawn(_bodyView);
 
         if (!_entityManager.TryGetComponent<SpriteComponent>(_spriteViewEntity, out var sprite))
             return null;
@@ -381,7 +379,20 @@ public sealed partial class TraumaHealthAnalyzerControl
             }
         }
 
+        for (var obsolete = sprite.AllLayers.Count() - 1; obsolete >= layer; obsolete--)
+        {
+            _spriteSystem.RemoveLayer((_spriteViewEntity.Value, sprite), obsolete);
+        }
+
         return _spriteViewEntity;
+    }
+
+    protected override void ExitedTree()
+    {
+        base.ExitedTree();
+        if (!_entityManager.Deleted(_spriteViewEntity))
+            _entityManager.QueueDeleteEntity(_spriteViewEntity);
+        _spriteViewEntity = null;
     }
 
     private void CreateOrAddToLayer(Entity<SpriteComponent> sprite, SpriteSpecifier rsi, int layer)

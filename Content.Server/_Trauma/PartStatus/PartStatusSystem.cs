@@ -150,12 +150,10 @@ public sealed partial class PartStatusSystem : EntitySystem
                 || wound.Comp.WoundSeverity == WoundSeverity.Healed)
                 continue;
 
-            if (wound.Comp.AlwaysShowInInspects ||
-                !damageSeverities.TryGetValue(wound.Comp.DamageType, out var existingSeverity) ||
+            var key = wound.Comp.TextString ?? ProtoMan.Index(wound.Comp.DamageGroup.Value).ID;
+            if (!damageSeverities.TryGetValue(key, out var existingSeverity) ||
                 wound.Comp.WoundSeverity > existingSeverity)
-                damageSeverities[wound.Comp.TextString == null
-                    ? ProtoMan.Index(wound.Comp.DamageGroup.Value).ID
-                    : wound.Comp.TextString] = wound.Comp.WoundSeverity;
+                damageSeverities[key] = wound.Comp.WoundSeverity;
 
             if (!isBleeding && _bleedQuery.TryComp(wound, out var bleeds) && bleeds.IsBleeding)
                 isBleeding = true;
@@ -261,10 +259,7 @@ public sealed partial class PartStatusSystem : EntitySystem
         var traumaDescriptions = GetTraumaDescriptions(partStatus, inspectingSelf);
         if (traumaDescriptions.Count > 0)
         {
-            if (hasStatus)
-                sb.Append(Loc.GetString("inspect-part-status-conjunction2"));
-            else
-                sb.Append(Loc.GetString("inspect-part-status-conjunction3"));
+            sb.Append(hasStatus ? Loc.GetString("inspect-part-status-conjunction2") : Loc.GetString("inspect-part-status-conjunction3"));
             sb.Append(string.Join(Loc.GetString("inspect-part-status-comma"), traumaDescriptions));
             hasStatus = true;
         }
@@ -304,11 +299,9 @@ public sealed partial class PartStatusSystem : EntitySystem
             descriptions.Add(Loc.GetString(localeText));
         }
 
-        if (descriptions.Count > 1)
-        {
-            var lastDescription = descriptions[^1];
-            descriptions[^1] = Loc.GetString("inspect-part-status-and") + lastDescription;
-        }
+        if (descriptions.Count <= 1) return descriptions;
+        var lastDescription = descriptions[^1];
+        descriptions[^1] = Loc.GetString("inspect-part-status-and") + lastDescription;
 
         return descriptions;
     }
@@ -339,11 +332,9 @@ public sealed partial class PartStatusSystem : EntitySystem
         }
 
         // If we have multiple traumas, add "and it" before the last one
-        if (descriptions.Count > 1)
-        {
-            var lastDescription = descriptions[^1];
-            descriptions[^1] = Loc.GetString("inspect-part-status-and") + lastDescription;
-        }
+        if (descriptions.Count <= 1) return descriptions;
+        var lastDescription = descriptions[^1];
+        descriptions[^1] = Loc.GetString("inspect-part-status-and") + lastDescription;
 
         return descriptions;
     }

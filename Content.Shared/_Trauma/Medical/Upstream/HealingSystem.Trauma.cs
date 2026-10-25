@@ -58,7 +58,7 @@ public sealed partial class HealingSystem
         return HasDamage(healing, (target, targetDamage)) ||
             TryComp<BodyComponent>(target, out var bodyComp) && // I'm paranoid, sorry.
             IsBodyDamaged((target, bodyComp), user, healing.Comp) ||
-            healing.Comp.ModifyBloodLevel > 0 // Special case if healing item can restore lost blood...
+            healing.Comp.ModifyBloodLevel < 0 // Special case if healing item can restore lost blood...
                 && TryComp<BloodstreamComponent>(target, out var bloodstream)
                 && _solutionContainerSystem.ResolveSolution(target, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution)
                 && bloodSolution.Volume < bloodSolution.MaxVolume;
@@ -238,7 +238,8 @@ public sealed partial class HealingSystem
 
         var isAnyTypeFullyConsumed = healingLeft.DamageDict.Any(d => d.Value == 0);
 
-        if (!healedBleed && !isAnyTypeFullyConsumed && (leftoverHealAndTrauma || leftoverHealAndBleed))
+        if (!healedBleed && !healedBleedLevel && healedTotal.GetTotal() == 0
+            && !isAnyTypeFullyConsumed && (leftoverHealAndTrauma || leftoverHealAndBleed))
         {
             if (leftoverHealAndTrauma)
                 _popupSystem.PopupEntity(Loc.GetString("medical-item-requires-surgery-rebell", ("target", ent)), ent, args.User, PopupType.MediumCaution);

@@ -173,16 +173,37 @@ reagent-desc-tirimol = Сильный депрессант для лечения
 
 reagent-desc-tramadol = Мощное боевое обезболивающее. Не принимайте вместе с алкоголем.
 
-reagent-effect-condition-guidebook-stamina-damage-threshold = повреждение выносливости больше {$min} и меньше {$max}
+reagent-effect-condition-guidebook-stamina-damage-threshold =
+    { $max ->
+        [2147483648] повреждение выносливости цели больше {NATURALFIXED($min, 2)}
+        *[other] { $min ->
+            [0] повреждение выносливости цели больше нуля и меньше {NATURALFIXED($max, 2)}
+            *[other] повреждение выносливости цели больше {NATURALFIXED($min, 2)} и меньше {NATURALFIXED($max, 2)}
+        }
+    }
 
-reagent-effect-condition-guidebook-typed-damage-threshold = повреждения соответствуют условию: {$changes}
+reagent-effect-condition-guidebook-typed-damage-threshold = повреждения цели превышают указанный порог: {$changes}
 
-reagent-effect-condition-guidebook-unique-bloodstream-chem-threshold = количество посторонних реагентов в крови больше {$min} и меньше {$max}
+reagent-effect-condition-guidebook-unique-bloodstream-chem-threshold =
+    { $max ->
+        [2147483647] { $min ->
+            [-1] количество посторонних реагентов в крови не ограничено
+            *[other] количество посторонних реагентов в крови больше {$min}
+        }
+        *[other] { $min ->
+            [-1] количество посторонних реагентов в крови меньше {$max}
+            *[other] количество посторонних реагентов в крови больше {$min} и меньше {$max}
+        }
+    }
 
-reagent-effect-guidebook-deal-stamina-damage = { $deltasign ->
-    [1] Наносит
-   *[-1] Лечит
-    } {$amount} единиц повреждения выносливости.
+reagent-effect-guidebook-deal-stamina-damage =
+    { $deltasign ->
+        [1] Наносит
+        *[-1] Лечит
+    } {$amount} единиц повреждения выносливости { $immediate ->
+        [true] немедленно
+        *[false] постепенно
+    }.
 
 reagent-name-aluite = алуит
 
@@ -294,21 +315,27 @@ reagent-desc-methane = Бесцветный горючий газ без зап�
 
 ent-PillCanisterIbuprofen = баночка для таблеток
     .suffix = Ибупрофен, 10 ед., 15
+    .desc = Вмещает до 15 таблеток.
 
 ent-PillCanisterOxycodone = баночка для таблеток
     .suffix = Оксикодон, 5 ед., 15
+    .desc = Вмещает до 15 таблеток.
 
 ent-PillCanisterTramadol = баночка для таблеток
     .suffix = Трамадол, 7,5 ед., 15
+    .desc = Вмещает до 15 таблеток.
 
 ent-PillIbuprofen = таблетка
     .suffix = Ибупрофен, 10 ед., 15
+    .desc = Это не суппозиторий.
 
 ent-PillOxycodone = таблетка
     .suffix = Оксикодон, 5 ед.
+    .desc = Это не суппозиторий.
 
 ent-PillTramadol = таблетка
     .suffix = Трамадол, 7,5 ед.
+    .desc = Это не суппозиторий.
 
 ent-SyringeIbuprofen = шприц
     .suffix = Ибупрофен, 15 ед.

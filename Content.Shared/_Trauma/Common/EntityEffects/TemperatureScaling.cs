@@ -18,11 +18,10 @@ public partial record struct TemperatureScaling(FixedPoint2 Min, FixedPoint2 Max
     // Calculates the efficiency multiplier based on the given temperature.
     // </summary>
     // <param name="temperature">The temperature to calculate efficiency for.</param>
-    // <param name="scale">The scale factor to apply to the efficiency calculation.</param>
     // <param name="invert"> If true, efficiency increases with temperature. If false, efficiency decreases with temperature.</param>
     // <returns>The calculated efficiency multiplier.</returns>
 
-    public FixedPoint2 GetEfficiencyMultiplier(FixedPoint2 temperature, FixedPoint2 scale, bool invert = false)
+    public FixedPoint2 GetEfficiencyMultiplier(FixedPoint2 temperature, bool invert = false)
     {
         if (Min > Max) // If the minimum is greater than the max, swap them to prevent issues.
             (Min, Max) = (Max, Min);
@@ -46,7 +45,7 @@ public partial record struct TemperatureScaling(FixedPoint2 Min, FixedPoint2 Max
         // If not inverted, efficiency decreases with temperature (1 - scaled distance)
         // Then apply the scale factor to the result
         return invert
-            ? FixedPoint2.New(1) + (scaledDistance * scale)
-            : (FixedPoint2.New(1) - scaledDistance) * scale;
+            ? FixedPoint2.New(1) + (scaledDistance * Scale)
+            : (FixedPoint2.New(1) - scaledDistance) * Scale;
     }
 }

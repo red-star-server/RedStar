@@ -306,7 +306,7 @@
       effects:
       - !type:CleanBloodstream
         excluded: Multiver
-        cleanseRate: -3
+        cleanseRate: 3
         conditions:
         - !type:BloodstreamCountCondition
           max: 3

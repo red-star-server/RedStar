@@ -1,5 +1,6 @@
 using Robust.Shared.Containers;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Client.UserInterface.RichText;
 using System.Linq;
@@ -26,6 +27,11 @@ using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Medical;
+using Content.Shared.Inventory;
+using Content.Shared.Temperature.Components;
+using Content.Shared._Trauma.Common.EntityEffects;
+using Content.Shared.Medical.Cryogenics;
+using Content.Shared._Trauma.Common.Medical.HealthAnalyzer;
 using Content.Shared.Medical.HealthAnalyzer;
 using Content.Shared.Medical.Healing;
 using Content.Shared.Mobs;
@@ -54,6 +60,8 @@ public sealed class MedicalTreatmentTest : GameTest
     [SidedDependency(Side.Server)] private BloodstreamSystem _blood = default!;
     [SidedDependency(Side.Server)] private HealthAnalyzerSystem _analyzer = default!;
     [SidedDependency(Side.Server)] private HealingSystem _healing = default!;
+
+    [SidedDependency(Side.Server)] private InventorySystem _inventory = default!;
 
     private static readonly ProtoId<OrganCategoryPrototype> Arm = "ArmLeft";
     private static readonly ProtoId<OrganCategoryPrototype> Head = "Head";
@@ -274,4 +282,112 @@ public sealed class MedicalTreatmentTest : GameTest
             Assert.That(state.VitalDamage, Is.EqualTo(_threshold.CheckVitalDamage(body)));
         });
     }
+    [Test]
+    [RunOnSide(Side.Server)]
+    public void BloodpackRepeatsUntilBloodIsRestored()
+    {
+        var body = SSpawn("MobHuman");
+        _blood.TryModifyBloodLevel(body, -200);
+        var item = SSpawn("Bloodpack");
+        var before = SComp<StackComponent>(item).Count;
+        var ev = FinishTreatment(body, item);
+        Assert.Multiple(() =>
+        {
+            Assert.That(ev.Repeat, Is.True);
+            Assert.That(SComp<StackComponent>(item).Count, Is.EqualTo(before - 1));
+        });
+    }
+
+    [TestCase(true, false)]
+    [TestCase(false, true)]
+    [TestCase(true, true)]
+    [RunOnSide(Side.Server)]
+    public void CPRRequiresBothMouthsAvailable(bool blockRescuer, bool blockPatient)
+    {
+        var rescuer = SSpawn("MobHuman");
+        var patient = SSpawn("MobHuman");
+        _mob.ChangeMobState(patient, MobState.Critical);
+        if (blockRescuer)
+            Assert.That(_inventory.TryEquip(rescuer, SSpawn("ClothingMaskGas"), "mask", force: true), Is.True);
+        if (blockPatient)
+            Assert.That(_inventory.TryEquip(patient, SSpawn("ClothingMaskGas"), "mask", force: true), Is.True);
+        var ev = new GetVerbsEvent<InnateVerb>(rescuer, patient, null, null, true, true, true, new());
+        SEntMan.EventBus.RaiseLocalEvent(rescuer, ev);
+        ev.Verbs.Single(x => x.Text == Loc.GetString("cpr-verb")).Act!.Invoke();
+        Assert.That(SEntMan.HasComponent<ActiveCPRComponent>(patient), Is.False);
+    }
+
+    [Test]
+    [RunOnSide(Side.Server)]
+    public void PartialHealingStillConsumesADoseWhenAnotherPartIsBlocked()
+    {
+        var body = SSpawn("MobHuman");
+        var arm = _body.GetOrgan(body, Arm)!.Value;
+        var head = _body.GetOrgan(body, Head)!.Value;
+        _damage.ChangeDamage(body, new DamageSpecifier { DamageDict = { ["Blunt"] = 5 } },
+            true, targetPart: TargetBodyPart.Head, canMiss: false);
+        _wounds.TryInduceWound(arm, Slash, 20, out _, damageGroup: Brute);
+        _targeting.SetTarget(body, TargetBodyPart.LeftArm);
+        var item = SSpawn("Brutepack");
+        var before = SComp<StackComponent>(item).Count;
+        var ev = FinishTreatment(body, item);
+        Assert.Multiple(() =>
+        {
+            Assert.That(_damage.GetTotalDamage(head), Is.EqualTo(FixedPoint2.Zero));
+            Assert.That(ev.Handled, Is.True);
+            Assert.That(SComp<StackComponent>(item).Count, Is.EqualTo(before - 1));
+        });
+    }
+
+    [TestCase(0.5f, 0.5f)]
+    [TestCase(1f, 1f)]
+    [TestCase(2f, 2f)]
+    [RunOnSide(Side.Server)]
+    public void TemperatureScaledMedicineScalesDoseOnlyOnce(float dose, float expectedHealing)
+    {
+        var body = SSpawn("MobHuman");
+        var arm = _body.GetOrgan(body, Arm)!.Value;
+        _damage.ChangeDamage(body, new DamageSpecifier { DamageDict = { ["Blunt"] = 10 } },
+            true, targetPart: TargetBodyPart.LeftArm, canMiss: false);
+        var temperature = FixedPoint2.New(SComp<TemperatureComponent>(body).Temperature);
+        _effects.ApplyEffect(body, new HealthChange
+        {
+            Damage = new DamageSpecifier { DamageDict = { ["Blunt"] = -1 } },
+            ScaleByTemperature = new TemperatureScaling(temperature - 100, temperature + 100, 2),
+            TargetPart = TargetBodyPart.LeftArm,
+        }, dose);
+        Assert.That(_damage.GetTotalDamage(arm), Is.EqualTo((FixedPoint2) (10 - expectedHealing)));
+    }
+
+    [Test]
+    [RunOnSide(Side.Server)]
+    public void CryoAnalyzerSelectsOnlyItsCurrentPatientsParts()
+    {
+        var pod = SSpawn("CryoPod");
+        var patient = SSpawn("MobHuman");
+        var cryo = SComp<CryoPodComponent>(pod);
+        Assert.That(_containers.Insert(patient, cryo.BodyContainer), Is.True);
+        var message = new HealthAnalyzerPartMessage(Arm);
+        SEntMan.EventBus.RaiseLocalEvent(pod, message);
+        var analyzer = SComp<HealthAnalyzerComponent>(pod);
+        Assert.That(_analyzer.GetAnalyzedPart((pod, analyzer), patient), Is.EqualTo(_body.GetOrgan(patient, Arm)));
+        Assert.That(_containers.Remove(patient, cryo.BodyContainer), Is.True);
+        Assert.That(_analyzer.GetAnalyzedPart((pod, analyzer), null), Is.Null);
+    }
+
+    [Test]
+    [RunOnSide(Side.Server)]
+    public void MultiverRemovesForeignReagentsFromBlood()
+    {
+        var body = SSpawn("MobHuman");
+        _blood.TryModifyBloodLevel(body, -20);
+        Assert.That(_blood.TryAddToBloodstream(body, new Solution("Toxin", 10)), Is.True);
+        ProtoId<ReagentPrototype> multiver = "Multiver";
+        var effects = _prototypes.Index(multiver).Metabolisms!.Metabolisms["Bloodstream"].Effects;
+        _effects.TryApplyEffects(body, effects);
+        var bloodstream = SComp<BloodstreamComponent>(body);
+        Assert.That(_solutions.ResolveSolution(body, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var solution), Is.True);
+        Assert.That(solution.GetTotalPrototypeQuantity("Toxin"), Is.EqualTo((FixedPoint2) 7));
+    }
+
 }

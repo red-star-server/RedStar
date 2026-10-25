@@ -578,7 +578,6 @@
     Bloodstream:
       effects:
       - !type:HealthChange
-        conditions:
         damage:
           types:
             Poison: 2
