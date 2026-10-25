@@ -1,0 +1,31 @@
+- type: entity
+  id: MedicalTechFab
+  components:
+  - type: Lathe
+    staticPacks:
+    - SurgeryStaticGoob
+    dynamicPacks:
+    - Surgery
+
+- type: entity
+  id: CrateMedicalSurgery
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children: !Clear
+        - id: Scalpel
+        - id: Retractor
+        - id: Cautery
+        - id: Drill
+        - id: SawElectric # Goob - was Saw
+        - id: Hemostat
+        - id: ClothingMaskSterile
+        # <Goob>
+        - id: BoneGel
+        - id: MedicalStitches
+        - id: BoxLatexGloves
+        - id: BoxSterileMask
+        - id: NitrousOxideTankFilled
+        - id: ClothingMaskBreath
+        # </Goob>

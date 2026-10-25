@@ -1,0 +1,93 @@
+- type: entity
+  parent: SurgeryOpenCavityBase
+  id: SurgeryOpenTailSlot
+  name: Create Tail Joint
+  components:
+  - type: Surgery
+    requirement: SurgeryOpenIncision
+    steps:
+    - SurgeryStepSawBones
+    - SurgeryStepCreateJoint
+    - SurgeryStepStitchJoint
+    - SurgeryStepOpenOrganSlot
+  - type: SurgeryPartCondition
+    parts: [ Torso ]
+  - type: SurgeryOrganSlotCondition
+    organSlot: Tail
+
+# Tongue
+
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryRemoveTongue
+  name: Remove Tongue
+  components:
+  - type: Surgery
+    steps:
+    - SurgeryStepOpenIncisionScalpel
+    - SurgeryStepRemoveOrganHand
+  - type: SurgeryOrganCondition
+    organ: Tongue
+
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryInsertTongue
+  name: Insert Tongue
+  components:
+  - type: Surgery
+    steps:
+    - SurgeryStepInsertOrgan
+    - SurgeryStepSealOrganWound
+  - type: SurgeryOrganSlotCondition
+    organSlot: Tongue
+  - type: SurgeryOrganCondition
+    inverse: true
+    reattaching: true
+    organ: Tongue
+
+# Kidneys
+
+- type: entity
+  parent: BaseSurgeryRemoveOrgan
+  id: SurgeryRemoveKidneys
+  name: Remove Kidneys
+  components:
+  - type: SurgeryOrganCondition
+    organ: Kidneys
+
+- type: entity
+  parent: BaseSurgeryInsertOrgan
+  id: SurgeryInsertKidneys
+  name: Insert Kidneys
+  components:
+  - type: SurgeryOrganSlotCondition
+    organSlot: Kidneys
+  - type: SurgeryOrganCondition
+    organ: Kidneys
+
+# Wings
+
+- type: entity
+  parent: SurgeryOpenCavityBase
+  id: SurgeryOpenWingsSlot
+  name: Create Wing Joints
+  components:
+  - type: Surgery
+    requirement: SurgeryOpenIncision
+    steps:
+    - SurgeryStepSawBones
+    - SurgeryStepCreateJoint
+    - SurgeryStepStitchJoint
+    - SurgeryStepOpenOrganSlot
+  - type: SurgeryPartCondition
+    parts: [ Torso ]
+  - type: SurgeryOrganSlotCondition
+    organSlot: Wings
+
+- type: entity
+  parent: SurgeryAttachBase
+  id: SurgeryAttachWings
+  name: Attach Wings
+  components:
+  - type: SurgeryPartRemovedCondition
+    category: Wings

@@ -1,0 +1,440 @@
+- type: entity
+  id: MobSkeletonPerson
+  components:
+  - type: SurgeryTarget
+    sepsisImmune: true
+
+- type: entity
+  id: OrganBaseTorso
+  components:
+  - type: BodyPartCavity
+    whitelist:
+      sizes:
+      - Tiny
+      - Small
+
+- type: randomHumanoidSettings
+  id: VisitorCMO
+  components:
+  - type: SurgerySpeedModifier
+    speedModifier: 2
+
+- type: entity
+  id: BaseCigar
+  components:
+  - type: Cautery
+    speed: 0.4
+  - type: SurgeryTool
+    startSound:
+      path: /Audio/Effects/cig_light.ogg
+    endSound:
+      path: /Audio/Effects/cig_snuff.ogg
+
+- type: entity
+  id: ShardCrystalBase
+  components:
+  - type: Sharp
+
+- type: entity
+  id: ShardBase
+  components:
+  - type: Scalpel
+    speed: 0.45
+  - type: Sharp
+
+- type: entity
+  id: BrokenBottle
+  components:
+  - type: Sharp
+
+- type: entity
+  id: Pen
+  components:
+  - type: Tending
+    speed: 0.55
+  - type: SurgeryTool
+    startSound:
+      path: /Audio/_RedStar/Medical/Surgery/retractor1.ogg
+    endSound:
+      path: /Audio/_RedStar/Medical/Surgery/hemostat1.ogg
+
+- type: entity
+  id: UtensilBase
+  components:
+  - type: Tweezers
+    speed: 0.2
+  - type: SurgeryTool
+    startSound:
+      path: /Audio/_RedStar/Medical/Surgery/retractor1.ogg
+    endSound:
+      path: /Audio/_RedStar/Medical/Surgery/hemostat1.ogg
+
+- type: entity
+  id: Fork
+  components:
+  - type: Tweezers
+    speed: 0.35
+
+- type: entity
+  id: ForkPlastic
+  components:
+  - type: Tweezers
+    speed: 0.35
+
+- type: entity
+  id: HydroponicsToolClippers
+  components:
+  - type: Retractor
+    speed: 0.35
+  - type: Hemostat
+    speed: 0.6
+  - type: SurgeryTool
+    startSound:
+      path: /Audio/_RedStar/Medical/Surgery/retractor1.ogg
+    endSound:
+      path: /Audio/_RedStar/Medical/Surgery/retractor2.ogg
+
+- type: entity
+  id: HydroponicsToolHatchet
+  components:
+  - type: Sharp
+  - type: BoneSaw
+    speed: 0.35
+  - type: SurgeryTool
+    startSound:
+      path: /Audio/_RedStar/Medical/Surgery/saw.ogg
+
+- type: entity
+  id: MedicatedSuture
+  components:
+  - type: Stitches
+    speed: 2
+    used: true
+  - type: SurgeryTool
+    startSound:
+      path: /Audio/Items/Medical/brutepack_begin.ogg
+      params:
+        volume: 1.0
+        variation: 0.125
+    endSound:
+      path: /Audio/Items/Medical/brutepack_end.ogg
+      params:
+        volume: 1.0
+        variation: 0.125
+
+- type: entity
+  id: BaseToolSurgery
+  components:
+  - type: SurgeryTool
+
+- type: entity
+  id: Cautery
+  components:
+  - type: SurgeryTool
+    startSound:
+      path: /Audio/_RedStar/Medical/Surgery/cautery1.ogg
+    endSound:
+      path: /Audio/_RedStar/Medical/Surgery/cautery2.ogg
+  - type: Cautery
+
+- type: entity
+  id: Drill
+  components:
+  - type: SurgeryTool
+    startSound:
+      path: /Audio/_RedStar/Medical/Surgery/saw.ogg
+  - type: Drill
+
+- type: entity
+  id: Scalpel
+  components:
+  - type: SurgeryTool
+    startSound:
+      path: /Audio/_RedStar/Medical/Surgery/scalpel1.ogg
+    endSound:
+      path: /Audio/_RedStar/Medical/Surgery/scalpel2.ogg
+  - type: Scalpel
+  - type: Sharp
+
+- type: entity
+  id: ScalpelAdvanced
+  components:
+  - type: Scalpel
+    speed: 1.35
+
+- type: entity
+  id: ScalpelLaser
+  components:
+  - type: Scalpel
+    speed: 1.75
+
+- type: entity
+  id: Retractor
+  components:
+  - type: SurgeryTool
+    startSound:
+      path: /Audio/_RedStar/Medical/Surgery/retractor1.ogg
+    endSound:
+      path: /Audio/_RedStar/Medical/Surgery/retractor2.ogg
+  - type: Retractor
+
+- type: entity
+  id: Hemostat
+  components:
+  - type: SurgeryTool
+    startSound:
+      path: /Audio/_RedStar/Medical/Surgery/retractor1.ogg
+    endSound:
+      path: /Audio/_RedStar/Medical/Surgery/hemostat1.ogg
+  - type: Hemostat
+  - type: Tweezers
+  - type: Tending
+
+- type: entity
+  id: Saw
+  components:
+  - type: BoneSaw
+  - type: SurgeryTool
+    startSound:
+      path: /Audio/_RedStar/Medical/Surgery/bone_saw.ogg
+
+- type: entity
+  id: SawImprov
+  components:
+  - type: BoneSaw
+    speed: 0.5
+
+- type: entity
+  id: SawElectric
+  components:
+  - type: BoneSaw
+    speed: 1.5
+  - type: SurgeryTool
+    startSound:
+      path: /Audio/_RedStar/Medical/Surgery/saw.ogg
+
+- type: entity
+  id: SawAdvanced
+  components:
+  - type: BoneSaw
+    speed: 2
+
+- type: entity
+  id: CableStack
+  components:
+  - type: Stitches
+    speed: 0.7
+    used: true
+  - type: SurgeryTool
+    startSound:
+      path: /Audio/_RedStar/Medical/Surgery/retractor1.ogg
+    endSound:
+      path: /Audio/_RedStar/Medical/Surgery/hemostat1.ogg
+
+- type: entity
+  id: BaseCrowbar
+  components:
+  - type: Tweezers
+    speed: 0.55
+  - type: SurgeryTool
+    startSound: /Audio/Items/crowbar.ogg
+
+- type: entity
+  id: BaseLighter
+  components:
+  - type: Cautery
+    speed: 0.45
+  - type: SurgeryTool
+    startSound:
+      collection: lighterOnSounds
+    endSound:
+      collection: lighterOffSounds
+
+- type: entity
+  id: Matchstick
+  components:
+  - type: Cautery
+    speed: 0.2
+  - type: SurgeryTool
+    startSound:
+      path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
+    endSound:
+      path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
+
+- type: entity
+  id: Wirecutter
+  components:
+  - type: Retractor
+    speed: 0.35
+  - type: Hemostat
+    speed: 0.6
+  - type: SurgeryTool
+    startSound:
+      path: /Audio/Items/wirecutter.ogg
+      params:
+        variation: 0.125
+    endSound:
+      path: /Audio/Items/wirecutter.ogg
+      params:
+        variation: 0.125
+
+- type: entity
+  id: PowerDrill
+  components:
+  - type: Tending
+    speed: 0.75
+  - type: Drill
+    speed: 1
+  - type: SurgeryTool
+    startSound: /Audio/Items/drill_use.ogg
+
+- type: entity
+  id: BaseWelder
+  components:
+  - type: Cautery
+    speed: 0.7
+  - type: SurgeryTool
+    startSound:
+      collection: Welder
+    endSound:
+      collection: WelderOff
+
+- type: entity
+  id: Chainsaw
+  components:
+  - type: BoneSaw
+    speed: 0.5
+  - type: SurgeryTool
+    startSound:
+      path: /Audio/Weapons/chainsaw_pull.ogg
+    endSound:
+      path: /Audio/Weapons/chainsaw_rev.ogg
+  - type: Sharp
+
+- type: entity
+  id: FireAxe
+  components:
+  - type: Scalpel
+    speed: 0.3
+  - type: BoneSaw
+    speed: 0.5
+  - type: SurgeryTool
+    startSound:
+      path: /Audio/_RedStar/Medical/Surgery/saw.ogg
+  - type: Sharp
+
+- type: entity
+  id: BaseKnife
+  components:
+  - type: Scalpel
+    speed: 0.65
+  - type: Sharp
+
+- type: entity
+  id: ButchCleaver
+  components:
+  - type: Scalpel
+    speed: 0.3
+  - type: BoneSaw
+    speed: 0.5
+
+- type: entity
+  id: Spear
+  components:
+  - type: Sharp
+
+- type: entity
+  id: BaseSword
+  components:
+  - type: Sharp
+
+- type: entity
+  id: OperatingTable
+  components:
+  - type: OperatingTable
+    speedModifier: 1.5
+
+- type: antagSpecifier
+  id: NukeopsMedic
+  components:
+  - type: SurgerySpeedModifier
+    speedModifier: 2
+
+- type: entity
+  id: BaseWeaponCrusher
+  components:
+  - type: Sharp
+
+- type: entity
+  id: MedicalBorgChassisDerelict
+  components:
+  - type: Sanitized
+  - type: SurgeryIgnoreClothing
+  - type: SurgerySpeedModifier
+    speedModifier: 1.5
+
+- type: entity
+  id: BaseWeaponBatteryNoAmmoCounter
+  components:
+  - type: Cautery
+    speed: 0.9
+  - type: SurgeryTool
+    endSound:
+      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
+
+- type: entity
+  id: BaseWeaponPowerCell
+  components:
+  - type: Cautery
+    speed: 0.9
+  - type: SurgeryTool
+    endSound:
+      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
+
+- type: entity
+  id: Armblade
+  components:
+  - type: Scalpel
+    speed: 0.3
+  - type: BoneSaw
+    speed: 0.75
+  - type: SurgeryTool
+    startSound:
+      path: /Audio/_RedStar/Medical/Surgery/saw.ogg
+
+- type: entity
+  id: UnholyHalberd
+  components:
+  - type: Sharp
+
+- type: job
+  id: Chemist
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: SurgerySpeedModifier
+      speedModifier: 1.25
+
+- type: job
+  id: ChiefMedicalOfficer
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: SurgerySpeedModifier
+      speedModifier: 2
+
+- type: job
+  id: MedicalDoctor
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: SurgerySpeedModifier
+      speedModifier: 1.5
+
+- type: job
+  id: MedicalIntern
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: SurgerySpeedModifier
+      speedModifier: 1.25
