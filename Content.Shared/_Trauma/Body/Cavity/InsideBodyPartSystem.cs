@@ -22,6 +22,7 @@ public sealed partial class InsideBodyPartSystem : CommonInsideBodyPartSystem
     [Dependency] private DamageableSystem _damage = default!;
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedJitteringSystem _jittering = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
@@ -89,6 +90,8 @@ public sealed partial class InsideBodyPartSystem : CommonInsideBodyPartSystem
             !_container.Remove(ent.Owner, container))
             return;
 
+        // The part is itself inside the body's organ container. Leave that container before applying damage.
+        _transform.AttachToGridOrMap(ent.Owner);
         _damage.TryChangeDamage(part, ent.Comp.BurstDamage, ignoreResistances: true);
         // BoneDamage is a trauma, not a wound prototype. A zero-severity wound holds its inflicter.
         if (_wound.TryCreateWound(part, BluntWound, 0, out var wound, Brute))

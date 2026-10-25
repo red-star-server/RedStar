@@ -1,3 +1,4 @@
+using System.Linq;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Network;
 using Content.Shared._Trauma.Common.Body;
@@ -237,6 +238,14 @@ public sealed partial class SurgerySystem : EntitySystem
             args.Cancelled = true;
             return;
         }
+
+        // The modification itself changes this condition before the final incision-closing step.
+        // Keep that final step available while the incision is still open.
+        if (HasComp<IncisionOpenComponent>(args.Part)
+            && GetNextStep(args.Body, args.Part, ent.Owner, args.User) is {} next
+            && GetSingleton(next.Surgery.Comp.Steps[next.Step < 0 ? -next.Step - 1 : next.Step]) is {} nextStep
+            && _stepQuery.Comp(nextStep).Remove?.Values.Any(entry => entry.Component is IncisionOpenComponent) == true)
+            return;
 
         var organs = _part.GetPartOrgans(args.Part);
 

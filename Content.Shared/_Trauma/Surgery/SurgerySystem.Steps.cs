@@ -770,6 +770,10 @@ public sealed partial class SurgerySystem
             return null;
         }
 
+        // Closing an operation can undo its prerequisite incision. Do not reopen a finished procedure.
+        if (surgery.Comp.Steps.All(step => IsStepComplete(body, part, step, surgery)))
+            return null;
+
         requirements.Add(surgery);
 
         if (surgery.Comp.Requirement is { } requirementId &&

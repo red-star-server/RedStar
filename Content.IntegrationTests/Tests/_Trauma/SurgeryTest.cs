@@ -249,7 +249,15 @@ public sealed class SurgeryTest : GameTest
             var containers = Server.System<SharedContainerSystem>();
             Assert.That(containers.TryGetContainer(torso, "_part_cavity", out var cavity), Is.True);
             Assert.That(cavity!.ContainedEntities, Does.Contain(selected));
-            Assert.That(containers.Remove(selected, cavity), Is.True);
+            Assert.That(_surgery.TryDoSurgeryStep(patient, torso, surgeon, "SurgeryInsertItem", "SurgeryStepRemoveItem", out _), Is.True);
+        });
+        await RunSeconds(14);
+        await Server.WaitAssertion(() =>
+        {
+            Assert.That(_hands.GetActiveItem(surgeon), Is.EqualTo(selected));
+            Assert.That(_hands.TryDrop(surgeon, selected), Is.True);
+            var containers = Server.System<SharedContainerSystem>();
+            Assert.That(containers.TryGetContainer(torso, "_part_cavity", out var cavity), Is.True);
             var mouse = SSpawn("MobMouse");
             SEntMan.RemoveComponent<BarotraumaComponent>(mouse);
             SEntMan.RemoveComponent<RespiratorComponent>(mouse);
@@ -260,7 +268,8 @@ public sealed class SurgeryTest : GameTest
             SEntMan.EventBus.RaiseLocalEvent(mouse, burst);
             Assert.That(burst.Handled, Is.True);
         });
-        await RunSeconds(13);
+        // Let the burst and its temporary paralysis finish before fixture cleanup.
+        await RunSeconds(20);
         await Server.WaitAssertion(() =>
         {
             Assert.That(SEntMan.HasComponent<InsideBodyPartComponent>(selected), Is.False);
