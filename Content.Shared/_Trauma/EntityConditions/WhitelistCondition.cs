@@ -46,6 +46,12 @@ public sealed partial class WhitelistConditionSystem : EntityConditionSystem<Met
     protected override void Condition(Entity<MetaDataComponent> ent, ref EntityConditionEvent<WhitelistCondition> args)
     {
         var cond = args.Condition;
+        if (!_whitelist.CheckBoth(ent, blacklist: cond.Blacklist))
+        {
+            args.Result = false;
+            return;
+        }
+
         args.Result = _whitelist.CheckBoth(ent, blacklist: cond.Blacklist, whitelist: cond.Whitelist);
 
         if (args.Result || !cond.CheckMind)

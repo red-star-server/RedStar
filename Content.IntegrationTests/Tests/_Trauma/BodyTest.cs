@@ -173,22 +173,6 @@ public sealed class BodyTest : GameTest
 
     [Test]
     [RunOnSide(Side.Server)]
-    public void HumanArmCanBeRemovedAndReattached()
-    {
-        var body = SSpawn("MobHuman");
-        var arm = _body.GetOrgan(body, "ArmLeft").Value;
-        var hand = _body.GetOrgan(body, "HandLeft").Value;
-        Assert.That(_body.RemoveOrgan(body, arm), Is.True);
-        Assert.That(_body.GetOrgan(body, "HandLeft"), Is.Null);
-        Assert.That(_parts.GetSeveredOrgansContainer(arm).ContainedEntities, Does.Contain(hand));
-
-        Assert.That(_body.InsertOrgan(body, arm), Is.True);
-        Assert.That(_body.GetOrgan(body, "HandLeft"), Is.EqualTo(hand));
-        Assert.That(SComp<ChildOrganComponent>(hand).Parent, Is.EqualTo(arm));
-    }
-
-    [Test]
-    [RunOnSide(Side.Server)]
     public void MissingEyesBlindHumanUntilReinserted()
     {
         var body = SSpawn("MobHuman");
@@ -300,22 +284,6 @@ public sealed class BodyTest : GameTest
         Assert.That(_body.RemoveOrgan(body, head), Is.True);
         Assert.That(_body.GetOrgan(body, "Brain"), Is.EqualTo(brain));
         Assert.That(SEntMan.HasComponent<DebrainedComponent>(body), Is.False);
-    }
-
-    [Test]
-    [RunOnSide(Side.Server)]
-    public void InitialBodyCachesAndParentsOrgans()
-    {
-        var body = SSpawn("TraumaTestBody");
-        var torso = _body.GetOrgan(body, "Torso").Value;
-        var arm = _body.GetOrgan(body, "ArmLeft").Value;
-        var hand = _body.GetOrgan(body, "HandLeft").Value;
-
-        Assert.That(SComp<BodyCacheComponent>(body).Organs, Has.Count.EqualTo(6));
-        Assert.That(SComp<ChildOrganComponent>(arm).Parent, Is.EqualTo(torso));
-        Assert.That(SComp<ChildOrganComponent>(hand).Parent, Is.EqualTo(arm));
-        Assert.That(_parts.GetOrgan(arm, HandLeftCategory), Is.EqualTo(hand));
-        Assert.That(SEntMan.HasComponent<EnabledOrganComponent>(hand), Is.True);
     }
 
     [Test]

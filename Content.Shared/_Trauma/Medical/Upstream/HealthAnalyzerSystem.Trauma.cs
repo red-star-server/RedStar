@@ -57,11 +57,16 @@ public abstract partial class HealthAnalyzerSystem
         if (state.Body.Count == 0)
             return;
 
+        var globalBleeding = state.Bleeding.Count > 0;
         state.Bleeding.Clear();
         foreach (var part in _body.GetOrgans<WoundableComponent>(body))
         {
             if (part.Comp.Bleeds > 0 && _body.GetCategory(part.Owner) is {} category)
                 state.Bleeding.Add(category);
         }
+
+        // General blood loss may have no wound that identifies the bleeding part.
+        if (state.Bleeding.Count == 0 && globalBleeding)
+            state.Bleeding.Add("Torso");
     }
 }

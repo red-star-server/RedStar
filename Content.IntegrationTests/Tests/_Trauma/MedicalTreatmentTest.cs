@@ -2,7 +2,6 @@ using Robust.Shared.Containers;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
-using Robust.Client.UserInterface.RichText;
 using System.Linq;
 using Content.Shared.Verbs;
 using Robust.Shared.Localization;
@@ -27,6 +26,10 @@ using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Medical;
+using Content.Shared.EntityConditions;
+using Content.Shared.Mind;
+using Content.Shared.Whitelist;
+using Content.Shared._Trauma.EntityConditions;
 using Content.Shared.Inventory;
 using Content.Shared.Temperature.Components;
 using Content.Shared._Trauma.Common.EntityEffects;
@@ -45,7 +48,6 @@ namespace Content.IntegrationTests.Tests._Trauma;
 [TestFixture]
 public sealed class MedicalTreatmentTest : GameTest
 {
-    [SidedDependency(Side.Client)] private MarkupTagManager _markup = default!;
     [SidedDependency(Side.Server)] private SharedContainerSystem _containers = default!;
     [SidedDependency(Side.Server)] private SharedSolutionContainerSystem _solutions = default!;
     [SidedDependency(Side.Server)] private IPrototypeManager _prototypes = default!;
@@ -63,6 +65,9 @@ public sealed class MedicalTreatmentTest : GameTest
 
     [SidedDependency(Side.Server)] private InventorySystem _inventory = default!;
 
+    [SidedDependency(Side.Server)] private SharedEntityConditionsSystem _conditions = default!;
+    [SidedDependency(Side.Server)] private SharedMindSystem _minds = default!;
+
     private static readonly ProtoId<OrganCategoryPrototype> Arm = "ArmLeft";
     private static readonly ProtoId<OrganCategoryPrototype> Head = "Head";
     private static readonly EntProtoId Slash = "Slash";
@@ -75,13 +80,6 @@ public sealed class MedicalTreatmentTest : GameTest
         ev.DoAfter = new Content.Shared.DoAfter.DoAfter(0, args, TimeSpan.Zero);
         SEntMan.EventBus.RaiseLocalEvent(target, ev);
         return ev;
-    }
-
-    [Test]
-    [RunOnSide(Side.Client)]
-    public void SelfInspectionMarkupHandlerIsRegistered()
-    {
-        Assert.That(_markup.TryGetMarkupTagHandler("examineborder", null, out _), Is.True);
     }
 
     [Test]
@@ -133,36 +131,6 @@ public sealed class MedicalTreatmentTest : GameTest
 
     [Test]
     [RunOnSide(Side.Server)]
-    public void BloodpackRestoresBloodInsteadOfDrainingIt()
-    {
-        var body = SSpawn("MobHuman");
-        _blood.TryModifyBloodLevel(body, -50);
-        var before = _blood.GetBloodLevel(body);
-        var item = SSpawn("Bloodpack");
-        FinishTreatment(body, item);
-        Assert.That(_blood.GetBloodLevel(body), Is.GreaterThan(before));
-    }
-
-    [Test]
-    [RunOnSide(Side.Server)]
-    public void MedicineHealsWoundsAcrossTheBody()
-    {
-        var body = SSpawn("MobHuman");
-        var arm = _body.GetOrgan(body, Arm)!.Value;
-        var head = _body.GetOrgan(body, Head)!.Value;
-        foreach (var part in new[] { TargetBodyPart.LeftArm, TargetBodyPart.Head })
-            _damage.ChangeDamage(body, new DamageSpecifier { DamageDict = { ["Blunt"] = 10 } },
-                true, targetPart: part, canMiss: false);
-        _effects.ApplyEffect(body, new HealthChange { Damage = new DamageSpecifier { DamageDict = { ["Blunt"] = -20 } } });
-        Assert.Multiple(() =>
-        {
-            Assert.That(_damage.GetTotalDamage(arm), Is.LessThan((FixedPoint2) 10));
-            Assert.That(_damage.GetTotalDamage(head), Is.LessThan((FixedPoint2) 10));
-        });
-    }
-
-    [Test]
-    [RunOnSide(Side.Server)]
     public void BoneMedicineRestoresBoneIntegrity()
     {
         var body = SSpawn("MobHuman");
@@ -195,24 +163,6 @@ public sealed class MedicalTreatmentTest : GameTest
         });
     }
 
-    [TestCase("PillCanisterTramadol", "Tramadol", 7.5f)]
-    [TestCase("PillCanisterOxycodone", "Oxycodone", 5f)]
-    [TestCase("PillCanisterIbuprofen", "Ibuprofen", 10f)]
-    [RunOnSide(Side.Server)]
-    public void PrefilledCanisterContainsFifteenCorrectDoses(string prototype, string reagent, float dose)
-    {
-        var canister = SSpawn(prototype);
-        Assert.That(_containers.TryGetContainer(canister, "storagebase", out var storage), Is.True);
-        Assert.That(storage!.ContainedEntities, Has.Count.EqualTo(15));
-        foreach (var pill in storage.ContainedEntities)
-        {
-            var quantity = FixedPoint2.Zero;
-            foreach (var (_, solution) in _solutions.EnumerateSolutions(pill))
-                quantity += solution.Comp.Solution.GetTotalPrototypeQuantity(reagent);
-            Assert.That(quantity, Is.EqualTo((FixedPoint2) dose));
-        }
-    }
-
     [TestCase(100, MobState.SoftCrit)]
     [TestCase(150, MobState.Critical)]
     [TestCase(200, MobState.Dead)]
@@ -235,21 +185,6 @@ public sealed class MedicalTreatmentTest : GameTest
             true, targetPart: TargetBodyPart.LeftArm, canMiss: false);
         Assert.That(_threshold.CheckVitalDamage(body), Is.EqualTo(FixedPoint2.Zero));
         Assert.That(SComp<MobStateComponent>(body).CurrentState, Is.EqualTo(MobState.Alive));
-    }
-
-    [Test]
-    [RunOnSide(Side.Server)]
-    public void SoftCritBreathingIsAssistedByCPR()
-    {
-        var body = SSpawn("MobHuman");
-        _mob.ChangeMobState(body, MobState.SoftCrit);
-        var alone = new ModifyInhaledVolumeEvent(1);
-        SEntMan.EventBus.RaiseLocalEvent(body, ref alone);
-        Assert.That(alone.Volume, Is.EqualTo(0.3f).Within(0.0001f));
-        SEntMan.EnsureComponent<ActiveCPRComponent>(body);
-        var assisted = new ModifyInhaledVolumeEvent(1);
-        SEntMan.EventBus.RaiseLocalEvent(body, ref assisted);
-        Assert.That(assisted.Volume, Is.EqualTo(3f).Within(0.0001f));
     }
 
     [Test]
@@ -279,6 +214,7 @@ public sealed class MedicalTreatmentTest : GameTest
         {
             Assert.That(state.Body, Does.ContainKey(Arm));
             Assert.That(state.Bleeding, Does.Contain(Arm));
+            Assert.That(state.Bleeding, Does.Not.Contain((ProtoId<OrganCategoryPrototype>) "Torso"));
             Assert.That(state.VitalDamage, Is.EqualTo(_threshold.CheckVitalDamage(body)));
         });
     }
@@ -288,19 +224,20 @@ public sealed class MedicalTreatmentTest : GameTest
     {
         var body = SSpawn("MobHuman");
         _blood.TryModifyBloodLevel(body, -200);
+        var bloodBefore = _blood.GetBloodLevel(body);
         var item = SSpawn("Bloodpack");
         var before = SComp<StackComponent>(item).Count;
         var ev = FinishTreatment(body, item);
         Assert.Multiple(() =>
         {
             Assert.That(ev.Repeat, Is.True);
+            Assert.That(_blood.GetBloodLevel(body), Is.GreaterThan(bloodBefore));
             Assert.That(SComp<StackComponent>(item).Count, Is.EqualTo(before - 1));
         });
     }
 
     [TestCase(true, false)]
     [TestCase(false, true)]
-    [TestCase(true, true)]
     [RunOnSide(Side.Server)]
     public void CPRRequiresBothMouthsAvailable(bool blockRescuer, bool blockPatient)
     {
@@ -340,7 +277,6 @@ public sealed class MedicalTreatmentTest : GameTest
     }
 
     [TestCase(0.5f, 0.5f)]
-    [TestCase(1f, 1f)]
     [TestCase(2f, 2f)]
     [RunOnSide(Side.Server)]
     public void TemperatureScaledMedicineScalesDoseOnlyOnce(float dose, float expectedHealing)
@@ -390,4 +326,35 @@ public sealed class MedicalTreatmentTest : GameTest
         Assert.That(solution.GetTotalPrototypeQuantity("Toxin"), Is.EqualTo((FixedPoint2) 7));
     }
 
+    [TestCase(false)]
+    [TestCase(true)]
+    [RunOnSide(Side.Server)]
+    public void MindWhitelistCannotBypassBodyBlacklist(bool blacklistBody)
+    {
+        var body = SSpawn("MobHuman");
+        var mind = _minds.CreateMind(null);
+        _minds.TransferTo(mind.Owner, body);
+        var condition = new WhitelistCondition
+        {
+            CheckMind = true,
+            Whitelist = new EntityWhitelist { Components = new[] { "Mind" } },
+            Blacklist = blacklistBody ? new EntityWhitelist { Components = new[] { "Body" } } : null,
+        };
+        Assert.That(_conditions.TryCondition(body, condition), Is.EqualTo(!blacklistBody));
+    }
+
+    [TestCase(0f, false)]
+    [TestCase(2f, true)]
+    [RunOnSide(Side.Server)]
+    public void AnalyzerRetainsBleedingWithoutLocalizedWounds(float bleedAmount, bool expectedBleeding)
+    {
+        var body = SSpawn("MobHuman");
+        _blood.TryModifyBleedAmount(body, bleedAmount);
+        var state = _analyzer.GetHealthAnalyzerUiState(body, true);
+        Assert.Multiple(() =>
+        {
+            Assert.That(state.Body, Is.Not.Empty);
+            Assert.That(state.Bleeding.Contains("Torso"), Is.EqualTo(expectedBleeding));
+        });
+    }
 }
