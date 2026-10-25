@@ -34,7 +34,7 @@ construction-graph-tag-surgery-tools-electronics = плата панели хи�
 
 construction-graph-tag-utility-tools-electronics = плата панели технических инструментов
 
-ipc-recharge-tip = Зарядка завершена.
+ipc-recharge-tip = Вы пополняете заряд своей батареи.
 
 markings-organ-ArmAugment = Аугмент руки
 
