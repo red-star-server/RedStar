@@ -1,0 +1,61 @@
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepRearrangeTissue
+  name: Rearrange soft tissue
+  components:
+  - type: SurgeryStep
+    tool:
+    - type: Tweezers
+    add:
+    - type: TissueRearranged
+    duration: 5
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/hemostat.rsi
+    state: hemostat
+  - type: SurgeryDamageChangeEffect
+    damage:
+      types:
+        Slash: 15
+    sleepModifier: 0.2
+
+- type: entity
+  parent: SurgeryStepCloseBloodOutputs
+  id: SurgeryStepStitchVessels
+  name: Stitch up blood vessels
+  components:
+  - type: SurgeryStep
+    add:
+    - type: VesselsStitched
+    remove: null
+
+- type: entity
+  parent: SurgeryStepSealBones
+  id: SurgeryStepCreateJoint
+  name: Create joint
+  components:
+  - type: SurgeryStep
+    remove: null
+    add:
+    - type: JointCreated
+
+- type: entity
+  parent: SurgeryStepCloseBloodOutputs
+  id: SurgeryStepStitchJoint
+  name: Stitch joint blood vessels
+  components:
+  - type: SurgeryStep
+    remove: null
+    add:
+    - type: JointStitched
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepRemoveOrganHand
+  name: Remove organ
+  components:
+  - type: SurgeryStep
+    duration: 8
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/manipulation.rsi
+    state: insertion
+  - type: SurgeryRemoveOrganStep
