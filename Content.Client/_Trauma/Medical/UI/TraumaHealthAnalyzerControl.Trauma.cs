@@ -23,10 +23,10 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-namespace Content.Client.HealthAnalyzer.UI;
+namespace Content.Client._Trauma.Medical.UI;
 
 // TODO: use ui injection
-public sealed partial class HealthAnalyzerControl
+public sealed partial class TraumaHealthAnalyzerControl
 {
     private BodySystem _body = default!;
     private SharedSolutionContainerSystem _solution = default!;
