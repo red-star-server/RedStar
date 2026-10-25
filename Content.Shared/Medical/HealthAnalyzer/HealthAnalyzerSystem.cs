@@ -13,12 +13,14 @@ using Content.Shared.Traits.Assorted;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
+using Robust.Shared.Network; // RS14
 
 namespace Content.Shared.Medical.HealthAnalyzer;
 
 public abstract partial class HealthAnalyzerSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private INetManager _net = default!; // RS14
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private BloodstreamSystem _bloodstream = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
@@ -226,6 +228,12 @@ public abstract partial class HealthAnalyzerSystem : EntitySystem
 
     private void UpdateUi(Entity<HealthAnalyzerComponent> analyzer)
     {
+        // RS14-start
+        // Temperature is server-only; predicted states would overwrite it with NaN.
+        if (_net.IsClient)
+            return;
+        // RS14-end
+
         // Gather all the information the UI needs.
         var state = GetHealthAnalyzerUiState(analyzer.Comp.ScannedEntity, analyzer.Comp.IsAnalyzerActive);
         // RS14-start

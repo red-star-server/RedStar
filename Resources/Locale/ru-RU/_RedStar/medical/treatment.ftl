@@ -89,9 +89,9 @@ inspect-part-status-conjunction3 = {""}
 
 inspect-part-status-fine = в порядке
 
-inspect-part-status-line = [font size=10]{$possessive} [bold]{$part}[/bold]: {$status}.[/font]
+inspect-part-status-line = [font size=10][bold]{$part}[/bold]: {$status}.[/font]
 
-inspect-part-status-line-styleless = {$possessive} {$part}: {$status}.
+inspect-part-status-line-styleless = {$part}: {$status}.
 
 inspect-part-status-their = Часть тела:
 
