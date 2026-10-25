@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
+using Content.Shared._Trauma.Augments; // RS14
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions.Events;
 using Content.Shared.Administration.Components;
@@ -262,6 +263,14 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
 
         var ev = new GetMeleeDamageEvent(uid, new(component.Damage * Damageable.UniversalMeleeDamageModifier), new(), user, component.ResistanceBypass);
         RaiseLocalEvent(uid, ref ev);
+
+        // RS14-start
+        if (uid != user && !_hands.IsHolding(user, uid)) return DamageSpecifier.ApplyModifierSets(ev.Damage, ev.Modifiers);
+        var userEv = new GetUserMeleeDamageEvent(uid, ev.Damage, ev.Modifiers);
+        RaiseLocalEvent(user, ref userEv);
+        ev.Damage = userEv.Damage;
+        ev.Modifiers = userEv.Modifiers;
+        // RS14-end
 
         return DamageSpecifier.ApplyModifierSets(ev.Damage, ev.Modifiers);
     }

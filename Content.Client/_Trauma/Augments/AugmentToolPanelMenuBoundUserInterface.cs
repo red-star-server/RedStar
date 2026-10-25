@@ -1,0 +1,40 @@
+using Robust.Client.UserInterface;
+using Robust.Client.Graphics;
+using Robust.Client.GameObjects;
+
+using Content.Shared._Trauma.Augments;
+using Robust.Client.Input;
+
+namespace Content.Client._Trauma.Augments;
+
+public sealed partial class AugmentToolPanelMenuBoundUserInterface : BoundUserInterface
+{
+    [Dependency] private IClyde _clyde = default!;
+    [Dependency] private IInputManager _input = default!;
+    [Dependency] private IEntityManager _ent = default!;
+
+    private AugmentToolPanelMenu? _menu;
+
+    public AugmentToolPanelMenuBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+    {
+        IoCManager.InjectDependencies(this);
+    }
+
+    protected override void Open()
+    {
+        base.Open();
+
+        _menu = this.CreateWindow<AugmentToolPanelMenu>();
+        _menu.SetEntity(Owner);
+        _menu.SendSwitchMessage += SendSwitchMessage;
+
+        // Open the menu, centered on the mouse
+        var vpSize = _clyde.ScreenSize;
+        _menu.OpenCenteredAt(_input.MouseScreenPosition.Position / vpSize);
+    }
+
+    public void SendSwitchMessage(EntityUid? desiredTool)
+    {
+        SendPredictedMessage(new AugmentToolPanelSwitchMessage(_ent.GetNetEntity(desiredTool)));
+    }
+}

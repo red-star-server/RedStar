@@ -27,7 +27,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests._Trauma;
 
-public sealed class SurgeryTest : GameTest
+public sealed partial class SurgeryTest : GameTest
 {
     [SidedDependency(Side.Server)] private BodySystem _body = default!;
     [SidedDependency(Side.Server)] private BodyPartSystem _parts = default!;
