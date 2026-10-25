@@ -1,0 +1,27 @@
+- type: entity
+  id: ExosuitFabricator
+  components:
+  - type: Lathe
+    dynamicPacks:
+    - BasicCybernetics
+    - MedicalCybernetics
+    - AdvancedCybernetics
+
+- type: entity
+  id: MedicalTechFab
+  components:
+  - type: Lathe
+    dynamicPacks:
+    - MedicalCybernetics
+
+- type: entity
+  id: SecurityTechFab
+  components:
+  - type: Lathe
+    dynamicPacks:
+    - SecurityCybernetics
+
+- type: latheRecipePack
+  id: MedicalBoards
+  recipes:
+  - MedicalBiofabMachineBoard
