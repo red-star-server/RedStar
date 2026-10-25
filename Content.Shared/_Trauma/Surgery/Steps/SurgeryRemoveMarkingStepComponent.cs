@@ -1,0 +1,29 @@
+using Robust.Shared.Prototypes;
+using Robust.Shared.GameStates;
+
+using Content.Shared.Humanoid;
+
+namespace Content.Shared._Trauma.Surgery.Steps;
+
+[RegisterComponent, NetworkedComponent]
+public sealed partial class SurgeryRemoveMarkingStepComponent : Component
+{
+    /// <summary>
+    ///     The category the marking belongs to.
+    /// </summary>
+    [DataField]
+    public HumanoidVisualLayers MarkingCategory;
+
+    /// <summary>
+    ///     Can be either a segment of a marking ID, or an entire ID that will be checked
+    ///     against the entity to validate that the marking is present.
+    /// </summary>
+    [DataField]
+    public string MatchString = string.Empty;
+
+    /// <summary>
+    ///     Will this step spawn an item as a result of removing the markings? If so, which?
+    /// </summary>
+    [DataField]
+    public EntProtoId? ItemSpawn;
+}
