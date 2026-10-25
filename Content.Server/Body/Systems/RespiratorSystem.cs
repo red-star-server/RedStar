@@ -89,7 +89,7 @@ public sealed partial class RespiratorSystem : EntitySystem
 
             UpdateSaturation(uid, -(float)respirator.UpdateInterval.TotalSeconds, respirator);
 
-            if (!_mobState.IsIncapacitated(uid)) // cannot breathe in crit.
+            if (!_mobState.IsIncapacitated(uid) || _mobState.IsSoftCrit(uid)) // RS14: softcrit still breathes weakly.
             {
                 switch (respirator.Status)
                 {

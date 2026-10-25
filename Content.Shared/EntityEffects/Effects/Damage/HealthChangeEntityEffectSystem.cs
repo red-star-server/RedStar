@@ -3,7 +3,6 @@ using Content.Shared._Trauma.Common.Damage;
 using Content.Shared._Trauma.Common.EntityEffects;
 using Content.Shared._Trauma.Common.Targeting;
 using Content.Shared.Temperature.Components;
-using Content.Shared._Trauma.Common.Damage;
 // RS14-end
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
