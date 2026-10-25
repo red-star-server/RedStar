@@ -182,7 +182,7 @@ public sealed partial class SurgerySystem
         var group = ProtoMan.Index<DamageGroupPrototype>(ent.Comp.MainGroup);
         foreach (var type in group.DamageTypes)
         {
-            adjustedDamage.DamageDict[type] -= bonus;
+            adjustedDamage.DamageDict[type] = adjustedDamage.DamageDict.GetValueOrDefault(type) - bonus;
         }
 
         _damage.ChangeDamage(args.Part, adjustedDamage, true, origin: args.User, ignoreBlockers: true);
@@ -191,7 +191,7 @@ public sealed partial class SurgerySystem
     [SubscribeLocalEvent]
     private void OnTendWoundsCheck(Entity<SurgeryTendWoundsEffectComponent> ent, ref SurgeryStepCompleteCheckEvent args)
     {
-        if (_wounds.HasDamageOfGroup(args.Part, ent.Comp.MainGroup))
+        if (_wounds.GetWoundableSeverityPoint(args.Part, ent.Comp.MainGroup, healable: true) > 0)
             args.Cancelled = true;
     }
 
@@ -203,9 +203,9 @@ public sealed partial class SurgerySystem
         if (ev.Container is not {} container)
             return;
 
-        var activeHandEntity = _hands.EnumerateHeld(args.User).FirstOrDefault();
-        if (activeHandEntity != default && ent.Comp.Action == "Insert")
-            _container.Insert(activeHandEntity, container);
+        var activeHandEntity = _hands.GetActiveItem(args.User);
+        if (activeHandEntity != null && ent.Comp.Action == "Insert")
+            _container.Insert(activeHandEntity.Value, container);
         else if (ent.Comp.Action == "Remove" && container.ContainedEntity is {} contained)
             _hands.TryPickupAnyHand(args.User, contained);
     }
@@ -255,11 +255,11 @@ public sealed partial class SurgerySystem
     private void OnAffixPartStep(Entity<SurgeryAffixPartStepComponent> ent, ref SurgeryStepEvent args)
     {
         if (!TryComp(args.Surgery, out SurgeryPartRemovedConditionComponent? removedComp) ||
-            _part.FindBodyPart(args.Body, removedComp.Part, removedComp.Symmetry) is not {} targetPart)
+            _body.GetOrgan(args.Body, removedComp.Category) is not {} targetPart)
             return;
 
         // We reward players for properly affixing the parts by healing a little bit of damage, and enabling the part temporarily.
-        _wounds.TryHealWounds(targetPart.Owner, 12f, out _, damageGroup: Brute);
+        _wounds.TryHealWounds(targetPart, 12f, out _, damageGroup: Brute);
         RemComp<OrganReattachedComponent>(targetPart);
     }
 
@@ -386,8 +386,10 @@ public sealed partial class SurgerySystem
                 {
                     foreach (var modifier in organ.Comp.IntegrityModifiers)
                     {
-                        var delta = healAmount - modifier.Value;
-                        if (delta > 0)
+                        if (healAmount <= 0)
+                            return;
+
+                        if (modifier.Value <= healAmount)
                         {
                             healAmount -= modifier.Value;
                             _trauma.TryRemoveOrganDamageModifier(
@@ -402,7 +404,7 @@ public sealed partial class SurgerySystem
                                 -healAmount,
                                 modifier.Key.Item2,
                                 modifier.Key.Item1);
-                            break;
+                            return;
                         }
                     }
                 }
@@ -563,6 +565,7 @@ public sealed partial class SurgerySystem
             var comp = EnsureComp<OrganComponentsComponent>(organ);
             if (remove)
             {
+                EntityManager.RemoveComponents(bodyTarget, components);
                 foreach (var key in components.Keys)
                 {
                     comp.OnAdd?.Remove(key);
@@ -621,7 +624,11 @@ public sealed partial class SurgerySystem
         {
             if (!organs.TryGetValue(category, out var organ) ||
                 !TryComp<OrganComponentsComponent>(organ, out var organComps))
+            {
+                if (checkMissing && compsToAdd.Count > 0)
+                    return true;
                 continue;
+            }
             if (checkMissing)
             {
                 if (compsToAdd.Keys.Any(key => !organComps.AddedKeys.Contains(key)))
@@ -703,7 +710,7 @@ public sealed partial class SurgerySystem
             DuplicateCondition = DuplicateConditions.SameEvent,
             NeedHand = true,
             BreakOnHandChange = true,
-            AttemptFrequency = AttemptFrequency.EveryTick,
+            AttemptFrequency = AttemptFrequency.EveryTick
         };
 
         if (!_doAfter.TryStartDoAfter(doAfter))
@@ -833,7 +840,7 @@ public sealed partial class SurgerySystem
             BodyPartType.Foot => SlotFlags.FEET,
             BodyPartType.Tail => SlotFlags.NONE,
             BodyPartType.Other => SlotFlags.NONE,
-            _ => SlotFlags.NONE,
+            _ => SlotFlags.NONE
         };
 
         var check = new SurgeryCanPerformStepEvent(user, body, tool, slot);

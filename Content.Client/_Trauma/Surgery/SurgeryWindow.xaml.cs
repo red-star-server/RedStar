@@ -254,13 +254,16 @@ public sealed partial class SurgeryWindow : FancyWindow
 
     private void UpdateSurgeries(EntityUid part)
     {
+        if (_player.LocalEntity is not {} player)
+            return;
+
         var valid = new ValueList<EntProtoId>();
         foreach (var surgery in _system.AllSurgeries)
         {
             if (_system.GetSingleton(surgery) is not { } surgeryEnt)
                 continue;
 
-            var ev = new SurgeryValidEvent(_owner, part, _player.LocalEntity!.Value);
+            var ev = new SurgeryValidEvent(_owner, part, player);
             _ent.EventBus.RaiseLocalEvent(surgeryEnt, ref ev);
 
             if (ev.Cancelled)
@@ -270,6 +273,8 @@ public sealed partial class SurgeryWindow : FancyWindow
         }
 
         var changed = false;
+
+        var deselected = false;
 
         // remove any surgeries that arent valid
         _surgeries.RemoveAll(id =>
@@ -281,8 +286,7 @@ public sealed partial class SurgeryWindow : FancyWindow
             if (_surgery?.Proto == id)
             {
                 _surgery = null;
-                if (_part is { } part)
-                    ViewPart(part);
+                deselected = true;
             }
             changed = true;
             return true;
@@ -297,6 +301,9 @@ public sealed partial class SurgeryWindow : FancyWindow
             changed = true;
             _surgeries.Add(id);
         }
+
+        if (deselected)
+            View(ViewType.Surgeries);
 
         // update buttons if they changed
         if (changed)

@@ -1,6 +1,7 @@
 using Robust.Shared.Prototypes;
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared._Trauma.Wounds;
+using Content.Shared._Trauma.Traumas;
 using Content.Shared.Actions;
 using Content.Shared.Body;
 using Content.Shared.Damage.Prototypes;
@@ -27,8 +28,9 @@ public sealed partial class InsideBodyPartSystem : CommonInsideBodyPartSystem
     [Dependency] private SharedStunSystem _stun = default!;
     [Dependency] private MobStateSystem _mob = default!;
     [Dependency] private WoundSystem _wound = default!;
+    [Dependency] private TraumaSystem _trauma = default!;
 
-    private static readonly EntProtoId Trauma = "BoneDamage";
+    private static readonly EntProtoId BluntWound = "WoundBlunt";
     private static readonly ProtoId<DamageGroupPrototype> Brute = "Brute";
 
     private EntityQuery<BodyComponent> _bodyQuery;
@@ -82,13 +84,15 @@ public sealed partial class InsideBodyPartSystem : CommonInsideBodyPartSystem
     private void OnDoAfter(Entity<InsideBodyPartComponent> ent, ref BurstDoAfterEvent args)
     {
         var part = ent.Comp.Part;
-        if (args.Cancelled ||
+        if (args.Cancelled || args.Target != part ||
             !_container.TryGetContainingContainer(ent.Owner, out var container) ||
             !_container.Remove(ent.Owner, container))
             return;
 
         _damage.TryChangeDamage(part, ent.Comp.BurstDamage, ignoreResistances: true);
-        _wound.TryCreateWound(part, Trauma, 20, out _, ProtoMan.Index(Brute));
+        // BoneDamage is a trauma, not a wound prototype. A zero-severity wound holds its inflicter.
+        if (_wound.TryCreateWound(part, BluntWound, 0, out var wound, Brute))
+            _trauma.ApplyBoneTrauma(part, (wound.Value.Owner, Comp<TraumaInflicterComponent>(wound.Value.Owner)), 20);
 
         var target = part;
         if (_body.GetBody(part) is {} body)

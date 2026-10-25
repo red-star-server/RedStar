@@ -51,6 +51,7 @@ public sealed partial class SurgerySystem : EntitySystem
     [Dependency] private EntityQuery<StackComponent> _stackQuery;
 
     private CompName _surgeryName;
+    private CompName _stepName;
 
     /// <summary>
     /// Cache of all surgery prototypes' singleton entities.
@@ -95,6 +96,7 @@ public sealed partial class SurgerySystem : EntitySystem
         base.Initialize();
 
         _surgeryName = Factory.CompName<SurgeryComponent>();
+        _stepName = Factory.CompName<SurgeryStepComponent>();
 
 
         InitializeStart();
@@ -245,7 +247,10 @@ public sealed partial class SurgerySystem : EntitySystem
         {
             if (!organs.TryGetValue(category, out var organ) ||
                 !TryComp<OrganComponentsComponent>(organ, out var comps))
+            {
+                allOnAddFound = false;
                 continue;
+            }
 
             foreach (var key in components.Keys)
             {
@@ -311,7 +316,9 @@ public sealed partial class SurgerySystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnPartRemovedConditionValid(Entity<SurgeryPartRemovedConditionComponent> ent, ref SurgeryValidEvent args)
     {
-        if (!_part.CanInsertOrgan(args.Part, ent.Comp.Category))
+        if (_part.GetOrgan(args.Part, ent.Comp.Category) is {} attached)
+            args.Cancelled |= !HasComp<OrganReattachedComponent>(attached);
+        else if (!_part.CanInsertOrgan(args.Part, ent.Comp.Category))
             args.Cancelled = true;
 
         // TODO NUBODY: OrganReattachedComponent shitcode logic??? cancel if there are parts and none of them have it
@@ -367,6 +374,7 @@ public sealed partial class SurgerySystem : EntitySystem
         step = default;
 
         if (!_targetQuery.HasComp(body) ||
+            _body.GetBody(targetPart) != body ||
             !IsLyingDown(body, user) ||
             GetSingleton(surgery) is not { } surgeryEntId ||
             !TryComp(surgeryEntId, out SurgeryComponent? surgeryComp) ||
@@ -396,7 +404,8 @@ public sealed partial class SurgerySystem : EntitySystem
 
     public EntityUid? GetSingleton(EntProtoId surgeryOrStep)
     {
-        if (!ProtoMan.HasIndex(surgeryOrStep))
+        if (!ProtoMan.TryIndex(surgeryOrStep, out var prototype)
+            || !prototype.HasComp(_surgeryName) && !prototype.HasComp(_stepName))
             return null;
 
         // This (for now) assumes that surgery entity data remains unchanged between client

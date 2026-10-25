@@ -53,7 +53,9 @@ public abstract partial class SharedItemSwitchSystem : EntitySystem
 
     private void OnSwitchAttempt(EntityUid uid, ItemSwitchComponent comp, ref ItemSwitchAttemptEvent args)
     {
-        if (comp.IsPowered || !comp.NeedsPower || comp.State != comp.DefaultState)
+        if (!comp.NeedsPower || args.State == comp.DefaultState
+            || comp.States.TryGetValue(args.State, out var state)
+            && _battery.GetCharge(uid).Charge >= state.EnergyPerUse)
             return;
 
         args.Popup = Loc.GetString("item-switch-failed-no-power");
@@ -153,21 +155,6 @@ public abstract partial class SharedItemSwitchSystem : EntitySystem
         var attempt = new ItemSwitchAttemptEvent(user, key);
         RaiseLocalEvent(uid, ref attempt);
 
-        var nextAttack = new TimeSpan(0);
-        if (TryComp<MeleeWeaponComponent>(ent, out var meleeComp))
-            nextAttack = meleeComp.NextAttack;
-
-        if (ent.Comp.States.TryGetValue(ent.Comp.State, out var prevState)
-            && prevState is { RemoveComponents: true, Components: not null })
-            EntityManager.RemoveComponents(ent, prevState.Components);
-
-        if (state.Components is not null)
-            EntityManager.AddComponents(ent, state.Components);
-
-        if (TryComp(ent, out meleeComp)
-            && nextAttack.Ticks != 0)
-            meleeComp.NextAttack = nextAttack;
-
         predicted &= comp.Predictable;
 
         if (attempt.Cancelled)
@@ -187,6 +174,21 @@ public abstract partial class SharedItemSwitchSystem : EntitySystem
 
             return false;
         }
+
+        var nextAttack = new TimeSpan(0);
+        if (TryComp<MeleeWeaponComponent>(ent, out var meleeComp))
+            nextAttack = meleeComp.NextAttack;
+
+        if (ent.Comp.States.TryGetValue(ent.Comp.State, out var prevState)
+            && prevState is { RemoveComponents: true, Components: not null })
+            EntityManager.RemoveComponents(ent, prevState.Components);
+
+        if (state.Components is not null)
+            EntityManager.AddComponents(ent, state.Components);
+
+        if (TryComp(ent, out meleeComp)
+            && nextAttack.Ticks != 0)
+            meleeComp.NextAttack = nextAttack;
 
         if (predicted)
             _audio.PlayPredicted(state.SoundStateActivate, uid, user);

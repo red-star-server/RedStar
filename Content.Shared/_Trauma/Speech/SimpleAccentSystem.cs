@@ -28,6 +28,9 @@ public sealed partial class SimpleAccentSystem : EntitySystem
 
     public string ApplyAccent([ForbidLiteral] ProtoId<SimpleAccentPrototype> id, EntityUid uid, string msg)
     {
+        if (string.IsNullOrEmpty(msg))
+            return msg;
+
         _sb.Clear();
 
         var accent = ProtoMan.Index(id);
@@ -37,6 +40,9 @@ public sealed partial class SimpleAccentSystem : EntitySystem
             msg = _replacement.ApplyReplacements(msg, replacement);
 
         var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(uid));
+
+        if (string.IsNullOrEmpty(msg))
+            return msg;
 
         // prefix
         var first = msg[0];
