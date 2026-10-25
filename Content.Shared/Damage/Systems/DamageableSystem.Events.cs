@@ -1,5 +1,9 @@
-using Content.Shared.CCVar;
+// RS14-start
 using Content.Shared.Cloning.Events;
+using Content.Shared._Trauma.Common.Body;
+using Content.Shared._Trauma.Common.Targeting;
+// RS14-end
+using Content.Shared.CCVar;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
@@ -15,6 +19,7 @@ public sealed partial class DamageableSystem
 {
     public override void Initialize()
     {
+        CacheVitalPrototypes(); // Trauma // RS14
         RebuildContainerCache();
 
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
@@ -124,6 +129,10 @@ public sealed partial class DamageableSystem
 
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs ev)
     {
+        // RS14-start
+        if (ev.WasModified<DamageTypePrototype>())
+            CacheVitalPrototypes();
+        // RS14-end
         if (!ev.WasModified<DamageContainerPrototype>() && !ev.WasModified<DamageGroupPrototype>())
             return;
 
@@ -218,6 +227,11 @@ public sealed partial class DamageableSystem
 
     private void OnDamageDealt(Entity<InjurableComponent> ent, ref DamageDealtEvent args)
     {
+        // RS14-start
+        if (UsesBodyPartDamage(ent)) // Trauma - don't change damagedict for entities with body, damage should be applied to body parts
+            return;
+
+        // RS14-end
         if (!_damageableQuery.TryGetComponent(ent, out var damageable))
             return;
 
@@ -242,6 +256,10 @@ public sealed partial class DamageableSystem
 
         if (!damageDone.Empty)
             OnEntityDamageChanged((ent, damageable), damageDone, args.InterruptsDoAfters, args.Origin);
+        // RS14-start
+
+        args.ModifiedDamage = damageDone; // Trauma
+        // RS14-end
     }
 }
 
@@ -249,7 +267,18 @@ public sealed partial class DamageableSystem
 ///     Raised before damage is done, so stuff can cancel it if necessary.
 /// </summary>
 [ByRefEvent]
-public record struct BeforeDamageChangedEvent(DamageSpecifier Damage, EntityUid? Origin = null, bool Cancelled = false);
+// RS14-start
+public record struct BeforeDamageChangedEvent(DamageSpecifier Damage, EntityUid Target, EntityUid? Origin = null, bool Cancelled = false, // Trauma - added Target
+    bool CanBeCancelled = false, TargetBodyPart? TargetPart = null) : IInventoryRelayEvent // Trauma
+{
+    public BeforeDamageChangedEvent(DamageSpecifier damage, EntityUid? origin = null, bool cancelled = false)
+        : this(damage, EntityUid.Invalid, origin, cancelled)
+    {
+    }
+
+    public SlotFlags TargetSlots => SlotFlags.WITHOUT_POCKET;
+}
+// RS14-end
 
 /// <summary>
 ///     Raised on an entity when damage is about to be dealt,
@@ -258,7 +287,7 @@ public record struct BeforeDamageChangedEvent(DamageSpecifier Damage, EntityUid?
 ///
 ///     For example, armor.
 /// </summary>
-public sealed class DamageModifyEvent(DamageSpecifier damage, EntityUid? origin = null)
+public sealed class DamageModifyEvent(EntityUid target, DamageSpecifier damage, EntityUid? origin = null, BodyPartType? targetPart = null) // RS14
     : EntityEventArgs, IInventoryRelayEvent
 {
     /// <inheritdoc/>
@@ -266,6 +295,16 @@ public sealed class DamageModifyEvent(DamageSpecifier damage, EntityUid? origin 
     ///     Whenever locational damage is a thing, this should just check only that bit of armor.
     /// </remarks>
     public SlotFlags TargetSlots => ~SlotFlags.POCKET;
+    // RS14-start
+
+    public DamageModifyEvent(DamageSpecifier damage, EntityUid? origin = null)
+        : this(EntityUid.Invalid, damage, origin)
+    {
+    }
+
+    public readonly EntityUid Target = target;
+    public readonly BodyPartType? TargetPart = targetPart;
+    // RS14-end
 
     /// <summary>
     ///     Contains the original damage, prior to any modifers.
@@ -291,7 +330,16 @@ public sealed class DamageModifyEvent(DamageSpecifier damage, EntityUid? origin 
 /// <param name="Origin">The originator of the damage</param>
 /// <param name="InterruptsDoAfters">If the damage being dealt will interrupt do-afters</param>
 [ByRefEvent]
-public readonly record struct DamageDealtEvent(DamageSpecifier Damage, EntityUid? Origin, bool InterruptsDoAfters);
+// RS14-start
+public record struct DamageDealtEvent(DamageSpecifier Damage, EntityUid? Origin, bool InterruptsDoAfters,
+    bool IgnoreBlockers, DamageSpecifier ModifiedDamage)
+{
+    public DamageDealtEvent(DamageSpecifier damage, EntityUid? origin, bool interruptsDoAfters)
+        : this(damage, origin, interruptsDoAfters, false, damage)
+    {
+    }
+}
+// RS14-end
 
 [Obsolete("Will be replaced with damage-model specific events; general 'took damage' can be served by DamageDealtEvent")]
 public sealed class DamageChangedEvent : EntityEventArgs

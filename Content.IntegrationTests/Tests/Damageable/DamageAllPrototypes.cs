@@ -1,3 +1,6 @@
+using System.Linq; // RS14
+using Content.Shared.Body; // RS14
+using Content.Shared._Trauma.Body; // RS14
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Utility;
@@ -6,6 +9,8 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
+using Robust.Shared.GameObjects; // RS14
+using Robust.Shared.Prototypes; // RS14
 
 namespace Content.IntegrationTests.Tests.Damageable;
 
@@ -47,19 +52,28 @@ public sealed class DamageAllPrototypesTest : GameTest
 
                     foreach (var type in SProtoMan.EnumeratePrototypes<DamageTypePrototype>())
                     {
-                        if (!_damageableSystem.CanBeDamagedBy(entity, type))
+                        if (!SupportsDamageType(entity, type)) // RS14
                             continue;
 
+                        // RS14-start: body-level Injurable describes the old model; parts have their own containers.
+                        var parts = SEntMan.System<BodyPartSystem>();
+                        if (parts.GetRootPart(entity) != null && !SEntMan.System<BodySystem>()
+                                .GetExternalOrgans(entity).Any(part => SupportsDamageType(part.Owner, type)))
+                            continue;
+                        // RS14-end
                         canBeDamaged = true;
 
                         await Server.WaitAssertion(() =>
                         {
-                            var damage = new DamageSpecifier(type, FixedPoint2.Epsilon);
+                            // RS14-start: vital damage is split between torso and head; one epsilon rounds to zero.
+                            var testDamage = FixedPoint2.Epsilon * 2;
+                            var damage = new DamageSpecifier(type, testDamage);
+                            // RS14-end
                             var previousDamage = _damageableSystem.GetTotalDamage(entity);
                             _damageableSystem.ChangeDamage(entity, damage, ignoreResistances: true);
                             Assert.That(
                                 _damageableSystem.GetTotalDamage(entity),
-                                Is.EqualTo(FixedPoint2.Epsilon + previousDamage),
+                                Is.EqualTo(testDamage + previousDamage), // RS14
                                 $"{injurable} should take {type.ID} damage.");
 
                             _damageableSystem.ClearAllDamage(entity);
@@ -80,4 +94,20 @@ public sealed class DamageAllPrototypesTest : GameTest
             await Server.WaitPost(() => SEntMan.DeleteEntity(map.MapUid));
         }
     }
+
+    // RS14-start
+    // Validate the Injurable container's declared types, rather than predicting arbitrary damage events.
+    private bool SupportsDamageType(EntityUid uid, ProtoId<DamageTypePrototype> type)
+    {
+        if (!SEntMan.TryGetComponent<InjurableComponent>(uid, out var injurable))
+            return false;
+
+        if (injurable.DamageContainer is not { } id)
+            return true;
+
+        var container = SProtoMan.Index(id);
+        return container.SupportedTypes.Contains(type)
+            || container.SupportedGroups.Any(group => SProtoMan.Index(group).DamageTypes.Contains(type));
+    }
+    // RS14-end
 }

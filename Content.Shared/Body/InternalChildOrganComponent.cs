@@ -7,5 +7,5 @@ namespace Content.Shared.Body;
 /// Marker components for child organs that are considered "internal" to their parent. e.g. kidneys are internal to a torso, but an arm isn't.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState] // RS14
+[AutoGenerateComponentState(fieldDeltas: true)] // RS14
 public sealed partial class InternalChildOrganComponent : BaseSurgeryToolComponent; // RS14

@@ -1,0 +1,28 @@
+- type: entity
+  id: ClothingHeadHelmetArmoredBase
+  components:
+  - type: ArmorPointBlank
+
+- type: entity
+  id: ClothingHeadHelmetSwat
+  components:
+  - type: ArmorPointBlank
+    range: 1
+
+- type: entity
+  id: ClothingHeadHelmetRiot
+  components:
+  - type: ArmorPointBlank
+    range: 1
+
+- type: entity
+  id: ClothingHeadHelmetBombSuit
+  components:
+  - type: ArmorPointBlank
+    range: 0
+
+- type: entity
+  id: ClothingHeadHelmetERTLeader
+  components:
+  - type: ArmorPointBlank
+    range: 1

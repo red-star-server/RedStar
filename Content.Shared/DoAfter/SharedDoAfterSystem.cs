@@ -266,6 +266,14 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             return false;
         }
 
+        // RS14-start
+        if (args.MultiplyDelay)
+        {
+            _modifyEv.Multiplier = 1f;
+            RaiseLocalEvent(args.User, _modifyEv);
+            args.Delay *= _modifyEv.Multiplier;
+        }
+        // RS14-end
         id = new DoAfterId(args.User, comp.NextId++);
         var doAfter = new DoAfter(id.Value.Index, args, GameTiming.CurTime);
 
