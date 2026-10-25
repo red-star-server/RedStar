@@ -1,3 +1,4 @@
+using Content.Shared._Trauma.Common.Medical.HealthAnalyzer; // RS14
 using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Cryogenics;
 using JetBrains.Annotations;
@@ -17,6 +18,7 @@ public sealed class CryoPodBoundUserInterface : BoundUserInterface
     {
         base.Open();
         _window = this.CreateWindowCenteredLeft<CryoPodWindow>();
+        _window.OnBodyPartSelected += (part, _) => SendMessage(new HealthAnalyzerPartMessage(part)); // RS14
         _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
         _window.OnEjectPatientPressed += EjectPatientPressed;
         _window.OnEjectBeakerPressed += EjectBeakerPressed;

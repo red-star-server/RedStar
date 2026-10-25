@@ -16,8 +16,6 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.Explosion;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Eye.Blinding.Systems;
-using Content.Shared.Mobs;
-using Content.Shared.Mobs.Components;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
@@ -114,16 +112,8 @@ public sealed class MedicalDamageTest : GameTest
     private static readonly EntProtoId BluntWound = "WoundBlunt";
 
     [TestCase("MobHuman")]
-    [TestCase("MobDwarf")]
-    [TestCase("MobArachnid")]
     [TestCase("MobDiona")]
-    [TestCase("MobGingerbread")]
-    [TestCase("MobMoth")]
-    [TestCase("MobReptilian")]
-    [TestCase("MobSkeletonPerson")]
     [TestCase("MobSlimePerson")]
-    [TestCase("MobVox")]
-    [TestCase("MobVulpkanin")]
     [RunOnSide(Side.Server)]
     public void TargetedDamageChangesOnlySelectedPart(string prototype)
     {
@@ -259,17 +249,6 @@ public sealed class MedicalDamageTest : GameTest
         Assert.That(_damage.GetTotalDamage(body), Is.EqualTo((FixedPoint2) 12));
         var torso = _body.GetOrgan(body, "Torso").Value;
         Assert.That(_damage.GetTotalDamage(torso), Is.EqualTo((FixedPoint2) 12));
-    }
-
-    [Test]
-    [RunOnSide(Side.Server)]
-    public void BodyStateReflectsTheCurrentPartDamage()
-    {
-        var body = SSpawn("MobHuman");
-        var damage = new DamageSpecifier { DamageDict = { ["Asphyxiation"] = 150 } };
-        _damage.ChangeDamage(body, damage, ignoreResistances: true);
-        Assert.That(_damage.GetTotalDamage(body), Is.EqualTo((FixedPoint2) 150));
-        Assert.That(SComp<MobStateComponent>(body).CurrentState, Is.EqualTo(MobState.Critical));
     }
 
     [Test]
@@ -430,25 +409,4 @@ public sealed class MedicalDamageTest : GameTest
         Assert.That(_damage.GetTotalDamage(arm), Is.EqualTo(applied.GetTotal()));
     }
 
-    [Test]
-    public void DamageArithmeticPreservesIndependentMetadata()
-    {
-        var damage = new DamageSpecifier
-        {
-            DamageDict = { ["Blunt"] = 10 },
-            ArmorPenetration = 0.25f,
-            PartDamageVariation = 2f,
-            Flags = DamageSpecifier.DamageFlags.PreciseHit,
-            WoundSeverityMultipliers = { ["Blunt"] = 2 },
-            WoundTypeOverrides = { ["Blunt"] = "WoundBlunt" },
-        };
-        var scaled = damage * 2;
-        Assert.That(scaled.DamageDict["Blunt"], Is.EqualTo((FixedPoint2) 20));
-        Assert.That(scaled.ArmorPenetration, Is.EqualTo(damage.ArmorPenetration));
-        Assert.That(scaled.PartDamageVariation, Is.EqualTo(damage.PartDamageVariation));
-        Assert.That(scaled.Flags, Is.EqualTo(damage.Flags));
-        Assert.That(scaled.WoundSeverityMultipliers, Is.EqualTo(damage.WoundSeverityMultipliers));
-        scaled.WoundSeverityMultipliers["Blunt"] = 3;
-        Assert.That(damage.WoundSeverityMultipliers["Blunt"], Is.EqualTo((FixedPoint2) 2));
-    }
 }

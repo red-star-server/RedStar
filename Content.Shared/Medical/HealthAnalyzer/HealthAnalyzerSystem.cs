@@ -13,12 +13,14 @@ using Content.Shared.Traits.Assorted;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
+using Robust.Shared.Network; // RS14
 
 namespace Content.Shared.Medical.HealthAnalyzer;
 
 public abstract partial class HealthAnalyzerSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private INetManager _net = default!; // RS14
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private BloodstreamSystem _bloodstream = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
@@ -46,6 +48,15 @@ public abstract partial class HealthAnalyzerSystem : EntitySystem
             if (Deleted(patient))
             {
                 StopAnalyzingEntity((analyzer, component));
+                // RS14-start
+                continue;
+            }
+
+            if (component.CurrentBodyPart is {} part &&
+                (Deleted(part) || _body.GetBody(part) != patient))
+            {
+                BeginAnalyzingEntity((analyzer, component), patient);
+                // RS14-end
                 continue;
             }
 
@@ -128,6 +139,7 @@ public abstract partial class HealthAnalyzerSystem : EntitySystem
             return;
 
         analyzer.Comp.ScannedEntity = null;
+        analyzer.Comp.CurrentBodyPart = null; // RS14
         analyzer.Comp.IsAnalyzerActive = false;
         analyzer.Comp.NextUpdate = TimeSpan.Zero;
         Dirty(analyzer);
@@ -147,10 +159,11 @@ public abstract partial class HealthAnalyzerSystem : EntitySystem
     /// </summary>
     /// <param name="analyzer">The health analyzer that should receive the updates.</param>
     /// <param name="target">The entity to start analyzing.</param>
-    private void BeginAnalyzingEntity(Entity<HealthAnalyzerComponent> analyzer, EntityUid target)
+    private void BeginAnalyzingEntity(Entity<HealthAnalyzerComponent> analyzer, EntityUid target, EntityUid? part = null) // RS14
     {
         // Link the health analyzer to the scanned entity
         analyzer.Comp.ScannedEntity = target;
+        analyzer.Comp.CurrentBodyPart = part; // RS14
         analyzer.Comp.IsAnalyzerActive = true;
         analyzer.Comp.NextUpdate = _timing.CurTime + analyzer.Comp.UpdateInterval;
 
@@ -199,7 +212,7 @@ public abstract partial class HealthAnalyzerSystem : EntitySystem
         if (_unrevivableQuery.TryComp(entity, out var unrevivableComp) && unrevivableComp.Analyzable)
             unrevivable = true;
 
-        return new HealthAnalyzerUiState(
+        var state = new HealthAnalyzerUiState( // RS14
             GetNetEntity(entity),
             float.NaN,
             bloodAmount,
@@ -207,12 +220,25 @@ public abstract partial class HealthAnalyzerSystem : EntitySystem
             bleeding,
             unrevivable
         );
+        // RS14-start
+        PopulateTraumaState(target, state);
+        return state;
+        // RS14-end
     }
 
     private void UpdateUi(Entity<HealthAnalyzerComponent> analyzer)
     {
+        // RS14-start
+        // Temperature is server-only; predicted states would overwrite it with NaN.
+        if (_net.IsClient)
+            return;
+        // RS14-end
+
         // Gather all the information the UI needs.
         var state = GetHealthAnalyzerUiState(analyzer.Comp.ScannedEntity, analyzer.Comp.IsAnalyzerActive);
+        // RS14-start
+        state.Part = GetNetEntity(analyzer.Comp.CurrentBodyPart);
+        // RS14-end
         // Send it to the BUI.
         _ui.SetUiState(analyzer.Owner, HealthAnalyzerUiKey.Key, state);
     }

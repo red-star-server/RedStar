@@ -1,3 +1,7 @@
+// RS14-start
+using Content.Shared.Body;
+using Robust.Shared.GameObjects;
+// RS14-end
 #nullable enable
 using System.Linq;
 using Content.IntegrationTests.Tests.Helpers;
@@ -38,6 +42,19 @@ public sealed class DefibrillatorTest : InteractionTest
     private static readonly EntProtoId BedProtoId = "Bed";
     private static readonly ProtoId<DamageTypePrototype> BluntDamageTypeId = "Blunt";
 
+    // RS14-start
+    // The migrated anatomy stores injuries on its parts. Preserve the test's exact vital damage totals.
+    private void SetPatientDamage(EntityUid patient, DamageSpecifier damage)
+    {
+        var damageable = SEntMan.System<DamageableSystem>();
+        var parts = SEntMan.System<BodySystem>().GetVitalParts(patient);
+        Assert.That(parts, Is.Not.Empty);
+        foreach (var part in parts)
+            damageable.SetDamage(part, damage / parts.Count);
+        SEntMan.System<MobThresholdSystem>().VerifyThresholds(patient);
+    }
+
+    // RS14-end
     /// <summary>
     /// Kills a target mob, heals them and then revives them with a defibrillator.
     /// </summary>
@@ -53,7 +70,6 @@ public sealed class DefibrillatorTest : InteractionTest
         await SpawnTarget(TargetProtoId);
 
         var targetMobState = Comp<MobStateComponent>();
-        var targetDamageable = Comp<DamageableComponent>();
 
         // Check that the target has no damage and is not crit or dead.
         Assert.Multiple(() =>
@@ -69,7 +85,7 @@ public sealed class DefibrillatorTest : InteractionTest
         var deathDamage = new DamageSpecifier(ProtoMan.Index(BluntDamageTypeId), deathThreshold);
 
         // Kill the target by applying blunt damage.
-        await Server.WaitPost(() => damageableSystem.SetDamage((STarget.Value, targetDamageable), deathDamage));
+        await Server.WaitPost(() => SetPatientDamage(STarget.Value, deathDamage)); // RS14
         await RunTicks(3);
 
         // Check that the target is dead.
@@ -98,7 +114,7 @@ public sealed class DefibrillatorTest : InteractionTest
         });
 
         // Set the damage halfway between the crit and death thresholds so that the target can be revived.
-        await Server.WaitPost(() => damageableSystem.SetDamage((STarget.Value, targetDamageable), critDamage));
+        await Server.WaitPost(() => SetPatientDamage(STarget.Value, critDamage)); // RS14
         await RunTicks(3);
 
         // Check that the target is still dead.
@@ -131,7 +147,6 @@ public sealed class DefibrillatorTest : InteractionTest
         var bed = ToServer(await Spawn(BedProtoId));
 
         var targetMobState = Comp<MobStateComponent>();
-        var targetDamageable = Comp<DamageableComponent>();
         var targetBuckle = Comp<BuckleComponent>();
 
         await Server.WaitPost(() => buckleSystem.TryBuckle(STarget.Value, null, bed));
@@ -144,9 +159,9 @@ public sealed class DefibrillatorTest : InteractionTest
         var critDamage = new DamageSpecifier(ProtoMan.Index(BluntDamageTypeId), (critThreshold + deathThreshold) / 2);
         var deathDamage = new DamageSpecifier(ProtoMan.Index(BluntDamageTypeId), deathThreshold);
 
-        await Server.WaitPost(() => damageableSystem.SetDamage((STarget.Value, targetDamageable), deathDamage));
+        await Server.WaitPost(() => SetPatientDamage(STarget.Value, deathDamage)); // RS14
         await RunTicks(3);
-        await Server.WaitPost(() => damageableSystem.SetDamage((STarget.Value, targetDamageable), critDamage));
+        await Server.WaitPost(() => SetPatientDamage(STarget.Value, critDamage)); // RS14
         await RunTicks(3);
         Assert.That(targetMobState.CurrentState, Is.EqualTo(MobState.Dead), "Target mob was not dead before being defibrillated.");
 
