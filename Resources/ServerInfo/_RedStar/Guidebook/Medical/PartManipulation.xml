@@ -1,0 +1,29 @@
+<Document>
+# Операции на частях тела
+Хирургия позволяет удалять части тела и присоединять их обратно.
+
+## Анатомия
+Основные части тела — голова, туловище, руки, кисти, ноги и стопы.
+<Box>
+<GuideEntityEmbed Entity="OrganHumanHead" Caption="голова"/>
+<GuideEntityEmbed Entity="OrganHumanTorso" Caption="туловище"/>
+</Box>
+<Box>
+<GuideEntityEmbed Entity="OrganHumanHandRight" Caption="правая кисть"/>
+<GuideEntityEmbed Entity="OrganHumanArmRight" Caption="правая рука"/>
+<GuideEntityEmbed Entity="OrganHumanArmLeft" Caption="левая рука"/>
+<GuideEntityEmbed Entity="OrganHumanHandLeft" Caption="левая кисть"/>
+</Box>
+<Box>
+<GuideEntityEmbed Entity="OrganHumanFootRight" Caption="правая стопа"/>
+<GuideEntityEmbed Entity="OrganHumanLegRight" Caption="правая нога"/>
+<GuideEntityEmbed Entity="OrganHumanLegLeft" Caption="левая нога"/>
+<GuideEntityEmbed Entity="OrganHumanFootLeft" Caption="левая стопа"/>
+</Box>
+У разных видов набор частей тела отличается: могут присутствовать хвост, крылья и другие конечности.
+Для удаления используйте операцию ампутации, а для возвращения части тела — операцию присоединения в месте её крепления.
+Кисти крепятся к рукам, стопы — к ногам, остальные основные части — к туловищу.
+
+## Присоединённая конечность не работает
+Присоединение само по себе не устраняет все повреждения. Обработайте раны хирургически или местными лечебными средствами и проверьте состояние части тела анализатором.
+</Document>

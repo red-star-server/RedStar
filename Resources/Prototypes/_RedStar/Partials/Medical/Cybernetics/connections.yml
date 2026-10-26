@@ -25,3 +25,15 @@
   id: MedicalBoards
   recipes:
   - MedicalBiofabMachineBoard
+
+- type: latheRecipePack
+  id: AdvancedCybernetics
+  recipes:
+  - SpeedLeftLeg
+  - SpeedRightLeg
+
+- type: technology
+  id: AdvancedCybernetics
+  recipeUnlocks:
+  - SpeedLeftLeg
+  - SpeedRightLeg
