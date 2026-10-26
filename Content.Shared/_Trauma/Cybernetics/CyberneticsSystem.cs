@@ -1,6 +1,6 @@
+using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared._Trauma.Common.DoAfter;
-using Content.Shared._Trauma.Body;
 using Content.Shared.Body;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Emp;

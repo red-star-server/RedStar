@@ -46,10 +46,6 @@
     - screw_1
     - screw_1 # todo
     - screw_1
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     sprite: _RedStar/Medical/Cybernetics/materials.rsi
     state: screw_1
