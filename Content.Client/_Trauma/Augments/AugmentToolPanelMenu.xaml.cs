@@ -36,6 +36,8 @@ public sealed partial class AugmentToolPanelMenu : RadialMenu
     /// </summary>
     public void Refresh()
     {
+        Main.RemoveAllChildren();
+
         if (!_ent.TryGetComponent<StorageComponent>(_owner, out var storage))
             return;
 

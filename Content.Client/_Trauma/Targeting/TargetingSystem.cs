@@ -2,6 +2,7 @@ using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Common.Input;
 using Content.Shared._Trauma.Common.Targeting;
 using Content.Shared._Trauma.Targeting;
+using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
@@ -46,7 +47,13 @@ public sealed partial class TargetingSystem : SharedTargetingSystem
             InputCmdHandler.FromDelegate((session) => HandleTargetChange(session, TargetBodyPart.RightLeg)))
         .Bind(TraumaKeyFunctions.TargetRightFoot,
             InputCmdHandler.FromDelegate((session) => HandleTargetChange(session, TargetBodyPart.RightFoot)))
-        .Register<SharedTargetingSystem>();
+        .Register<TargetingSystem>();
+    }
+
+    public override void Shutdown()
+    {
+        CommandBinds.Unregister<TargetingSystem>();
+        base.Shutdown();
     }
 
     [SubscribeLocalEvent]
@@ -101,14 +108,22 @@ public sealed partial class TargetingSystem : SharedTargetingSystem
             PartStatusShutdown?.Invoke();
     }
 
-    [SubscribeLocalEvent, SubscribeNetworkEvent]
-    private void OnTargetIntegrityChanged(TargetIntegrityChangedMessage args)
+    [SubscribeLocalEvent]
+    private void OnStatusHandleState(Entity<BodyStatusComponent> ent, ref AfterAutoHandleStateEvent args)
     {
-        if (_player.LocalEntity is not {} uid
-            || !TryComp<BodyStatusComponent>(uid, out var comp))
-            return;
+        UpdatePartStatus(ent);
+    }
 
-        PartStatusUpdate?.Invoke(comp);
+    [SubscribeLocalEvent]
+    private void OnStatusChanged(Entity<BodyStatusComponent> ent, ref BodyStatusChangedEvent args)
+    {
+        UpdatePartStatus(ent);
+    }
+
+    private void UpdatePartStatus(Entity<BodyStatusComponent> ent)
+    {
+        if (_player.LocalEntity == ent.Owner)
+            PartStatusUpdate?.Invoke(ent.Comp);
     }
 
     private void HandleTargetChange(ICommonSession? session, TargetBodyPart target)

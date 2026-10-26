@@ -488,7 +488,7 @@ public partial class TraumaSystem
         foreach (var trauma in wound.Comp.TraumaContainer.ContainedEntities)
         {
             var containedTraumaComp = _traumaQuery.Comp(trauma);
-            if (containedTraumaComp.TraumaType != traumaType)
+            if (containedTraumaComp.TraumaType != traumaType || containedTraumaComp.TraumaTarget != target)
                 continue;
 
             // Allows us to create multiple dismemberment traumas on the same body part.
@@ -496,6 +496,7 @@ public partial class TraumaSystem
                 continue;
 
             containedTraumaComp.TraumaSeverity = severity;
+            DirtyField(trauma, containedTraumaComp, nameof(TraumaComponent.TraumaSeverity));
             return trauma;
         }
 

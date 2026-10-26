@@ -158,6 +158,9 @@ public sealed partial class SurgerySystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnTargetDoAfter(Entity<SurgeryTargetComponent> ent, ref SurgeryDoAfterEvent args)
     {
+        if (args.Handled)
+            return;
+
         if (args.Cancelled)
         {
             var failEv = new SurgeryStepFailedEvent(args.User, ent, args.Surgery, args.Step);
@@ -166,8 +169,7 @@ public sealed partial class SurgerySystem : EntitySystem
         }
 
         var tool = _hands.GetActiveItemOrSelf(args.User);
-        if (args.Handled
-            || !IsSurgeryValid(ent, GetEntity(args.Part), args.Surgery, args.Step, args.User, out var surgery, out var part, out var step)
+        if (!IsSurgeryValid(ent, GetEntity(args.Part), args.Surgery, args.Step, args.User, out var surgery, out var part, out var step)
             || !PreviousStepsComplete(ent, part, surgery, args.Step, args.User)
             || !CanPerformStep(args.User, ent, part, step, tool, false))
         {
@@ -176,10 +178,11 @@ public sealed partial class SurgerySystem : EntitySystem
         }
 
         var complete = IsStepComplete(ent, part, args.Step, surgery);
-        args.Repeat = HasComp<SurgeryRepeatableStepComponent>(step) && !complete;
+        args.Handled = true;
         var ev = new SurgeryStepEvent(args.User, ent, part, tool, surgery, step, complete);
         RaiseLocalEvent(step, ref ev);
         RaiseLocalEvent(args.User, ref ev);
+        args.Repeat = HasComp<SurgeryRepeatableStepComponent>(step) && !IsStepComplete(ent, part, args.Step, surgery);
 
         // consume the tool if it's something like using LV cable as stitches
         if (!args.ToolUsed) return;

@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared.Body;
 using Content.Shared.Gibbing;
@@ -16,9 +17,9 @@ public sealed partial class BodyPartSystem : CommonBodyPartSystem
     [Dependency] private BodyCacheSystem _cache = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedContainerSystem _container = default!;
-    [Dependency] private EntityQuery<BodyPartComponent> _query = default!;
-    [Dependency] private EntityQuery<ChildOrganComponent> _childQuery = default!;
-    [Dependency] private EntityQuery<OrganComponent> _organQuery = default!;
+    [Dependency] private EntityQuery<BodyPartComponent> _query;
+    [Dependency] private EntityQuery<ChildOrganComponent> _childQuery;
+    [Dependency] private EntityQuery<OrganComponent> _organQuery;
 
     [SubscribeLocalEvent]
     private void OnPartInserted(Entity<BodyPartComponent> ent, ref OrganGotInsertedEvent args)
@@ -55,7 +56,7 @@ public sealed partial class BodyPartSystem : CommonBodyPartSystem
         if (TerminatingOrDeleted(ent))
         {
             // this part is being deleted so detach the children
-            foreach (var organ in ent.Comp.Children.Values)
+            foreach (var organ in ent.Comp.Children.Values.ToArray())
             {
                 _body.RemoveOrgan(body, organ);
             }
@@ -63,7 +64,7 @@ public sealed partial class BodyPartSystem : CommonBodyPartSystem
         }
 
         var container = EnsureSeveredOrgansContainer(ent);
-        foreach (var (category, organ) in ent.Comp.Children)
+        foreach (var (category, organ) in ent.Comp.Children.ToArray())
         {
             // slot has an organ so try to put it in the container
             if (!_container.Insert(organ, container))

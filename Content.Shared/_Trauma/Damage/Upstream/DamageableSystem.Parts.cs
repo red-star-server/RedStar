@@ -264,12 +264,12 @@ public sealed partial class DamageableSystem
         Dirty(body, bodyDamage);
 
         // Sum up damage from all body parts
-        foreach (var part in _body.GetOrgans<DamageableComponent>(body))
+        foreach (var part in _body.EnumerateOrgans(body, _damageableQuery))
         {
             if (_internalQuery.HasComp(part)) // don't count internal organs, for now at least
                 continue;
 
-            foreach (var (type, value) in part.Comp.Damage.DamageDict)
+            foreach (var (type, value) in part.Comp2.Damage.DamageDict)
             {
                 if (value == 0)
                     continue;

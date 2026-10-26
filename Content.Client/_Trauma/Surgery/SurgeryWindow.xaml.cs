@@ -327,7 +327,7 @@ public sealed partial class SurgeryWindow : FancyWindow
             }
 
             var priority = SurgeryPriority(a).CompareTo(SurgeryPriority(b));
-            return priority != 0 ? priority : string.Compare(Name(a), Name(b), StringComparison.Ordinal);
+            return priority != 0 ? priority : string.Compare(Name(a), Name(b), StringComparison.CurrentCulture);
         });
 
         Surgeries.RemoveAllChildren();

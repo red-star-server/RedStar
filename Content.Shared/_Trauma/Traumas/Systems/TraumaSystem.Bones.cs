@@ -116,10 +116,9 @@ public partial class TraumaSystem
             return false;
 
         var ev = new BoneIntegrityChangedEvent(bone.Comp.BoneIntegrity, newIntegrity);
-        RaiseLocalEvent(bone, ref ev);
-
         bone.Comp.BoneIntegrity = newIntegrity;
         DirtyField(bone, bone.Comp, nameof(BoneComponent.BoneIntegrity));
+        RaiseLocalEvent(bone, ref ev);
 
         CheckBoneSeverity(bone);
         return true;
@@ -131,9 +130,9 @@ public partial class TraumaSystem
     public void UpdateBodyBoneAlert(Entity<BodyComponent?> body)
     {
         bool hasBrokenBones = false;
-        foreach (var bone in _body.GetOrgans<BoneComponent>(body))
+        foreach (var bone in _body.EnumerateOrgans<BoneComponent>(body, _boneQuery))
         {
-            if (bone.Comp.BoneSeverity != BoneSeverity.Broken) continue;
+            if (bone.Comp2.BoneSeverity != BoneSeverity.Broken) continue;
             hasBrokenBones = true;
             break;
         }
@@ -168,10 +167,9 @@ public partial class TraumaSystem
             return;
 
         var ev = new BoneSeverityChangedEvent(bone.Comp.BoneSeverity, nearestSeverity);
-        RaiseLocalEvent(bone, ref ev);
-
         bone.Comp.BoneSeverity = nearestSeverity;
         DirtyField(bone, nameof(BoneComponent.BoneSeverity));
+        RaiseLocalEvent(bone, ref ev);
 
         if (_body.GetBody(bone.Owner) is {} body)
             UpdateBodyBoneAlert(body);

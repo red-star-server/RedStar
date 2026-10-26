@@ -290,7 +290,7 @@ public sealed partial class WoundableVisualsSystem : EntitySystem
 
         foreach (var wound in _wound.GetWoundableWounds(uid))
         {
-            if (_bleedQuery.TryComp(wound, out var bleeds))
+            if (_bleedQuery.TryComp(wound, out var bleeds) && bleeds.IsBleeding)
                 total += bleeds.BleedingAmount;
         }
 

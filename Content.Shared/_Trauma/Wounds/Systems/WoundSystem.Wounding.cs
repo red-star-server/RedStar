@@ -57,6 +57,9 @@ public sealed partial class WoundSystem
         if (_timing.ApplyingState)
             return;
 
+        if (_woundableQuery.HasComp(args.Organ))
+            CheckWoundableSeverityThresholds(args.Organ);
+
         if (_body.GetBody(parent.Owner) is {} body)
             _trauma.UpdateBodyBoneAlert(body);
     }
@@ -198,7 +201,9 @@ public sealed partial class WoundSystem
     {
         // TODO: Apply a missing-hand delay penalty so that removing an injured hand is not faster.
         // make a thing like LegsComponent that makes doafters longer with missing hands
-        RaiseLocalEvent(ent, ref args.Args);
+        var ev = args.Args;
+        RaiseLocalEvent(ent, ref ev);
+        args.Args = ev;
     }
 
     #endregion
@@ -568,10 +573,9 @@ public sealed partial class WoundSystem
             return;
 
         var ev = new WoundSeverityChangedEvent(wound.Comp.WoundSeverity, nearestSeverity);
-        RaiseLocalEvent(wound, ref ev);
-
         wound.Comp.WoundSeverity = nearestSeverity;
         DirtyField(wound, wound.Comp, nameof(WoundComponent.WoundSeverity));
+        RaiseLocalEvent(wound, ref ev);
     }
 
     /// <summary>

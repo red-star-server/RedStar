@@ -57,7 +57,11 @@ public sealed partial class CyberneticsSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnModifyDoAfter(Entity<CyberneticsComponent> ent, ref BodyRelayedEvent<ModifyDoAfterDelayEvent> args)
     {
-        if (ent.Comp.Disabled)
-            args.Args.Multiplier *= 10;
+        if (!ent.Comp.Disabled)
+            return;
+
+        var ev = args.Args;
+        ev.Multiplier *= 10;
+        args.Args = ev;
     }
 }

@@ -1,9 +1,11 @@
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared._Trauma.Traumas;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
+[AutoGenerateComponentPause]
 public sealed partial class BleedInflicterComponent : Component
 {
     /// <summary>
@@ -31,13 +33,13 @@ public sealed partial class BleedInflicterComponent : Component
     /// <summary>
     /// Time at which the bleeding scaling transition finishes.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField, AutoNetworkedField]
     public TimeSpan ScalingFinishesAt = TimeSpan.Zero;
 
     /// <summary>
     /// Time at which the bleeding scaling transition started.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField, AutoNetworkedField]
     public TimeSpan ScalingStartsAt = TimeSpan.Zero;
 
     /// <summary>

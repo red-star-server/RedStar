@@ -9,7 +9,7 @@ public sealed partial class NeedsTongueSystem : EntitySystem
 {
     [Dependency] private BodySystem _body = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private EntityQuery<EnabledOrganComponent> _enabledQuery = default!;
+    [Dependency] private EntityQuery<EnabledOrganComponent> _enabledQuery;
 
     [SubscribeLocalEvent]
     private void OnSpeakAttempt(Entity<NeedsTongueComponent> ent, ref SpeakAttemptEvent args)

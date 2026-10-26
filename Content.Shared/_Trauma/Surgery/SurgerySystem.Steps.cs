@@ -381,9 +381,12 @@ public sealed partial class SurgerySystem
         switch (ent.Comp.TraumaType)
         {
             case TraumaType.OrganDamage:
-                foreach (var organ in _body.GetInternalOrgans(args.Body))
+                foreach (var organUid in _part.GetPartOrgans(args.Part).Values.ToArray())
                 {
-                    foreach (var modifier in organ.Comp.IntegrityModifiers)
+                    if (!TryComp<InternalChildOrganComponent>(organUid, out var organ))
+                        continue;
+
+                    foreach (var modifier in organ.IntegrityModifiers.ToArray())
                     {
                         if (healAmount <= 0)
                             return;
@@ -392,14 +395,14 @@ public sealed partial class SurgerySystem
                         {
                             healAmount -= modifier.Value;
                             _trauma.TryRemoveOrganDamageModifier(
-                                organ.AsNullable(),
+                                (organUid, organ),
                                 modifier.Key.Item2,
                                 modifier.Key.Item1);
                         }
                         else
                         {
                             _trauma.TryChangeOrganDamageModifier(
-                                organ.AsNullable(),
+                                (organUid, organ),
                                 -healAmount,
                                 modifier.Key.Item2,
                                 modifier.Key.Item1);

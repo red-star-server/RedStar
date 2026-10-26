@@ -191,7 +191,7 @@ public sealed partial class BodyBloodstreamSystem : EntitySystem
             return true; // No modifiers. return true
 
         var lastCanBleed = true;
-        var lastPriority = 0;
+        var lastPriority = int.MinValue;
         foreach (var (_, pair) in ent.Comp.BleedingModifiers)
         {
             if (pair.Priority <= lastPriority)
@@ -311,7 +311,7 @@ public sealed partial class BodyBloodstreamSystem : EntitySystem
             var totalPartBleeds = FixedPoint2.Zero;
             foreach (var wound in _wound.GetWoundableWounds(part.AsNullable()))
             {
-                if (_bleedQuery.TryComp(wound, out var bleeds))
+            if (_bleedQuery.TryComp(wound, out var bleeds) && bleeds.IsBleeding)
                     totalPartBleeds += bleeds.BleedingAmount;
             }
             total += totalPartBleeds;
