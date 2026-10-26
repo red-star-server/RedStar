@@ -61,7 +61,10 @@ public sealed partial class WoundSystem
             CheckWoundableSeverityThresholds(args.Organ);
 
         if (_body.GetBody(parent.Owner) is {} body)
+        {
+            _bodyStatus.UpdateStatus(body);
             _trauma.UpdateBodyBoneAlert(body);
+        }
     }
 
     [SubscribeLocalEvent]

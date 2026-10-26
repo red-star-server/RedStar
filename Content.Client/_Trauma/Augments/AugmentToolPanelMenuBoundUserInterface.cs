@@ -1,34 +1,43 @@
+using Content.Client.UserInterface.Controls;
 using Content.Shared._Trauma.Augments;
-using Robust.Client.Graphics;
-using Robust.Client.Input;
+using Content.Shared.Storage;
 using Robust.Client.UserInterface;
+using Robust.Shared.Utility;
 
 namespace Content.Client._Trauma.Augments;
 
-public sealed partial class AugmentToolPanelMenuBoundUserInterface : BoundUserInterface
+public sealed partial class AugmentToolPanelMenuBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
-    [Dependency] private IClyde _clyde = default!;
-    [Dependency] private IInputManager _input = default!;
-    [Dependency] private IEntityManager _ent = default!;
-
-    private AugmentToolPanelMenu? _menu;
-
-    public AugmentToolPanelMenuBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-        IoCManager.InjectDependencies(this);
-    }
+    private SimpleRadialMenu? _menu;
 
     protected override void Open()
     {
         base.Open();
 
-        _menu = this.CreateWindow<AugmentToolPanelMenu>();
-        _menu.SetEntity(Owner);
-        _menu.SendSwitchMessage += SendSwitchMessage;
+        if (!EntMan.TryGetComponent<StorageComponent>(Owner, out var storage))
+            return;
 
-        // Open the menu, centered on the mouse
-        var vpSize = _clyde.ScreenSize;
-        _menu.OpenCenteredAt(_input.MouseScreenPosition.Position / vpSize);
+        var options = new List<RadialMenuOptionBase>();
+        foreach (var (tool, _) in storage.StoredItems)
+        {
+            options.Add(new RadialMenuActionOption<EntityUid?>(SendSwitchMessage, tool)
+            {
+                IconSpecifier = new RadialMenuEntityIconSpecifier(tool),
+                ToolTip = EntMan.GetComponent<MetaDataComponent>(tool).EntityName,
+                Order = options.Count,
+            });
+        }
+
+        options.Add(new RadialMenuActionOption<EntityUid?>(SendSwitchMessage, null)
+        {
+            IconSpecifier = RadialMenuIconSpecifier.With(new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/close.svg.192dpi.png"))),
+            ToolTip = Loc.GetString("augment-tool-panel-retract"),
+            Order = options.Count,
+        });
+
+        _menu = this.CreateWindow<SimpleRadialMenu>();
+        _menu.SetButtons(options);
+        _menu.OpenOverMouseScreenPosition();
     }
 
     /// <summary>
@@ -36,6 +45,6 @@ public sealed partial class AugmentToolPanelMenuBoundUserInterface : BoundUserIn
     /// </summary>
     public void SendSwitchMessage(EntityUid? desiredTool)
     {
-        SendPredictedMessage(new AugmentToolPanelSwitchMessage(_ent.GetNetEntity(desiredTool)));
+        SendPredictedMessage(new AugmentToolPanelSwitchMessage(EntMan.GetNetEntity(desiredTool)));
     }
 }

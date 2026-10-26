@@ -33,7 +33,7 @@ public sealed partial class HealBoneDamageEffectSystem : EntityEffectSystem<Body
     {
         var amount = args.Effect.Amount * args.Scale;
 
-        foreach (var bone in _body.EnumerateOrgans<BoneComponent>(ent))
+        foreach (var bone in _body.EnumerateOrgans<BoneComponent>(ent.AsNullable()))
         {
             _trauma.DamageBone((bone.Owner, bone.Comp2), -amount);
         }
