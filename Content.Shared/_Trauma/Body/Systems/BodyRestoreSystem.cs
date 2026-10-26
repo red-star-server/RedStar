@@ -20,7 +20,7 @@ public sealed partial class BodyRestoreSystem : EntitySystem
         // not using _body.RelayEvent because it wraps it in BodyRelayedEvent
         foreach (var organ in _body.GetOrgans(ent.AsNullable()))
         {
-            RaiseLocalEvent(organ, args); // TODO: make by ref if it stops being a class
+            RaiseLocalEvent(organ, args);
         }
     }
 

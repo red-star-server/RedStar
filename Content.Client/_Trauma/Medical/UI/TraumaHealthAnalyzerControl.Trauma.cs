@@ -387,7 +387,7 @@ public sealed partial class TraumaHealthAnalyzerControl
         int layer = 0;
         foreach (var (part, integrity) in body)
         {
-            // TODO: PartStatusUIController and make it use layers instead of TextureRects when EE refactors alerts.
+            // TODO: Move body status presentation into a UI controller.
             var name = part.ToString().ToLowerInvariant();
             int enumValue = (int) integrity;
             var baseRsiPath = new ResPath($"/Textures/_RedStar/Medical/Interface/Targeting/Status/{name}.rsi");

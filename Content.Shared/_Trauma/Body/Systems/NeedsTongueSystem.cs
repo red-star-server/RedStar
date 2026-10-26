@@ -17,7 +17,6 @@ public sealed partial class NeedsTongueSystem : EntitySystem
         if (args.Cancelled || _body.GetOrgan(ent.Owner, ent.Comp.Category) is {} tongue && _enabledQuery.HasComp(tongue))
             return;
 
-        // TODO: change to PopupEntity if chat gets predicted
         _popup.PopupEntity(Loc.GetString("trauma-organ-no-tongue"), ent, ent);
         args.Cancel();
     }

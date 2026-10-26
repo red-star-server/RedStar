@@ -66,6 +66,26 @@
   - type: SurgeryOrganCondition
     organ: Kidneys
 
+# Appendix
+
+- type: entity
+  parent: BaseSurgeryRemoveOrgan
+  id: SurgeryRemoveAppendix
+  name: Remove Appendix
+  components:
+  - type: SurgeryOrganCondition
+    organ: Appendix
+
+- type: entity
+  parent: BaseSurgeryInsertOrgan
+  id: SurgeryInsertAppendix
+  name: Insert Appendix
+  components:
+  - type: SurgeryOrganSlotCondition
+    organSlot: Appendix
+  - type: SurgeryOrganCondition
+    organ: Appendix
+
 # Wings
 
 - type: entity

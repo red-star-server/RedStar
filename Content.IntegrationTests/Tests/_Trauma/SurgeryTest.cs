@@ -42,7 +42,6 @@ public sealed partial class SurgeryTest : GameTest
     private static readonly ProtoId<OrganCategoryPrototype> Arm = "ArmLeft";
     private static readonly ProtoId<OrganCategoryPrototype> Torso = "Torso";
     private static readonly ProtoId<OrganCategoryPrototype> Head = "Head";
-    private static readonly ProtoId<OrganCategoryPrototype> Heart = "Heart";
     private static readonly EntProtoId BluntWound = "WoundBlunt";
 
     private async Task<(EntityUid Surgeon, EntityUid Patient)> SetupPatient()
@@ -147,26 +146,28 @@ public sealed partial class SurgeryTest : GameTest
         });
     }
 
-    [Test]
-    public async Task HeartCanBeRemovedAndReinsertedThroughSurgery()
+    [TestCase("Heart", "SurgeryRemoveHeart", "SurgeryInsertHeart")]
+    [TestCase("Appendix", "SurgeryRemoveAppendix", "SurgeryInsertAppendix")]
+    public async Task OrganCanBeRemovedAndReinsertedThroughSurgery(string organCategory, string removal, string insertion)
     {
         var (surgeon, patient) = await SetupPatient();
+        ProtoId<OrganCategoryPrototype> category = organCategory;
         EntityUid torso = default;
-        EntityUid heart = default;
+        EntityUid organ = default;
         await Server.WaitAssertion(() =>
         {
             torso = _body.GetOrgan(patient, Torso)!.Value;
-            heart = _body.GetOrgan(patient, Heart)!.Value;
+            organ = _body.GetOrgan(patient, category)!.Value;
         });
 
-        await Operate(surgeon, patient, torso, "SurgeryRemoveHeart");
-        await Server.WaitAssertion(() => Assert.That(_body.GetOrgan(patient, Heart), Is.Null));
-        await Operate(surgeon, patient, torso, "SurgeryInsertHeart", heart);
+        await Operate(surgeon, patient, torso, removal);
+        await Server.WaitAssertion(() => Assert.That(_body.GetOrgan(patient, category), Is.Null));
+        await Operate(surgeon, patient, torso, insertion, organ);
         await Server.WaitAssertion(() =>
         {
-            Assert.That(_body.GetOrgan(patient, Heart), Is.EqualTo(heart));
-            Assert.That(_parts.GetOrgan(torso, Heart), Is.EqualTo(heart));
-            Assert.That(SEntMan.HasComponent<EnabledOrganComponent>(heart), Is.True);
+            Assert.That(_body.GetOrgan(patient, category), Is.EqualTo(organ));
+            Assert.That(_parts.GetOrgan(torso, category), Is.EqualTo(organ));
+            Assert.That(SEntMan.HasComponent<EnabledOrganComponent>(organ), Is.True);
         });
     }
 
