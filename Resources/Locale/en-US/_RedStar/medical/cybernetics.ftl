@@ -82,7 +82,8 @@ ent-MaterialScrew = steel screw
     .desc = This screw is really rusty, you wouldn't want to get cut by it...
     .suffix = Full
 
-ent-MaterialScrewSingle = 
+ent-MaterialScrewSingle = { ent-MaterialScrew }
+    .desc = { ent-MaterialScrew.desc }
     .suffix = Single
 
 research-technology-basic-augmentation = Basic augmentation

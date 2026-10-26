@@ -49,6 +49,9 @@ public sealed partial class AugmentToolPanelSystem : EntitySystem
             return;
 
         var desiredTool = GetEntity(args.DesiredTool);
+        if (desiredTool == null && _hands.GetHeldItem(body, hand) == null)
+            return;
+
         if (_hands.GetHeldItem(body, hand) is {} held && !HasComp<AugmentToolPanelActiveItemComponent>(held))
         {
             _popup.PopupEntity(Loc.GetString("augment-tool-panel-hand-full"), body, body, PopupType.SmallCaution);

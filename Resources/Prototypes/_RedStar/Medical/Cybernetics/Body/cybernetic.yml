@@ -7,6 +7,8 @@
   - type: Injurable
     damageContainer: Silicon
   - type: Cybernetics
+  - type: OrganComponents
+    onlyWhileEnabled: true
   - type: Inorganic
 
 - type: entity

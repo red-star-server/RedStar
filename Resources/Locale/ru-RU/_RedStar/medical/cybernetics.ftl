@@ -82,7 +82,8 @@ ent-MaterialScrew = стальной шуруп
     .desc = Этот шуруп сильно заржавел. Лучше им не пораниться...
     .suffix = Полная стопка
 
-ent-MaterialScrewSingle = 
+ent-MaterialScrewSingle = { ent-MaterialScrew }
+    .desc = { ent-MaterialScrew.desc }
     .suffix = Один
 
 research-technology-basic-augmentation = Базовая аугментация

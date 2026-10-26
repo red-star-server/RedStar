@@ -12,6 +12,12 @@ namespace Content.Shared._Trauma.Common.Body;
 public sealed partial class OrganComponentsComponent : Component
 {
     /// <summary>
+    /// Apply the components only while the installed organ is enabled.
+    /// </summary>
+    [DataField]
+    public bool OnlyWhileEnabled;
+
+    /// <summary>
     /// Components which were added.
     /// </summary>
     [DataField, AutoNetworkedField]
