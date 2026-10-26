@@ -29,3 +29,29 @@
         - id: NitrousOxideTankFilled
         - id: ClothingMaskBreath
         # </Goob>
+
+- type: latheRecipePack
+  id: BorgModulesStatic
+  recipes:
+  - BorgModuleSurgery
+
+- type: latheRecipePack
+  id: BorgModules
+  recipes:
+  - BorgModuleAdvancedSurgery
+
+- type: latheRecipePack
+  id: Surgery
+  recipes:
+  - ClothingHandsGlovesSurgical
+  - DefibrillatorCompact
+
+- type: borgType
+  id: medical
+  defaultModules:
+  - BorgModuleSurgery
+  addComponents:
+  - type: Sanitized
+  - type: SurgeryIgnoreClothing
+  - type: SurgerySpeedModifier
+    speedModifier: 1.5

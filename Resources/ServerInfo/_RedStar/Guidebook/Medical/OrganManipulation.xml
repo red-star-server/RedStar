@@ -1,0 +1,34 @@
+<Document>
+# Операции на органах
+Повреждённые или отсутствующие органы можно заменить здоровыми с помощью хирургии.
+
+## Анатомия
+Обычно у пациента есть следующие органы:
+<Box>
+<GuideEntityEmbed Entity="OrganHumanBrain" Caption="мозг"/>
+<GuideEntityEmbed Entity="OrganHumanEyes" Caption="глаза"/>
+<GuideEntityEmbed Entity="OrganHumanHeart" Caption="сердце"/>
+</Box>
+<Box>
+<GuideEntityEmbed Entity="OrganHumanKidneys" Caption="почки"/>
+<GuideEntityEmbed Entity="OrganHumanLiver" Caption="печень"/>
+<GuideEntityEmbed Entity="OrganHumanLungs" Caption="лёгкие"/>
+<GuideEntityEmbed Entity="OrganHumanStomach" Caption="желудок"/>
+</Box>
+Набор органов зависит от вида: например, у дион некоторые функции объединены в одном органе.
+Для извлечения выберите операцию удаления нужного органа. Для пересадки выберите соответствующую операцию на части тела, в которой он должен находиться.
+
+## Результат пересадки
+- Пересадка мозга позволяет перенести пациента в другое тело. Тело без мозга или сердца быстро погибает.
+- Пересадка глаз позволяет восстановить зрение.
+- Некоторые органы дают особые свойства. Например, органы космического карпа связаны с его приспособленностью к космосу.
+
+## Где взять замену?
+Медицинский биофабрикатор выращивает из биомассы биосинтетические органы и части тела для пересадки.
+<Box>
+<GuideEntityEmbed Entity="MedicalBiofabricator" Caption="медицинский биофабрикатор"/>
+<GuideEntityEmbed Entity="MedicalBiofabMachineBoard" Caption="плата биофабрикатора"/>
+<GuideEntityEmbed Entity="MaterialBiomass" Caption="биомасса"/>
+</Box>
+Если нужное оборудование ещё не исследовано, орган придётся получить у подходящего донора.
+</Document>

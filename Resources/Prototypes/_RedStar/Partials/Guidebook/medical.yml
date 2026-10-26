@@ -1,0 +1,6 @@
+- type: guideEntry
+  id: MedicalDoctor
+  text: "/ServerInfo/_RedStar/Guidebook/Medical/MedicalDoctor.xml"
+  children:
+  - TraumaMedicine
+  - Surgery
