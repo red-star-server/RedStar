@@ -14,6 +14,9 @@ public sealed partial class ItemSwitchComponent : Component
     [DataField, AutoNetworkedField]
     public string State;
 
+    /// <summary>
+    /// State definitions indexed by the identifiers used by this item.
+    /// </summary>
     [DataField(readOnly: true)]
     public Dictionary<string, ItemSwitchState> States = [];
 
@@ -33,7 +36,7 @@ public sealed partial class ItemSwitchComponent : Component
     /// <summary>
     ///     Whether the item's toggle can be predicted by the client.
     /// </summary>
-    /// /// <remarks>
+    /// <remarks>
     /// If server-side systems affect the item's toggle, then the item is not predictable.
     /// </remarks>
     [DataField]
@@ -72,24 +75,45 @@ public sealed partial class ItemSwitchComponent : Component
 [DataDefinition]
 public sealed partial class ItemSwitchState
 {
+    /// <summary>
+    /// Localization key for the verb that activates this state.
+    /// </summary>
     [DataField]
     public string? Verb;
 
+    /// <summary>
+    /// Sound played when the item enters this state.
+    /// </summary>
     [DataField]
     public SoundSpecifier? SoundStateActivate;
 
+    /// <summary>
+    /// Sound played when activation of this state fails.
+    /// </summary>
     [DataField]
     public SoundSpecifier? SoundFailToActivate;
 
+    /// <summary>
+    /// Components applied while this state is selected.
+    /// </summary>
     [DataField]
     public ComponentRegistry? Components;
 
+    /// <summary>
+    /// Whether to remove this state's components when leaving it.
+    /// </summary>
     [DataField]
     public bool RemoveComponents = true;
 
+    /// <summary>
+    /// Optional sprite used to represent this state.
+    /// </summary>
     [DataField]
     public SpriteSpecifier? Sprite;
 
+    /// <summary>
+    /// Whether this state is hidden from the selection UI.
+    /// </summary>
     [DataField]
     public bool Hidden;
 

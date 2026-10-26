@@ -9,6 +9,9 @@ namespace Content.Shared._Trauma.EntityConditions;
 /// </summary>
 public sealed partial class AnyCondition : EntityConditionBase<AnyCondition>
 {
+    /// <summary>
+    /// Nested conditions, at least one of which must succeed.
+    /// </summary>
     [DataField(required: true)]
     public EntityCondition[] Conditions = default!;
 

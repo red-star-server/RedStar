@@ -11,6 +11,9 @@ public sealed partial class BloodstreamComponent
     [DataField, AutoNetworkedField, Access(typeof(BloodstreamSystem), typeof(BodyBloodstreamSystem))]
     public float BleedAmountFromWounds;
 
+    /// <summary>
+    /// Bleeding contribution from sources other than wound entities.
+    /// </summary>
     [DataField, AutoNetworkedField, Access(typeof(BloodstreamSystem), typeof(BodyBloodstreamSystem))]
     public float BleedAmountNotFromWounds;
 }

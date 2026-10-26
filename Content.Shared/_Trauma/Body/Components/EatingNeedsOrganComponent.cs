@@ -10,6 +10,9 @@ namespace Content.Shared._Trauma.Body;
 [RegisterComponent, NetworkedComponent, Access(typeof(EatingNeedsOrganSystem))]
 public sealed partial class EatingNeedsOrganComponent : Component
 {
+    /// <summary>
+    /// Organ category required for this entity to eat.
+    /// </summary>
     [DataField]
     public ProtoId<OrganCategoryPrototype> Category = "Head";
 }

@@ -7,7 +7,7 @@ namespace Content.Shared._Trauma.Augments;
 /// Augment that allows access to its storage via a radial menu once implanted
 /// The storage must be filled before installation or you can't do anything with it.
 /// An accessed item replaces a hand while in use and cannot be removed when stunned etc.
-/// <summary>
+/// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class AugmentToolPanelComponent : Component
 {
@@ -20,7 +20,7 @@ public sealed partial class AugmentToolPanelComponent : Component
 
 /// <summary>
 /// Marker component to indicate that an entity is the active tool of an augment tool panel
-/// <summary>
+/// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class AugmentToolPanelActiveItemComponent : Component;
 

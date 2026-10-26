@@ -6,7 +6,7 @@ namespace Content.Shared._Trauma.Augments;
 
 /// <summary>
 /// Component for entities that serve as AugmentPowerCellSlot organs
-/// <summary>
+/// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(AugmentPowerCellSystem))]
 public sealed partial class AugmentPowerCellSlotComponent : Component
 {
@@ -25,7 +25,7 @@ public sealed partial class AugmentPowerCellSlotComponent : Component
 
 /// <summary>
 /// Marker component to indicate that an entity currently has an AugmentPowerCellSlot organ
-/// <summary>
+/// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class HasAugmentPowerCellSlotComponent : Component;
 

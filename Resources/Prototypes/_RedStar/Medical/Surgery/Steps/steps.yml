@@ -567,8 +567,8 @@
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepLobotomize
-  name: Lobotomize patient
   categories: [ HideSpawnMenu ]
+  name: Lobotomize patient
   components:
   - type: SurgeryStep
     tool:
@@ -591,8 +591,8 @@
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepMendBrainTissue
-  name: Mend brain tissue
   categories: [ HideSpawnMenu ]
+  name: Mend brain tissue
   components:
   - type: SurgeryStep
     tool:

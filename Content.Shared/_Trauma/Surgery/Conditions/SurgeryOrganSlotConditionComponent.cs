@@ -10,9 +10,15 @@ namespace Content.Shared._Trauma.Surgery.Conditions;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class SurgeryOrganSlotConditionComponent : Component
 {
+    /// <summary>
+    /// Organ category whose slot is required on the selected part.
+    /// </summary>
     [DataField(required: true)]
     public ProtoId<OrganCategoryPrototype> OrganSlot;
 
+    /// <summary>
+    /// Whether the organ slot must be absent rather than present.
+    /// </summary>
     [DataField]
     public bool Inverse;
 }

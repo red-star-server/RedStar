@@ -111,7 +111,7 @@ public sealed partial class TraumaHealthAnalyzerControl : BoxContainer
 
         // Alerts
 
-        var showAlerts = state.Unrevivable == true || state.Bleeding.Count > 0; // Shitmed - check if any limbs bleeding
+        var showAlerts = state.Unrevivable == true || state.Bleeding.Count > 0; // Show alerts when any body part is bleeding.
 
         AlertsDivider.Visible = showAlerts;
         AlertsContainer.Visible = showAlerts;

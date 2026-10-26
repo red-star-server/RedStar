@@ -7,7 +7,7 @@ namespace Content.Shared._Trauma.Traumas;
 public sealed partial class BleedRemoverComponent : Component
 {
     /// <summary>
-    ///     The severity it requires for the wound infliction to activate, so that space wont be activating this shit.
+    /// Minimum wound severity required to trigger this effect.
     /// </summary>
     [DataField, AutoNetworkedField]
     public FixedPoint2 SeverityThreshold = FixedPoint2.New(1);

@@ -70,9 +70,15 @@ public sealed partial class SiliconComponent : Component
     [DataField]
     public float? ChargeThresholdCritical = 0.1f;
 
+    /// <summary>
+    /// Alert that displays the charge of the silicon's battery.
+    /// </summary>
     [DataField]
     public ProtoId<AlertPrototype> BatteryAlert = "BorgBattery";
 
+    /// <summary>
+    /// Alert displayed when no battery is installed.
+    /// </summary>
     [DataField]
     public ProtoId<AlertPrototype> NoBatteryAlert = "BorgBatteryNone";
 
@@ -83,6 +89,9 @@ public sealed partial class SiliconComponent : Component
     [DataField(required: true)]
     public Dictionary<int, float> SpeedModifierThresholds = default!;
 
+    /// <summary>
+    /// Multiplier applied to fire stacks affecting this silicon.
+    /// </summary>
     [DataField]
     public float FireStackMultiplier = 1f;
 }

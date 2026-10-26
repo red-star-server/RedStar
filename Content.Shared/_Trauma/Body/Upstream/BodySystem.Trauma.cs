@@ -179,7 +179,7 @@ public sealed partial class BodySystem
         if (!_bodyQuery.Resolve(body, ref body.Comp, false) || body.Comp.Organs?.ContainedEntities is not {} organs)
             return 1f;
 
-        // TODO SHITMED: change vital to just be a bool on OrganCategoryPrototype
+        // TODO: change vital to just be a bool on OrganCategoryPrototype
         int total = 0;
         int vital = 0;
         foreach (var organ in organs)

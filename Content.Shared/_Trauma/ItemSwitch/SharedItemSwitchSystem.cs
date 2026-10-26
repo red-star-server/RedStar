@@ -260,7 +260,7 @@ public abstract partial class SharedItemSwitchSystem : EntitySystem
         args.PushMarkup(onMsg);
 
         // If the current state is the default state, which is also off, do not calculate the current percentage.
-        // This is because any number divided by 0 gets fucked real quick.
+        // Avoid dividing by zero when the selected item requires no charge.
         if (ent.Comp.State == ent.Comp.DefaultState)
             return;
 

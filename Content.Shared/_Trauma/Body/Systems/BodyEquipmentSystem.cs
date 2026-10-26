@@ -16,7 +16,7 @@ public sealed partial class BodyEquipmentSystem : EntitySystem
 
     private EntityQuery<InventoryComponent> _inventoryQuery;
 
-    // TODO SHITMED: make this a field on OrganCategoryPrototype or something??
+    // TODO: make this a field on OrganCategoryPrototype or something??
     public static readonly Dictionary<BodyPartType, string[]> PartInventorySlots = new()
     {
         { BodyPartType.Head, [ "eyes", "ears", "head", "mask" ] },
@@ -74,7 +74,7 @@ public sealed partial class BodyEquipmentSystem : EntitySystem
     public static BodyPartType? GetInventoryPart(string slot)
         => slot switch
         {
-            // TODO SHITMED: HOLY SHITCODE
+            // Slot requirements should share the category mapping above.
             "innerclothing" or "outerclothing" => BodyPartType.Torso,
             "eyes" or "ears" or "head" or "mask" => BodyPartType.Head,
             "gloves" => BodyPartType.Hand,

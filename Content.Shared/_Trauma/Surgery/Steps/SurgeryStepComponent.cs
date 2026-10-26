@@ -8,18 +8,33 @@ namespace Content.Shared._Trauma.Surgery.Steps;
 [EntityCategory("SurgerySteps")]
 public sealed partial class SurgeryStepComponent : Component
 {
+    /// <summary>
+    /// Surgical tool components accepted by this step.
+    /// </summary>
     [DataField]
     public ComponentRegistry? Tool;
 
+    /// <summary>
+    /// Components added to the selected part when the step completes.
+    /// </summary>
     [DataField]
     public ComponentRegistry? Add;
 
+    /// <summary>
+    /// Components added to the patient's body when the step completes.
+    /// </summary>
     [DataField]
     public ComponentRegistry? BodyAdd;
 
+    /// <summary>
+    /// Components removed from the selected part when the step completes.
+    /// </summary>
     [DataField]
     public ComponentRegistry? Remove;
 
+    /// <summary>
+    /// Components removed from the patient's body when the step completes.
+    /// </summary>
     [DataField]
     public ComponentRegistry? BodyRemove;
 
@@ -41,6 +56,9 @@ public sealed partial class SurgeryStepComponent : Component
     [DataField]
     public Dictionary<ProtoId<OrganCategoryPrototype>, ComponentRegistry>? RemoveOrganOnAdd;
 
+    /// <summary>
+    /// Base duration of the step in seconds before surgery speed modifiers.
+    /// </summary>
     [DataField]
     public float Duration = 2f;
 }

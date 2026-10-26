@@ -33,17 +33,17 @@ public sealed partial class AugmentToolPanelMenu : RadialMenu
         if (!_ent.TryGetComponent<StorageComponent>(_owner, out var storage))
             return;
 
-        // TODO: make this use simple radial menu bruh
+        // TODO: Replace the custom radial menu with SimpleRadialMenu.
         foreach (var (entity, _) in storage.StoredItems)
         {
             var button = new RadialMenuButtonWithSector()
             {
-                SetSize = new Vector2(64f, 64f),
+                SetSize = new Vector2(64f, 64f)
             };
 
             button.AddChild(new SpriteView(entity, _ent)
                 {
-                    Scale = new Vector2(3f, 3f),
+                    Scale = new Vector2(3f, 3f)
                 });
             Main.AddChild(button);
 
@@ -57,14 +57,14 @@ public sealed partial class AugmentToolPanelMenu : RadialMenu
         var nilButton = new RadialMenuButtonWithSector()
         {
             SetSize = new Vector2(64f, 64f),
-            ToolTip = Loc.GetString("augment-tool-panel-retract"),
+            ToolTip = Loc.GetString("augment-tool-panel-retract")
         };
 
         nilButton.AddChild(new Label
         {
             Text = Loc.GetString("augment-tool-panel-retract"),
             HorizontalAlignment = HAlignment.Center,
-            VerticalAlignment = VAlignment.Center,
+            VerticalAlignment = VAlignment.Center
         });
         Main.AddChild(nilButton);
 

@@ -39,9 +39,9 @@ public sealed partial class InternalChildOrganComponent
     public Dictionary<(string, EntityUid), FixedPoint2> IntegrityModifiers = new();
 
     /// <summary>
-    ///     The name's self-explanatory, thresholds. for states. of integrity. of this god fucking damn organ.
+    /// Integrity thresholds for the organ damage states.
     /// </summary>
-    [DataField] // TODO SHITMED: MAKE REQUIRED WHEN EVERY YML HAS THESE.
+    [DataField] // TODO: MAKE REQUIRED WHEN EVERY YML HAS THESE.
     public Dictionary<OrganSeverity, FixedPoint2> IntegrityThresholds = new()
     {
         { OrganSeverity.Normal, 15 },

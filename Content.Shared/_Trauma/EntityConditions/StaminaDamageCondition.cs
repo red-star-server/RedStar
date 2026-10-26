@@ -6,9 +6,15 @@ namespace Content.Shared._Trauma.EntityConditions;
 
 public sealed partial class StaminaDamageCondition : EntityConditionBase<StaminaDamageCondition>
 {
+    /// <summary>
+    /// Minimum stamina damage required for the condition to succeed.
+    /// </summary>
     [DataField]
     public float Min;
 
+    /// <summary>
+    /// Maximum stamina damage allowed for the condition to succeed.
+    /// </summary>
     [DataField]
     public float Max = float.PositiveInfinity;
 

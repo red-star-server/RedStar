@@ -9,6 +9,9 @@ namespace Content.Shared._Trauma.Augments;
 [RegisterComponent, NetworkedComponent, Access(typeof(AugmentPowerDrawSystem))]
 public sealed partial class AugmentPowerDrawComponent : Component
 {
+    /// <summary>
+    /// Energy consumed per second while the augment is active.
+    /// </summary>
     [DataField(required: true)]
     public float Draw;
 }

@@ -38,7 +38,7 @@ public sealed partial class PartStatusUIController : UIController, IOnStateEnter
             catch (ArgumentException)
             {
                 // don't care if it's a non-game screen or whatever
-                // dogshit api has no nullable method :)
+                // This API requires a non-null entity.
             }
         };
     }

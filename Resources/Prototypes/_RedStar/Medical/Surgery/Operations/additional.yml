@@ -11,7 +11,8 @@
     - SurgeryStepStitchJoint
     - SurgeryStepOpenOrganSlot
   - type: SurgeryPartCondition
-    parts: [ Torso ]
+    parts:
+    - Torso
   - type: SurgeryOrganSlotCondition
     organSlot: Tail
 
@@ -80,7 +81,8 @@
     - SurgeryStepStitchJoint
     - SurgeryStepOpenOrganSlot
   - type: SurgeryPartCondition
-    parts: [ Torso ]
+    parts:
+    - Torso
   - type: SurgeryOrganSlotCondition
     organSlot: Wings
 

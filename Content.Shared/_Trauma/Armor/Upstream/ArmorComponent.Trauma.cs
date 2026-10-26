@@ -11,26 +11,26 @@ namespace Content.Shared.Armor;
 public sealed partial class ArmorComponent
 {
     /// <summary>
-    /// Shitmed Change: If true, the coverage won't show.
+    /// If true, armor coverage is hidden when examined.
     /// </summary>
     [DataField("coverageHidden")]
     public bool ArmourCoverageHidden;
 
     /// <summary>
-    /// Shitmed Change: If true, the modifiers won't show.
+    /// If true, armor modifiers are hidden when examined.
     /// </summary>
     [DataField("modifiersHidden")]
     public bool ArmourModifiersHidden;
 
     /// <summary>
-    /// Shitmed Change: thankfully all the armor in the game is symmetrical.
+    /// Body-part types covered by this armor, independent of symmetry.
     /// </summary>
     [DataField("coverage")]
     [Access(typeof(SharedArmorSystem), typeof(CoveredPartSystem))]
     public List<BodyPartType> ArmorCoverage = new();
 
     /// <summary>
-    /// Shitmed Change: The amount of dismemberment chance deduction.
+    /// Trauma severity deductions provided by this armor.
     /// </summary>
     [DataField]
     public Dictionary<TraumaType, FixedPoint2> TraumaDeductions = new()

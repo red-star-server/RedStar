@@ -368,8 +368,6 @@ public sealed partial class TraumaHealthAnalyzerControl
             int enumValue = (int) integrity;
             var baseRsiPath = new ResPath($"/Textures/_RedStar/Medical/Interface/Targeting/Status/{name}.rsi");
             var rsi = new SpriteSpecifier.Rsi(baseRsiPath, $"{enumValue}");
-            // Shitcode with love from Russia :)
-            // fuck you mocho
             CreateOrAddToLayer((_spriteViewEntity.Value, sprite), rsi, layer);
             layer++;
 

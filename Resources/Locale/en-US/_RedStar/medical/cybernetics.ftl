@@ -14,21 +14,21 @@ ent-OrganCyberneticFootLeft = cybernetic left foot
 
 ent-OrganCyberneticFootRight = cybernetic right foot
 
-ent-OrganCyberneticJWL = 
+ent-OrganCyberneticJWL =
     .desc = A cybernetic arm with the ability to pry doors open.
 
 ent-OrganJWLArmLeft = J.W.L left arm
 
 ent-OrganJWLArmRight = J.W.L right arm
 
-ent-OrganCyberneticSpeed = 
+ent-OrganCyberneticSpeed =
     .desc = A cybernetic leg that allows its wearer to run faster.
 
 ent-OrganSpeedLegLeft = S.P.E.E.D left leg
 
 ent-OrganSpeedLegRight = S.P.E.E.D right leg
 
-ent-OrganCyberneticDex = 
+ent-OrganCyberneticDex =
     .desc = A cybernetic hand that allows its wearer to interact faster.
 
 ent-OrganDexHandLeft = D.E.X left hand
@@ -53,13 +53,13 @@ ent-OrganCyberneticLungs = cybernetic lungs
 ent-OrganCyberneticLungsUpgraded = upgraded cybernetic lungs
     .desc = A self-contained respiratory system that eliminates the need to breathe entirely and grants increased stamina recovery.
 
-ent-OrganBioSynth = 
+ent-OrganBioSynth =
     .suffix = bio-synthetic
 
-ent-OrganBioSynthExternal = 
+ent-OrganBioSynthExternal =
     .desc = This synthetic part can be transplanted onto any living organism and it will adapt to its recipient.
 
-ent-OrganBioSynthInternal = 
+ent-OrganBioSynthInternal =
     .desc = This synthetic organ can be transplanted into any living organism and it will adapt to its recipient.
 
 ent-MicroplasticsStatusEffect = microplastics buildup

@@ -15,9 +15,15 @@ public sealed partial class InventoryAnyNestedCondition : EntityConditionBase<In
     [DataField(required: true)]
     public EntityCondition Condition = default!;
 
+    /// <summary>
+    /// Localization key used to describe the nested inventory condition.
+    /// </summary>
     [DataField]
     public LocId GuidebookText = "entity-condition-guidebook-inventory-nested";
 
+    /// <summary>
+    /// Inventory slots whose items are checked by the nested condition.
+    /// </summary>
     [DataField]
     public SlotFlags Flags = SlotFlags.WITHOUT_POCKET;
 

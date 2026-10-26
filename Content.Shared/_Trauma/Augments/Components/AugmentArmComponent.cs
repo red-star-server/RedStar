@@ -4,6 +4,6 @@ namespace Content.Shared._Trauma.Augments;
 
 /// <summary>
 /// Marker component to indicate that an entity serves as an AugmentArm organ
-/// <summary>
+/// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class AugmentArmComponent : Component;

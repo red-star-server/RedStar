@@ -44,7 +44,7 @@ public partial class TraumaSystem
             _ => 0f
         };
 
-        // TODO SHITMED: predict bone damage!!?!
+        // TODO: Predict bone damage.
         if (_net.IsServer)
             _audio.PlayPvs(bone.Comp.BoneBreakSound, body, bone.Comp.BoneBreakSound.Params.WithVolume(volumeFloat));
     }
@@ -88,7 +88,7 @@ public partial class TraumaSystem
         if (!_boneQuery.Resolve(bone, ref bone.Comp))
             return false;
 
-        // TODO: predict when its rng is unfucked
+        // TODO: Predict trauma creation once its random selection is deterministic.
         if (_net.IsServer)
             AddTrauma(bone, bone, wound, TraumaType.BoneDamage, severity);
 

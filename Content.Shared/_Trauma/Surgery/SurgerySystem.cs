@@ -146,7 +146,7 @@ public sealed partial class SurgerySystem : EntitySystem
         ref DoAfterAttemptEvent<SurgeryDoAfterEvent> args)
     {
         if (_net.IsClient
-            || !args.Event.Repeat) // We only wanna do this laggy shit on repeatables. One-time stuff idc.
+            || !args.Event.Repeat) // Only repeatable steps need this completion check.
             return;
 
         if (!IsSurgeryValid(ent, GetEntity(args.Event.Part), args.Event.Surgery, args.Event.Step, args.Event.User, out var surgery, out var part, out var _)
@@ -330,7 +330,7 @@ public sealed partial class SurgerySystem : EntitySystem
         else if (!_part.CanInsertOrgan(args.Part, ent.Comp.Category))
             args.Cancelled = true;
 
-        // TODO NUBODY: OrganReattachedComponent shitcode logic??? cancel if there are parts and none of them have it
+        // TODO: Replace the reattachment marker with an explicit operation state.
     }
 
     [SubscribeLocalEvent]
@@ -437,7 +437,7 @@ public sealed partial class SurgerySystem : EntitySystem
             return true;
 
         // you can't otherwise operate on something with no buckle
-        // just let people do surgery on goliaths and shit
+        // Allow surgery on non-humanoid bodies, including goliaths.
         if (!TryComp<BuckleComponent>(entity, out var buckle))
             return true;
 

@@ -26,7 +26,7 @@ public sealed partial class OrganComponentsSystem : EntitySystem
 
     private void ApplyComponents(Entity<OrganComponentsComponent> ent, EntityUid body)
     {
-        // TODO SHITMED: this doesn't actually have any kind of refcounting :)
+        // TODO: this doesn't actually have any kind of refcounting :)
         if (ent.Comp.OnAdd is {} adding)
             EntityManager.AddComponents(body, adding);
         if (ent.Comp.OnRemove is {} removing)

@@ -196,7 +196,7 @@ public sealed partial class WoundSystem
     [SubscribeLocalEvent]
     private void OnModifyDoAfterDelay(Entity<HandOrganComponent> ent, ref BodyRelayedEvent<ModifyDoAfterDelayEvent> args)
     {
-        // TODO SHITMED: because of how the shitcode works, missing a hand is faster than having a broken one
+        // TODO: Apply a missing-hand delay penalty so that removing an injured hand is not faster.
         // make a thing like LegsComponent that makes doafters longer with missing hands
         RaiseLocalEvent(ent, args.Args);
     }

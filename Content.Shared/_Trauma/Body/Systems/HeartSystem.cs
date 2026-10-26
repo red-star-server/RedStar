@@ -5,7 +5,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared._Trauma.Body;
 
-// TODO SHITMED: make this generic vital organs system instead of copy pasting with brain system bruh
+// TODO: Share brain and heart handling in a generic vital-organ system.
 public sealed partial class HeartSystem : EntitySystem
 {
     [Dependency] private BodySystem _body = default!;

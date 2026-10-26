@@ -2,7 +2,7 @@
   abstract: true
   id: SurgeryBase
   components:
-  # TODO SHITMED: replace with surgery categories system and tie it into autodoc
+  # TODO: replace with surgery categories system and tie it into autodoc
   - type: SurgeryPartComponentCondition
     inverse: true # regular surgeries can't be done on xenos (xeno surgeries are more complex, damage the user and have unique flavour text)
     components:
@@ -22,7 +22,8 @@
   id: SurgeryAttachBase
   components:
   - type: SurgeryPartCondition
-    parts: [ Torso ]
+    parts:
+    - Torso
   - type: Surgery
     requirement: SurgeryOpenIncision
     steps:
@@ -100,7 +101,8 @@
     - SurgeryStepSealSkull
     - SurgeryStepCloseIncision
   - type: SurgeryPartCondition
-    parts: [ Head ]
+    parts:
+    - Head
     inverse: false
 
 - type: entity
@@ -114,7 +116,8 @@
     - SurgeryStepSealRibcage
     - SurgeryStepCloseIncision
   - type: SurgeryPartCondition
-    parts: [ Torso ]
+    parts:
+    - Torso
     inverse: false
 
 - type: entity
@@ -128,7 +131,8 @@
     - SurgeryStepSawBones
     - SurgeryStepPriseOpenBones
   - type: SurgeryPartCondition
-    parts: [ Torso ]
+    parts:
+    - Torso
 
 - type: entity
   parent: SurgeryBase
@@ -143,7 +147,8 @@
     - SurgeryStepRemoveFeature
   - type: SurgeryHasBodyCondition
   - type: SurgeryPartCondition
-    parts: [ Torso ]
+    parts:
+    - Torso
     inverse: true
 
 - type: entity
@@ -177,7 +182,7 @@
   - type: SurgeryTraumaPresentCondition
     trauma: OrganDamage
 
-# I fucking hate hardcoding all of this shit to accomodate for surgery BUI.
+# The surgery UI currently requires explicit entries for each operation.
 # If anyone can give me pointers on how to make it better I'd be incredibly grateful.
 
 - type: entity
@@ -226,7 +231,8 @@
   name: Attach Left Hand
   components:
   - type: SurgeryPartCondition
-    parts: [ Arm ]
+    parts:
+    - Arm
     symmetry: Left
   - type: SurgeryPartRemovedCondition
     category: HandLeft
@@ -237,7 +243,8 @@
   name: Attach Right Hand
   components:
   - type: SurgeryPartCondition
-    parts: [ Arm ]
+    parts:
+    - Arm
     symmetry: Right
   - type: SurgeryPartRemovedCondition
     category: HandRight
@@ -248,7 +255,8 @@
   name: Attach Left Foot
   components:
   - type: SurgeryPartCondition
-    parts: [ Leg ]
+    parts:
+    - Leg
     symmetry: Left
   - type: SurgeryPartRemovedCondition
     category: FootLeft
@@ -259,7 +267,8 @@
   name: Attach Right Foot
   components:
   - type: SurgeryPartCondition
-    parts: [ Leg ]
+    parts:
+    - Leg
     symmetry: Right
   - type: SurgeryPartRemovedCondition
     category: FootRight
@@ -311,15 +320,16 @@
     - SurgeryStepInsertItem
     - SurgeryStepRemoveItem
   - type: SurgeryPartCondition
-    parts: [ Torso ]
+    parts:
+    - Torso
 
 # Lobotomy
 
 - type: entity
   parent: SurgeryBase
   id: SurgeryLobotomize
-  name: Lobotomize
   categories: [ HideSpawnMenu ]
+  name: Lobotomize
   components:
   - type: Surgery
     requirement: SurgeryOpenIncision
@@ -336,13 +346,14 @@
       #- type: Clumsy # TODO: add system for modifying OrganStatusEffects
     inverse: true
   - type: SurgeryPartCondition
-    parts: [ Head ]
+    parts:
+    - Head
 
 - type: entity
   parent: SurgeryBase
   id: SurgeryMendBrainTissue
-  name: Mend brain tissue
   categories: [ HideSpawnMenu ]
+  name: Mend brain tissue
   components:
   - type: Surgery
     requirement: SurgeryOpenIncision
@@ -358,4 +369,5 @@
       - type: RatvarianLanguage
       #- type: Clumsy
   - type: SurgeryPartCondition
-    parts: [ Head ]
+    parts:
+    - Head

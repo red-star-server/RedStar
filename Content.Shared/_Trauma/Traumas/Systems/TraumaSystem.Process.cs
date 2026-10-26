@@ -28,7 +28,7 @@ public partial class TraumaSystem
     [Dependency] private EntityQuery<WoundableComponent> _woundableQuery;
 
     private const string TraumaContainerId = "Traumas";
-    // TODO SHITMED: this should be a bool on the trauma entity or something
+    // TODO: this should be a bool on the trauma entity or something
     public static readonly TraumaType[] TraumasBlockingHealing = { TraumaType.BoneDamage, TraumaType.OrganDamage, TraumaType.Dismemberment };
 
     public static readonly ProtoId<DamageTypePrototype> Blunt = "Blunt";

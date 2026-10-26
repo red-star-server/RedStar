@@ -537,7 +537,8 @@
   worksOnTheDead: true
   reactiveEffects:
     Acidic:
-      methods: [Touch]
+      methods:
+      - Touch
       effects:
       - !type:HealthChange
         scaling: true
@@ -578,7 +579,8 @@
   worksOnTheDead: true
   reactiveEffects:
     Acidic:
-      methods: [Touch]
+      methods:
+      - Touch
       effects:
       - !type:HealthChange
         scaling: true
@@ -797,11 +799,13 @@
     amount: -10
   reactiveEffects:
     Extinguish:
-      methods: [Touch]
+      methods:
+      - Touch
       effects:
       - !type:Extinguish ''
     Acidic:
-      methods: [Touch]
+      methods:
+      - Touch
       effects:
       - !type:HealthChange
         scaling: true
@@ -853,12 +857,14 @@
     amount: -8
   reactiveEffects:
     Flammable:
-      methods: [Touch]
+      methods:
+      - Touch
       effects:
       - !type:Flammable
         multiplier: 0.2
     Acidic:
-      methods: [Touch]
+      methods:
+      - Touch
       effects:
       - !type:HealthChange
         scaling: true
@@ -1083,7 +1089,8 @@
             Slash: 0.5
   reactiveEffects:
     Extinguish:
-      methods: [Touch]
+      methods:
+      - Touch
       effects:
       - !type:Extinguish ''
   tileReactions:

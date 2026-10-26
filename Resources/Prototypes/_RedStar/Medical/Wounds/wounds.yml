@@ -1,6 +1,6 @@
 - type: entity
-  id: WoundBase
   abstract: true
+  id: WoundBase
   components:
   - type: Wound
     damageType: Blunt
@@ -10,8 +10,8 @@
         ents: []
 
 - type: entity
-  id: WoundBlunt
   parent: WoundBase
+  id: WoundBlunt
   components:
   - type: Wound
     damageType: Blunt
@@ -54,8 +54,8 @@
       BoneDamage: 1.2
 
 - type: entity
-  id: Piercing
   parent: WoundBase
+  id: Piercing
   components:
   - type: Wound
     damageType: Piercing
@@ -104,8 +104,8 @@
     scalingSpeed: 0.8
 
 - type: entity
-  id: Ballistic
   parent: WoundBase
+  id: Ballistic
   components:
   - type: Wound
     damageType: Ballistic
@@ -134,8 +134,8 @@
     scalingSpeed: 0.5
 
 - type: entity
-  id: Slash
   parent: WoundBase
+  id: Slash
   components:
   - type: Wound
     damageType: Slash
@@ -178,8 +178,8 @@
     scalingSpeed: 2
 
 - type: entity
-  id: Heat
   parent: WoundBase
+  id: Heat
   components:
   - type: Wound
     damageType: Heat
@@ -215,8 +215,8 @@
       VeinsDamage: 0.45
 
 - type: entity
-  id: Ion
   parent: WoundBase
+  id: Ion
   categories: [HideSpawnMenu]
   components:
   - type: Wound
@@ -232,8 +232,8 @@
       VeinsDamage: 0
 
 - type: entity
-  id: Cold
   parent: WoundBase
+  id: Cold
   components:
   - type: Wound
     damageType: Cold
@@ -250,8 +250,8 @@
       VeinsDamage: 0.5
 
 - type: entity
-  id: Holy
   parent: WoundBase
+  id: Holy
   components:
   - type: Wound
     damageType: Holy
@@ -266,8 +266,8 @@
       VeinsDamage: 0
 
 - type: entity
-  id: Shock
   parent: WoundBase
+  id: Shock
   components:
   - type: Wound
     damageType: Shock
@@ -285,8 +285,8 @@
       VeinsDamage: 0.34
 
 - type: entity
-  id: Cellular
   parent: WoundBase
+  id: Cellular
   components:
   - type: Wound
     damageType: Cellular
@@ -304,8 +304,8 @@
       VeinsDamage: 0.17
 
 - type: entity
-  id: Caustic
   parent: WoundBase
+  id: Caustic
   components:
   - type: Wound
     damageType: Caustic
@@ -322,8 +322,8 @@
       VeinsDamage: 0.5
 
 - type: entity
-  id: Radiation
   parent: WoundBase
+  id: Radiation
   components:
   - type: Wound
     damageType: Radiation
@@ -342,8 +342,8 @@
       VeinsDamage: 0.34
 
 - type: entity
-  id: Poison
   parent: WoundBase
+  id: Poison
   components:
   - type: Wound
     damageType: Poison

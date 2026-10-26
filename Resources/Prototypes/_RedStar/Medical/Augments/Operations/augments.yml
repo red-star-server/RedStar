@@ -34,7 +34,8 @@
     - SurgeryStepInsertAugmentPowerCellSlot
     - SurgeryStepSealOrganWound
   - type: SurgeryPartCondition
-    parts: [ Torso ]
+    parts:
+    - Torso
   - type: SurgeryOrganCondition
     organ: AugmentPowerCell
   - type: SurgeryOrganSlotCondition
@@ -46,7 +47,8 @@
   name: Open Cavity For Power Cell Slot
   components:
   - type: SurgeryPartCondition
-    parts: [ Torso ]
+    parts:
+    - Torso
   - type: SurgeryOrganSlotCondition
     organSlot: AugmentPowerCell
 
@@ -56,7 +58,8 @@
   name: Remove Power Cell Slot
   components:
   - type: SurgeryPartCondition
-    parts: [ Torso ]
+    parts:
+    - Torso
   - type: SurgeryOrganCondition
     organ: AugmentPowerCell
 
@@ -73,7 +76,8 @@
     - SurgeryStepInsertAugmentPowerCellCharger
     - SurgeryStepSealOrganWound
   - type: SurgeryPartCondition
-    parts: [ Torso ]
+    parts:
+    - Torso
   - type: SurgeryOrganCondition
     organ: AugmentCharger
   - type: SurgeryOrganSlotCondition
@@ -85,7 +89,8 @@
   name: Open Cavity For Power Cell Charger
   components:
   - type: SurgeryPartCondition
-    parts: [ Torso ]
+    parts:
+    - Torso
   - type: SurgeryOrganSlotCondition
     organSlot: AugmentCharger
 
@@ -95,7 +100,8 @@
   name: Remove Internal Power Cell Charger
   components:
   - type: SurgeryPartCondition
-    parts: [ Torso ]
+    parts:
+    - Torso
   - type: SurgeryOrganCondition
     organ: AugmentCharger
 
@@ -109,7 +115,8 @@
   - type: Surgery
     requirement: SurgeryOpenIncision # no ribcage
   - type: SurgeryPartCondition
-    parts: [ Arm ]
+    parts:
+    - Arm
   - type: SurgeryOrganSlotCondition
     organSlot: ArmAugment
 
@@ -125,7 +132,8 @@
     - SurgeryStepInsertAugmentArm
     - SurgeryStepSealOrganWound
   - type: SurgeryPartCondition
-    parts: [ Arm ]
+    parts:
+    - Arm
   - type: SurgeryOrganCondition
     organ: ArmAugment
   - type: SurgeryOrganSlotCondition
@@ -139,6 +147,7 @@
   - type: Surgery
     requirement: SurgeryOpenIncision # no ribcage
   - type: SurgeryPartCondition
-    parts: [ Arm ]
+    parts:
+    - Arm
   - type: SurgeryOrganCondition
     organ: ArmAugment

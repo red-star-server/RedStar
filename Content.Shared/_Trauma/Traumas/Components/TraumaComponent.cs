@@ -36,6 +36,9 @@ public sealed partial class TraumaComponent : Component
     [DataField, AutoNetworkedField]
     public FixedPoint2 TraumaSeverity;
 
+    /// <summary>
+    /// Type of trauma represented by this entity.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public TraumaType TraumaType;
 }

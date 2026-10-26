@@ -6,7 +6,9 @@
   - type: Sprite
     sprite: _RedStar/Medical/Augments/arm.rsi
   - type: ChildOrgan
-    parents: [ ArmLeft, ArmRight ]
+    parents:
+    - ArmLeft
+    - ArmRight
   - type: Item
     size: Huge
   - type: Organ
@@ -24,10 +26,12 @@
     layers:
     - sprite: Clothing/Belt/utility.rsi
       state: icon
-      map: [ "enum.ActionVisuals.Icon" ]
+      map:
+      - "enum.ActionVisuals.Icon"
     - texture: Interface/Default/blocked.png
       visible: false
-      map: [ "enum.ActionVisuals.IconToggled" ]
+      map:
+      - "enum.ActionVisuals.IconToggled"
 
 - type: entity
   abstract: true
@@ -89,7 +93,8 @@
   description: An electronics board that programs a tool panel to hold a specific type of item. This one holds utility tools.
   components:
   - type: Tag
-    tags: [ AugmentUtilityToolElectronics ]
+    tags:
+    - AugmentUtilityToolElectronics
 
 - type: entity
   parent: BaseAugmentElectronics
@@ -98,7 +103,8 @@
   description: An electronics board that programs a tool panel to hold a specific type of item. This one holds botanical tools.
   components:
   - type: Tag
-    tags: [ AugmentBotanyToolElectronics ]
+    tags:
+    - AugmentBotanyToolElectronics
 
 - type: entity
   parent: BaseAugmentElectronics
@@ -107,7 +113,8 @@
   description: An electronics board that programs a tool panel to hold a specific type of item. This one holds surgical tools.
   components:
   - type: Tag
-    tags: [ AugmentSurgeryToolElectronics ]
+    tags:
+    - AugmentSurgeryToolElectronics
 
 - type: entity
   parent: BaseAugmentElectronics
@@ -116,7 +123,8 @@
   description: An electronics board that controls a strength augment.
   components:
   - type: Tag
-    tags: [ AugmentStrengthElectronics ]
+    tags:
+    - AugmentStrengthElectronics
 
 # Arm augment casings
 
@@ -143,7 +151,8 @@
   - type: Construction
     node: casing
   - type: Tag
-    tags: [ AugmentToolPanelCasing ]
+    tags:
+    - AugmentToolPanelCasing
 
 - type: entity
   parent: BaseIncompleteAugmentToolPanel
@@ -254,7 +263,8 @@
   - type: Construction
     node: casing
   - type: Tag
-    tags: [ AugmentStrengthCasing ]
+    tags:
+    - AugmentStrengthCasing
 
 - type: entity
   parent: BaseIncompleteAugmentStrength
@@ -275,11 +285,13 @@
   - type: Sprite
     layers:
     - texture: Interface/Default/blocked.png
-      map: [ "enum.ActionVisuals.Icon" ]
+      map:
+      - "enum.ActionVisuals.Icon"
     - sprite: Objects/Tools/Toolboxes/toolbox_blue.rsi
       state: icon
       visible: false
-      map: [ "enum.ActionVisuals.IconToggled" ]
+      map:
+      - "enum.ActionVisuals.IconToggled"
   - type: InstantAction
     event: !type:ToggleActionEvent
 

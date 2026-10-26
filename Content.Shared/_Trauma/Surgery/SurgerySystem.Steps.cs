@@ -704,7 +704,6 @@ public sealed partial class SurgerySystem
         var doAfter = new DoAfterArgs(EntityManager, user, TimeSpan.FromSeconds(duration), ev, body, body)
         {
             BreakOnMove = true,
-            //BreakOnTargetMove = true, I fucking hate wizden dude.
             CancelDuplicate = true,
             DuplicateCondition = DuplicateConditions.SameEvent,
             NeedHand = true,
@@ -855,7 +854,7 @@ public sealed partial class SurgerySystem
 
         if (check.IsValid)
         {
-            // surgery conditions are fucking awful and apply to both the surgery and steps...
+            // Both the operation and the individual step may impose surgery conditions.
             var ev = new SurgeryValidEvent(body, part, tool);
             RaiseLocalEvent(step, ref ev);
             if (!ev.Cancelled)

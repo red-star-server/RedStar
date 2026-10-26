@@ -3,7 +3,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared._Trauma.DelayedDeath;
 
-// TODO SHITMED: kill this dogshit and have actual vital organ simulation
+// TODO: Drive delayed death from vital-organ state.
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentPause, AutoGenerateComponentState]
 public sealed partial class DelayedDeathComponent : Component

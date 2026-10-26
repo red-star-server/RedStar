@@ -10,15 +10,27 @@ namespace Content.Shared.Damage;
 /// </summary>
 public sealed partial class DamageSpecifier
 {
+    /// <summary>
+    /// Armor penetration carried by this damage specification.
+    /// </summary>
     [DataField]
     public float ArmorPenetration;
 
+    /// <summary>
+    /// Variation used when distributing damage between targeted body parts.
+    /// </summary>
     [DataField]
     public float PartDamageVariation;
 
+    /// <summary>
+    /// Per-damage-type multipliers applied when creating wounds.
+    /// </summary>
     [DataField]
     public Dictionary<ProtoId<DamageTypePrototype>, FixedPoint2> WoundSeverityMultipliers = new();
 
+    /// <summary>
+    /// Additional rules for applying damage and creating wounds.
+    /// </summary>
     [DataField]
     public DamageFlags Flags = DamageFlags.None;
 

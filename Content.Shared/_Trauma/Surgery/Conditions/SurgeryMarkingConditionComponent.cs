@@ -6,6 +6,9 @@ namespace Content.Shared._Trauma.Surgery.Conditions;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class SurgeryMarkingConditionComponent : Component
 {
+    /// <summary>
+    /// Whether the marking requirement is inverted.
+    /// </summary>
     [DataField]
     public bool Inverse;
 

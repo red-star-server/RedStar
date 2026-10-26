@@ -56,7 +56,7 @@ public sealed partial class PartStatusSystem : EntitySystem
     private void OnGetPartStatus(GetPartStatusEvent message, EntitySessionEventArgs args)
     {
         if (args.SenderSession.AttachedEntity is not {} entity ||
-            _mob.IsIncapacitated(entity)) // fuck you i guess???
+            _mob.IsIncapacitated(entity))
             return;
 
         var partStatusSet = CollectPartStatuses(entity);

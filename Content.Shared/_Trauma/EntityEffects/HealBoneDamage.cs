@@ -11,6 +11,9 @@ namespace Content.Shared._Trauma.EntityEffects;
 /// </summary>
 public sealed partial class HealBoneDamage : EntityEffectBase<HealBoneDamage>
 {
+    /// <summary>
+    /// Bone integrity restored when this effect is applied.
+    /// </summary>
     [DataField]
     public FixedPoint2 Amount = 1;
 

@@ -8,6 +8,9 @@ namespace Content.Shared._Trauma.Surgery;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class SanitizedComponent : Component
 {
+    /// <summary>
+    /// Whether holding this item protects the surgeon from contaminating a wound.
+    /// </summary>
     [DataField]
     public bool WorksInHands;
 }

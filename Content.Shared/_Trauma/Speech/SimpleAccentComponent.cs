@@ -10,6 +10,9 @@ namespace Content.Shared._Trauma.Speech;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class SimpleAccentComponent : BaseAccentComponent
 {
+    /// <summary>
+    /// Replacement rules used to transform this entity's speech.
+    /// </summary>
     [DataField(required: true)]
     public ProtoId<SimpleAccentPrototype> Accent;
 }

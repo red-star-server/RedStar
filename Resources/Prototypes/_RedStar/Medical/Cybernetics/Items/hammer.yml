@@ -6,9 +6,9 @@
   icon: { sprite: _RedStar/Medical/Cybernetics/hammer.rsi, state: icon }
 
 - type: entity
-  name: hammer
   parent: BaseItem
   id: MeleeHammer
+  name: hammer
   description: 3 steel 2 wood
   components:
   - type: Sprite

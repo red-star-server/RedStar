@@ -21,6 +21,9 @@ namespace Content.Shared._Trauma.EntityConditions;
 /// </remarks>
 public sealed partial class TypedDamageCondition : EntityConditionBase<TypedDamageCondition>
 {
+    /// <summary>
+    /// Damage thresholds checked for the specified damage types and groups.
+    /// </summary>
     [DataField(required: true)]
     public DamageSpecifier Damage = default!;
 

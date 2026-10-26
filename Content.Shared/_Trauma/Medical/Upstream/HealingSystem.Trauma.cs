@@ -159,7 +159,6 @@ public sealed partial class HealingSystem
             return;
 
         var healedBleed = false;
-        //var canHeal = true; // Shitmed - not used
         var healedTotal = new DamageSpecifier(); // Goobstation
         FixedPoint2 modifiedBleedStopAbility = 0;
         // Heal some bleeds

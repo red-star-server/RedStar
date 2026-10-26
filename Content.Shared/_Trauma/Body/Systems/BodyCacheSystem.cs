@@ -116,7 +116,7 @@ public sealed partial class BodyCacheSystem : CommonBodyCacheSystem
         // will only reliably work during surgery, OnBodyInit ensures they all find their parents on spawn
         // only reason this would not actually exist is:
         // - container fill, don't care MapInit will fix it
-        // - a shitter adding side effects to insert attempt, your fault for doing that
+        // - insertion handlers that modify the organ hierarchy before the cache is updated
         if (GetParentOrgan(args.Target.Owner, category, ent.Comp.Parents) is not { } part)
             return;
 

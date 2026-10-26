@@ -3,7 +3,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared._Trauma.Surgery.Tools;
 
 /// <summary>
-/// Given to sharp things that gives them shitty default scalpel and bone saw surgery qualities while added.
+/// Grants fallback scalpel and bone-saw qualities to sharp items.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState]
