@@ -144,14 +144,17 @@ public sealed partial class AugmentToolPanelSystem : EntitySystem
             return;
         }
 
+        if (!_toggle.TryActivate(augment.Owner, user: body))
+            return;
+
         if (!_hands.TryPickup(body, tool, hand))
         {
+            _toggle.TryDeactivate(augment.Owner, user: body);
             _popup.PopupEntity(Loc.GetString("augment-tool-panel-cannot-pick-up"), body, body, PopupType.SmallCaution);
             return;
         }
 
         EnsureComp<AugmentToolPanelActiveItemComponent>(tool);
-        _toggle.TryActivate(augment.Owner, user: body);
         _popup.PopupEntity(Loc.GetString("augment-tool-panel-selected", ("item", tool)), body, body);
     }
 }

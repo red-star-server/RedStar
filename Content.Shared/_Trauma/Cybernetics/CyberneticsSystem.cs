@@ -27,7 +27,7 @@ public sealed partial class CyberneticsSystem : EntitySystem
         ent.Comp.Disabled = true;
         Dirty(ent);
 
-        if (_body.GetBody(ent.Owner) is not {} body)
+        if (_body.GetBody(ent.Owner) == null)
             return;
 
         _body.DisableOrgan(ent.Owner);

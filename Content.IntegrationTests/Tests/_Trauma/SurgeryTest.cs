@@ -107,7 +107,8 @@ public sealed partial class SurgeryTest : GameTest
 
                 if (_hands.GetActiveItem(surgeon) is { } held)
                     Assert.That(_hands.TryDrop(surgeon, held), Is.True);
-                Assert.That(_hands.TryPickupAnyHand(surgeon, tool), Is.True);
+                Assert.That(_hands.TryPickupAnyHand(surgeon, tool), Is.True,
+                    $"{procedure}/{stepId}: could not pick up {SEntMan.ToPrettyString(tool)}");
                 Assert.That(_surgery.TryDoSurgeryStep(patient, part, surgeon, SComp<MetaDataComponent>(next.Surgery).EntityPrototype!.ID, stepId, out var error), Is.True, $"{procedure}/{stepId}: {error}");
                 // Allow repeatable treatment to complete, including its final cancellation check.
                 duration = data.Duration * 3 + 1;

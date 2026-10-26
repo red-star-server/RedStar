@@ -20,6 +20,9 @@ public sealed partial class StaminaRegenerationSystem : EntitySystem
         var query = EntityQueryEnumerator<StaminaRegenerationComponent, StaminaComponent>();
         while (query.MoveNext(out var uid, out var regeneration, out var stamina))
         {
+            if (stamina.Critical || stamina.StaminaDamage <= 0f && regeneration.RegenerationRate <= 0f)
+                continue;
+
             _stamina.TakeStaminaDamage(uid, regeneration.RegenerationRate * frameTime,
                 stamina, visual: false, ignoreResist: true);
         }

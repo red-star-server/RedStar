@@ -108,8 +108,8 @@ public sealed partial class AugmentPowerCellSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnRemoved(Entity<AugmentPowerCellSlotComponent> ent, ref OrganGotRemovedEvent args)
     {
-        _alerts.ClearAlert(args.Target, ent.Comp.BatteryAlert);
-        _alerts.ClearAlert(args.Target, ent.Comp.NoBatteryAlert);
+        _alerts.ClearAlert(args.Target.Owner, ent.Comp.BatteryAlert);
+        _alerts.ClearAlert(args.Target.Owner, ent.Comp.NoBatteryAlert);
     }
 
     [SubscribeLocalEvent]
