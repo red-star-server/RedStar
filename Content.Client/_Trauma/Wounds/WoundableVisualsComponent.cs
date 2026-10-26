@@ -1,8 +1,8 @@
-using Robust.Shared.Prototypes;
 using Content.Shared._Trauma.Common.Wounds;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.DisplacementMap;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client._Trauma.Wounds;
 

@@ -1,14 +1,8 @@
-using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
-using Robust.Shared.Network;
-using Robust.Shared.Prototypes;
-
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared._Trauma.Common.Traumas;
 using Content.Shared.Atmos.Rotting;
 using Content.Shared.Body;
 using Content.Shared.Damage.Components;
-using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
@@ -20,10 +14,13 @@ using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Traits.Assorted;
 using Content.Shared.Verbs;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared._Trauma.Medical;
 

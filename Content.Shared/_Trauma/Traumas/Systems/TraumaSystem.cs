@@ -1,5 +1,3 @@
-using Robust.Shared.Network;
-using Robust.Shared.Prototypes;
 using Content.Shared._Trauma.Wounds;
 using Content.Shared.Alert;
 using Content.Shared.Body;
@@ -7,6 +5,8 @@ using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 

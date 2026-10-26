@@ -1,8 +1,8 @@
-using Robust.Shared.Prototypes;
 using Content.Shared._Trauma.Traumas;
 using Content.Shared.Body;
 using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Trauma.EntityEffects;
 

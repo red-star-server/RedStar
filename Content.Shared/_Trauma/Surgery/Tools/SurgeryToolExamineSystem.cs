@@ -1,9 +1,9 @@
-using Robust.Shared.Utility;
-using Content.Shared._Trauma.Common.Surgery.Tools;
 using Content.Shared._Trauma.Body;
+using Content.Shared._Trauma.Common.Surgery.Tools;
 using Content.Shared.Body;
 using Content.Shared.Examine;
 using Content.Shared.Verbs;
+using Robust.Shared.Utility;
 
 namespace Content.Shared._Trauma.Surgery.Tools;
 

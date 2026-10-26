@@ -1,6 +1,5 @@
-using Robust.Shared.GameStates;
-
 using Content.Shared.EntityEffects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared._Trauma.Body;

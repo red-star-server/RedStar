@@ -71,8 +71,10 @@ public sealed partial class PowerCellSystem
             return true;
         }
 
-        battery = null;
-        return false;
+        // RS14-start: installed augment batteries are outside the body's normal cell slot.
+        battery = FindBattery(ent);
+        return battery != null;
+        // RS14-end
     }
 
     /// <summary>
@@ -90,8 +92,10 @@ public sealed partial class PowerCellSystem
         if (TryGetBatteryFromSlot(ent, out battery))
             return true;
 
-        battery = null;
-        return false;
+        // RS14-start: installed augment batteries are outside the body's normal cell slot.
+        battery = FindBattery(ent);
+        return battery != null;
+        // RS14-end
     }
 
     /// <summary>

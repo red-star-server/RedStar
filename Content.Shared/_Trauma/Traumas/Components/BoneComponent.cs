@@ -1,7 +1,7 @@
-using Robust.Shared.GameStates;
 using Content.Shared._Trauma.Common.Traumas;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared._Trauma.Traumas;
 

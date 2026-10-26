@@ -6,7 +6,6 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
-using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.IdentityManagement;
 using Content.Shared.MedicalScanner;
 using Content.Shared.Mobs;
@@ -19,6 +18,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+
 namespace Content.Client._Trauma.Medical.UI;
 
 // Health analyzer UI is split from its window because it's used by both the
@@ -120,20 +120,24 @@ public sealed partial class TraumaHealthAnalyzerControl : BoxContainer
             AlertsContainer.RemoveAllChildren();
 
         if (state.Unrevivable == true)
+        {
             AlertsContainer.AddChild(new RichTextLabel
             {
                 Text = Loc.GetString("health-analyzer-window-entity-unrevivable-text"),
                 Margin = new Thickness(0, 4),
                 MaxWidth = 300
             });
+        }
 
         if (state.Bleeding.Count > 0)
+        {
             AlertsContainer.AddChild(new RichTextLabel
             {
                 Text = Loc.GetString("health-analyzer-window-entity-bleeding-text"),
                 Margin = new Thickness(0, 4),
                 MaxWidth = 300
             });
+        }
 
         // Damage Groups
 

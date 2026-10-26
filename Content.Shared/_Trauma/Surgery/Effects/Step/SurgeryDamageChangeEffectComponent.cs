@@ -1,6 +1,5 @@
-using Robust.Shared.GameStates;
-
 using Content.Shared.Damage;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared._Trauma.Surgery.Effects.Step;
 

@@ -1,6 +1,6 @@
-using Robust.Client.GameObjects;
 using Content.Client.Items;
 using Content.Shared._Trauma.ItemSwitch;
+using Robust.Client.GameObjects;
 
 namespace Content.Client._Trauma.ItemSwitch;
 

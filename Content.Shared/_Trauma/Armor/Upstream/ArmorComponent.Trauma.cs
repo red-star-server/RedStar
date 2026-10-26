@@ -1,3 +1,4 @@
+using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared._Trauma.Common.Traumas;
 using Content.Shared.FixedPoint;
@@ -25,7 +26,7 @@ public sealed partial class ArmorComponent
     /// Shitmed Change: thankfully all the armor in the game is symmetrical.
     /// </summary>
     [DataField("coverage")]
-    [Access(typeof(SharedArmorSystem), typeof(Content.Shared._Trauma.Body.CoveredPartSystem))]
+    [Access(typeof(SharedArmorSystem), typeof(CoveredPartSystem))]
     public List<BodyPartType> ArmorCoverage = new();
 
     /// <summary>

@@ -1,0 +1,57 @@
+- type: latheRecipePack
+  id: BiofabPartsStatic
+  recipes:
+  # Organs
+  - OrganBioSynthEyes
+  - OrganBioSynthTongue
+  - OrganBioSynthEars
+  - OrganBioSynthLungs
+  - OrganBioSynthHeart
+  - OrganBioSynthStomach
+  - OrganBioSynthLiver
+  - OrganBioSynthKidneys
+  # Parts
+  - OrganBioSynthHead
+  - OrganBioSynthArmLeft
+  - OrganBioSynthArmRight
+  - OrganBioSynthHandLeft
+  - OrganBioSynthHandRight
+  - OrganBioSynthLegLeft
+  - OrganBioSynthLegRight
+  - OrganBioSynthFootLeft
+  - OrganBioSynthFootRight
+
+- type: latheRecipePack
+  id: MedicalCybernetics
+  recipes:
+  - MedicalCyberneticEyes
+
+- type: latheRecipePack
+  id: BasicCybernetics
+  recipes:
+  - LeftArmCybernetic
+  - RightArmCybernetic
+  - LeftHandCybernetic
+  - RightHandCybernetic
+  - LeftLegCybernetic
+  - RightLegCybernetic
+  - LeftFootCybernetic
+  - RightFootCybernetic
+  - BasicCyberneticEyes
+  - BasicCyberneticLungs
+
+- type: latheRecipePack
+  id: AdvancedCybernetics
+  recipes:
+  - UpgradedCyberneticLungs
+  - JawsOfLifeLeftArm
+  - JawsOfLifeRightArm
+  - DexLeftHand
+  - DexRightHand
+  - DiagnosticCyberneticEyes
+
+- type: latheRecipePack
+  id: SecurityCybernetics
+  parent: MedicalCybernetics
+  recipes:
+  - SecurityCyberneticEyes

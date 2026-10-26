@@ -1,5 +1,5 @@
-using Content.Shared.Armor;
 using Content.Shared._Trauma.Common.Armor;
+using Content.Shared.Armor;
 
 namespace Content.Shared._Trauma.Armor;
 

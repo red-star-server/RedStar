@@ -1,0 +1,97 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseWoodenHandle
+  name: wooden handle
+  description: A normal wooden handle that can be used in crafting.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Medical/Cybernetics/wooden_handle.rsi
+    state: icon
+  - type: Construction
+    node: handle
+
+- type: entity
+  parent: BaseWoodenHandle
+  id: WoodenHandleHammer
+  name: hammer handle
+  components:
+  - type: Construction
+    graph: Hammer
+
+# if you revive metal bat / forged knife add handles for them
+
+- type: stack
+  id: Screw
+  name: stack-screw
+  icon: { sprite: _RedStar/Medical/Cybernetics/materials.rsi, state: screw_1 }
+  spawn: MaterialScrew
+  maxCount: 10
+
+- type: entity
+  parent: PartBase
+  id: MaterialScrew
+  name: steel screw
+  description: "This screw is really rusty, you wouldn't want to get cut by it..."
+  suffix: Full
+  components:
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 10
+  - type: Stack
+    stackType: Screw
+    count: 10
+    baseLayer: base
+    layerStates:
+    - screw_1
+    - screw_1 # todo
+    - screw_1
+  - type: Sprite
+    sprite: _RedStar/Medical/Cybernetics/materials.rsi
+    state: screw_1
+    layers:
+    - state: screw_1
+      map: ["base"]
+  - type: Item
+    size: Small
+    heldPrefix: screw
+  - type: Construction
+    graph: ScrewDouble
+    node: stack
+  - type: Appearance
+  - type: StaticPrice
+    price: 0
+  - type: StackPrice
+    price: 5
+
+- type: entity
+  parent: MaterialScrew
+  id: MaterialScrewSingle
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1
+
+- type: constructionGraph
+  id: ScrewDouble
+  graph:
+  - node: start
+    edges:
+    - to: stack
+      completed:
+      - !type:SetStackCount
+        amount: 2
+      steps:
+      - material: Steel
+        amount: 1
+        doAfter: 2
+  - node: stack
+    entity: MaterialScrewSingle
+
+- type: construction
+  id: ScrewDouble
+  graph: ScrewDouble
+  category: construction-category-misc
+  targetNode: stack
+  objectType: Item
+

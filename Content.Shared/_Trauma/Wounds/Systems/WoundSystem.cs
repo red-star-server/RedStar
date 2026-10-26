@@ -1,4 +1,3 @@
-using Robust.Shared.Network;
 using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Traumas;
 using Content.Shared.Body;
@@ -7,6 +6,7 @@ using Content.Shared.Throwing;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
+using Robust.Shared.Network;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 

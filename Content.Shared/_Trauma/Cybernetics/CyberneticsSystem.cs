@@ -1,0 +1,63 @@
+using Content.Shared._Trauma.Body;
+using Content.Shared._Trauma.Common.Body;
+using Content.Shared._Trauma.Common.DoAfter;
+using Content.Shared.Body;
+using Content.Shared.Damage.Systems;
+using Content.Shared.Emp;
+using Content.Shared.Random.Helpers;
+using Robust.Shared.Timing;
+
+namespace Content.Shared._Trauma.Cybernetics;
+
+public sealed partial class CyberneticsSystem : EntitySystem
+{
+    [Dependency] private BodySystem _body = default!;
+    [Dependency] private BodyPartSystem _part = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private IGameTiming _timing = default!;
+
+    [SubscribeLocalEvent]
+    private void OnEmpPulse(Entity<CyberneticsComponent> ent, ref EmpPulseEvent ev)
+    {
+        if (ent.Comp.Disabled || !SharedRandomExtensions.PredictedProb(_timing, ent.Comp.DisableChance, GetNetEntity(ent)))
+            return;
+
+        ev.Affected = true;
+        ev.Disabled = true;
+        ent.Comp.Disabled = true;
+        Dirty(ent);
+
+        if (_body.GetBody(ent.Owner) == null)
+            return;
+
+        _body.DisableOrgan(ent.Owner);
+        var target = _part.GetOuterOrgan(ent.Owner);
+        _damageable.ChangeDamage(target, ent.Comp.EmpDamage, increaseOnly: true);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnEmpDisabledRemoved(Entity<CyberneticsComponent> ent, ref EmpDisabledRemovedEvent ev)
+    {
+        if (!ent.Comp.Disabled)
+            return;
+
+        ent.Comp.Disabled = false;
+        Dirty(ent);
+
+        _body.EnableOrgan(ent.Owner, logMissing: false);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnEnableAttempt(Entity<CyberneticsComponent> ent, ref OrganEnableAttemptEvent args)
+    {
+        // prevent enabling the organ while emped
+        args.Cancelled |= ent.Comp.Disabled;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnModifyDoAfter(Entity<CyberneticsComponent> ent, ref BodyRelayedEvent<ModifyDoAfterDelayEvent> args)
+    {
+        if (ent.Comp.Disabled)
+            args.Args.Multiplier *= 10;
+    }
+}

@@ -1,0 +1,377 @@
+- type: latheRecipe
+  id: MedicalCyberneticEyes
+  result: OrganCyberneticEyesMedical
+  categories:
+  - Robotics
+  completetime: 10
+  materials:
+    Steel: 2000
+    Glass: 1000
+    Plastic: 1000
+    Gold: 1000
+    Silver: 600
+
+- type: latheRecipe
+  id: BasicCyberneticLungs
+  result: OrganCyberneticLungs
+  categories:
+  - Robotics
+  completetime: 10
+  materials:
+    Steel: 2000
+    Glass: 1000
+    Plastic: 1000
+    Gold: 1000
+    Silver: 600
+
+- type: latheRecipe
+  id: UpgradedCyberneticLungs
+  result: OrganCyberneticLungsUpgraded
+  categories:
+  - Robotics
+  completetime: 10
+  materials:
+    Steel: 3000
+    Glass: 1500
+    Plastic: 1000
+    Gold: 1500
+    Silver: 900
+
+- type: latheRecipe
+  abstract: true
+  id: SynthOrgan
+  completetime: 10
+  materials:
+    Biomass: 10
+
+- type: latheRecipe
+  abstract: true
+  id: SynthPart
+  completetime: 5
+  materials:
+    Biomass: 7
+
+## Organs
+
+- type: latheRecipe
+  parent: SynthOrgan
+  id: OrganBioSynthEyes
+  result: OrganBioSynthEyes
+
+- type: latheRecipe
+  parent: SynthOrgan
+  id: OrganBioSynthTongue
+  result: OrganBioSynthTongue
+
+- type: latheRecipe
+  parent: SynthOrgan
+  id: OrganBioSynthEars
+  result: OrganBioSynthEars
+
+- type: latheRecipe
+  parent: SynthOrgan
+  id: OrganBioSynthLungs
+  result: OrganBioSynthLungs
+
+- type: latheRecipe
+  parent: SynthOrgan
+  id: OrganBioSynthHeart
+  result: OrganBioSynthHeart
+
+- type: latheRecipe
+  parent: SynthOrgan
+  id: OrganBioSynthStomach
+  result: OrganBioSynthStomach
+
+- type: latheRecipe
+  parent: SynthOrgan
+  id: OrganBioSynthLiver
+  result: OrganBioSynthLiver
+
+- type: latheRecipe
+  parent: SynthOrgan
+  id: OrganBioSynthKidneys
+  result: OrganBioSynthKidneys
+
+## Parts
+
+- type: latheRecipe
+  parent: SynthPart
+  id: OrganBioSynthHead
+  result: OrganBioSynthHead
+  completetime: 10
+  materials:
+    Biomass: 5
+
+- type: latheRecipe
+  parent: SynthPart
+  id: OrganBioSynthArmLeft
+  result: OrganBioSynthArmLeft
+
+- type: latheRecipe
+  parent: SynthPart
+  id: OrganBioSynthHandLeft
+  result: OrganBioSynthHandLeft
+  materials:
+    Biomass: 3
+
+- type: latheRecipe
+  parent: SynthPart
+  id: OrganBioSynthArmRight
+  result: OrganBioSynthArmRight
+
+- type: latheRecipe
+  parent: SynthPart
+  id: OrganBioSynthHandRight
+  result: OrganBioSynthHandRight
+  materials:
+    Biomass: 3
+
+- type: latheRecipe
+  parent: SynthPart
+  id: OrganBioSynthLegLeft
+  result: OrganBioSynthLegLeft
+
+- type: latheRecipe
+  parent: SynthPart
+  id: OrganBioSynthLegRight
+  result: OrganBioSynthLegRight
+
+- type: latheRecipe
+  parent: SynthPart
+  id: OrganBioSynthFootLeft
+  result: OrganBioSynthFootLeft
+  materials:
+    Biomass: 3
+
+- type: latheRecipe
+  parent: SynthPart
+  id: OrganBioSynthFootRight
+  result: OrganBioSynthFootRight
+  materials:
+    Biomass: 3
+
+## Pizza
+
+- type: latheRecipe
+  id: RightArmCybernetic
+  result: OrganCyberneticArmRight
+  categories:
+  - Robotics
+  completetime: 5
+  materials:
+    Steel: 1000
+    Glass: 500
+    Plastic: 500
+    Gold: 300
+    Silver: 300
+
+- type: latheRecipe
+  id: LeftArmCybernetic
+  result: OrganCyberneticArmLeft
+  categories:
+  - Robotics
+  completetime: 5
+  materials:
+    Steel: 1000
+    Glass: 500
+    Plastic: 500
+    Gold: 300
+    Silver: 300
+
+- type: latheRecipe
+  id: RightLegCybernetic
+  result: OrganCyberneticLegRight
+  categories:
+  - Robotics
+  completetime: 5
+  materials:
+    Steel: 1000
+    Glass: 500
+    Plastic: 500
+    Gold: 300
+    Silver: 300
+
+- type: latheRecipe
+  id: LeftLegCybernetic
+  result: OrganCyberneticLegLeft
+  categories:
+  - Robotics
+  completetime: 5
+  materials:
+    Steel: 1000
+    Glass: 500
+    Plastic: 500
+    Gold: 300
+    Silver: 300
+
+- type: latheRecipe
+  id: RightHandCybernetic
+  result: OrganCyberneticHandRight
+  categories:
+  - Robotics
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 200
+    Plastic: 300
+    Gold: 100
+    Silver: 100
+
+- type: latheRecipe
+  id: LeftHandCybernetic
+  result: OrganCyberneticHandLeft
+  categories:
+  - Robotics
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 200
+    Plastic: 300
+    Gold: 100
+    Silver: 100
+
+- type: latheRecipe
+  id: RightFootCybernetic
+  result: OrganCyberneticFootRight
+  categories:
+  - Robotics
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 200
+    Plastic: 300
+    Gold: 100
+    Silver: 100
+
+- type: latheRecipe
+  id: LeftFootCybernetic
+  result: OrganCyberneticFootLeft
+  categories:
+  - Robotics
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 200
+    Plastic: 300
+    Gold: 100
+    Silver: 100
+
+- type: latheRecipe
+  id: JawsOfLifeLeftArm
+  result: OrganJWLArmLeft
+  categories:
+  - Robotics
+  completetime: 10
+  materials:
+    Steel: 2000
+    Glass: 1000
+    Plastic: 1000
+    Gold: 1000
+    Silver: 600
+
+- type: latheRecipe
+  id: JawsOfLifeRightArm
+  result: OrganJWLArmRight
+  categories:
+  - Robotics
+  completetime: 10
+  materials:
+    Steel: 2000
+    Glass: 1000
+    Plastic: 1000
+    Gold: 1000
+    Silver: 600
+
+- type: latheRecipe
+  id: SpeedLeftLeg
+  result: OrganSpeedLegLeft
+  categories:
+  - Robotics
+  completetime: 10
+  materials:
+    Steel: 2000
+    Glass: 1000
+    Plastic: 1000
+    Gold: 1000
+    Silver: 600
+
+- type: latheRecipe
+  id: SpeedRightLeg
+  result: OrganSpeedLegRight
+  categories:
+  - Robotics
+  completetime: 10
+  materials:
+    Steel: 2000
+    Glass: 1000
+    Plastic: 1000
+    Gold: 1000
+    Silver: 600
+
+- type: latheRecipe
+  id: BasicCyberneticEyes
+  result: OrganCyberneticEyes
+  categories:
+  - Robotics
+  completetime: 5
+  materials:
+    Steel: 1000
+    Glass: 500
+    Plastic: 500
+    Gold: 300
+    Silver: 300
+
+- type: latheRecipe
+  id: DiagnosticCyberneticEyes
+  result: OrganCyberneticEyesDiagnostic
+  categories:
+  - Robotics
+  completetime: 10
+  materials:
+    Steel: 2000
+    Glass: 1000
+    Plastic: 1000
+    Gold: 1000
+    Silver: 600
+
+- type: latheRecipe
+  id: DexLeftHand
+  result: OrganDexHandLeft
+  categories:
+  - Robotics
+  completetime: 10
+  materials:
+    Steel: 2000
+    Glass: 1000
+    Plastic: 1000
+    Gold: 1000
+    Silver: 600
+
+- type: latheRecipe
+  id: DexRightHand
+  result: OrganDexHandRight
+  categories:
+  - Robotics
+  completetime: 10
+  materials:
+    Steel: 2000
+    Glass: 1000
+    Plastic: 1000
+    Gold: 1000
+    Silver: 600
+
+## Augments
+
+- type: latheRecipe
+  id: SecurityCyberneticEyes
+  result: OrganCyberneticEyesSecurity
+  categories:
+  - Robotics
+  completetime: 10
+  materials:
+    Steel: 2000
+    Glass: 1000
+    Plastic: 1000
+    Gold: 1000
+    Silver: 600

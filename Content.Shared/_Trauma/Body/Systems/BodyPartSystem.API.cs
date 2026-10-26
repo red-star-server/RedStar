@@ -1,9 +1,8 @@
-using Robust.Shared.Prototypes;
-
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared._Trauma.Common.Targeting;
 using Content.Shared.Body;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared._Trauma.Body;

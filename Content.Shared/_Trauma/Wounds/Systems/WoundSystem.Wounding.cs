@@ -1,13 +1,12 @@
-using Robust.Shared.Prototypes;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Shared._Trauma.Common.Medical;
+using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared._Trauma.Common.Damage;
 using Content.Shared._Trauma.Common.DoAfter;
 using Content.Shared._Trauma.Common.Healing;
+using Content.Shared._Trauma.Common.Medical;
 using Content.Shared._Trauma.Common.Wounds;
-using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Traumas;
 using Content.Shared.Body;
 using Content.Shared.Damage.Prototypes;
@@ -16,6 +15,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Gibbing;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Trauma.Wounds;
 

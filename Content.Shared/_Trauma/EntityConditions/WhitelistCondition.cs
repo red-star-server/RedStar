@@ -1,7 +1,7 @@
-using Robust.Shared.Prototypes;
 using Content.Shared.EntityConditions;
 using Content.Shared.Mind;
 using Content.Shared.Whitelist;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Trauma.EntityConditions;
 

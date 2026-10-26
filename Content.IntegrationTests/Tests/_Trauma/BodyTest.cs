@@ -4,13 +4,13 @@ using Content.IntegrationTests.Tests.Helpers;
 using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared._Trauma.DelayedDeath;
-using Content.Shared.Body;
-using Content.Shared.Body.Components;
-using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Rotting;
+using Content.Shared.Body;
+using Content.Shared.Body.Components;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
+using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Movement.Components;
 using Robust.Shared.Prototypes;
 

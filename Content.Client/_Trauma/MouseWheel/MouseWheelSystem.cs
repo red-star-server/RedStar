@@ -3,8 +3,8 @@ using Content.Shared._Trauma.Common.CCVar;
 using Content.Shared._Trauma.Common.Input;
 using Content.Shared._Trauma.Common.MouseWheel;
 using Content.Shared._Trauma.Targeting;
-using Robust.Client.Input;
 using Robust.Client.GameObjects;
+using Robust.Client.Input;
 using Robust.Shared.Configuration;
 using Robust.Shared.Input;
 

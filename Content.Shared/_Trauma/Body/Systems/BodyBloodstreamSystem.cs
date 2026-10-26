@@ -1,8 +1,7 @@
-using Robust.Shared.Utility;
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared._Trauma.Common.CCVar;
-using Content.Shared._Trauma.Wounds;
 using Content.Shared._Trauma.Traumas;
+using Content.Shared._Trauma.Wounds;
 using Content.Shared.Alert;
 using Content.Shared.Body;
 using Content.Shared.Body.Components;
@@ -12,6 +11,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared._Trauma.Body;
 

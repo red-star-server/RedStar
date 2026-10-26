@@ -1,10 +1,10 @@
+using System.Linq;
 using Content.Shared._Trauma.Common.DoAfter;
 using Content.Shared._Trauma.Common.Traumas;
 using Content.Shared.Body;
 using Content.Shared.FixedPoint;
 using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
-using System.Linq;
 
 namespace Content.Shared._Trauma.Traumas;
 

@@ -1,8 +1,8 @@
-using Robust.Shared.Network;
-using Robust.Shared.Serialization;
 using Content.Shared._Trauma.Wounds;
 using Content.Shared.Body;
 using Content.Shared.Mobs;
+using Robust.Shared.Network;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared._Trauma.Body;
 

@@ -1,10 +1,9 @@
-using Robust.Shared.Prototypes;
-
+using System.Linq;
+using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared._Trauma.Common.Surgery;
 using Content.Shared._Trauma.Common.Surgery.Tools;
 using Content.Shared._Trauma.Common.Traumas;
-using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Surgery.Conditions;
 using Content.Shared._Trauma.Surgery.Effects.Step;
 using Content.Shared._Trauma.Surgery.Steps;
@@ -25,7 +24,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Content.Shared.StatusEffectNew;
 using Robust.Shared.Containers;
-using System.Linq;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Trauma.Surgery;
 

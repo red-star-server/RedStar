@@ -1,7 +1,7 @@
 using System.Globalization;
 using System.Linq;
 using System.Numerics;
-using Content.Shared._Trauma.Common.Body;
+using Content.Shared._Trauma.Common.Medical.HealthAnalyzer;
 using Content.Shared._Trauma.Common.Traumas;
 using Content.Shared._Trauma.Common.Wounds;
 using Content.Shared._Trauma.Traumas;
@@ -9,7 +9,6 @@ using Content.Shared._Trauma.Wounds;
 using Content.Shared.Atmos.Rotting;
 using Content.Shared.Body;
 using Content.Shared.Body.Components;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage.Components;
@@ -17,7 +16,6 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.MedicalScanner;
-using Content.Shared._Trauma.Common.Medical.HealthAnalyzer;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Prototypes;
@@ -32,8 +30,8 @@ public sealed partial class TraumaHealthAnalyzerControl
     private SharedSolutionContainerSystem _solution = default!;
     private TraumaSystem _trauma = default!;
 
-    private EntityQuery<AmputationTraumaComponent> _amputationQuery = default!;
-    private EntityQuery<BoneComponent> _boneQuery = default!;
+    private EntityQuery<AmputationTraumaComponent> _amputationQuery;
+    private EntityQuery<BoneComponent> _boneQuery;
 
     public event Action<ProtoId<OrganCategoryPrototype>?, EntityUid>? OnBodyPartSelected;
 
@@ -81,11 +79,9 @@ public sealed partial class TraumaHealthAnalyzerControl
 
     public void SetActiveBodyPart(ProtoId<OrganCategoryPrototype> part)
     {
-        if (_target is {} target)
-        {
-            _mode = HealthAnalyzerMode.Body;
-            OnBodyPartSelected?.Invoke(part, target);
-        }
+        if (_target is not { } target) return;
+        _mode = HealthAnalyzerMode.Body;
+        OnBodyPartSelected?.Invoke(part, target);
     }
 
     public void SetMode(HealthAnalyzerMode mode)
@@ -104,7 +100,9 @@ public sealed partial class TraumaHealthAnalyzerControl
     public void SetActiveButtons(bool isHumanoid)
     {
         foreach (var button in _bodyPartControls.Values)
+        {
             button.Visible = isHumanoid;
+        }
     }
 
     public void PopulateTrauma(EntityUid target, ref HealthAnalyzerUiState state)
@@ -185,18 +183,22 @@ public sealed partial class TraumaHealthAnalyzerControl
         ConditionsListContainer.RemoveAllChildren();
 
         if (state.Unrevivable == true)
+        {
             ConditionsListContainer.AddChild(new RichTextLabel
             {
                 Text = Loc.GetString("condition-body-unrevivable", ("entity", identity)),
                 Margin = new Thickness(0, 4),
             });
+        }
 
         if (bloodLevelLow)
+        {
             ConditionsListContainer.AddChild(new RichTextLabel
             {
                 Text = Loc.GetString("condition-body-low-blood", ("entity", identity)),
                 Margin = new Thickness(0, 4),
             });
+        }
 
         foreach (var bleeding in state.Bleeding)
         {
@@ -417,8 +419,8 @@ public sealed partial class TraumaHealthAnalyzerControl
 
         var groupContainer = new BoxContainer
         {
-            Align = BoxContainer.AlignMode.Begin,
-            Orientation = BoxContainer.LayoutOrientation.Vertical,
+            Align = AlignMode.Begin,
+            Orientation = LayoutOrientation.Vertical,
         };
 
         groupContainer.AddChild(CreateDiagnosticGroupTitle(groupTitleText, ent));
@@ -438,8 +440,8 @@ public sealed partial class TraumaHealthAnalyzerControl
 
                 var groupContainer = new BoxContainer
                 {
-                    Align = BoxContainer.AlignMode.Begin,
-                    Orientation = BoxContainer.LayoutOrientation.Vertical,
+                    Align = AlignMode.Begin,
+                    Orientation = LayoutOrientation.Vertical,
                 };
 
                 groupContainer.AddChild(CreateDiagnosticGroupTitle(textInfo.ToTitleCase(groupTitleText), "metaphysical"));
@@ -475,7 +477,7 @@ public sealed partial class TraumaHealthAnalyzerControl
         {
             Margin = new Thickness(0, 6, 0, 0),
             VerticalAlignment = VAlignment.Bottom,
-            Orientation = BoxContainer.LayoutOrientation.Horizontal,
+            Orientation = LayoutOrientation.Horizontal,
         };
 
         if (textureOverride != null)

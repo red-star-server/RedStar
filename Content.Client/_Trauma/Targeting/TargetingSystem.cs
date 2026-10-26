@@ -1,6 +1,6 @@
+using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Common.Input;
 using Content.Shared._Trauma.Common.Targeting;
-using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Targeting;
 using Robust.Client.Player;
 using Robust.Shared.Input.Binding;

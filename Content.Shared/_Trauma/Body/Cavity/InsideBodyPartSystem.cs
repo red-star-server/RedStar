@@ -1,7 +1,6 @@
-using Robust.Shared.Prototypes;
 using Content.Shared._Trauma.Common.Body;
-using Content.Shared._Trauma.Wounds;
 using Content.Shared._Trauma.Traumas;
+using Content.Shared._Trauma.Wounds;
 using Content.Shared.Actions;
 using Content.Shared.Body;
 using Content.Shared.Damage.Prototypes;
@@ -13,6 +12,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Trauma.Body.Cavity;
 

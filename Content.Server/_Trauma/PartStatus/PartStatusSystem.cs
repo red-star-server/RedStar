@@ -1,25 +1,23 @@
-using Robust.Shared.Utility;
-
 using System.Linq;
 using System.Text;
+using Content.Server.Chat.Managers;
+using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared._Trauma.Common.Traumas;
 using Content.Shared._Trauma.Common.Wounds;
-using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.PartStatus;
 using Content.Shared._Trauma.Traumas;
 using Content.Shared._Trauma.Wounds;
-using Content.Server.Chat.Managers;
 using Content.Shared.Body;
 using Content.Shared.Chat;
 using Content.Shared.Damage.Components;
-using Content.Shared.Examine;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Examine;
 using Content.Shared.HealthExaminable;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Verbs;
-using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Server._Trauma.PartStatus;
 

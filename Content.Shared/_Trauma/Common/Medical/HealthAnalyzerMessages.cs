@@ -1,10 +1,6 @@
-using Robust.Shared.Serialization;
-using Robust.Shared.Prototypes;
-
-using Content.Shared._Trauma.Common.Body;
-using Content.Shared._Trauma.Common.Traumas;
 using Content.Shared.Body;
-using Content.Shared.FixedPoint;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared._Trauma.Common.Medical.HealthAnalyzer;
 

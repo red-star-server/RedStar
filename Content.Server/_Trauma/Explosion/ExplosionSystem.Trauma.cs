@@ -1,3 +1,4 @@
+using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Common.CCVar;
 using Content.Shared.Body;
 using Content.Shared.Damage;
@@ -10,7 +11,7 @@ namespace Content.Server.Explosion.EntitySystems;
 public sealed partial class ExplosionSystem
 {
     [Dependency] private BodySystem _body = default!;
-    [Dependency] private Content.Shared._Trauma.Body.BodyPartSystem _bodyParts = default!;
+    [Dependency] private BodyPartSystem _bodyParts = default!;
 
     private float PartVariation;
     private float WoundMultiplier;

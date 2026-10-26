@@ -1,6 +1,5 @@
-using Robust.Shared.GameStates;
-
 using Content.Shared._Trauma.Common.Body;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared._Trauma.Surgery.Conditions;
 

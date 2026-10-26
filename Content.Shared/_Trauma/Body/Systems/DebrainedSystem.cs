@@ -1,5 +1,3 @@
-using Robust.Shared.Prototypes;
-
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared._Trauma.DelayedDeath;
 using Content.Shared.Body;
@@ -9,6 +7,7 @@ using Content.Shared.Rejuvenate;
 using Content.Shared.Speech;
 using Content.Shared.Standing;
 using Content.Shared.Stunnable;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Shared._Trauma.Body;

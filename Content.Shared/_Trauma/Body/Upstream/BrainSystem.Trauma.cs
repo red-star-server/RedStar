@@ -1,6 +1,5 @@
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared.Body.Components;
-using Content.Shared.Body;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Body.Systems;

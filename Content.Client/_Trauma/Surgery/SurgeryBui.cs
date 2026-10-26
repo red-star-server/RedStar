@@ -1,5 +1,5 @@
-using Robust.Client.UserInterface;
 using Content.Shared._Trauma.Surgery;
+using Robust.Client.UserInterface;
 
 namespace Content.Client._Trauma.Surgery;
 

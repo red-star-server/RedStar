@@ -1,16 +1,15 @@
-using System.Numerics;
 using System.Linq;
+using System.Numerics;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
 using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Body.Cavity;
-using Content.Shared._Trauma.Speech;
-using Robust.Shared.Containers;
-using Content.Shared._Trauma.Common.Traumas;
 using Content.Shared._Trauma.Common.Body;
+using Content.Shared._Trauma.Common.Traumas;
 using Content.Shared._Trauma.ItemSwitch;
+using Content.Shared._Trauma.Speech;
 using Content.Shared._Trauma.Surgery;
 using Content.Shared._Trauma.Surgery.Steps;
 using Content.Shared._Trauma.Surgery.Steps.Parts;
@@ -22,12 +21,13 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.Standing;
 using Content.Shared.Temperature.Components;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests._Trauma;
 
-public sealed class SurgeryTest : GameTest
+public sealed partial class SurgeryTest : GameTest
 {
     [SidedDependency(Side.Server)] private BodySystem _body = default!;
     [SidedDependency(Side.Server)] private BodyPartSystem _parts = default!;
@@ -107,7 +107,8 @@ public sealed class SurgeryTest : GameTest
 
                 if (_hands.GetActiveItem(surgeon) is { } held)
                     Assert.That(_hands.TryDrop(surgeon, held), Is.True);
-                Assert.That(_hands.TryPickupAnyHand(surgeon, tool), Is.True);
+                Assert.That(_hands.TryPickupAnyHand(surgeon, tool), Is.True,
+                    $"{procedure}/{stepId}: could not pick up {SEntMan.ToPrettyString(tool)}");
                 Assert.That(_surgery.TryDoSurgeryStep(patient, part, surgeon, SComp<MetaDataComponent>(next.Surgery).EntityPrototype!.ID, stepId, out var error), Is.True, $"{procedure}/{stepId}: {error}");
                 // Allow repeatable treatment to complete, including its final cancellation check.
                 duration = data.Duration * 3 + 1;

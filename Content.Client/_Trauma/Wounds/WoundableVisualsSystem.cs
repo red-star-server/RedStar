@@ -1,17 +1,17 @@
-using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
-using Robust.Client.GameObjects;
+using Content.Client.DisplacementMap;
+using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared._Trauma.Common.Wounds;
-using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Traumas;
 using Content.Shared._Trauma.Wounds;
-using Content.Client.DisplacementMap;
 using Content.Shared.Body;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
+using Robust.Client.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client._Trauma.Wounds;
 
