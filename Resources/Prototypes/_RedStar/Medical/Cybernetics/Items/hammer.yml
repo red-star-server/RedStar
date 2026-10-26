@@ -15,7 +15,6 @@
     sprite: _RedStar/Medical/Cybernetics/hammer.rsi
     state: icon
   - type: MeleeWeapon
-    animationRotation: -90
     wideAnimationRotation: -135
     attackRate: 1
     damage:
