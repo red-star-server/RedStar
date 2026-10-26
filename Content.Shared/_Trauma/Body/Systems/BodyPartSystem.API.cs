@@ -146,9 +146,13 @@ public sealed partial class BodyPartSystem
             if (_body.GetBody(ent.Owner) is {} body && !_body.RemoveOrgan(body, organ))
                 return false;
 
+            if (GetSeveredOrgansContainer(ent) is {} container
+                && container.Contains(organ)
+                && !RemoveOrgan(ent, organ))
+                return false;
+
             // Normal removal already clears this through OrganGotRemovedEvent.
             // If the organ was already absent, or the part has no body, clear it here.
-            // TODO: also eject if it's in the severed container
             if (ent.Comp.Children.TryGetValue(category, out var remaining) && remaining == organ)
                 OrganRemoved(ent, organ);
         }

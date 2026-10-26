@@ -696,9 +696,6 @@ public sealed partial class SurgerySystem
         var ev = new SurgeryDoAfterEvent(GetNetEntity(part), surgeryId, stepId, toolUsed);
         var duration = GetSurgeryDuration(step, user, body, speed);
 
-        if (TryComp(user, out SurgerySpeedModifierComponent? surgerySpeedMod))
-            duration = duration / surgerySpeedMod.SpeedModifier;
-
         // Current do-afters check container accessibility. The patient is accessible; their internal part is not.
         // Keep the selected part in the event while checking distance and movement against the patient.
         var doAfter = new DoAfterArgs(EntityManager, user, duration, ev, body, body)
@@ -858,7 +855,7 @@ public sealed partial class SurgerySystem
         if (check.IsValid)
         {
             // Both the operation and the individual step may impose surgery conditions.
-            var ev = new SurgeryValidEvent(body, part, tool);
+            var ev = new SurgeryValidEvent(body, part, user);
             RaiseLocalEvent(step, ref ev);
             if (!ev.Cancelled)
                 return true;
@@ -868,7 +865,7 @@ public sealed partial class SurgerySystem
         }
 
         if (doPopup && popup != null)
-            _popup.PopupEntity(check.Popup, user, user, PopupType.SmallCaution);
+            _popup.PopupEntity(popup, user, user, PopupType.SmallCaution);
 
         return false;
     }

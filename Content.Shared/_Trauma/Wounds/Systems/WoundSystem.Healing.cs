@@ -233,7 +233,7 @@ public partial class WoundSystem
     public bool TryHealWounds(Entity<WoundableComponent?> part,
         DamageSpecifier damage,
         out Dictionary<string, FixedPoint2> healed,
-        bool ignoreMultipliers = false)
+        bool ignoreBlockers = false)
     {
         healed = [];
         if (!_woundableQuery.Resolve(part, ref part.Comp))
@@ -241,7 +241,7 @@ public partial class WoundSystem
 
         foreach (var (type, amount) in damage.DamageDict)
         {
-            if (TryHealWoundsOfType(part, amount, type, out var typeHealed))
+            if (TryHealWoundsOfType(part, amount, type, out var typeHealed, ignoreBlockers))
             {
                 healed.Add(type, typeHealed);
                 continue;

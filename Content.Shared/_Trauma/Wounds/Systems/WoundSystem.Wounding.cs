@@ -198,7 +198,7 @@ public sealed partial class WoundSystem
     {
         // TODO: Apply a missing-hand delay penalty so that removing an injured hand is not faster.
         // make a thing like LegsComponent that makes doafters longer with missing hands
-        RaiseLocalEvent(ent, args.Args);
+        RaiseLocalEvent(ent, ref args.Args);
     }
 
     #endregion

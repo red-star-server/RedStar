@@ -8,9 +8,9 @@ public sealed partial class DoAfterDelayMultiplierSystem : EntitySystem
     [Dependency] private BodySystem _body = default!;
 
     [SubscribeLocalEvent]
-    private void OnBodyModify(EntityUid uid, BodyComponent component, ModifyDoAfterDelayEvent args)
+    private void OnBodyModify(Entity<BodyComponent> ent, ref ModifyDoAfterDelayEvent args)
     {
-        _body.RelayEvent((uid, component), args);
+        _body.RelayEvent(ent, ref args);
     }
 
     [SubscribeLocalEvent]

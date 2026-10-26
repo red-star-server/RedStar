@@ -27,21 +27,19 @@ namespace Content.Client._Trauma.Medical.UI;
 [GenerateTypedNameReferences]
 public sealed partial class TraumaHealthAnalyzerControl : BoxContainer
 {
-    private readonly IEntityManager _entityManager;
+    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private IPrototypeManager _prototypes = default!;
+    [Dependency] private IResourceCache _cache = default!;
+
     private readonly SpriteSystem _spriteSystem;
-    private readonly IPrototypeManager _prototypes;
-    private readonly IResourceCache _cache;
     private readonly DamageableSystem _damageable;
 
     public TraumaHealthAnalyzerControl()
     {
+        IoCManager.InjectDependencies(this);
         RobustXamlLoader.Load(this);
 
-        var dependencies = IoCManager.Instance!;
-        _entityManager = dependencies.Resolve<IEntityManager>();
         _spriteSystem = _entityManager.System<SpriteSystem>();
-        _prototypes = dependencies.Resolve<IPrototypeManager>();
-        _cache = dependencies.Resolve<IResourceCache>();
         _damageable = _entityManager.System<DamageableSystem>();
         InitializeTrauma();
     }

@@ -23,7 +23,6 @@ using Robust.Shared.Utility;
 
 namespace Content.Client._Trauma.Medical.UI;
 
-// TODO: use ui injection
 public sealed partial class TraumaHealthAnalyzerControl
 {
     private BodySystem _body = default!;

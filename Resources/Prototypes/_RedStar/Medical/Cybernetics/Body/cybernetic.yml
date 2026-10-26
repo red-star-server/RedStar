@@ -203,7 +203,6 @@
     - state: eyes-sechud
   - type: OrganComponents
     onAdd:
-    # TODO: this should add ShowSecurityIcons's components
     - type: ShowJobIcons
     - type: ShowMindShieldIcons
     - type: ShowCriminalRecordIcons

@@ -129,7 +129,7 @@ public partial class TraumaSystem
         TraumaType? traumaType = null,
         bool showAll = true)
     {
-        var boneBroken = showAll && _boneQuery.TryComp(part, out var bone) && bone.BoneSeverity == BoneSeverity.Broken;
+        var boneBroken = !showAll && _boneQuery.TryComp(part, out var bone) && bone.BoneSeverity == BoneSeverity.Broken;
         foreach (var trauma in GetAllWoundTraumas(wound))
         {
             if (traumaType != null && trauma.Comp.TraumaType != traumaType)
