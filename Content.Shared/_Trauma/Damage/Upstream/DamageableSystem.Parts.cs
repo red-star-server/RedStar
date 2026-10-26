@@ -14,6 +14,9 @@ namespace Content.Shared.Damage.Systems;
 
 public sealed partial class DamageableSystem
 {
+    /// <summary>
+    /// Distributes the body initial damage to its newly created parts.
+    /// </summary>
     public void ApplyInitialBodyDamage(Entity<DamageableComponent> ent)
     {
         if (!UsesBodyPartDamage(ent))
@@ -202,6 +205,9 @@ public sealed partial class DamageableSystem
 
     private List<float> _weights = new();
 
+    /// <summary>
+    /// Creates normalized weights for distributing varied damage between body parts.
+    /// </summary>
     public List<float> GetDamageVariationMultipliers(EntityUid uid, float variation, int count)
     {
         DebugTools.AssertNotEqual(count, 0);
@@ -285,6 +291,9 @@ public sealed partial class DamageableSystem
         return true;
     }
 
+    /// <summary>
+    /// Adjusts damage according to the selected body-part distribution behavior.
+    /// </summary>
     public DamageSpecifier ApplySplitDamageBehaviors(SplitDamageBehavior splitDamageBehavior,
         DamageSpecifier damage,
         List<Entity<DamageableComponent>> parts)

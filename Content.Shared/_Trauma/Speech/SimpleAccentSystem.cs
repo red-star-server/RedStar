@@ -21,11 +21,17 @@ public sealed partial class SimpleAccentSystem : EntitySystem
         ApplyAccent(ent.Comp.Accent, ref args);
     }
 
+    /// <summary>
+    /// Applies the configured speech replacement rules to the message.
+    /// </summary>
     public void ApplyAccent([ForbidLiteral] ProtoId<SimpleAccentPrototype> id, ref AccentGetEvent args)
     {
         args.Message = ApplyAccent(id, args.Entity, args.Message);
     }
 
+    /// <summary>
+    /// Applies the configured speech replacement rules to the message.
+    /// </summary>
     public string ApplyAccent([ForbidLiteral] ProtoId<SimpleAccentPrototype> id, EntityUid uid, string msg)
     {
         if (string.IsNullOrEmpty(msg))

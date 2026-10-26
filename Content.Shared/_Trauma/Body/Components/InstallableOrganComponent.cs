@@ -5,7 +5,7 @@ namespace Content.Shared._Trauma.Body;
 /// <summary>
 /// Lets you install an organ by pressing Z, if you don't have one already installed.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(InstallableOrganComponent))]
+[RegisterComponent, NetworkedComponent, Access(typeof(InstallableOrganSystem))]
 public sealed partial class InstallableOrganComponent : Component
 {
     /// <summary>

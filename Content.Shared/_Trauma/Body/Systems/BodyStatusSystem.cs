@@ -36,6 +36,9 @@ public sealed partial class BodyStatusSystem : EntitySystem
         UpdateStatus(ent.AsNullable());
     }
 
+    /// <summary>
+    /// Recomputes the body status information used by medical HUDs.
+    /// </summary>
     public void UpdateStatus(Entity<BodyStatusComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))

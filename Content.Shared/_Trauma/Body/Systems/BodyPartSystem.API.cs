@@ -53,6 +53,9 @@ public sealed partial class BodyPartSystem
         return organs;
     }
 
+    /// <summary>
+    /// Returns the part containing this child organ, or null when it is detached.
+    /// </summary>
     public EntityUid? GetParentPart(Entity<ChildOrganComponent?> organ) => _childQuery.Resolve(organ, ref organ.Comp, false) ? organ.Comp.Parent : null;
 
     /// <summary>
@@ -97,6 +100,9 @@ public sealed partial class BodyPartSystem
             ? organ
             : null;
 
+    /// <summary>
+    /// Adds an organ category slot to the part if it does not already exist.
+    /// </summary>
     public bool TryAddSlot(Entity<BodyPartComponent?> ent, [ForbidLiteral] ProtoId<OrganCategoryPrototype> category)
     {
         if (!_query.Resolve(ent, ref ent.Comp))

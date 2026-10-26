@@ -57,8 +57,8 @@ public sealed partial class SurgeryStepComponent : Component
     public Dictionary<ProtoId<OrganCategoryPrototype>, ComponentRegistry>? RemoveOrganOnAdd;
 
     /// <summary>
-    /// Base duration of the step in seconds before surgery speed modifiers.
+    /// Base duration of the step before surgery speed modifiers.
     /// </summary>
     [DataField]
-    public float Duration = 2f;
+    public TimeSpan Duration = TimeSpan.FromSeconds(2);
 }

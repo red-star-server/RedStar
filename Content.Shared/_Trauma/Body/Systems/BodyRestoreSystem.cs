@@ -24,6 +24,9 @@ public sealed partial class BodyRestoreSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Restores the body organ state after rejuvenation.
+    /// </summary>
     public void RestoreBody(Entity<BodyComponent?> body)
     {
         if (_part.GetRootPart(body) is {} root)

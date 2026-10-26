@@ -29,13 +29,13 @@ public sealed partial class BleedInflicterComponent : Component
 
     // these are calculated when wound is spawned.
     /// <summary>
-    ///     The time at which the scaling of bleeding started
+    /// Time at which the bleeding scaling transition finishes.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
     public TimeSpan ScalingFinishesAt = TimeSpan.Zero;
 
     /// <summary>
-    ///     The time at which the scaling will end
+    /// Time at which the bleeding scaling transition started.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
     public TimeSpan ScalingStartsAt = TimeSpan.Zero;

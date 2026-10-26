@@ -276,6 +276,9 @@ public sealed partial class BodyBloodstreamSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
+    /// <summary>
+    /// Updates bleeding suppression when the remover wound severity changes.
+    /// </summary>
     public void OnBleedRemoverSeverityUpdate(Entity<BleedRemoverComponent> ent, ref WoundSeverityPointChangedEvent args)
     {
         var delta = args.NewSeverity - args.OldSeverity;

@@ -41,6 +41,9 @@ public sealed partial class TargetingUIController : UIController, IOnStateEntere
         };
     }
 
+    /// <summary>
+    /// Connects the controller to the newly loaded targeting system.
+    /// </summary>
     public void OnSystemLoaded(TargetingSystem system)
     {
         system.TargetingStartup += AddTargetingControl;
@@ -48,6 +51,9 @@ public sealed partial class TargetingUIController : UIController, IOnStateEntere
         system.TargetChange += CycleTarget;
     }
 
+    /// <summary>
+    /// Disconnects the controller from the unloaded targeting system.
+    /// </summary>
     public void OnSystemUnloaded(TargetingSystem system)
     {
         system.TargetingStartup -= AddTargetingControl;
@@ -66,11 +72,17 @@ public sealed partial class TargetingUIController : UIController, IOnStateEntere
         UpdateVisibility();
     }
 
+    /// <summary>
+    /// Updates medical HUD controls when gameplay begins.
+    /// </summary>
     public void OnStateEntered(GameplayState state)
     {
         UpdateVisibility();
     }
 
+    /// <summary>
+    /// Adds the targeting control for the local character.
+    /// </summary>
     public void AddTargetingControl(TargetingComponent component)
     {
         _targetingComponent = component;
@@ -88,12 +100,18 @@ public sealed partial class TargetingUIController : UIController, IOnStateEntere
             control.SetBodyPartsVisible(comp.Target);
     }
 
+    /// <summary>
+    /// Removes the local targeting control from the HUD.
+    /// </summary>
     public void RemoveTargetingControl()
     {
         _targetingComponent = null;
         UpdateVisibility();
     }
 
+    /// <summary>
+    /// Selects the requested target body part through the targeting system.
+    /// </summary>
     public void CycleTarget(TargetBodyPart bodyPart)
     {
         if (_player.LocalEntity is not {} user

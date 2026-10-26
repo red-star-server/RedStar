@@ -205,6 +205,9 @@ public sealed partial class WoundSystem
 
     #region Public API
 
+    /// <summary>
+    /// Finds the damage group containing the requested damage type.
+    /// </summary>
     public ProtoId<DamageGroupPrototype>? GetDamageGroupByType([ForbidLiteral] ProtoId<DamageTypePrototype> id)
     {
         foreach (var group in ProtoMan.EnumeratePrototypes<DamageGroupPrototype>())
@@ -216,6 +219,9 @@ public sealed partial class WoundSystem
         return null;
     }
 
+    /// <summary>
+    /// Attempts to apply severity to a wound of the requested type on the part.
+    /// </summary>
     public bool TryInduceWound(
         Entity<WoundableComponent?> part,
         [ForbidLiteral] EntProtoId id,
@@ -479,6 +485,9 @@ public sealed partial class WoundSystem
         DirtyField(part, part.Comp, nameof(WoundableComponent.Integrity));
     }
 
+    /// <summary>
+    /// Attaches the wound to the part and updates the affected integrity state.
+    /// </summary>
     public bool AddWound(
         Entity<WoundableComponent?> part,
         Entity<WoundComponent?> wound,
@@ -614,6 +623,9 @@ public sealed partial class WoundSystem
         => ProtoMan.TryIndex(id, out var proto)
             && proto.HasComp(_woundName);
 
+    /// <summary>
+    /// Collects the wound severity state of each woundable body-part category.
+    /// </summary>
     public Dictionary<ProtoId<OrganCategoryPrototype>, WoundableSeverity> GetWoundableStatesOnBody(EntityUid body)
     {
         var result = SeveredStates();
@@ -626,6 +638,9 @@ public sealed partial class WoundSystem
         return result;
     }
 
+    /// <summary>
+    /// Collects the injury severity state of each damageable body-part category.
+    /// </summary>
     public Dictionary<ProtoId<OrganCategoryPrototype>, WoundableSeverity> GetDamageableStatesOnBody(EntityUid body)
     {
         var result = SeveredStates();

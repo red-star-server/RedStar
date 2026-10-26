@@ -43,6 +43,9 @@ public sealed partial class TargetingControl : UIWidget
         }
     }
 
+    /// <summary>
+    /// Shows only body parts supported by the current targeting mask.
+    /// </summary>
     public void SetBodyPartsVisible(TargetBodyPart bodyPart)
     {
         foreach (var bodyPartButton in _bodyPartControls)
@@ -53,6 +56,9 @@ public sealed partial class TargetingControl : UIWidget
 
     protected override void OnThemeUpdated() => TargetDoll.Texture = GetTargetDollTexture();
 
+    /// <summary>
+    /// Sets whether the targeting doll is visible.
+    /// </summary>
     public void SetTargetDollVisible(bool visible) => Visible = visible;
 
     private Texture GetTargetDollTexture()

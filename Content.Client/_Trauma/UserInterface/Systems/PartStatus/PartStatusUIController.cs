@@ -43,6 +43,9 @@ public sealed partial class PartStatusUIController : UIController, IOnStateEnter
         };
     }
 
+    /// <summary>
+    /// Connects the controller to the newly loaded targeting system.
+    /// </summary>
     public void OnSystemLoaded(TargetingSystem system)
     {
         system.PartStatusStartup += UpdatePartStatusControl;
@@ -50,6 +53,9 @@ public sealed partial class PartStatusUIController : UIController, IOnStateEnter
         system.PartStatusUpdate += UpdatePartStatusControl;
     }
 
+    /// <summary>
+    /// Disconnects the controller from the unloaded targeting system.
+    /// </summary>
     public void OnSystemUnloaded(TargetingSystem system)
     {
         system.PartStatusStartup -= UpdatePartStatusControl;
@@ -67,6 +73,9 @@ public sealed partial class PartStatusUIController : UIController, IOnStateEnter
         UpdateVisibility();
     }
 
+    /// <summary>
+    /// Updates medical HUD controls when gameplay begins.
+    /// </summary>
     public void OnStateEntered(GameplayState state)
     {
         UpdateVisibility();
@@ -82,18 +91,27 @@ public sealed partial class PartStatusUIController : UIController, IOnStateEnter
             control.SetTextures(comp.BodyStatus);
     }
 
+    /// <summary>
+    /// Removes the local body-status control from the HUD.
+    /// </summary>
     public void RemovePartStatusControl()
     {
         _comp = null;
         UpdateVisibility();
     }
 
+    /// <summary>
+    /// Updates the HUD from the local body-status component.
+    /// </summary>
     public void UpdatePartStatusControl(BodyStatusComponent comp)
     {
         _comp = comp;
         UpdateVisibility();
     }
 
+    /// <summary>
+    /// Resolves the texture used by a body-status sprite.
+    /// </summary>
     public Texture GetTexture(SpriteSpecifier specifier)
     {
         _sprite ??= _entMan.System<SpriteSystem>();
@@ -101,6 +119,9 @@ public sealed partial class PartStatusUIController : UIController, IOnStateEnter
         return _sprite.Frame0(specifier);
     }
 
+    /// <summary>
+    /// Requests the local character body-status examination text from the server.
+    /// </summary>
     public void GetPartStatusMessage()
     {
         if (_player.LocalEntity is not {} user

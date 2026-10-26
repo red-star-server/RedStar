@@ -17,6 +17,9 @@ public sealed partial class BodyEquipmentSystem : EntitySystem
     private EntityQuery<InventoryComponent> _inventoryQuery;
 
     // TODO: make this a field on OrganCategoryPrototype or something??
+    /// <summary>
+    /// Inventory slots that require each body-part type.
+    /// </summary>
     public static readonly Dictionary<BodyPartType, string[]> PartInventorySlots = new()
     {
         { BodyPartType.Head, [ "eyes", "ears", "head", "mask" ] },
@@ -71,6 +74,9 @@ public sealed partial class BodyEquipmentSystem : EntitySystem
     private bool HasBodyPart(EntityUid body, BodyPartType part)
         => _part.FindBodyPart(body, part) != null;
 
+    /// <summary>
+    /// Resolves the body-part type required by an inventory slot, if any.
+    /// </summary>
     public static BodyPartType? GetInventoryPart(string slot)
         => slot switch
         {

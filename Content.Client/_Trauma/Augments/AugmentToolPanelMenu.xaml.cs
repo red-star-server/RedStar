@@ -22,12 +22,18 @@ public sealed partial class AugmentToolPanelMenu : RadialMenu
         RobustXamlLoader.Load(this);
     }
 
+    /// <summary>
+    /// Selects the augment whose stored tools are displayed by this menu.
+    /// </summary>
     public void SetEntity(EntityUid uid)
     {
         _owner = uid;
         Refresh();
     }
 
+    /// <summary>
+    /// Rebuilds the tool choices from the selected augment storage.
+    /// </summary>
     public void Refresh()
     {
         if (!_ent.TryGetComponent<StorageComponent>(_owner, out var storage))

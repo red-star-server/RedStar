@@ -106,6 +106,9 @@ public partial class TraumaSystem
 
     #region Public API
 
+    /// <summary>
+    /// Enumerates the trauma entities associated with the wound.
+    /// </summary>
     public IEnumerable<Entity<TraumaComponent>> GetAllWoundTraumas(Entity<TraumaInflicterComponent?> wound)
     {
         if (!_query.Resolve(wound, ref wound.Comp, false))
@@ -117,6 +120,9 @@ public partial class TraumaSystem
         }
     }
 
+    /// <summary>
+    /// Checks whether the wound has an associated trauma matching the requested filters.
+    /// </summary>
     public bool HasAssociatedTrauma(
         EntityUid part,
         Entity<TraumaInflicterComponent?> wound,
@@ -140,6 +146,9 @@ public partial class TraumaSystem
         return false;
     }
 
+    /// <summary>
+    /// Collects the trauma entities associated with the wound.
+    /// </summary>
     public void AddWoundTraumas(
         Entity<TraumaInflicterComponent?> wound,
         List<Entity<TraumaComponent>> traumas,
@@ -154,6 +163,9 @@ public partial class TraumaSystem
         }
     }
 
+    /// <summary>
+    /// Checks whether any wound on the part has a trauma matching the requested filters.
+    /// </summary>
     public bool HasWoundableTrauma(
         Entity<WoundableComponent?> part,
         TraumaType? traumaType = null,
@@ -189,6 +201,9 @@ public partial class TraumaSystem
         return traumas.Count > 0;
     }
 
+    /// <summary>
+    /// Collects the trauma entities affecting the selected body part.
+    /// </summary>
     public void AddPartTraumas(
         Entity<WoundableComponent?> part,
         List<Entity<TraumaComponent>> traumas,
@@ -223,6 +238,9 @@ public partial class TraumaSystem
         return _traumas;
     }
 
+    /// <summary>
+    /// Selects trauma types that pass their configured chance checks.
+    /// </summary>
     public List<TraumaType> RandomTraumaChance(
         Entity<WoundableComponent?> part,
         Entity<TraumaInflicterComponent> wound,
@@ -251,6 +269,9 @@ public partial class TraumaSystem
         return traumaList;
     }
 
+    /// <summary>
+    /// Totals the trauma chance deductions from armor covering the selected part.
+    /// </summary>
     public FixedPoint2 GetArmourChanceDeduction(EntityUid body, Entity<TraumaInflicterComponent> inflicter, TraumaType traumaType, BodyPartType coverage)
     {
         var total = FixedPoint2.Zero;
@@ -273,6 +294,9 @@ public partial class TraumaSystem
         return total;
     }
 
+    /// <summary>
+    /// Combines the applicable trauma chance deductions for the target.
+    /// </summary>
     public FixedPoint2 GetTraumaChanceDeduction(
         Entity<TraumaInflicterComponent> wound,
         EntityUid body,
@@ -286,6 +310,9 @@ public partial class TraumaSystem
         return deduction;
     }
 
+    /// <summary>
+    /// Applies the trauma consequences of a mangled body part.
+    /// </summary>
     public void ApplyMangledTraumas(Entity<WoundableComponent> part,
         Entity<TraumaInflicterComponent?> wound,
         FixedPoint2 severity, EntityUid? user = null)
@@ -311,6 +338,9 @@ public partial class TraumaSystem
 
     #region Trauma Chance Randoming
 
+    /// <summary>
+    /// Attempts to inflict bone trauma using the wound configured chance.
+    /// </summary>
     public bool RandomBoneTraumaChance(Entity<WoundableComponent> target, Entity<TraumaInflicterComponent> woundInflicter, float multiplier)
     {
         if (_body.GetBody(target.Owner) is not {} body ||
@@ -348,6 +378,9 @@ public partial class TraumaSystem
         return SharedRandomExtensions.PredictedProb(_timing, (float) chance, GetNetEntity(target), GetNetEntity(woundInflicter));
     }
 
+    /// <summary>
+    /// Attempts to inflict internal-organ trauma using the wound configured chance.
+    /// </summary>
     public bool RandomOrganTraumaChance(
         Entity<WoundableComponent> target,
         Entity<TraumaInflicterComponent> woundInflicter,
@@ -391,6 +424,9 @@ public partial class TraumaSystem
         return SharedRandomExtensions.PredictedProb(_timing, (float) chance, GetNetEntity(target), GetNetEntity(woundInflicter));
     }
 
+    /// <summary>
+    /// Attempts to sever the part using the wound configured dismemberment chance.
+    /// </summary>
     public bool RandomDismembermentTraumaChance(
         Entity<WoundableComponent> target,
         Entity<TraumaInflicterComponent> woundInflicter,
@@ -435,6 +471,9 @@ public partial class TraumaSystem
         return SharedRandomExtensions.PredictedProb(_timing, chance, GetNetEntity(target), GetNetEntity(woundInflicter));
     }
 
+    /// <summary>
+    /// Creates and associates a trauma entity with the affected part and wound.
+    /// </summary>
     public EntityUid AddTrauma(
         EntityUid target,
         EntityUid part,
@@ -478,6 +517,9 @@ public partial class TraumaSystem
         return traumaEnt;
     }
 
+    /// <summary>
+    /// Removes trauma of the requested type from the part wounds.
+    /// </summary>
     public void RemoveTraumas(Entity<WoundableComponent?> part, TraumaType type)
     {
         if (!GetPartTraumas(part, out var traumas, type))
@@ -489,6 +531,9 @@ public partial class TraumaSystem
         }
     }
 
+    /// <summary>
+    /// Removes the trauma entity and its associated state.
+    /// </summary>
     public void RemoveTrauma(Entity<TraumaComponent> trauma)
     {
         var ev = new TraumaBeingRemovedEvent(trauma);

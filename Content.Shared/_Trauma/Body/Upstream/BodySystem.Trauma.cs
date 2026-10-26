@@ -326,6 +326,9 @@ public sealed partial class BodySystem
         return _container.Remove(organ.Owner, container);
     }
 
+    /// <summary>
+    /// Replaces the existing organ in the body with an organ of the same category.
+    /// </summary>
     public bool ReplaceOrgan(Entity<BodyComponent?> body, Entity<OrganComponent?> organ)
     {
         if (!_bodyQuery.Resolve(body, ref body.Comp, false) ||
@@ -456,6 +459,9 @@ public sealed partial class BodySystem
         return GetRandomBodyPart(target, attackerComp.Target, targetComp);
     }
 
+    /// <summary>
+    /// Selects an available body part according to the attack targeting rules.
+    /// </summary>
     public TargetBodyPart GetRandomBodyPart(EntityUid target,
         TargetBodyPart targetPart,
         TargetingComponent? targetComp = null)
@@ -481,6 +487,9 @@ public sealed partial class BodySystem
         return TargetBodyPart.Chest;
     }
 
+    /// <summary>
+    /// Selects an available body part according to the attack targeting rules.
+    /// </summary>
     public TargetBodyPart GetRandomBodyPart(EntityUid target)
     {
         var children = GetVitalParts(target);
@@ -491,6 +500,9 @@ public sealed partial class BodySystem
         return _part.GetTargetBodyPart(rand.Pick(children)) ?? TargetBodyPart.Chest;
     }
 
+    /// <summary>
+    /// Selects an available body part according to the attack targeting rules.
+    /// </summary>
     public TargetBodyPart GetRandomBodyPart(EntityUid target,
         EntityUid? attacker,
         TargetBodyPart? targetPart = null,
@@ -509,6 +521,9 @@ public sealed partial class BodySystem
         return GetRandomBodyPart(target);
     }
 
+    /// <summary>
+    /// Resolves the requested body part using the available target and attacker information.
+    /// </summary>
     public TargetBodyPart GetTargetBodyPart(EntityUid target,
         EntityUid? attacker,
         TargetBodyPart? targetPart = null,

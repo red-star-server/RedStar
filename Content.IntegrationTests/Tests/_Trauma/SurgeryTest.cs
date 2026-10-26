@@ -111,7 +111,7 @@ public sealed partial class SurgeryTest : GameTest
                     $"{procedure}/{stepId}: could not pick up {SEntMan.ToPrettyString(tool)}");
                 Assert.That(_surgery.TryDoSurgeryStep(patient, part, surgeon, SComp<MetaDataComponent>(next.Surgery).EntityPrototype!.ID, stepId, out var error), Is.True, $"{procedure}/{stepId}: {error}");
                 // Allow repeatable treatment to complete, including its final cancellation check.
-                duration = data.Duration * 3 + 1;
+                duration = (float) data.Duration.TotalSeconds * 3 + 1;
             });
 
             if (finished)

@@ -31,6 +31,9 @@ public sealed partial class AugmentToolPanelMenuBoundUserInterface : BoundUserIn
         _menu.OpenCenteredAt(_input.MouseScreenPosition.Position / vpSize);
     }
 
+    /// <summary>
+    /// Requests that the server select a stored tool, or retract the current tool when null.
+    /// </summary>
     public void SendSwitchMessage(EntityUid? desiredTool)
     {
         SendPredictedMessage(new AugmentToolPanelSwitchMessage(_ent.GetNetEntity(desiredTool)));

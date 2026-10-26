@@ -67,6 +67,9 @@ public sealed partial class LegsSystem : EntitySystem
         UpdateMovementSpeed((args.Target, comp));
     }
 
+    /// <summary>
+    /// Recalculates movement speed from the currently attached legs.
+    /// </summary>
     public void UpdateMovementSpeed(Entity<LegsComponent> ent)
     {
         var walkSpeed = 0f;

@@ -31,6 +31,7 @@ namespace Content.Shared._Trauma.Surgery;
 
 public sealed partial class SurgerySystem : EntitySystem
 {
+    [Dependency] private ILocalizationManager _loc = default!;
     [Dependency] private BodySystem _body = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private IGameTiming _timing = default!;
@@ -411,6 +412,9 @@ public sealed partial class SurgerySystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Returns the cached entity representing a surgery or step prototype, creating it when needed.
+    /// </summary>
     public EntityUid? GetSingleton(EntProtoId surgeryOrStep)
     {
         if (!ProtoMan.TryIndex(surgeryOrStep, out var prototype)

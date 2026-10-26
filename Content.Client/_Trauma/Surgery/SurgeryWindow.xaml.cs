@@ -82,6 +82,9 @@ public sealed partial class SurgeryWindow : FancyWindow
         Update();
     }
 
+    /// <summary>
+    /// Selects the patient whose available operations are displayed.
+    /// </summary>
     public void SetOwner(EntityUid owner)
     {
         _owner = owner;

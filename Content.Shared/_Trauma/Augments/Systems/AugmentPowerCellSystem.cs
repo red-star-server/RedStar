@@ -177,6 +177,9 @@ public sealed partial class AugmentPowerCellSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("augments-power-cell-info", ("percent", percent), ("draw", draw)), user, user);
     }
 
+    /// <summary>
+    /// Totals the power draw reported by the body installed augments.
+    /// </summary>
     public float GetBodyDraw(EntityUid body)
     {
         var ev = new GetAugmentsPowerDrawEvent(body);

@@ -72,6 +72,9 @@ public partial class TraumaSystem
 
     #region Public API
 
+    /// <summary>
+    /// Applies integrity damage to the bone and updates its severity state.
+    /// </summary>
     public bool DamageBone(Entity<BoneComponent?> bone, FixedPoint2 severity)
     {
         if (severity == 0 || !_boneQuery.Resolve(bone, ref bone.Comp))
@@ -80,6 +83,9 @@ public partial class TraumaSystem
         return SetBoneIntegrity(bone, bone.Comp.BoneIntegrity - severity);
     }
 
+    /// <summary>
+    /// Applies bone damage and creates the associated trauma when appropriate.
+    /// </summary>
     public bool ApplyBoneTrauma(
         Entity<BoneComponent?> bone,
         Entity<TraumaInflicterComponent> wound,
@@ -97,6 +103,9 @@ public partial class TraumaSystem
         return true;
     }
 
+    /// <summary>
+    /// Sets the bone remaining integrity and updates its severity state.
+    /// </summary>
     public bool SetBoneIntegrity(Entity<BoneComponent?> bone, FixedPoint2 integrity)
     {
         if (!_boneQuery.Resolve(bone, ref bone.Comp))

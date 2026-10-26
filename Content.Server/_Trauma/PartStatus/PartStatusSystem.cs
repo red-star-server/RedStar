@@ -100,6 +100,9 @@ public sealed partial class PartStatusSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
+    /// <summary>
+    /// Builds localized examination markup for the target health state.
+    /// </summary>
     public FormattedMessage CreateMarkup(EntityUid uid, EntityUid examiner, HealthExaminableComponent component, DamageableComponent damage)
     {
         var partStatusSet = CollectPartStatuses(uid);

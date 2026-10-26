@@ -72,6 +72,9 @@ public sealed partial class MobStateComponentsSystem : EntitySystem
             EnsureComp<AwakeMobComponent>(ent);
     }
 
+    /// <summary>
+    /// Adds the components configured for the requested mob state.
+    /// </summary>
     public void AddState(EntityUid uid, MobState state)
     {
         switch (state)

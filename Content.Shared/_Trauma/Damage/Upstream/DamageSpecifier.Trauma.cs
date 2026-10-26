@@ -10,6 +10,9 @@ namespace Content.Shared.Damage;
 /// </summary>
 public sealed partial class DamageSpecifier
 {
+    private static readonly ProtoId<DamageTypePrototype> BluntDamage = "Blunt";
+    private static readonly EntProtoId BluntWound = "WoundBlunt";
+
     /// <summary>
     /// Armor penetration carried by this damage specification.
     /// </summary>
@@ -39,12 +42,15 @@ public sealed partial class DamageSpecifier
     /// If not stated, use damage type as a wound.
     /// </summary>
     [DataField]
-    public Dictionary<ProtoId<DamageTypePrototype>, string> WoundTypeOverrides = new();
+    public Dictionary<ProtoId<DamageTypePrototype>, EntProtoId> WoundTypeOverrides = new();
 
-    public string GetWoundId(ProtoId<DamageTypePrototype> id)
+    /// <summary>
+    /// Resolves the wound prototype associated with a damage type and its overrides.
+    /// </summary>
+    public EntProtoId GetWoundId(ProtoId<DamageTypePrototype> id)
     {
-        var wound = WoundTypeOverrides.GetValueOrDefault(id, id);
-        return wound == "Blunt" ? "WoundBlunt" : wound;
+        var wound = WoundTypeOverrides.GetValueOrDefault(id, new EntProtoId(id.Id));
+        return wound.Id == BluntDamage.Id ? BluntWound : wound;
     }
 
     public DamageSpecifier(float armorPenetration,

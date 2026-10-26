@@ -24,6 +24,9 @@ public sealed partial class ExplosionSystem
         Subs.CVar(_cfg, TraumaCVars.ExplosionWoundMultiplier, x => WoundMultiplier = x, true);
     }
 
+    /// <summary>
+    /// Applies explosion wound-severity multipliers to the damage specification.
+    /// </summary>
     public void ModifyWoundSeverities(DamageSpecifier damage)
     {
         if (damage.PartDamageVariation == 0f)
