@@ -1,5 +1,5 @@
-using Robust.Shared.Serialization;
 using Content.Shared._Trauma.Common.Targeting;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared._Trauma.Targeting;
 

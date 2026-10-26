@@ -1,6 +1,5 @@
-using Robust.Shared.Serialization;
-
 using Content.Shared.DoAfter;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared._Trauma.Power;
 

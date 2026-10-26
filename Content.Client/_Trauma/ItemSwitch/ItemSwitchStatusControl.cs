@@ -1,7 +1,7 @@
-using Robust.Client.UserInterface.Controls;
 using Content.Client.Items.UI;
 using Content.Client.Message;
 using Content.Shared._Trauma.ItemSwitch;
+using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client._Trauma.ItemSwitch;
 

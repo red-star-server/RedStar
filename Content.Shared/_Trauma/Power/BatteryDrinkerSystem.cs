@@ -1,6 +1,3 @@
-using Robust.Shared.Network;
-using Robust.Shared.Utility;
-
 using Content.Shared.DoAfter;
 using Content.Shared.Popups;
 using Content.Shared.Power.Components;
@@ -10,6 +7,8 @@ using Content.Shared.PowerCell.Components;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Network;
+using Robust.Shared.Utility;
 
 namespace Content.Shared._Trauma.Power;
 

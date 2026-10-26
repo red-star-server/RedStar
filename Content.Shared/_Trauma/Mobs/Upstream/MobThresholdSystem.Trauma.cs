@@ -1,3 +1,4 @@
+using Content.Shared._Trauma.Body;
 using Content.Shared.Body;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
@@ -15,7 +16,7 @@ public sealed partial class MobThresholdSystem
 {
     [Dependency] private INetManager _net = default!;
     [Dependency] private BodySystem _body = default!;
-    [Dependency] private Content.Shared._Trauma.Body.BodyPartSystem _parts = default!;
+    [Dependency] private BodyPartSystem _parts = default!;
     [Dependency] private EntityQuery<BodyComponent> _bodyQuery = default!;
     [Dependency] private EntityQuery<DamageableComponent> _damageQuery = default!;
 

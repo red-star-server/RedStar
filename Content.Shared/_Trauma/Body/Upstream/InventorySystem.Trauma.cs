@@ -1,6 +1,5 @@
 using Content.Shared.Random;
 using Robust.Shared.Map;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Inventory;
 

@@ -1,11 +1,11 @@
-using Content.Shared._Trauma.Common.Body;
+using System.Text;
 using Content.Shared._Trauma.Body;
+using Content.Shared._Trauma.Common.Body;
 using Content.Shared.Body;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
-using System.Text;
 
 namespace Content.Shared.Damage.Systems;
 

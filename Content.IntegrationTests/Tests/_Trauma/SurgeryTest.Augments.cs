@@ -1,17 +1,17 @@
+using System.Linq;
 using Content.Shared._Trauma.Augments;
 using Content.Shared.Actions.Components;
+using Content.Shared.Body;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Power.EntitySystems;
-using Content.Shared.Body;
-using Content.Shared.Verbs;
-using System.Linq;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Storage.EntitySystems;
+using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests._Trauma;
 

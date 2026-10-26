@@ -1,10 +1,9 @@
-using Robust.Shared.Serialization;
-
 using Content.Shared.Body;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared._Trauma.Body;
 

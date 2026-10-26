@@ -1,9 +1,7 @@
-using Robust.Client.UserInterface;
-using Robust.Client.Graphics;
-using Robust.Client.GameObjects;
-
 using Content.Shared._Trauma.Augments;
+using Robust.Client.Graphics;
 using Robust.Client.Input;
+using Robust.Client.UserInterface;
 
 namespace Content.Client._Trauma.Augments;
 

@@ -1,5 +1,3 @@
-using Robust.Shared.Prototypes;
-
 using Content.Shared.Body;
 using Content.Shared.Body.Systems;
 using Content.Shared.Damage.Systems;

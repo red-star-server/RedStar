@@ -1,16 +1,15 @@
-using System.Numerics;
 using System.Linq;
+using System.Numerics;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
 using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Body.Cavity;
-using Content.Shared._Trauma.Speech;
-using Robust.Shared.Containers;
-using Content.Shared._Trauma.Common.Traumas;
 using Content.Shared._Trauma.Common.Body;
+using Content.Shared._Trauma.Common.Traumas;
 using Content.Shared._Trauma.ItemSwitch;
+using Content.Shared._Trauma.Speech;
 using Content.Shared._Trauma.Surgery;
 using Content.Shared._Trauma.Surgery.Steps;
 using Content.Shared._Trauma.Surgery.Steps.Parts;
@@ -22,6 +21,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.Standing;
 using Content.Shared.Temperature.Components;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 

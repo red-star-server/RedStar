@@ -1,11 +1,11 @@
-using Robust.Client.UserInterface.Controls;
-using Content.Client.Gameplay;
 using Content.Client._Trauma.Targeting;
 using Content.Client._Trauma.UserInterface.Systems.Targeting.Widgets;
+using Content.Client.Gameplay;
 using Content.Shared._Trauma.Common.Targeting;
 using Content.Shared._Trauma.Targeting;
-using Robust.Client.UserInterface.Controllers;
 using Robust.Client.Player;
+using Robust.Client.UserInterface.Controllers;
+using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client._Trauma.UserInterface.Systems.Targeting;
 

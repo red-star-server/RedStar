@@ -1,26 +1,24 @@
-using Content.Shared._Trauma.Common.Body;
+using System.Linq;
+using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Common.Healing;
 using Content.Shared._Trauma.Common.Targeting;
 using Content.Shared.Body;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
-using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
-using System.Linq;
 
 namespace Content.Shared.Medical.Healing;
 
 public sealed partial class HealingSystem
 {
     [Dependency] private BodySystem _body = default!;
-    [Dependency] private Content.Shared._Trauma.Body.BodyPartSystem _healingParts = default!;
+    [Dependency] private BodyPartSystem _healingParts = default!;
 
     private ProtoId<OrganCategoryPrototype>[] _partHealingOrder =
     {

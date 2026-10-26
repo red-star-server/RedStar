@@ -1,6 +1,5 @@
-using Robust.Shared.Prototypes;
-
 using Content.Shared.Tag;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Trauma.Clothing;
 

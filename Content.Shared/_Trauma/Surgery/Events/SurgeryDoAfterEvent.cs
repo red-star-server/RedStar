@@ -1,7 +1,6 @@
+using Content.Shared.DoAfter;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-
-using Content.Shared.DoAfter;
 
 namespace Content.Shared._Trauma.Surgery;
 

@@ -1,19 +1,19 @@
-using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
+using System.Linq;
+using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared._Trauma.Common.Healing;
 using Content.Shared._Trauma.Common.Traumas;
-using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Wounds;
 using Content.Shared.Armor;
 using Content.Shared.Body;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
-using Content.Shared.Inventory;
 using Content.Shared.FixedPoint;
+using Content.Shared.Inventory;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Containers;
-using System.Linq;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared._Trauma.Traumas;
 

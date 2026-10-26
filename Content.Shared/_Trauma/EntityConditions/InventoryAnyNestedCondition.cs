@@ -1,6 +1,6 @@
-using Robust.Shared.Prototypes;
 using Content.Shared.EntityConditions;
 using Content.Shared.Inventory;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Trauma.EntityConditions;
 

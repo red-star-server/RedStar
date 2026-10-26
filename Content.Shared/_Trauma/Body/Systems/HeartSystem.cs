@@ -1,8 +1,6 @@
-using Robust.Shared.Prototypes;
-
-using Content.Shared._Trauma.Common.Body;
 using Content.Shared._Trauma.DelayedDeath;
 using Content.Shared.Body;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Shared._Trauma.Body;

@@ -1,7 +1,6 @@
-using Robust.Shared.Prototypes;
-using Robust.Shared.GameStates;
-
 using Content.Shared.Alert;
+using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Trauma.Common.Body;
 

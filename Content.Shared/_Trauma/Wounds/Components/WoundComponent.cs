@@ -1,8 +1,8 @@
+using Content.Shared._Trauma.Common.Wounds;
+using Content.Shared.Damage.Prototypes;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Content.Shared._Trauma.Common.Wounds;
-using Content.Shared.FixedPoint;
-using Content.Shared.Damage.Prototypes;
 
 namespace Content.Shared._Trauma.Wounds;
 

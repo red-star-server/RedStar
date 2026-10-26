@@ -1,5 +1,5 @@
-using Content.Shared._Trauma.Common.Body;
 using Content.Shared._Trauma.Body;
+using Content.Shared._Trauma.Common.Body;
 using Content.Shared.Body;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;

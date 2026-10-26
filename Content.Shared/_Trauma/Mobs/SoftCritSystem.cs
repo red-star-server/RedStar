@@ -1,16 +1,16 @@
+using Content.Shared._Trauma.Common.Body;
+using Content.Shared._Trauma.Common.CCVar;
+using Content.Shared._Trauma.Medical;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Chat;
-using Content.Shared.Pulling.Events;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Pulling.Events;
 using Content.Shared.Radio;
 using Content.Shared.Speech;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.Stunnable;
-using Content.Shared._Trauma.Common.Body;
-using Content.Shared._Trauma.Common.CCVar;
-using Content.Shared._Trauma.Medical;
 using Robust.Shared.Configuration;
 
 namespace Content.Shared._Trauma.Mobs;

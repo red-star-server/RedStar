@@ -1,6 +1,6 @@
-using Robust.Shared.Prototypes;
 using Content.Shared.Dataset;
 using Content.Shared.Speech.Prototypes;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Trauma.Speech;
 

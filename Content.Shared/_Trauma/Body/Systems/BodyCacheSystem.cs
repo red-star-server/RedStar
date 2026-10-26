@@ -1,9 +1,7 @@
-using Robust.Shared.Prototypes;
-
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared.Body;
-using Content.Shared.Containers;
 using Content.Shared.Polymorph;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Shared._Trauma.Body;

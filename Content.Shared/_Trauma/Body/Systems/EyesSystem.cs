@@ -1,11 +1,10 @@
-using Content.Shared._Trauma.Traumas;
-using Content.Shared.FixedPoint;
-using Robust.Shared.Prototypes;
-
 using Content.Shared._Trauma.Common.Body;
+using Content.Shared._Trauma.Traumas;
 using Content.Shared.Body;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Eye.Blinding.Systems;
+using Content.Shared.FixedPoint;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Trauma.Body;
 

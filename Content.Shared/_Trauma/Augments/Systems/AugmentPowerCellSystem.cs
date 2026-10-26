@@ -1,15 +1,14 @@
-using Content.Shared.Power;
-using Robust.Shared.Prototypes;
-
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared.Alert;
 using Content.Shared.Body;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Power;
 using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Shared._Trauma.Augments;

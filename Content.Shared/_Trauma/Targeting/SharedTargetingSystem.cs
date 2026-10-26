@@ -1,6 +1,5 @@
-using System.Linq;
-using Content.Shared._Trauma.Common.Targeting;
 using Content.Shared._Trauma.Body;
+using Content.Shared._Trauma.Common.Targeting;
 using Content.Shared.Body;
 
 namespace Content.Shared._Trauma.Targeting;

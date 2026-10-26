@@ -1,7 +1,6 @@
+using Content.Shared.Actions.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-
-using Content.Shared.Actions.Components;
 
 namespace Content.Shared._Trauma.Body;
 

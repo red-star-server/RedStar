@@ -1,10 +1,10 @@
-using Robust.Shared.Prototypes;
+using System.Text;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Speech;
 using Content.Shared.Speech.EntitySystems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using System.Text;
 
 namespace Content.Shared._Trauma.Speech;
 

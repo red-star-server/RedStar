@@ -1,8 +1,7 @@
-using Robust.Shared.Prototypes;
-
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.EntityConditions;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Trauma.EntityConditions;
 

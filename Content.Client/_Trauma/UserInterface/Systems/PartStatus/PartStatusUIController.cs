@@ -1,16 +1,15 @@
-using Robust.Shared.Utility;
-using Robust.Client.Graphics;
-using Robust.Client.GameObjects;
-
-using Content.Client.Gameplay;
-using Content.Client.UserInterface.Systems.Alerts.Widgets;
 using Content.Client._Trauma.Targeting;
 using Content.Client._Trauma.UserInterface.Systems.PartStatus.Widgets;
+using Content.Client.Gameplay;
+using Content.Client.UserInterface.Systems.Alerts.Widgets;
 using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.PartStatus;
+using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client._Trauma.UserInterface.Systems.PartStatus;
 

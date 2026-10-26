@@ -1,7 +1,7 @@
-using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 using Content.Shared._Trauma.Common.Wounds;
 using Content.Shared.Body;
+using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Trauma.Body;
 

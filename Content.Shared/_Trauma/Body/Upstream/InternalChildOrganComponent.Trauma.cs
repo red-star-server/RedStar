@@ -1,5 +1,5 @@
-using Content.Shared.FixedPoint;
 using Content.Shared._Trauma.Common.Traumas;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 
 namespace Content.Shared.Body;

@@ -1,9 +1,8 @@
-using Robust.Shared.Utility;
-
 using Content.Shared._Trauma.Common.CCVar;
 using Content.Shared._Trauma.Surgery.Tools;
 using Content.Shared.Verbs;
 using Robust.Shared.Configuration;
+using Robust.Shared.Utility;
 
 namespace Content.Shared._Trauma.Surgery;
 

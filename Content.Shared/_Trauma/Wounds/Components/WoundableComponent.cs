@@ -1,10 +1,10 @@
-using Robust.Shared.GameStates;
-using Content.Shared._Trauma.Common.Wounds;
 using Content.Shared._Trauma.Common.Traumas;
+using Content.Shared._Trauma.Common.Wounds;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared._Trauma.Wounds;
 

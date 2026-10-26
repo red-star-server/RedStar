@@ -1,8 +1,8 @@
 using Content.Shared._Trauma.Common.Medical.HealthAnalyzer;
 using Content.Shared._Trauma.Wounds;
 using Content.Shared.Body;
-using Content.Shared.MedicalScanner;
 using Content.Shared.Medical.Cryogenics;
+using Content.Shared.MedicalScanner;
 using Content.Shared.Mobs.Systems;
 
 namespace Content.Shared.Medical.HealthAnalyzer;

@@ -1,6 +1,4 @@
 using Robust.Shared.GameStates;
-using Content.Shared.Actions;
-using Content.Shared.Actions.Components;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Shared._Trauma.Augments;
