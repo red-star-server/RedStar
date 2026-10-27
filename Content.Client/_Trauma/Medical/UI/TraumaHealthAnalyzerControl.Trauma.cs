@@ -62,7 +62,7 @@ public sealed partial class TraumaHealthAnalyzerControl
             { "LegLeft", LeftLegButton },
             { "FootLeft", LeftFootButton },
             { "LegRight", RightLegButton },
-            { "FootRight", RightFootButton },
+            { "FootRight", RightFootButton }
         };
 
         foreach (var (part, button) in _bodyPartControls)
@@ -157,7 +157,7 @@ public sealed partial class TraumaHealthAnalyzerControl
             ConditionsListContainer.AddChild(new RichTextLabel
             {
                 Text = Loc.GetString("condition-none"),
-                Margin = new Thickness(0, 4),
+                Margin = new Thickness(0, 4)
             });
         }
     }
@@ -204,7 +204,7 @@ public sealed partial class TraumaHealthAnalyzerControl
             ConditionsListContainer.AddChild(new RichTextLabel
             {
                 Text = Loc.GetString("condition-body-unrevivable", ("entity", identity)),
-                Margin = new Thickness(0, 4),
+                Margin = new Thickness(0, 4)
             });
         }
 
@@ -213,7 +213,7 @@ public sealed partial class TraumaHealthAnalyzerControl
             ConditionsListContainer.AddChild(new RichTextLabel
             {
                 Text = Loc.GetString("condition-body-low-blood", ("entity", identity)),
-                Margin = new Thickness(0, 4),
+                Margin = new Thickness(0, 4)
             });
         }
 
@@ -225,7 +225,7 @@ public sealed partial class TraumaHealthAnalyzerControl
             ConditionsListContainer.AddChild(new RichTextLabel
             {
                 Text = locString,
-                Margin = new Thickness(0, 4),
+                Margin = new Thickness(0, 4)
             });
         }
 
@@ -256,7 +256,7 @@ public sealed partial class TraumaHealthAnalyzerControl
                 ConditionsListContainer.AddChild(new RichTextLabel
                 {
                     Text = locString,
-                    Margin = new Thickness(0, 4),
+                    Margin = new Thickness(0, 4)
                 });
             }
         }
@@ -286,14 +286,14 @@ public sealed partial class TraumaHealthAnalyzerControl
                 ConditionsListContainer.AddChild(new RichTextLabel
                 {
                     Text = Loc.GetString("condition-organ-rotting", ("organ", organ)),
-                    Margin = new Thickness(0, 4),
+                    Margin = new Thickness(0, 4)
                 });
             }
 
             ConditionsListContainer.AddChild(new RichTextLabel
             {
                 Text = Loc.GetString($"condition-organ-damage-{organ.Comp.OrganSeverity}", ("organ", organ)),
-                Margin = new Thickness(0, 4),
+                Margin = new Thickness(0, 4)
             });
         }
 
@@ -302,7 +302,7 @@ public sealed partial class TraumaHealthAnalyzerControl
             ConditionsListContainer.AddChild(new RichTextLabel
             {
                 Text = Loc.GetString("condition-none"),
-                Margin = new Thickness(0, 4),
+                Margin = new Thickness(0, 4)
             });
         }
     }
@@ -339,7 +339,7 @@ public sealed partial class TraumaHealthAnalyzerControl
         ConditionsListContainer.AddChild(new RichTextLabel
         {
             Text = Loc.GetString("condition-none"),
-            Margin = new Thickness(0, 4),
+            Margin = new Thickness(0, 4)
         });
     }
 
@@ -383,23 +383,21 @@ public sealed partial class TraumaHealthAnalyzerControl
         if (!_entityManager.TryGetComponent<SpriteComponent>(_spriteViewEntity, out var sprite))
             return null;
 
-        int layer = 0;
+        var layer = 0;
         foreach (var (part, integrity) in body)
         {
             // TODO: Move body status presentation into a UI controller.
             var name = part.ToString().ToLowerInvariant();
-            int enumValue = (int) integrity;
+            var enumValue = (int) integrity;
             var baseRsiPath = new ResPath($"/Textures/_RedStar/Medical/Interface/Targeting/Status/{name}.rsi");
             var rsi = new SpriteSpecifier.Rsi(baseRsiPath, $"{enumValue}");
             CreateOrAddToLayer((_spriteViewEntity.Value, sprite), rsi, layer);
             layer++;
 
-            if (bleeding.Contains(part))
-            {
-                var bleedRsi = new SpriteSpecifier.Rsi(baseRsiPath, "bleed");
-                CreateOrAddToLayer((_spriteViewEntity.Value, sprite), bleedRsi, layer);
-                layer++;
-            }
+            if (!bleeding.Contains(part)) continue;
+            var bleedRsi = new SpriteSpecifier.Rsi(baseRsiPath, "bleed");
+            CreateOrAddToLayer((_spriteViewEntity.Value, sprite), bleedRsi, layer);
+            layer++;
         }
 
         for (var obsolete = sprite.AllLayers.Count() - 1; obsolete >= layer; obsolete--)
@@ -432,7 +430,7 @@ public sealed partial class TraumaHealthAnalyzerControl
 
     private void DrawOrganDiagnostics(EntityUid ent, FixedPoint2 damage)
     {
-        TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+        var textInfo = new CultureInfo("en-US", false).TextInfo;
         var name = _entityManager.GetComponent<MetaDataComponent>(ent).EntityName;
         var groupTitleText = Loc.GetString("group-organ-status",
             ("organ", textInfo.ToTitleCase(name)),
@@ -441,7 +439,7 @@ public sealed partial class TraumaHealthAnalyzerControl
         var groupContainer = new BoxContainer
         {
             Align = AlignMode.Begin,
-            Orientation = LayoutOrientation.Vertical,
+            Orientation = LayoutOrientation.Vertical
         };
 
         groupContainer.AddChild(CreateDiagnosticGroupTitle(groupTitleText, ent));
@@ -451,7 +449,7 @@ public sealed partial class TraumaHealthAnalyzerControl
 
     private void DrawSolutionDiagnostics(List<EntityUid> sources)
     {
-        TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+        var textInfo = new CultureInfo("en-US", false).TextInfo;
         foreach (var uid in sources)
         {
             foreach (var (name, ent) in _solution.EnumerateSolutions(uid))
@@ -462,7 +460,7 @@ public sealed partial class TraumaHealthAnalyzerControl
                 var groupContainer = new BoxContainer
                 {
                     Align = AlignMode.Begin,
-                    Orientation = LayoutOrientation.Vertical,
+                    Orientation = LayoutOrientation.Vertical
                 };
 
                 groupContainer.AddChild(CreateDiagnosticGroupTitle(textInfo.ToTitleCase(groupTitleText), "metaphysical"));
@@ -498,7 +496,7 @@ public sealed partial class TraumaHealthAnalyzerControl
         {
             Margin = new Thickness(0, 6, 0, 0),
             VerticalAlignment = VAlignment.Bottom,
-            Orientation = LayoutOrientation.Horizontal,
+            Orientation = LayoutOrientation.Horizontal
         };
 
         if (textureOverride != null)
@@ -514,7 +512,7 @@ public sealed partial class TraumaHealthAnalyzerControl
             var spriteView = new SpriteView
             {
                 SetSize = new Vector2(30, 30),
-                OverrideDirection = Direction.South,
+                OverrideDirection = Direction.South
             };
 
             spriteView.SetEntity(ent);

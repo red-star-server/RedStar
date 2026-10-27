@@ -16,7 +16,7 @@ public sealed partial class ExplosionSystem
     private float PartVariation;
     private float WoundMultiplier;
 
-    private ProtoId<DamageTypePrototype>[] _types = { "Blunt", "Slash", "Piercing", "Heat", "Cold" };
+    private ProtoId<DamageTypePrototype>[] _types = ["Blunt", "Slash", "Piercing", "Heat", "Cold"];
 
     private void SubscribeTrauma()
     {
