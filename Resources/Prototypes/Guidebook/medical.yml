@@ -11,7 +11,12 @@
 - type: guideEntry
   id: MedicalDoctor
   name: guide-entry-medicaldoctor
-  text: "/ServerInfo/Guidebook/Medical/MedicalDoctor.xml"
+  # RS14-start
+  text: "/ServerInfo/_RedStar/Guidebook/Medical/MedicalDoctor.xml"
+  children:
+  - TraumaMedicine
+  - Surgery
+  # RS14-end
 
 - type: guideEntry
   id: Cloning
