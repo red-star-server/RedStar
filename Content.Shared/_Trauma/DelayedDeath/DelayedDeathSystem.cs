@@ -15,14 +15,7 @@ public sealed partial class DelayedDeathSystem : EntitySystem
     [Dependency] private SharedChatSystem _chat = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
-    private EntityQuery<MobStateComponent> _mobQuery;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        _mobQuery = GetEntityQuery<MobStateComponent>();
-    }
+    [Dependency] private EntityQuery<MobStateComponent> _mobQuery;
 
     public override void Update(float frameTime)
     {

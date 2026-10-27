@@ -11,18 +11,9 @@ public sealed partial class LegsSystem : EntitySystem
 {
     [Dependency] private MovementSpeedModifierSystem _movement = default!;
 
-    private EntityQuery<LegsComponent> _query;
-    private EntityQuery<LegComponent> _legQuery;
-    private EntityQuery<BoneComponent> _boneQuery;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        _query = GetEntityQuery<LegsComponent>();
-        _legQuery = GetEntityQuery<LegComponent>();
-        _boneQuery = GetEntityQuery<BoneComponent>();
-    }
+    [Dependency] private EntityQuery<LegsComponent> _query;
+    [Dependency] private EntityQuery<LegComponent> _legQuery;
+    [Dependency] private EntityQuery<BoneComponent> _boneQuery;
 
     [SubscribeLocalEvent]
     private void OnStandAttempt(Entity<LegsComponent> ent, ref StandAttemptEvent args)

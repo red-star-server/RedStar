@@ -34,14 +34,7 @@ public sealed partial class InsideBodyPartSystem : CommonInsideBodyPartSystem
     private static readonly EntProtoId BluntWound = "WoundBlunt";
     private static readonly ProtoId<DamageGroupPrototype> Brute = "Brute";
 
-    private EntityQuery<BodyComponent> _bodyQuery;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        _bodyQuery = GetEntityQuery<BodyComponent>();
-    }
+    [Dependency] private EntityQuery<BodyComponent> _bodyQuery;
 
     public override void InsertedIntoPart(EntityUid item, EntityUid part)
     {
