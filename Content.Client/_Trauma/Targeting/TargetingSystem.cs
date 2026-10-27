@@ -2,7 +2,6 @@ using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Common.Input;
 using Content.Shared._Trauma.Common.Targeting;
 using Content.Shared._Trauma.Targeting;
-using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
@@ -136,7 +135,6 @@ public sealed partial class TargetingSystem : SharedTargetingSystem
         TargetChange?.Invoke(target);
     }
 
-    // TODO: move the scroll logic here or something this is bad
     public override void CycleTargeting(int delta)
     {
         if (_player.LocalEntity is not { } player || !TryComp(player, out TargetingComponent? targeting))

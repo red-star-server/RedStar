@@ -41,11 +41,6 @@ public sealed partial class InternalChildOrganComponent
     /// <summary>
     /// Integrity thresholds for the organ damage states.
     /// </summary>
-    [DataField] // TODO: MAKE REQUIRED WHEN EVERY YML HAS THESE.
-    public Dictionary<OrganSeverity, FixedPoint2> IntegrityThresholds = new()
-    {
-        { OrganSeverity.Normal, 15 },
-        { OrganSeverity.Damaged, 10 },
-        { OrganSeverity.Destroyed, 0 },
-    };
+    [DataField(required: true)]
+    public Dictionary<OrganSeverity, FixedPoint2> IntegrityThresholds = default!;
 }

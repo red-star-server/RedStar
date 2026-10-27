@@ -93,6 +93,10 @@
   id: OrganBaseChildInternal
   components:
   - type: InternalChildOrgan
+    integrityThresholds:
+      Normal: 15
+      Damaged: 10
+      Destroyed: 0
 
 - type: entity
   id: OrganBaseExternal
