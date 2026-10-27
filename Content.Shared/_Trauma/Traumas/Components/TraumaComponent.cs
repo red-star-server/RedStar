@@ -41,4 +41,10 @@ public sealed partial class TraumaComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public TraumaType TraumaType;
+
+    /// <summary>
+    /// Whether this trauma prevents wound healing while it is active.
+    /// </summary>
+    [DataField]
+    public bool BlocksHealing;
 }

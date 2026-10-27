@@ -519,7 +519,7 @@ public sealed partial class WoundSystem
         // We prevent removal if theres at least one wound holding traumas left.
         foreach (var trauma in _trauma.GetAllWoundTraumas(wound))
         {
-            if (TraumaSystem.TraumasBlockingHealing.Contains(trauma.Comp.TraumaType))
+            if (trauma.Comp.BlocksHealing)
                 return false;
         }
 

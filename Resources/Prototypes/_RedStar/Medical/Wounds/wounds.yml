@@ -363,12 +363,14 @@
   components:
   - type: Trauma
     traumaType: BoneDamage
+    blocksHealing: true
 
 - type: entity
   id: OrganDamage
   components:
   - type: Trauma
     traumaType: OrganDamage
+    blocksHealing: true
 
 - type: entity
   id: VeinsDamage
@@ -381,3 +383,4 @@
   components:
   - type: Trauma
     traumaType: Dismemberment
+    blocksHealing: true

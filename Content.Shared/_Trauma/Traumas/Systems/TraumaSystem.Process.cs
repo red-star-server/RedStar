@@ -28,9 +28,6 @@ public partial class TraumaSystem
     [Dependency] private EntityQuery<WoundableComponent> _woundableQuery;
 
     private const string TraumaContainerId = "Traumas";
-    // TODO: this should be a bool on the trauma entity or something
-    public static readonly TraumaType[] TraumasBlockingHealing = { TraumaType.BoneDamage, TraumaType.OrganDamage, TraumaType.Dismemberment };
-
     public static readonly ProtoId<DamageTypePrototype> Blunt = "Blunt";
     public static readonly ProtoId<DamageGroupPrototype> Brute = "Brute";
     /// <summary>
@@ -76,16 +73,7 @@ public partial class TraumaSystem
         if (args.IgnoreBlockers)
             return;
 
-        foreach (var trauma in GetAllWoundTraumas(ent.AsNullable()))
-        {
-            if (!TraumasBlockingHealing.Contains(trauma.Comp.TraumaType)) continue;
-            if (trauma.Comp.TraumaType == TraumaType.BoneDamage &&
-                _boneQuery.TryComp(args.Woundable, out var bone) &&
-                bone.BoneSeverity != BoneSeverity.Broken)
-                continue;
-
-            args.Cancelled = true;
-        }
+        args.Cancelled = HasHealingBlockingTrauma(args.Woundable);
     }
 
     [SubscribeLocalEvent]
@@ -100,8 +88,29 @@ public partial class TraumaSystem
             return;
         }
 
-        if (TraumasBlockingHealing.Any(traumaType => HasWoundableTrauma(ent.AsNullable(), traumaType, false)))
+        if (HasHealingBlockingTrauma(ent))
             args.Cancelled = true;
+    }
+
+    private bool HasHealingBlockingTrauma(Entity<WoundableComponent> part)
+    {
+        if (!GetPartTraumas(part.AsNullable(), out var traumas))
+            return false;
+
+        foreach (var trauma in traumas)
+        {
+            if (!trauma.Comp.BlocksHealing)
+                continue;
+
+            if (trauma.Comp.TraumaType == TraumaType.BoneDamage
+                && _boneQuery.TryComp(part, out var bone)
+                && bone.BoneSeverity != BoneSeverity.Broken)
+                continue;
+
+            return true;
+        }
+
+        return false;
     }
 
     #region Public API
@@ -135,10 +144,14 @@ public partial class TraumaSystem
             if (traumaType != null && trauma.Comp.TraumaType != traumaType)
                 continue;
 
-            if (showAll) return true;
-            // TODO: Fill this with other blocking traumas.
-            if (trauma.Comp.TraumaType == TraumaType.BoneDamage && !boneBroken)
-                continue;
+            if (!showAll)
+            {
+                if (!trauma.Comp.BlocksHealing)
+                    continue;
+
+                if (trauma.Comp.TraumaType == TraumaType.BoneDamage && !boneBroken)
+                    continue;
+            }
 
             return true;
         }

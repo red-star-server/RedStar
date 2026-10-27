@@ -1,17 +1,19 @@
+using Content.Shared._Trauma.Common.Traumas;
 using Content.Shared.Body;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Pulling.Events;
 using Content.Shared.Standing;
+using Content.Shared._Trauma.Traumas;
 
 namespace Content.Shared._Trauma.Body;
 
-// TODO: prevent standing if your bones are broken
 public sealed partial class LegsSystem : EntitySystem
 {
     [Dependency] private MovementSpeedModifierSystem _movement = default!;
 
     private EntityQuery<LegsComponent> _query;
     private EntityQuery<LegComponent> _legQuery;
+    private EntityQuery<BoneComponent> _boneQuery;
 
     public override void Initialize()
     {
@@ -19,12 +21,23 @@ public sealed partial class LegsSystem : EntitySystem
 
         _query = GetEntityQuery<LegsComponent>();
         _legQuery = GetEntityQuery<LegComponent>();
+        _boneQuery = GetEntityQuery<BoneComponent>();
     }
 
     [SubscribeLocalEvent]
     private void OnStandAttempt(Entity<LegsComponent> ent, ref StandAttemptEvent args)
     {
-        if (ent.Comp.Legs.Count < ent.Comp.Required)
+        var usableLegs = 0;
+        foreach (var leg in ent.Comp.Legs)
+        {
+            if (_boneQuery.TryComp(leg, out BoneComponent? bone)
+                && bone.BoneSeverity == BoneSeverity.Broken)
+                continue;
+
+            usableLegs++;
+        }
+
+        if (usableLegs < ent.Comp.Required)
             args.Cancel();
     }
 
