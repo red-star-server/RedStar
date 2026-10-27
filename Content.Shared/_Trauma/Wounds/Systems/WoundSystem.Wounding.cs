@@ -716,6 +716,42 @@ public sealed partial class WoundSystem
     }
 
     /// <summary>
+    /// Get wounds on a woundable that are currently bleeding
+    /// </summary>
+    public List<Entity<WoundComponent>> GetBleedingWounds(Entity<WoundableComponent?> part)
+    {
+        var result = new List<Entity<WoundComponent>>();
+        var wounds = GetWoundableWounds(part);
+        foreach (var wound in wounds)
+        {
+            if (_bleedQuery.TryComp(wound, out var bleeds) && bleeds.IsBleeding)
+                result.Add(wound);
+        }
+        return result;
+    }
+
+    /// <summary>
+    /// Get wounds on a woundable that can be healed
+    /// </summary>
+    public List<Entity<WoundComponent>> GetHealableWounds(Entity<WoundableComponent?> part, bool ignoreBlockers = false)
+    {
+        var result = new List<Entity<WoundComponent>>();
+        var wounds = GetWoundableWounds(part);
+        foreach (var wound in wounds)
+        {
+            if (CanHealWound(wound, ignoreBlockers))
+                result.Add(wound);
+        }
+        return result;
+    }
+
+    /// <summary>
+    /// Checks if a woundable has any wounds that cannot be healed
+    /// </summary>
+    public bool HasNonHealableWounds(Entity<WoundableComponent?> part, bool ignoreBlockers = false)
+        => GetWoundableWounds(part).Any(wound => !CanHealWound(wound, ignoreBlockers));
+
+    /// <summary>
     /// Checks for wounds on an entity that have exceeded their MangleSeverity threshold
     /// </summary>
     public bool HasWoundsExceedingMangleSeverity(Entity<WoundableComponent?> part)

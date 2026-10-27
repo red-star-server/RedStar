@@ -57,13 +57,10 @@ public partial class WoundSystem
         {
             var totalBleedAmount = FixedPoint2.Zero;
             var hasBleedingWounds = false;
-            foreach (var wound in GetWoundableWounds(part.AsNullable()))
+            foreach (var wound in GetBleedingWounds(part.AsNullable()))
             {
-                if (!_bleedQuery.TryComp(wound, out var bleeds) || !bleeds.IsBleeding)
-                    continue;
-
                 hasBleedingWounds = true;
-                totalBleedAmount += bleeds.BleedingAmount;
+                totalBleedAmount += _bleedQuery.Comp(wound).BleedingAmount;
             }
 
             if (hasBleedingWounds)
@@ -107,11 +104,9 @@ public partial class WoundSystem
         if (bleedStopAbility <= 0)
             return false;
 
-        foreach (var wound in GetWoundableWounds(part))
+        foreach (var wound in GetBleedingWounds(part))
         {
-            if (!_bleedQuery.TryComp(wound, out var bleeds) || !bleeds.IsBleeding)
-                continue;
-
+            var bleeds = _bleedQuery.Comp(wound);
             var previous = bleeds.BleedingAmount;
             if (previous <= 0)
                 continue;

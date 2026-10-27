@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared._Trauma.Common.Healing;
@@ -82,7 +81,7 @@ public partial class TraumaSystem
         args.Bleeding = ent.Comp.Bleeds > MinBleedToStopHealing;
 
         var part = ent.AsNullable();
-        if (_wound.GetWoundableWounds(part).Any(wound => !_wound.CanHealWound(wound)))
+        if (_wound.HasNonHealableWounds(part))
         {
             args.Cancelled = true;
             return;

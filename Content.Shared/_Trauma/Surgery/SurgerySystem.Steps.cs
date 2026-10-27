@@ -435,10 +435,9 @@ public sealed partial class SurgerySystem
     private void OnBleedsTreatmentStep(Entity<SurgeryBleedsTreatmentStepComponent> ent, ref SurgeryStepEvent args)
     {
         var healAmount = ent.Comp.Amount;
-        foreach (var wound in _wounds.GetWoundableWounds(args.Part))
+        foreach (var wound in _wounds.GetBleedingWounds(args.Part))
         {
-            if (!_bleedQuery.TryComp(wound, out var bleeds) || !bleeds.IsBleeding)
-                continue;
+            var bleeds = _bleedQuery.Comp(wound);
 
             DirtyField(wound, bleeds, nameof(BleedInflicterComponent.Scaling));
             if (bleeds.Scaling > healAmount)
@@ -461,10 +460,9 @@ public sealed partial class SurgerySystem
     [SubscribeLocalEvent]
     private void OnBleedsTreatmentCheck(Entity<SurgeryBleedsTreatmentStepComponent> ent, ref SurgeryStepCompleteCheckEvent args)
     {
-        foreach (var wound in _wounds.GetWoundableWounds(args.Part))
+        foreach (var wound in _wounds.GetBleedingWounds(args.Part))
         {
-            if (!_bleedQuery.TryComp(wound, out var bleeds) || !bleeds.IsBleeding)
-                continue;
+            var bleeds = _bleedQuery.Comp(wound);
 
             args.Cancelled = true;
             break;

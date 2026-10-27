@@ -309,10 +309,9 @@ public sealed partial class BodyBloodstreamSystem : EntitySystem
         foreach (var part in _body.GetOrgans<WoundableComponent>(ent.AsNullable()))
         {
             var totalPartBleeds = FixedPoint2.Zero;
-            foreach (var wound in _wound.GetWoundableWounds(part.AsNullable()))
+            foreach (var wound in _wound.GetBleedingWounds(part.AsNullable()))
             {
-            if (_bleedQuery.TryComp(wound, out var bleeds) && bleeds.IsBleeding)
-                    totalPartBleeds += bleeds.BleedingAmount;
+                totalPartBleeds += _bleedQuery.Comp(wound).BleedingAmount;
             }
             total += totalPartBleeds;
 
