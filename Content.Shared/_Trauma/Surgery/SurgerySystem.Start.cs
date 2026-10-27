@@ -16,7 +16,7 @@ public sealed partial class SurgerySystem
     private void InitializeStart()
     {
         // cvar is yes var is no, invert it
-        _cfg.OnValueChanged(SurgeryCVars.CanOperateOnSelf, x => _noSelfOperate = !x, true);
+        Subs.CVar(_cfg, SurgeryCVars.CanOperateOnSelf, x => _noSelfOperate = !x, true);
     }
 
     private void AttemptStartSurgery(Entity<SurgeryToolComponent> ent, EntityUid user, EntityUid target)

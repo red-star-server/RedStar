@@ -11,6 +11,6 @@ public sealed partial class BloodstreamSystem
     public override void Initialize()
     {
         base.Initialize();
-        _medicalCfg.OnValueChanged(TraumaCVars.BleedMultiplier, value => _bloodlossMultiplier = value, true);
+        Subs.CVar(_medicalCfg, TraumaCVars.BleedMultiplier, value => _bloodlossMultiplier = value, true);
     }
 }

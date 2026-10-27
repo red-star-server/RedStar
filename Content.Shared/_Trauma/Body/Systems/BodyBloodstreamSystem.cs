@@ -34,8 +34,8 @@ public sealed partial class BodyBloodstreamSystem : EntitySystem
     {
         base.Initialize();
 
-        _cfg.OnValueChanged(SurgeryCVars.BleedingSeverityTrade, x => _bleedingSeverity = x, true);
-        _cfg.OnValueChanged(SurgeryCVars.BleedsScalingTime, x => _bleedScaleTime = x, true);
+        Subs.CVar(_cfg, SurgeryCVars.BleedingSeverityTrade, x => _bleedingSeverity = x, true);
+        Subs.CVar(_cfg, SurgeryCVars.BleedsScalingTime, x => _bleedScaleTime = x, true);
     }
 
     public override void Update(float frameTime)
