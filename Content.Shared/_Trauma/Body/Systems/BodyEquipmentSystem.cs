@@ -14,7 +14,7 @@ public sealed partial class BodyEquipmentSystem : EntitySystem
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
-    private EntityQuery<InventoryComponent> _inventoryQuery;
+    [Dependency] private EntityQuery<InventoryComponent> _inventoryQuery;
 
     // TODO: make this a field on OrganCategoryPrototype or something??
     /// <summary>
@@ -27,14 +27,6 @@ public sealed partial class BodyEquipmentSystem : EntitySystem
         { BodyPartType.Hand, [ "gloves" ] },
         { BodyPartType.Foot, [ "shoes" ] }
     };
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        _inventoryQuery = GetEntityQuery<InventoryComponent>();
-
-    }
 
     [SubscribeLocalEvent]
     private void OnEquippingTargetAttempt(Entity<BodyEquipmentComponent> ent, ref IsEquippingTargetAttemptEvent args)
