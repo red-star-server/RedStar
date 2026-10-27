@@ -39,9 +39,8 @@ public sealed partial class SoftCritSystem : EntitySystem
     {
         base.Initialize();
 
-
-        Subs.CVar(_cfg, TraumaCVars.SoftCritMoveSpeed, x => SoftCritSpeed = x, true);
-        Subs.CVar(_cfg, TraumaCVars.SoftCritInhaleModifier, x => InhaleVolumeModifier = x, true);
+        _cfg.OnValueChanged(TraumaCVars.SoftCritMoveSpeed, x => SoftCritSpeed = x, true);
+        _cfg.OnValueChanged(TraumaCVars.SoftCritInhaleModifier, x => InhaleVolumeModifier = x, true);
     }
 
     [SubscribeLocalEvent(before: [typeof(VocalSystem)])]

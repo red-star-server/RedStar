@@ -9,16 +9,7 @@ public sealed partial class OrganActionsSystem : EntitySystem
 {
     [Dependency] private ActionContainerSystem _actionContainer = default!;
     [Dependency] private SharedActionsSystem _actions = default!;
-
-    private EntityQuery<OrganComponent> _organQuery;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        _organQuery = GetEntityQuery<OrganComponent>();
-
-    }
+    [Dependency] private EntityQuery<OrganComponent> _organQuery;
 
     [SubscribeLocalEvent]
     private void OnMapInit(Entity<OrganActionsComponent> ent, ref MapInitEvent args)

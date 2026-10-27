@@ -13,8 +13,7 @@ public sealed partial class BodyEquipmentSystem : EntitySystem
     [Dependency] private BodyPartSystem _part = default!;
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
-
-    private EntityQuery<InventoryComponent> _inventoryQuery;
+    [Dependency] private EntityQuery<InventoryComponent> _inventoryQuery;
 
     // TODO: make this a field on OrganCategoryPrototype or something??
     /// <summary>
@@ -27,14 +26,6 @@ public sealed partial class BodyEquipmentSystem : EntitySystem
         { BodyPartType.Hand, [ "gloves" ] },
         { BodyPartType.Foot, [ "shoes" ] }
     };
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        _inventoryQuery = GetEntityQuery<InventoryComponent>();
-
-    }
 
     [SubscribeLocalEvent]
     private void OnEquippingTargetAttempt(Entity<BodyEquipmentComponent> ent, ref IsEquippingTargetAttemptEvent args)
@@ -94,18 +85,14 @@ public sealed partial class BodyEquipmentSystem : EntitySystem
     public void DropPartItems(Entity<InventoryComponent?> ent, Entity<BodyPartComponent?> part)
     {
         // don't drop for mobs being deleted, gibbing etc would handle it themselves
-        if (!TerminatingOrDeleted(ent) &&
-            _inventoryQuery.Resolve(ent, ref ent.Comp) &&
+        if (TerminatingOrDeleted(ent) || !_inventoryQuery.Resolve(ent, ref ent.Comp) ||
             // only care about parts being removed
-            _part.GetPartType(part) is {} type &&
+            _part.GetPartType(part) is not { } type ||
             // do nothing if there's e.g. a second foot to wear shoes with. there's no individual shoe items.
-            _part.GetBodyParts(ent.Owner, type).Count == 0 &&
-            PartInventorySlots.TryGetValue(type, out var slots))
+            _part.GetBodyParts(ent.Owner, type).Count != 0 || !PartInventorySlots.TryGetValue(type, out var slots)) return;
+        foreach (var slot in slots)
         {
-            foreach (var slot in slots)
-            {
-                _inventory.DropSlotContents(ent, slot);
-            }
+            _inventory.DropSlotContents(ent, slot);
         }
     }
 }

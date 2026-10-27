@@ -276,7 +276,7 @@ public sealed partial class WoundSystem
         [NotNullWhen(true)] out Entity<WoundComponent>? woundCreated,
         ProtoId<DamageGroupPrototype>? damageGroup)
     {
-        if (id.Id == "Blunt")
+        if (id == BluntWound)
             id = BluntWound;
         woundCreated = null;
 
@@ -319,7 +319,7 @@ public sealed partial class WoundSystem
         [NotNullWhen(true)] out Entity<WoundComponent>? woundContinued,
         EntityUid? user = null)
     {
-        if (id.Id == "Blunt")
+        if (id == BluntWound)
             id = BluntWound;
         woundContinued = null;
         if (severity == FixedPoint2.Zero ||

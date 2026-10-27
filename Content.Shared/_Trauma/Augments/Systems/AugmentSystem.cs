@@ -6,18 +6,8 @@ namespace Content.Shared._Trauma.Augments;
 public sealed partial class AugmentSystem : EntitySystem
 {
     [Dependency] private AugmentPowerCellSystem _power = default!;
-
-    private EntityQuery<InstalledAugmentsComponent> _installedQuery;
-    private EntityQuery<OrganComponent> _organQuery;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        _installedQuery = GetEntityQuery<InstalledAugmentsComponent>();
-        _organQuery = GetEntityQuery<OrganComponent>();
-
-    }
+    [Dependency] private EntityQuery<InstalledAugmentsComponent> _installedQuery = default!;
+    [Dependency] private EntityQuery<OrganComponent> _organQuery;
 
     [SubscribeLocalEvent]
     private void OnAdded(Entity<AugmentComponent> augment, ref OrganGotInsertedEvent args)
