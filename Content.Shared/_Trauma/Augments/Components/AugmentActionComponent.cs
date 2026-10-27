@@ -12,9 +12,15 @@ namespace Content.Shared._Trauma.Augments;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class AugmentActionComponent : Component
 {
+    /// <summary>
+    /// Action prototype granted to the body while this augment is enabled.
+    /// </summary>
     [DataField(required: true)]
     public EntProtoId Action;
 
+    /// <summary>
+    /// Spawned action entity currently granted by this augment.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? ActionEntity;
 }

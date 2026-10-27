@@ -8,28 +8,28 @@
     },
     "states": [
         {
-        "name": "0"
+            "name": "0"
         },
         {
-        "name": "1"
+            "name": "1"
         },
         {
-        "name": "2"
+            "name": "2"
         },
         {
-        "name": "3"
+            "name": "3"
         },
         {
-        "name": "4"
+            "name": "4"
         },
         {
-        "name": "5"
+            "name": "5"
         },
         {
-        "name": "6"
+            "name": "6"
         },
         {
-        "name": "bleed"
+            "name": "bleed"
         }
     ]
 }

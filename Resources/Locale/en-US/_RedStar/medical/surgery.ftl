@@ -101,6 +101,9 @@ ent-SurgeryInsertHeart = Insert Heart
 ent-SurgeryInsertItem = Cavity Implant
     .desc = { "" }
 
+ent-SurgeryInsertAppendix = Insert Appendix
+    .desc = { "" }
+
 ent-SurgeryInsertKidneys = Insert Kidneys
     .desc = { "" }
 
@@ -147,6 +150,9 @@ ent-SurgeryRemoveEyes = Remove Eyes
     .desc = { "" }
 
 ent-SurgeryRemoveHeart = Remove Heart
+    .desc = { "" }
+
+ent-SurgeryRemoveAppendix = Remove Appendix
     .desc = { "" }
 
 ent-SurgeryRemoveKidneys = Remove Kidneys

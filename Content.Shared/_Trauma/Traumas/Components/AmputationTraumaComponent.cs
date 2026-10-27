@@ -13,6 +13,9 @@ namespace Content.Shared._Trauma.Traumas;
 [AutoGenerateComponentState]
 public sealed partial class AmputationTraumaComponent : Component
 {
+    /// <summary>
+    /// Category of the removed part that caused this amputation wound.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public ProtoId<OrganCategoryPrototype> Source;
 }

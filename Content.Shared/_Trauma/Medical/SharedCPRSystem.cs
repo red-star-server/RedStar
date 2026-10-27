@@ -101,7 +101,7 @@ public abstract partial class SharedCPRSystem : EntitySystem
             return;
 
         var active = EnsureComp<ActiveCPRComponent>(target);
-        // PlayPredicted is shitcode and doesnt spawn the same entity for client, can't do it nicely
+        // Keep the looping audio entity on the server so it can be stopped reliably.
         if (_net.IsClient || _audio.PlayPredicted(ent.Comp.Sound, ent, ent, ent.Comp.Sound.Params.WithLoop(true)) is not {} audio)
             return;
 

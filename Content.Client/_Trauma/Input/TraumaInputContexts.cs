@@ -5,6 +5,9 @@ namespace Content.Client._Trauma.Input;
 
 public static class TraumaInputContexts
 {
+    /// <summary>
+    /// Registers the input contexts used by the medical interfaces.
+    /// </summary>
     public static void SetupContexts(IInputContextContainer contexts)
     {
         var human = contexts.GetContext("human");

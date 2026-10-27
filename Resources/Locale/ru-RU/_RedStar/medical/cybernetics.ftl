@@ -14,21 +14,21 @@ ent-OrganCyberneticFootLeft = кибернетическая левая стоп
 
 ent-OrganCyberneticFootRight = кибернетическая правая стопа
 
-ent-OrganCyberneticJWL = 
+ent-OrganCyberneticJWL =
     .desc = Кибернетическая рука, позволяющая взламывать двери.
 
 ent-OrganJWLArmLeft = левая рука J.W.L.
 
 ent-OrganJWLArmRight = правая рука J.W.L.
 
-ent-OrganCyberneticSpeed = 
+ent-OrganCyberneticSpeed =
     .desc = Кибернетическая нога, позволяющая быстрее бегать.
 
 ent-OrganSpeedLegLeft = левая нога S.P.E.E.D.
 
 ent-OrganSpeedLegRight = правая нога S.P.E.E.D.
 
-ent-OrganCyberneticDex = 
+ent-OrganCyberneticDex =
     .desc = Кибернетическая кисть, позволяющая быстрее выполнять действия.
 
 ent-OrganDexHandLeft = левая кисть D.E.X.
@@ -53,13 +53,13 @@ ent-OrganCyberneticLungs = кибернетические лёгкие
 ent-OrganCyberneticLungsUpgraded = улучшенные кибернетические лёгкие
     .desc = Автономная дыхательная система, устраняющая необходимость дышать и ускоряющая восстановление выносливости.
 
-ent-OrganBioSynth = 
+ent-OrganBioSynth =
     .suffix = биосинтетический
 
-ent-OrganBioSynthExternal = 
+ent-OrganBioSynthExternal =
     .desc = Эту синтетическую часть тела можно пересадить живому организму: она адаптируется к реципиенту.
 
-ent-OrganBioSynthInternal = 
+ent-OrganBioSynthInternal =
     .desc = Этот синтетический орган можно пересадить живому организму: он адаптируется к реципиенту.
 
 ent-MicroplasticsStatusEffect = накопление микропластика

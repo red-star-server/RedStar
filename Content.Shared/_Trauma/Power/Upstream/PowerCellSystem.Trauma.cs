@@ -11,6 +11,9 @@ public sealed partial class PowerCellSystem
 {
     [Dependency] private InventorySystem _inventory = default!;
 
+    /// <summary>
+    /// Updates the cell draw rate and refreshes the connected battery charge rate.
+    /// </summary>
     public void SetDrawRate(Entity<PowerCellDrawComponent?> ent, float rate)
     {
         if (!Resolve(ent, ref ent.Comp, false) || ent.Comp.DrawRate == rate)

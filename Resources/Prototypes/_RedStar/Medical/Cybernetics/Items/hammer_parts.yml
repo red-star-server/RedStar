@@ -32,8 +32,8 @@
   parent: PartBase
   id: MaterialScrew
   name: steel screw
-  description: "This screw is really rusty, you wouldn't want to get cut by it..."
   suffix: Full
+  description: "This screw is really rusty, you wouldn't want to get cut by it..."
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -51,7 +51,8 @@
     state: screw_1
     layers:
     - state: screw_1
-      map: ["base"]
+      map:
+      - "base"
   - type: Item
     size: Small
     heldPrefix: screw
@@ -94,4 +95,3 @@
   category: construction-category-misc
   targetNode: stack
   objectType: Item
-

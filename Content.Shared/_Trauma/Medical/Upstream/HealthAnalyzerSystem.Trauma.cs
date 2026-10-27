@@ -35,6 +35,9 @@ public abstract partial class HealthAnalyzerSystem
             BeginAnalyzingEntity(analyzer, target, organ);
     }
 
+    /// <summary>
+    /// Resolves the body part currently selected by the analyzer, if available.
+    /// </summary>
     public EntityUid? GetAnalyzedPart(Entity<HealthAnalyzerComponent> analyzer, EntityUid? patient)
     {
         if (analyzer.Comp.CurrentBodyPart is {} part &&

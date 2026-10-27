@@ -67,6 +67,10 @@ public sealed class BodyTest : GameTest
   - type: ChildOrgan
     parents: [Head]
   - type: InternalChildOrgan
+    integrityThresholds:
+      Normal: 15
+      Damaged: 10
+      Destroyed: 0
   - type: Brain
 
 - type: entity
@@ -77,6 +81,10 @@ public sealed class BodyTest : GameTest
   - type: ChildOrgan
     parents: [Torso]
   - type: InternalChildOrgan
+    integrityThresholds:
+      Normal: 15
+      Damaged: 10
+      Destroyed: 0
   - type: Heart
 
 - type: entity
@@ -120,6 +128,11 @@ public sealed class BodyTest : GameTest
   components:
   - type: ChildOrgan
     parents: [Torso, Head]
+  - type: InternalChildOrgan
+    integrityThresholds:
+      Normal: 15
+      Damaged: 10
+      Destroyed: 0
 
 - type: entity
   id: TraumaTestZeroLegRequirement

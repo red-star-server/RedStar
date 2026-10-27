@@ -24,6 +24,7 @@ namespace Content.Shared._Trauma.ItemSwitch;
 
 public abstract partial class SharedItemSwitchSystem : EntitySystem
 {
+    [Dependency] private ILocalizationManager _loc = default!;
     [Dependency] private INetManager _net = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedBatterySystem _battery = default!;
@@ -39,6 +40,9 @@ public abstract partial class SharedItemSwitchSystem : EntitySystem
 
     private static readonly ProtoId<ItemSizePrototype> PocketableItemSize = "Small";
 
+    /// <summary>
+    /// Verb category used to group item-switch activation choices.
+    /// </summary>
     public static readonly VerbCategory SwitchCategory = new("verb-categories-switch", "/Textures/Interface/VerbIcons/group.svg.192dpi.png");
 
     [SubscribeLocalEvent]
@@ -94,7 +98,7 @@ public abstract partial class SharedItemSwitchSystem : EntitySystem
                 continue;
             args.Verbs.Add(new ActivationVerb()
             {
-                Text = Loc.TryGetString(state.Value.Verb, out var title) ? title : state.Value.Verb,
+                Text = _loc.TryGetString(state.Value.Verb, out var title) ? title : state.Value.Verb,
                 Category = SwitchCategory,
                 Act = () => Switch((ent.Owner, ent.Comp), state.Key, user, ent.Comp.Predictable)
             });
@@ -227,6 +231,9 @@ public abstract partial class SharedItemSwitchSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Allows the client to update visuals after the selected item state changes.
+    /// </summary>
     public virtual void VisualsChanged(Entity<ItemSwitchComponent> ent, string key)
     {
     }
@@ -260,7 +267,7 @@ public abstract partial class SharedItemSwitchSystem : EntitySystem
         args.PushMarkup(onMsg);
 
         // If the current state is the default state, which is also off, do not calculate the current percentage.
-        // This is because any number divided by 0 gets fucked real quick.
+        // Avoid dividing by zero when the selected item requires no charge.
         if (ent.Comp.State == ent.Comp.DefaultState)
             return;
 

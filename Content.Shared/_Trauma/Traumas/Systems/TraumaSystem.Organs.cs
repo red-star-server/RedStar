@@ -71,6 +71,9 @@ public partial class TraumaSystem
     #endregion
 
     #region Public API
+    /// <summary>
+    /// Registers a named temporary adjustment to organ integrity.
+    /// </summary>
     public bool TryCreateOrganDamageModifier(Entity<InternalChildOrganComponent?> ent,
         FixedPoint2 severity,
         EntityUid effectOwner,
@@ -88,6 +91,9 @@ public partial class TraumaSystem
         return true;
     }
 
+    /// <summary>
+    /// Updates an existing named adjustment to organ integrity.
+    /// </summary>
     public bool TryChangeOrganDamageModifier(Entity<InternalChildOrganComponent?> ent,
         FixedPoint2 change,
         EntityUid effectOwner,
@@ -107,6 +113,9 @@ public partial class TraumaSystem
         return true;
     }
 
+    /// <summary>
+    /// Removes a named organ integrity adjustment if it exists.
+    /// </summary>
     public bool TryRemoveOrganDamageModifier(Entity<InternalChildOrganComponent?> ent,
         EntityUid effectOwner,
         string identifier)

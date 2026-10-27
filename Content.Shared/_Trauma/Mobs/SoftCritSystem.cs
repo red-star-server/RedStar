@@ -69,7 +69,7 @@ public sealed partial class SoftCritSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnSpeechTypeOverride(Entity<SoftCritMobComponent> ent, ref SpeechTypeOverrideEvent args)
     {
-        // too fucked up to speak properly
+        // Soft critical state limits speech.
         if (args.DesiredType == InGameICChatType.Speak)
             args.DesiredType = InGameICChatType.Whisper;
     }

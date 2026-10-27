@@ -47,6 +47,9 @@ public abstract partial class SharedTargetingSystem : EntitySystem
         SetTarget(user, msg.BodyPart);
     }
 
+    /// <summary>
+    /// Sets the body part targeted by this entity.
+    /// </summary>
     public void SetTarget(EntityUid user, TargetBodyPart target)
     {
         if (!ValidParts.Contains(target) || !_query.TryComp(user, out var comp) || comp.Target == target)
@@ -56,6 +59,9 @@ public abstract partial class SharedTargetingSystem : EntitySystem
         Dirty(user, comp);
     }
 
+    /// <summary>
+    /// Cycles the local targeting selection in the requested direction.
+    /// </summary>
     public virtual void CycleTargeting(int delta)
     {
     }

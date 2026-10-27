@@ -10,7 +10,7 @@ namespace Content.Shared._Trauma.Body;
 /// It can be clicked to show detailed info in chat.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState]
+[AutoGenerateComponentState(true)]
 public sealed partial class BodyStatusComponent : Component
 {
     /// <summary>

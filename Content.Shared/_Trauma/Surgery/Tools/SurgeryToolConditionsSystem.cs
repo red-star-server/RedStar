@@ -19,7 +19,7 @@ public sealed partial class SurgeryToolConditionsSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnToggleUsed(Entity<ItemToggleComponent> ent, ref SurgeryToolUsedEvent args)
     {
-        // if it can't be turned on with Z it's assumed to just be internal shityml rather than a tool visible enabled and disabled
+        // Toggles without on-use activation represent internal state, not a tool the user must switch on.
         if (ent.Comp.Activated || !ent.Comp.OnUse || args.IgnoreToggle)
             return;
 

@@ -39,9 +39,9 @@
   - type: Stitches
 
 - type: entity
-  name: tissue cutter
-  id: EnergyScalpel
   parent: Scalpel
+  id: EnergyScalpel
+  name: tissue cutter
   description: A scalpel which uses an energy blade, also serves as a drill in its powered state.
   components:
   - type: Sprite
@@ -104,9 +104,9 @@
             volume: -5
 
 - type: entity
-  name: power pinches
-  id: AdvancedRetractor
   parent: Retractor
+  id: AdvancedRetractor
+  name: power pinches
   description: A retractor with mechanical pinches, also serves as a hemostat in its powered state.
   components:
   - type: Sprite
@@ -168,9 +168,9 @@
             volume: -5
 
 - type: entity
-  name: energy stapler
-  id: EnergyCautery
   parent: Cautery
+  id: EnergyCautery
+  name: energy stapler
   description: A cautery with an energy tip, also serves as stitches in its powered state.
   components:
   - type: Sprite
@@ -228,9 +228,9 @@
             volume: -5
 
 - type: entity
-  name: bone multitool
-  id: AdvancedBoneGel
   parent: BoneGel
+  id: AdvancedBoneGel
+  name: bone multitool
   description: A mechanized bone healer, also serves as bone setter in its powered state.
   components:
   - type: Sprite
@@ -287,9 +287,9 @@
             volume: -5
 
 - type: entity
-  name: surgical omnitool
-  id: OmnimedTool
   parent: BaseToolSurgery
+  id: OmnimedTool
+  name: surgical omnitool
   description: A compact surgical omnitool conveniently packed like a Swiss Army knife.
   components:
   - type: Sprite
@@ -327,10 +327,10 @@
   - type: SurgeryIgnoreClothing
 
 - type: entity
-  id: OmnimedToolDebug
   parent: OmnimedToolSyndie
-  suffix: Admeme
+  id: OmnimedToolDebug
   name: experimental surgical omnitool
+  suffix: Admeme
   components:
   - type: Hemostat
     speed: 10

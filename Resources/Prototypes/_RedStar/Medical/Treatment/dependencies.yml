@@ -91,7 +91,8 @@
           min: 2.5
   reactiveEffects:
     Acidic:
-      methods: [Touch]
+      methods:
+      - Touch
       effects:
       - !type:HealthChange
         scaling: true

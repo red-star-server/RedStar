@@ -12,12 +12,18 @@ public partial class ChoiceControl : Control
 {
     public ChoiceControl() => RobustXamlLoader.Load(this);
 
+    /// <summary>
+    /// Updates the choice label and its optional icon.
+    /// </summary>
     public void Set(string name, Texture? texture)
     {
         NameLabel.SetMessage(name);
         Texture.Texture = texture;
     }
 
+    /// <summary>
+    /// Updates the choice label and its optional icon.
+    /// </summary>
     public void Set(FormattedMessage msg, Texture? texture)
     {
         NameLabel.SetMessage(msg);

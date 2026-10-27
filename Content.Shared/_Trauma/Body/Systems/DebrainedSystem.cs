@@ -12,10 +12,10 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared._Trauma.Body;
 
-// TODO SHITMED: kill this and HeartSystem fucking aids
+// TODO: Share vital-organ handling with HeartSystem.
 /// <summary>
 ///     This system handles behavior on entities when they lose their head or their brains are removed.
-///     MindComponent fuckery should still be mainly handled on BrainSystem as usual.
+///     Mind ownership is handled by BrainSystem.
 /// </summary>
 public sealed partial class DebrainedSystem : EntitySystem
 {
@@ -29,7 +29,7 @@ public sealed partial class DebrainedSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnComponentInit(EntityUid uid, DebrainedComponent _, ComponentInit args)
     {
-        // the components are networked, don't need to let it do weird shit
+        // Component state replication supplies these changes on the client.
         if (_timing.ApplyingState)
             return;
 

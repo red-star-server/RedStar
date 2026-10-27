@@ -24,6 +24,9 @@ public sealed partial class WoundableVisualsComponent : Component
         { "Brute", Color.Red }
     };
 
+    /// <summary>
+    /// Optional overlay state used to display bleeding.
+    /// </summary>
     [DataField]
     public string? BleedingOverlay;
 
@@ -43,6 +46,9 @@ public sealed partial class WoundableVisualsComponent : Component
         (BleedingSeverity.Minor, 2.6)
     ];
 
+    /// <summary>
+    /// Displacement map applied to the wound overlays.
+    /// </summary>
     [DataField]
     public ProtoId<DisplacementDataPrototype>? Displacement;
 }

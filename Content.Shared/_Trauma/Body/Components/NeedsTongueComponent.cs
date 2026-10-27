@@ -10,6 +10,9 @@ namespace Content.Shared._Trauma.Body;
 [RegisterComponent, NetworkedComponent, Access(typeof(NeedsTongueSystem))]
 public sealed partial class NeedsTongueComponent : Component
 {
+    /// <summary>
+    /// Organ category required for this entity to speak.
+    /// </summary>
     [DataField]
     public ProtoId<OrganCategoryPrototype> Category = "Tongue";
 }

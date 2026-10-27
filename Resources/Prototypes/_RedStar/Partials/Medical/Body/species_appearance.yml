@@ -7,8 +7,8 @@
     relationships: !Remove
 
 - type: entity
-  id: AppearanceSkeletonPerson
   parent: !Clear [ BaseSpeciesAppearanceOrganless ]
+  id: AppearanceSkeletonPerson
 
 - type: entity
   id: AppearanceDiona
@@ -60,10 +60,14 @@
   id: OrganSlimePersonHead
   components:
   - type: BodyPart
-    slots: [ Eyes, Tongue, Ears ]
+    slots:
+    - Eyes
+    - Tongue
+    - Ears
 
 - type: entity
   id: OrganSlimePersonCore
   components:
   - type: ChildOrgan
-    parents: [ Torso ]
+    parents:
+    - Torso

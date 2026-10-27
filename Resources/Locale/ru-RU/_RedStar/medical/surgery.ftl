@@ -101,6 +101,9 @@ ent-SurgeryInsertHeart = Установить сердце
 ent-SurgeryInsertItem = Поместить предмет в полость тела
     .desc = { "" }
 
+ent-SurgeryInsertAppendix = Установить аппендикс
+    .desc = { "" }
+
 ent-SurgeryInsertKidneys = Установить почки
     .desc = { "" }
 
@@ -147,6 +150,9 @@ ent-SurgeryRemoveEyes = Извлечь глаза
     .desc = { "" }
 
 ent-SurgeryRemoveHeart = Извлечь сердце
+    .desc = { "" }
+
+ent-SurgeryRemoveAppendix = Извлечь аппендикс
     .desc = { "" }
 
 ent-SurgeryRemoveKidneys = Извлечь почки

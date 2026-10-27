@@ -10,7 +10,7 @@ public sealed partial class EatingNeedsOrganSystem : EntitySystem
 {
     [Dependency] private BodySystem _body = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private EntityQuery<EnabledOrganComponent> _enabledQuery = default!;
+    [Dependency] private EntityQuery<EnabledOrganComponent> _enabledQuery;
 
     [SubscribeLocalEvent]
     private void OnIngestionAttempt(Entity<EatingNeedsOrganComponent> ent, ref IngestionAttemptEvent args)

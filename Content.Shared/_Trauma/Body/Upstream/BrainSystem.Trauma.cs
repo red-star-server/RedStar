@@ -9,7 +9,7 @@ public sealed partial class BrainSystem
     [Dependency] private BodySystem _body = default!;
     [Dependency] private IGameTiming _timing = default!;
 
-    // <Shitmed> - do nothing for lings, use Active logic and don't do anything if a body already has a brain
+    // Use the active-organ logic and preserve an existing brain.
     [SubscribeLocalEvent]
     private void OnRemoved(EntityUid uid, BrainComponent brain, ref OrganGotRemovedEvent args)
     {

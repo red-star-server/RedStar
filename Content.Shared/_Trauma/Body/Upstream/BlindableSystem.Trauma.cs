@@ -20,6 +20,9 @@ public sealed partial class BlindableSystem
 
     // Alternative version of the method intended to be used with Eye Organs, so that you can just pass in
     // the severity and set that.
+    /// <summary>
+    /// Sets eye damage and refreshes the corresponding blindness state.
+    /// </summary>
     public void SetEyeDamage(Entity<BlindableComponent?> blindable, int amount)
     {
         if (!Resolve(blindable, ref blindable.Comp, false))

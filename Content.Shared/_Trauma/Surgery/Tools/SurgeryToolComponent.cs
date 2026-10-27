@@ -13,9 +13,15 @@ public sealed partial class SurgeryToolComponent : Component
     [DataField]
     public bool IgnoreToggle;
 
+    /// <summary>
+    /// Sound played when an operation step starts with this tool.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public SoundSpecifier? StartSound;
 
+    /// <summary>
+    /// Sound played when an operation step completes with this tool.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public SoundSpecifier? EndSound;
 }

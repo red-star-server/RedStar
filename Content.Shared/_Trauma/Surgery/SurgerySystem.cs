@@ -31,6 +31,7 @@ namespace Content.Shared._Trauma.Surgery;
 
 public sealed partial class SurgerySystem : EntitySystem
 {
+    [Dependency] private ILocalizationManager _loc = default!;
     [Dependency] private BodySystem _body = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private IGameTiming _timing = default!;
@@ -146,7 +147,7 @@ public sealed partial class SurgerySystem : EntitySystem
         ref DoAfterAttemptEvent<SurgeryDoAfterEvent> args)
     {
         if (_net.IsClient
-            || !args.Event.Repeat) // We only wanna do this laggy shit on repeatables. One-time stuff idc.
+            || !args.Event.Repeat) // Only repeatable steps need this completion check.
             return;
 
         if (!IsSurgeryValid(ent, GetEntity(args.Event.Part), args.Event.Surgery, args.Event.Step, args.Event.User, out var surgery, out var part, out var _)
@@ -157,6 +158,9 @@ public sealed partial class SurgerySystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnTargetDoAfter(Entity<SurgeryTargetComponent> ent, ref SurgeryDoAfterEvent args)
     {
+        if (args.Handled)
+            return;
+
         if (args.Cancelled)
         {
             var failEv = new SurgeryStepFailedEvent(args.User, ent, args.Surgery, args.Step);
@@ -165,8 +169,7 @@ public sealed partial class SurgerySystem : EntitySystem
         }
 
         var tool = _hands.GetActiveItemOrSelf(args.User);
-        if (args.Handled
-            || !IsSurgeryValid(ent, GetEntity(args.Part), args.Surgery, args.Step, args.User, out var surgery, out var part, out var step)
+        if (!IsSurgeryValid(ent, GetEntity(args.Part), args.Surgery, args.Step, args.User, out var surgery, out var part, out var step)
             || !PreviousStepsComplete(ent, part, surgery, args.Step, args.User)
             || !CanPerformStep(args.User, ent, part, step, tool, false))
         {
@@ -175,10 +178,11 @@ public sealed partial class SurgerySystem : EntitySystem
         }
 
         var complete = IsStepComplete(ent, part, args.Step, surgery);
-        args.Repeat = HasComp<SurgeryRepeatableStepComponent>(step) && !complete;
+        args.Handled = true;
         var ev = new SurgeryStepEvent(args.User, ent, part, tool, surgery, step, complete);
         RaiseLocalEvent(step, ref ev);
         RaiseLocalEvent(args.User, ref ev);
+        args.Repeat = HasComp<SurgeryRepeatableStepComponent>(step) && !IsStepComplete(ent, part, args.Step, surgery);
 
         // consume the tool if it's something like using LV cable as stitches
         if (!args.ToolUsed) return;
@@ -330,7 +334,7 @@ public sealed partial class SurgerySystem : EntitySystem
         else if (!_part.CanInsertOrgan(args.Part, ent.Comp.Category))
             args.Cancelled = true;
 
-        // TODO NUBODY: OrganReattachedComponent shitcode logic??? cancel if there are parts and none of them have it
+        // TODO: Replace the reattachment marker with an explicit operation state.
     }
 
     [SubscribeLocalEvent]
@@ -411,6 +415,9 @@ public sealed partial class SurgerySystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Returns the cached entity representing a surgery or step prototype, creating it when needed.
+    /// </summary>
     public EntityUid? GetSingleton(EntProtoId surgeryOrStep)
     {
         if (!ProtoMan.TryIndex(surgeryOrStep, out var prototype)
@@ -437,7 +444,7 @@ public sealed partial class SurgerySystem : EntitySystem
             return true;
 
         // you can't otherwise operate on something with no buckle
-        // just let people do surgery on goliaths and shit
+        // Allow surgery on non-humanoid bodies, including goliaths.
         if (!TryComp<BuckleComponent>(entity, out var buckle))
             return true;
 

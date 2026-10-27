@@ -1,6 +1,6 @@
 - type: entity
-  id: BluntScar
   parent: WoundBase
+  id: BluntScar
   components:
   - type: Wound
     damageType: Blunt
@@ -8,8 +8,8 @@
     isScar: true
 
 - type: entity
-  id: PiercingScar
   parent: WoundBase
+  id: PiercingScar
   components:
   - type: Wound
     damageType: Piercing
@@ -17,8 +17,8 @@
     isScar: true
 
 - type: entity
-  id: SlashScar
   parent: WoundBase
+  id: SlashScar
   components:
   - type: Wound
     damageType: Slash
@@ -26,8 +26,8 @@
     isScar: true
 
 - type: entity
-  id: BurnScar
   parent: WoundBase
+  id: BurnScar
   components:
   - type: Wound
     damageType: Heat
@@ -35,8 +35,8 @@
     isScar: true
 
 - type: entity
-  id: RadiationScar
   parent: WoundBase
+  id: RadiationScar
   components:
   - type: Wound
     damageType: Radiation

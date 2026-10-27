@@ -120,10 +120,6 @@
   - type: SurgeryOrganCondition
     organ: Stomach
 
-# Abdomen
-
-# TODO SHITMED: implement kidneys, appendix
-
 ## Removing
 
 # Head
@@ -195,7 +191,3 @@
   components:
   - type: SurgeryOrganCondition
     organ: Stomach
-
-# Abdomen
-
-# TODO SHITMED: kidneys, appendix

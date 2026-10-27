@@ -23,7 +23,6 @@ using Robust.Shared.Utility;
 
 namespace Content.Client._Trauma.Medical.UI;
 
-// TODO: use ui injection
 public sealed partial class TraumaHealthAnalyzerControl
 {
     private BodySystem _body = default!;
@@ -77,6 +76,9 @@ public sealed partial class TraumaHealthAnalyzerControl
         ChemicalsButton.OnPressed += _ => SetMode(HealthAnalyzerMode.Chemicals);
     }
 
+    /// <summary>
+    /// Selects the body part displayed by the health analyzer.
+    /// </summary>
     public void SetActiveBodyPart(ProtoId<OrganCategoryPrototype> part)
     {
         if (_target is not { } target) return;
@@ -84,6 +86,9 @@ public sealed partial class TraumaHealthAnalyzerControl
         OnBodyPartSelected?.Invoke(part, target);
     }
 
+    /// <summary>
+    /// Selects which type of medical information the analyzer displays.
+    /// </summary>
     public void SetMode(HealthAnalyzerMode mode)
     {
         _mode = mode;
@@ -91,12 +96,18 @@ public sealed partial class TraumaHealthAnalyzerControl
             PopulateTrauma(target, ref _lastState);
     }
 
+    /// <summary>
+    /// Clears the analyzer body-part selection.
+    /// </summary>
     public void ResetBodyPart()
     {
         if (_target is {} target)
             OnBodyPartSelected?.Invoke(null, target);
     }
 
+    /// <summary>
+    /// Updates which analyzer selection buttons are available for the scanned body.
+    /// </summary>
     public void SetActiveButtons(bool isHumanoid)
     {
         foreach (var button in _bodyPartControls.Values)
@@ -105,6 +116,9 @@ public sealed partial class TraumaHealthAnalyzerControl
         }
     }
 
+    /// <summary>
+    /// Updates the analyzer trauma display from the current scan state.
+    /// </summary>
     public void PopulateTrauma(EntityUid target, ref HealthAnalyzerUiState state)
     {
         _lastState = state;
@@ -150,6 +164,9 @@ public sealed partial class TraumaHealthAnalyzerControl
 
     #region Scan state populate methods
 
+    /// <summary>
+    /// Updates body-part health and bleeding information in the analyzer.
+    /// </summary>
     public void PopulateBody(EntityUid target, ref HealthAnalyzerUiState state, bool bloodLevelLow = false)
     {
         var selectedPart = _entityManager.GetEntity(state.Part);
@@ -245,6 +262,9 @@ public sealed partial class TraumaHealthAnalyzerControl
         }
     }
 
+    /// <summary>
+    /// Populates the analyzer organ list for the scanned body.
+    /// </summary>
     public void PopulateOrgans(EntityUid body)
     {
         ReturnButton.Visible = false;
@@ -287,6 +307,9 @@ public sealed partial class TraumaHealthAnalyzerControl
         }
     }
 
+    /// <summary>
+    /// Populates the analyzer reagent list for the scanned body.
+    /// </summary>
     public void PopulateChemicals(EntityUid body)
     {
         ReturnButton.Visible = false;
@@ -363,13 +386,11 @@ public sealed partial class TraumaHealthAnalyzerControl
         int layer = 0;
         foreach (var (part, integrity) in body)
         {
-            // TODO: PartStatusUIController and make it use layers instead of TextureRects when EE refactors alerts.
+            // TODO: Move body status presentation into a UI controller.
             var name = part.ToString().ToLowerInvariant();
             int enumValue = (int) integrity;
             var baseRsiPath = new ResPath($"/Textures/_RedStar/Medical/Interface/Targeting/Status/{name}.rsi");
             var rsi = new SpriteSpecifier.Rsi(baseRsiPath, $"{enumValue}");
-            // Shitcode with love from Russia :)
-            // fuck you mocho
             CreateOrAddToLayer((_spriteViewEntity.Value, sprite), rsi, layer);
             layer++;
 

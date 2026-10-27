@@ -36,6 +36,15 @@ public sealed partial class TraumaComponent : Component
     [DataField, AutoNetworkedField]
     public FixedPoint2 TraumaSeverity;
 
+    /// <summary>
+    /// Type of trauma represented by this entity.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public TraumaType TraumaType;
+
+    /// <summary>
+    /// Whether this trauma prevents wound healing while it is active.
+    /// </summary>
+    [DataField]
+    public bool BlocksHealing;
 }

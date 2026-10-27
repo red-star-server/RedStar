@@ -98,6 +98,9 @@ public partial class WoundSystem
         return anyHealed;
     }
 
+    /// <summary>
+    /// Attempts to reduce bleeding on the part and reports the applied change.
+    /// </summary>
     public bool TryHealBleedingWounds(Entity<WoundableComponent?> part, FixedPoint2 bleedStopAbility, out FixedPoint2 modifiedBleed)
     {
         modifiedBleed = FixedPoint2.Zero;
@@ -134,6 +137,9 @@ public partial class WoundSystem
         return modifiedBleed > FixedPoint2.Zero;
     }
 
+    /// <summary>
+    /// Attempts to heal eligible wounds on the part using the supplied healing budget.
+    /// </summary>
     public bool TryHealWounds(Entity<WoundableComponent?> part,
         FixedPoint2 healAmount,
         out FixedPoint2 healed,
@@ -176,6 +182,9 @@ public partial class WoundSystem
         return healed > 0;
     }
 
+    /// <summary>
+    /// Attempts to heal wounds matching the requested damage type.
+    /// </summary>
     public bool TryHealWoundsOfType(Entity<WoundableComponent?> part,
         FixedPoint2 healAmount,
         [ForbidLiteral] ProtoId<DamageTypePrototype> damageType,
@@ -218,10 +227,13 @@ public partial class WoundSystem
         return healed > 0;
     }
 
+    /// <summary>
+    /// Attempts to heal eligible wounds on the part using the supplied healing budget.
+    /// </summary>
     public bool TryHealWounds(Entity<WoundableComponent?> part,
         DamageSpecifier damage,
         out Dictionary<string, FixedPoint2> healed,
-        bool ignoreMultipliers = false)
+        bool ignoreBlockers = false)
     {
         healed = [];
         if (!_woundableQuery.Resolve(part, ref part.Comp))
@@ -229,7 +241,7 @@ public partial class WoundSystem
 
         foreach (var (type, amount) in damage.DamageDict)
         {
-            if (TryHealWoundsOfType(part, amount, type, out var typeHealed))
+            if (TryHealWoundsOfType(part, amount, type, out var typeHealed, ignoreBlockers))
             {
                 healed.Add(type, typeHealed);
                 continue;
@@ -239,6 +251,9 @@ public partial class WoundSystem
         return healed.Any();
     }
 
+    /// <summary>
+    /// Finds the body part with the greatest damage matching the requested group.
+    /// </summary>
     public bool TryGetWoundableWithMostDamage(
         EntityUid body,
         [NotNullWhen(true)] out Entity<WoundableComponent>? woundable,
@@ -261,6 +276,9 @@ public partial class WoundSystem
         return woundable != null;
     }
 
+    /// <summary>
+    /// Checks whether the part has damage in the requested group.
+    /// </summary>
     public bool HasDamageOfGroup(
         EntityUid woundable,
         [ForbidLiteral] ProtoId<DamageGroupPrototype> damageGroup)
@@ -269,6 +287,9 @@ public partial class WoundSystem
         return wounds.Any(wound => wound.Comp.DamageGroup == damageGroup);
     }
 
+    /// <summary>
+    /// Checks whether the wound can be healed under the current healing restrictions.
+    /// </summary>
     public bool CanHealWound(Entity<WoundComponent> wound, bool ignoreBlockers = false)
     {
         if (!ignoreBlockers && !wound.Comp.CanBeHealed)

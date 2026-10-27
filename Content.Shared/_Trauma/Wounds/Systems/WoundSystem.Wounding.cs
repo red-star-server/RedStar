@@ -57,8 +57,14 @@ public sealed partial class WoundSystem
         if (_timing.ApplyingState)
             return;
 
+        if (_woundableQuery.HasComp(args.Organ))
+            CheckWoundableSeverityThresholds(args.Organ);
+
         if (_body.GetBody(parent.Owner) is {} body)
+        {
+            _bodyStatus.UpdateStatus(body);
             _trauma.UpdateBodyBoneAlert(body);
+        }
     }
 
     [SubscribeLocalEvent]
@@ -196,15 +202,20 @@ public sealed partial class WoundSystem
     [SubscribeLocalEvent]
     private void OnModifyDoAfterDelay(Entity<HandOrganComponent> ent, ref BodyRelayedEvent<ModifyDoAfterDelayEvent> args)
     {
-        // TODO SHITMED: because of how the shitcode works, missing a hand is faster than having a broken one
+        // TODO: Apply a missing-hand delay penalty so that removing an injured hand is not faster.
         // make a thing like LegsComponent that makes doafters longer with missing hands
-        RaiseLocalEvent(ent, args.Args);
+        var ev = args.Args;
+        RaiseLocalEvent(ent, ref ev);
+        args.Args = ev;
     }
 
     #endregion
 
     #region Public API
 
+    /// <summary>
+    /// Finds the damage group containing the requested damage type.
+    /// </summary>
     public ProtoId<DamageGroupPrototype>? GetDamageGroupByType([ForbidLiteral] ProtoId<DamageTypePrototype> id)
     {
         foreach (var group in ProtoMan.EnumeratePrototypes<DamageGroupPrototype>())
@@ -216,6 +227,9 @@ public sealed partial class WoundSystem
         return null;
     }
 
+    /// <summary>
+    /// Attempts to apply severity to a wound of the requested type on the part.
+    /// </summary>
     public bool TryInduceWound(
         Entity<WoundableComponent?> part,
         [ForbidLiteral] EntProtoId id,
@@ -479,6 +493,9 @@ public sealed partial class WoundSystem
         DirtyField(part, part.Comp, nameof(WoundableComponent.Integrity));
     }
 
+    /// <summary>
+    /// Attaches the wound to the part and updates the affected integrity state.
+    /// </summary>
     public bool AddWound(
         Entity<WoundableComponent?> part,
         Entity<WoundComponent?> wound,
@@ -502,7 +519,7 @@ public sealed partial class WoundSystem
         // We prevent removal if theres at least one wound holding traumas left.
         foreach (var trauma in _trauma.GetAllWoundTraumas(wound))
         {
-            if (TraumaSystem.TraumasBlockingHealing.Contains(trauma.Comp.TraumaType))
+            if (trauma.Comp.BlocksHealing)
                 return false;
         }
 
@@ -559,10 +576,9 @@ public sealed partial class WoundSystem
             return;
 
         var ev = new WoundSeverityChangedEvent(wound.Comp.WoundSeverity, nearestSeverity);
-        RaiseLocalEvent(wound, ref ev);
-
         wound.Comp.WoundSeverity = nearestSeverity;
         DirtyField(wound, wound.Comp, nameof(WoundComponent.WoundSeverity));
+        RaiseLocalEvent(wound, ref ev);
     }
 
     /// <summary>
@@ -614,6 +630,9 @@ public sealed partial class WoundSystem
         => ProtoMan.TryIndex(id, out var proto)
             && proto.HasComp(_woundName);
 
+    /// <summary>
+    /// Collects the wound severity state of each woundable body-part category.
+    /// </summary>
     public Dictionary<ProtoId<OrganCategoryPrototype>, WoundableSeverity> GetWoundableStatesOnBody(EntityUid body)
     {
         var result = SeveredStates();
@@ -626,6 +645,9 @@ public sealed partial class WoundSystem
         return result;
     }
 
+    /// <summary>
+    /// Collects the injury severity state of each damageable body-part category.
+    /// </summary>
     public Dictionary<ProtoId<OrganCategoryPrototype>, WoundableSeverity> GetDamageableStatesOnBody(EntityUid body)
     {
         var result = SeveredStates();

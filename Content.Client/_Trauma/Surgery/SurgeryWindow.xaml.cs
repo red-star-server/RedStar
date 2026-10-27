@@ -82,6 +82,9 @@ public sealed partial class SurgeryWindow : FancyWindow
         Update();
     }
 
+    /// <summary>
+    /// Selects the patient whose available operations are displayed.
+    /// </summary>
     public void SetOwner(EntityUid owner)
     {
         _owner = owner;
@@ -324,7 +327,7 @@ public sealed partial class SurgeryWindow : FancyWindow
             }
 
             var priority = SurgeryPriority(a).CompareTo(SurgeryPriority(b));
-            return priority != 0 ? priority : string.Compare(Name(a), Name(b), StringComparison.Ordinal);
+            return priority != 0 ? priority : string.Compare(Name(a), Name(b), StringComparison.CurrentCulture);
         });
 
         Surgeries.RemoveAllChildren();

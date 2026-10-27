@@ -14,6 +14,9 @@ namespace Content.Shared.Damage.Systems;
 
 public sealed partial class DamageableSystem
 {
+    /// <summary>
+    /// Distributes the body initial damage to its newly created parts.
+    /// </summary>
     public void ApplyInitialBodyDamage(Entity<DamageableComponent> ent)
     {
         if (!UsesBodyPartDamage(ent))
@@ -73,10 +76,10 @@ public sealed partial class DamageableSystem
         if (damage.Empty)
             return damage;
 
-        // TODO SHITMED: jesus christ refactor this
+        // TODO: Separate target selection from per-part damage distribution.
         var adjustedDamage = damage * partMultiplier;
-        // This cursed shitcode lets us know if the target part is a power of 2
-        // therefore having multiple parts targeted.
+        // A bitmask with more than one set bit targets multiple body parts,
+        // rather than a single primitive body-part flag.
         if (targetPart != null
             && targetPart != 0 && (targetPart & (targetPart - 1)) != 0)
         {
@@ -143,11 +146,11 @@ public sealed partial class DamageableSystem
                 appliedDamage += partDamageResult;
 
                 /*
-                    Why this ugly shitcode? Its so that we can track chems and other sorts of healing surpluses.
+                    Track unused healing so that per-part limits do not reduce the requested total healing.
                     Assume you're fighting in a spaced area. Your chest has 30 damage, and every other part
                     is getting 0.5 per tick. Your chems will only be 10% as effective, so we take the surplus
                     healing and pass it along parts. That way a chem that would heal you for 75 brute would truly
-                    heal the 75 brute per tick, and not some weird shit like 6.8 per tick.
+                    apply the full 75 brute healing per tick rather than only 6.8 per tick.
                 */
                 foreach (var (type, damageFromDict) in modifiedDamage.DamageDict)
                 {
@@ -171,7 +174,7 @@ public sealed partial class DamageableSystem
         TargetBodyPart? target;
         var totalDamage = damage.GetTotal();
 
-        if (totalDamage <= 0 || !canMiss) // Whoops i think i fucked up damage here.
+        if (totalDamage <= 0 || !canMiss)
             target = _body.GetTargetBodyPart(uid, origin, targetPart);
         else
             target = _body.GetRandomBodyPart(uid, origin, targetPart);
@@ -202,6 +205,9 @@ public sealed partial class DamageableSystem
 
     private List<float> _weights = new();
 
+    /// <summary>
+    /// Creates normalized weights for distributing varied damage between body parts.
+    /// </summary>
     public List<float> GetDamageVariationMultipliers(EntityUid uid, float variation, int count)
     {
         DebugTools.AssertNotEqual(count, 0);
@@ -228,7 +234,7 @@ public sealed partial class DamageableSystem
         return list;
     }
 
-    // TODO: kill this shit
+    // TODO: Replace repeated aggregation with incremental parent damage updates.
     /// <summary>
     /// Updates the parent entity's damage values by summing damage from all body parts.
     /// Should be called after damage is applied to any body part.
@@ -258,12 +264,12 @@ public sealed partial class DamageableSystem
         Dirty(body, bodyDamage);
 
         // Sum up damage from all body parts
-        foreach (var part in _body.GetOrgans<DamageableComponent>(body))
+        foreach (var part in _body.EnumerateOrgans(body, _damageableQuery))
         {
             if (_internalQuery.HasComp(part)) // don't count internal organs, for now at least
                 continue;
 
-            foreach (var (type, value) in part.Comp.Damage.DamageDict)
+            foreach (var (type, value) in part.Comp2.Damage.DamageDict)
             {
                 if (value == 0)
                     continue;
@@ -285,6 +291,9 @@ public sealed partial class DamageableSystem
         return true;
     }
 
+    /// <summary>
+    /// Adjusts damage according to the selected body-part distribution behavior.
+    /// </summary>
     public DamageSpecifier ApplySplitDamageBehaviors(SplitDamageBehavior splitDamageBehavior,
         DamageSpecifier damage,
         List<Entity<DamageableComponent>> parts)

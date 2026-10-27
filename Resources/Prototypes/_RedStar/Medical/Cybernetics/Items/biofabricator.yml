@@ -9,7 +9,8 @@
     snapCardinals: true
     layers:
     - state: limbgrower_idleoff
-      map: ["enum.LatheVisualLayers.IsRunning"]
+      map:
+      - "enum.LatheVisualLayers.IsRunning"
 #    - state: limbgrower_idleoff
 #      shader: unshaded
 #      map: ["enum.PowerDeviceVisualLayers.Powered"]
@@ -30,10 +31,9 @@
     staticPacks:
     - BiofabPartsStatic
 
-
 - type: entity
-  id: MedicalBiofabMachineBoard
   parent: BaseMachineCircuitboard
+  id: MedicalBiofabMachineBoard
   name: medical biofab machine board
   description: A machine printed circuit board for a medical biofab.
   components:

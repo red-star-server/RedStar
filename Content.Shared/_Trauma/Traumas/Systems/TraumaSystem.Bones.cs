@@ -44,7 +44,7 @@ public partial class TraumaSystem
             _ => 0f
         };
 
-        // TODO SHITMED: predict bone damage!!?!
+        // TODO: Predict bone damage.
         if (_net.IsServer)
             _audio.PlayPvs(bone.Comp.BoneBreakSound, body, bone.Comp.BoneBreakSound.Params.WithVolume(volumeFloat));
     }
@@ -72,6 +72,9 @@ public partial class TraumaSystem
 
     #region Public API
 
+    /// <summary>
+    /// Applies integrity damage to the bone and updates its severity state.
+    /// </summary>
     public bool DamageBone(Entity<BoneComponent?> bone, FixedPoint2 severity)
     {
         if (severity == 0 || !_boneQuery.Resolve(bone, ref bone.Comp))
@@ -80,6 +83,9 @@ public partial class TraumaSystem
         return SetBoneIntegrity(bone, bone.Comp.BoneIntegrity - severity);
     }
 
+    /// <summary>
+    /// Applies bone damage and creates the associated trauma when appropriate.
+    /// </summary>
     public bool ApplyBoneTrauma(
         Entity<BoneComponent?> bone,
         Entity<TraumaInflicterComponent> wound,
@@ -88,7 +94,7 @@ public partial class TraumaSystem
         if (!_boneQuery.Resolve(bone, ref bone.Comp))
             return false;
 
-        // TODO: predict when its rng is unfucked
+        // TODO: Predict trauma creation once its random selection is deterministic.
         if (_net.IsServer)
             AddTrauma(bone, bone, wound, TraumaType.BoneDamage, severity);
 
@@ -97,6 +103,9 @@ public partial class TraumaSystem
         return true;
     }
 
+    /// <summary>
+    /// Sets the bone remaining integrity and updates its severity state.
+    /// </summary>
     public bool SetBoneIntegrity(Entity<BoneComponent?> bone, FixedPoint2 integrity)
     {
         if (!_boneQuery.Resolve(bone, ref bone.Comp))
@@ -107,10 +116,9 @@ public partial class TraumaSystem
             return false;
 
         var ev = new BoneIntegrityChangedEvent(bone.Comp.BoneIntegrity, newIntegrity);
-        RaiseLocalEvent(bone, ref ev);
-
         bone.Comp.BoneIntegrity = newIntegrity;
         DirtyField(bone, bone.Comp, nameof(BoneComponent.BoneIntegrity));
+        RaiseLocalEvent(bone, ref ev);
 
         CheckBoneSeverity(bone);
         return true;
@@ -122,9 +130,9 @@ public partial class TraumaSystem
     public void UpdateBodyBoneAlert(Entity<BodyComponent?> body)
     {
         bool hasBrokenBones = false;
-        foreach (var bone in _body.GetOrgans<BoneComponent>(body))
+        foreach (var bone in _body.EnumerateOrgans<BoneComponent>(body, _boneQuery))
         {
-            if (bone.Comp.BoneSeverity != BoneSeverity.Broken) continue;
+            if (bone.Comp2.BoneSeverity != BoneSeverity.Broken) continue;
             hasBrokenBones = true;
             break;
         }
@@ -159,10 +167,9 @@ public partial class TraumaSystem
             return;
 
         var ev = new BoneSeverityChangedEvent(bone.Comp.BoneSeverity, nearestSeverity);
-        RaiseLocalEvent(bone, ref ev);
-
         bone.Comp.BoneSeverity = nearestSeverity;
         DirtyField(bone, nameof(BoneComponent.BoneSeverity));
+        RaiseLocalEvent(bone, ref ev);
 
         if (_body.GetBody(bone.Owner) is {} body)
             UpdateBodyBoneAlert(body);

@@ -9,6 +9,9 @@ namespace Content.Shared._Trauma.Augments;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class AugmentActivatableUIComponent : Component
 {
+    /// <summary>
+    /// Bound interface to open when the installed augment is activated.
+    /// </summary>
     [DataField(required: true, customTypeSerializer: typeof(EnumSerializer))]
     public Enum? Key;
 }

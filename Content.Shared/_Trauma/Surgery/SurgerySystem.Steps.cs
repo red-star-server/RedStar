@@ -178,7 +178,7 @@ public sealed partial class SurgerySystem
 
         var adjustedDamage = new DamageSpecifier(ent.Comp.Damage);
 
-        var group = ProtoMan.Index<DamageGroupPrototype>(ent.Comp.MainGroup);
+        var group = ProtoMan.Index(ent.Comp.MainGroup);
         foreach (var type in group.DamageTypes)
         {
             adjustedDamage.DamageDict[type] = adjustedDamage.DamageDict.GetValueOrDefault(type) - bonus;
@@ -203,9 +203,9 @@ public sealed partial class SurgerySystem
             return;
 
         var activeHandEntity = _hands.GetActiveItem(args.User);
-        if (activeHandEntity != null && ent.Comp.Action == "Insert")
+        if (activeHandEntity != null && ent.Comp.Action == SurgeryStepCavityEffectComponent.InsertAction)
             _container.Insert(activeHandEntity.Value, container);
-        else if (ent.Comp.Action == "Remove" && container.ContainedEntity is {} contained)
+        else if (ent.Comp.Action == SurgeryStepCavityEffectComponent.RemoveAction && container.ContainedEntity is {} contained)
             _hands.TryPickupAnyHand(args.User, contained);
     }
 
@@ -215,8 +215,8 @@ public sealed partial class SurgerySystem
         var ev = new GetBodyPartCavityEvent();
         RaiseLocalEvent(args.Part, ref ev);
         if (ev.Container is not {} container
-            || (ent.Comp.Action == "Insert" && container.Count == 0)
-            || (ent.Comp.Action == "Remove" && container.Count != 0))
+            || (ent.Comp.Action == SurgeryStepCavityEffectComponent.InsertAction && container.Count == 0)
+            || (ent.Comp.Action == SurgeryStepCavityEffectComponent.RemoveAction && container.Count != 0))
             args.Cancelled = true;
     }
 
@@ -381,9 +381,12 @@ public sealed partial class SurgerySystem
         switch (ent.Comp.TraumaType)
         {
             case TraumaType.OrganDamage:
-                foreach (var organ in _body.GetInternalOrgans(args.Body))
+                foreach (var organUid in _part.GetPartOrgans(args.Part).Values.ToArray())
                 {
-                    foreach (var modifier in organ.Comp.IntegrityModifiers)
+                    if (!TryComp<InternalChildOrganComponent>(organUid, out var organ))
+                        continue;
+
+                    foreach (var modifier in organ.IntegrityModifiers.ToArray())
                     {
                         if (healAmount <= 0)
                             return;
@@ -392,14 +395,14 @@ public sealed partial class SurgerySystem
                         {
                             healAmount -= modifier.Value;
                             _trauma.TryRemoveOrganDamageModifier(
-                                organ.AsNullable(),
+                                (organUid, organ),
                                 modifier.Key.Item2,
                                 modifier.Key.Item1);
                         }
                         else
                         {
                             _trauma.TryChangeOrganDamageModifier(
-                                organ.AsNullable(),
+                                (organUid, organ),
                                 -healAmount,
                                 modifier.Key.Item2,
                                 modifier.Key.Item1);
@@ -696,15 +699,11 @@ public sealed partial class SurgerySystem
         var ev = new SurgeryDoAfterEvent(GetNetEntity(part), surgeryId, stepId, toolUsed);
         var duration = GetSurgeryDuration(step, user, body, speed);
 
-        if (TryComp(user, out SurgerySpeedModifierComponent? surgerySpeedMod))
-            duration = duration / surgerySpeedMod.SpeedModifier;
-
         // Current do-afters check container accessibility. The patient is accessible; their internal part is not.
         // Keep the selected part in the event while checking distance and movement against the patient.
-        var doAfter = new DoAfterArgs(EntityManager, user, TimeSpan.FromSeconds(duration), ev, body, body)
+        var doAfter = new DoAfterArgs(EntityManager, user, duration, ev, body, body)
         {
             BreakOnMove = true,
-            //BreakOnTargetMove = true, I fucking hate wizden dude.
             CancelDuplicate = true,
             DuplicateCondition = DuplicateConditions.SameEvent,
             NeedHand = true,
@@ -722,17 +721,17 @@ public sealed partial class SurgerySystem
         var targetName = Identity.Entity(body, EntityManager);
 
         var locName = $"surgery-popup-procedure-{surgeryId}-step-{stepId}";
-        if (!Loc.TryGetString(locName, out var locResult, ("user", userName), ("target", targetName), ("part", part)))
+        if (!_loc.TryGetString(locName, out var locResult, ("user", userName), ("target", targetName), ("part", part)))
             locResult = Loc.GetString($"surgery-popup-step-{stepId}", ("user", userName), ("target", targetName), ("part", part));
 
         _popup.PopupEntity(locResult, user, user);
         return true;
     }
 
-    private float GetSurgeryDuration(EntityUid surgeryStep, EntityUid user, EntityUid target, float toolSpeed)
+    private TimeSpan GetSurgeryDuration(EntityUid surgeryStep, EntityUid user, EntityUid target, float toolSpeed)
     {
         if (!_stepQuery.TryComp(surgeryStep, out var stepComp))
-            return 2f; // Shouldnt really happen but just a failsafe.
+            return TimeSpan.FromSeconds(2); // Fallback for a step without its configuration component.
 
         var speed = toolSpeed;
         if(TryComp<BuckleComponent>(target, out var buckleComp)) // Get buckle component from target.
@@ -792,6 +791,9 @@ public sealed partial class SurgerySystem
         return null;
     }
 
+    /// <summary>
+    /// Finds the next incomplete step, including prerequisite operations.
+    /// </summary>
     public (Entity<SurgeryComponent> Surgery, int Step)? GetNextStep(EntityUid body, EntityUid part, EntityUid surgery, EntityUid user)
     {
         _nextStepList.Clear();
@@ -855,8 +857,8 @@ public sealed partial class SurgerySystem
 
         if (check.IsValid)
         {
-            // surgery conditions are fucking awful and apply to both the surgery and steps...
-            var ev = new SurgeryValidEvent(body, part, tool);
+            // Both the operation and the individual step may impose surgery conditions.
+            var ev = new SurgeryValidEvent(body, part, user);
             RaiseLocalEvent(step, ref ev);
             if (!ev.Cancelled)
                 return true;
@@ -866,7 +868,7 @@ public sealed partial class SurgerySystem
         }
 
         if (doPopup && popup != null)
-            _popup.PopupEntity(check.Popup, user, user, PopupType.SmallCaution);
+            _popup.PopupEntity(popup, user, user, PopupType.SmallCaution);
 
         return false;
     }
@@ -876,6 +878,9 @@ public sealed partial class SurgerySystem
         return CanPerformStep(user, body, part, step, tool, doPopup, out _, out _, out _);
     }
 
+    /// <summary>
+    /// Checks whether the surgeon can perform the step with the currently held item.
+    /// </summary>
     public bool CanPerformStepWithHeld(EntityUid user, EntityUid body, EntityUid part, EntityUid step, bool doPopup, out string? popup)
     {
         var tool = _hands.GetActiveItemOrSelf(user);

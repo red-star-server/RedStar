@@ -11,6 +11,9 @@ namespace Content.Shared._Trauma.EntityEffects;
 /// </summary>
 public sealed partial class HealBoneDamage : EntityEffectBase<HealBoneDamage>
 {
+    /// <summary>
+    /// Bone integrity restored when this effect is applied.
+    /// </summary>
     [DataField]
     public FixedPoint2 Amount = 1;
 
@@ -30,9 +33,9 @@ public sealed partial class HealBoneDamageEffectSystem : EntityEffectSystem<Body
     {
         var amount = args.Effect.Amount * args.Scale;
 
-        foreach (var bone in _body.GetOrgans<BoneComponent>(ent.Owner))
+        foreach (var bone in _body.EnumerateOrgans<BoneComponent>(ent.AsNullable()))
         {
-            _trauma.DamageBone(bone.AsNullable(), -amount);
+            _trauma.DamageBone((bone.Owner, bone.Comp2), -amount);
         }
     }
 }

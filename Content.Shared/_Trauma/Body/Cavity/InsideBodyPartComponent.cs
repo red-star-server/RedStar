@@ -31,15 +31,27 @@ public sealed partial class InsideBodyPartComponent : Component
     [DataField]
     public EntProtoId<InstantActionComponent> BurstAction = "ActionBodyPartBurst";
 
+    /// <summary>
+    /// Spawned action that lets the contained entity burst out.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? ActionEntity;
 
+    /// <summary>
+    /// Time required to burst out of a severed part or a dead body.
+    /// </summary>
     [DataField]
     public TimeSpan Delay = TimeSpan.FromSeconds(4);
 
+    /// <summary>
+    /// Time required to burst out while the containing body is alive.
+    /// </summary>
     [DataField]
     public TimeSpan AliveDelay = TimeSpan.FromSeconds(10); // more drama when alive
 
+    /// <summary>
+    /// Damage dealt to the containing part when the entity escapes.
+    /// </summary>
     [DataField]
     public DamageSpecifier BurstDamage = new()
     {

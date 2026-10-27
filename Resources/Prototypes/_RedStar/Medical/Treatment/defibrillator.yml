@@ -1,6 +1,6 @@
 - type: entity
-  id: DefibrillatorCompactEmpty
   parent: DefibrillatorCompact
+  id: DefibrillatorCompactEmpty
   suffix: Empty
   components:
   - type: ItemSlots

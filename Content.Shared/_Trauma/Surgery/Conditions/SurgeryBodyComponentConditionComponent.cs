@@ -9,9 +9,15 @@ namespace Content.Shared._Trauma.Surgery.Conditions;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class SurgeryBodyComponentConditionComponent : Component
 {
+    /// <summary>
+    /// Body requirements that must match for the operation to be available.
+    /// </summary>
     [DataField]
     public EntityWhitelist? Whitelist;
 
+    /// <summary>
+    /// Body properties that prevent the operation from being available.
+    /// </summary>
     [DataField]
     public EntityWhitelist? Blacklist;
 }

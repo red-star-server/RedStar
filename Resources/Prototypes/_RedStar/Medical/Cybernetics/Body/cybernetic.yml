@@ -51,7 +51,8 @@
   id: OrganCyberneticMetabolizer
   components:
   - type: Metabolizer
-    metabolizerTypes: [ Cybernetic ]
+    metabolizerTypes:
+    - Cybernetic
 
 ## Parts
 
@@ -202,12 +203,11 @@
     - state: eyes-sechud
   - type: OrganComponents
     onAdd:
-    # TODO SHITMED: this should add ShowSecurityIcons's components
     - type: ShowJobIcons
     - type: ShowMindShieldIcons
     - type: ShowCriminalRecordIcons
     - type: ShowContrabandDetails
-    # no flash or welding protection, too op for shitsec
+    # Security HUD eyes do not grant flash or welding protection.
 
 - type: entity
   parent: OrganCyberneticEyes
@@ -269,7 +269,7 @@
       Normal: 25
       Damaged: 9
       Destroyed: 0
-  # TODO SHITMED: write a test that it actually breathes nitrogen and ignores co2 bruh
+  # TODO: Verify nitrogen respiration and carbon dioxide tolerance.
 
 - type: entity
   parent: OrganCyberneticLungs

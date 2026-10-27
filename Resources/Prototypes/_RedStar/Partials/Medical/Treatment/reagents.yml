@@ -40,7 +40,8 @@
           min: 20
         type: Local
         visualType: Medium
-        messages: ["generic-reagent-effect-nauseous"]
+        messages:
+        - "generic-reagent-effect-nauseous"
         probability: 0.2
       - !type:Vomit
         conditions:
@@ -421,7 +422,8 @@
       - !type:PopupMessage
         type: Local
         visualType: Medium
-        messages: ["leporazine-effect-temperature-adjusting"]
+        messages:
+        - "leporazine-effect-temperature-adjusting"
         probability: 0.2
       - !type:AdjustReagent
         reagent: Fresium
@@ -465,7 +467,9 @@
       - !type:PopupMessage
         type: Local
         visualType: Large
-        messages: ["barozine-effect-skin-burning", "barozine-effect-muscle-contract"]
+        messages:
+        - "barozine-effect-skin-burning"
+        - "barozine-effect-muscle-contract"
         probability: 0.1
 
 - type: reagent
@@ -740,7 +744,9 @@
           min: 10
       - !type:PopupMessage
         visualType: Medium
-        messages: ["ethyloxyephedrine-effect-feeling-awake", "ethyloxyephedrine-effect-clear-mind"]
+        messages:
+        - "ethyloxyephedrine-effect-feeling-awake"
+        - "ethyloxyephedrine-effect-clear-mind"
         type: Local
         probability: 0.1
 
@@ -760,7 +766,9 @@
           min: 5
       - !type:PopupMessage
         visualType: Medium
-        messages: ["ethyloxyephedrine-effect-feeling-awake", "ethyloxyephedrine-effect-clear-mind"]
+        messages:
+        - "ethyloxyephedrine-effect-feeling-awake"
+        - "ethyloxyephedrine-effect-clear-mind"
         type: Local
         probability: 0.1
 
@@ -794,7 +802,8 @@
           min: 20
         type: Local
         visualType: Medium
-        messages: ["generic-reagent-effect-nauseous"]
+        messages:
+        - "generic-reagent-effect-nauseous"
         probability: 0.2
       - !type:Vomit
         conditions:
@@ -815,7 +824,8 @@
           min: 1
         type: Local
         visualType: Medium
-        messages: ["generic-reagent-effect-nauseous"]
+        messages:
+        - "generic-reagent-effect-nauseous"
         probability: 0.2
 
 - type: reagent
@@ -1013,7 +1023,8 @@
           min: 15
         type: Local
         visualType: Medium
-        messages: ["mannitol-effect-enlightened"]
+        messages:
+        - "mannitol-effect-enlightened"
         probability: 0.2
 
 - type: reagent

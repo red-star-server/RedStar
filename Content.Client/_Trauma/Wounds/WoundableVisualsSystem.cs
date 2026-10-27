@@ -290,7 +290,7 @@ public sealed partial class WoundableVisualsSystem : EntitySystem
 
         foreach (var wound in _wound.GetWoundableWounds(uid))
         {
-            if (_bleedQuery.TryComp(wound, out var bleeds))
+            if (_bleedQuery.TryComp(wound, out var bleeds) && bleeds.IsBleeding)
                 total += bleeds.BleedingAmount;
         }
 
@@ -377,7 +377,7 @@ public sealed partial class WoundableVisualsSystem : EntitySystem
     private static string GetLimbBleedingKey(BodyPartComponent bodyPart)
     {
         var symmetry = bodyPart.Symmetry == BodyPartSymmetry.Left ? "L" : "R";
-        // TODO SHITMED: Foot ? Leg : Arm - WHAT THE FUCK!?!?
+        // TODO: Represent limb bleeding layers explicitly instead of mapping feet to legs.
         var partType = bodyPart.PartType == BodyPartType.Foot ? "Leg" : "Arm";
         return $"{symmetry}{partType}";
     }

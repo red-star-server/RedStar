@@ -12,7 +12,8 @@
     node: casing
     defaultTarget: augment
   - type: Tag
-    tags: [ AugmentCellCasing ]
+    tags:
+    - AugmentCellCasing
 
 - type: entity
   parent: BaseItem
@@ -37,7 +38,8 @@
     sprite: _RedStar/Medical/Augments/power.rsi
     state: cell
   - type: ChildOrgan
-    parents: [ Torso ]
+    parents:
+    - Torso
   - type: Organ
     category: AugmentPowerCell
   - type: OrganComponents
@@ -77,7 +79,8 @@
     sprite: _RedStar/Medical/Augments/power.rsi
     state: cell
   - type: ChildOrgan
-    parents: [ Torso ]
+    parents:
+    - Torso
   - type: Organ
     category: AugmentCharger
   - type: AugmentCharger
@@ -95,7 +98,8 @@
     graph: AugmentRecharger
     node: casing
   - type: Tag
-    tags: [ AugmentRechargerCasing ]
+    tags:
+    - AugmentRechargerCasing
 
 - type: entity
   parent: BaseItem

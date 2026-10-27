@@ -56,7 +56,7 @@ public sealed partial class PartStatusSystem : EntitySystem
     private void OnGetPartStatus(GetPartStatusEvent message, EntitySessionEventArgs args)
     {
         if (args.SenderSession.AttachedEntity is not {} entity ||
-            _mob.IsIncapacitated(entity)) // fuck you i guess???
+            _mob.IsIncapacitated(entity))
             return;
 
         var partStatusSet = CollectPartStatuses(entity);
@@ -100,6 +100,9 @@ public sealed partial class PartStatusSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
+    /// <summary>
+    /// Builds localized examination markup for the target health state.
+    /// </summary>
     public FormattedMessage CreateMarkup(EntityUid uid, EntityUid examiner, HealthExaminableComponent component, DamageableComponent damage)
     {
         var partStatusSet = CollectPartStatuses(uid);

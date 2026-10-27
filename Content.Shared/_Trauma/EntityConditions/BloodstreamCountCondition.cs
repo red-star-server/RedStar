@@ -10,9 +10,15 @@ namespace Content.Shared._Trauma.EntityConditions;
 /// </summary>
 public sealed partial class BloodstreamCountCondition : EntityConditionBase<BloodstreamCountCondition>
 {
+    /// <summary>
+    /// Exclusive upper limit on the number of reagents in the bloodstream.
+    /// </summary>
     [DataField]
     public int Max = int.MaxValue;
 
+    /// <summary>
+    /// Exclusive lower limit on the number of reagents in the bloodstream.
+    /// </summary>
     [DataField]
     public int Min = -1;
 

@@ -82,6 +82,9 @@ public sealed partial class SurgeryToolExamineSystem : EntitySystem
             Loc.GetString("surgery-tool-examinable-verb-message"));
     }
 
+    /// <summary>
+    /// Adds the tool surgery qualities to examination information.
+    /// </summary>
     public void OnExamined(EntityUid uid, BaseSurgeryToolComponent comp, ref SurgeryToolExaminedEvent args)
     {
         var msg = args.Message;

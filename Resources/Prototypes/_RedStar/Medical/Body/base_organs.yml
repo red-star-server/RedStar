@@ -15,7 +15,8 @@
   id: OrganBaseLimb
   components:
   - type: ChildOrgan
-    parents: [ Torso ]
+    parents:
+    - Torso
   - type: Limb
 
 - type: entity

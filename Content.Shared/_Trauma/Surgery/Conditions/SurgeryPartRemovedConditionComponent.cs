@@ -14,9 +14,15 @@ public sealed partial class SurgeryPartRemovedConditionComponent : Component
     [DataField(required: true)]
     public ProtoId<OrganCategoryPrototype> Category;
 
+    /// <summary>
+    /// Type of the body part whose removal is checked.
+    /// </summary>
     [DataField]
     public BodyPartType Part;
 
+    /// <summary>
+    /// Optional side of the body part whose removal is checked.
+    /// </summary>
     [DataField]
     public BodyPartSymmetry? Symmetry;
 }

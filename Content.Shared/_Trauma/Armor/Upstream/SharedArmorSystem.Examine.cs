@@ -1,6 +1,8 @@
 using System.Linq;
 using Content.Shared._Trauma.Common.Body;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Localizations;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Armor;
@@ -37,8 +39,7 @@ public abstract partial class SharedArmorSystem
         foreach (var coefficientArmor in armorModifiers.Coefficients)
         {
             msg.PushNewline();
-            // TODO: probably make these prototype fields or have a test that they all exist
-            var armorType = Loc.GetString("armor-damage-type-" + coefficientArmor.Key.Id.ToLower());
+            var armorType = GetArmorDamageTypeName(coefficientArmor.Key);
             msg.AddMarkupOrThrow(Loc.GetString("armor-coefficient-value-trauma", // Trauma - better locale string
                 ("type", armorType),
                 ("value", MathF.Abs(1f - coefficientArmor.Value) * 100), ("protect", coefficientArmor.Value < 1f) // Trauma - better values
@@ -49,7 +50,7 @@ public abstract partial class SharedArmorSystem
         {
             msg.PushNewline();
 
-            var armorType = Loc.GetString("armor-damage-type-" + flatArmor.Key.Id.ToLower());
+            var armorType = GetArmorDamageTypeName(flatArmor.Key);
             msg.AddMarkupOrThrow(Loc.GetString("armor-reduction-value",
                 ("type", armorType),
                 ("value", flatArmor.Value)
@@ -57,5 +58,12 @@ public abstract partial class SharedArmorSystem
         }
 
         return msg;
+    }
+
+    private string GetArmorDamageTypeName(ProtoId<DamageTypePrototype> damageType)
+    {
+        return Loc.TryGetString("armor-damage-type-" + damageType.Id.ToLowerInvariant(), out var name)
+            ? name
+            : ProtoMan.Index(damageType).LocalizedName;
     }
 }

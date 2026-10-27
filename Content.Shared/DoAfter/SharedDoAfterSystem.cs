@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using Content.Shared._Trauma.Common.DoAfter;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Examine;
@@ -269,9 +270,9 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         // RS14-start
         if (args.MultiplyDelay)
         {
-            _modifyEv.Multiplier = 1f;
-            RaiseLocalEvent(args.User, _modifyEv);
-            args.Delay *= _modifyEv.Multiplier;
+            var modifyEv = new ModifyDoAfterDelayEvent(1f);
+            RaiseLocalEvent(args.User, ref modifyEv);
+            args.Delay *= modifyEv.Multiplier;
         }
         // RS14-end
         id = new DoAfterId(args.User, comp.NextId++);

@@ -1,14 +1,11 @@
 using Content.Shared._Trauma.Wounds;
 using Content.Shared.Body;
 using Content.Shared.Mobs;
-using Robust.Shared.Network;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared._Trauma.Body;
 
 public sealed partial class BodyStatusSystem : EntitySystem
 {
-    [Dependency] private INetManager _net = default!;
     [Dependency] private WoundSystem _wound = default!;
 
 
@@ -36,6 +33,9 @@ public sealed partial class BodyStatusSystem : EntitySystem
         UpdateStatus(ent.AsNullable());
     }
 
+    /// <summary>
+    /// Recomputes the body status information used by medical HUDs.
+    /// </summary>
     public void UpdateStatus(Entity<BodyStatusComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))
@@ -44,16 +44,13 @@ public sealed partial class BodyStatusSystem : EntitySystem
         ent.Comp.BodyStatus = _wound.GetWoundableStatesOnBody(ent.Owner);
         Dirty(ent, ent.Comp);
 
-        var ev = new TargetIntegrityChangedMessage();
-        if (_net.IsClient)
-            RaiseLocalEvent(ev);
-        else
-            RaiseNetworkEvent(ev, ent);
+        var ev = new BodyStatusChangedEvent();
+        RaiseLocalEvent(ent, ref ev);
     }
 }
 
 /// <summary>
-/// Message sent by the server/predicted when a body's parts get damaged, to update the part status UI.
+/// Raised after the body status is recomputed, including during prediction.
 /// </summary>
-[Serializable, NetSerializable]
-public sealed class TargetIntegrityChangedMessage: EntityEventArgs;
+[ByRefEvent]
+public readonly record struct BodyStatusChangedEvent;

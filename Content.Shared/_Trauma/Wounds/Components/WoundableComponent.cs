@@ -34,7 +34,7 @@ public sealed partial class WoundableComponent : Component
     public FixedPoint2 Integrity;
 
     /// <summary>
-    /// yeah
+    /// Remaining integrity thresholds for each wound severity.
     /// </summary>
     [DataField(required: true)]
     public Dictionary<WoundableSeverity, FixedPoint2> Thresholds = new();
@@ -45,9 +45,15 @@ public sealed partial class WoundableComponent : Component
     [DataField, AutoNetworkedField]
     public FixedPoint2 Bleeds = FixedPoint2.Zero;
 
+    /// <summary>
+    /// Sound played when this part is destroyed.
+    /// </summary>
     [DataField]
     public SoundSpecifier WoundableDestroyedSound = new SoundCollectionSpecifier("WoundableDestroyed");
 
+    /// <summary>
+    /// Sound played when this part is severed from its body.
+    /// </summary>
     [DataField]
     public SoundSpecifier WoundableDelimbedSound = new SoundCollectionSpecifier("WoundableDelimbed");
 
@@ -81,6 +87,9 @@ public sealed partial class WoundableComponent : Component
     [DataField]
     public DamageSpecifier? DamageOnAmputate;
 
+    /// <summary>
+    /// Severity deductions applied to incoming trauma by trauma type.
+    /// </summary>
     [DataField]
     public Dictionary<TraumaType, FixedPoint2> TraumaDeductions = new()
     {

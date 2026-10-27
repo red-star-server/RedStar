@@ -48,6 +48,9 @@ public sealed partial class PartStatusControl : UIWidget
         _controller = controller;
     }
 
+    /// <summary>
+    /// Updates body-part icons from their current wound severity states.
+    /// </summary>
     public void SetTextures(Dictionary<ProtoId<OrganCategoryPrototype>, WoundableSeverity> state)
     {
         foreach (var (part, integrity) in state)
@@ -68,5 +71,8 @@ public sealed partial class PartStatusControl : UIWidget
             OnPartStatusClicked?.Invoke();
     }
 
+    /// <summary>
+    /// Sets whether the body-status control is visible.
+    /// </summary>
     public void SetVisible(bool visible) => Visible = visible;
 }

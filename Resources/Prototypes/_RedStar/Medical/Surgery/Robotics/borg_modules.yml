@@ -31,8 +31,8 @@
     icon: { sprite: _RedStar/Medical/Surgery/borg_actions.rsi, state: surgery-module }
 
 - type: entity
-  id: BorgModuleAdvancedSurgery
   parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
+  id: BorgModuleAdvancedSurgery
   name: advanced surgery cyborg module
   components:
   - type: Sprite

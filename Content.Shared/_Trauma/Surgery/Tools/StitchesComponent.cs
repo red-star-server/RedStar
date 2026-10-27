@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared._Trauma.Surgery.Tools;
 
 /// <summary>
-///     It lets you fucking stitch your ass up
+/// Allows the item to close surgical incisions with stitches.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class StitchesComponent : BaseSurgeryToolComponent

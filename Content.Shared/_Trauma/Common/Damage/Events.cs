@@ -14,6 +14,5 @@ public readonly record struct DamageSetEvent(FixedPoint2 Damage);
 [ByRefEvent]
 public record struct SuicideLethalDamageEvent;
 
-// wizard shitcode
 [ByRefEvent]
 public record struct LifeStealHealEvent;

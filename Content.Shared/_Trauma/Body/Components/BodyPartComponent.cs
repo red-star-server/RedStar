@@ -15,9 +15,15 @@ public sealed partial class BodyPartComponent : BaseSurgeryToolComponent
 {
     public override string ToolName => Loc.GetString("trauma-surgery-tool-body-part");
 
+    /// <summary>
+    /// Anatomical type used to select and relate this body part.
+    /// </summary>
     [DataField(required: true)]
     public BodyPartType PartType;
 
+    /// <summary>
+    /// Side of the body occupied by this part.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public BodyPartSymmetry Symmetry = BodyPartSymmetry.None;
 
@@ -26,8 +32,7 @@ public sealed partial class BodyPartComponent : BaseSurgeryToolComponent
     /// Used by surgery, etc.
     /// </summary>
     /// <remarks>
-    /// Please do not add this part's category to it I will be very sad.
-    /// TODO NUBODY: Write a test that nobody ever does this
+    /// A part must not contain its own organ category in its slots.
     /// </remarks>
     [DataField(required: true), AutoNetworkedField]
     public HashSet<ProtoId<OrganCategoryPrototype>> Slots = new();
@@ -42,7 +47,7 @@ public sealed partial class BodyPartComponent : BaseSurgeryToolComponent
     /// Container to store organs in if this bodypart is severed.
     /// When being attached to a body, they will be transferred.
     /// </summary>
-    // TODO SHITMED: have this affect the sprite in the future so an arm with its hand attached can be seen
+    // TODO: have this affect the sprite in the future so an arm with its hand attached can be seen
     [DataField]
     public string ContainerId = "body_part_organs";
 }
