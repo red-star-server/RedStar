@@ -107,8 +107,8 @@ public sealed partial class SurgeryTest : GameTest
                     }
                     : data.RequiredItemComponent switch
                     {
-                        nameof(InternalChildOrganComponent) => organ!.Value,
-                        nameof(BodyPartComponent) => organ!.Value,
+                        "InternalChildOrgan" => organ!.Value,
+                        "BodyPart" => organ!.Value,
                         var component => throw new InvalidOperationException($"Unexpected surgery tool {component} in {stepId}"),
                     };
 
