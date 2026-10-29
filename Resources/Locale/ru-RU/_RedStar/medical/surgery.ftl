@@ -432,12 +432,6 @@ surgery-popup-step-SurgeryStepStitchJoint = {$user} сшивает сосуды 
 
 surgery-popup-step-SurgeryStepStitchVessels = {$user} сшивает кровеносные сосуды на части тела «{$part}» пациента {$target}.
 
-surgery-tool-examinable-verb-message = Узнать, как этот предмет можно использовать в хирургии.
-
-surgery-tool-examinable-verb-text = Хирургический инструмент
-
-surgery-tool-header = В хирургии этот предмет можно использовать как:
-
 surgery-tool-match-light = Сначала зажгите спичку!
 
 surgery-tool-match-replace = Возьмите новую спичку!
@@ -445,10 +439,6 @@ surgery-tool-match-replace = Возьмите новую спичку!
 surgery-tool-reload = Сначала перезарядите его!
 
 surgery-tool-turn-on = Сначала включите инструмент!
-
-surgery-tool-unlimited = - {$tool}, скорость [color={$color}]{$speed}x[/color]
-
-surgery-tool-used = - {$tool}, скорость [color={$color}]{$speed}x[/color], [color=red]расходуется после применения[/color]
 
 surgery-ui-window-parts = < Части тела
 
@@ -474,22 +464,6 @@ trauma-surgery-heavy-bleeding-other = У пациента слишком сил�
 
 trauma-surgery-heavy-bleeding-self = У вас слишком сильное кровотечение!
 
-trauma-surgery-mode-bonegel = костный гель
-
-trauma-surgery-mode-bonesetter = костоправ
-
-trauma-surgery-mode-cautery = прижигатель
-
-trauma-surgery-mode-drill = дрель
-
-trauma-surgery-mode-hemostat = гемостат
-
-trauma-surgery-mode-retractor = ретрактор
-
-trauma-surgery-mode-scalpel = скальпель
-
-trauma-surgery-mode-stitches = швы
-
 trauma-surgery-needs-tool = Для этого этапа требуется: {$tool}!
 
 trauma-surgery-no-bleeding-other = У пациента нет кровотечения.
@@ -508,27 +482,16 @@ trauma-surgery-title-part = Хирургия — {$part}
 
 trauma-surgery-title-procedure = Хирургия — {$part}, {$surgery}
 
-trauma-surgery-tool-bonegel = костный гель
 
-trauma-surgery-tool-bonesaw = костная пила
 
-trauma-surgery-tool-bonesetter = костоправ
 
-trauma-surgery-tool-cautery = прижигатель
 
-trauma-surgery-tool-drill = дрель
 
-trauma-surgery-tool-hemostat = гемостат
 
-trauma-surgery-tool-retractor = ретрактор
 
-trauma-surgery-tool-scalpel = скальпель
 
-trauma-surgery-tool-stitches = хирургическая нить
 
-trauma-surgery-tool-tending = инструмент обработки ран
 
-trauma-surgery-tool-tweezers = пинцет
 
 trauma-surgery-trauma-BoneDamage = повреждение костей
 

@@ -432,12 +432,6 @@ surgery-popup-step-SurgeryStepStitchJoint = {$user} is stitching a joint's vesse
 
 surgery-popup-step-SurgeryStepStitchVessels = {$user} is stitching blood vessels on {$target}'s {$part}.
 
-surgery-tool-examinable-verb-message = Examine the uses of this tool in surgeries.
-
-surgery-tool-examinable-verb-text = Surgery Tool
-
-surgery-tool-header = This can be used in surgeries as:
-
 surgery-tool-match-light = Light it first!
 
 surgery-tool-match-replace = Get a new match!
@@ -445,10 +439,6 @@ surgery-tool-match-replace = Get a new match!
 surgery-tool-reload = Reload it first!
 
 surgery-tool-turn-on = Turn it on first!
-
-surgery-tool-unlimited = - {$tool} at [color={$color}]{$speed}x[/color] speed
-
-surgery-tool-used = - {$tool} at [color={$color}]{$speed}x[/color] speed, [color=red]then gets used up[/color]
 
 surgery-ui-window-parts = < Parts
 
@@ -474,22 +464,6 @@ trauma-surgery-heavy-bleeding-other = The subject is bleeding too heavily!
 
 trauma-surgery-heavy-bleeding-self = You're bleeding too heavily!
 
-trauma-surgery-mode-bonegel = bonegel
-
-trauma-surgery-mode-bonesetter = bonesetter
-
-trauma-surgery-mode-cautery = cautery
-
-trauma-surgery-mode-drill = drill
-
-trauma-surgery-mode-hemostat = hemostat
-
-trauma-surgery-mode-retractor = retractor
-
-trauma-surgery-mode-scalpel = scalpel
-
-trauma-surgery-mode-stitches = stitches
-
 trauma-surgery-needs-tool = You need {$tool} to perform this step!
 
 trauma-surgery-no-bleeding-other = The subject isn't bleeding
@@ -507,28 +481,6 @@ trauma-surgery-part-needs-body = The part must be attached to a body!
 trauma-surgery-title-part = Surgery - {$part}
 
 trauma-surgery-title-procedure = Surgery - {$part}, {$surgery}
-
-trauma-surgery-tool-bonegel = bone gel
-
-trauma-surgery-tool-bonesaw = a bone saw
-
-trauma-surgery-tool-bonesetter = a bone setter
-
-trauma-surgery-tool-cautery = a cautery
-
-trauma-surgery-tool-drill = a drill
-
-trauma-surgery-tool-hemostat = a hemostat
-
-trauma-surgery-tool-retractor = a retractor
-
-trauma-surgery-tool-scalpel = a scalpel
-
-trauma-surgery-tool-stitches = stitches
-
-trauma-surgery-tool-tending = a wound tender
-
-trauma-surgery-tool-tweezers = tweezers
 
 trauma-surgery-trauma-BoneDamage = BoneDamage
 

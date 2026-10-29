@@ -175,8 +175,6 @@
 #  components:
 #  - type: SurgeryStep
 #    skill: 2
-#    tool:
-#    - type: Scalpel
 #  - type: SurgeryCutLarvaRootsStep
 #  - type: Sprite
 #    sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
@@ -190,8 +188,6 @@
 #  components:
 #  - type: SurgeryStep
 #    skill: 2
-#    tool:
-#    - type: Hemostat
 #    bodyRemove:
 #    - type: VictimInfected
 #  - type: Sprite
