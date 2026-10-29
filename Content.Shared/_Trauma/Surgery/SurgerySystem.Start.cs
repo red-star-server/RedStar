@@ -1,7 +1,11 @@
+using System.Linq;
 using Content.Shared._Trauma.Common.CCVar;
-using Content.Shared._Trauma.Surgery.Tools;
+using Content.Shared.Tools;
+using Content.Shared.Tools.Components;
+using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Shared.Configuration;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared._Trauma.Surgery;
@@ -10,6 +14,7 @@ public sealed partial class SurgerySystem
 {
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private EntityQuery<SurgeryTargetComponent> _targetQuery;
+    [Dependency] private TagSystem _tagSystem = default!;
 
     private bool _noSelfOperate;
 
@@ -19,7 +24,9 @@ public sealed partial class SurgerySystem
         Subs.CVar(_cfg, SurgeryCVars.CanOperateOnSelf, x => _noSelfOperate = !x, true);
     }
 
-    private void AttemptStartSurgery(Entity<SurgeryToolComponent> ent, EntityUid user, EntityUid target)
+    private static readonly ProtoId<TagPrototype> SurgeryToolTag = "SurgeryTool";
+
+    private void AttemptStartSurgery(Entity<ToolComponent> ent, EntityUid user, EntityUid target)
     {
         if (!IsLyingDown(target, user))
             return;
@@ -34,12 +41,13 @@ public sealed partial class SurgerySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnUtilityVerb(Entity<SurgeryToolComponent> ent, ref GetVerbsEvent<UtilityVerb> args)
+    private void OnUtilityVerb(Entity<ToolComponent> ent, ref GetVerbsEvent<UtilityVerb> args)
     {
         var target = args.Target;
         if (!args.CanInteract ||
             !args.CanAccess ||
-            !_targetQuery.HasComp(target))
+            !_targetQuery.HasComp(target) ||
+            !_tagSystem.HasTag(ent.Owner, SurgeryToolTag))
             return;
 
         var user = args.User;

@@ -1,4 +1,5 @@
 using Content.Shared.Body;
+using Content.Shared.Tools;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -9,10 +10,16 @@ namespace Content.Shared._Trauma.Surgery.Steps;
 public sealed partial class SurgeryStepComponent : Component
 {
     /// <summary>
-    /// Surgical tool components accepted by this step.
+    /// Component required on a payload item used by this step, such as an organ or body part.
     /// </summary>
     [DataField]
-    public ComponentRegistry? Tool;
+    public string? RequiredItemComponent;
+
+    /// <summary>
+    /// Tool qualities accepted by this step.
+    /// </summary>
+    [DataField]
+    public HashSet<ProtoId<ToolQualityPrototype>>? ToolQualities;
 
     /// <summary>
     /// Components added to the selected part when the step completes.

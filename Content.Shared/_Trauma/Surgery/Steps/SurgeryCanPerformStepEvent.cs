@@ -1,4 +1,3 @@
-using Content.Shared._Trauma.Common.Surgery.Tools;
 using Content.Shared.Inventory;
 
 namespace Content.Shared._Trauma.Surgery.Steps;
@@ -10,8 +9,7 @@ public record struct SurgeryCanPerformStepEvent(
     EntityUid Tool,
     SlotFlags TargetSlots,
     string? Popup = null,
-    StepInvalidReason Invalid = StepInvalidReason.None,
-    BaseSurgeryToolComponent? ValidTool = null
+    StepInvalidReason Invalid = StepInvalidReason.None
 ) : IInventoryRelayEvent
 {
     public bool IsValid => Invalid == StepInvalidReason.None;

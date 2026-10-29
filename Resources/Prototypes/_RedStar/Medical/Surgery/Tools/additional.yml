@@ -8,8 +8,10 @@
     sprite: _RedStar/Medical/Objects/Specific/Medical/makeshift_bone_gel.rsi
   - type: Item
     sprite: _RedStar/Medical/Objects/Specific/Medical/makeshift_bone_gel.rsi
-  - type: BoneGel
-    speed: 0.7
+  - type: Tool
+    qualities:
+      - BoneHealing
+    speedModifier: 0.7
 
 - type: entity
   parent: OmnimedTool
@@ -18,25 +20,17 @@
   name: integrated surgery omnitool
   description: An expanded surgical omnitool capable of accelerated function compared to the normal compact version.
   components:
-  - type: Hemostat
-    speed: 2
-  - type: Scalpel
-    speed: 2
-  - type: Drill
-    speed: 2
-  - type: BoneSetter
-    speed: 2
-  - type: Retractor
-    speed: 2
-  - type: Cautery
-    speed: 2
-  - type: BoneGel
-    speed: 2
-  - type: BoneSaw
-    speed: 2
-  - type: Tweezers
-    speed: 2
-  - type: Tending
-    speed: 2
-  - type: Stitches
-    speed: 2
+  - type: Tool
+    qualities:
+      - Clamping
+      - Slicing
+      - Drilling
+      - BoneSetting
+      - Retracting
+      - Cauterizing
+      - BoneHealing
+      - Sawing
+      - Manipulating
+      - Tending
+      - Suturing
+    speedModifier: 2

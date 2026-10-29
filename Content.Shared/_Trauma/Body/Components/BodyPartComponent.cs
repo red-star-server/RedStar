@@ -1,5 +1,4 @@
 using Content.Shared._Trauma.Common.Body;
-using Content.Shared._Trauma.Common.Surgery.Tools;
 using Content.Shared.Body;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -11,10 +10,8 @@ namespace Content.Shared._Trauma.Body;
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState(fieldDeltas: true)]
-public sealed partial class BodyPartComponent : BaseSurgeryToolComponent
+public sealed partial class BodyPartComponent : Component
 {
-    public override string ToolName => Loc.GetString("trauma-surgery-tool-body-part");
-
     /// <summary>
     /// Anatomical type used to select and relate this body part.
     /// </summary>

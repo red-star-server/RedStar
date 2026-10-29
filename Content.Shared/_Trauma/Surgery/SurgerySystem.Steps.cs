@@ -1,8 +1,8 @@
 using System.Linq;
+using Content.Shared._Trauma.Augments;
 using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared._Trauma.Common.Surgery;
-using Content.Shared._Trauma.Common.Surgery.Tools;
 using Content.Shared._Trauma.Common.Traumas;
 using Content.Shared._Trauma.Surgery.Conditions;
 using Content.Shared._Trauma.Surgery.Effects.Step;
@@ -23,6 +23,9 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Content.Shared.StatusEffectNew;
+using Content.Shared.Stacks;
+using Content.Shared.Tools.Components;
+using Content.Shared.Tools.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 
@@ -35,13 +38,15 @@ public sealed partial class SurgerySystem
     [Dependency] private SharedChatSystem _chat = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private StatusEffectsSystem _status = default!;
+    [Dependency] private SharedToolSystem _sharedTool = default!;
+
     [Dependency] private EntityQuery<BodyPartComponent> _partQuery;
     [Dependency] private EntityQuery<BleedInflicterComponent> _bleedQuery;
     [Dependency] private EntityQuery<OrganComponent> _organQuery;
     [Dependency] private EntityQuery<SurgeryComponent> _query;
     [Dependency] private EntityQuery<SurgeryIgnoreClothingComponent> _ignoreQuery;
     [Dependency] private EntityQuery<SurgeryStepComponent> _stepQuery;
-    [Dependency] private EntityQuery<SurgeryToolComponent> _toolQuery;
+    [Dependency] private EntityQuery<ToolComponent> _toolQuery;
 
     private static readonly ProtoId<DamageGroupPrototype> Brute = "Brute";
     private static readonly ProtoId<DamageTypePrototype> Poison = "Poison";
@@ -125,26 +130,28 @@ public sealed partial class SurgerySystem
             }
         }
 
-        if (ent.Comp.Tool == null)
-            return;
-
-        foreach (var reg in ent.Comp.Tool.Values)
+        if (ent.Comp.ToolQualities is { Count: > 0 } qualities)
         {
-            if (GetSurgeryComp(args.Tool, reg.Component) is {} data)
+            if (!_sharedTool.HasAllQualities(args.Tool, qualities))
             {
-                args.ValidTool = data;
-                return; // multiple required tools isn't supported so just return
+                args.Invalid = StepInvalidReason.MissingTool;
+                args.Popup = Loc.GetString("trauma-surgery-needs-tool", ("tool", _sharedTool.GetQualitiesText(qualities)));
+                return;
             }
 
-            args.Invalid = StepInvalidReason.MissingTool;
+        }
 
-            if (reg.Component is BaseSurgeryToolComponent required)
-                args.Popup = Loc.GetString("trauma-surgery-needs-tool", ("tool", required.ToolName));
-            else
-                Log.Error($"Surgery step {ToPrettyString(ent)} wants bad component {reg.Component} which isn't a ISurgeryTool");
+        if (ent.Comp.RequiredItemComponent == null)
+            return;
 
+        var requiredComponent = Factory.GetRegistration(ent.Comp.RequiredItemComponent);
+        if (HasComp(args.Tool, requiredComponent.Type))
+        {
             return;
         }
+
+        args.Invalid = StepInvalidReason.MissingTool;
+        args.Popup = Loc.GetString("trauma-surgery-needs-tool", ("tool", requiredComponent.Type.Name));
     }
 
     [SubscribeLocalEvent]
@@ -534,19 +541,18 @@ public sealed partial class SurgerySystem
 
     private bool TryToolAudio(Entity<SurgeryStepComponent> ent, SurgeryStepEvent args)
     {
-        if (ent.Comp.Tool == null)
+        if (ent.Comp.ToolQualities is { Count: > 0 } qualities && !_sharedTool.HasAllQualities(args.Tool, qualities))
+            return false;
+
+        if (ent.Comp.RequiredItemComponent == null)
             return true;
 
-        foreach (var reg in ent.Comp.Tool.Values)
-        {
-            if (!HasSurgeryComp(args.Tool, reg.Component))
-                return false;
+        if (!Factory.TryGetRegistration(ent.Comp.RequiredItemComponent, out var requiredComponent) ||
+            !HasComp(args.Tool, requiredComponent.Type))
+            return false;
 
-            if (_toolQuery.CompOrNull(args.Tool)?.EndSound is not { } sound)
-                continue;
+        if (_toolQuery.CompOrNull(args.Tool)?.UseSound is { } sound)
             _audio.PlayPredicted(sound, args.Tool, args.User);
-            break; // no overlaying sounds
-        }
 
         return true;
     }
@@ -675,12 +681,12 @@ public sealed partial class SurgerySystem
         }
 
         var tool = _hands.GetActiveItemOrSelf(user);
-        if (!CanPerformStep(user, body, part, step, tool, true, out _, out error, out var data))
+        if (!CanPerformStep(user, body, part, step, tool, true, out _, out error))
             return false;
 
         var toolComp = _toolQuery.CompOrNull(tool);
-        var usedEv = new SurgeryToolUsedEvent(user, body);
-        usedEv.IgnoreToggle = toolComp?.IgnoreToggle ?? false;
+        var usedEv = new SurgeryUseAttemptEvent(user, body);
+        usedEv.IgnoreToggle = HasComp<AugmentComponent>(tool);
         RaiseLocalEvent(tool, ref usedEv);
         if (usedEv.Cancelled)
         {
@@ -688,14 +694,14 @@ public sealed partial class SurgerySystem
             return false;
         }
 
-        if (toolComp?.StartSound is {} sound)
+        if (toolComp?.UseSound is {} sound)
             _audio.PlayPredicted(sound, tool, user);
 
         _rotateToFace.TryFaceCoordinates(user, _transform.GetMapCoordinates(body).Position);
 
         // We need to check for nullability because of surgeries that dont require a tool, like Cavity Implants
-        var speed = data?.Speed ?? 1f;
-        var toolUsed = data?.Used ?? false; // if no tool is being used you can't consume it
+        var speed = _toolQuery.CompOrNull(tool)?.SpeedModifier ?? 1f;
+        var toolUsed = HasComp<StackComponent>(tool);
         var ev = new SurgeryDoAfterEvent(GetNetEntity(part), surgeryId, stepId, toolUsed);
         var duration = GetSurgeryDuration(step, user, body, speed);
 
@@ -828,11 +834,8 @@ public sealed partial class SurgerySystem
         EntityUid tool,
         bool doPopup,
         out string? popup,
-        out StepInvalidReason reason,
-        out BaseSurgeryToolComponent? data)
+        out StepInvalidReason reason)
     {
-        data = null;
-
         var type = _partQuery.CompOrNull(part)?.PartType ?? BodyPartType.Other;
 
         var slot = type switch
@@ -853,8 +856,6 @@ public sealed partial class SurgerySystem
 
         popup = check.Popup;
         reason = check.Invalid;
-        data = check.ValidTool;
-
         if (check.IsValid)
         {
             // Both the operation and the individual step may impose surgery conditions.
@@ -875,7 +876,7 @@ public sealed partial class SurgerySystem
 
     private bool CanPerformStep(EntityUid user, EntityUid body, EntityUid part, EntityUid step, EntityUid tool, bool doPopup)
     {
-        return CanPerformStep(user, body, part, step, tool, doPopup, out _, out _, out _);
+        return CanPerformStep(user, body, part, step, tool, doPopup, out _, out _);
     }
 
     /// <summary>
@@ -884,7 +885,7 @@ public sealed partial class SurgerySystem
     public bool CanPerformStepWithHeld(EntityUid user, EntityUid body, EntityUid part, EntityUid step, bool doPopup, out string? popup)
     {
         var tool = _hands.GetActiveItemOrSelf(user);
-        return CanPerformStep(user, body, part, step, tool, doPopup, out popup, out _, out _);
+        return CanPerformStep(user, body, part, step, tool, doPopup, out popup, out _);
     }
 
     private bool IsStepComplete(EntityUid body, EntityUid part, EntProtoId step, EntityUid surgery)
@@ -897,14 +898,5 @@ public sealed partial class SurgerySystem
         return !ev.Cancelled;
     }
 
-    private BaseSurgeryToolComponent? GetSurgeryComp(EntityUid tool, IComponent component)
-    {
-        if (TryComp(tool, component.GetType(), out var found) && found is BaseSurgeryToolComponent data)
-            return data;
-
-        return null;
-    }
-
-    private bool HasSurgeryComp(EntityUid tool, IComponent component) => GetSurgeryComp(tool, component) != null;
     #endregion
 }
