@@ -184,6 +184,7 @@ public sealed partial class SurgeryTest : GameTest
     {
         var tool = SSpawn("AdvancedBoneGel");
         Assert.That(_tools.HasQuality(tool, BoneHealing), Is.True);
+        Assert.That(_tools.HasQuality(tool, BoneSetting), Is.False);
         Assert.That(_tools.CycleMultipleTool(tool), Is.True);
         Assert.That(_tools.HasQuality(tool, BoneHealing), Is.False);
         Assert.That(_tools.HasQuality(tool, BoneSetting), Is.True);

@@ -187,6 +187,10 @@
       - Manipulating
     speedModifier: 0.55
     useSound: /Audio/Items/crowbar.ogg
+  - type: Tag
+    tags:
+      - Crowbar
+      - SurgeryTool
 - type: entity
   id: BaseLighter
   components:
@@ -194,7 +198,8 @@
     qualities:
       - Cauterizing
     speedModifier: 0.45
-    useSound: collection: lighterOnSounds
+    useSound:
+      collection: lighterOnSounds
 - type: entity
   id: Matchstick
   components:
@@ -221,6 +226,10 @@
       - Drilling
     speedModifier: 1
     useSound: /Audio/Items/drill_use.ogg
+  - type: Tag
+    tags:
+      - Powerdrill
+      - SurgeryTool
 - type: entity
   id: BaseWelder
   components:
@@ -228,7 +237,11 @@
     qualities:
       - Cauterizing
     speedModifier: 0.7
-    useSound: collection: Welder
+    useSound:
+      collection: Welder
+  - type: Tag
+    tags:
+      - SurgeryTool
 - type: entity
   id: Chainsaw
   components:
@@ -238,6 +251,9 @@
       - Sawing
     speedModifier: 0.5
     useSound: /Audio/Weapons/chainsaw_pull.ogg
+  - type: Tag
+    tags:
+      - SurgeryTool
 - type: entity
   id: FireAxe
   components:
@@ -248,6 +264,9 @@
       - Sawing
     speedModifier: 0.5
     useSound: /Audio/_RedStar/Medical/Surgery/saw.ogg
+  - type: Tag
+    tags:
+      - SurgeryTool
 - type: entity
   id: BaseKnife
   components:

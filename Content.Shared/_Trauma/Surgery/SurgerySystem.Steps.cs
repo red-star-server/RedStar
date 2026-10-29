@@ -708,7 +708,7 @@ public sealed partial class SurgerySystem
 
         // We need to check for nullability because of surgeries that dont require a tool, like Cavity Implants
         var speed = _toolQuery.CompOrNull(tool)?.SpeedModifier ?? 1f;
-        var toolUsed = TryComp<StackComponent>(tool, out var stack) && stack.Count <= 1;
+        var toolUsed = HasComp<StackComponent>(tool);
         var ev = new SurgeryDoAfterEvent(GetNetEntity(part), surgeryId, stepId, toolUsed);
         var duration = GetSurgeryDuration(step, user, body, speed);
 
