@@ -254,7 +254,8 @@
     - VesselsStitched
     - JointCreated
     - JointStitched
-    - OrganReattached
+    remove:
+    - type: OrganReattached
     duration: 2
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/cautery.rsi
