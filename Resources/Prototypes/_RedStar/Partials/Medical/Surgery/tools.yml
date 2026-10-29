@@ -9,6 +9,7 @@
   - type: Tag
     tags:
     - SurgeryTool
+
 - type: entity
   parent: BaseToolSurgery
   id: Cautery
@@ -31,6 +32,7 @@
     qualities:
       - Cauterizing
     useSound: /Audio/_RedStar/Medical/Surgery/cautery1.ogg
+
 - type: entity
   parent: [ BaseToolSurgery, BaseMedicalScienceContraband ] # Trauma - Made it contraband
   id: Drill
@@ -57,6 +59,7 @@
     qualities:
       - Drilling
     useSound: /Audio/_RedStar/Medical/Surgery/saw.ogg
+
 - type: entity
   parent: [ BaseToolSurgery, BaseMedicalScienceContraband ] # Trauma - Made it contraband
   id: Scalpel
@@ -126,6 +129,7 @@
     qualities:
       - Slicing
     speedModifier: 1.35
+
 - type: entity
   parent: Scalpel
   id: ScalpelLaser
@@ -143,6 +147,7 @@
     qualities:
       - Slicing
     speedModifier: 1.75
+
 - type: entity
   parent: BaseToolSurgery
   id: Retractor
@@ -159,6 +164,7 @@
     qualities:
       - Retracting
     useSound: /Audio/_RedStar/Medical/Surgery/retractor1.ogg
+
 - type: entity
   parent: BaseToolSurgery
   id: Hemostat
@@ -178,6 +184,7 @@
       - Manipulating
       - Tending
     useSound: /Audio/_RedStar/Medical/Surgery/retractor1.ogg
+
 - type: entity
   parent: [ BaseToolSurgery, BaseMedicalScienceContraband ] # Trauma - Made it contraband
   id: Saw
@@ -200,6 +207,7 @@
     qualities:
       - Sawing
       - Slicing
+
 - type: entity
   parent: [Saw, BaseMinorContraband] # Trauma - add contraband mark
   id: SawImprov
@@ -221,6 +229,7 @@
     qualities:
       - Sawing
     speedModifier: 0.5
+
 - type: entity
   parent: Saw
   id: SawElectric
@@ -249,6 +258,7 @@
     speedModifier: 1.5
     useSound: # Trauma
       path: /Audio/_RedStar/Medical/Surgery/saw.ogg
+
 - type: entity
   parent: [ SawElectric ]
   id: SawAdvanced
