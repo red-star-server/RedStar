@@ -10,10 +10,10 @@ namespace Content.Shared._Trauma.Surgery.Steps;
 public sealed partial class SurgeryStepComponent : Component
 {
     /// <summary>
-    /// Surgical tool components accepted by this step.
+    /// Components required on a payload item used by this step, such as an organ or body part.
     /// </summary>
     [DataField]
-    public ComponentRegistry? Tool;
+    public ComponentRegistry? RequiredItemComponents;
 
     /// <summary>
     /// Tool qualities accepted by this step.

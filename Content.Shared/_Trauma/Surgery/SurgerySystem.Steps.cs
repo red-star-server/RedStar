@@ -141,10 +141,10 @@ public sealed partial class SurgerySystem
 
         }
 
-        if (ent.Comp.Tool == null)
+        if (ent.Comp.RequiredItemComponents == null)
             return;
 
-        foreach (var reg in ent.Comp.Tool.Values)
+        foreach (var reg in ent.Comp.RequiredItemComponents.Values)
         {
             if (HasSurgeryComp(args.Tool, reg.Component))
                 return; // multiple required tools isn't supported so just return
@@ -547,10 +547,10 @@ public sealed partial class SurgerySystem
         if (ent.Comp.ToolQualities is { Count: > 0 } qualities && !_sharedTool.HasAllQualities(args.Tool, qualities))
             return false;
 
-        if (ent.Comp.Tool == null)
+        if (ent.Comp.RequiredItemComponents == null)
             return true;
 
-        foreach (var reg in ent.Comp.Tool.Values)
+        foreach (var reg in ent.Comp.RequiredItemComponents.Values)
         {
             if (!HasSurgeryComp(args.Tool, reg.Component))
                 return false;

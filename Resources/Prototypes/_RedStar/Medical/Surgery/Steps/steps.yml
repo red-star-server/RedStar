@@ -279,7 +279,7 @@
   name: Insert part
   components:
   - type: SurgeryStep
-    tool:
+    requiredItemComponents:
     - type: BodyPart
       partType: Other # goida
       slots: []
@@ -521,7 +521,7 @@
   name: Add organ
   components:
   - type: SurgeryStep
-    tool:
+    requiredItemComponents:
     - type: InternalChildOrgan
     duration: 6
   - type: Sprite

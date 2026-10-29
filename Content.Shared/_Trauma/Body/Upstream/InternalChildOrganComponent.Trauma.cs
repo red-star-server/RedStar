@@ -7,31 +7,31 @@ namespace Content.Shared.Body;
 public sealed partial class InternalChildOrganComponent
 {
     /// <summary>
-    ///     Maximum organ integrity, do keep in mind that Organs are supposed to be VERY and VERY damage sensitive
+    /// Maximum organ integrity, do keep in mind that Organs are supposed to be VERY and VERY damage sensitive
     /// </summary>
     [DataField("intCap"), AutoNetworkedField]
     public FixedPoint2 IntegrityCap = 15;
 
     /// <summary>
-    ///     Current organ HP, or integrity, whatever you prefer to say
+    /// Current organ HP, or integrity, whatever you prefer to say
     /// </summary>
     [DataField("integrity"), AutoNetworkedField]
     public FixedPoint2 OrganIntegrity = 15;
 
     /// <summary>
-    ///     Current Organ severity, dynamically updated based on organ integrity
+    /// Current Organ severity, dynamically updated based on organ integrity
     /// </summary>
     [DataField, AutoNetworkedField]
     public OrganSeverity OrganSeverity = OrganSeverity.Normal;
 
     /// <summary>
-    ///     Sound played when this organ gets turned into a blood mush.
+    /// Sound played when this organ gets turned into a blood mush.
     /// </summary>
     [DataField]
     public SoundSpecifier OrganDestroyedSound = new SoundCollectionSpecifier("OrganDestroyed");
 
     /// <summary>
-    ///     All the modifiers that are currently modifying the OrganIntegrity
+    /// All the modifiers that are currently modifying the OrganIntegrity
     /// </summary>
     //[AutoNetworkedField] // cant network until EntityUid NetSerializer is real
     public Dictionary<(string, EntityUid), FixedPoint2> IntegrityModifiers = new();
