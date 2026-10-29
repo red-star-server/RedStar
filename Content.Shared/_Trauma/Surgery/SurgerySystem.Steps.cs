@@ -141,20 +141,17 @@ public sealed partial class SurgerySystem
 
         }
 
-        if (ent.Comp.RequiredItemComponents == null)
+        if (ent.Comp.RequiredItemComponent == null)
             return;
 
-        foreach (var reg in ent.Comp.RequiredItemComponents.Values)
+        var requiredComponent = Factory.GetRegistration(ent.Comp.RequiredItemComponent);
+        if (HasComp(args.Tool, requiredComponent.Type))
         {
-            if (HasSurgeryComp(args.Tool, reg.Component))
-                return; // multiple required tools isn't supported so just return
-
-            args.Invalid = StepInvalidReason.MissingTool;
-
-            args.Popup = Loc.GetString("trauma-surgery-needs-tool", ("tool", reg.Component.GetType().Name));
-
             return;
         }
+
+        args.Invalid = StepInvalidReason.MissingTool;
+        args.Popup = Loc.GetString("trauma-surgery-needs-tool", ("tool", requiredComponent.Type.Name));
     }
 
     [SubscribeLocalEvent]
@@ -547,19 +544,15 @@ public sealed partial class SurgerySystem
         if (ent.Comp.ToolQualities is { Count: > 0 } qualities && !_sharedTool.HasAllQualities(args.Tool, qualities))
             return false;
 
-        if (ent.Comp.RequiredItemComponents == null)
+        if (ent.Comp.RequiredItemComponent == null)
             return true;
 
-        foreach (var reg in ent.Comp.RequiredItemComponents.Values)
-        {
-            if (!HasSurgeryComp(args.Tool, reg.Component))
-                return false;
+        if (!Factory.TryGetRegistration(ent.Comp.RequiredItemComponent, out var requiredComponent) ||
+            !HasComp(args.Tool, requiredComponent.Type))
+            return false;
 
-            if (_toolQuery.CompOrNull(args.Tool)?.UseSound is not { } sound)
-                continue;
+        if (_toolQuery.CompOrNull(args.Tool)?.UseSound is { } sound)
             _audio.PlayPredicted(sound, args.Tool, args.User);
-            break; // no overlaying sounds
-        }
 
         return true;
     }
@@ -905,14 +898,5 @@ public sealed partial class SurgerySystem
         return !ev.Cancelled;
     }
 
-    private IComponent? GetSurgeryComp(EntityUid tool, IComponent component)
-    {
-        if (TryComp(tool, component.GetType(), out var found))
-            return found;
-
-        return null;
-    }
-
-    private bool HasSurgeryComp(EntityUid tool, IComponent component) => GetSurgeryComp(tool, component) != null;
     #endregion
 }

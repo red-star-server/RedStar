@@ -31,7 +31,6 @@
 - type: entity
   id: ShardBase
   components:
-
   - type: Tool
     qualities:
       - Slicing
@@ -118,7 +117,6 @@
 - type: entity
   id: Scalpel
   components:
-
   - type: Tool
     qualities:
       - Slicing
@@ -272,7 +270,6 @@
 - type: entity
   id: Chainsaw
   components:
-
   - type: Tool
     qualities:
       - Sawing
@@ -285,7 +282,6 @@
 - type: entity
   id: FireAxe
   components:
-
   - type: Tool
     qualities:
       - Slicing
@@ -299,7 +295,6 @@
 - type: entity
   id: BaseKnife
   components:
-
   - type: Tool
     qualities:
       - Slicing

@@ -275,10 +275,7 @@
   name: Insert part
   components:
   - type: SurgeryStep
-    requiredItemComponents:
-    - type: BodyPart
-      partType: Other # goida
-      slots: []
+    requiredItemComponent: BodyPart
     duration: 6
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/manipulation.rsi
@@ -517,8 +514,7 @@
   name: Add organ
   components:
   - type: SurgeryStep
-    requiredItemComponents:
-    - type: InternalChildOrgan
+    requiredItemComponent: InternalChildOrgan
     duration: 6
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/manipulation.rsi

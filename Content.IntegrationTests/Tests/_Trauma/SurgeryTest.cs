@@ -104,10 +104,10 @@ public sealed partial class SurgeryTest : GameTest
                         "BoneSetting" => SSpawn("Bonesetter"),
                         var quality => throw new InvalidOperationException($"Unexpected surgery quality {quality} in {stepId}"),
                     }
-                    : data.RequiredItemComponents!.Values.First().Component switch
+                    : data.RequiredItemComponent switch
                     {
-                        InternalChildOrganComponent => organ!.Value,
-                        BodyPartComponent => organ!.Value,
+                        nameof(InternalChildOrganComponent) => organ!.Value,
+                        nameof(BodyPartComponent) => organ!.Value,
                         var component => throw new InvalidOperationException($"Unexpected surgery tool {component} in {stepId}"),
                     };
 
