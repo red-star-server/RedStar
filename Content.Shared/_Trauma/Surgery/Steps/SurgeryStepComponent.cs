@@ -1,3 +1,4 @@
+using Content.Shared._Trauma.Surgery.Steps.Parts;
 using Content.Shared.Body;
 using Content.Shared.Tools;
 using Robust.Shared.GameStates;
@@ -68,4 +69,16 @@ public sealed partial class SurgeryStepComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan Duration = TimeSpan.FromSeconds(2);
+
+    /// <summary>
+    /// Surgery step flags to set when this step completes.
+    /// </summary>
+    [DataField]
+    public SurgeryStepFlags? SetFlags;
+
+    /// <summary>
+    /// Surgery step flags to clear when this step completes.
+    /// </summary>
+    [DataField]
+    public SurgeryStepFlags? ClearFlags;
 }
