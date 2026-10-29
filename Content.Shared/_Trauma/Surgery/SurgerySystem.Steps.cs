@@ -79,10 +79,21 @@ public sealed partial class SurgerySystem
         AddOrRemoveComponentsToEntity(args.Body, comp.BodyRemove, true);
 
         // Apply surgery step flags
-        if (comp.SetFlags != null)
-            _surgeryState.SetStep(args.Part, comp.SetFlags.Value);
-        if (comp.ClearFlags != null)
-            _surgeryState.ClearStep(args.Part, comp.ClearFlags.Value);
+        if (comp.SetFlags is { } setFlags)
+        {
+            foreach (var flag in setFlags)
+            {
+                _surgeryState.SetStep(args.Part, flag);
+            }
+        }
+
+        if (comp.ClearFlags is { } clearFlags)
+        {
+            foreach (var flag in clearFlags)
+            {
+                _surgeryState.ClearStep(args.Part, flag);
+            }
+        }
     }
 
     private void HandleOrganModifications(SurgeryStepEvent args, SurgeryStepComponent comp)

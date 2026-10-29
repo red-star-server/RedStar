@@ -12,7 +12,8 @@
   - type: SurgeryStep
     toolQualities:
     - Slicing
-    setFlags: IncisionOpen
+    setFlags:
+    - IncisionOpen
     duration: 2
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/scalpel.rsi
@@ -31,7 +32,8 @@
   - type: SurgeryStep
     toolQualities:
     - Clamping
-    setFlags: BleedersClamped
+    setFlags:
+    - BleedersClamped
     duration: 4
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/hemostat.rsi
@@ -48,7 +50,8 @@
   - type: SurgeryStep
     toolQualities:
     - Suturing
-    clearFlags: BleedersClamped
+    clearFlags:
+    - BleedersClamped
     duration: 5
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/stitches.rsi
@@ -62,7 +65,8 @@
   - type: SurgeryStep
     toolQualities:
     - Retracting
-    setFlags: SkinRetracted
+    setFlags:
+    - SkinRetracted
     duration: 2
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/retractor.rsi
@@ -76,7 +80,8 @@
   - type: SurgeryStep
     toolQualities:
     - Slicing
-    setFlags: BodyPartSawed
+    setFlags:
+    - BodyPartSawed
     duration: 4
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/scalpel.rsi
@@ -90,7 +95,8 @@
   - type: SurgeryStep
     toolQualities:
     - Sawing
-    setFlags: BonesSawed
+    setFlags:
+    - BonesSawed
     duration: 4
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/circular-saw.rsi
@@ -104,7 +110,8 @@
   - type: SurgeryStep
     toolQualities:
     - Sawing
-    setFlags: BonesOpen
+    setFlags:
+    - BonesOpen
     duration: 5
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/circular-saw.rsi
@@ -154,7 +161,8 @@
   - type: SurgeryStep
     toolQualities:
     - Retracting
-    setFlags: BonesOpen
+    setFlags:
+    - BonesOpen
     duration: 2
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/retractor.rsi
@@ -197,7 +205,8 @@
   - type: SurgeryStep
     toolQualities:
     - Retracting
-    clearFlags: BonesOpen
+    clearFlags:
+    - BonesOpen
     duration: 2
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/retractor.rsi
@@ -211,7 +220,8 @@
   - type: SurgeryStep
     toolQualities:
     - BoneHealing
-    clearFlags: BonesSawed
+    clearFlags:
+    - BonesSawed
     duration: 2
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/bone-gel.rsi
@@ -308,7 +318,8 @@
   - type: SurgeryStep
     toolQualities:
     - Sawing
-    setFlags: BodyPartSawed
+    setFlags:
+    - BodyPartSawed
     duration: 4
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/circular-saw.rsi
@@ -322,7 +333,8 @@
   - type: SurgeryStep
     toolQualities:
     - Clamping
-    setFlags: InternalBleedersClamped
+    setFlags:
+    - InternalBleedersClamped
     duration: 2
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/hemostat.rsi
@@ -363,7 +375,8 @@
   - type: SurgeryStep
     toolQualities:
     - Slicing
-    setFlags: IncisionOpen
+    setFlags:
+    - IncisionOpen
     duration: 3
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/scalpel.rsi
@@ -420,7 +433,8 @@
   - type: SurgeryStep
     toolQualities:
     - Cauterizing
-    clearFlags: IncisionOpen
+    clearFlags:
+    - IncisionOpen
     duration: 2
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/cautery.rsi
@@ -439,7 +453,8 @@
   - type: SurgeryStep
     toolQualities:
     - Suturing
-    clearFlags: IncisionOpen
+    clearFlags:
+    - IncisionOpen
     duration: 8
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/stitches.rsi

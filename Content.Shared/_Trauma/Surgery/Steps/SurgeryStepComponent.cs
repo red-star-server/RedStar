@@ -74,11 +74,11 @@ public sealed partial class SurgeryStepComponent : Component
     /// Surgery step flags to set when this step completes.
     /// </summary>
     [DataField]
-    public SurgeryStepFlags? SetFlags;
+    public List<SurgeryStepFlags>? SetFlags;
 
     /// <summary>
     /// Surgery step flags to clear when this step completes.
     /// </summary>
     [DataField]
-    public SurgeryStepFlags? ClearFlags;
+    public List<SurgeryStepFlags>? ClearFlags;
 }

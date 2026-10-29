@@ -33,7 +33,6 @@ public sealed partial class SurgerySystem : EntitySystem
     [Dependency] private ILocalizationManager _loc = default!;
     [Dependency] private BodySystem _body = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private INetManager _net = default!;
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private MobStateSystem _mobState = default!;
@@ -251,7 +250,7 @@ public sealed partial class SurgerySystem : EntitySystem
             state.CompletedSteps.HasFlag(SurgeryStepFlags.IncisionOpen) &&
             GetNextStep(args.Body, args.Part, ent.Owner, args.User) is {} next
             && GetSingleton(next.Surgery.Comp.Steps[next.Step < 0 ? -next.Step - 1 : next.Step]) is {} nextStep
-            && _stepQuery.Comp(nextStep).ClearFlags?.HasFlag(SurgeryStepFlags.IncisionOpen) == true)
+            && _stepQuery.Comp(nextStep).ClearFlags?.Contains(SurgeryStepFlags.IncisionOpen) == true)
             return;
 
         var organs = _part.GetPartOrgans(args.Part);
