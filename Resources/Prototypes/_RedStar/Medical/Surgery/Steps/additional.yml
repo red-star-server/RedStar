@@ -4,8 +4,8 @@
   name: Rearrange soft tissue
   components:
   - type: SurgeryStep
-    tool:
-    - type: Tweezers
+    toolQualities:
+    - Manipulating
     add:
     - type: TissueRearranged
     duration: 5

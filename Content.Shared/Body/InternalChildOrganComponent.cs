@@ -1,5 +1,4 @@
 using Robust.Shared.GameStates;
-using Content.Shared._Trauma.Common.Surgery.Tools; // RS14
 
 namespace Content.Shared.Body;
 
@@ -8,4 +7,4 @@ namespace Content.Shared.Body;
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState(fieldDeltas: true)] // RS14
-public sealed partial class InternalChildOrganComponent : BaseSurgeryToolComponent; // RS14
+public sealed partial class InternalChildOrganComponent : Component;

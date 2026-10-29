@@ -6,8 +6,6 @@ namespace Content.Shared.Body;
 
 public sealed partial class InternalChildOrganComponent
 {
-    public override string ToolName => Loc.GetString("trauma-surgery-tool-organ");
-
     /// <summary>
     ///     Maximum organ integrity, do keep in mind that Organs are supposed to be VERY and VERY damage sensitive
     /// </summary>

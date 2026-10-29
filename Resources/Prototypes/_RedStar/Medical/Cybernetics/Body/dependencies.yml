@@ -3,11 +3,6 @@
   parent: OrganBase
   id: OrganBaseFleshy # not bone or metal
   components:
-  - type: SurgeryTool
-    startSound:
-      path: /Audio/_RedStar/Medical/Surgery/organ1.ogg
-    endSound:
-      path: /Audio/_RedStar/Medical/Surgery/organ2.ogg
   - type: Edible
   - type: BadFood
   - type: Extractable
@@ -26,3 +21,5 @@
         Quantity: 12
       - ReagentId: Fat
         Quantity: 3
+  - type: Tool
+    useSound: /Audio/_RedStar/Medical/Surgery/organ1.ogg

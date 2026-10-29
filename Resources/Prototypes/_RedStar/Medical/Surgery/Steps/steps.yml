@@ -10,8 +10,8 @@
   name: Cut with a scalpel
   components:
   - type: SurgeryStep
-    tool:
-    - type: Scalpel
+    toolQualities:
+    - Slicing
     add:
     - type: IncisionOpen
     duration: 2
@@ -30,8 +30,8 @@
   name: Clamp the bleeders
   components:
   - type: SurgeryStep
-    tool:
-    - type: Hemostat
+    toolQualities:
+    - Clamping
     add:
     - type: BleedersClamped
     duration: 4
@@ -48,8 +48,8 @@
   name: Stitch up destroyed tissues
   components:
   - type: SurgeryStep
-    tool:
-    - type: Stitches
+    toolQualities:
+    - Suturing
     remove:
     - type: BleedersClamped
     duration: 5
@@ -63,8 +63,8 @@
   name: Retract the skin
   components:
   - type: SurgeryStep
-    tool:
-    - type: Retractor
+    toolQualities:
+    - Retracting
     add:
     - type: SkinRetracted
     duration: 2
@@ -78,8 +78,8 @@
   name: Remove the dead skin
   components:
   - type: SurgeryStep
-    tool:
-    - type: Scalpel
+    toolQualities:
+    - Slicing
     add:
     - type: BodyPartSawed
     duration: 4
@@ -93,8 +93,8 @@
   name: Saw through bones
   components:
   - type: SurgeryStep
-    tool:
-    - type: BoneSaw
+    toolQualities:
+    - Sawing
     add:
     - type: BonesSawed
     duration: 4
@@ -108,8 +108,8 @@
   name: Clear up bone leftovers
   components:
   - type: SurgeryStep
-    tool:
-    - type: BoneSaw
+    toolQualities:
+    - Sawing
     add:
     - type: BonesOpen
     duration: 5
@@ -123,8 +123,8 @@
   name: Mend bones
   components:
   - type: SurgeryStep
-    tool:
-    - type: BoneGel
+    toolQualities:
+    - BoneHealing
     duration: 7
   - type: SurgeryAffixPartStep
   - type: Sprite
@@ -141,8 +141,8 @@
   name: Heal Organs
   components:
   - type: SurgeryStep
-    tool:
-    - type: Tending
+    toolQualities:
+    - Tending
     duration: 7
   - type: SurgeryAffixOrganStep
   - type: Sprite
@@ -159,8 +159,8 @@
   name: Prise the bones open
   components:
   - type: SurgeryStep
-    tool:
-    - type: Retractor
+    toolQualities:
+    - Retracting
     add:
     - type: BonesOpen
     duration: 2
@@ -207,8 +207,8 @@
   name: Close bones
   components:
   - type: SurgeryStep
-    tool:
-    - type: Retractor
+    toolQualities:
+    - Retracting
     remove:
     - type: BonesOpen
     duration: 2
@@ -222,8 +222,8 @@
   name: Seal bones
   components:
   - type: SurgeryStep
-    tool:
-    - type: BoneGel
+    toolQualities:
+    - BoneHealing
     remove:
     - type: BonesSawed
     duration: 2
@@ -247,8 +247,8 @@
   name: Close incision
   components:
   - type: SurgeryStep
-    tool:
-    - type: Cautery
+    toolQualities:
+    - Cauterizing
     remove:
     # This surgery removes a bunch of components that might be leftover from other surgeries in unintended cases.
     # Essentially a bit of a fallback for endusers :)
@@ -295,8 +295,8 @@
   name: Seal wounds
   components:
   - type: SurgeryStep
-    tool:
-    - type: Cautery
+    toolQualities:
+    - Cauterizing
     remove:
     - type: SkinRetracted
     - type: BleedersClamped
@@ -325,8 +325,8 @@
   name: Saw through bones
   components:
   - type: SurgeryStep
-    tool:
-    - type: BoneSaw
+    toolQualities:
+    - Sawing
     add:
     - type: BodyPartSawed
     duration: 4
@@ -340,8 +340,8 @@
   name: Clamp internal bleeders
   components:
   - type: SurgeryStep
-    tool:
-    - type: Hemostat
+    toolQualities:
+    - Clamping
     add:
     - type: InternalBleedersClamped
     duration: 2
@@ -360,8 +360,8 @@
   name: Amputate part
   components:
   - type: SurgeryStep
-    tool:
-    - type: BoneSaw
+    toolQualities:
+    - Sawing
     remove:
     # We remove these components to force people to go through all the steps again lol, otherwise you can just keep chopping.
     - type: SkinRetracted
@@ -382,8 +382,8 @@
   name: Make a careful incision
   components:
   - type: SurgeryStep
-    tool:
-    - type: Scalpel
+    toolQualities:
+    - Slicing
     add:
     - type: IncisionOpen
     duration: 3
@@ -397,8 +397,8 @@
   name: Repair damaged tissue
   components:
   - type: SurgeryStep
-    tool:
-    - type: Tending
+    toolQualities:
+    - Tending
     duration: 1
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/hemostat.rsi
@@ -418,8 +418,8 @@
   name: Repair burnt tissue
   components:
   - type: SurgeryStep
-    tool:
-    - type: Tending
+    toolQualities:
+    - Tending
     duration: 1
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/hemostat.rsi
@@ -440,8 +440,8 @@
   name: Seal the wound
   components:
   - type: SurgeryStep
-    tool:
-    - type: Cautery
+    toolQualities:
+    - Cauterizing
     remove:
     - type: IncisionOpen
     duration: 2
@@ -460,8 +460,8 @@
   name: Stitch up the dismemberment wound
   components:
   - type: SurgeryStep
-    tool:
-    - type: Stitches
+    toolQualities:
+    - Suturing
     remove:
     - type: IncisionOpen
     duration: 8
@@ -507,8 +507,8 @@
   name: Remove organ
   components:
   - type: SurgeryStep
-    tool:
-    - type: Tweezers
+    toolQualities:
+    - Manipulating
     duration: 8
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/hemostat.rsi
@@ -535,8 +535,8 @@
   name: Carve out a cavity
   components:
   - type: SurgeryStep
-    tool:
-    - type: Scalpel
+    toolQualities:
+    - Slicing
     duration: 6
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/manipulation.rsi
@@ -549,8 +549,8 @@
   name: Seal wounds
   components:
   - type: SurgeryStep
-    tool:
-    - type: Cautery
+    toolQualities:
+    - Cauterizing
     duration: 2
   - type: SurgeryAffixOrganStep
   - type: Sprite
@@ -571,8 +571,8 @@
   name: Lobotomize patient
   components:
   - type: SurgeryStep
-    tool:
-    - type: Drill
+    toolQualities:
+    - Drilling
     addOrganOnAdd:
       Brain:
       - type: OhioAccent
@@ -595,8 +595,8 @@
   name: Mend brain tissue
   components:
   - type: SurgeryStep
-    tool:
-    - type: Hemostat
+    toolQualities:
+    - Clamping
     duration: 4
     removeOrganOnAdd:
       Brain:

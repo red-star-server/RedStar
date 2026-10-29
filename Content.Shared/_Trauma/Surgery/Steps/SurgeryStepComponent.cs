@@ -1,4 +1,5 @@
 using Content.Shared.Body;
+using Content.Shared.Tools;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -13,6 +14,12 @@ public sealed partial class SurgeryStepComponent : Component
     /// </summary>
     [DataField]
     public ComponentRegistry? Tool;
+
+    /// <summary>
+    /// Tool qualities accepted by this step.
+    /// </summary>
+    [DataField]
+    public HashSet<ProtoId<ToolQualityPrototype>>? ToolQualities;
 
     /// <summary>
     /// Components added to the selected part when the step completes.

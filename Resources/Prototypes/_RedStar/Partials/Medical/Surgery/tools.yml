@@ -9,10 +9,6 @@
   - type: Tag
     tags:
     - SurgeryTool
-  - type: SurgeryTool
-
-# Cautery
-
 - type: entity
   parent: BaseToolSurgery
   id: Cautery
@@ -31,15 +27,10 @@
         Heat: 5
     soundHit:
       path: /Audio/Effects/lightburn.ogg
-  - type: SurgeryTool
-    startSound:
-      path: /Audio/_RedStar/Medical/Surgery/cautery1.ogg
-    endSound:
-      path: /Audio/_RedStar/Medical/Surgery/cautery2.ogg
-  - type: Cautery
-
-# Drill
-
+  - type: Tool
+    qualities:
+      - Cauterizing
+    useSound: /Audio/_RedStar/Medical/Surgery/cautery1.ogg
 - type: entity
   parent: [ BaseToolSurgery, BaseMedicalScienceContraband ] # Trauma - Made it contraband
   id: Drill
@@ -62,36 +53,25 @@
       path: /Audio/Items/drill_hit.ogg
   - type: StaticPrice
     price: 40
-  - type: SurgeryTool
-    startSound:
-      path: /Audio/_RedStar/Medical/Surgery/saw.ogg
-  - type: Drill
-
-# Scalpel
-
+  - type: Tool
+    qualities:
+      - Drilling
+    useSound: /Audio/_RedStar/Medical/Surgery/saw.ogg
 - type: entity
   parent: [ BaseToolSurgery, BaseMedicalScienceContraband ] # Trauma - Made it contraband
   id: Scalpel
   name: scalpel
   description: A surgical tool used to make incisions into flesh.
   components:
-  # <Trauma>
-  - type: SurgeryTool
-    startSound:
-      path: /Audio/_RedStar/Medical/Surgery/scalpel1.ogg
-    endSound:
-      path: /Audio/_RedStar/Medical/Surgery/scalpel2.ogg
-  - type: Scalpel
   - type: Tag
     tags:
     - SurgeryTool
     - Knife
-  - type: Sharp
-  # </Trauma>
   - type: Tool
     qualities:
-    - Slicing
+      - Slicing
     speedModifier: 0.66 # pretend the sixes go on forever :)
+    useSound: /Audio/_RedStar/Medical/Surgery/scalpel1.ogg
   - type: Utensil
     types:
       - Knife
@@ -142,9 +122,10 @@
     damage:
       types:
         Slash: 12
-  - type: Scalpel
-    speed: 1.35
-
+  - type: Tool
+    qualities:
+      - Slicing
+    speedModifier: 1.35
 - type: entity
   parent: Scalpel
   id: ScalpelLaser
@@ -158,12 +139,10 @@
     sprite: _RedStar/Medical/LegacyTools/scalpel.rsi
     storedRotation: 90
     heldPrefix: laser
-  - type: Scalpel
-    speed: 1.75
-  # TODO: prevent bleeding from incisions
-
-# Retractor
-
+  - type: Tool
+    qualities:
+      - Slicing
+    speedModifier: 1.75
 - type: entity
   parent: BaseToolSurgery
   id: Retractor
@@ -176,15 +155,10 @@
   - type: Item
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/retractor.rsi
     storedRotation: 90
-  - type: SurgeryTool
-    startSound:
-      path: /Audio/_RedStar/Medical/Surgery/retractor1.ogg
-    endSound:
-      path: /Audio/_RedStar/Medical/Surgery/retractor2.ogg
-  - type: Retractor
-
-# Hemostat
-
+  - type: Tool
+    qualities:
+      - Retracting
+    useSound: /Audio/_RedStar/Medical/Surgery/retractor1.ogg
 - type: entity
   parent: BaseToolSurgery
   id: Hemostat
@@ -198,29 +172,18 @@
     heldPrefix: hemostat
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/hemostat.rsi
     storedRotation: 90
-  - type: SurgeryTool
-    startSound:
-      path: /Audio/_RedStar/Medical/Surgery/retractor1.ogg
-    endSound:
-      path: /Audio/_RedStar/Medical/Surgery/hemostat1.ogg
-  - type: Hemostat
-  - type: Tweezers
-  - type: Tending
-
-# Saws
-
+  - type: Tool
+    qualities:
+      - Clamping
+      - Manipulating
+      - Tending
+    useSound: /Audio/_RedStar/Medical/Surgery/retractor1.ogg
 - type: entity
   parent: [ BaseToolSurgery, BaseMedicalScienceContraband ] # Trauma - Made it contraband
   id: Saw
   name: metal saw
   description: For cutting wood and other objects to pieces. Or sawing bones, in case of emergency.
   components:
-  # <Trauma>
-  - type: BoneSaw
-  - type: SurgeryTool
-    startSound:
-      path: /Audio/_RedStar/Medical/Surgery/bone_saw.ogg
-  # </Trauma>
   - type: Utensil
     types:
       - Knife
@@ -235,10 +198,8 @@
     useSound: # Trauma
       path: /Audio/_RedStar/Medical/Surgery/bone_saw.ogg
     qualities:
-    - Sawing
-    - Slicing
-# No melee for regular saw because have you ever seen someone use a band saw as a weapon? It's dumb.
-
+      - Sawing
+      - Slicing
 - type: entity
   parent: [Saw, BaseMinorContraband] # Trauma - add contraband mark
   id: SawImprov
@@ -257,22 +218,19 @@
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
   - type: Tool
+    qualities:
+      - Sawing
     speedModifier: 0.5
-  - type: BoneSaw
-    speed: 0.5
-
 - type: entity
   parent: Saw
   id: SawElectric
   name: circular saw
   description: For heavy duty cutting.
   components:
-  # <Trauma>
   - type: Tag
     tags:
     - SurgeryTool
     - CircularSaw
-  # </Trauma>
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/circular-saw.rsi
     state: circular-saw
@@ -286,15 +244,11 @@
     soundHit:
       path: /Audio/Items/drill_hit.ogg
   - type: Tool
+    qualities:
+      - Sawing
     speedModifier: 1.5
     useSound: # Trauma
       path: /Audio/_RedStar/Medical/Surgery/saw.ogg
-  - type: BoneSaw
-    speed: 1.5
-  - type: SurgeryTool
-    startSound:
-      path: /Audio/_RedStar/Medical/Surgery/saw.ogg
-
 - type: entity
   parent: [ SawElectric ]
   id: SawAdvanced
@@ -312,6 +266,6 @@
   - type: MeleeWeapon
     attackRate: 1.5
   - type: Tool
-    speedModifier: 2.0
-  - type: BoneSaw
-    speed: 2
+    qualities:
+      - Sawing
+    speedModifier: 2

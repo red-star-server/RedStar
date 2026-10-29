@@ -8,18 +8,18 @@ using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Body.Cavity;
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared._Trauma.Common.Traumas;
-using Content.Shared._Trauma.ItemSwitch;
 using Content.Shared._Trauma.Speech;
 using Content.Shared._Trauma.Surgery;
 using Content.Shared._Trauma.Surgery.Steps;
 using Content.Shared._Trauma.Surgery.Steps.Parts;
-using Content.Shared._Trauma.Surgery.Tools;
 using Content.Shared._Trauma.Traumas;
 using Content.Shared._Trauma.Wounds;
 using Content.Shared.Body;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.Standing;
+using Content.Shared.Tools;
+using Content.Shared.Tools.Systems;
 using Content.Shared.Temperature.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -37,11 +37,13 @@ public sealed partial class SurgeryTest : GameTest
     [SidedDependency(Side.Server)] private StandingStateSystem _standing = default!;
     [SidedDependency(Side.Server)] private TraumaSystem _trauma = default!;
     [SidedDependency(Side.Server)] private WoundSystem _wounds = default!;
-    [SidedDependency(Side.Server)] private SharedItemSwitchSystem _switch = default!;
+    [SidedDependency(Side.Server)] private SharedToolSystem _tools = default!;
 
     private static readonly ProtoId<OrganCategoryPrototype> Arm = "ArmLeft";
     private static readonly ProtoId<OrganCategoryPrototype> Torso = "Torso";
     private static readonly ProtoId<OrganCategoryPrototype> Head = "Head";
+    private static readonly ProtoId<ToolQualityPrototype> BoneHealing = "BoneHealing";
+    private static readonly ProtoId<ToolQualityPrototype> BoneSetting = "BoneSetting";
     private static readonly EntProtoId BluntWound = "WoundBlunt";
 
     private async Task<(EntityUid Surgeon, EntityUid Patient)> SetupPatient()
@@ -86,23 +88,28 @@ public sealed partial class SurgeryTest : GameTest
                 var stepId = next.Surgery.Comp.Steps[next.Step];
                 var step = _surgery.GetSingleton(stepId)!.Value;
                 var data = SComp<SurgeryStepComponent>(step);
-                var tool = data.Tool!.Values.First().Component switch
-                {
-                    DrillComponent => SSpawn("Drill"),
-                    ScalpelComponent => SSpawn("Scalpel"),
-                    RetractorComponent => SSpawn("Retractor"),
-                    BoneSawComponent => SSpawn("Saw"),
-                    HemostatComponent => SSpawn("Hemostat"),
-                    BoneGelComponent => SSpawn("BoneGel"),
-                    CauteryComponent => SSpawn("Cautery"),
-                    StitchesComponent => SSpawn("MedicalStitches"),
-                    TendingComponent => SSpawn("Hemostat"),
-                    TweezersComponent => SSpawn("Hemostat"),
-                    BoneSetterComponent => SSpawn("Bonesetter"),
-                    InternalChildOrganComponent => organ!.Value,
-                    BodyPartComponent => organ!.Value,
-                    _ => throw new InvalidOperationException($"Unexpected surgery tool in {stepId}"),
-                };
+                var tool = data.ToolQualities is { Count: > 0 } qualities
+                    ? qualities.First().ToString() switch
+                    {
+                        "Drilling" => SSpawn("Drill"),
+                        "Slicing" => SSpawn("Scalpel"),
+                        "Retracting" => SSpawn("Retractor"),
+                        "Sawing" => SSpawn("Saw"),
+                        "Clamping" => SSpawn("Hemostat"),
+                        "BoneHealing" => SSpawn("BoneGel"),
+                        "Cauterizing" => SSpawn("Cautery"),
+                        "Suturing" => SSpawn("MedicalStitches"),
+                        "Tending" => SSpawn("Hemostat"),
+                        "Manipulating" => SSpawn("Hemostat"),
+                        "BoneSetting" => SSpawn("Bonesetter"),
+                        var quality => throw new InvalidOperationException($"Unexpected surgery quality {quality} in {stepId}"),
+                    }
+                    : data.Tool!.Values.First().Component switch
+                    {
+                        InternalChildOrganComponent => organ!.Value,
+                        BodyPartComponent => organ!.Value,
+                        var component => throw new InvalidOperationException($"Unexpected surgery tool {component} in {stepId}"),
+                    };
 
                 if (_hands.GetActiveItem(surgeon) is { } held)
                     Assert.That(_hands.TryDrop(surgeon, held), Is.True);
@@ -176,20 +183,13 @@ public sealed partial class SurgeryTest : GameTest
     public void AdvancedToolSwitchesItsSurgicalCapabilities()
     {
         var tool = SSpawn("AdvancedBoneGel");
-        Assert.That(SEntMan.HasComponent<BoneGelComponent>(tool), Is.True);
-        Assert.That(_switch.Switch(tool, "bonesetter"), Is.True);
-        Assert.That(SEntMan.HasComponent<BoneGelComponent>(tool), Is.False);
-        Assert.That(SEntMan.HasComponent<BoneSetterComponent>(tool), Is.True);
-        Assert.That(_switch.Switch(tool, "bonegel"), Is.True);
-        Assert.That(SEntMan.HasComponent<BoneGelComponent>(tool), Is.True);
-        Assert.That(SEntMan.HasComponent<BoneSetterComponent>(tool), Is.False);
-        var switching = SComp<ItemSwitchComponent>(tool);
-        switching.NeedsPower = true;
-        switching.States["bonesetter"].EnergyPerUse = 10;
-        Assert.That(_switch.Switch(tool, "bonesetter"), Is.False);
-        Assert.That(switching.State, Is.EqualTo("bonegel"));
-        Assert.That(SEntMan.HasComponent<BoneGelComponent>(tool), Is.True);
-        Assert.That(SEntMan.HasComponent<BoneSetterComponent>(tool), Is.False);
+        Assert.That(_tools.HasQuality(tool, BoneHealing), Is.True);
+        Assert.That(_tools.CycleMultipleTool(tool), Is.True);
+        Assert.That(_tools.HasQuality(tool, BoneHealing), Is.False);
+        Assert.That(_tools.HasQuality(tool, BoneSetting), Is.True);
+        Assert.That(_tools.CycleMultipleTool(tool), Is.True);
+        Assert.That(_tools.HasQuality(tool, BoneHealing), Is.True);
+        Assert.That(_tools.HasQuality(tool, BoneSetting), Is.False);
     }
     [Test]
     public async Task LobotomyCanBeReversed()
