@@ -6,8 +6,8 @@
   - type: SurgeryStep
     toolQualities:
     - Manipulating
-    add:
-    - type: TissueRearranged
+    setFlags:
+    - TissueRearranged
     duration: 5
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/hemostat.rsi
@@ -24,9 +24,10 @@
   name: Stitch up blood vessels
   components:
   - type: SurgeryStep
-    add:
-    - type: VesselsStitched
-    remove: null
+    setFlags:
+    - VesselsStitched
+    clearFlags:
+    - BleedersClamped
 
 - type: entity
   parent: SurgeryStepSealBones
@@ -34,9 +35,10 @@
   name: Create joint
   components:
   - type: SurgeryStep
-    remove: null
-    add:
-    - type: JointCreated
+    setFlags:
+    - JointCreated
+    clearFlags:
+    - BonesSawed
 
 - type: entity
   parent: SurgeryStepCloseBloodOutputs
@@ -44,9 +46,10 @@
   name: Stitch joint blood vessels
   components:
   - type: SurgeryStep
-    remove: null
-    add:
-    - type: JointStitched
+    setFlags:
+    - JointStitched
+    clearFlags:
+    - BleedersClamped
 
 - type: entity
   parent: SurgeryStepBase

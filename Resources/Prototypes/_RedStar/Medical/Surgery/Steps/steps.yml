@@ -12,8 +12,8 @@
   - type: SurgeryStep
     toolQualities:
     - Slicing
-    add:
-    - type: IncisionOpen
+    setFlags:
+    - IncisionOpen
     duration: 2
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/scalpel.rsi
@@ -32,8 +32,8 @@
   - type: SurgeryStep
     toolQualities:
     - Clamping
-    add:
-    - type: BleedersClamped
+    setFlags:
+    - BleedersClamped
     duration: 4
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/hemostat.rsi
@@ -50,8 +50,8 @@
   - type: SurgeryStep
     toolQualities:
     - Suturing
-    remove:
-    - type: BleedersClamped
+    clearFlags:
+    - BleedersClamped
     duration: 5
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/stitches.rsi
@@ -65,8 +65,8 @@
   - type: SurgeryStep
     toolQualities:
     - Retracting
-    add:
-    - type: SkinRetracted
+    setFlags:
+    - SkinRetracted
     duration: 2
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/retractor.rsi
@@ -80,8 +80,8 @@
   - type: SurgeryStep
     toolQualities:
     - Slicing
-    add:
-    - type: BodyPartSawed
+    setFlags:
+    - BodyPartSawed
     duration: 4
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/scalpel.rsi
@@ -95,8 +95,8 @@
   - type: SurgeryStep
     toolQualities:
     - Sawing
-    add:
-    - type: BonesSawed
+    setFlags:
+    - BonesSawed
     duration: 4
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/circular-saw.rsi
@@ -110,8 +110,8 @@
   - type: SurgeryStep
     toolQualities:
     - Sawing
-    add:
-    - type: BonesOpen
+    setFlags:
+    - BonesOpen
     duration: 5
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/circular-saw.rsi
@@ -161,8 +161,8 @@
   - type: SurgeryStep
     toolQualities:
     - Retracting
-    add:
-    - type: BonesOpen
+    setFlags:
+    - BonesOpen
     duration: 2
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/retractor.rsi
@@ -205,8 +205,8 @@
   - type: SurgeryStep
     toolQualities:
     - Retracting
-    remove:
-    - type: BonesOpen
+    clearFlags:
+    - BonesOpen
     duration: 2
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/retractor.rsi
@@ -220,8 +220,8 @@
   - type: SurgeryStep
     toolQualities:
     - BoneHealing
-    remove:
-    - type: BonesSawed
+    clearFlags:
+    - BonesSawed
     duration: 2
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/bone-gel.rsi
@@ -245,18 +245,17 @@
   - type: SurgeryStep
     toolQualities:
     - Cauterizing
+    clearFlags:
+    - SkinRetracted
+    - BleedersClamped
+    - IncisionOpen
+    - InternalBleedersClamped
+    - TissueRearranged
+    - VesselsStitched
+    - JointCreated
+    - JointStitched
     remove:
-    # This surgery removes a bunch of components that might be leftover from other surgeries in unintended cases.
-    # Essentially a bit of a fallback for endusers :)
-    - type: SkinRetracted
-    - type: BleedersClamped
-    - type: IncisionOpen
     - type: OrganReattached
-    - type: InternalBleedersClamped
-    - type: TissueRearranged
-    - type: VesselsStitched
-    - type: JointCreated
-    - type: JointStitched
     duration: 2
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/cautery.rsi
@@ -290,15 +289,15 @@
   - type: SurgeryStep
     toolQualities:
     - Cauterizing
-    remove:
-    - type: SkinRetracted
-    - type: BleedersClamped
-    - type: IncisionOpen
-    - type: InternalBleedersClamped
-    - type: TissueRearranged
-    - type: VesselsStitched
-    - type: JointCreated
-    - type: JointStitched
+    clearFlags:
+    - SkinRetracted
+    - BleedersClamped
+    - IncisionOpen
+    - InternalBleedersClamped
+    - TissueRearranged
+    - VesselsStitched
+    - JointCreated
+    - JointStitched
     duration: 2
   - type: SurgeryAffixPartStep
   - type: Sprite
@@ -320,8 +319,8 @@
   - type: SurgeryStep
     toolQualities:
     - Sawing
-    add:
-    - type: BodyPartSawed
+    setFlags:
+    - BodyPartSawed
     duration: 4
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/circular-saw.rsi
@@ -335,8 +334,8 @@
   - type: SurgeryStep
     toolQualities:
     - Clamping
-    add:
-    - type: InternalBleedersClamped
+    setFlags:
+    - InternalBleedersClamped
     duration: 2
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/hemostat.rsi
@@ -355,12 +354,12 @@
   - type: SurgeryStep
     toolQualities:
     - Sawing
-    remove:
+    clearFlags:
+    - SkinRetracted
+    - BleedersClamped
+    - InternalBleedersClamped
+    - IncisionOpen
     # We remove these components to force people to go through all the steps again lol, otherwise you can just keep chopping.
-    - type: SkinRetracted
-    - type: BleedersClamped
-    - type: InternalBleedersClamped
-    - type: IncisionOpen
     duration: 8
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/circular-saw.rsi
@@ -377,8 +376,8 @@
   - type: SurgeryStep
     toolQualities:
     - Slicing
-    add:
-    - type: IncisionOpen
+    setFlags:
+    - IncisionOpen
     duration: 3
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/scalpel.rsi
@@ -435,8 +434,8 @@
   - type: SurgeryStep
     toolQualities:
     - Cauterizing
-    remove:
-    - type: IncisionOpen
+    clearFlags:
+    - IncisionOpen
     duration: 2
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/cautery.rsi
@@ -455,8 +454,8 @@
   - type: SurgeryStep
     toolQualities:
     - Suturing
-    remove:
-    - type: IncisionOpen
+    clearFlags:
+    - IncisionOpen
     duration: 8
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/stitches.rsi

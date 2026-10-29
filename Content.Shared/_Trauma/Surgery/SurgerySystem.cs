@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared._Trauma.Common.Surgery;
@@ -34,7 +33,6 @@ public sealed partial class SurgerySystem : EntitySystem
     [Dependency] private ILocalizationManager _loc = default!;
     [Dependency] private BodySystem _body = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private INetManager _net = default!;
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private MobStateSystem _mobState = default!;
@@ -195,11 +193,14 @@ public sealed partial class SurgerySystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnCloseIncisionValid(Entity<SurgeryCloseIncisionConditionComponent> ent, ref SurgeryValidEvent args)
     {
-        if (!HasComp<IncisionOpenComponent>(args.Part) ||
-            !HasComp<BleedersClampedComponent>(args.Part) ||
-            !HasComp<SkinRetractedComponent>(args.Part) ||
-            !HasComp<OrganReattachedComponent>(args.Part) ||
-            !HasComp<InternalBleedersClampedComponent>(args.Part))
+        var requiredSteps = SurgeryStepFlags.IncisionOpen |
+                           SurgeryStepFlags.BleedersClamped |
+                           SurgeryStepFlags.SkinRetracted |
+                           SurgeryStepFlags.InternalBleedersClamped;
+
+        if (!TryComp<SurgeryStateComponent>(args.Part, out var state) ||
+            (state.CompletedSteps & requiredSteps) != requiredSteps ||
+            !HasComp<OrganReattachedComponent>(args.Part))
         {
             args.Cancelled = true;
         }
@@ -245,10 +246,11 @@ public sealed partial class SurgerySystem : EntitySystem
 
         // The modification itself changes this condition before the final incision-closing step.
         // Keep that final step available while the incision is still open.
-        if (HasComp<IncisionOpenComponent>(args.Part)
-            && GetNextStep(args.Body, args.Part, ent.Owner, args.User) is {} next
+        if (TryComp<SurgeryStateComponent>(args.Part, out var state) &&
+            state.CompletedSteps.HasFlag(SurgeryStepFlags.IncisionOpen) &&
+            GetNextStep(args.Body, args.Part, ent.Owner, args.User) is {} next
             && GetSingleton(next.Surgery.Comp.Steps[next.Step < 0 ? -next.Step - 1 : next.Step]) is {} nextStep
-            && _stepQuery.Comp(nextStep).Remove?.Values.Any(entry => entry.Component is IncisionOpenComponent) == true)
+            && _stepQuery.Comp(nextStep).ClearFlags?.Contains(SurgeryStepFlags.IncisionOpen) == true)
             return;
 
         var organs = _part.GetPartOrgans(args.Part);
@@ -368,7 +370,10 @@ public sealed partial class SurgerySystem : EntitySystem
             return;
         }
 
-        if (ent.Comp.Inverted != woundable.Bleeds > 0 || HasComp<BleedersClampedComponent>(args.Part)) return;
+        var bleedersClamped = TryComp<SurgeryStateComponent>(args.Part, out var state) &&
+                              state.CompletedSteps.HasFlag(SurgeryStepFlags.BleedersClamped);
+
+        if (ent.Comp.Inverted != woundable.Bleeds > 0 || bleedersClamped) return;
         args.Cancelled = true;
         args.Reason = (ent.Comp.Inverted, args.User == args.Body) switch
         {

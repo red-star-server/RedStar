@@ -4,5 +4,3 @@ trauma-organ-install-success = You inserted { $organ } into your body.
 trauma-organ-no-mouth = You have no mouth!
 trauma-organ-no-mouth-other = { $target } has no mouth!
 trauma-organ-no-tongue = You have no tongue!
-trauma-surgery-tool-body-part = A body part
-trauma-surgery-tool-organ = An organ

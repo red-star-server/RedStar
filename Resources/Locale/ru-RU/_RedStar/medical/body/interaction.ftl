@@ -4,5 +4,3 @@ trauma-organ-install-success = Вы установили { $organ } в своё 
 trauma-organ-no-mouth = У вас нет рта!
 trauma-organ-no-mouth-other = У { $target } нет рта!
 trauma-organ-no-tongue = У вас нет языка!
-trauma-surgery-tool-body-part = Часть тела
-trauma-surgery-tool-organ = Орган

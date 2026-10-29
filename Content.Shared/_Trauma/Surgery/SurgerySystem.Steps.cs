@@ -39,6 +39,7 @@ public sealed partial class SurgerySystem
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private StatusEffectsSystem _status = default!;
     [Dependency] private SharedToolSystem _sharedTool = default!;
+    [Dependency] private SurgeryStateSystem _surgeryState = default!;
 
     [Dependency] private EntityQuery<BodyPartComponent> _partQuery;
     [Dependency] private EntityQuery<BleedInflicterComponent> _bleedQuery;
@@ -76,6 +77,23 @@ public sealed partial class SurgerySystem
         AddOrRemoveComponentsToEntity(args.Part, comp.Remove, true);
         AddOrRemoveComponentsToEntity(args.Body, comp.BodyAdd);
         AddOrRemoveComponentsToEntity(args.Body, comp.BodyRemove, true);
+
+        // Apply surgery step flags
+        if (comp.SetFlags is { } setFlags)
+        {
+            foreach (var flag in setFlags)
+            {
+                _surgeryState.SetStep(args.Part, flag);
+            }
+        }
+
+        if (comp.ClearFlags is { } clearFlags)
+        {
+            foreach (var flag in clearFlags)
+            {
+                _surgeryState.ClearStep(args.Part, flag);
+            }
+        }
     }
 
     private void HandleOrganModifications(SurgeryStepEvent args, SurgeryStepComponent comp)
@@ -93,7 +111,9 @@ public sealed partial class SurgerySystem
 
     private bool CheckComponentChanges(SurgeryStepComponent comp, SurgeryStepCompleteCheckEvent args)
     {
-        return TryToolCheck(comp.Add, args.Part) ||
+        return comp.SetFlags?.Any(flag => !_surgeryState.HasStep(args.Part, flag)) == true ||
+               comp.ClearFlags?.Any(flag => _surgeryState.HasStep(args.Part, flag)) == true ||
+               TryToolCheck(comp.Add, args.Part) ||
                TryToolCheck(comp.Remove, args.Part, checkMissing: false) ||
                TryToolCheck(comp.BodyAdd, args.Body) ||
                TryToolCheck(comp.BodyRemove, args.Body, checkMissing: false);
@@ -544,11 +564,9 @@ public sealed partial class SurgerySystem
         if (ent.Comp.ToolQualities is { Count: > 0 } qualities && !_sharedTool.HasAllQualities(args.Tool, qualities))
             return false;
 
-        if (ent.Comp.RequiredItemComponent == null)
-            return true;
-
-        if (!Factory.TryGetRegistration(ent.Comp.RequiredItemComponent, out var requiredComponent) ||
-            !HasComp(args.Tool, requiredComponent.Type))
+        if (ent.Comp.RequiredItemComponent is { } requiredItemComponent &&
+            (!Factory.TryGetRegistration(requiredItemComponent, out var requiredComponent) ||
+             !HasComp(args.Tool, requiredComponent.Type)))
             return false;
 
         if (_toolQuery.CompOrNull(args.Tool)?.UseSound is { } sound)

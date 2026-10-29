@@ -32,6 +32,7 @@ public sealed partial class SurgeryTest : GameTest
     [SidedDependency(Side.Server)] private BodySystem _body = default!;
     [SidedDependency(Side.Server)] private BodyPartSystem _parts = default!;
     [SidedDependency(Side.Server)] private SurgerySystem _surgery = default!;
+    [SidedDependency(Side.Server)] private SurgeryStateSystem _surgeryState = default!;
     [SidedDependency(Side.Server)] private SharedHandsSystem _hands = default!;
     [SidedDependency(Side.Server)] private InventorySystem _inventory = default!;
     [SidedDependency(Side.Server)] private StandingStateSystem _standing = default!;
@@ -106,8 +107,8 @@ public sealed partial class SurgeryTest : GameTest
                     }
                     : data.RequiredItemComponent switch
                     {
-                        nameof(InternalChildOrganComponent) => organ!.Value,
-                        nameof(BodyPartComponent) => organ!.Value,
+                        "InternalChildOrgan" => organ!.Value,
+                        "BodyPart" => organ!.Value,
                         var component => throw new InvalidOperationException($"Unexpected surgery tool {component} in {stepId}"),
                     };
 
@@ -148,8 +149,8 @@ public sealed partial class SurgeryTest : GameTest
             var bone = SComp<BoneComponent>(arm);
             Assert.That(bone.BoneIntegrity, Is.EqualTo(bone.IntegrityCap));
             Assert.That(_trauma.HasWoundableTrauma(arm, TraumaType.BoneDamage), Is.False);
-            Assert.That(SEntMan.HasComponent<IncisionOpenComponent>(arm), Is.False);
-            Assert.That(SEntMan.HasComponent<BonesSawedComponent>(arm), Is.False);
+            Assert.That(_surgeryState.HasStep(arm, SurgeryStepFlags.IncisionOpen), Is.False);
+            Assert.That(_surgeryState.HasStep(arm, SurgeryStepFlags.BonesSawed), Is.False);
         });
     }
 
@@ -180,7 +181,7 @@ public sealed partial class SurgeryTest : GameTest
 
     [Test]
     [RunOnSide(Side.Server)]
-    public void AdvancedToolSwitchesItsSurgicalCapabilities()
+    public void MultipleToolCyclesItsSurgicalCapabilities()
     {
         var tool = SSpawn("AdvancedBoneGel");
         Assert.That(_tools.HasQuality(tool, BoneHealing), Is.True);
@@ -218,7 +219,7 @@ public sealed partial class SurgeryTest : GameTest
             Assert.That(_body.RemoveOrgan(patient, arm), Is.True);
         });
         await RunSeconds(8);
-        await Server.WaitAssertion(() => Assert.That(SEntMan.HasComponent<IncisionOpenComponent>(arm), Is.False));
+        await Server.WaitAssertion(() => Assert.That(_surgeryState.HasStep(arm, SurgeryStepFlags.IncisionOpen), Is.False));
         EntityUid torso = default;
         await Server.WaitAssertion(() => torso = _body.GetOrgan(patient, Torso)!.Value);
         await Operate(surgeon, patient, torso, "SurgeryAttachLeftArm", arm);
