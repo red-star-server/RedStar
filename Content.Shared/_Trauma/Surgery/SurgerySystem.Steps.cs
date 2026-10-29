@@ -111,7 +111,9 @@ public sealed partial class SurgerySystem
 
     private bool CheckComponentChanges(SurgeryStepComponent comp, SurgeryStepCompleteCheckEvent args)
     {
-        return TryToolCheck(comp.Add, args.Part) ||
+        return comp.SetFlags?.Any(flag => !_surgeryState.HasStep(args.Part, flag)) == true ||
+               comp.ClearFlags?.Any(flag => _surgeryState.HasStep(args.Part, flag)) == true ||
+               TryToolCheck(comp.Add, args.Part) ||
                TryToolCheck(comp.Remove, args.Part, checkMissing: false) ||
                TryToolCheck(comp.BodyAdd, args.Body) ||
                TryToolCheck(comp.BodyRemove, args.Body, checkMissing: false);
