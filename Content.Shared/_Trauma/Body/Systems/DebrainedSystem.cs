@@ -12,10 +12,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared._Trauma.Body;
 
-// TODO: Share vital-organ handling with HeartSystem.
 /// <summary>
-///     This system handles behavior on entities when they lose their head or their brains are removed.
-///     Mind ownership is handled by BrainSystem.
+/// This system handles behavior on entities when they lose their head or their brains are removed.
+/// Mind ownership is handled by BrainSystem.
 /// </summary>
 public sealed partial class DebrainedSystem : EntitySystem
 {
