@@ -1,0 +1,76 @@
+<Document>
+# Матка и признаки
+<Box>
+<GuideEntityEmbed Entity="BeeQueen" Caption=""/>
+</Box>
+Признаки матки это признаки всей колонии. Их видно по цвету пчёл, а точно покажет [textlink="анализатор пасеки" link="BeekeepingAnalyzer"]. Матка из карго приходит с признаком [color=#7CC46A]Защита растений[/color].
+
+## Как менять признаки
+Матку достают из улья через ПКМ, пункт [bold]Поймать[/bold], и колют шприцем. Не тяните: без улья она живёт 5 минут.
+
+<Table Columns="2">
+<ColorBox Color="#453a59" OutlineColor="#5B5C6E"><Box>[bold]Что ввести[/bold]</Box></ColorBox>
+<ColorBox Color="#453a59" OutlineColor="#5B5C6E"><Box>[bold]Что будет[/bold]</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Нестабильный мутаген</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Каждые [protodata="BeeQueen" comp="BeeQueen" member="MutagenPerRoll"/] ед. дают случайный исход: новый признак или потерю старого. Бывают и плохие признаки.</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Маточное молочко</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Каждые [protodata="BeeQueen" comp="BeeQueen" member="JellyPerSlot"/] ед. дают ещё один слот для признака, всего до [protodata="BeeQueen" comp="BeeQueen" member="MaxSlots"/].</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Любой другой реагент</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Только матке с [color=#D9534F]Жалом[/color], до [protodata="BeeQueen" comp="BeeQueen" member="PayloadCap"/] ед. Без жала шприц не сработает.</Box></ColorBox>
+</Table>
+
+У матки из карго [protodata="BeeQueen" comp="BeeQueen" member="Slots"/] слот. Когда свободного слота нет, новый признак вытесняет случайный старый, поэтому сначала добудьте молочко.
+
+## Признаки
+### Хорошие
+- [color=#7CC46A]Защита растений[/color]: опыление снижает вредителей и сорняки. Слот не занимает.
+- [color=#F2C14E]Продуктивность[/color]: соты строятся в полтора раза быстрее, но стоят больше нектара.
+- [color=#E79A3F]Эффективный сбор[/color]: каждый визит приносит в полтора раза больше нектара.
+- [color=#F2A0C0]Плодовитость[/color]: матка делает пчёл чаще, новые пчёлы дешевле, колония растёт быстрее.
+- [color=#6FB8E0]Зоркая разведчица[/color]: за вылет разведчица находит до трёх лотков.
+- [color=#B58BD8]Улучшенное опыление[/color]: опыление вдвое чаще удваивает урожай, но опылений у пчелы на одно меньше.
+- [color=#A0C878]Живучесть[/color]: пчёлы в руках живут в полтора раза дольше.
+- [color=#5FE08A]Мутагенное опыление[/color]: каждое опыление действует на растение как 1 ед. нестабильного мутагена.
+- [color=#E8D36F]Аварийная матка[/color]: если матка пропала, колония за 3 минуты выводит новую, обычную.
+- [color=#F5E6A8]Ранняя яйцекладка[/color]: полная колония вдвое быстрее откладывает яйцо матки.
+- [color=#C9E4A0]Живучее яйцо[/color]: яйцо живёт в полтора раза дольше, молочко собирать проще.
+- [color=#9FD6F2]Скорая матка[/color]: следующее яйцо после прошлого приходит вдвое быстрее.
+
+### Опасные и плохие
+- [color=#D9534F]Жало[/color]: матка принимает реагенты. Пчёлы несут их в жале и понемногу добавляют в соты.
+- [color=#E0603A]Агрессия[/color]: пчёлы кусают при взятии в руки.
+- [color=#9A9A9A]Лень[/color]: соты строятся медленнее.
+- [color=#C07A4A]Прожорливость[/color]: сота съедает больше нектара.
+- [color=#B0A0D0]Хрупкость[/color]: пчёлы в руках живут меньше.
+- [color=#A08070]Неуклюжесть[/color]: опыление вдвое реже удваивает урожай.
+- [color=#7A8A9A]Медлительность[/color]: визит приносит меньше нектара.
+- [color=#8F7FA8]Вялая матка[/color]: яйцо откладывается заметно позже.
+- [color=#D8A7A7]Хрупкое яйцо[/color]: яйцо живёт вдвое меньше, молочко нужно собирать быстро.
+
+<ColorBox Color="#59563a" OutlineColor="#5B5C6E">
+<Box Orientation="Vertical" HorizontalAlignment="Stretch">
+[bold]Нестабильность.[/bold] Каждый бросок мутагена делает матку нестабильнее (счётчик виден в анализаторе). Чем он больше, тем чаще мутаген даёт плохой признак или отнимает хороший и тем реже даёт хороший. Молодая матка, выросшая из яйца, начинает с нуля, а улетевшая с роем старая матка счётчик сохраняет.
+</Box>
+</ColorBox>
+
+<ColorBox Color="#59563a" OutlineColor="#5B5C6E">
+<Box Orientation="Vertical" HorizontalAlignment="Stretch">
+[bold]Жало и агрессия вместе.[/bold] Пчелу с жалом в руке держат только кожаные перчатки ботаника, остальные перчатки она прокалывает. Реагенты из матки попадут в того, кого она ужалит.
+</Box>
+</ColorBox>
+
+## Яйцо и маточное молочко
+Когда колония полная (пчёлы у вас в руках тоже считаются) несколько минут подряд, матка откладывает [bold]яйцо второй матки[/bold]. Его покажут осмотр улья и анализатор.
+
+<Box>
+<GuideEntityEmbed Entity="Beaker" Caption="Мензурка"/>
+</Box>
+Возьмите пустую бутылку или мензурку, ПКМ по улью, [bold]Собрать маточное молочко[/bold]: [protodata="Beehive" comp="Beehive" member="JellyAmount"/] ед. Молочко немного лечит отравления и хорошо продаётся, но главное, оно даёт матке слоты для признаков.
+
+<Box>
+<GuideReagentEmbed Reagent="RoyalJelly"/>
+</Box>
+
+## Роение
+Яйцо живёт 5 минут. Если его не собрать, начинается [bold]роение[/bold]: старая матка улетает с половиной колонии, а дома остаётся молодая с теми же признаками. Рой строит себе [textlink="дикий улей" link="BeekeepingWild"].
+</Document>

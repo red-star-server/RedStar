@@ -1,0 +1,26 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from the honey state of tgstation icons/obj/service/hydroponics/harvest.dmi at commit https://github.com/tgstation/tgstation/commit/ef2317dd53b48801c19befdd017f779fbc1b26af, modified by KAVALDi (github). The overlay states are drawn by KAVALDi (github) from this icon.",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "drips"
+        },
+        {
+            "name": "cells"
+        },
+        {
+            "name": "outline"
+        },
+        {
+            "name": "shine"
+        }
+    ]
+}

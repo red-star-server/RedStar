@@ -1,0 +1,38 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "frames-0 to frames-4 taken from tgstation icons/obj/service/hydroponics/equipment.dmi at commit https://github.com/tgstation/tgstation/commit/a28d7aba8fd21609596d0412d9e680686fa0b238, modified by KAVALDi (github). honey-1 to honey-4 drawn by KAVALDi (github), desaturated so the colour is set by a tint.",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "frames-0"
+        },
+        {
+            "name": "frames-1"
+        },
+        {
+            "name": "frames-2"
+        },
+        {
+            "name": "frames-3"
+        },
+        {
+            "name": "frames-4"
+        },
+        {
+            "name": "honey-1"
+        },
+        {
+            "name": "honey-2"
+        },
+        {
+            "name": "honey-3"
+        },
+        {
+            "name": "honey-4"
+        }
+    ]
+}
