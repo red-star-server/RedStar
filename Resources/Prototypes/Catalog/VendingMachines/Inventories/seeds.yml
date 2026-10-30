@@ -15,6 +15,10 @@
       PineappleSeeds: 5
       OrangeSeeds: 5
       WatermelonSeeds: 5
+      CoconutSeeds: 3 # RS14
+      AvocadoSeeds: 3 # RS14
+      RedStarMangoSeeds: 3 # RS14
+      PomegranateSeeds: 3 # RS14
   - name: vending-machine-category-vegetable-seeds
     icon: { entity: CarrotSeeds }
     startingInventory:
@@ -31,6 +35,8 @@
       PumpkinSeeds: 5
       SoybeanSeeds: 5
       TomatoSeeds: 5
+      CucumberSeeds: 5 # RS14
+      RedStarCactusSeeds: 3 # RS14
   - name: vending-machine-category-grain-seeds
     icon: { entity: WheatSeeds }
     startingInventory:
@@ -38,6 +44,8 @@
       RiceSeeds: 5
       SugarcaneSeeds: 5
       WheatSeeds: 5
+      CoffeeSeeds: 3 # RS14
+      HopsSeeds: 3 # RS14
   - name: vending-machine-category-other-seeds
     icon: { entity: PoppySeeds }
     startingInventory:
@@ -50,6 +58,11 @@
       PoppySeeds: 3
       TeaPlantSeeds: 5
       TowercapSeeds: 5
+      RoseSeeds: 3 # RS14
+      GeraniumSeeds: 3 # RS14
+      ButterflyOrchidSeeds: 3 # RS14
+      BeeSeeds: 2 # RS14
+      RedStarAshPorciniSeeds: 1 # RS14
     contrabandInventory:
       TobaccoSeeds: 2
       FoodSnackSemki: 2
