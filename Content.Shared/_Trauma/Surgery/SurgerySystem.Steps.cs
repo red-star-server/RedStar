@@ -831,9 +831,8 @@ public sealed partial class SurgerySystem
         if (ev.Handled)
             return true;
 
-        // TODO: use step index instead of prototype id to avoid repeated linear scans.
-        if (surgery.Comp.Requirement is not { } requirement) 
-            return surgery.Comp.Steps.TakeWhile(surgeryStep => surgeryStep != step).All(surgeryStep => IsStepComplete(body, part, surgeryStep, surgery));
+        if (surgery.Comp.Requirement is not { } requirement)
+            return AllPreviousStepsComplete(body, part, surgery, step);
 
         if (GetSingleton(requirement) is not { } requiredEnt ||
             !TryComp(requiredEnt, out SurgeryComponent? requiredComp) ||
@@ -842,7 +841,39 @@ public sealed partial class SurgerySystem
             return false;
         }
 
-        return surgery.Comp.Steps.TakeWhile(surgeryStep => surgeryStep != step).All(surgeryStep => IsStepComplete(body, part, surgeryStep, surgery));
+        return AllPreviousStepsComplete(body, part, surgery, step);
+    }
+
+    /// <summary>
+    /// Returns true if every step before <paramref name="step"/> in the surgery is complete.
+    /// Uses a cached index to avoid repeated linear scans of the steps list.
+    /// </summary>
+    private bool AllPreviousStepsComplete(EntityUid body, EntityUid part, Entity<SurgeryComponent> surgery, EntProtoId step)
+    {
+        var index = GetStepIndex(surgery);
+        if (!index.TryGetValue(step, out var stepPos))
+            return true; // step not found: nothing to check
+
+        for (var i = 0; i < stepPos; i++)
+        {
+            if (!IsStepComplete(body, part, surgery.Comp.Steps[i], surgery))
+                return false;
+        }
+
+        return true;
+    }
+
+    private Dictionary<EntProtoId, int> GetStepIndex(Entity<SurgeryComponent> surgery)
+    {
+        if (!_stepIndexCache.TryGetValue(surgery.Owner, out var index))
+        {
+            index = new Dictionary<EntProtoId, int>(surgery.Comp.Steps.Count);
+            for (var i = 0; i < surgery.Comp.Steps.Count; i++)
+                index[surgery.Comp.Steps[i]] = i;
+            _stepIndexCache[surgery.Owner] = index;
+        }
+
+        return index;
     }
 
     private bool CanPerformStep(EntityUid user,
