@@ -65,10 +65,12 @@ namespace Content.IntegrationTests.Tests
         {
             {"/Maps/bagel.yml", ["RubberStampMime"]},
             {"/Maps/reach.yml", ["HandheldCrewMonitor"]},
+            {"/Maps/hike.yml", ["HandheldCrewMonitor"]},
             {"/Maps/Shuttles/ShuttleEvent/honki.yml", ["GoldenBikeHorn", "RubberStampClown"]},
             {"/Maps/Shuttles/ShuttleEvent/syndie_evacpod.yml", ["RubberStampSyndicate"]},
             {"/Maps/Shuttles/ShuttleEvent/cruiser.yml", ["ShuttleGunPerforator"]},
             {"/Maps/Shuttles/ShuttleEvent/instigator.yml", ["ShuttleGunFriendship"]},
+            {"/Maps/Nonstations/wizardsden.yml", ["RubberStampWizard"]},
             // RS14-start
             {"/Maps/_RedStar/awesome.yml", ["ClothingHeadHatCatEars", "BoxFolderCentCom"]},
             // {"/Maps/_RedStar/cluster.yml", ["RubberStampMime"]},

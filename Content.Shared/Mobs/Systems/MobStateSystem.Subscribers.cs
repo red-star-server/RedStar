@@ -39,7 +39,7 @@ public partial class MobStateSystem
         SubscribeLocalEvent<MobStateComponent, StartPullAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, UpdateCanMoveEvent>(CheckActHardcrit); // Trauma - you can crawl around in softcrit // RS14
         SubscribeLocalEvent<MobStateComponent, StandAttemptEvent>(CheckAct);
-        SubscribeLocalEvent<MobStateComponent, PointAttemptEvent>(CheckAct);
+        SubscribeLocalEvent<MobStateComponent, PointAttemptEvent>(OnPointAttempt);
     }
 
     [SubscribeLocalEvent]
@@ -188,7 +188,19 @@ public partial class MobStateSystem
         }
     }
 
+    private void OnPointAttempt(Entity<MobStateComponent> ent, ref PointAttemptEvent args)
+    {
+        switch (ent.Comp.CurrentState)
+        {
+            case MobState.Dead:
+            case MobState.Critical:
+                args.Cancel();
+                break;
+        }
+    }
+
     [SubscribeLocalEvent]
+
     private void OnEquipAttempt(EntityUid target, MobStateComponent component, IsEquippingAttemptEvent args)
     {
         // is this a self-equip, or are they being stripped?
