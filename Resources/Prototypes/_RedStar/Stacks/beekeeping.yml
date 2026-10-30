@@ -1,0 +1,13 @@
+- type: stack
+  parent: BaseMediumStack
+  id: Beeswax
+  name: stack-beeswax
+  icon: { sprite: _RedStar/Objects/Specific/Beekeeping/wax.rsi, state: icon }
+  spawn: Beeswax
+
+- type: stack
+  parent: BaseMediumStack
+  id: Honeycomb
+  name: stack-honeycomb
+  icon: { sprite: _RedStar/Objects/Specific/Beekeeping/honeycomb.rsi, state: icon }
+  spawn: FoodHoneycomb

@@ -1,0 +1,37 @@
+- type: constructionGraph
+  id: Beehive
+  start: start
+  graph:
+  - node: start
+    actions:
+    - !type:DestroyEntity {}
+    edges:
+    - to: beehive
+      completed:
+      - !type:SnapToGrid { }
+      steps:
+      - material: WoodPlank
+        amount: 20
+        doAfter: 4
+  - node: beehive
+    entity: Beehive
+    edges:
+    - to: start
+      completed:
+      # Only the queen and the frames drop; the bee icons inside the hive go with it.
+      - !type:EmptyContainer
+        container: queen
+      - !type:EmptyContainer
+        container: frame1
+      - !type:EmptyContainer
+        container: frame2
+      - !type:EmptyContainer
+        container: frame3
+      - !type:EmptyContainer
+        container: frame4
+      - !type:SpawnPrototype
+        prototype: MaterialWoodPlank
+        amount: 20
+      steps:
+      - tool: Prying
+        doAfter: 7
