@@ -1,0 +1,23 @@
+# A sealed suit and hood: bees cannot sting through them (see BeehiveSystem.IsStingProof). The empty pressure
+# protection only marks the clothes as sealed, with the default multipliers it changes no pressure damage.
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterSuitBeekeeper
+  name: beekeeper suit
+  description: A thick sealed suit that bees cannot get through.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/OuterClothing/Suits/beekeeper.rsi
+  - type: Clothing
+    sprite: _RedStar/Clothing/OuterClothing/Suits/beekeeper.rsi
+  - type: Item
+    size: Large
+  - type: PressureProtection
+  - type: ClothingSpeedModifier
+    walkModifier: 0.95
+    sprintModifier: 0.95
+  - type: HeldSpeedModifier
+  - type: Tag
+    tags:
+    - ClothMade
+    - WhitelistChameleon

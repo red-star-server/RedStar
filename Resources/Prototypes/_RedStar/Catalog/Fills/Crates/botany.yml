@@ -1,0 +1,16 @@
+- type: entity
+  parent: CrateHydroponics
+  id: CrateHydroponicsBeekeeping
+  name: beekeeping crate
+  description: A flat-packed beehive, two hive frames, a packaged queen bee, and a beekeeper suit with a hood. No bees inside, the colony starts when the queen goes into the hive.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: BeehiveFlatpack
+        - id: BeeFrame
+          amount: 2
+        - id: BeeQueenPackage
+        - id: ClothingOuterSuitBeekeeper
+        - id: ClothingHeadHatBeekeeper
