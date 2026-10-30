@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared._Trauma.Common.Clothing;
 using Content.Shared.Body;
@@ -26,6 +27,13 @@ public sealed partial class BodyEquipmentSystem : EntitySystem
         { BodyPartType.Hand, [ "gloves" ] },
         { BodyPartType.Foot, [ "shoes" ] }
     };
+
+    /// <summary>
+    /// Reverse lookup: slot name → required body-part type. Derived from <see cref="PartInventorySlots"/>.
+    /// </summary>
+    private static readonly Dictionary<string, BodyPartType> _slotToPart = PartInventorySlots
+        .SelectMany(kv => kv.Value.Select(slot => (slot, kv.Key)))
+        .ToDictionary(t => t.slot, t => t.Key);
 
     [SubscribeLocalEvent]
     private void OnEquippingTargetAttempt(Entity<BodyEquipmentComponent> ent, ref IsEquippingTargetAttemptEvent args)
@@ -69,15 +77,7 @@ public sealed partial class BodyEquipmentSystem : EntitySystem
     /// Resolves the body-part type required by an inventory slot, if any.
     /// </summary>
     public static BodyPartType? GetInventoryPart(string slot)
-        => slot switch
-        {
-            // Slot requirements should share the category mapping above.
-            "innerclothing" or "outerclothing" => BodyPartType.Torso,
-            "eyes" or "ears" or "head" or "mask" => BodyPartType.Head,
-            "gloves" => BodyPartType.Hand,
-            "shoes" => BodyPartType.Foot,
-            _ => null
-        };
+        => _slotToPart.TryGetValue(slot, out var part) ? part : null;
 
     /// <summary>
     /// Drop items worn by a body part, unless there is another of the same type of part.
