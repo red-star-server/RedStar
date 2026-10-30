@@ -1,0 +1,10 @@
+ent-SarinSlowdownStatusEffect = sarin slowdown
+    .desc = { ent-StatusEffectSlowdown.desc }
+ent-ProbitalSlowdownStatusEffect = probital slowdown
+    .desc = { ent-StatusEffectSlowdown.desc }
+ent-TirimolSlowdownStatusEffect = tirimol slowdown
+    .desc = { ent-StatusEffectSlowdown.desc }
+ent-AtropineSlowdownStatusEffect = atropine slowdown
+    .desc = { ent-StatusEffectSlowdown.desc }
+ent-EpinephrineStatusEffect = epinephrine rush
+    .desc = { ent-StatusEffectSpeed.desc }

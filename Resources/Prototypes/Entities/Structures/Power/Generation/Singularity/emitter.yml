@@ -30,12 +30,11 @@
     - state: beam
       shader: unshaded
       visible: false
-      map: ["enum.EmitterVisualLayers.Lights"]
-    # RS14-start
-    - state: unlocked
+      map: ["enum.PowerStateDeviceVisualLayers.Lights"]
+    - state: unlocked # RS14
       shader: unshaded
+      visible: false
       map: ["enum.LockVisualLayers.Lock"]
-    # RS14-end
   - type: Emitter
   - type: PowerState
     idlePowerDraw: 5
@@ -51,12 +50,17 @@
     requirePowered: true
   - type: Gun
     showExamineText: false
-    fireRate: 10 #just has to be fast enough to keep up with upgrades
-    selectedMode: SemiAuto
+    burstCooldown: 1.4
+    burstFireRate: 0.5
+    selectedMode: Burst
     availableModes:
-      - SemiAuto
+      - Burst
     soundGunshot:
       path: /Audio/Weapons/emitter.ogg
+  - type: NetworkPoweredAmmoProvider
+    adminLogToggleLevel: FieldGeneration
+    prototype: EmitterBolt
+  - type: AutoShootGun
   - type: PowerConsumer
     voltage: Medium
     drawRate: 5

@@ -1,2 +1,2 @@
 ent-GeneticOverloadStatusEffect = генетическая перегрузка
-    .desc = Организм не справляется с приобретёнными генетическими изменениями.
+    .desc = { ent-MobStatusEffectDebuff.desc }
