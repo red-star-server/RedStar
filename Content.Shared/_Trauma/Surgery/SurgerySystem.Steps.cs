@@ -831,15 +831,15 @@ public sealed partial class SurgerySystem
         if (ev.Handled)
             return true;
 
-        // TODO RMC14 use index instead of the prototype id
-        if (surgery.Comp.Requirement is { } requirement)
+        // TODO: use step index instead of prototype id to avoid repeated linear scans.
+        if (surgery.Comp.Requirement is not { } requirement) 
+            return surgery.Comp.Steps.TakeWhile(surgeryStep => surgeryStep != step).All(surgeryStep => IsStepComplete(body, part, surgeryStep, surgery));
+
+        if (GetSingleton(requirement) is not { } requiredEnt ||
+            !TryComp(requiredEnt, out SurgeryComponent? requiredComp) ||
+            !PreviousStepsComplete(body, part, (requiredEnt, requiredComp), step, user))
         {
-            if (GetSingleton(requirement) is not { } requiredEnt ||
-                !TryComp(requiredEnt, out SurgeryComponent? requiredComp) ||
-                !PreviousStepsComplete(body, part, (requiredEnt, requiredComp), step, user))
-            {
-                return false;
-            }
+            return false;
         }
 
         return surgery.Comp.Steps.TakeWhile(surgeryStep => surgeryStep != step).All(surgeryStep => IsStepComplete(body, part, surgeryStep, surgery));
