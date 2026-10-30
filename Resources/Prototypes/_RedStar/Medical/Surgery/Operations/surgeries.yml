@@ -341,7 +341,8 @@
   - type: SurgeryOrganOnAddCondition
     components:
       Brain:
-      - type: OhioAccent
+      - type: SimpleAccent
+        accent: Ohio
       - type: RatvarianLanguage
       #- type: Clumsy # TODO: add system for modifying OrganStatusEffects
     inverse: true
@@ -365,7 +366,8 @@
   - type: SurgeryOrganOnAddCondition
     components:
       Brain:
-      - type: OhioAccent
+      - type: SimpleAccent
+        accent: Ohio
       - type: RatvarianLanguage
       #- type: Clumsy
   - type: SurgeryPartCondition
