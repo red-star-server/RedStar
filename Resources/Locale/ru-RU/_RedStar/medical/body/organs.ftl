@@ -9,6 +9,3 @@ markings-organ-Heart = Сердце
 markings-organ-Stomach = Желудок
 markings-organ-Liver = Печень
 markings-organ-Kidneys = Почки
-
-ent-OrganDionaTongue = язык
-ent-OrganSlimePersonTongue = язык

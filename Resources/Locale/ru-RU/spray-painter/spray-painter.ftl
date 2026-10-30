@@ -81,6 +81,7 @@ spray-painter-style-airlockstandard-medical = Медицинский
 spray-painter-style-airlockstandard-salvage = Утилизаторский
 spray-painter-style-airlockstandard-science = Научный
 spray-painter-style-airlockstandard-security = Милиция
+spray-painter-style-airlockstandard-service = Сервис
 spray-painter-style-airlockstandard-virology = Вирусология
 
 spray-painter-style-airlockglass-atmospherics = Атмос

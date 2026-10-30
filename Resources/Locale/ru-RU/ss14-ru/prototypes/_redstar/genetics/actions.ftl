@@ -1,2 +1,2 @@
-ent-ActionGenePhotonicEmission = Фотонный импульс
-    .desc = Выпускает направленный лазерный импульс.
+ent-ActionGenePhotonicEmission = { ent-ActionDragonsBreath }
+    .desc = { ent-ActionDragonsBreath.desc }
