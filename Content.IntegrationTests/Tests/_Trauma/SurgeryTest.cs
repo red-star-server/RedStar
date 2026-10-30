@@ -200,9 +200,9 @@ public sealed partial class SurgeryTest : GameTest
         EntityUid head = default;
         await Server.WaitAssertion(() => head = _body.GetOrgan(patient, Head)!.Value);
         await Operate(surgeon, patient, head, "SurgeryLobotomize");
-        await Server.WaitAssertion(() => Assert.That(SEntMan.HasComponent<OhioAccentComponent>(patient), Is.True));
+        await Server.WaitAssertion(() => Assert.That(SEntMan.HasComponent<SimpleAccentComponent>(patient), Is.True));
         await Operate(surgeon, patient, head, "SurgeryMendBrainTissue");
-        await Server.WaitAssertion(() => Assert.That(SEntMan.HasComponent<OhioAccentComponent>(patient), Is.False));
+        await Server.WaitAssertion(() => Assert.That(SEntMan.HasComponent<SimpleAccentComponent>(patient), Is.False));
     }
 
     [Test]

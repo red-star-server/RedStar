@@ -8,7 +8,6 @@ namespace Content.Shared._Trauma.Body;
 /// Body component that caches which organs are in each slot for faster lookups.
 /// Also responsible for <see cref="ChildOrganComponent"/> management.
 /// </summary>
-// TODO NUBODY: write a test that this never desyncs with reality
 [RegisterComponent, NetworkedComponent, Access(typeof(BodyCacheSystem))]
 [AutoGenerateComponentState]
 public sealed partial class BodyCacheComponent : Component

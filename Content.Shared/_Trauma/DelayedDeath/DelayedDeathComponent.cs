@@ -3,7 +3,8 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared._Trauma.DelayedDeath;
 
-// TODO: Drive delayed death from vital-organ state.
+/// Kills an entity after a delay when vital organs are missing.
+/// Added by <see cref="VitalOrganSystem"/> and <see cref="DebrainedSystem"/>.
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentPause, AutoGenerateComponentState]
 public sealed partial class DelayedDeathComponent : Component

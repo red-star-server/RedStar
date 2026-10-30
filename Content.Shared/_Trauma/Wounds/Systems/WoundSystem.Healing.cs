@@ -368,7 +368,8 @@ public partial class WoundSystem
             woundCountByType[type] = woundCountByType.GetValueOrDefault(type) + 1;
         }
 
-        // TODO: this makes no sense really it should just have a finite healing amount or operate directly on each wound
+        // Spread the total healing evenly across the wounds of each damage type.
+        // e.g. 10 Brute healing with 2 Brute wounds → each wound gets 5.
         foreach (var (healingType, amount) in healing.DamageDict)
         {
             var splitAmount = woundCountByType.GetValueOrDefault(healingType);

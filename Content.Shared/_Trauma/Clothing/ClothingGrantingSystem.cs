@@ -11,11 +11,11 @@ public sealed partial class ClothingGrantingSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
 
     [SubscribeLocalEvent]
-    private void OnCompEquipClothingGrantComponent(Entity<ClothingGrantComponentComponent> ent, ref GotEquippedEvent args)
+    private void OnCompEquipClothingGrantComponent(Entity<ClothingGrantsComponentsComponent> ent, ref GotEquippedEvent args)
         => OnCompEquip(ent.Owner, ent.Comp, args);
 
     [SubscribeLocalEvent]
-    private void OnCompUnequipClothingGrantComponent(Entity<ClothingGrantComponentComponent> ent, ref GotUnequippedEvent args)
+    private void OnCompUnequipClothingGrantComponent(Entity<ClothingGrantsComponentsComponent> ent, ref GotUnequippedEvent args)
         => OnCompUnequip(ent.Owner, ent.Comp, args);
 
     [SubscribeLocalEvent]
@@ -26,7 +26,7 @@ public sealed partial class ClothingGrantingSystem : EntitySystem
     private void OnTagUnequipClothingGrantTag(Entity<ClothingGrantTagComponent> ent, ref GotUnequippedEvent args)
         => OnTagUnequip(ent.Owner, ent.Comp, args);
 
-    private void OnCompEquip(EntityUid uid, ClothingGrantComponentComponent component, GotEquippedEvent args)
+    private void OnCompEquip(EntityUid uid, ClothingGrantsComponentsComponent component, GotEquippedEvent args)
     {
         if (_timing.ApplyingState)
             return;
@@ -46,7 +46,7 @@ public sealed partial class ClothingGrantingSystem : EntitySystem
         EntityManager.AddComponents(target, component.Components);
     }
 
-    private void OnCompUnequip(EntityUid uid, ClothingGrantComponentComponent component, GotUnequippedEvent args)
+    private void OnCompUnequip(EntityUid uid, ClothingGrantsComponentsComponent component, GotUnequippedEvent args)
     {
         if (_timing.ApplyingState)
             return;

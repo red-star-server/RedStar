@@ -175,6 +175,7 @@
     parents:
     - Torso
   - type: Heart
+  - type: VitalOrgan
 
 - type: entity
   id: OrganBaseStomach
