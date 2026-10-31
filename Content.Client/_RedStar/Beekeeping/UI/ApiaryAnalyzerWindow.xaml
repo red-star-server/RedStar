@@ -1,0 +1,170 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      xmlns:botany="clr-namespace:Content.Client.Botany.UI"
+                      xmlns:chemistry="clr-namespace:Content.Client.Chemistry.UI"
+                      MinWidth="620">
+    <BoxContainer Orientation="Horizontal"
+                  Margin="6 4 6 8"
+                  SeparationOverride="6"
+                  VerticalExpand="True">
+
+        <!-- What was scanned: its own lines and what its traits add up to. The window is as tall as this column. -->
+        <PanelContainer StyleClasses="PanelInsetDark">
+            <BoxContainer Orientation="Vertical"
+                          MinWidth="260"
+                          Margin="6"
+                          SeparationOverride="4">
+                <Label Name="TargetName"
+                       StyleClasses="LabelKeyText"
+                       HorizontalAlignment="Center" />
+                <SpriteView Name="TargetSprite"
+                            OverrideDirection="South"
+                            Scale="2 2"
+                            SetSize="64 64"
+                            HorizontalAlignment="Center" />
+
+                <!-- Long text wraps at the minimum width instead of widening the column. -->
+                <PanelContainer StyleClasses="BackgroundPanel"
+                                HorizontalExpand="True">
+                    <BoxContainer Orientation="Vertical" Margin="0 8" MaxWidth="260">
+                        <Label Name="InfoHeading"
+                               StyleClasses="LabelKeyText" />
+                        <RichTextLabel Name="Traits" />
+                        <GridContainer Name="BeeInfo"
+                                       Columns="2"
+                                       HorizontalExpand="True" />
+                    </BoxContainer>
+                </PanelContainer>
+
+                <PanelContainer StyleClasses="BackgroundPanel"
+                                HorizontalExpand="True">
+                    <BoxContainer Orientation="Vertical" Margin="0 8">
+                        <Label Text="{Loc apiary-analyzer-section-stats}"
+                               StyleClasses="LabelKeyText" />
+                        <GridContainer Name="Stats"
+                                       Columns="2"
+                                       HorizontalExpand="True" />
+                    </BoxContainer>
+                </PanelContainer>
+            </BoxContainer>
+        </PanelContainer>
+
+        <!-- A hive: the colony with its frames beside it, and the trays it knows. -->
+        <BoxContainer Name="HiveBox"
+                      Orientation="Vertical"
+                      HorizontalExpand="True"
+                      SeparationOverride="4">
+            <PanelContainer StyleClasses="BackgroundPanelDark"
+                            HorizontalExpand="True">
+                <GridContainer Columns="2"
+                               Margin="0 8"
+                               VSeparationOverride="6"
+                               HSeparationOverride="6"
+                               HorizontalExpand="True">
+                    <botany:BotanyMetricControl Name="Bees" />
+                    <!-- The info mark in the corner says, on hover, where the nectar goes. -->
+                    <Control HorizontalExpand="True">
+                        <botany:BotanyMetricControl Name="Nectar" />
+                        <TextureRect Name="NectarHelp"
+                                     TexturePath="/Textures/Interface/VerbIcons/information.svg.192dpi.png"
+                                     Stretch="KeepAspectCentered"
+                                     SetSize="16 16"
+                                     HorizontalAlignment="Right"
+                                     VerticalAlignment="Top"
+                                     Margin="0 6 6 0"
+                                     MouseFilter="Stop" />
+                    </Control>
+                    <botany:BotanyMetricControl Name="Combs" />
+                    <botany:BotanyMetricControl Name="Health" />
+                </GridContainer>
+            </PanelContainer>
+
+            <BoxContainer Orientation="Horizontal" SeparationOverride="4">
+                <PanelContainer StyleClasses="BackgroundPanelDark"
+                                HorizontalExpand="True">
+                    <BoxContainer Orientation="Vertical" Margin="0 8" VerticalAlignment="Top">
+                        <Label Text="{Loc apiary-analyzer-section-colony}"
+                               StyleClasses="LabelKeyText"
+                               Margin="0 0 0 2" />
+                        <GridContainer Columns="2" HorizontalExpand="True" VerticalAlignment="Top">
+                            <Label Text="{Loc apiary-analyzer-bees-home}" Margin="0 0 8 0" />
+                            <Label Name="BeesHome" StyleClasses="LabelWeak" />
+                            <Label Text="{Loc apiary-analyzer-queen}" Margin="0 0 8 0" />
+                            <Label Name="Queen" StyleClasses="LabelWeak" />
+                            <Label Text="{Loc apiary-analyzer-egg}" Margin="0 0 8 0" />
+                            <Label Name="Egg" StyleClasses="LabelWeak" />
+                            <Label Text="{Loc apiary-analyzer-foraging}" Margin="0 0 8 0" />
+                            <Label Name="Foraging" StyleClasses="LabelWeak" />
+                            <Label Text="{Loc apiary-analyzer-new-bee}" Margin="0 0 8 0" />
+                            <Label Name="NewBee" StyleClasses="LabelWeak" />
+                        </GridContainer>
+                    </BoxContainer>
+                </PanelContainer>
+
+                <!-- A meat hive: what it holds, listed like the harvest chemicals of the plant analyzer. -->
+                <PanelContainer Name="ChemicalsPanel"
+                                StyleClasses="BackgroundPanelDark"
+                                HorizontalExpand="True"
+                                Visible="False">
+                    <BoxContainer Orientation="Vertical" Margin="0 8">
+                        <Label Text="{Loc 'apiary-analyzer-section-chemicals'}"
+                               StyleClasses="LabelKeyText"
+                               Margin="0 0 0 2" />
+                        <ScrollContainer MaxHeight="150"
+                                         ReturnMeasure="True">
+                            <chemistry:ReagentDisplayControl Name="Chemicals"
+                                                             EmptyMessage="{Loc 'apiary-analyzer-chemicals-none'}" />
+                        </ScrollContainer>
+                    </BoxContainer>
+                </PanelContainer>
+
+                <!-- Each frame as its live picture with its combs beside it. -->
+                <PanelContainer Name="FramesPanel"
+                                StyleClasses="BackgroundPanelDark"
+                                HorizontalExpand="True">
+                    <BoxContainer Orientation="Vertical" Margin="0 8">
+                        <Label Name="FramesHeading"
+                               StyleClasses="LabelKeyText"
+                               Margin="0 0 0 2" />
+                        <BoxContainer Name="Frames"
+                                      Orientation="Vertical"
+                                      SeparationOverride="2" />
+                    </BoxContainer>
+                </PanelContainer>
+            </BoxContainer>
+
+            <!-- Takes whatever height is left and scrolls: it never makes the window taller. -->
+            <PanelContainer StyleClasses="BackgroundPanelDark"
+                            HorizontalExpand="True"
+                            VerticalExpand="True">
+                <BoxContainer Orientation="Vertical" Margin="0 8">
+                    <Label Name="TraysHeading"
+                           StyleClasses="LabelKeyText"
+                           Margin="0 0 0 6" />
+                    <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
+                        <BoxContainer Name="Trays"
+                                      Orientation="Vertical" />
+                    </ScrollContainer>
+                </BoxContainer>
+            </PanelContainer>
+        </BoxContainer>
+
+        <!-- A queen or a bee: every trait with what it does. -->
+        <PanelContainer Name="BeeBox"
+                        StyleClasses="BackgroundPanelDark"
+                        HorizontalExpand="True"
+                        Visible="False">
+            <BoxContainer Orientation="Vertical" Margin="0 8">
+                <Label Text="{Loc apiary-analyzer-section-traits}"
+                       StyleClasses="LabelKeyText"
+                       Margin="0 0 0 2" />
+                <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
+                    <BoxContainer Name="TraitDetails"
+                                  Orientation="Vertical"
+                                  SeparationOverride="4"
+                                  MaxWidth="340" />
+                </ScrollContainer>
+            </BoxContainer>
+        </PanelContainer>
+    </BoxContainer>
+</controls:FancyWindow>

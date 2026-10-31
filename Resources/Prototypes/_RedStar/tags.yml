@@ -1,2 +1,8 @@
 ﻿- type: Tag
+  id: Beeswax
+
+- type: Tag
   id: Dish
+
+- type: Tag
+  id: Honeycomb
