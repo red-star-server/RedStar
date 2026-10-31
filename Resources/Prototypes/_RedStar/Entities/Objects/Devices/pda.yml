@@ -1,0 +1,24 @@
+# Medical
+
+- type: entity
+  parent: BaseMedicalPDA
+  id: GeneticistPDA
+  name: geneticist PDA
+  description: I hope I don’t get it stained with blood.
+  components:
+  - type: Pda
+    id: GeneticistIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-internmed
+  - type: PdaBorderColor
+    borderColor: "#717059"
+    accentVColor: "#447987"
+  - type: Icon
+    sprite: Objects/Devices/pda.rsi
+    state: pda-internmed
+  - type: GuideHelp
+    # guides:  
+    # - MedicalDoctor #TODO make a guide for geneticist

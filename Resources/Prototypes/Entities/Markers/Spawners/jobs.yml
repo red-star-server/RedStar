@@ -490,6 +490,10 @@
   parent: SpawnPointJobBase
   name: brigmedic
   components:
+  #RS14-start
+  - type: SpawnPoint
+    job_id: Brigmedic
+  #RS14-end
   - type: Sprite
     layers:
       - state: green
