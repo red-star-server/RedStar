@@ -110,7 +110,7 @@ public abstract partial class SharedFlatpackSystem : EntitySystem
     {
         if (!args.IsInDetailsRange)
             return;
-        args.PushMarkup(Loc.GetString(ent.Comp.ExamineText)); // RS14
+        args.PushMarkup(Loc.GetString("flatpack-examine"));
     }
 
     protected void SetupFlatpack(Entity<FlatpackComponent?> ent, EntProtoId proto, EntityUid board)

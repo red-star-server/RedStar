@@ -6,5 +6,5 @@ namespace Content.Shared._RedStar.Beekeeping.Data;
 public enum BeeRole : byte
 {
     Scout,
-    Pollinator,
+    Pollinator
 }

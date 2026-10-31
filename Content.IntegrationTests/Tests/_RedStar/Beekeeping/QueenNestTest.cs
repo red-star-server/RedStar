@@ -1,9 +1,8 @@
 #nullable enable
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
-using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Storage.Components;
 using Content.Shared._RedStar.Beekeeping.Components;
+using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 

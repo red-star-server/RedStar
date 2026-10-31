@@ -156,5 +156,4 @@ public sealed partial class BeeTraitPrototype : IPrototype
     /// </summary>
     [DataField]
     public bool Aggressive;
-
 }

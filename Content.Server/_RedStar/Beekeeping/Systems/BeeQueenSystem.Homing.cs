@@ -1,14 +1,10 @@
 using System.Numerics;
 using Content.Server._RedStar.Beekeeping.Components;
 using Content.Server._RedStar.Beekeeping.Data;
-using Content.Shared.Audio;
-using Content.Shared.Database;
-using Content.Shared.Throwing;
 using Content.Shared._RedStar.Beekeeping.Components;
 using Content.Shared._RedStar.Beekeeping.Visuals;
-using Robust.Shared.Containers;
-using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
+using Content.Shared.Audio;
+using Content.Shared.Throwing;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 
@@ -81,19 +77,22 @@ public sealed partial class BeeQueenSystem
             var target = Transform(hive).LocalPosition;
             var delta = target - xform.LocalPosition;
             var distance = delta.Length();
-            var step = homing.Speed * frameTime;
 
-            if (distance > step)
+            FaceHome((uid, homing), xform, delta);
+
+            if (distance <= homing.Speed * frameTime)
             {
-                FaceHome((uid, homing), xform, delta);
-                _transform.SetLocalPosition(uid, xform.LocalPosition + delta / distance * step, xform);
+                if (TryComp<PhysicsComponent>(uid, out var snapBody))
+                    _physics.SetLinearVelocity(uid, Vector2.Zero, body: snapBody);
+                _transform.SetLocalPosition(uid, target, xform);
+                StopHoming((uid, homing));
+                homing.NextCheck = now + homing.CheckInterval;
+                ArriveHome(uid, hive);
                 continue;
             }
 
-            _transform.SetLocalPosition(uid, target, xform);
-            StopHoming((uid, homing));
-            homing.NextCheck = now + homing.CheckInterval;
-            ArriveHome(uid, hive);
+            if (TryComp<PhysicsComponent>(uid, out var body))
+                _physics.SetLinearVelocity(uid, delta / distance * homing.Speed, body: body);
         }
     }
 
@@ -160,6 +159,9 @@ public sealed partial class BeeQueenSystem
         _appearance.SetData(homing, BeeForagerVisuals.Flying, false);
         if (homing.Comp.Facing == BeeHomingFacing.Mirror)
             _appearance.SetData(homing, BeeForagerVisuals.FacingRight, false);
+
+        if (TryComp<PhysicsComponent>(homing, out var body))
+            _physics.SetLinearVelocity(homing, Vector2.Zero, body: body);
     }
 
     /// <summary>
@@ -204,6 +206,8 @@ public sealed partial class BeeQueenSystem
     /// <summary>
     /// The nearest hive without a queen that she can fly to in a straight line.
     /// </summary>
+    private readonly HashSet<Entity<BeehiveComponent>> _nearbyHives = new();
+
     private Entity<BeehiveComponent>? FindFreeHive(EntityUid queen, TransformComponent xform, BeeHomingComponent homing)
     {
         if (xform.GridUid is not { } grid || xform.ParentUid != grid)
@@ -211,9 +215,13 @@ public sealed partial class BeeQueenSystem
 
         Entity<BeehiveComponent>? best = null;
         var bestDistance = float.MaxValue;
-        var query = EntityQueryEnumerator<BeehiveComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var comp, out var hiveXform))
+
+        _nearbyHives.Clear();
+        _lookup.GetEntitiesInRange(_transform.GetMapCoordinates(xform), homing.Range, _nearbyHives);
+
+        foreach (var (uid, comp) in _nearbyHives)
         {
+            var hiveXform = Transform(uid);
             if (hiveXform.ParentUid != grid ||
                 _itemSlots.GetItemOrNull(uid, comp.QueenSlot) != null)
             {
@@ -221,7 +229,7 @@ public sealed partial class BeeQueenSystem
             }
 
             var distance = Vector2.Distance(xform.LocalPosition, hiveXform.LocalPosition);
-            if (distance > homing.Range || distance >= bestDistance || !CanFlyHome(queen, xform, homing, uid))
+            if (distance >= bestDistance || !CanFlyHome(queen, xform, homing, uid))
                 continue;
 
             best = (uid, comp);

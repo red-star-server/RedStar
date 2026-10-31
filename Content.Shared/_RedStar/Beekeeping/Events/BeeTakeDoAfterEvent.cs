@@ -1,5 +1,5 @@
-using Content.Shared.DoAfter;
 using Content.Shared._RedStar.Beekeeping.Data;
+using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared._RedStar.Beekeeping.Events;

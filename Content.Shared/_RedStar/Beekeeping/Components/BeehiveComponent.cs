@@ -1,9 +1,9 @@
+using Content.Shared._RedStar.Beekeeping.Data;
+using Content.Shared._RedStar.Beekeeping.Prototypes;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Guidebook;
 using Content.Shared.Whitelist;
-using Content.Shared._RedStar.Beekeeping.Data;
-using Content.Shared._RedStar.Beekeeping.Prototypes;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared._RedStar.Beekeeping.Components;

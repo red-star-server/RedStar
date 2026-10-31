@@ -1,6 +1,6 @@
+using Content.Shared._RedStar.Beekeeping.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared._RedStar.Beekeeping.Components;
 
 namespace Content.Shared._RedStar.Beekeeping.Systems;
 

@@ -4,7 +4,7 @@
   parent: BaseFlatpack
   id: BeehiveFlatpack
   name: beehive flatpack
-  description: A flat-packed beehive.
+  description: A flat-packed beehive. Requires a crowbar to unpack.
   components:
   - type: Sprite
     sprite: _RedStar/Objects/Specific/Beekeeping/beehive-flatpack.rsi
@@ -13,7 +13,6 @@
   - type: Flatpack
     entity: Beehive
     qualityNeeded: Prying
-    examineText: beekeeping-flatpack-examine
   - type: StaticPrice
     price: 100
   - type: GuideHelp

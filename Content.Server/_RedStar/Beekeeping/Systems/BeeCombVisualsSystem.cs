@@ -1,8 +1,7 @@
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared._RedStar.Beekeeping.Components;
 using Content.Shared._RedStar.Beekeeping.Visuals;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server._RedStar.Beekeeping.Systems;
@@ -40,7 +39,7 @@ public sealed partial class BeeCombVisualsSystem : EntitySystem
             var amount = quantity.Float();
             total += amount;
             if (ent.Comp.HoneyReagents.Contains(reagent.Prototype) ||
-                !_proto.TryIndex<ReagentPrototype>(reagent.Prototype, out var proto))
+                !_proto.TryIndex(reagent.Prototype, out var proto))
             {
                 continue;
             }

@@ -13,5 +13,5 @@ public enum BeehivePauseReason : byte
     HighPressure,
     Cold,
     Heat,
-    Fire,
+    Fire
 }

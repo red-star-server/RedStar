@@ -18,5 +18,5 @@ public enum BeehiveCrowding : byte
     /// <summary>
     /// Over the limit after the grace period. Extra bees leave and returns are refused.
     /// </summary>
-    Leaving,
+    Leaving
 }

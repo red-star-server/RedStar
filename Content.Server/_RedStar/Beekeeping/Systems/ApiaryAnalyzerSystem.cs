@@ -1,16 +1,13 @@
 using System.Linq;
 using Content.Server.Destructible;
-using Content.Shared.Botany.Components;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Damage.Components;
-using Content.Shared.Humanoid;
-using Content.Shared.Damage.Systems;
 using Content.Shared._RedStar.Beekeeping.Components;
 using Content.Shared._RedStar.Beekeeping.Data;
 using Content.Shared._RedStar.Beekeeping.Systems;
 using Content.Shared._RedStar.Beekeeping.UI;
-using Robust.Shared.Prototypes;
+using Content.Shared.Botany.Components;
+using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Server._RedStar.Beekeeping.Systems;
@@ -28,7 +25,6 @@ public sealed partial class ApiaryAnalyzerSystem : SharedApiaryAnalyzerSystem
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private DestructibleSystem _destructible = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private SharedSolutionContainerSystem _solutions = default!;
 
     private readonly List<Entity<BeeFrameComponent>> _frames = new();
@@ -139,7 +135,7 @@ public sealed partial class ApiaryAnalyzerSystem : SharedApiaryAnalyzerSystem
                 Frame = GetNetEntity(frame),
                 Prototype = MetaData(frame).EntityPrototype?.ID,
                 Combs = frame.Comp.Combs,
-                MaxCombs = frame.Comp.MaxCombs,
+                MaxCombs = frame.Comp.MaxCombs
             });
         }
 
@@ -159,7 +155,7 @@ public sealed partial class ApiaryAnalyzerSystem : SharedApiaryAnalyzerSystem
                 Tray = GetNetEntity(source.Tray),
                 Plant = plant is { } p ? GetNetEntity(p) : null,
                 PlantPrototype = plant is { } named ? MetaData(named).EntityPrototype?.ID : null,
-                State = _scout.GetTrayState(hive, source),
+                State = _scout.GetTrayState(hive, source)
             });
         }
 
@@ -167,9 +163,7 @@ public sealed partial class ApiaryAnalyzerSystem : SharedApiaryAnalyzerSystem
         {
             var max = _destructible.DestroyedAt(hive).Float();
             state.MaxHealth = max;
-#pragma warning disable CS0618
             state.Health = Math.Max(0f, max - _damageable.GetTotalDamage((hive, damageable)).Float());
-#pragma warning restore CS0618
         }
     }
 }

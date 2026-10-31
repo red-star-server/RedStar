@@ -1,23 +1,7 @@
-using Content.Server.NPC.HTN;
-using Content.Server.NPC.Systems;
-using Content.Shared.Damage.Systems;
-using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Interaction;
-using Content.Shared.Mobs;
-using Content.Shared.Movement.Components;
-using Content.Shared.Movement.Systems;
-using Content.Shared.Popups;
-using Content.Shared.Tools.Systems;
+using System.Numerics;
 using Content.Shared._RedStar.Beekeeping.Components;
 using Content.Shared._RedStar.Beekeeping.Visuals;
-using Robust.Shared.Configuration;
-using Robust.Shared.Containers;
 using Robust.Shared.Map;
-using Robust.Shared.Physics.Systems;
-using Robust.Shared.Player;
-using Robust.Shared.Random;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.Server._RedStar.Beekeeping.Systems;
 
@@ -41,7 +25,7 @@ public sealed partial class BeeErrandSystem
         SetFacing(bee, target - from);
     }
 
-    public void SetFacing(EntityUid bee, System.Numerics.Vector2 localDirection)
+    public void SetFacing(EntityUid bee, Vector2 localDirection)
     {
         if (localDirection.LengthSquared() < 0.0001f)
             return;

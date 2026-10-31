@@ -18,5 +18,5 @@ public enum ApiaryNectarUse : byte
     /// <summary>No workers at home to build combs.</summary>
     NoWorkers,
     /// <summary>A hive without frames: no room for bees or combs.</summary>
-    NoFrames,
+    NoFrames
 }

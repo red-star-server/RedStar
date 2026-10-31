@@ -1,3 +1,8 @@
+using Content.Shared._RedStar.Beekeeping.Components;
+using Content.Shared._RedStar.Beekeeping.Data;
+using Content.Shared._RedStar.Beekeeping.Prototypes;
+using Content.Shared._RedStar.Beekeeping.Systems;
+using Content.Shared._RedStar.Beekeeping.Visuals;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry.EntitySystems;
@@ -7,12 +12,6 @@ using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
-using Content.Shared._RedStar.Beekeeping.Components;
-using Content.Shared._RedStar.Beekeeping.Data;
-using Content.Shared._RedStar.Beekeeping.Prototypes;
-using Content.Shared._RedStar.Beekeeping.Systems;
-using Content.Shared._RedStar.Beekeeping.Visuals;
-using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -31,7 +30,6 @@ public sealed partial class BeeQueenSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private IPrototypeManager _proto = default!;
-    [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private BeeScoutSystem _scout = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
@@ -43,6 +41,7 @@ public sealed partial class BeeQueenSystem : EntitySystem
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedSolutionContainerSystem _solutions = default!;
     [Dependency] private BeehiveSystem _hive = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private ISharedAdminLogManager _adminLog = default!;
 
@@ -52,7 +51,6 @@ public sealed partial class BeeQueenSystem : EntitySystem
 
         UpdateHoming(frameTime);
         UpdateQueens();
-        UpdateQueenLife();
     }
 
     /// <summary>
@@ -66,12 +64,57 @@ public sealed partial class BeeQueenSystem : EntitySystem
     private void OnQueenMapInit(Entity<BeeQueenComponent> ent, ref MapInitEvent args)
     {
         UpdateQueenVisuals(ent);
+
+        if (!_container.IsEntityInContainer(ent))
+            StartQueenTimer(ent);
     }
 
     [SubscribeLocalEvent]
     private void OnQueenSolutionChanged(Entity<BeeQueenComponent> ent, ref SolutionChangedEvent args)
     {
         _changedQueens.Add(ent);
+    }
+
+    /// <summary>
+    /// Queen inserted into a hive: stop the death timer.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnQueenInsertedIntoContainer(Entity<BeeQueenComponent> ent, ref EntGotInsertedIntoContainerMessage args)
+    {
+        if (!HasComp<BeehiveComponent>(args.Container.Owner))
+            return;
+
+        RemCompDeferred<TimedDespawnComponent>(ent);
+        ent.Comp.DiesAt = null;
+        Dirty(ent);
+    }
+
+    /// <summary>
+    /// Queen removed from a hive: start the death timer.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnQueenRemovedFromContainer(Entity<BeeQueenComponent> ent, ref EntGotRemovedFromContainerMessage args)
+    {
+        if (HasComp<BeehiveComponent>(args.Container.Owner) && !TerminatingOrDeleted(ent))
+            StartQueenTimer(ent);
+    }
+
+    /// <summary>
+    /// Timer expired: popup and delete.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnQueenTimedDespawn(Entity<BeeQueenComponent> ent, ref TimedDespawnEvent args)
+    {
+        _popup.PopupCoordinates(Loc.GetString("beekeeping-queen-died"), Transform(ent).Coordinates, PopupType.SmallCaution);
+        _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(ent):queen} died outside a hive");
+    }
+
+    private void StartQueenTimer(Entity<BeeQueenComponent> ent)
+    {
+        var despawn = EnsureComp<TimedDespawnComponent>(ent);
+        despawn.Lifetime = (float) ent.Comp.Lifetime.TotalSeconds;
+        ent.Comp.DiesAt = _timing.CurTime + ent.Comp.Lifetime;
+        Dirty(ent);
     }
 
     private void UpdateQueens()
@@ -86,53 +129,6 @@ public sealed partial class BeeQueenSystem : EntitySystem
         }
 
         _changedQueens.Clear();
-    }
-
-    /// <summary>
-    /// Once a second: a queen outside a hive lives only so long. A hive, a swarm carrying her or an angry queen
-    /// guarding her keeps her alive; anywhere else her clock runs and she dies when it runs out.
-    /// </summary>
-    private TimeSpan _nextQueenLife;
-
-    private void UpdateQueenLife()
-    {
-        var now = _timing.CurTime;
-        if (now < _nextQueenLife)
-            return;
-
-        _nextQueenLife = now + TimeSpan.FromSeconds(1);
-
-        var query = EntityQueryEnumerator<BeeQueenComponent>();
-        while (query.MoveNext(out var uid, out var queen))
-        {
-            var inContainer = _container.TryGetContainingContainer(uid, out var container);
-            var home = inContainer && HasComp<BeehiveComponent>(container!.Owner);
-
-            if (home)
-            {
-                if (queen.DiesAt != null)
-                {
-                    queen.DiesAt = null;
-                    Dirty(uid, queen);
-                }
-
-                continue;
-            }
-
-            if (queen.DiesAt is not { } dies)
-            {
-                queen.DiesAt = now + queen.Lifetime;
-                Dirty(uid, queen);
-                continue;
-            }
-
-            if (now < dies)
-                continue;
-
-            _popup.PopupCoordinates(Loc.GetString("beekeeping-queen-died"), Transform(uid).Coordinates, PopupType.SmallCaution);
-            _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(uid):queen} died outside a hive");
-            QueueDel(uid);
-        }
     }
 
     private void SortQueenSolution(Entity<BeeQueenComponent> queen)

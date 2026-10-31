@@ -21,5 +21,5 @@ public enum BeeScoutState : byte
     /// <summary>
     /// Dead; a worker takes its place at <see cref="BeehiveComponent.ScoutReplaceAt"/>.
     /// </summary>
-    Lost,
+    Lost
 }

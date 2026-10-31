@@ -1,8 +1,8 @@
 using System.Globalization;
-using Content.Shared.ActionBlocker;
-using Content.Shared.Verbs;
 using Content.Shared._RedStar.Beekeeping.Components;
 using Content.Shared._RedStar.Beekeeping.Data;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 
@@ -85,7 +85,7 @@ public sealed partial class BeehiveSystem
                 IconEntity = GetNetEntity(frame),
                 Category = FramesCategory,
                 Priority = FramePriority - i,
-                Act = () => ItemSlots.TryEjectToHands(ent, slot, user, excludeUserAudio: true),
+                Act = () => ItemSlots.TryEjectToHands(ent, slot, user, excludeUserAudio: true)
             });
         }
 
@@ -101,7 +101,7 @@ public sealed partial class BeehiveSystem
                 IconEntity = GetNetEntity(queen),
                 Category = BeesCategory,
                 Priority = 3,
-                Act = () => StartTakeQueen(ent, user),
+                Act = () => StartTakeQueen(ent, user)
             });
         }
 
@@ -131,7 +131,7 @@ public sealed partial class BeehiveSystem
             Priority = priority,
             Disabled = blocker != null,
             Message = blocker != null ? Loc.GetString(blocker) : null,
-            Act = () => StartTakeBee(hive, user, role),
+            Act = () => StartTakeBee(hive, user, role)
         });
     }
 
