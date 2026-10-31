@@ -639,23 +639,11 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
     private Color GetCombColor(BeeFrameComponent frame)
     {
         var honey = Math.Max(frame.Combs, 1) * frame.HoneyPerComb;
-        var r = frame.HoneyColor.R * honey;
-        var g = frame.HoneyColor.G * honey;
-        var b = frame.HoneyColor.B * honey;
-        var total = honey;
-        foreach (var (reagent, quantity) in frame.Payload.Contents)
-        {
-            if (!Proto.TryIndex(reagent.Prototype, out var proto))
-                continue;
+        if (frame.Payload.Volume <= 0)
+            return frame.HoneyColor;
 
-            var amount = quantity.Float();
-            r += proto.SubstanceColor.R * amount;
-            g += proto.SubstanceColor.G * amount;
-            b += proto.SubstanceColor.B * amount;
-            total += amount;
-        }
-
-        return new Color(r / total, g / total, b / total);
+        var payloadShare = frame.Payload.Volume.Float() / (honey + frame.Payload.Volume.Float());
+        return Color.InterpolateBetween(frame.HoneyColor, frame.Payload.GetColor(Proto), payloadShare);
     }
 
     #endregion
