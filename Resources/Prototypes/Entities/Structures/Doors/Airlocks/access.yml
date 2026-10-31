@@ -310,7 +310,7 @@
       board: [ DoorElectronicsResearch ]
 
 - type: entity
-  parent: AirlockScience
+  parent: AirlockMedicalScience # RS14
   id: AirlockMedicalScienceLocked
   suffix: Science-Medical, Locked # uses sci door sprite
   components:
@@ -740,7 +740,7 @@
       board: [ DoorElectronicsResearch ]
 
 - type: entity
-  parent: AirlockScienceGlass
+  parent: AirlockMedicalScienceGlass # RS14
   id: AirlockMedicalScienceGlassLocked
   suffix: Science-Medical, Locked # uses sci door sprite
   components:
