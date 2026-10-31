@@ -26,9 +26,19 @@ public sealed partial class OrganComponentsSystem : EntitySystem
 
     private void ApplyComponents(Entity<OrganComponentsComponent> ent, EntityUid body)
     {
-        // TODO: this doesn't actually have any kind of refcounting :)
         if (ent.Comp.OnAdd is {} adding)
+        {
+            // Track which components this organ actually added so we only remove those.
+            // This prevents removing a component that was already on the body before this organ was inserted.
+            foreach (var name in adding.Keys)
+            {
+                var type = Factory.GetRegistration(name).Type;
+                if (!HasComp(body, type))
+                    ent.Comp.AddedKeys.Add(name);
+            }
             EntityManager.AddComponents(body, adding);
+            Dirty(ent);
+        }
         if (ent.Comp.OnRemove is {} removing)
             EntityManager.RemoveComponents(body, removing);
     }
@@ -53,7 +63,16 @@ public sealed partial class OrganComponentsSystem : EntitySystem
     {
         if (ent.Comp.OnRemove is {} removed)
             EntityManager.AddComponents(body, removed);
-        if (ent.Comp.OnAdd is {} added)
-            EntityManager.RemoveComponents(body, added);
+        if (ent.Comp.OnAdd is not { } added)
+            return;
+
+        // Only remove components that this organ actually granted; leave pre-existing ones alone.
+        foreach (var name in ent.Comp.AddedKeys)
+        {
+            var type = Factory.GetRegistration(name).Type;
+            RemComp(body, type);
+        }
+        ent.Comp.AddedKeys.Clear();
+        Dirty(ent);
     }
 }

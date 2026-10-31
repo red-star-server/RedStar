@@ -59,6 +59,13 @@ public sealed partial class SurgerySystem : EntitySystem
     /// </summary>
     private readonly Dictionary<EntProtoId, EntityUid> _surgeries = new();
 
+    /// <summary>
+    /// Per-surgery step-position index used by <c>PreviousStepsComplete</c>.
+    /// Maps surgery singleton EntityUid to (step EntProtoId → position in Steps list).
+    /// Cleared on round restart to stay consistent with entity reloads.
+    /// </summary>
+    private readonly Dictionary<EntityUid, Dictionary<EntProtoId, int>> _stepIndexCache = new();
+
     private readonly List<EntProtoId> _allSurgeries = new();
 
     /// <summary>
@@ -121,6 +128,7 @@ public sealed partial class SurgerySystem : EntitySystem
     private void OnRoundRestartCleanup(RoundRestartCleanupEvent ev)
     {
         _surgeries.Clear();
+        _stepIndexCache.Clear();
     }
 
     [SubscribeLocalEvent]

@@ -60,13 +60,13 @@ public sealed partial class BodySystem
 
     /// <summary>
     /// Vital body parts' organ categories.
+    /// Moving this to a bool field on <see cref="OrganCategoryPrototype"/> would allow data-driven configuration.
     /// </summary>
     public static readonly ProtoId<OrganCategoryPrototype>[] VitalParts =
     [
         "Head",
         "Torso"
     ];
-    // TODO: vital internal organs???
 
     private readonly HashSet<ProtoId<OrganCategoryPrototype>> _coveredParts = new();
 
@@ -179,7 +179,7 @@ public sealed partial class BodySystem
         if (!_bodyQuery.Resolve(body, ref body.Comp, false) || body.Comp.Organs?.ContainedEntities is not {} organs)
             return 1f;
 
-        // TODO: change vital to just be a bool on OrganCategoryPrototype
+        // VitalParts is a static array; moving it to OrganCategoryPrototype would allow data-driven configuration.
         int total = 0;
         int vital = 0;
         foreach (var organ in organs)

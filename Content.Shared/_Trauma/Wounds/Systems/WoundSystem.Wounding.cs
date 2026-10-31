@@ -187,7 +187,8 @@ public sealed partial class WoundSystem
 
         var part = ent.AsNullable();
 
-        // TODO: VERY sus
+        // DamageSetEvent sets all damage types to a single scalar value (args.Damage).
+        // Re-induce wounds for every tracked damage type at the new uniform value.
         var value = args.Damage;
         var damage = _damageable.GetAllDamage(ent.Owner);
         foreach (var type in damage.DamageDict.Keys)
@@ -202,8 +203,9 @@ public sealed partial class WoundSystem
     [SubscribeLocalEvent]
     private void OnModifyDoAfterDelay(Entity<HandOrganComponent> ent, ref BodyRelayedEvent<ModifyDoAfterDelayEvent> args)
     {
-        // TODO: Apply a missing-hand delay penalty so that removing an injured hand is not faster.
-        // make a thing like LegsComponent that makes doafters longer with missing hands
+        // TODO: Apply a do-after delay penalty when the hand is missing.
+        // Add DoAfterDelayMultiplierComponent to hand organ prototypes, or track hand count
+        // on the body (analogous to LegsComponent) and scale the multiplier there.
         var ev = args.Args;
         RaiseLocalEvent(ent, ref ev);
         args.Args = ev;
