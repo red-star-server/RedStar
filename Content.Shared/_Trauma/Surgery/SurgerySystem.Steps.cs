@@ -852,7 +852,7 @@ public sealed partial class SurgerySystem
     {
         var index = GetStepIndex(surgery);
         if (!index.TryGetValue(step, out var stepPos))
-            return true; // step not found: nothing to check
+            stepPos = surgery.Comp.Steps.Count;
 
         for (var i = 0; i < stepPos; i++)
         {
