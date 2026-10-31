@@ -1,3 +1,5 @@
+using Content.Shared._Trauma.Common.Input; // RS14
+using Content.Shared._Trauma.Common.CCVar; // RS14
 using System.Numerics;
 using Content.Client.Stylesheets;
 using Content.Shared.CCVar;
@@ -253,6 +255,23 @@ namespace Content.Client.Options.UI.Tabs
             AddButton(EngineKeyFunctions.WindowCloseRecent);
             AddButton(EngineKeyFunctions.EscapeMenu);
             AddButton(ContentKeyFunctions.EscapeContext);
+
+            // RS14-start
+            AddHeader("ui-options-header-targeting");
+            AddToggleCvarCheckBox("ui-options-mouse-wheel-targeting", TraumaCVars.MouseWheelTargeting);
+            AddButton(TraumaKeyFunctions.TargetingMod);
+            AddButton(TraumaKeyFunctions.TargetHead);
+            AddButton(TraumaKeyFunctions.TargetChest);
+            AddButton(TraumaKeyFunctions.TargetGroin);
+            AddButton(TraumaKeyFunctions.TargetLeftArm);
+            AddButton(TraumaKeyFunctions.TargetLeftHand);
+            AddButton(TraumaKeyFunctions.TargetRightArm);
+            AddButton(TraumaKeyFunctions.TargetRightHand);
+            AddButton(TraumaKeyFunctions.TargetLeftLeg);
+            AddButton(TraumaKeyFunctions.TargetLeftFoot);
+            AddButton(TraumaKeyFunctions.TargetRightLeg);
+            AddButton(TraumaKeyFunctions.TargetRightFoot);
+            // RS14-end
 
             AddHeader("ui-options-header-misc");
             AddButton(ContentKeyFunctions.TakeScreenshot);

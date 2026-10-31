@@ -52,7 +52,7 @@
   tier: 1
   cost: 5000
   recipeUnlocks:
-  - TechDiskComputerCircuitboard
+  - ResearchPointDiskTerminalCircuitboard # RS14
 
 - type: technology
   id: MagnetsTech

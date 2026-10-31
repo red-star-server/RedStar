@@ -1,3 +1,4 @@
+using Content.Shared._Trauma.Common.Body; // RS14
 using Content.Shared.Alert;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
@@ -41,6 +42,7 @@ public sealed partial class BloodstreamSystem : EntitySystem
     [Dependency] private MobStateSystem _mobStateSystem = default!;
     [Dependency] private DamageableSystem _damageableSystem = default!;
     [Dependency] private MetabolizerSystem _metabolizer = default!;
+    [Dependency] private Content.Shared._Trauma.Body.BodyPartSystem _bodyPartSystem = default!; // RS14
 
     public override void Update(float frameTime)
     {
@@ -71,7 +73,7 @@ public sealed partial class BloodstreamSystem : EntitySystem
                 if (bloodPercentage < bloodstream.BloodlossThreshold)
                 {
                     // bloodloss damage is based on the base value, and modified by how low your blood level is.
-                    var amt = bloodstream.BloodlossDamage / (0.1f + bloodPercentage);
+                    var amt = bloodstream.BloodlossDamage * (1 - bloodPercentage) * 10f * _bloodlossMultiplier; // RS14
 
                     _damageableSystem.TryChangeDamage(uid, amt, ignoreResistances: false, interruptsDoAfters: false);
 
@@ -83,7 +85,7 @@ public sealed partial class BloodstreamSystem : EntitySystem
                 else
                 {
                     // If they're healthy, we'll try and heal some bloodloss instead.
-                    _damageableSystem.TryChangeDamage(uid, bloodstream.BloodlossHealDamage * bloodPercentage, ignoreResistances: true, interruptsDoAfters: false);
+                    _damageableSystem.TryChangeDamage(uid, bloodstream.BloodlossHealDamage * bloodPercentage * _bloodlossMultiplier, ignoreResistances: true, interruptsDoAfters: false); // RS14
 
                     _status.TryRemoveStatusEffect(uid, Bloodloss);
                 }
@@ -92,6 +94,10 @@ public sealed partial class BloodstreamSystem : EntitySystem
             {
                 TickBleed((uid, bloodstream));
             }
+            // RS14-start
+            var bodyUpdate = new BloodstreamUpdateEvent();
+            RaiseLocalEvent(uid, ref bodyUpdate);
+            // RS14-end
         }
     }
 
@@ -216,10 +222,13 @@ public sealed partial class BloodstreamSystem : EntitySystem
             return;
 
         // Does the calculation of how much bleed rate should be added/removed, then applies it
-        var oldBleedAmount = ent.Comp.BleedAmount;
+        var oldBleedAmount = ent.Comp.BleedAmountNotFromWounds; // RS14
         var total = bloodloss.GetTotal();
         var totalFloat = total.Float();
-        TryModifyBleedAmount(ent.AsNullable(), totalFloat);
+        // RS14-start
+        if (!HasComp<BodyComponent>(ent) || _bodyPartSystem.GetRootPart(ent.Owner) == null)
+            TryModifyBleedAmount(ent.AsNullable(), totalFloat);
+        // RS14-end
 
         // Critical hit. Causes target to lose blood, using the bleed rate modifier of the weapon, currently divided by 5
         // The crit chance is currently the bleed rate modifier divided by 25.
@@ -234,7 +243,8 @@ public sealed partial class BloodstreamSystem : EntitySystem
         }
 
         // Heat damage will cauterize, causing the bleed rate to be reduced.
-        else if (totalFloat <= ent.Comp.BloodHealedSoundThreshold && oldBleedAmount > 0)
+        else if (totalFloat <= ent.Comp.BloodHealedSoundThreshold && oldBleedAmount > 0
+                 && (!HasComp<BodyComponent>(ent) || _bodyPartSystem.GetRootPart(ent.Owner) == null)) // RS14
         {
             // Magically, this damage has healed some bleeding, likely
             // because it's burn damage that cauterized their wounds.
@@ -301,6 +311,11 @@ public sealed partial class BloodstreamSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnRejuvenate(Entity<BloodstreamComponent> ent, ref RejuvenateEvent args)
     {
+        // RS14-start
+        ent.Comp.BleedAmountFromWounds = 0;
+        ent.Comp.BleedAmountNotFromWounds = 0;
+        DirtyFields(ent, ent.Comp, null, nameof(BloodstreamComponent.BleedAmountFromWounds), nameof(BloodstreamComponent.BleedAmountNotFromWounds));
+        // RS14-end
         TryModifyBleedAmount(ent.AsNullable(), -ent.Comp.BleedAmount);
 
         if (_solutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution))
@@ -518,8 +533,16 @@ public sealed partial class BloodstreamSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp, logMissing: false))
             return false;
 
-        ent.Comp.BleedAmount += amount;
-        ent.Comp.BleedAmount = Math.Clamp(ent.Comp.BleedAmount, 0, ent.Comp.MaxBleedAmount);
+        // RS14-start
+        ent.Comp.BleedAmountNotFromWounds = Math.Max(ent.Comp.BleedAmountNotFromWounds + amount, 0);
+        ent.Comp.BleedAmount = Math.Clamp(ent.Comp.BleedAmountFromWounds + ent.Comp.BleedAmountNotFromWounds, 0, ent.Comp.MaxBleedAmount);
+        DirtyField(ent, ent.Comp, nameof(BloodstreamComponent.BleedAmountNotFromWounds));
+        if (amount <= 0)
+        {
+            var ev = new CauterizedEvent(-amount);
+            RaiseLocalEvent(ent, ref ev);
+        }
+        // RS14-end
 
         DirtyField(ent, ent.Comp, nameof(BloodstreamComponent.BleedAmount));
 

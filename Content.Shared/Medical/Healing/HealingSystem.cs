@@ -1,3 +1,7 @@
+// RS14-start
+using Content.Shared._Trauma.Common.Healing;
+using Content.Shared.Body;
+// RS14-end
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
@@ -32,22 +36,16 @@ public sealed partial class HealingSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<HealingComponent, UseInHandEvent>(OnHealingUse);
-        SubscribeLocalEvent<HealingComponent, AfterInteractEvent>(OnHealingAfterInteract);
-        SubscribeLocalEvent<DamageableComponent, HealingDoAfterEvent>(OnDoAfter);
-    }
-
+    [SubscribeLocalEvent] // RS14
     private void OnDoAfter(Entity<DamageableComponent> target, ref HealingDoAfterEvent args)
     {
-
         if (args.Handled || args.Cancelled)
             return;
 
-        if (!TryComp(args.Used, out HealingComponent? healing))
+        // RS14-start
+        if (!TryComp(args.Used, out HealingComponent? healing)
+            || _healingParts.GetRootPart(target.Owner) != null) // Shitmed - let body handle it separately
+        // RS14-end
             return;
 
         if (!TryComp<InjurableComponent>(target, out var injurable))
@@ -78,7 +76,7 @@ public sealed partial class HealingSystem : EntitySystem
 
         // Restores missing blood
         if (healing.ModifyBloodLevel != 0 && bloodstream != null)
-            _bloodstreamSystem.TryModifyBloodLevel((target.Owner, bloodstream), healing.ModifyBloodLevel);
+            _bloodstreamSystem.TryModifyBloodLevel((target.Owner, bloodstream), -healing.ModifyBloodLevel); // Goobedit // RS14
 
         if (!_damageable.TryChangeDamage(target.Owner, healing.Damage * _damageable.UniversalTopicalsHealModifier, out var healed, true, origin: args.Args.User) && healing.BloodlossModifier != 0)
             return;
@@ -110,7 +108,12 @@ public sealed partial class HealingSystem : EntitySystem
                 $"{ToPrettyString(args.User):user} healed themselves for {total:damage} damage");
         }
 
-        _audio.PlayPredicted(healing.HealingEndSound, target.Owner, args.User);
+        // RS14-start
+        // Goobstation
+        // Only play sound if this is not a body part (body parts are handled by OnBodyDoAfter)
+        if (!HasComp<BodyComponent>(target.Owner))
+            _audio.PlayPredicted(healing.HealingEndSound, target.Owner, args.User);
+        // RS14-end
 
         // Logic to determine the whether or not to repeat the healing action
         args.Repeat = HasDamage((args.Used.Value, healing), target) && !dontRepeat;
@@ -159,6 +162,7 @@ public sealed partial class HealingSystem : EntitySystem
         return false;
     }
 
+    [SubscribeLocalEvent] // RS14
     private void OnHealingUse(Entity<HealingComponent> healing, ref UseInHandEvent args)
     {
         if (args.Handled)
@@ -168,6 +172,7 @@ public sealed partial class HealingSystem : EntitySystem
             args.Handled = true;
     }
 
+    [SubscribeLocalEvent] // RS14
     private void OnHealingAfterInteract(Entity<HealingComponent> healing, ref AfterInteractEvent args)
     {
         if (args.Handled || !args.CanReach || args.Target == null)
@@ -198,25 +203,50 @@ public sealed partial class HealingSystem : EntitySystem
         if (TryComp<StackComponent>(healing, out var stack) && stack.Count < 1)
             return false;
 
-        if (!HasDamage(healing, target!))
+        // RS14-start
+        // Shitmed Change Start
+        var anythingToDo =
+            HasDamage(healing, (target.Owner, target.Comp)) ||
+            TryComp<BodyComponent>(target, out var bodyComp) && // I'm paranoid, sorry.
+            IsBodyDamaged((target, bodyComp), user, healing.Comp) ||
+            healing.Comp.ModifyBloodLevel < 0 // Special case if healing item can restore lost blood... Goobstation edit
+                && TryComp<BloodstreamComponent>(target, out var bloodstream)
+                && _solutionContainerSystem.ResolveSolution(target.Owner, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution)
+                && bloodSolution.Volume < bloodSolution.MaxVolume; // ...and there is lost blood to restore.
+
+        if (!anythingToDo)
+        // RS14-end
         {
             _popupSystem.PopupEntity(Loc.GetString("medical-item-cant-use", ("item", healing.Owner)), healing, user);
             return false;
         }
-
-        _audio.PlayPredicted(healing.Comp.HealingBeginSound, healing, user);
+        // RS14-start
+        // Shitmed Change End
+            // Goobstation Moved - to avoid audio spam
+            //_audio.PlayPredicted(healing.Comp.HealingBeginSound, healing, user);
+        // RS14-end
 
         var isNotSelf = user != target.Owner;
 
         if (isNotSelf)
         {
+            // RS14-start
+            // Show this to the target
+            // Goobstation predicted --> client
+            // RS14-end
             var msg = Loc.GetString("medical-item-popup-target", ("user", Identity.Entity(user, EntityManager)), ("item", healing.Owner));
-            _popupSystem.PopupEntity(msg, target, target, PopupType.Medium);
+            _popupSystem.PopupEntity(msg, target, target, PopupType.Medium); // RS14
         }
 
-        var delay = isNotSelf
+        var delay = isNotSelf || healing.Comp.SelfHealPenaltyMultiplier == 0f // Trauma - fix healing toolbox taking 1000 years to use // RS14
             ? healing.Comp.Delay
             : healing.Comp.Delay * GetScaledHealingPenalty(target, healing.Comp.SelfHealPenaltyMultiplier);
+        // RS14-start
+
+        // Play sound when starting the healing action
+        // Goobstation
+        _audio.PlayPredicted(healing.Comp.HealingBeginSound, target, user);
+        // RS14-end
 
         var doAfterEventArgs =
             new DoAfterArgs(EntityManager, user, delay, new HealingDoAfterEvent(), target, target: target, used: healing)
@@ -225,7 +255,7 @@ public sealed partial class HealingSystem : EntitySystem
                 // not being able to heal your own ticking damage would be frustrating.
                 NeedHand = true,
                 BreakOnMove = true,
-                BreakOnWeightlessMove = false,
+                BreakOnWeightlessMove = false // RS14
             };
 
         _doAfter.TryStartDoAfter(doAfterEventArgs);
@@ -247,8 +277,13 @@ public sealed partial class HealingSystem : EntitySystem
             return 1;
 
         var percentDamage = (float)(_damageable.GetTotalDamage(ent) / amount);
-        //basically make it scale from 1 to the multiplier.
+        // RS14-start
+        var ev = new ModifySelfHealSpeedEvent();
+        RaiseLocalEvent(ent, ref ev);
+        percentDamage *= ev.Modifier;
 
+        // RS14-end
+        //basically make it scale from 1 to the multiplier.
         var output = percentDamage * (mod - 1) + 1;
         return Math.Max(output, 1);
     }

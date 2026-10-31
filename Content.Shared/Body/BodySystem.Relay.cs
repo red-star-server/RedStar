@@ -1,3 +1,4 @@
+using System.Linq; // RS14
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Body.Events;
 using Content.Shared.Chat;
@@ -55,8 +56,12 @@ public sealed partial class BodySystem
     public void RelayEvent<T>(Entity<BodyComponent> ent, ref T args) where T : struct
     {
         var ev = new BodyRelayedEvent<T>(ent, args);
-        foreach (var organ in ent.Comp.Organs?.ContainedEntities ?? [])
+        foreach (var organ in ent.Comp.Organs?.ContainedEntities.ToArray() ?? []) // RS14
         {
+            // RS14-start: a relayed injury can remove or destroy an organ.
+            if (TerminatingOrDeleted(organ))
+                continue;
+            // RS14-end
             RaiseLocalEvent(organ, ref ev);
         }
         args = ev.Args;
@@ -72,8 +77,12 @@ public sealed partial class BodySystem
     public void RelayEvent<T>(Entity<BodyComponent> ent, T args) where T : class
     {
         var ev = new BodyRelayedEvent<T>(ent, args);
-        foreach (var organ in ent.Comp.Organs?.ContainedEntities ?? [])
+        foreach (var organ in ent.Comp.Organs?.ContainedEntities.ToArray() ?? []) // RS14
         {
+            // RS14-start
+            if (TerminatingOrDeleted(organ))
+                continue;
+            // RS14-end
             RaiseLocalEvent(organ, ref ev);
         }
     }

@@ -1,0 +1,44 @@
+- type: entity
+  parent: WoundBase
+  id: BluntScar
+  components:
+  - type: Wound
+    damageType: Blunt
+    canBeHealed: false
+    isScar: true
+
+- type: entity
+  parent: WoundBase
+  id: PiercingScar
+  components:
+  - type: Wound
+    damageType: Piercing
+    canBeHealed: false
+    isScar: true
+
+- type: entity
+  parent: WoundBase
+  id: SlashScar
+  components:
+  - type: Wound
+    damageType: Slash
+    canBeHealed: false
+    isScar: true
+
+- type: entity
+  parent: WoundBase
+  id: BurnScar
+  components:
+  - type: Wound
+    damageType: Heat
+    canBeHealed: false
+    isScar: true
+
+- type: entity
+  parent: WoundBase
+  id: RadiationScar
+  components:
+  - type: Wound
+    damageType: Radiation
+    canBeHealed: false
+    isScar: true

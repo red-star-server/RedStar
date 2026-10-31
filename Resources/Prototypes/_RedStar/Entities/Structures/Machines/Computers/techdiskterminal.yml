@@ -1,0 +1,37 @@
+- type: entity
+  parent: BaseComputer
+  id: ComputerResearchPointDiskTerminal
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Machines/tech_disk_printer.rsi
+  - type: ComputerVisuals
+    stateFrame: icon
+    stateKeyboard: null
+    stateScreen: unshaded
+    stateKeys: null
+    statePanel: panel
+  - type: PointDiskConsole
+    printSound:
+      path: /Audio/Machines/printer.ogg
+    disks:
+    - ResearchDisk
+    - ResearchDisk5000
+    - ResearchDisk10000
+  - type: ResearchClient
+  - type: ActivatableUI
+    key: enum.PointDiskConsoleUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+      enum.PointDiskConsoleUiKey.Key:
+        type: PointDiskConsoleBoundUserInterface
+      enum.ResearchClientUiKey.Key:
+        type: ResearchClientBoundUserInterface
+  - type: ExtensionCableReceiver
+  - type: Computer
+    board: ResearchPointDiskTerminalCircuitboard
+  - type: PointLight
+    radius: 0.8
+    energy: 0.5
+    color: "#b53ca1"

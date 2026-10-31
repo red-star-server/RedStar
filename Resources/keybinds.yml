@@ -1,5 +1,10 @@
 version: 1 # Not used right now, whatever.
 binds:
+# RS14-start
+- function: TargetingMod
+  type: State
+  key: Alt
+# RS14-end
 - function: UIClick
   type: State
   key: MouseLeft

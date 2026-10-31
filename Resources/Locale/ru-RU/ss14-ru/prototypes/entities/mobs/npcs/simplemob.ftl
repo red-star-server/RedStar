@@ -7,3 +7,5 @@ ent-SimpleSpaceMobBase = { ent-BaseSimpleMob }
 ent-SimpleMobBase = { ent-MobRespirator }
     .desc = { ent-MobRespirator.desc }
     .suffix = ИИ
+ent-SolutionVermin = { ent-SolutionFood }
+    .desc = { ent-SolutionFood.desc }

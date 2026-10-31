@@ -50,7 +50,7 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
     /// <param name="state">The state that carries the information about the patient.</param>
     public void Populate(HealthAnalyzerUiState state)
     {
-        PopulateDataFields(state.TargetEntity, state.ScanMode, state.BloodLevel, state.Unrevivable, state.Bleeding);
+        PopulateDataFields(state.TargetEntity, state.ScanMode, state.BloodLevel, state.Unrevivable, state.Bleeding.Count > 0); // RS14: Trauma reports bleeding per body part.
         if (!float.IsNaN(state.Temperature))
             PopulateTemperature(state.Temperature);
     }

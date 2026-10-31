@@ -58,6 +58,10 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         var (beakerCapacity, beaker) = GetBeakerInfo(entity);
         var injecting = GetInjectingReagents(entity);
         var health = _healthAnalyzerSystem.GetHealthAnalyzerUiState(patient, true);
+        // RS14-start
+        if (TryComp<HealthAnalyzerComponent>(entity, out var analyzer))
+            health.Part = GetNetEntity(_healthAnalyzerSystem.GetAnalyzedPart((entity.Owner, analyzer), patient));
+        // RS14-end
         health.ScanMode = true;
         var hasDamage = patient is null ? false : _damageable.GetTotalDamage(patient.Value) > 0;
 

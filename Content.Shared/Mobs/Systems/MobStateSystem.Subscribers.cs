@@ -21,7 +21,6 @@ using Content.Shared.Strip.Components;
 using Content.Shared.Throwing;
 using Content.Shared.Tools.Systems;
 using System.Linq;
-using Content.Shared.Popups;
 
 namespace Content.Shared.Mobs.Systems;
 
@@ -30,7 +29,7 @@ public partial class MobStateSystem
     //General purpose event subscriptions. If you can avoid it register these events inside their own systems
     private void SubscribeEvents()
     {
-        SubscribeLocalEvent<MobStateComponent, ChangeDirectionAttemptEvent>(CheckAct);
+        SubscribeLocalEvent<MobStateComponent, ChangeDirectionAttemptEvent>(CheckActHardcrit); // Trauma - you can crawl around in softcrit // RS14
         SubscribeLocalEvent<MobStateComponent, UseAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, AttackAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, ThrowAttemptEvent>(CheckAct);
@@ -38,9 +37,9 @@ public partial class MobStateSystem
         SubscribeLocalEvent<MobStateComponent, DropAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, PickupAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, StartPullAttemptEvent>(CheckAct);
-        SubscribeLocalEvent<MobStateComponent, UpdateCanMoveEvent>(CheckAct);
+        SubscribeLocalEvent<MobStateComponent, UpdateCanMoveEvent>(CheckActHardcrit); // Trauma - you can crawl around in softcrit // RS14
         SubscribeLocalEvent<MobStateComponent, StandAttemptEvent>(CheckAct);
-        SubscribeLocalEvent<MobStateComponent, PointAttemptEvent>(CheckAct);
+        SubscribeLocalEvent<MobStateComponent, PointAttemptEvent>(OnPointAttempt);
     }
 
     [SubscribeLocalEvent]
@@ -66,6 +65,7 @@ public partial class MobStateSystem
         {
             case MobState.Dead:
             case MobState.Critical:
+            case MobState.SoftCrit: // Trauma - softcrit prevents interaction, conscious actions (too hard to do) // RS14
                 args.Cancelled = true;
                 break;
         }
@@ -78,6 +78,7 @@ public partial class MobStateSystem
             case MobState.Alive:
                 //unused
                 break;
+            case MobState.SoftCrit: // Trauma - can't stand in softcrit // RS14
             case MobState.Critical:
                 _standing.Stand(target);
                 break;
@@ -109,6 +110,7 @@ public partial class MobStateSystem
                 _appearance.SetData(target, MobStateVisuals.State, MobState.Alive);
                 break;
             }
+            case MobState.SoftCrit: // Trauma - can't stand while softcrit and if you give it to a simplemob i guess its fine to look the same as crit // RS14
             case MobState.Critical:
             {
                 Down(target);
@@ -171,12 +173,24 @@ public partial class MobStateSystem
             return;
         }
 
-        CheckAct(uid, component, args);
+        CheckActHardcrit(uid, component, args); // Trauma - you can whisper while softcrit // RS14
     }
 
     private void CheckAct(EntityUid target, MobStateComponent component, CancellableEntityEventArgs args)
     {
         switch (component.CurrentState)
+        {
+            case MobState.Dead:
+            case MobState.SoftCrit: // Trauma - softcrit prevents most things // RS14
+            case MobState.Critical:
+                args.Cancel();
+                break;
+        }
+    }
+
+    private void OnPointAttempt(Entity<MobStateComponent> ent, ref PointAttemptEvent args)
+    {
+        switch (ent.Comp.CurrentState)
         {
             case MobState.Dead:
             case MobState.Critical:
@@ -186,6 +200,7 @@ public partial class MobStateSystem
     }
 
     [SubscribeLocalEvent]
+
     private void OnEquipAttempt(EntityUid target, MobStateComponent component, IsEquippingAttemptEvent args)
     {
         // is this a self-equip, or are they being stripped?

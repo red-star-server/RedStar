@@ -1,0 +1,8 @@
+- type: damageGroup
+  id: Brute
+  name: damage-group-brute
+  damageTypes: !Clear
+  - Blunt
+  - Slash
+  - Piercing
+  - Ballistic

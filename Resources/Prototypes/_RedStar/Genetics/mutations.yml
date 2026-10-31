@@ -27,7 +27,7 @@
 
 - type: geneticMutation
   id: ElasticFrameMutation
-  requiredGenes: [ FlexibleJoints, ElasticTendons, FragileBones, DenseConnectiveTissue ]
+  requiredGenes: [ DenseConnectiveTissue, KeratinizedCovering, FlexibleJoints, FragileBones ]
   requiredReagents:
     Nutriment: 5
     Saline: 5
@@ -135,7 +135,7 @@
 
 - type: geneticMutation
   id: PhotonicLatticeMutation
-  requiredGenes: [ LamellarScales, ProteinSecretion, KeratinizedCovering ]
+  requiredGenes: [ LamellarScales, StructuralIridescence, PhotoreactiveTissue ]
   requiredReagents:
     Nutriment: 10
     Saline: 10
@@ -145,7 +145,7 @@
 
 - type: geneticMutation
   id: RegenerationMutation
-  requiredGenes: [ CoordinatedRepair, ImmuneTolerance, HighMetabolism, BroodDevelopment ]
+  requiredGenes: [ CoordinatedRepair, DetoxifyingMetabolism, HighMetabolism, RegenerativeBudding ]
   requiredReagents:
     Nutriment: 10
     Saline: 10
@@ -165,7 +165,7 @@
 
 - type: geneticMutation
   id: PressureHomeostasisMutation
-  requiredGenes: [ TorporControl, ElasticFrame, LowPressureAdaptation ]
+  requiredGenes: [ LowPressureAdaptation, TorporControl, PressureResistantMembranes ]
   requiredReagents:
     Nutriment: 10
     Saline: 10
@@ -205,7 +205,7 @@
 
 - type: geneticMutation
   id: ReflectionMutation
-  requiredGenes: [ PhotonicLattice, LamellarScales ]
+  requiredGenes: [ PhotonicLattice, CompositeCarapace ]
   requiredReagents:
     Nutriment: 15
     Saline: 10
@@ -225,10 +225,39 @@
 
 - type: geneticMutation
   id: SomaticHomeostasisMutation
-  requiredGenes: [ Regeneration, DetoxifyingMetabolism ]
+  requiredGenes: [ Regeneration, ThermalRepair, ImmuneTolerance ]
   requiredReagents:
     Nutriment: 15
     Saline: 10
     UnstableMutagen: 10
   resultGene: SomaticHomeostasis
   duration: 120
+
+- type: geneticMutation
+  id: ThermalRepairMutation
+  requiredGenes: [ CellRenewal, HeatAdaptation, ProteinSecretion ]
+  requiredReagents:
+    Nutriment: 5
+    Saline: 5
+  resultGene: ThermalRepair
+  duration: 60
+
+- type: geneticMutation
+  id: CompositeCarapaceMutation
+  requiredGenes: [ ElasticFrame, ChitinousCovering, MineralizedTissue, LoadBearingTissue ]
+  requiredReagents:
+    Nutriment: 10
+    Saline: 10
+    UnstableMutagen: 5
+  resultGene: CompositeCarapace
+  duration: 90
+
+- type: geneticMutation
+  id: ThermalHomeostasisMutation
+  requiredGenes: [ ColdAdaptation, HeatAdaptation, SlowMetabolism ]
+  requiredReagents:
+    Nutriment: 10
+    Saline: 10
+    UnstableMutagen: 5
+  resultGene: ThermalHomeostasis
+  duration: 90

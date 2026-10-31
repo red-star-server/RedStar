@@ -1,0 +1,4 @@
+<controls:SurgeryStepButton
+    xmlns="https://spacestation14.io"
+    xmlns:controls="using:Content.Client._Trauma.Surgery">
+</controls:SurgeryStepButton>

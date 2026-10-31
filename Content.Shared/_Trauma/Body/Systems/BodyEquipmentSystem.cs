@@ -1,0 +1,100 @@
+using System.Linq;
+using Content.Shared._Trauma.Common.Body;
+using Content.Shared._Trauma.Common.Clothing;
+using Content.Shared.Body;
+using Content.Shared.IdentityManagement;
+using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
+using Content.Shared.Popups;
+
+namespace Content.Shared._Trauma.Body;
+
+public sealed partial class BodyEquipmentSystem : EntitySystem
+{
+    [Dependency] private BodyPartSystem _part = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+
+    [Dependency] private EntityQuery<InventoryComponent> _inventoryQuery;
+
+    /// <summary>
+    /// Inventory slots that require each body-part type.
+    /// </summary>
+    public static readonly Dictionary<BodyPartType, string[]> PartInventorySlots = new()
+    {
+        { BodyPartType.Head, [ "eyes", "ears", "head", "mask" ] },
+        { BodyPartType.Torso, [ "innerclothing", "outerclothing" ] },
+        { BodyPartType.Hand, [ "gloves" ] },
+        { BodyPartType.Foot, [ "shoes" ] }
+    };
+
+    /// <summary>
+    /// Reverse lookup: slot name → required body-part type. Derived from <see cref="PartInventorySlots"/>.
+    /// </summary>
+    private static readonly Dictionary<string, BodyPartType> _slotToPart = PartInventorySlots
+        .SelectMany(kv => kv.Value.Select(slot => (slot, kv.Key)))
+        .ToDictionary(t => t.slot, t => t.Key);
+
+    [SubscribeLocalEvent]
+    private void OnEquippingTargetAttempt(Entity<BodyEquipmentComponent> ent, ref IsEquippingTargetAttemptEvent args)
+    {
+        if (GetInventoryPart(args.Slot) is not {} part ||
+            HasBodyPart(ent.Owner, part))
+            return;
+
+        var ident = Identity.Entity(ent, EntityManager);
+        var partName = part.ToString().ToLower();
+        _popup.PopupEntity(Loc.GetString("equip-part-missing-error",
+            ("target", ident), ("part", partName)), args.EquipTarget, args.User);
+        args.Cancel();
+    }
+
+    [SubscribeLocalEvent]
+    private void OnCheckEquipmentPart(Entity<BodyEquipmentComponent> ent, ref CheckEquipmentPartEvent args)
+    {
+        // If there's no body part associated with the slot, just allow it
+        if (GetInventoryPart(args.Slot) is not {} part)
+        {
+            args.Handled = true;
+            return;
+        }
+
+        // only allow if this body has the required part
+        if (HasBodyPart(ent, part))
+            args.Handled = true;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnOrganRemovedFrom(Entity<BodyEquipmentComponent> ent, ref OrganRemovedFromEvent args)
+    {
+        DropPartItems(ent.Owner, args.Organ.Owner);
+    }
+
+    private bool HasBodyPart(EntityUid body, BodyPartType part)
+        => _part.FindBodyPart(body, part) != null;
+
+    /// <summary>
+    /// Resolves the body-part type required by an inventory slot, if any.
+    /// </summary>
+    public static BodyPartType? GetInventoryPart(string slot)
+        => _slotToPart.TryGetValue(slot, out var part) ? part : null;
+
+    /// <summary>
+    /// Drop items worn by a body part, unless there is another of the same type of part.
+    /// </summary>
+    public void DropPartItems(Entity<InventoryComponent?> ent, Entity<BodyPartComponent?> part)
+    {
+        // don't drop for mobs being deleted, gibbing etc would handle it themselves
+        if (TerminatingOrDeleted(ent) || !_inventoryQuery.Resolve(ent, ref ent.Comp) ||
+            // only care about parts being removed
+            _part.GetPartType(part) is not { } type ||
+            // do nothing if there's e.g. a second foot to wear shoes with. there's no individual shoe items.
+            _part.GetBodyParts(ent.Owner, type).Count != 0 || !PartInventorySlots.TryGetValue(type, out var slots))
+            return;
+
+        foreach (var slot in slots)
+        {
+            _inventory.DropSlotContents(ent, slot);
+        }
+    }
+}

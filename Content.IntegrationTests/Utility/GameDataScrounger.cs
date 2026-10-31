@@ -274,7 +274,11 @@ public static partial class GameDataScrounger
                 var entity = new EntityMetadata()
                 {
                     Abstract = @abstract,
-                    Components = components?.Children.Select(x => x["type"].ToString()).ToHashSet() ?? new(),
+                    // RS14-start: partial !Remove entries do not have an ordinary type key.
+                    Components = components?.Children
+                        .Where(x => x is YamlMappingNode map && map.Children.ContainsKey("type"))
+                        .Select(x => x["type"].ToString()).ToHashSet() ?? new(),
+                    // RS14-end
                     Parents = parents,
                     Id = id.AsString(),
                 };

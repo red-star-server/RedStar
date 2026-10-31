@@ -1,0 +1,128 @@
+using Content.Shared.Damage.Prototypes;
+using Content.Shared.FixedPoint;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
+
+namespace Content.Shared.Damage;
+
+/// <summary>
+/// Trauma - add extra fields for wounding and armor penetration.
+/// </summary>
+public sealed partial class DamageSpecifier
+{
+    private static readonly ProtoId<DamageTypePrototype> BluntDamage = "Blunt";
+    private static readonly EntProtoId BluntWound = "WoundBlunt";
+
+    /// <summary>
+    /// Armor penetration carried by this damage specification.
+    /// </summary>
+    [DataField]
+    public float ArmorPenetration;
+
+    /// <summary>
+    /// Variation used when distributing damage between targeted body parts.
+    /// </summary>
+    [DataField]
+    public float PartDamageVariation;
+
+    /// <summary>
+    /// Per-damage-type multipliers applied when creating wounds.
+    /// </summary>
+    [DataField]
+    public Dictionary<ProtoId<DamageTypePrototype>, FixedPoint2> WoundSeverityMultipliers = new();
+
+    /// <summary>
+    /// Additional rules for applying damage and creating wounds.
+    /// </summary>
+    [DataField]
+    public DamageFlags Flags = DamageFlags.None;
+
+    /// <summary>
+    /// Wounds that are induced by damage types.
+    /// If not stated, use damage type as a wound.
+    /// </summary>
+    [DataField]
+    public Dictionary<ProtoId<DamageTypePrototype>, EntProtoId> WoundTypeOverrides = new();
+
+    /// <summary>
+    /// Resolves the wound prototype associated with a damage type and its overrides.
+    /// </summary>
+    public EntProtoId GetWoundId(ProtoId<DamageTypePrototype> id)
+    {
+        var wound = WoundTypeOverrides.GetValueOrDefault(id, new EntProtoId(id.Id));
+        return wound.Id == BluntDamage.Id ? BluntWound : wound;
+    }
+
+    public DamageSpecifier(float armorPenetration,
+        float partVariation,
+        Dictionary<ProtoId<DamageTypePrototype>, FixedPoint2> severityMultipliers)
+    {
+        ArmorPenetration = armorPenetration;
+        PartDamageVariation = partVariation;
+        WoundSeverityMultipliers = new (severityMultipliers);
+    }
+
+    /// <summary>
+    /// Copy damage metadata (e.g. armor penetration) from the argument to this damage spec.
+    /// </summary>
+    public void CopyMetadata(DamageSpecifier src)
+    {
+        ArmorPenetration = src.ArmorPenetration;
+        PartDamageVariation = src.PartDamageVariation;
+        WoundSeverityMultipliers = new(src.WoundSeverityMultipliers);
+        Flags = src.Flags;
+        WoundTypeOverrides = new(src.WoundTypeOverrides);
+    }
+
+    /// <summary>
+    /// Returns new armor modifier set for a given penetration value.
+    /// </summary>
+    public static DamageModifierSet PenetrateArmor(DamageModifierSet modifierSet, float penetration)
+    {
+        if (penetration == 0f ||
+            penetration > 0f && (modifierSet.IgnoreArmorPierceFlags & (int) PartialArmorPierceFlags.Positive) != 0 ||
+            penetration < 0f && (modifierSet.IgnoreArmorPierceFlags & (int) PartialArmorPierceFlags.Negative) != 0)
+            return modifierSet;
+
+        var result = new DamageModifierSet();
+        if (penetration >= 1f)
+            return result;
+
+        var inversePen = 1f - penetration;
+
+        foreach (var (type, coef) in modifierSet.Coefficients)
+        {
+            // Negative coefficients are not modified by this,
+            // coefficients above 1 will actually be lowered which is not desired
+            if (coef is <= 0 or >= 1)
+            {
+                result.Coefficients.Add(type, coef);
+                continue;
+            }
+
+            result.Coefficients.Add(type, MathF.Pow(coef, inversePen));
+        }
+
+        foreach (var (type, flat) in modifierSet.FlatReductions)
+        {
+            // Negative flat reductions are not modified by this
+            if (flat <= 0)
+            {
+                result.FlatReductions.Add(type, flat);
+                continue;
+            }
+
+            result.FlatReductions.Add(type, flat * inversePen);
+        }
+
+        return result;
+    }
+
+    [Flags, Serializable, NetSerializable]
+    public enum DamageFlags : byte
+    {
+        None = 0,
+        PreciseHit = 1 << 0,
+        MartialArtCombo = 1 << 1,
+    }
+}

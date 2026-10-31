@@ -1,0 +1,7 @@
+- type: soundCollection
+  id: OrganDestroyed
+  files:
+  - /Audio/_RedStar/Medical/Organs/OrganDestroyed1.ogg
+  - /Audio/_RedStar/Medical/Organs/OrganDestroyed2.ogg
+  - /Audio/_RedStar/Medical/Organs/OrganDestroyed3.ogg
+  - /Audio/_RedStar/Medical/Organs/OrganDestroyed4.ogg

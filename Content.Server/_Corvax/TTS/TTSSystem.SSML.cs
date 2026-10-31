@@ -1,47 +1,15 @@
-using System.Text;
-using System.Text.RegularExpressions;
-
 namespace Content.Server._Corvax.TTS;
 
 // ReSharper disable once InconsistentNaming
 public sealed partial class TTSSystem
 {
-    private static readonly Regex UpperCaseWordRegex = new(@"\b([А-ЯЁ]{2,})\b",
-        RegexOptions.Compiled);
-
-    private static readonly Regex YesNoRegex = new(@"\b(НЕТ|ДА|нет|да)\b",
-        RegexOptions.Compiled);
-
-    private static readonly Regex NotRegex = new(@"\b(НЕ|не)\b",
-        RegexOptions.Compiled);
-
-    private static readonly Regex ImportantWordRegex = new(
-        @"\b(внимание|Внимание|ВНИМАНИЕ|" +
-        @"опасность|Опасность|ОПАСНОСТЬ|" +
-        @"срочно|Срочно|СРОЧНО|" +
-        @"важно|Важно|ВАЖНО|" +
-        @"предупреждение|Предупреждение|ПРЕДУПРЕЖДЕНИЕ|" +
-        @"помогите|Помогите|ПОМОГИТЕ|" +
-        @"капитан|Капитан|КАПИТАН|" +
-        @"командир|Командир|КОМАНДИР)\b",
-        RegexOptions.Compiled);
-
-    private static readonly Regex WhitespaceRegex = new(@"\s+",
-        RegexOptions.Compiled);
-
-    /// <summary>
-    /// Converts text into valid SSML with pauses and emphasis.
-    /// </summary>
-    private static string ToSsmlText(string text, SoundTraits traits = SoundTraits.None)
+    private static string ToSsmlText(string text, SoundTraits traits = NormalTraits)
     {
         text = XmlEscape(text);
-        text = InsertPauses(text);
-        text = InsertEmphasis(text);
+        var attrs = BuildProsodyAttributes(traits);
 
-        var prosodyAttrs = BuildProsodyAttributes(traits);
-
-        return !string.IsNullOrEmpty(prosodyAttrs)
-            ? $"<speak><prosody {prosodyAttrs}>{text}</prosody></speak>"
+        return attrs.Length > 0
+            ? $"<speak><prosody {attrs}>{text}</prosody></speak>"
             : $"<speak>{text}</speak>";
     }
 
@@ -52,110 +20,6 @@ public sealed partial class TTSSystem
                    .Replace(">", "&gt;")
                    .Replace("\"", "&quot;")
                    .Replace("'", "&apos;");
-    }
-
-    private static string InsertPauses(string text)
-    {
-        var sb = new StringBuilder();
-        var i = 0;
-
-        while (i < text.Length)
-        {
-            var c = text[i];
-
-            if (c is '!' or '?')
-            {
-                while (i < text.Length && text[i] is '!' or '?')
-                {
-                    sb.Append(text[i]);
-                    i++;
-                }
-
-                if (HasFollowingText(text, i))
-                    sb.Append(" <break time=\"400ms\"/> ");
-
-                continue;
-            }
-
-            if (c == '.' && i + 2 < text.Length && text[i + 1] == '.' && text[i + 2] == '.')
-            {
-                sb.Append("...");
-                i += 3;
-
-                if (HasFollowingText(text, i))
-                    sb.Append(" <break time=\"500ms\"/> ");
-
-                continue;
-            }
-
-            sb.Append(c);
-
-            if (c == '.')
-            {
-                if (i + 1 < text.Length && char.IsLetter(text[i + 1]))
-                {
-                    // Nothing
-                }
-                else if (HasFollowingText(text, i + 1))
-                {
-                    sb.Append(" <break time=\"300ms\"/> ");
-                }
-            }
-            else if (c == ',' && i + 1 < text.Length && text[i + 1] == ' ')
-            {
-                sb.Append(" <break time=\"80ms\"/> ");
-            }
-            else if (c == ';' && i + 1 < text.Length && text[i + 1] == ' ')
-            {
-                sb.Append(" <break time=\"120ms\"/> ");
-            }
-            else if (c == ':' && i + 1 < text.Length && text[i + 1] == ' ')
-            {
-                sb.Append(" <break time=\"100ms\"/> ");
-            }
-
-            i++;
-        }
-
-        var result = WhitespaceRegex.Replace(sb.ToString(), " ");
-        return result.Trim();
-    }
-
-    private static bool HasFollowingText(string text, int index)
-    {
-        return index < text.Length &&
-               text[index] == ' ' &&
-               index + 1 < text.Length &&
-               !char.IsWhiteSpace(text[index + 1]);
-    }
-
-    private static string InsertEmphasis(string text)
-    {
-        text = UpperCaseWordRegex.Replace(text, m =>
-        {
-            var word = m.Value.ToLowerInvariant();
-            return $"<prosody pitch=\"+30%\" volume=\"+3dB\">{word}</prosody>";
-        });
-
-        text = YesNoRegex.Replace(text, m =>
-        {
-            var word = m.Value.ToLowerInvariant();
-            return $"<prosody pitch=\"+25%\" volume=\"+6dB\">{word}</prosody>";
-        });
-
-        text = NotRegex.Replace(text, m =>
-        {
-            var word = m.Value.ToLowerInvariant();
-            return $"<prosody pitch=\"+15%\">{word}</prosody>";
-        });
-
-        text = ImportantWordRegex.Replace(text, m =>
-        {
-            var word = m.Value.ToLowerInvariant();
-            return $"<prosody pitch=\"+10%\">{word}</prosody>";
-        });
-
-        return text;
     }
 
     private static string BuildProsodyAttributes(SoundTraits traits)
@@ -184,17 +48,6 @@ public sealed partial class TTSSystem
         else if (traits.HasFlag(SoundTraits.PitchVeryhigh))
             attrs.Add("pitch=\"x-high\"");
 
-        if (traits.HasFlag(SoundTraits.VolumeXSoft))
-            attrs.Add("volume=\"x-soft\"");
-        else if (traits.HasFlag(SoundTraits.VolumeSoft))
-            attrs.Add("volume=\"soft\"");
-        else if (traits.HasFlag(SoundTraits.VolumeMedium))
-            attrs.Add("volume=\"medium\"");
-        else if (traits.HasFlag(SoundTraits.VolumeLoud))
-            attrs.Add("volume=\"loud\"");
-        else if (traits.HasFlag(SoundTraits.VolumeXLoud))
-            attrs.Add("volume=\"x-loud\"");
-
         return string.Join(" ", attrs);
     }
 
@@ -213,12 +66,6 @@ public sealed partial class TTSSystem
         PitchLow = 1 << 6,
         PitchMedium = 1 << 7,
         PitchHigh = 1 << 8,
-        PitchVeryhigh = 1 << 9,
-
-        VolumeXSoft = 1 << 10,
-        VolumeSoft = 1 << 11,
-        VolumeMedium = 1 << 12,
-        VolumeLoud = 1 << 13,
-        VolumeXLoud = 1 << 14
+        PitchVeryhigh = 1 << 9
     }
 }

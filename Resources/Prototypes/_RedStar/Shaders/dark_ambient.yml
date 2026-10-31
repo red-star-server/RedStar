@@ -1,0 +1,8 @@
+- type: shader
+  id: DarkAmbient
+  kind: source
+  path: "/Textures/_RedStar/Shaders/dark_ambient.swsl"
+  params:
+    Intensity: 0.8
+    ShadowDepth: 0.45
+    Warmth: 0.8

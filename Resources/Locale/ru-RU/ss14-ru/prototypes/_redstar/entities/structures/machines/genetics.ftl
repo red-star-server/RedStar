@@ -1,0 +1,9 @@
+ent-GeneticChamber = генетическая камера
+    .desc = Камера для направленной обработки приобретённых генетических модификаций.
+ent-ComputerGeneticsConsole = консоль генетики
+    .desc = Управляет активацией, подавлением и удалением генов в подключённой генетической камере.
+ent-GeneticChamberCircuitboard = машинная плата генетической камеры
+    .desc = { ent-BaseMachineCircuitboard.desc }
+    .suffix = { ent-BaseMachineCircuitboard.suffix }
+ent-GeneticsConsoleCircuitboard = компьютерная плата консоли генетики
+    .desc = { ent-BaseComputerCircuitboard.desc }

@@ -1,0 +1,12 @@
+- type: organCategory
+  id: Tail
+
+## Organs
+
+# IPC
+
+- type: organCategory
+  id: Wings
+
+- type: Tag
+  id: CircularSaw # Heretic: KnowledgeRitualHard

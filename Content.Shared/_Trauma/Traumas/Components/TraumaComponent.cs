@@ -1,0 +1,50 @@
+using Content.Shared._Trauma.Common.Traumas;
+using Content.Shared.FixedPoint;
+using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
+
+namespace Content.Shared._Trauma.Traumas;
+
+[RegisterComponent, NetworkedComponent]
+[EntityCategory("Traumas")]
+[AutoGenerateComponentState(fieldDeltas: true)]
+public sealed partial class TraumaComponent : Component
+{
+    /// <summary>
+    /// Part this trauma belongs to, can be null if the organ or bone, etc; got delimbed but still exists
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public EntityUid? HoldingWoundable;
+
+    /// <summary>
+    /// For OrganDamage - the organ
+    /// For BoneDamage - the bone
+    /// For Dismemberment - the parent woundable, of the woundable that got delimbed
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public EntityUid? TraumaTarget;
+
+    /// <summary>
+    /// The wound this trauma was applied by.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public EntityUid Wound;
+
+    /// <summary>
+    /// The severity the wound had when trauma got induced; Gets updated to the new one if the trauma gets worsened by the same wound
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public FixedPoint2 TraumaSeverity;
+
+    /// <summary>
+    /// Type of trauma represented by this entity.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public TraumaType TraumaType;
+
+    /// <summary>
+    /// Whether this trauma prevents wound healing while it is active.
+    /// </summary>
+    [DataField]
+    public bool BlocksHealing;
+}

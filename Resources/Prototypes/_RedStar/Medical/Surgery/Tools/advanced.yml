@@ -1,0 +1,247 @@
+- type: entity
+  parent: BaseToolSurgery
+  id: Bonesetter
+  name: bone setter
+  description: Used for setting bones back into place.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/bonesetter.rsi
+    state: bonesetter
+  - type: Item
+  - type: Tool
+    qualities:
+      - BoneSetting
+    useSound: /Audio/_RedStar/Medical/Surgery/bone_setter.ogg
+- type: entity
+  parent: BaseToolSurgery
+  id: BoneGel
+  name: bottle of bone gel
+  description: A container for bone gel that often needs to be refilled from a specialized machine.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/bone-gel.rsi
+    state: bone-gel
+  - type: Tool
+    qualities:
+      - BoneHealing
+- type: entity
+  parent: BaseToolSurgery
+  id: MedicalStitches
+  name: medical stitches
+  description: A fine, curved needle with a length of absorbable polyglycolide suture thread.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/stitches.rsi
+    state: stitches
+  - type: Tool
+    qualities:
+      - Suturing
+    useSound: /Audio/_RedStar/Medical/Surgery/saw.ogg # TODO: SOUND
+- type: entity
+  parent: Scalpel
+  id: EnergyScalpel
+  name: tissue cutter
+  description: A scalpel which uses an energy blade, also serves as a drill in its powered state.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/e-scalpel.rsi
+    state: e-scalpel-on
+  - type: Item
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/e-scalpel.rsi
+    heldPrefix: scalpel
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 12
+  - type: PhysicalComposition #Goobstation - Recycle update
+    materialComposition:
+      Steel: 150
+      Glass: 37
+      Gold: 37
+  - type: MultipleTool
+    statusShowBehavior: true
+    entries:
+    - behavior: [ Slicing, Sawing ]
+      sprite: { sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/e-scalpel.rsi, state: e-scalpel }
+      useSound: /Audio/_RedStar/Medical/Surgery/scalpel1.ogg
+      changeSound: { path: /Audio/Effects/sparks4.ogg }
+    - behavior: [ Drilling ]
+      sprite: { sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/e-scalpel.rsi, state: e-scalpel-on }
+      useSound: /Audio/_RedStar/Medical/Surgery/saw.ogg
+      changeSound: { path: /Audio/Effects/sparks4.ogg }
+  - type: Tool
+    qualities:
+      - Slicing
+      - Sawing
+    speedModifier: 3
+    useSound: /Audio/_RedStar/Medical/Surgery/scalpel1.ogg
+- type: entity
+  parent: Retractor
+  id: AdvancedRetractor
+  name: power pinches
+  description: A retractor with mechanical pinches, also serves as a hemostat in its powered state.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/adv-retractor.rsi
+    state: adv-retractor-on
+  - type: Item
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/adv-retractor.rsi
+    heldPrefix: retractor
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 12
+  - type: PhysicalComposition #Goobstation - Recycle update
+    materialComposition:
+      Steel: 150
+      Glass: 37
+      Silver: 37
+  - type: MultipleTool
+    statusShowBehavior: true
+    entries:
+    - behavior: [ Retracting ]
+      sprite: { sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/adv-retractor.rsi, state: adv-retractor }
+      useSound: /Audio/_RedStar/Medical/Surgery/retractor1.ogg
+      changeSound: { path: /Audio/Effects/sparks4.ogg }
+    - behavior: [ Clamping, Manipulating, Tending ]
+      sprite: { sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/adv-retractor.rsi, state: adv-retractor-on }
+      useSound: /Audio/_RedStar/Medical/Surgery/hemostat1.ogg
+      changeSound: { path: /Audio/Effects/sparks4.ogg }
+  - type: Tool
+    qualities:
+      - Retracting
+    speedModifier: 3
+    useSound: /Audio/_RedStar/Medical/Surgery/retractor1.ogg
+- type: entity
+  parent: Cautery
+  id: EnergyCautery
+  name: energy stapler
+  description: A cautery with an energy tip, also serves as stitches in its powered state.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/e-cautery.rsi
+    state: e-cautery-on
+  - type: Item
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/e-cautery.rsi
+    heldPrefix: cautery
+  - type: MeleeWeapon
+    damage:
+      types:
+        Heat: 12
+  - type: PhysicalComposition #Goobstation - Recycle update
+    materialComposition:
+      Steel: 150
+      Glass: 37
+      Plasma: 37
+  - type: MultipleTool
+    statusShowBehavior: true
+    entries:
+    - behavior: [ Cauterizing ]
+      sprite: { sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/e-cautery.rsi, state: e-cautery }
+      useSound: /Audio/_RedStar/Medical/Surgery/cautery1.ogg
+      changeSound: { collection: WelderOn }
+    - behavior: [ Suturing ]
+      sprite: { sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/e-cautery.rsi, state: e-cautery-on }
+      useSound: /Audio/_RedStar/Medical/Surgery/cautery2.ogg
+      changeSound: { path: /Audio/Effects/sparks4.ogg }
+  - type: Tool
+    qualities:
+      - Cauterizing
+    speedModifier: 3
+    useSound: /Audio/_RedStar/Medical/Surgery/cautery1.ogg
+- type: entity
+  parent: BoneGel
+  id: AdvancedBoneGel
+  name: bone multitool
+  description: A mechanized bone healer, also serves as bone setter in its powered state.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/e-bone-gel.rsi
+    state: e-bone-gel-on
+  - type: Item
+    heldPrefix: bonegel
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 12
+  - type: PhysicalComposition #Goobstation - Recycle update
+    materialComposition:
+      Steel: 150
+      Glass: 37
+      Plasma: 37
+  - type: MultipleTool
+    statusShowBehavior: true
+    entries:
+    - behavior: [ BoneHealing ]
+      sprite: { sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/e-bone-gel.rsi, state: e-bone-gel }
+      useSound: /Audio/_RedStar/Medical/Surgery/bone_setter.ogg
+      changeSound: { path: /Audio/Effects/sparks4.ogg }
+    - behavior: [ BoneSetting ]
+      sprite: { sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/e-bone-gel.rsi, state: e-bone-gel-on }
+      useSound: /Audio/_RedStar/Medical/Surgery/bone_setter.ogg
+      changeSound: { path: /Audio/Effects/sparks4.ogg }
+  - type: Tool
+    qualities:
+      - BoneHealing
+      - BoneSetting
+    speedModifier: 3
+    useSound: /Audio/_RedStar/Medical/Surgery/bone_setter.ogg
+- type: entity
+  parent: BaseToolSurgery
+  id: OmnimedTool
+  name: surgical omnitool
+  description: A compact surgical omnitool conveniently packed like a Swiss Army knife.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/omnimed.rsi
+    state: omnimed
+  - type: Item
+    size: Normal
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/omnimed.rsi
+  - type: Tool
+    qualities:
+      - Slicing
+      - Sawing
+      - Cauterizing
+      - Drilling
+      - Retracting
+      - Clamping
+      - Suturing
+      - BoneHealing
+      - BoneSetting
+      - Tending
+      - Manipulating
+    useSound: /Audio/_RedStar/Medical/Surgery/saw.ogg
+- type: entity
+  parent: [ OmnimedTool, BaseSyndicateContraband ]
+  id: OmnimedToolSyndie
+  name: gorlex surgical omnitool
+  description: A compact surgical omnitool conveniently packed like a Swiss Army knife, except that its user has probably violated a couple of Swiss conventions. Can perform surgery through clothing.
+  components:
+  - type: Sprite
+    state: evil
+  - type: Item
+    size: Small
+    heldPrefix: evil
+  - type: SurgeryIgnoreClothing
+
+- type: entity
+  parent: OmnimedToolSyndie
+  id: OmnimedToolDebug
+  name: experimental surgical omnitool
+  suffix: Admeme
+  components:
+  - type: Tool
+    qualities:
+      - Slicing
+      - Sawing
+      - Cauterizing
+      - Drilling
+      - Retracting
+      - Clamping
+      - Suturing
+      - BoneHealing
+      - BoneSetting
+      - Tending
+      - Manipulating
+    speedModifier: 10

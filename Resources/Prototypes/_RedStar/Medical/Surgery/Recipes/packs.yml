@@ -1,0 +1,15 @@
+- type: latheRecipePack
+  id: SurgeryStaticGoob
+  recipes:
+  - BoneGel
+  - MedicalStitches
+  - Bonesetter
+
+- type: latheRecipePack
+  id: Surgery
+  recipes:
+  - EnergyScalpel
+  - AdvancedRetractor
+  - EnergyCautery
+  - AdvancedBoneGel
+  - OmnimedTool

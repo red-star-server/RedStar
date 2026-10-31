@@ -1,0 +1,140 @@
+- type: entity
+  parent: Pill
+  id: PillTramadol
+  name: pill
+  suffix: Tramadol 7.5u
+  components:
+  - type: Pill
+    pillType: 18
+  - type: Sprite
+    state: pill18
+  - type: Label
+    localizedLabel: reagent-name-tramadol
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Tramadol
+        Quantity: 7.5
+
+- type: entity
+  parent: PillCanister
+  id: PillCanisterTramadol
+  name: pill canister
+  suffix: Tramadol 7.5u, 15
+  components:
+  - type: Label
+    localizedLabel: reagent-name-tramadol
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: PillTramadol
+        amount: 15
+
+- type: entity
+  parent: Pill
+  id: PillOxycodone
+  name: pill
+  suffix: Oxycodone 5u
+  components:
+  - type: Pill
+    pillType: 19
+  - type: Sprite
+    state: pill19
+  - type: Label
+    localizedLabel: reagent-name-oxycodone
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Oxycodone
+        Quantity: 5
+
+- type: entity
+  parent: PillCanister
+  id: PillCanisterOxycodone
+  name: pill canister
+  suffix: Oxycodone 5u, 15
+  components:
+  - type: Label
+    localizedLabel: reagent-name-oxycodone
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: PillOxycodone
+        amount: 15
+
+- type: entity
+  parent: Pill
+  id: PillIbuprofen
+  name: pill
+  suffix: Ibuprofen 10u, 15
+  components:
+  - type: Pill
+    pillType: 1
+  - type: Sprite
+    state: pill1
+  - type: Label
+    localizedLabel: reagent-name-ibuprofen
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Ibuprofen
+        Quantity: 10
+
+- type: entity
+  parent: PillCanister
+  id: PillCanisterIbuprofen
+  name: pill canister
+  suffix: Ibuprofen 10u, 15
+  components:
+  - type: Label
+    localizedLabel: reagent-name-ibuprofen
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: PillIbuprofen
+        amount: 15
+
+- type: entity
+  parent: PrefilledSyringe
+  id: SyringeTramadol
+  name: syringe
+  suffix: Tramadol 15u
+  description: A potent painkiller.
+  components:
+  - type: Label
+    localizedLabel: reagent-name-tramadol
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Tramadol
+        Quantity: 15
+
+- type: entity
+  parent: PrefilledSyringe
+  id: SyringeOxycodone
+  name: syringe
+  suffix: Oxycodone 15u
+  description: A potent painkiller.
+  components:
+  - type: Label
+    localizedLabel: reagent-name-oxycodone
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Oxycodone
+        Quantity: 15
+
+- type: entity
+  parent: PrefilledSyringe
+  id: SyringeIbuprofen
+  name: syringe
+  suffix: Ibuprofen 15u
+  description: A mild painkiller.
+  components:
+  - type: Label
+    localizedLabel: reagent-name-ibuprofen
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Ibuprofen
+        Quantity: 15

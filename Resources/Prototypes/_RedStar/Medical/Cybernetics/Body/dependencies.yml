@@ -1,0 +1,25 @@
+- type: entity
+  abstract: true
+  parent: OrganBase
+  id: OrganBaseFleshy # not bone or metal
+  components:
+  - type: Edible
+  - type: BadFood
+  - type: Extractable
+    grindableSolutionName: food
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 3
+      - ReagentId: Blood
+        Quantity: 10
+  - type: Solution
+    id: food
+    solution:
+      reagents:
+      - ReagentId: UncookedAnimalProteins
+        Quantity: 12
+      - ReagentId: Fat
+        Quantity: 3
+  - type: Tool
+    useSound: /Audio/_RedStar/Medical/Surgery/organ1.ogg

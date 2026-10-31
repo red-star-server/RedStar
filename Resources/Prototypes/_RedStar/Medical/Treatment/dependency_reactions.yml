@@ -1,0 +1,77 @@
+- type: reaction
+  id: Cryostylane
+  reactants:
+    Ice:
+      amount: 1
+    Plasma:
+      amount: 1
+    Nitrogen:
+      amount: 1
+  products:
+    Cryostylane: 1
+
+- type: reaction
+  id: Cyanide
+  impact: Medium
+  minTemp: 380
+  reactants:
+    Ammonia:
+      amount: 1
+    Oil:
+      amount: 1
+    Oxygen:
+      amount: 1
+  products:
+    Cyanide: 3
+
+- type: reaction
+  id: Methanol
+  reactants:
+    Methane:
+      amount: 1
+    Water:
+      amount: 1
+    Oxygen:
+      amount: 1
+  products:
+    Methanol: 3
+
+- type: reaction
+  id: Methane
+  reactants:
+    CarbonDioxide:
+      amount: 1
+    Hydrogen:
+      amount: 4
+    Aluminium:
+      amount: 1
+      catalyst: true
+  products:
+    Methane: 3
+    Water: 2
+
+- type: reaction
+  id: CryostylaneOxygenCooling
+  conserveEnergy: false
+  reactants:
+    Cryostylane:
+      amount: 1
+      catalyst: true
+    Oxygen:
+      amount: 1
+  effects:
+  - !type:AdjustSolutionThermalEnergy
+    delta: -100
+
+- type: reaction
+  id: CryostylaneIodineCooling
+  conserveEnergy: false
+  reactants:
+    Cryostylane:
+      amount: 1
+      catalyst: true
+    Iodine:
+      amount: 1
+  effects:
+  - !type:AdjustSolutionThermalEnergy
+    delta: -200

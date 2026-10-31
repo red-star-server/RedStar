@@ -1,0 +1,499 @@
+- type: reaction
+  id: Dylovene
+  reactants: !Clear
+    Silicon:
+      amount: 1
+    Nitrogen:
+      amount: 1
+    Potassium:
+      amount: 1
+  products: !Clear
+    Dylovene: 3
+
+- type: reaction
+  id: Ethylredoxrazine
+  reactants: !Clear
+    Oxygen:
+      amount: 1
+    Dylovene:
+      amount: 1
+    Carbon:
+      amount: 1
+  products: !Clear
+    Ethylredoxrazine: 3
+
+- type: reaction
+  id: Cryptobiolin
+  reactants: !Clear
+    Potassium:
+      amount: 1
+    Oxygen:
+      amount: 1
+    Sugar:
+      amount: 1
+  products: !Clear
+    Cryptobiolin: 3
+
+- type: reaction
+  id: Arithrazine
+  reactants: !Clear
+    Hyronalin:
+      amount: 1
+    Hydrogen:
+      amount: 1
+  products: !Clear
+    Arithrazine: 2
+
+- type: reaction
+  id: Bicaridine
+  reactants: !Clear
+    Inaprovaline:
+      amount: 1
+    Carbon:
+      amount: 1
+  products: !Clear
+    Bicaridine: 2
+
+- type: reaction
+  id: Cryoxadone
+  reactants: !Clear
+    Dexalin:
+      amount: 1
+    Water:
+      amount: 1
+    Oxygen:
+      amount: 1
+  products: !Clear
+    Cryoxadone: 3
+
+- type: reaction
+  id: Doxarubixadone
+  reactants: !Clear
+    Cryoxadone:
+      amount: 1
+    UnstableMutagen:
+      amount: 1
+  products: !Clear
+    Doxarubixadone: 2
+
+- type: reaction
+  id: Epinephrine
+  reactants: !Clear
+    Phenol:
+      amount: 1
+    Acetone:
+      amount: 1
+    Chlorine:
+      amount: 1
+    Hydroxide:
+      amount: 1
+  products: !Clear
+    Epinephrine: 4
+
+- type: reaction
+  id: Dermaline
+  reactants: !Clear
+    Kelotane:
+      amount: 1
+    Oxygen:
+      amount: 1
+    Phosphorus:
+      amount: 1
+  products: !Clear
+    Dermaline: 3
+
+- type: reaction
+  id: Dexalin
+  reactants: !Clear
+    Oxygen:
+      amount: 2
+    Plasma:
+      amount: 1
+      catalyst: true
+  products: !Clear
+    Dexalin: 3
+
+- type: reaction
+  id: DexalinPlus
+  reactants: !Clear
+    Dexalin:
+      amount: 1
+    Carbon:
+      amount: 1
+    Iron:
+      amount: 1
+  products: !Clear
+    DexalinPlus: 3
+
+- type: reaction
+  id: Hyronalin
+  reactants: !Clear
+    Radium:
+      amount: 1
+    Dylovene:
+      amount: 1
+  products: !Clear
+    Hyronalin: 2
+
+- type: reaction
+  id: Inaprovaline
+  reactants: !Clear
+    Oxygen:
+      amount: 1
+    Carbon:
+      amount: 1
+    Sugar:
+      amount: 1
+  products: !Clear
+    Inaprovaline: 3
+
+- type: reaction
+  id: Ipecac
+  reactants: !Clear
+    Potassium:
+      amount: 1
+    Nitrogen:
+      amount: 1
+    Ammonia:
+      amount: 1
+  products: !Clear
+    Ipecac: 2
+
+- type: reaction
+  id: TranexamicAcid
+  reactants: !Clear
+    Inaprovaline:
+      amount: 1
+    SulfuricAcid:
+      amount: 1
+    Sugar:
+      amount: 1
+  products: !Clear
+    TranexamicAcid: 3
+
+- type: reaction
+  id: Kelotane
+  reactants: !Clear
+    Silicon:
+      amount: 1
+    Carbon:
+      amount: 1
+  products: !Clear
+    Kelotane: 2
+
+- type: reaction
+  id: Leporazine
+  reactants: !Clear
+    Copper:
+      amount: 1
+    Fersilicite:
+      amount: 1
+    Plasma:
+      amount: 1
+      catalyst: true
+  products: !Clear
+    Leporazine: 2
+
+- type: reaction
+  id: Ambuzol
+  reactants: !Clear
+    Ultravasculine:
+      amount: 1
+    Mannitol:
+      amount: 2
+    Romerodone:
+      amount: 1
+  products: !Clear
+    Ambuzol: 4
+
+- type: reaction
+  id: Synaptizine
+  reactants: !Clear
+    Lithium:
+      amount: 1
+    Sugar:
+      amount: 1
+    Water:
+      amount: 1
+  products: !Clear
+    Synaptizine: 3
+
+- type: reaction
+  id: Tricordrazine
+  reactants: !Clear
+    Inaprovaline:
+      amount: 1
+    Dylovene:
+      amount: 1
+  products: !Clear
+    Tricordrazine: 2
+
+- type: reaction
+  id: Lipozine
+  reactants: !Clear
+    TableSalt:
+      amount: 1
+    Ethanol:
+      amount: 1
+    Radium:
+      amount: 1
+  products: !Clear
+    Lipozine: 3
+
+- type: reaction
+  id: Mannitol
+  reactants: !Clear
+    Hydrogen:
+      amount: 1
+    Water:
+      amount: 1
+    Sugar:
+      amount: 1
+  products: !Clear
+    Mannitol: 3
+
+- type: reaction
+  id: Ultravasculine
+  reactants: !Clear
+    Histamine:
+      amount: 1
+    Plasma:
+      amount: 1
+      catalyst: true
+  products: !Clear
+    Ultravasculine: 1
+
+- type: reaction
+  id: Oculine
+  reactants: !Clear
+    TableSalt:
+      amount: 1
+    Blood:
+      amount: 1
+    Hydroxide:
+      amount: 2
+  products: !Clear
+    Oculine: 4
+
+- type: reaction
+  id: Siderlac
+  reactants: !Clear
+    Aloe:
+      amount: 1
+    Stellibinin:
+      amount: 1
+  products: !Clear
+    Siderlac: 2
+
+- type: reaction
+  id: Cognizine
+  reactants: !Clear
+    CarpoToxin:
+      amount: 1
+    Siderlac:
+      amount: 1
+    Acetone:
+      amount: 1
+  products: !Clear
+    Cognizine: 1
+
+- type: reaction
+  id: Sigynate
+  impact: Medium
+  minTemp: 370
+  reactants: !Clear
+    SodiumCarbonate:
+      amount: 1
+    SodiumHydroxide:
+      amount: 1
+    Kelotane:
+      amount: 1
+    Water:
+      amount: 1
+    Sugar:
+      amount: 1
+  products: !Clear
+    Sigynate: 4
+
+- type: reaction
+  id: Saline
+  reactants: !Clear
+    Water:
+      amount: 4
+    TableSalt:
+      amount: 1
+  products: !Clear
+    Saline: 5
+
+- type: reaction
+  id: Lacerinol
+  impact: Medium
+  minTemp: 335
+  reactants: !Clear
+    Bicaridine:
+      amount: 1
+    Benzene:
+      amount: 1
+  products: !Clear
+    Lacerinol: 2
+
+- type: reaction
+  id: Puncturase
+  impact: Medium
+  minTemp: 325
+  reactants: !Clear
+    Bicaridine:
+      amount: 1
+    Hydroxide:
+      amount: 1
+  products: !Clear
+    Puncturase: 2
+
+- type: reaction
+  id: Bruizine
+  impact: Medium
+  reactants: !Clear
+    Bicaridine:
+      amount: 1
+    Lithium:
+      amount: 0.9
+    Sugar:
+      amount: 1
+  products: !Clear
+    Bruizine: 2
+
+- type: reaction
+  id: Diphenhydramine
+  impact: Medium
+  minTemp: 377.59
+  reactants: !Clear
+    Diethylamine:
+      amount: 1
+    Oil:
+      amount: 1
+    TableSalt:
+      amount: 1
+    Carbon:
+      amount: 1
+    Ethanol:
+      amount: 1
+  products: !Clear
+    Diphenhydramine: 3
+
+- type: reaction
+  id: Pyrazine
+  impact: Medium
+  minTemp: 540
+  reactants: !Clear
+    Leporazine:
+      amount: 1
+    Dermaline:
+      amount: 1
+    Carbon:
+      amount: 1
+  products: !Clear
+    Pyrazine: 3
+
+- type: reaction
+  id: Insuzine
+  impact: Medium
+  minTemp: 433
+  reactants: !Clear
+    Leporazine:
+      amount: 1
+    Kelotane:
+      amount: 1
+    Silicon:
+      amount: 1
+  products: !Clear
+    Insuzine: 3
+
+- type: reaction
+  id: Opporozidone
+  minTemp: 400
+  reactants: !Clear
+    Phalanximine:
+      amount: 2
+    Plasma:
+      amount: 1
+    Doxarubixadone:
+      amount: 1
+  products: !Clear
+    Opporozidone: 3
+
+- type: reaction
+  id: Arcryox
+  minTemp: 370
+  reactants: !Clear
+    Lithium:
+      amount: 1
+    Tricordrazine:
+      amount: 1
+    Cryoxadone:
+      amount: 1
+  products: !Clear
+    Arcryox: 3
+
+- type: reaction
+  id: Aloxadone
+  impact: Medium
+  reactants: !Clear
+    Cryoxadone:
+      amount: 2
+    Aloe:
+      amount: 1
+    Leporazine:
+      amount: 2
+  products: !Clear
+    Aloxadone: 4
+
+- type: reaction
+  id: Psicodine
+  impact: Medium
+  reactants: !Clear
+    Mannitol:
+      amount: 2
+    Impedrezene:
+      amount: 1
+    Water:
+      amount: 2
+  products: !Clear
+    Psicodine: 4
+
+- type: reaction
+  id: PotassiumIodide
+  reactants: !Clear
+    Potassium:
+      amount: 1
+    Iodine:
+      amount: 1
+  products: !Clear
+    PotassiumIodide: 2
+
+- type: reaction
+  id: Haloperidol
+  reactants: !Clear
+    Aluminium:
+      amount: 1
+    Chlorine:
+      amount: 1
+    Fluorine:
+      amount: 1
+    Oil:
+      amount: 1
+    PotassiumIodide:
+      amount: 1
+  products: !Clear
+    Haloperidol: 5
+
+- type: reaction
+  id: Heparin
+  reactants: !Clear
+    SulfuricAcid:
+      amount: 1
+    Nitrogen:
+      amount: 1
+    Sodium:
+      amount: 1
+  products: !Clear
+    Heparin: 2

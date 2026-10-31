@@ -1,0 +1,388 @@
+- type: entity
+  id: MobSkeletonPerson
+  components:
+  - type: SurgeryTarget
+    sepsisImmune: true
+
+- type: entity
+  id: OrganBaseTorso
+  components:
+  - type: BodyPartCavity
+    whitelist:
+      sizes:
+      - Tiny
+      - Small
+
+- type: randomHumanoidSettings
+  id: VisitorCMO
+  components:
+  - type: SurgerySpeedModifier
+    speedModifier: 2
+
+- type: entity
+  id: BaseCigar
+  components:
+  - type: Tool
+    qualities:
+      - Cauterizing
+    speedModifier: 0.4
+    useSound: /Audio/Effects/cig_light.ogg
+
+- type: entity
+  id: ShardBase
+  components:
+  - type: Tool
+    qualities:
+      - Slicing
+    speedModifier: 0.45
+
+- type: entity
+  id: Pen
+  components:
+  - type: Tool
+    qualities:
+      - Tending
+    speedModifier: 0.55
+    useSound: /Audio/_RedStar/Medical/Surgery/retractor1.ogg
+
+- type: entity
+  id: UtensilBase
+  components:
+  - type: Tool
+    qualities:
+      - Manipulating
+    speedModifier: 0.2
+    useSound: /Audio/_RedStar/Medical/Surgery/retractor1.ogg
+
+- type: entity
+  id: Fork
+  components:
+  - type: Tool
+    qualities:
+      - Manipulating
+    speedModifier: 0.35
+
+- type: entity
+  id: ForkPlastic
+  components:
+  - type: Tool
+    qualities:
+      - Manipulating
+    speedModifier: 0.35
+
+- type: entity
+  id: HydroponicsToolClippers
+  components:
+  - type: Tool
+    qualities:
+      - Retracting
+      - Clamping
+    speedModifier: 0.6
+    useSound: /Audio/_RedStar/Medical/Surgery/retractor1.ogg
+
+- type: entity
+  id: HydroponicsToolHatchet
+  components:
+  - type: Tool
+    qualities:
+      - Sawing
+    speedModifier: 0.35
+    useSound: /Audio/_RedStar/Medical/Surgery/saw.ogg
+
+- type: entity
+  id: MedicatedSuture
+  components:
+  - type: Tool
+    qualities:
+      - Suturing
+    speedModifier: 2
+    useSound: /Audio/Items/Medical/brutepack_begin.ogg
+
+- type: entity
+  id: Cautery
+  components:
+  - type: Tool
+    qualities:
+      - Cauterizing
+    useSound: /Audio/_RedStar/Medical/Surgery/cautery1.ogg
+
+- type: entity
+  id: Drill
+  components:
+  - type: Tool
+    qualities:
+      - Drilling
+    useSound: /Audio/_RedStar/Medical/Surgery/saw.ogg
+
+- type: entity
+  id: Scalpel
+  components:
+  - type: Tool
+    qualities:
+      - Slicing
+    useSound: /Audio/_RedStar/Medical/Surgery/scalpel1.ogg
+
+- type: entity
+  id: ScalpelAdvanced
+  components:
+  - type: Tool
+    qualities:
+      - Slicing
+    speedModifier: 1.35
+
+- type: entity
+  id: ScalpelLaser
+  components:
+  - type: Tool
+    qualities:
+      - Slicing
+    speedModifier: 1.75
+
+- type: entity
+  id: Retractor
+  components:
+  - type: Tool
+    qualities:
+      - Retracting
+    useSound: /Audio/_RedStar/Medical/Surgery/retractor1.ogg
+
+- type: entity
+  id: Hemostat
+  components:
+  - type: Tool
+    qualities:
+      - Clamping
+      - Manipulating
+      - Tending
+    useSound: /Audio/_RedStar/Medical/Surgery/retractor1.ogg
+
+- type: entity
+  id: Saw
+  components:
+  - type: Tool
+    qualities:
+      - Sawing
+    useSound: /Audio/_RedStar/Medical/Surgery/bone_saw.ogg
+
+- type: entity
+  id: SawImprov
+  components:
+  - type: Tool
+    qualities:
+      - Sawing
+    speedModifier: 0.5
+
+- type: entity
+  id: SawElectric
+  components:
+  - type: Tool
+    qualities:
+      - Sawing
+    speedModifier: 1.5
+    useSound: /Audio/_RedStar/Medical/Surgery/saw.ogg
+
+- type: entity
+  id: SawAdvanced
+  components:
+  - type: Tool
+    qualities:
+      - Sawing
+    speedModifier: 2
+
+- type: entity
+  id: CableStack
+  components:
+  - type: Tool
+    qualities:
+      - Suturing
+    speedModifier: 0.7
+    useSound: /Audio/_RedStar/Medical/Surgery/retractor1.ogg
+
+- type: entity
+  id: BaseCrowbar
+  components:
+  - type: Tool
+    qualities:
+      - Manipulating
+    speedModifier: 0.55
+    useSound: /Audio/Items/crowbar.ogg
+  - type: Tag
+    tags:
+      - Crowbar
+      - SurgeryTool
+
+- type: entity
+  id: BaseLighter
+  components:
+  - type: Tool
+    qualities:
+      - Cauterizing
+    speedModifier: 0.45
+    useSound:
+      collection: lighterOnSounds
+
+- type: entity
+  id: Matchstick
+  components:
+  - type: Tool
+    qualities:
+      - Cauterizing
+    speedModifier: 0.2
+    useSound: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
+
+- type: entity
+  id: Wirecutter
+  components:
+  - type: Tool
+    qualities:
+      - Retracting
+      - Clamping
+    speedModifier: 0.6
+    useSound: /Audio/Items/wirecutter.ogg
+
+- type: entity
+  id: PowerDrill
+  components:
+  - type: Tool
+    qualities:
+      - Tending
+      - Drilling
+    speedModifier: 1
+    useSound: /Audio/Items/drill_use.ogg
+  - type: Tag
+    tags:
+      - Powerdrill
+      - SurgeryTool
+
+- type: entity
+  id: BaseWelder
+  components:
+  - type: Tool
+    qualities:
+      - Cauterizing
+    speedModifier: 0.7
+    useSound:
+      collection: Welder
+  - type: Tag
+    tags:
+      - SurgeryTool
+
+- type: entity
+  id: Chainsaw
+  components:
+  - type: Tool
+    qualities:
+      - Sawing
+    speedModifier: 0.5
+    useSound: /Audio/Weapons/chainsaw_pull.ogg
+  - type: Tag
+    tags:
+      - SurgeryTool
+
+- type: entity
+  id: FireAxe
+  components:
+  - type: Tool
+    qualities:
+      - Slicing
+      - Sawing
+    speedModifier: 0.5
+    useSound: /Audio/_RedStar/Medical/Surgery/saw.ogg
+  - type: Tag
+    tags:
+      - SurgeryTool
+
+- type: entity
+  id: BaseKnife
+  components:
+  - type: Tool
+    qualities:
+      - Slicing
+    speedModifier: 0.65
+
+- type: entity
+  id: ButchCleaver
+  components:
+  - type: Tool
+    qualities:
+      - Slicing
+      - Sawing
+    speedModifier: 0.5
+
+- type: entity
+  id: OperatingTable
+  components:
+  - type: OperatingTable
+    speedModifier: 1.5
+
+- type: antagSpecifier
+  id: NukeopsMedic
+  components:
+  - type: SurgerySpeedModifier
+    speedModifier: 2
+
+- type: entity
+  id: MedicalBorgChassisDerelict
+  components:
+  - type: Sanitized
+  - type: SurgeryIgnoreClothing
+  - type: SurgerySpeedModifier
+    speedModifier: 1.5
+
+- type: entity
+  id: BaseWeaponBatteryNoAmmoCounter
+  components:
+  - type: Tool
+    qualities:
+      - Cauterizing
+    speedModifier: 0.9
+
+- type: entity
+  id: BaseWeaponPowerCell
+  components:
+  - type: Tool
+    qualities:
+      - Cauterizing
+    speedModifier: 0.9
+
+- type: entity
+  id: Armblade
+  components:
+  - type: Tool
+    qualities:
+      - Slicing
+      - Sawing
+    speedModifier: 0.75
+    useSound: /Audio/_RedStar/Medical/Surgery/saw.ogg
+
+- type: job
+  id: Chemist
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: SurgerySpeedModifier
+      speedModifier: 1.25
+
+- type: job
+  id: ChiefMedicalOfficer
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: SurgerySpeedModifier
+      speedModifier: 2
+
+- type: job
+  id: MedicalDoctor
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: SurgerySpeedModifier
+      speedModifier: 1.5
+
+- type: job
+  id: MedicalIntern
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: SurgerySpeedModifier
+      speedModifier: 1.25

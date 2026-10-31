@@ -91,7 +91,7 @@ public sealed partial class IngestionSystem
             return false;
         }
 
-        var attempt = new IngestionAttemptEvent(flags);
+        var attempt = new IngestionAttemptEvent(flags) { User = user }; // RS14
         RaiseLocalEvent(target, ref attempt);
 
         if (!attempt.Cancelled)

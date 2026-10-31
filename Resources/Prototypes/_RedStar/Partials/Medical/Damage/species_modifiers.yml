@@ -1,0 +1,70 @@
+- type: damageModifierSet
+  id: Slime
+  coefficients: !Clear
+    Blunt: 0.6
+    Slash: 1.15
+    Piercing: 1.15
+    Cold: 1.5
+    Poison: 0.8
+    Cellular: 0.2
+  ignoreArmorPierceFlags: All
+
+- type: damageModifierSet
+  id: Scale
+  coefficients: !Clear
+    Cold: 1.3
+  ignoreArmorPierceFlags: All
+
+- type: damageModifierSet
+  id: Diona
+  coefficients: !Clear
+    Blunt: 0.7
+    Slash: 0.8
+    Heat: 1.5
+    Shock: 1.2
+  ignoreArmorPierceFlags: All
+
+- type: damageModifierSet
+  id: Moth
+  coefficients: !Clear
+    Cold: 0.7
+    Heat: 1.2
+    Blunt: 1.065
+    Slash: 1.065
+    Piercing: 1.065
+  ignoreArmorPierceFlags: All
+
+- type: damageModifierSet
+  id: Vox
+  coefficients: !Clear
+    Poison: 1
+  ignoreArmorPierceFlags: All
+
+- type: damageModifierSet
+  id: Skeleton
+  ignoreArmorPierceFlags: All
+  coefficients: !Clear
+    Blunt: 1.5
+    Cold: 0.0
+    Poison: 0.0
+    Radiation: 0.0
+    Asphyxiation: 0.0
+    Bloodloss: 0.0
+    Cellular: 0.0
+    Holy: 0.5
+
+- type: damageModifierSet
+  id: Gingerbread
+  coefficients: !Clear
+    Blunt: 1.5
+    Radiation: 0.5
+    Asphyxiation: 0.0
+    Bloodloss: 0.0
+  ignoreArmorPierceFlags: All
+
+- type: damageModifierSet
+  id: Vulpkanin
+  coefficients: !Clear
+    Heat: 1.15
+    Cold: 0.85
+  ignoreArmorPierceFlags: All

@@ -1,0 +1,56 @@
+- type: entity
+  abstract: true
+  parent: OrganBase
+  id: OrganBaseExternal
+  components:
+  - type: Sprite
+    overrideDir: North
+  - type: ThrowingAngle
+    angle: 90
+  - type: BodyPart
+
+- type: entity
+  abstract: true
+  parent: OrganBaseExternal
+  id: OrganBaseLimb
+  components:
+  - type: ChildOrgan
+    parents:
+    - Torso
+  - type: Limb
+
+- type: entity
+  abstract: true
+  parent: OrganBaseLimb
+  id: OrganBaseArm
+  components:
+  - type: BodyPart
+    partType: Arm
+  - type: Arm
+
+- type: entity
+  abstract: true
+  parent: OrganBaseLimb
+  id: OrganBaseLeg
+  components:
+  - type: BodyPart
+    partType: Leg
+  - type: Leg
+
+- type: entity
+  abstract: true
+  parent: OrganBaseExternal
+  id: OrganBaseHand
+  components:
+  - type: BodyPart
+    partType: Hand
+    slots: []
+
+- type: entity
+  abstract: true
+  parent: OrganBaseExternal
+  id: OrganBaseFoot
+  components:
+  - type: BodyPart
+    partType: Foot
+    slots: []

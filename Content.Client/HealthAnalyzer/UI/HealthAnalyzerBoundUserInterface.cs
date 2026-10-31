@@ -1,3 +1,4 @@
+using Content.Shared._Trauma.Common.Medical.HealthAnalyzer; // RS14
 using Content.Shared.Medical.HealthAnalyzer;
 using Content.Shared.MedicalScanner;
 using JetBrains.Annotations;
@@ -16,6 +17,7 @@ public sealed partial class HealthAnalyzerBoundUserInterface(EntityUid owner, En
         base.Open();
 
         _window = this.CreateWindow<HealthAnalyzerWindow>();
+        _window.OnBodyPartSelected += (part, _) => SendMessage(new HealthAnalyzerPartMessage(part)); // RS14
         _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
     }
 

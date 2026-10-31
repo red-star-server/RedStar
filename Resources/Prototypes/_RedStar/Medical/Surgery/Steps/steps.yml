@@ -1,0 +1,602 @@
+- type: entity
+  abstract: true
+  id: SurgeryStepBase
+  components:
+  - type: SurgeryStep
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepOpenIncisionScalpel
+  name: Cut with a scalpel
+  components:
+  - type: SurgeryStep
+    toolQualities:
+    - Slicing
+    setFlags:
+    - IncisionOpen
+    duration: 2
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/scalpel.rsi
+    state: scalpel
+  - type: SurgeryDamageChangeEffect
+    damage:
+      types:
+        Bloodloss: 10
+    sleepModifier: 0.5
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepClampBleeders
+  name: Clamp the bleeders
+  components:
+  - type: SurgeryStep
+    toolQualities:
+    - Clamping
+    setFlags:
+    - BleedersClamped
+    duration: 4
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/hemostat.rsi
+    state: hemostat
+  - type: SurgeryRepeatableStep
+  - type: SurgeryBleedsTreatmentStep
+    amount: 2
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepCloseBloodOutputs
+  name: Stitch up destroyed tissues
+  components:
+  - type: SurgeryStep
+    toolQualities:
+    - Suturing
+    clearFlags:
+    - BleedersClamped
+    duration: 5
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/stitches.rsi
+    state: stitches
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepRetractSkin
+  name: Retract the skin
+  components:
+  - type: SurgeryStep
+    toolQualities:
+    - Retracting
+    setFlags:
+    - SkinRetracted
+    duration: 2
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/retractor.rsi
+    state: retractor
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepRemoveSeveredSkin
+  name: Remove the dead skin
+  components:
+  - type: SurgeryStep
+    toolQualities:
+    - Slicing
+    setFlags:
+    - BodyPartSawed
+    duration: 4
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/scalpel.rsi
+    state: scalpel
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepSawBones
+  name: Saw through bones
+  components:
+  - type: SurgeryStep
+    toolQualities:
+    - Sawing
+    setFlags:
+    - BonesSawed
+    duration: 4
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/circular-saw.rsi
+    state: circular-saw
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepRemoveLeftoverBones
+  name: Clear up bone leftovers
+  components:
+  - type: SurgeryStep
+    toolQualities:
+    - Sawing
+    setFlags:
+    - BonesOpen
+    duration: 5
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/circular-saw.rsi
+    state: circular-saw
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepMendBones
+  name: Mend bones
+  components:
+  - type: SurgeryStep
+    toolQualities:
+    - BoneHealing
+    duration: 7
+  - type: SurgeryAffixPartStep
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/bone-gel.rsi
+    state: bone-gel
+  - type: SurgeryRepeatableStep
+  - type: SurgeryTraumaTreatmentStep
+    traumaType: BoneDamage
+    amount: 17
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepHealOrgans
+  name: Heal Organs
+  components:
+  - type: SurgeryStep
+    toolQualities:
+    - Tending
+    duration: 7
+  - type: SurgeryAffixOrganStep
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/hemostat.rsi
+    state: hemostat
+  - type: SurgeryRepeatableStep
+  - type: SurgeryTraumaTreatmentStep
+    traumaType: OrganDamage
+    amount: 17
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepPriseOpenBones
+  name: Prise the bones open
+  components:
+  - type: SurgeryStep
+    toolQualities:
+    - Retracting
+    setFlags:
+    - BonesOpen
+    duration: 2
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/retractor.rsi
+    state: retractor
+
+#- type: entity
+#  parent: SurgeryStepBase
+#  id: SurgeryStepCutLarvaRoots
+#  name: Cut larva roots
+#  components:
+#  - type: SurgeryStep
+#    skill: 2
+#  - type: SurgeryCutLarvaRootsStep
+#  - type: Sprite
+#    sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
+#    state: scalpel
+#  - type: SurgeryOperatingTableCondition
+
+#- type: entity
+#  parent: SurgeryStepBase
+#  id: SurgeryStepRemoveLarva
+#  name: Remove larva
+#  components:
+#  - type: SurgeryStep
+#    skill: 2
+#    bodyRemove:
+#    - type: VictimInfected
+#  - type: Sprite
+#    sprite: Objects/Specific/Medical/Surgery/scissors.rsi
+#    state: hemostat
+#  - type: SurgeryOperatingTableCondition
+#  - type: SurgeryStepSpawnEffect
+#    entity: XenoEmbryo
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepCloseBones
+  name: Close bones
+  components:
+  - type: SurgeryStep
+    toolQualities:
+    - Retracting
+    clearFlags:
+    - BonesOpen
+    duration: 2
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/retractor.rsi
+    state: retractor
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepSealBones
+  name: Seal bones
+  components:
+  - type: SurgeryStep
+    toolQualities:
+    - BoneHealing
+    clearFlags:
+    - BonesSawed
+    duration: 2
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/bone-gel.rsi
+    state: bone-gel
+
+- type: entity
+  parent: SurgeryStepSealBones
+  id: SurgeryStepSealSkull
+  name: Seal skull
+
+- type: entity
+  parent: SurgeryStepSealBones
+  id: SurgeryStepSealRibcage
+  name: Seal ribcage
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepCloseIncision
+  name: Close incision
+  components:
+  - type: SurgeryStep
+    toolQualities:
+    - Cauterizing
+    clearFlags:
+    - SkinRetracted
+    - BleedersClamped
+    - IncisionOpen
+    - InternalBleedersClamped
+    - TissueRearranged
+    - VesselsStitched
+    - JointCreated
+    - JointStitched
+    remove:
+    - type: OrganReattached
+    duration: 2
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/cautery.rsi
+    state: cautery
+  - type: SurgeryDamageChangeEffect
+    damage:
+      types:
+        Heat: -5
+    sleepModifier: 2
+
+# Feature Insertion
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepInsertFeature
+  name: Insert part
+  components:
+  - type: SurgeryStep
+    requiredItemComponent: BodyPart
+    duration: 6
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/manipulation.rsi
+    state: insertion
+  - type: SurgeryAddPartStep
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepSealWounds
+  name: Seal wounds
+  components:
+  - type: SurgeryStep
+    toolQualities:
+    - Cauterizing
+    clearFlags:
+    - SkinRetracted
+    - BleedersClamped
+    - IncisionOpen
+    - InternalBleedersClamped
+    - TissueRearranged
+    - VesselsStitched
+    - JointCreated
+    - JointStitched
+    duration: 2
+  - type: SurgeryAffixPartStep
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/cautery.rsi
+    state: cautery
+  - type: SurgeryDamageChangeEffect
+    damage:
+      types:
+        Heat: -5
+    sleepModifier: 2
+
+# Feature Removal
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepSawFeature
+  name: Saw through bones
+  components:
+  - type: SurgeryStep
+    toolQualities:
+    - Sawing
+    setFlags:
+    - BodyPartSawed
+    duration: 4
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/circular-saw.rsi
+    state: circular-saw
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepClampInternalBleeders
+  name: Clamp internal bleeders
+  components:
+  - type: SurgeryStep
+    toolQualities:
+    - Clamping
+    setFlags:
+    - InternalBleedersClamped
+    duration: 2
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/hemostat.rsi
+    state: hemostat
+  - type: SurgeryDamageChangeEffect
+    damage:
+      types:
+        Bloodloss: -5
+    sleepModifier: 2
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepRemoveFeature
+  name: Amputate part
+  components:
+  - type: SurgeryStep
+    toolQualities:
+    - Sawing
+    clearFlags:
+    - SkinRetracted
+    - BleedersClamped
+    - InternalBleedersClamped
+    - IncisionOpen
+    # We remove these components to force people to go through all the steps again lol, otherwise you can just keep chopping.
+    duration: 8
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/circular-saw.rsi
+    state: circular-saw
+  - type: SurgeryRemovePartStep
+
+# Tend Wounds
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepCarefulIncisionScalpel
+  name: Make a careful incision
+  components:
+  - type: SurgeryStep
+    toolQualities:
+    - Slicing
+    setFlags:
+    - IncisionOpen
+    duration: 3
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/scalpel.rsi
+    state: scalpel
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepRepairBruteTissue
+  name: Repair damaged tissue
+  components:
+  - type: SurgeryStep
+    toolQualities:
+    - Tending
+    duration: 1
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/hemostat.rsi
+    state: hemostat
+  - type: SurgeryTendWoundsEffect
+    damage:
+      types:
+        Blunt: -5
+        Slash: -5
+        Piercing: -5
+        Ballistic: -5
+  - type: SurgeryRepeatableStep
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepRepairBurnTissue
+  name: Repair burnt tissue
+  components:
+  - type: SurgeryStep
+    toolQualities:
+    - Tending
+    duration: 1
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/hemostat.rsi
+    state: hemostat
+  - type: SurgeryTendWoundsEffect
+    mainGroup: Burn
+    damage:
+      types:
+        Heat: -5
+        Cold: -5
+        Shock: -5
+        Caustic: -5
+  - type: SurgeryRepeatableStep
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepSealTendWound
+  name: Seal the wound
+  components:
+  - type: SurgeryStep
+    toolQualities:
+    - Cauterizing
+    clearFlags:
+    - IncisionOpen
+    duration: 2
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/cautery.rsi
+    state: cautery
+  - type: SurgeryDamageChangeEffect
+    damage:
+      types:
+        Heat: -5
+    sleepModifier: 2
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepSealDismembermentWound
+  name: Stitch up the dismemberment wound
+  components:
+  - type: SurgeryStep
+    toolQualities:
+    - Suturing
+    clearFlags:
+    - IncisionOpen
+    duration: 8
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/stitches.rsi
+    state: stitches
+  - type: SurgeryTraumaTreatmentStep
+    traumaType: Dismemberment
+
+# Cavity Implanting
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepInsertItem
+  name: Insert item into cavity
+  components:
+  - type: SurgeryStep
+    duration: 4
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/manipulation.rsi
+    state: insertion
+  - type: SurgeryStepCavityEffect
+    action: Insert
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepRemoveItem
+  name: Remove item from cavity
+  components:
+  - type: SurgeryStep
+    duration: 4
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/manipulation.rsi
+    state: insertion
+  - type: SurgeryStepCavityEffect
+    action: Remove
+
+# Organ Manipulation
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepRemoveOrgan
+  name: Remove organ
+  components:
+  - type: SurgeryStep
+    toolQualities:
+    - Manipulating
+    duration: 8
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/hemostat.rsi
+    state: hemostat
+  - type: SurgeryRemoveOrganStep
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepInsertOrgan
+  name: Add organ
+  components:
+  - type: SurgeryStep
+    requiredItemComponent: InternalChildOrgan
+    duration: 6
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/manipulation.rsi
+    state: insertion
+  - type: SurgeryAddOrganStep
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepOpenOrganSlot
+  name: Carve out a cavity
+  components:
+  - type: SurgeryStep
+    toolQualities:
+    - Slicing
+    duration: 6
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/manipulation.rsi
+    state: insertion
+  - type: SurgeryAddOrganSlotStep
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepSealOrganWound
+  name: Seal wounds
+  components:
+  - type: SurgeryStep
+    toolQualities:
+    - Cauterizing
+    duration: 2
+  - type: SurgeryAffixOrganStep
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/cautery.rsi
+    state: cautery
+  - type: SurgeryDamageChangeEffect
+    damage:
+      types:
+        Heat: -5
+    sleepModifier: 2
+
+# Augments
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepLobotomize
+  categories: [ HideSpawnMenu ]
+  name: Lobotomize patient
+  components:
+  - type: SurgeryStep
+    toolQualities:
+    - Drilling
+    addOrganOnAdd:
+      Brain:
+      - type: SimpleAccent
+        accent: Ohio
+      - type: RatvarianLanguage
+      #- type: Clumsy
+    duration: 5
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/drill.rsi
+    state: drill
+  - type: SurgeryStepEmoteEffect
+  - type: SurgeryDamageChangeEffect
+    damage:
+      types:
+        Piercing: 10
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepMendBrainTissue
+  categories: [ HideSpawnMenu ]
+  name: Mend brain tissue
+  components:
+  - type: SurgeryStep
+    toolQualities:
+    - Clamping
+    duration: 4
+    removeOrganOnAdd:
+      Brain:
+      - type: SimpleAccent
+        accent: Ohio
+      - type: RatvarianLanguage
+      #- type: Clumsy
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/hemostat.rsi
+    state: hemostat
+  - type: SurgeryStepEmoteEffect

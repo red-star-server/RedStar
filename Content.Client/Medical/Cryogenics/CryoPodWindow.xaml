@@ -1,6 +1,6 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
                xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-               xmlns:health="clr-namespace:Content.Client.HealthAnalyzer.UI"
+               xmlns:health="clr-namespace:Content.Client._Trauma.Medical.UI"
                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                MinSize="250 300"
                Resizable="False">
@@ -224,7 +224,8 @@
                       VerticalExpand="True"
                       Orientation="Vertical">
 
-            <health:HealthAnalyzerControl Name="HealthAnalyzer"/>
+            <!-- RS14: use the Trauma medical interface. -->
+            <health:TraumaHealthAnalyzerControl Name="HealthAnalyzer"/>
 
             <!-- This label is used to deal with a stray hline at the end of the health analyzer UI -->
             <Label Name="NoDamageText"

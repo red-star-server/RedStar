@@ -22,7 +22,10 @@ public sealed partial class HealthExaminableSystem : EntitySystem
 
     private void OnGetExamineVerbs(EntityUid uid, HealthExaminableComponent component, GetVerbsEvent<ExamineVerb> args)
     {
-        if (!TryComp<DamageableComponent>(uid, out var damage))
+        // RS14-start
+        if (HasComp<Content.Shared._Trauma.Body.BodyStatusComponent>(uid) ||
+            !TryComp<DamageableComponent>(uid, out var damage))
+        // RS14-end
             return;
 
         var detailsRange = _examineSystem.IsInDetailsRange(args.User, uid);

@@ -1,0 +1,36 @@
+- type: entity
+  parent: BoneGel
+  id: BoneGelMakeshift
+  name: makeshift bone gel
+  description: A poorly made substitute for bone gel. One hell of a last resort...
+  components:
+  - type: Sprite
+    sprite: _RedStar/Medical/Objects/Specific/Medical/makeshift_bone_gel.rsi
+  - type: Item
+    sprite: _RedStar/Medical/Objects/Specific/Medical/makeshift_bone_gel.rsi
+  - type: Tool
+    qualities:
+      - BoneHealing
+    speedModifier: 0.7
+
+- type: entity
+  parent: OmnimedTool
+  id: BorgOmnimedTool
+  categories: [ DoNotMap ]
+  name: integrated surgery omnitool
+  description: An expanded surgical omnitool capable of accelerated function compared to the normal compact version.
+  components:
+  - type: Tool
+    qualities:
+      - Clamping
+      - Slicing
+      - Drilling
+      - BoneSetting
+      - Retracting
+      - Cauterizing
+      - BoneHealing
+      - Sawing
+      - Manipulating
+      - Tending
+      - Suturing
+    speedModifier: 2

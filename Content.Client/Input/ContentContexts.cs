@@ -127,6 +127,7 @@ namespace Content.Client.Input
             ghost.AddFunction(EngineKeyFunctions.MoveRight);
             ghost.AddFunction(EngineKeyFunctions.Walk);
 
+            _Trauma.Input.TraumaInputContexts.SetupContexts(contexts); // RS14
         }
     }
 }
