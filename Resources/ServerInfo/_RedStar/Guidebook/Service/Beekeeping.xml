@@ -1,0 +1,161 @@
+<Document>
+# Пчеловодство
+Улей превращает нектар с грядок гидропоники в мёд и воск, а его пчёлы помогают ботанику: опыляют растения и гоняют вредителей. Мёда на станции больше нигде нет.
+
+<ColorBox Color="#453a59" OutlineColor="#5B5C6E">
+<Box Orientation="Vertical" HorizontalAlignment="Stretch">
+[bold]Коротко[/bold]
+- Закажите ящик пчеловода, поставьте улей у грядок, вставьте рамки и матку.
+- Пчёлы сами найдут созревшие растения. Колония сначала растёт, потом заполняет рамки сотами.
+- Запечатанную рамку срезают дважды: первый срез даёт воск, второй соты.
+- Что творится внутри улья, показывает [textlink="анализатор пасеки" link="BeekeepingAnalyzer"].
+</Box>
+</ColorBox>
+
+## Что понадобится
+[bold]Ящик пчеловода[/bold] заказывают в карго, в разделе гидропоники.
+
+<Table Columns="3">
+<ColorBox Color="#453a59" OutlineColor="#5B5C6E"><Box>[bold]Улей[/bold]</Box></ColorBox>
+<ColorBox Color="#453a59" OutlineColor="#5B5C6E"><Box>[bold]Две рамки[/bold]</Box></ColorBox>
+<ColorBox Color="#453a59" OutlineColor="#5B5C6E"><Box>[bold]Матка[/bold]</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box><GuideEntityEmbed Entity="BeehiveFlatpack" Caption=""/></Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box><GuideEntityEmbed Entity="BeeFrame" Caption=""/></Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box><GuideEntityEmbed Entity="BeeQueenPackage" Caption=""/></Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">В упаковке, вскрывается ломом.</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Ещё рамки делаются из 3 досок и 2 воска.</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">В упаковке, открывается в руке.</Box></ColorBox>
+</Table>
+
+<Box>
+<GuideEntityEmbed Entity="Crowbar" Caption="Лом" Margin="16 8"/>
+<GuideEntityEmbed Entity="KitchenKnife" Caption="Нож" Margin="16 8"/>
+<GuideEntityEmbed Entity="ApiaryAnalyzer" Caption="Анализатор"/>
+</Box>
+Ещё нужны [bold]лом[/bold], [bold]острый инструмент[/bold] и желательно [bold]анализатор пасеки[/bold] из БотаМакса. Улей можно собрать и без ящика, из 20 досок.
+
+## Первый улей
+- [bold]1.[/bold] Положите упаковку улья у грядок, где нормальный воздух, и вскройте её ломом.
+- [bold]2.[/bold] Вставьте в улей рамки.
+- [bold]3.[/bold] Откройте упаковку матки в руке и сразу посадите матку в улей. С ней появятся первые пять пчёл: разведчица и четыре рабочие, и разведчица вскоре вылетит искать лотки.
+- [bold]4.[/bold] Держите растения рядом живыми и созревшими.
+- [bold]5.[/bold] Ждите. Когда рамка запечатана, снимайте урожай.
+
+<ColorBox Color="#59563a" OutlineColor="#5B5C6E">
+<Box Orientation="Vertical" HorizontalAlignment="Stretch">
+[bold]Не отпускайте матку где попало.[/bold] Без улья она живёт 5 минут, а отпущенная на пол улетает сама: в пустой улей поблизости, а если его нет, строить [textlink="дикий улей" link="BeekeepingWild"] в шкафу.
+</Box>
+</ColorBox>
+
+## Как работает улей
+<Table Columns="2">
+<ColorBox Color="#453a59" OutlineColor="#5B5C6E"><Box>[bold]Разведчица[/bold]</Box></ColorBox>
+<ColorBox Color="#453a59" OutlineColor="#5B5C6E"><Box>[bold]Рабочие[/bold]</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box><GuideEntityEmbed Entity="BeeScoutIcon" Caption="" Scale="3"/></Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box><GuideEntityEmbed Entity="BeePollinatorIcon" Caption="" Scale="3"/></Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Одна на улей. Раз в одну-две минуты облетает окрестности и находит лотки с растениями. Улей помнит до 8 лотков.</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Все остальные пчёлы. Летают к найденным лоткам за нектаром и строят соты.</Box></ColorBox>
+</Table>
+
+Если разведчица погибла, её место занимает следующая новорождённая пчела. А если за 3 минуты никто не родился (например, нет нектара), разведчицей становится одна из рабочих.
+
+Пчёл, которые летают к лоткам, видно: они сами облетают препятствия, ныряют в цветок и возвращаются в улей. Рабочую в полёте можно взять в руку, как мышь: это та же пчела, что достают из улья. Убитая в полёте пчела для колонии потеряна, как и та, что не нашла дорогу домой. Пчёл показывают, только когда рядом кто-то есть. Если вокруг улья пусто или уже летает много пчёл, новые не вылетают, но улей работает как обычно: визиты считаются и без них.
+
+Нектар в улье почти не копится. Его сразу тратят:
+- [bold]На новых пчёл[/bold], пока колонии есть куда расти, но не чаще одной пчелы в минуту: матка делает пчёл не быстрее. На каждую рамку приходится [protodata="Beehive" comp="Beehive" member="BeesPerFrame"/] пчёл, рамок в улье до четырёх.
+- [bold]На соты[/bold] всё остальное. Чем больше рабочих дома, тем быстрее.
+- [bold]В запас[/bold], только когда все рамки полные или рабочих нет дома.
+
+Поэтому все рамки можно вставить сразу: улей растёт и одновременно даёт мёд. Больше рамок значит больше пчёл и больше мёда.
+
+- Улей учитывает только лотки, до которых есть прямая видимость. Лоток за стеной, за закрытой дверью или на другом шаттле для него не существует. Сами пчёлы по пути облетают препятствия.
+- Одно созревшее растение кормит лишь нескольких рабочих. Ставьте улей в центре большого сада.
+- Пчёлы затихают без воздуха, при пожаре, в холод ниже 0 °C или жару выше 50 °C. Почините условия, и улей заработает сам.
+- Без матки колония не растёт и теряет по пчеле раз в две минуты.
+
+## Урожай
+Рамку достают через ПКМ по улью, пункт [bold]Изъять[/bold]. Готовые рамки видно и на самом улье: жёлтая полоса значит мёд, серая значит запечатанные соты.
+
+<Table Columns="3">
+<ColorBox Color="#453a59" OutlineColor="#5B5C6E"><Box>[bold]Пустая[/bold]</Box></ColorBox>
+<ColorBox Color="#453a59" OutlineColor="#5B5C6E"><Box>[bold]С мёдом[/bold]</Box></ColorBox>
+<ColorBox Color="#453a59" OutlineColor="#5B5C6E"><Box>[bold]Запечатанная[/bold]</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box><GuideEntityEmbed Entity="BeeFrame" Caption=""/></Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box><GuideEntityEmbed Entity="BeeFrameUncapped" Caption=""/></Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box><GuideEntityEmbed Entity="BeeFrameCapped" Caption=""/></Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Верните в улей, пчёлы снова её заполнят.</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Можно срезать соты, но воска не будет.</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Первый срез снимает крышечки и даёт воск, второй срезает соты.</Box></ColorBox>
+</Table>
+
+Срез делается острым инструментом и занимает секунду. Пустую рамку верните в улей.
+
+- Новая рамка вмещает одну соту. Ткните в неё куском воска, и она будет вмещать на одну соту больше.
+- Рамка, разобранная ломом или сломанная, оставляет свои соты.
+
+<ColorBox Color="#59563a" OutlineColor="#5B5C6E">
+<Box Orientation="Vertical" HorizontalAlignment="Stretch">
+[bold]Не держите рамки снаружи долго.[/bold] Без рамок пчёлам тесно. Через 5 минут лишние пчёлы начнут улетать из улья.
+</Box>
+</ColorBox>
+
+## Что дают пчёлы
+<Table Columns="2">
+<Box><GuideEntityEmbed Entity="FoodHoneycomb" Caption="Соты"/></Box>
+<Box Margin="4" HorizontalAlignment="Left">[bold]Соковыжималка[/bold] даёт из них чистый мёд, [bold]измельчитель[/bold] мёд с витаминами. Соты покупает карго, за них бывают заказы.</Box>
+<Box><GuideEntityEmbed Entity="Beeswax" Caption="Воск"/></Box>
+<Box Margin="4" HorizontalAlignment="Left">Новые рамки, рамки побольше и восковые свечи. Тоже продаётся.</Box>
+<Box><GuideEntityEmbed Entity="ChemistryBottleRoyalJelly" Caption="Маточное
+молочко"/></Box>
+<Box Margin="4" HorizontalAlignment="Left">Из яйца матки. Даёт матке место для новых [textlink="признаков" link="BeekeepingQueen"] и дорого продаётся.</Box>
+</Table>
+
+Мёд немного лечит ушибы и ожоги. С ферментом из него получается медовуха, так что мёд пригодится [textlink="бармену" link="Bartender"].
+
+<Box>
+<GuideReagentEmbed Reagent="Honey"/>
+</Box>
+<Box>
+<GuideReagentEmbed Reagent="Mead"/>
+</Box>
+
+## Пчёлы в руках
+ПКМ по улью, пункт [bold]Поймать[/bold]: за пару секунд можно достать разведчицу, рабочую или матку. Снаружи одновременно может быть не больше [protodata="Beehive" comp="Beehive" member="MaxOutBees"/] пчёл улья.
+
+<Table Columns="2">
+<ColorBox Color="#453a59" OutlineColor="#5B5C6E"><Box>[bold]Разведчица[/bold]</Box></ColorBox>
+<ColorBox Color="#453a59" OutlineColor="#5B5C6E"><Box>[bold]Опылительница[/bold]</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box><GuideEntityEmbed Entity="BeeScoutIcon" Caption="" Scale="3"/></Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box><GuideEntityEmbed Entity="BeePollinatorIcon" Caption="" Scale="3"/></Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Поднесите к лотку, и она его запомнит, до [protodata="BeeScout" comp="BeeItem" member="MemoryLimit"/] лотков. Вернёте её в улей, и он узнает эти лотки, даже если сам до них не долетает.</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Поднесите к растению, и она его опылит, [protodata="BeePollinator" comp="BeeItem" member="Charges"/] раза за жизнь. Примерно каждое четвёртое опыление удваивает следующий урожай.</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Живёт снаружи 3 минуты. Пока она у вас, улей новых растений не ищет.</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Живёт снаружи 5 минут. Одно растение опыляется раз за урожай.</Box></ColorBox>
+</Table>
+
+Пчелу можно вернуть только в её улей. Отпустите её на пол, и она сама полетит домой, облетая стены.
+
+## Если что-то не так
+Сначала посмотрите улей [textlink="анализатором" link="BeekeepingAnalyzer"]: значок у полоски нектара подскажет, куда он сейчас уходит.
+
+<Table Columns="2">
+<ColorBox Color="#453a59" OutlineColor="#5B5C6E"><Box>[bold]Что видно[/bold]</Box></ColorBox>
+<ColorBox Color="#453a59" OutlineColor="#5B5C6E"><Box>[bold]Что сделать[/bold]</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Улей растёт, а мёда мало</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Это нормально: пока колония не полная, часть нектара уходит на пчёл. Больше растений и рабочих, больше мёда.</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Нет ни пчёл, ни мёда</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Проверьте матку и список лотков в анализаторе. Нужны созревшие растения, не закрытые стеной или дверью.</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Улей затих</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Осмотрите его: пчёлам не хватает воздуха, тепла или прохлады.</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Пчёлы улетают</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Им тесно, верните рамки.</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Колония тает</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Пропала матка.</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Улей не находит растения</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Разведчица у вас в руках или погибла. Новая появится через несколько минут.</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Опыление не срабатывает</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Растение уже опылено, уже созрело, собирает себя само или погибло.</Box></ColorBox>
+</Table>
+
+Дальше: [textlink="анализатор пасеки" link="BeekeepingAnalyzer"], [textlink="матка и признаки" link="BeekeepingQueen"], [textlink="рои и дикие ульи" link="BeekeepingWild"].
+</Document>

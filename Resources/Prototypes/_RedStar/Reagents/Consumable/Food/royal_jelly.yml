@@ -1,0 +1,33 @@
+# Royal jelly. Only from a queen egg in a beehive: no recipes and no vendors. Injected into a queen it gives her room
+# for one more trait; eaten, it heals a little of a damage that honey does not heal.
+- type: reagent
+  id: RoyalJelly
+  name: reagent-name-royal-jelly
+  group: Foods
+  desc: reagent-desc-royal-jelly
+  physicalDesc: reagent-physical-desc-creamy
+  flavor: sweet
+  color: "#F2E8C4"
+  recognizable: true
+  metabolisms:
+    Digestion:
+      effects:
+      - !type:EvenHealthChange
+        probability: 0.5
+        damage:
+          Toxin: -0.5
+  pricePerUnit: 10
+
+# A bottle of royal jelly, like the bottles of other reagents: for mapping, admins and tests.
+- type: entity
+  id: ChemistryBottleRoyalJelly
+  suffix: royal jelly
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    localizedLabel: reagent-name-royal-jelly
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: RoyalJelly
+        Quantity: 30
