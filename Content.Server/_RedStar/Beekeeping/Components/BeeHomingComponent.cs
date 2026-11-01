@@ -4,12 +4,13 @@ using Robust.Shared.Audio;
 namespace Content.Server._RedStar.Beekeeping.Components;
 
 /// <summary>
-/// A bee or queen left on the floor (dropped, or landed after a throw) flies straight back into its own hive:
-/// a bee item to the hive it was taken from, a queen to the hive she was last taken out of. It only flies while
-/// the hive is on the same grid, close enough and in clear sight; otherwise it stays where it is and tries
-/// again later. Picking it up stops the flight.
+/// A queen left on the floor (dropped, or landed after a throw) flies straight back into the hive she was last
+/// taken out of, or into any empty one in sight. It only flies while the hive is on the same grid, close enough, in
+/// clear sight and willing to take her; otherwise she stays where she is and tries again later. Picking her up stops
+/// the flight. Worker bees and the scout are not handled here: they fly home as NPCs
+/// (<c>BeeErrandSystem.FlyHome</c>).
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class BeeHomingComponent : Component
 {
     /// <summary>
@@ -63,6 +64,6 @@ public sealed partial class BeeHomingComponent : Component
     [ViewVariables]
     public bool Flying;
 
-    [ViewVariables]
+    [ViewVariables, AutoPausedField]
     public TimeSpan NextCheck;
 }

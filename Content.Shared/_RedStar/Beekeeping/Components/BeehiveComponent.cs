@@ -75,7 +75,7 @@ public sealed partial class BeehiveComponent : Component
     /// <summary>
     /// Since when the colony has been raising a new queen.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoPausedField]
     public TimeSpan? EmergencyQueenSince;
 
     #endregion
@@ -121,13 +121,13 @@ public sealed partial class BeehiveComponent : Component
     /// <summary>
     /// Since when the colony has been full with enough nectar.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoPausedField]
     public TimeSpan? EggFullSince;
 
     /// <summary>
     /// No egg before this time.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoPausedField]
     public TimeSpan EggCooldownUntil;
 
     [DataField]
@@ -234,7 +234,7 @@ public sealed partial class BeehiveComponent : Component
     /// <summary>
     /// When the queen may lay the next bee.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoPausedField]
     public TimeSpan NextLay;
 
     /// <summary>
@@ -414,7 +414,7 @@ public sealed partial class BeehiveComponent : Component
     /// <summary>
     /// The scout rests until then after a trip in someone's hands.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoPausedField]
     public TimeSpan ScoutRestsUntil;
 
     /// <summary>
@@ -565,7 +565,7 @@ public sealed partial class BeehiveComponent : Component
     [DataField]
     public TimeSpan DefenseCooldown = TimeSpan.FromSeconds(5);
 
-    [ViewVariables]
+    [ViewVariables, AutoPausedField]
     public TimeSpan NextDefense;
 
     /// <summary>

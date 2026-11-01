@@ -127,21 +127,30 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
         if (args.Cancelled || args.Slot.ID != ent.Comp.QueenSlot || !HasComp<BeeQueenComponent>(args.Item))
             return;
 
-        var map = Transform(ent).MapUid;
-        var active = 0;
-        var query = EntityQueryEnumerator<BeehiveComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var hive, out var xform))
-        {
-            if (uid != ent.Owner && xform.MapUid == map && GetQueen((uid, hive)) != null)
-                active++;
-        }
-
-        if (active < _cfg.GetCVar(BeekeepingCVars.ActiveHiveLimit))
+        if (HasRoomForQueen(ent))
             return;
 
         args.Cancelled = true;
         if (args.User is { } user)
             _popup.PopupEntity(Loc.GetString("beekeeping-queen-hive-limit"), ent, user);
+    }
+
+    /// <summary>
+    /// Whether a queen may go into this hive: the map has room for one more hive with a queen, this one not counted.
+    /// The same check that refuses her at the slot, so a flying queen can skip a hive that would turn her away.
+    /// </summary>
+    public bool HasRoomForQueen(Entity<BeehiveComponent> hive)
+    {
+        var map = Transform(hive).MapUid;
+        var active = 0;
+        var query = EntityQueryEnumerator<BeehiveComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var other, out var xform))
+        {
+            if (uid != hive.Owner && xform.MapUid == map && GetQueen((uid, other)) != null)
+                active++;
+        }
+
+        return active < _cfg.GetCVar(BeekeepingCVars.ActiveHiveLimit);
     }
 
     /// <summary>
@@ -156,6 +165,26 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
 
         var ev = new BeehiveBrokenEvent(ent);
         RaiseLocalEvent(ref ev);
+    }
+
+    /// <summary>
+    /// The timestamps the generated pause handling cannot reach: lists of them. Without this a pause on the hive's map
+    /// would let tired workers rest for free and leave visible foragers waiting in the past.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnHiveUnpaused(Entity<BeehiveComponent> ent, ref EntityUnpausedEvent args)
+    {
+        var comp = ent.Comp;
+        for (var i = 0; i < comp.RestingWorkers.Count; i++)
+        {
+            comp.RestingWorkers[i] += args.PausedTime;
+        }
+
+        for (var i = 0; i < comp.PendingForagers.Count; i++)
+        {
+            var (tray, at) = comp.PendingForagers[i];
+            comp.PendingForagers[i] = (tray, at + args.PausedTime);
+        }
     }
 
     /// <summary>
@@ -292,12 +321,27 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
 
         var scoutLeft = WorkersAtHome(comp) == 0 && comp.ScoutState == BeeScoutState.Home;
         comp.Bees--;
-        if (scoutLeft)
-        {
-            comp.ScoutState = BeeScoutState.Lost;
-            comp.ScoutReplaceAt = Timing.CurTime;
-        }
 
+        if (!scoutLeft)
+            return true;
+
+        comp.ScoutState = BeeScoutState.Lost;
+        comp.ScoutReplaceAt = Timing.CurTime;
+
+        return true;
+    }
+
+    /// <summary>
+    /// Takes one bee from home and counts it as outside the hive, like a bee taken out of it. The accounting of
+    /// <see cref="RemoveHomeBee"/> applies (a lost scout), and the caller then owns the bee: it must release it with
+    /// <see cref="ReleaseOutBee"/> or bring it back. Other systems go through this instead of touching the counters.
+    /// </summary>
+    public bool MoveHomeBeeOutside(Entity<BeehiveComponent> hive)
+    {
+        if (!RemoveHomeBee(hive))
+            return false;
+
+        hive.Comp.OutBees++;
         return true;
     }
 

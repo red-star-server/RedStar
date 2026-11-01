@@ -60,6 +60,31 @@ public sealed partial class BeeQueenComponent : Component
     public int Instability;
 
     /// <summary>
+    /// Each point of instability makes gaining a bad trait this much likelier: its weight is x(1 + step * points).
+    /// </summary>
+    [DataField]
+    public float BadGainStep = 0.2f;
+
+    /// <summary>
+    /// Each point of instability makes losing a good trait this much likelier: x(1 + step * points).
+    /// </summary>
+    [DataField]
+    public float GoodLossStep = 0.2f;
+
+    /// <summary>
+    /// Each point of instability makes gaining a good trait this much rarer: x(1 - decay * points), but not below
+    /// <see cref="GoodGainFloor"/>.
+    /// </summary>
+    [DataField]
+    public float GoodGainDecay = 0.1f;
+
+    /// <summary>
+    /// The weight factor a good trait's gain never drops below, however unstable the queen is.
+    /// </summary>
+    [DataField]
+    public float GoodGainFloor = 0.3f;
+
+    /// <summary>
     /// Her solution: what was injected and not used yet. Mutagen is used up at once, the rest is payload.
     /// </summary>
     [DataField]

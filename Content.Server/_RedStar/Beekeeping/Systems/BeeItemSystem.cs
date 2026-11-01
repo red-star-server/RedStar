@@ -230,8 +230,10 @@ public sealed partial class BeeItemSystem : EntitySystem
         // The bonus raises the yield to the bonus level; only what was added is remembered and later taken back.
         if (marker.Bonus)
         {
-            marker.AddedYieldMod = Math.Max(0, bee.Comp.BonusYieldMod - plant.Comp.YieldMod);
-            _plantHolder.AdjustsYieldMod(plant.AsNullable(), marker.AddedYieldMod);
+            var wanted = Math.Max(0, bee.Comp.BonusYieldMod - plant.Comp.YieldMod);
+            var before = plant.Comp.YieldMod;
+            _plantHolder.AdjustsYieldMod(plant.AsNullable(), wanted);
+            marker.AddedYieldMod = plant.Comp.YieldMod - before;
         }
 
         if (bee.Comp.PestControl)

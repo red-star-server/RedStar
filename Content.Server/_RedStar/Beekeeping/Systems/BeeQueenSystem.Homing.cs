@@ -19,6 +19,11 @@ public sealed partial class BeeQueenSystem
 {
     [Dependency] private SharedPhysicsSystem _physics = default!;
 
+    /// <summary>
+    /// How long a queen waits before trying again after a hive refused her.
+    /// </summary>
+    private static readonly TimeSpan RefusedRetry = TimeSpan.FromSeconds(10);
+
     private void UpdateHoming(float frameTime)
     {
         var now = _timing.CurTime;
@@ -87,7 +92,10 @@ public sealed partial class BeeQueenSystem
                 _transform.SetLocalPosition(uid, target, xform);
                 StopHoming((uid, homing));
                 homing.NextCheck = now + homing.CheckInterval;
-                ArriveHome(uid, hive);
+
+                if (!ArriveHome(uid, hive))
+                    homing.NextCheck = now + RefusedRetry;
+
                 continue;
             }
 
@@ -181,9 +189,12 @@ public sealed partial class BeeQueenSystem
             return null;
         }
 
-        // A queen only goes back into a hive that has no queen.
-        if (HasComp<BeeQueenComponent>(uid) && _itemSlots.GetItemOrNull(hiveUid, comp.QueenSlot) != null)
+        // A queen only goes back into a hive that has no queen and would take her.
+        if (HasComp<BeeQueenComponent>(uid) &&
+            (_itemSlots.GetItemOrNull(hiveUid, comp.QueenSlot) != null || !_hive.HasRoomForQueen((hiveUid, comp))))
+        {
             return null;
+        }
 
         return (hiveUid, comp);
     }
@@ -223,7 +234,8 @@ public sealed partial class BeeQueenSystem
         {
             var hiveXform = Transform(uid);
             if (hiveXform.ParentUid != grid ||
-                _itemSlots.GetItemOrNull(uid, comp.QueenSlot) != null)
+                _itemSlots.GetItemOrNull(uid, comp.QueenSlot) != null ||
+                !_hive.HasRoomForQueen((uid, comp)))
             {
                 continue;
             }
@@ -239,9 +251,9 @@ public sealed partial class BeeQueenSystem
         return best;
     }
 
-    private void ArriveHome(EntityUid uid, Entity<BeehiveComponent> hive)
+    private bool ArriveHome(EntityUid uid, Entity<BeehiveComponent> hive)
     {
-        if (HasComp<BeeQueenComponent>(uid))
-            _itemSlots.TryInsert(hive.Owner, hive.Comp.QueenSlot, uid, null);
+        return HasComp<BeeQueenComponent>(uid) &&
+               _itemSlots.TryInsert(hive.Owner, hive.Comp.QueenSlot, uid, null);
     }
 }

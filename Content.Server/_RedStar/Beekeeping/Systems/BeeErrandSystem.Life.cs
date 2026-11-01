@@ -79,11 +79,9 @@ public sealed partial class BeeErrandSystem
         if (!TerminatingOrDeleted(hiveUid) && TryComp<BeehiveComponent>(hiveUid, out var comp))
         {
             comp.Foragers.Remove(bee);
-            if (errand.Comp.Kind == BeeErrandKind.Forage && !bee.Comp.CountedOutside && comp.Bees > 0)
+            var hive = new Entity<BeehiveComponent>(hiveUid, comp);
+            if (errand.Comp.Kind == BeeErrandKind.Forage && !bee.Comp.CountedOutside && _hive.MoveHomeBeeOutside(hive))
             {
-                var hive = new Entity<BeehiveComponent>(hiveUid, comp);
-                comp.Bees--;
-                comp.OutBees++;
                 bee.Comp.SourceHive = hive;
                 bee.Comp.CountedOutside = true;
                 _popup.PopupEntity(Loc.GetString("beekeeping-forager-caught"), holder, holder);
