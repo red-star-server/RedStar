@@ -631,7 +631,7 @@
 
 - type: loadoutGroup
   id: GeneticistHead
-  name: Geneticist head
+  name: loadout-group-geneticist-head
   minLimit: 0
   loadouts:
   - BrigmedicHat
@@ -640,7 +640,7 @@
 
 - type: loadoutGroup
   id: GeneticistJumpsuit
-  name: Geneticist jumpsuit
+  name: loadout-group-geneticist-jumpsuit
   loadouts:
   - GeneticistJumpsuit
   - GeneticistJumpskirt
@@ -650,7 +650,7 @@
 
 - type: loadoutGroup
   id: GeneticBackpack
-  name: Geneticist backpack
+  name: loadout-group-geneticist-backpack
   loadouts:
   - GeneticistBackpack
   - GeneticistSatchel
@@ -658,7 +658,7 @@
 
 - type: loadoutGroup
   id: GeneticistOuterClothing
-  name: Geneticist outer clothing
+  name: loadout-group-geneticist-outerclothing
   minLimit: 0
   loadouts:
   - RegularLabCoat
