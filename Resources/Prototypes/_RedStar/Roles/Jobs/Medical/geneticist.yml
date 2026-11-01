@@ -1,0 +1,38 @@
+- type: job
+  id: Geneticist
+  name: job-name-geneticist
+  description: job-description-geneticist
+  playTimeTracker: JobGeneticist
+  requirements:
+    - !type:RoleTimeRequirement
+      role: JobMedicalDoctor
+      time: 2.5h
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 7h
+  startingGear: GeneticistGear
+  icon: "JobIconGeneticist"
+  supervisors: job-supervisors-cmo
+  guides: [ Medical ] #TODO change to genetics
+  access:
+  - Medical
+  - Chemistry
+  - Maintenance
+
+- type: startingGear
+  id: GeneticistGear
+  equipment:
+    id: GeneticistPDA
+    ears: ClothingHeadsetMedical
+    pocket2: HandheldGeneticAnalyzer
+
+- type: chameleonOutfit
+  id: GeneticistChameleonOutfit
+  job: Geneticist
+  equipment:
+    head: ClothingHeadHatBeretMedic
+    eyes: ClothingEyesHudMedical
+    mask: ClothingMaskSterile
+    neck: ClothingNeckStethoscope
+    outerClothing: ClothingOuterCoatLabGene
+    gloves: ClothingHandsGlovesLatex
