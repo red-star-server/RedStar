@@ -1,0 +1,1188 @@
+- type: reagent
+  id: Cryptobiolin
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectScrambled
+        type: Update
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectWoozy
+        time: 20.0
+
+- type: reagent
+  id: Dylovene
+  metabolisms: !Clear
+    Bloodstream:
+      metabolismRate: 0.25
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -0.75
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Dylovene
+          min: 20
+        damage:
+          types:
+            Blunt: 2
+      - !type:Jitter
+        conditions:
+        - !type:ReagentCondition
+          reagent: Dylovene
+          min: 20
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Dylovene
+          min: 20
+        type: Local
+        visualType: Medium
+        messages:
+        - "generic-reagent-effect-nauseous"
+        probability: 0.2
+      - !type:Vomit
+        conditions:
+        - !type:ReagentCondition
+          reagent: Dylovene
+          min: 20
+        probability: 0.02
+      - !type:Drunk
+        conditions:
+        - !type:ReagentCondition
+          reagent: Dylovene
+          min: 15
+
+- type: reagent
+  id: Diphenhydramine
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:AdjustReagent
+        reagent: Histamine
+        amount: -3.0
+      - !type:GenericStatusEffect
+        key: Jitter
+        time: 3.0
+        type: Remove
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
+        time: 1.5
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -3
+
+- type: reagent
+  id: Ethylredoxrazine
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrunk
+        time: 6.0
+        type: Remove
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -0.5
+
+- type: reagent
+  id: Arithrazine
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Radiation: -3
+            Blunt: 0.5
+
+- type: reagent
+  id: Bicaridine
+  metabolisms: !Clear
+    Bloodstream:
+      metabolismRate: 0.25
+      effects:
+      - !type:EvenHealthChange
+        damage:
+          Brute: -1.0
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Bicaridine
+          min: 12
+        damage:
+          types:
+            Asphyxiation: 0.5
+            Poison: 1.5
+      - !type:Vomit
+        conditions:
+        - !type:ReagentCondition
+          reagent: Bicaridine
+          min: 26
+        probability: 0.02
+      - !type:Jitter
+        conditions:
+        - !type:ReagentCondition
+          reagent: Bicaridine
+          min: 12
+      - !type:Drunk ''
+
+- type: reagent
+  id: Cryoxadone
+  worksOnTheDead: true
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:EvenHealthChange
+        conditions:
+        - !type:TemperatureCondition
+          max: 213.0
+        scaleByTemperature:
+          min: 100.0
+          max: 213.0
+          scale: 1.6
+        damage:
+          Airloss: -3
+          Brute: -2
+          Burn: -2
+          Toxin: -2
+
+- type: reagent
+  id: Doxarubixadone
+  worksOnTheDead: true
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:TemperatureCondition
+          max: 273.15
+        scaleByTemperature:
+          min: 100.0
+          max: 213.0
+          scale: 1.6
+        damage:
+          types:
+            Cellular: -2
+
+- type: reagent
+  id: Dermaline
+  metabolisms: !Clear
+    Bloodstream:
+      metabolismRate: 0.25
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: -1
+            Shock: -1
+            Cold: -1
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Dermaline
+          min: 10
+        damage:
+          types:
+            Asphyxiation: 1
+            Cold: 2
+            Blunt: 0.5
+      - !type:Jitter
+        conditions:
+        - !type:ReagentCondition
+          reagent: Dermaline
+          min: 10
+
+- type: reagent
+  id: Dexalin
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Asphyxiation: -1
+            Bloodloss: -0.5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Dexalin
+          min: 20
+        damage:
+          types:
+            Asphyxiation: 3
+            Cold: 1
+
+- type: reagent
+  id: DexalinPlus
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Asphyxiation: -3.5
+            Bloodloss: -3
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: HeartbreakerToxin
+          min: 1
+        reagent: HeartbreakerToxin
+        amount: -3
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: DexalinPlus
+          min: 25
+        damage:
+          types:
+            Asphyxiation: 5
+            Cold: 3
+
+- type: reagent
+  id: Epinephrine
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: Histamine
+          min: 45
+        reagent: Histamine
+        amount: -5
+      - !type:HealthChange
+        conditions:
+        - !type:NestedCondition
+          proto: MobCritical
+        - !type:ReagentCondition
+          reagent: Epinephrine
+          max: 20
+        damage:
+          types:
+            Asphyxiation: -3
+            Poison: -0.5
+      - !type:EvenHealthChange
+        conditions:
+        - !type:NestedCondition
+          proto: MobCritical
+        - !type:ReagentCondition
+          reagent: Epinephrine
+          max: 20
+        damage:
+          Brute: -1
+          Burn: -1
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Epinephrine
+          min: 20
+        damage:
+          types:
+            Asphyxiation: 1
+            Poison: 1
+      - !type:AdjustReagent
+        reagent: HeartbreakerToxin
+        amount: -2
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: HeartbreakerToxin
+          min: 1
+        reagent: Epinephrine
+        amount: -1
+      - !type:AdjustReagent
+        probability: 0.1
+        conditions:
+        - !type:ReagentCondition
+          reagent: HeartbreakerToxin
+          min: 1
+        reagent: Histamine
+        amount: 4
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectStunned
+        time: 0.75
+        type: Remove
+      - !type:ModifyKnockdown
+        time: 0.75
+        type: Remove
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectAdrenaline
+        time: 5
+      - !type:ModifyStatusEffect
+        effectProto: EpinephrineStatusEffect
+
+- type: reagent
+  id: Hyronalin
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Radiation: -1
+      - !type:Vomit
+        probability: 0.02
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Hyronalin
+          min: 30
+        damage:
+          types:
+            Heat: 2
+      - !type:Jitter
+        conditions:
+        - !type:ReagentCondition
+          reagent: Hyronalin
+          min: 30
+
+- type: reagent
+  id: Ipecac
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:Vomit
+        conditions:
+        - !type:ReagentCondition
+          reagent: Ipecac
+          min: 4
+        probability: 0.3
+
+- type: reagent
+  id: Inaprovaline
+  metabolisms: !Clear
+    Bloodstream:
+      metabolismRate: 0.1
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:NestedCondition
+          proto: MobCritical
+        damage:
+          types:
+            Asphyxiation: -2
+      - !type:ModifyBleed
+        amount: -0.25
+
+- type: reagent
+  id: Kelotane
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: -0.5
+            Shock: -0.5
+            Cold: -0.5
+      - !type:Satiate
+        satiationType: Thirst
+        factor: -10
+        conditions:
+        - !type:ReagentCondition
+          reagent: Kelotane
+          min: 30
+      - !type:PopupMessage
+        type: Local
+        messages:
+        - generic-reagent-effect-nauseous
+        - generic-reagent-effect-thirsty
+        - generic-reagent-effect-parched
+        probability: 0.1
+        conditions:
+        - !type:ReagentCondition
+          reagent: Kelotane
+          min: 25
+
+- type: reagent
+  id: Leporazine
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Cold: -4
+      - !type:AdjustTemperature
+        conditions:
+        - !type:TemperatureCondition
+          max: 293.15
+        amount: 1000000
+      - !type:AdjustTemperature
+        conditions:
+        - !type:TemperatureCondition
+          min: 293.15
+        amount: -1000000
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - "leporazine-effect-temperature-adjusting"
+        probability: 0.2
+      - !type:AdjustReagent
+        reagent: Fresium
+        amount: -5
+
+- type: reagent
+  id: Barozine
+  metabolisms: !Clear
+    Bloodstream:
+      metabolismRate: 0.25
+      effects:
+      - !type:HealthChange
+        probability: 0.3
+        damage:
+          types:
+            Heat: 0.5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Barozine
+          min: 30
+        damage:
+          types:
+            Poison: 3
+      - !type:Vomit
+        probability: 0.15
+        conditions:
+        - !type:ReagentCondition
+          reagent: Barozine
+          min: 30
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectPressureImmunity
+        type: Add
+      - !type:GenericStatusEffect
+        key: Stutter
+        component: StutteringAccent
+      - !type:Jitter ''
+      - !type:Emote
+        emote: Scream
+        probability: 0.2
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages:
+        - "barozine-effect-skin-burning"
+        - "barozine-effect-muscle-contract"
+        probability: 0.1
+
+- type: reagent
+  id: PolypyryliumOligomers
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:EvenHealthChange
+        damage:
+          Brute: -1.75
+          Airloss: -1
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: PolypyryliumOligomers
+          min: 30
+        damage:
+          types:
+            Asphyxiation: 3.5
+      - !type:ModifyBleed
+        amount: -0.25
+
+- type: reagent
+  id: Ambuzol
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:CureZombieInfection
+        conditions:
+        - !type:ReagentCondition
+          reagent: Ambuzol
+          min: 15
+    Digestion:
+      effects:
+      - !type:CureZombieInfection
+        conditions:
+        - !type:ReagentCondition
+          reagent: Ambuzol
+          min: 15
+
+- type: reagent
+  id: AmbuzolPlus
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:CureZombieInfection
+        innoculate: true
+        conditions:
+        - !type:ReagentCondition
+          reagent: AmbuzolPlus
+          min: 5
+    Digestion:
+      effects:
+      - !type:CureZombieInfection
+        innoculate: true
+        conditions:
+        - !type:ReagentCondition
+          reagent: AmbuzolPlus
+          min: 5
+
+- type: reagent
+  id: PulpedBananaPeel
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:ModifyBleed
+        amount: -0.5
+
+- type: reagent
+  id: Saline
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:Satiate
+        satiationType: Thirst
+        factor: 6
+      - !type:ModifyBloodLevel
+        amount: 12
+
+- type: reagent
+  id: Siderlac
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Caustic: -5
+
+- type: reagent
+  id: Stellibinin
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -4
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: Amatoxin
+          min: 1
+        reagent: Amatoxin
+        amount: -3
+
+- type: reagent
+  id: Synaptizine
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 2
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectStunned
+        time: 3.0
+        type: Remove
+      - !type:ModifyKnockdown
+        time: 3.0
+        type: Remove
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
+        time: 15.0
+        type: Remove
+
+- type: reagent
+  id: TranexamicAcid
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:ModifyBleed
+        amount: -1.5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: TranexamicAcid
+          min: 15
+        damage:
+          types:
+            Bloodloss: 3
+
+- type: reagent
+  id: Tricordrazine
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:EvenHealthChange
+        conditions:
+        - !type:MobStateCondition
+          mobstate: Alive
+        damage:
+          Brute: -1
+          Burn: -1
+      - !type:HealthChange
+        conditions:
+        - !type:MobStateCondition
+          mobstate: Alive
+        damage:
+          types:
+            Poison: -0.5
+
+- type: reagent
+  id: Lipozine
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:Satiate
+        satiationType: Hunger
+        factor: -1
+
+- type: reagent
+  id: Omnizine
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:EvenHealthChange
+        damage:
+          Burn: -2
+          Toxin: -2
+          Airloss: -2
+          Brute: -2
+
+- type: reagent
+  id: Ultravasculine
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:EvenHealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Ultravasculine
+          min: 0
+          max: 20
+        damage:
+          Toxin: -6
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Ultravasculine
+          min: 0
+          max: 20
+        damage:
+          types:
+            Blunt: 1.5
+      - !type:EvenHealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Ultravasculine
+          min: 20
+        damage:
+          Toxin: -2
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Ultravasculine
+          min: 20
+        damage:
+          types:
+            Blunt: 6
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: Histamine
+          min: 1
+        reagent: Histamine
+        amount: -1
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: Histamine
+          min: 1
+        reagent: Ultravasculine
+        amount: 0.5
+
+- type: reagent
+  id: Oculine
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:EyeDamage ''
+
+- type: reagent
+  id: Cognizine
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:MakeSentient
+        conditions:
+        - !type:ReagentCondition
+          reagent: Cognizine
+          min: 5
+
+- type: reagent
+  id: Ethyloxyephedrine
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:Jitter ''
+      - !type:GenericStatusEffect
+        key: Stutter
+        component: StutteringAccent
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
+        time: 10
+        type: Remove
+      - !type:ResetNarcolepsy
+        conditions:
+        - !type:ReagentCondition
+          reagent: Ethyloxyephedrine
+          min: 10
+      - !type:PopupMessage
+        visualType: Medium
+        messages:
+        - "ethyloxyephedrine-effect-feeling-awake"
+        - "ethyloxyephedrine-effect-clear-mind"
+        type: Local
+        probability: 0.1
+
+- type: reagent
+  id: Diphenylmethylamine
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
+        time: 10
+        type: Remove
+      - !type:ResetNarcolepsy
+        conditions:
+        - !type:ReagentCondition
+          reagent: Diphenylmethylamine
+          min: 5
+      - !type:PopupMessage
+        visualType: Medium
+        messages:
+        - "ethyloxyephedrine-effect-feeling-awake"
+        - "ethyloxyephedrine-effect-clear-mind"
+        type: Local
+        probability: 0.1
+
+- type: reagent
+  id: Sigynate
+  metabolisms: !Clear
+    Bloodstream:
+      metabolismRate: 0.25
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Caustic: -1.25
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Sigynate
+          min: 16
+        damage:
+          types:
+            Heat: 1
+      - !type:Jitter
+        conditions:
+        - !type:ReagentCondition
+          reagent: Sigynate
+          min: 20
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Sigynate
+          min: 20
+        type: Local
+        visualType: Medium
+        messages:
+        - "generic-reagent-effect-nauseous"
+        probability: 0.2
+      - !type:Vomit
+        conditions:
+        - !type:ReagentCondition
+          reagent: Sigynate
+          min: 30
+        probability: 0.02
+      - !type:Vomit
+        conditions:
+        - !type:ReagentCondition
+          reagent: Arithrazine
+          min: 1
+        probability: 0.1
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Arithrazine
+          min: 1
+        type: Local
+        visualType: Medium
+        messages:
+        - "generic-reagent-effect-nauseous"
+        probability: 0.2
+
+- type: reagent
+  id: Lacerinol
+  metabolisms: !Clear
+    Bloodstream:
+      metabolismRate: 0.25
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Slash: -2
+            Heat: 0.2
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Lacerinol
+          min: 12
+        damage:
+          types:
+            Cold: 1.5
+
+- type: reagent
+  id: Puncturase
+  metabolisms: !Clear
+    Bloodstream:
+      metabolismRate: 0.25
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Piercing: -2.5
+            Ballistic: -2.5
+            Radiation: 0.05
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Puncturase
+          min: 12
+        damage:
+          types:
+            Blunt: 3
+
+- type: reagent
+  id: Bruizine
+  metabolisms: !Clear
+    Bloodstream:
+      metabolismRate: 0.25
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Blunt: -2.25
+      - !type:Satiate
+        satiationType: Hunger
+        factor: -1
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Bruizine
+          min: 10.5
+        damage:
+          types:
+            Poison: 2.5
+
+- type: reagent
+  id: Pyrazine
+  metabolisms: !Clear
+    Bloodstream:
+      metabolismRate: 0.1
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: -1
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Pyrazine
+          min: 20
+        damage:
+          types:
+            Slash: 0.5
+            Piercing: 0.5
+      - !type:Vomit
+        conditions:
+        - !type:ReagentCondition
+          reagent: Pyrazine
+          min: 15
+        probability: 0.1
+      - !type:Emote
+        conditions:
+        - !type:ReagentCondition
+          reagent: Pyrazine
+          min: 20
+        emote: Scream
+        probability: 0.2
+
+- type: reagent
+  id: Insuzine
+  metabolisms: !Clear
+    Bloodstream:
+      metabolismRate: 0.25
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Shock: -1.5
+      - !type:AdjustReagent
+        reagent: Licoxide
+        amount: -2
+      - !type:AdjustReagent
+        reagent: Tazinide
+        amount: -2
+      - !type:AdjustTemperature
+        amount: -2500
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Insuzine
+          min: 12
+        damage:
+          types:
+            Cold: 1
+      - !type:AdjustTemperature
+        conditions:
+        - !type:ReagentCondition
+          reagent: Insuzine
+          min: 12
+        amount: -30000
+      - !type:Jitter
+        conditions:
+        - !type:ReagentCondition
+          reagent: Insuzine
+          min: 12
+
+- type: reagent
+  id: Opporozidone
+  worksOnTheDead: true
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:ReduceRotting
+        seconds: 10
+        conditions:
+        - !type:TemperatureCondition
+          max: 213
+        - !type:MobStateCondition
+          mobstate: Dead
+
+- type: reagent
+  id: Arcryox
+  worksOnTheDead: true
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:EvenHealthChange
+        conditions:
+        - !type:TemperatureCondition
+          max: 273.15
+        scaleByTemperature:
+          min: 100.0
+          max: 213.0
+          scale: 1.6
+        damage:
+          Brute: -4.5
+          Burn: -4.5
+
+- type: reagent
+  id: Aloxadone
+  worksOnTheDead: true
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:EvenHealthChange
+        conditions:
+        - !type:TemperatureCondition
+          max: 213.0
+        scaleByTemperature:
+          min: 100.0
+          max: 213.0
+          scale: 1.6
+        damage:
+          Burn: -10
+
+- type: reagent
+  id: Mannitol
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Mannitol
+          min: 15
+        type: Local
+        visualType: Medium
+        messages:
+        - "mannitol-effect-enlightened"
+        probability: 0.2
+
+- type: reagent
+  id: Psicodine
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Psicodine
+          min: 30
+        damage:
+          types:
+            Poison: 2
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
+        conditions:
+        - !type:ReagentCondition
+          reagent: Psicodine
+          min: 30
+        type: Add
+        time: 8
+      - !type:GenericStatusEffect
+        key: Jitter
+        time: 2.0
+        type: Remove
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrunk
+        time: 6.0
+        type: Remove
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - "psicodine-effect-fearless"
+        - "psicodine-effect-anxieties-wash-away"
+        - "psicodine-effect-at-peace"
+        probability: 0.2
+
+- type: reagent
+  id: PotassiumIodide
+  metabolisms: !Clear
+    Digestion:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Radiation: -0.25
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectRadiationProtection
+        time: 2
+        type: Add
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: PotassiumIodide
+          min: 20
+        damage:
+          types:
+            Poison: 1
+
+- type: reagent
+  id: Haloperidol
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:Emote
+        emote: Yawn
+        probability: 0.1
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
+        time: 4
+        type: Add
+        conditions:
+        - !type:ReagentCondition
+          reagent: Haloperidol
+          min: 5
+      - !type:GenericStatusEffect
+        key: Jitter
+        time: 4.0
+        type: Remove
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
+        time: 10.0
+        type: Remove
+      - !type:AdjustReagent
+        reagent: Desoxyephedrine
+        amount: -3.0
+      - !type:AdjustReagent
+        reagent: Ephedrine
+        amount: -3.0
+      - !type:AdjustReagent
+        reagent: Stimulants
+        amount: -1.0
+      - !type:AdjustReagent
+        reagent: THC
+        amount: -3.0
+      - !type:AdjustReagent
+        reagent: SpaceDrugs
+        amount: -3.0
+      - !type:AdjustReagent
+        reagent: Bananadine
+        amount: -3.0
+      - !type:AdjustReagent
+        reagent: SpaceGlue
+        amount: -3.0
+      - !type:AdjustReagent
+        reagent: MindbreakerToxin
+        amount: -3.0
+
+- type: reagent
+  id: Heparin
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectAnticoagulant
+        time: 30
+        type: Update
+      - !type:ModifyBleed
+        conditions:
+        - !type:ReagentCondition
+          reagent: Heparin
+          min: 15
+        amount: 0.25
+
+- type: reagent
+  id: Ichor
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:HealBoneDamage
+        amount: 1.5
+      - !type:Satiate
+        satiationType: Thirst
+        factor: 1.5
+      - !type:ModifyBloodLevel
+        amount: 3
+      - !type:EvenHealthChange
+        damage:
+          Burn: -3
+          Brute: -3
+          Toxin: -2
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: -5
+            Shock: -5
+            Cold: -5
+            Caustic: -5
+            Poison: -5
+            Radiation: -5
+            Asphyxiation: -5
+            Bloodloss: -5
+            Blunt: -5
+            Slash: -5
+            Piercing: -5
+            Ballistic: -5
+      - !type:ModifyBleed
+        amount: -1.5

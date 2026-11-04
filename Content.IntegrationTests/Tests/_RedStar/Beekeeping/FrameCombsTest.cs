@@ -1,9 +1,9 @@
 #nullable enable
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
-using Content.Shared.Stacks;
 using Content.Shared._RedStar.Beekeeping.Components;
-using Robust.Shared.GameObjects;
+using Content.Shared.Destructible;
+using Content.Shared.Stacks;
 
 namespace Content.IntegrationTests.Tests._RedStar.Beekeeping;
 
@@ -23,7 +23,7 @@ public sealed class FrameCombsTest : GameTest
         {
             var frame = server.EntMan.SpawnEntity("BeeFrameCapped", map.GridCoords);
             Assert.That(server.EntMan.GetComponent<BeeFrameComponent>(frame).Combs, Is.EqualTo(1));
-            server.System<Content.Shared.Destructible.SharedDestructibleSystem>().DestroyEntity(frame);
+            server.System<SharedDestructibleSystem>().DestroyEntity(frame);
         });
         await RunTicksSync(5);
 

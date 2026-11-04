@@ -198,8 +198,13 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
         }
         else
         {
+            var insidePod = ent.Comp.BodyContainer.ContainedEntity; // RS14
             RemComp<ActiveCryoPodComponent>(ent);
             UI.CloseUi(ent.Owner, HealthAnalyzerUiKey.Key);
+            // RS14-start
+            if (insidePod is {} patient)
+                _sleeping.TryWaking(patient);
+            // RS14-end
         }
 
         UpdateAppearance(ent.Owner, ent.Comp);
@@ -484,6 +489,7 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
     {
         if (args.Container.ID == CryoPodComponent.BodyContainerName)
         {
+            ResetAnalyzedPart(cryoPod); // RS14
             ClearInjectionBuffer(cryoPod);
         }
 
@@ -495,6 +501,7 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
         if (args.Container.ID == CryoPodComponent.BodyContainerName)
         {
             UI.CloseUi(cryoPod.Owner, CryoPodUiKey.Key, args.Entity);
+            ResetAnalyzedPart(cryoPod); // RS14
             ClearInjectionBuffer(cryoPod);
         }
 

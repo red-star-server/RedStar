@@ -335,9 +335,14 @@ public sealed partial class MobThresholdSystem : EntitySystem
     private void CheckThresholds(EntityUid target, MobStateComponent mobStateComponent,
         MobThresholdsComponent thresholdsComponent, DamageableComponent damageableComponent, EntityUid? origin = null)
     {
+        // RS14-start
+        if (_net.IsClient)
+            return;
+        var damage = CheckVitalDamage((target, damageableComponent));
+        // RS14-end
         foreach (var (threshold, mobState) in thresholdsComponent.Thresholds.Reverse())
         {
-            if (_damageable.GetTotalDamage((target, damageableComponent)) < threshold)
+            if (damage < threshold) // RS14
                 continue;
 
             TriggerThreshold(target, mobState, mobStateComponent, thresholdsComponent, origin);
@@ -395,7 +400,7 @@ public sealed partial class MobThresholdSystem : EntitySystem
             }
 
             if (TryGetNextState(target, currentMobState, out var nextState, threshold) &&
-                TryGetPercentageForState(target, nextState.Value, _damageable.GetTotalDamage((target, damageable)), out var percentage))
+                TryGetPercentageForState(target, nextState.Value, CheckVitalDamage((target, damageable)), out var percentage)) // RS14
             {
                 percentage = FixedPoint2.Clamp(percentage.Value, 0, 1);
 

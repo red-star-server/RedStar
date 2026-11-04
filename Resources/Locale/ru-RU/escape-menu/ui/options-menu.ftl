@@ -89,6 +89,7 @@ ui-options-hud-theme-clockwork = Механизм
 ui-options-hud-theme-retro = Ретро
 ui-options-hud-theme-minimalist = Минимализм
 ui-options-hud-theme-ashen = Пепел
+ui-options-hud-theme-trasen = Trasen-Knox
 ui-options-hud-layout-default = Стандартный
 ui-options-hud-layout-separated = Разделённый
 ui-options-vp-stretch = Растянуть изображение для соответствия окну игры
@@ -110,7 +111,12 @@ ui-options-vp-low-res = Изображение низкого разрешени
 ui-options-parallax-low-quality = Низкокачественный параллакс (фон)
 ui-options-ambient-occlusion = Отображать окружающее затенение
 ## RS14-start
-ui-options-light-atmosphere = Атмосферное освещение
+ui-options-light-bloom = Свечение ламп
+ui-options-light-bloom-strength = Интенсивность свечения:
+ui-options-dark-ambient = Глубокие тени
+ui-options-dark-ambient-strength = Интенсивность затемнения:
+ui-options-dark-ambient-shadow-depth = Глубина теней:
+ui-options-dark-ambient-warmth = Теплота теней:
 ## RS14-end
 ui-options-fps-counter = Показать счётчик FPS
 ui-options-vp-width = Ширина окна игры:

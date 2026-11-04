@@ -62,3 +62,9 @@ gun-speedloader-empty = Спидлоадер пуст
 # GunSpreadModifier
 examine-gun-spread-modifier-reduction = Разброс снижен на [color=yellow]{ $percentage }%[/color].
 examine-gun-spread-modifier-increase = Разброс повышен на [color=yellow]{ $percentage }%[/color].
+
+gun-access-locked = У объекта «{ $target }» закрыт доступ!
+gun-toggle-on = Объект «{ $target }» включается.
+gun-toggle-off = Объект «{ $target }» выключается.
+gun-not-anchored = Объект «{ $target }» не закреплён на земле!
+gun-network-ammo-examine = Текущий тип снаряда: [color=yellow]{ $ammo }[/color].

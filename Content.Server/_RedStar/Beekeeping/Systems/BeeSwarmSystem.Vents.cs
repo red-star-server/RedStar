@@ -240,12 +240,12 @@ public sealed partial class BeeSwarmSystem
         if (PickNestStorage(swarm, swarm.Comp.NestRange, grid, origin, swarm.Comp.Diet == BeehiveDiet.Meat ? QuietRadius : 0f) is { } storage)
         {
             swarm.Comp.Storage = storage;
-            swarm.Comp.Searching = false;
+            SetSearching(swarm, false);
             _errands.SetTarget(swarm.Owner, storage);
             return;
         }
 
-        swarm.Comp.Searching = true;
+        SetSearching(swarm, true);
         ContinueSearch(swarm);
     }
 }

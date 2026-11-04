@@ -1,3 +1,4 @@
+using Content.Shared.Weapons.Ranged.Components; // RS14
 using Content.Server.Administration.Logs;
 using Content.Server.Destructible;
 using Content.Server.Effects;
@@ -29,6 +30,15 @@ public sealed partial class ProjectileSystem : SharedProjectileSystem
         SubscribeLocalEvent<ProjectileComponent, StartCollideEvent>(OnStartCollide);
     }
 
+    // RS14-start
+    [SubscribeLocalEvent]
+    private void OnTargetedProjectileHit(Entity<TargetedProjectileComponent> ent, ref BeforeProjectileHitEvent args)
+    {
+        if (ent.Comp.Target == args.Target)
+            args.Damage.Flags |= DamageSpecifier.DamageFlags.PreciseHit;
+    }
+    // RS14-end
+
     private void OnStartCollide(EntityUid uid, ProjectileComponent component, ref StartCollideEvent args)
     {
         // This is so entities that shouldn't get a collision are ignored.
@@ -59,7 +69,7 @@ public sealed partial class ProjectileSystem : SharedProjectileSystem
             damageRequired = FixedPoint2.Max(damageRequired, FixedPoint2.Zero);
         }
 
-        if (_damageableSystem.TryChangeDamage((target, damageableComponent), ev.Damage, out var damage, component.IgnoreResistances, origin: component.Shooter))
+        if (_damageableSystem.TryChangeDamage((target, damageableComponent), ev.Damage, out var damage, component.IgnoreResistances, origin: component.Shooter, increaseOnly: component.IncreaseOnly)) // RS14
         {
             if (!Deleted(target))
             {

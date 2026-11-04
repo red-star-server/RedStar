@@ -1,0 +1,62 @@
+using Content.Shared._Trauma.Common.Body;
+using Content.Shared.Body;
+using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
+
+namespace Content.Shared._Trauma.Body;
+
+/// <summary>
+/// Component for external organs aka bodyparts.
+/// </summary>
+[RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState(fieldDeltas: true)]
+public sealed partial class BodyPartComponent : Component
+{
+    /// <summary>
+    /// Anatomical type used to select and relate this body part.
+    /// </summary>
+    [DataField(required: true)]
+    public BodyPartType PartType;
+
+    /// <summary>
+    /// Side of the body occupied by this part.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public BodyPartSymmetry Symmetry = BodyPartSymmetry.None;
+
+    /// <summary>
+    /// Slots for organs and child bodyparts.
+    /// Used by surgery, etc.
+    /// </summary>
+    /// <remarks>
+    /// A part must not contain its own organ category in its slots.
+    /// </remarks>
+    [DataField(required: true), AutoNetworkedField]
+    public HashSet<ProtoId<OrganCategoryPrototype>> Slots = new();
+
+    /// <summary>
+    /// Child organs and bodyparts that are attached to this part.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public Dictionary<ProtoId<OrganCategoryPrototype>, EntityUid> Children = new();
+
+    /// <summary>
+    /// Container to store organs in if this bodypart is severed.
+    /// When being attached to a body, they will be transferred.
+    /// </summary>
+    // TODO: have this affect the sprite in the future so an arm with its hand attached can be seen
+    [DataField]
+    public string ContainerId = "body_part_organs";
+}
+
+/// <summary>
+/// Raised on a bodypart after an organ/child part was inserted into it.
+/// </summary>
+[ByRefEvent]
+public record struct OrganInsertedIntoPartEvent(EntityUid Organ, ProtoId<OrganCategoryPrototype> Category);
+
+/// <summary>
+/// Raised on a bodypart after an organ/child part was removed from it.
+/// </summary>
+[ByRefEvent]
+public record struct OrganRemovedFromPartEvent(EntityUid Organ, ProtoId<OrganCategoryPrototype> Category);

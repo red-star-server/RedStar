@@ -31,6 +31,7 @@ namespace Content.Shared.Entry
         public override void Init()
         {
             IgnorePrototypes();
+            InitializeTraumaPrototypes(); // RS14
         }
 
         public override void PostInit()

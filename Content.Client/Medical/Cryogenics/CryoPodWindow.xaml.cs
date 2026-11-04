@@ -1,3 +1,4 @@
+using Content.Shared.Body; // RS14
 using System.Linq;
 using System.Numerics;
 using Content.Client.UserInterface.Controls;
@@ -25,10 +26,15 @@ public sealed partial class CryoPodWindow : FancyWindow
     public event Action? OnEjectBeakerPressed;
     public event Action<FixedPoint2>? OnInjectPressed;
 
+    // RS14-start
+    public event Action<ProtoId<OrganCategoryPrototype>?, EntityUid>? OnBodyPartSelected;
+
+    // RS14-end
     public CryoPodWindow()
     {
         IoCManager.InjectDependencies(this);
         RobustXamlLoader.Load(this);
+        HealthAnalyzer.OnBodyPartSelected += (part, target) => OnBodyPartSelected?.Invoke(part, target); // RS14
         _atmosphere = _entityManager.System<SharedAtmosphereSystem>();
         EjectPatientButton.OnPressed += _ => OnEjectPatientPressed?.Invoke();
         EjectBeakerButton.OnPressed += _ => OnEjectBeakerPressed?.Invoke();

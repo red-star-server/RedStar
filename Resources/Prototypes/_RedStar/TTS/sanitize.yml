@@ -4,7 +4,10 @@
   rules:
   - !type:TTSSanitizeTrim
   - !type:TTSSanitizeFilterChars
-    allowed: 'a-zA-Zа-яА-ЯёЁ0-9,\-+?!. '
+    allowed: 'a-zA-Zа-яА-ЯёЁ0-9,\-+?!.…:; '
+  - !type:TTSSanitizeRegex
+    pattern: '…'
+    replacement: '...'
 
 - type: ttsSanitize
   id: TTSSanitizeTranslit

@@ -7,6 +7,4 @@ namespace Content.Shared._RedStar.Beekeeping.Events;
 /// Applying a bee in hand to a tray: a scout remembers it, a pollinator pollinates the plant. Raised on the bee.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class BeeApplyDoAfterEvent : SimpleDoAfterEvent
-{
-}
+public sealed partial class BeeApplyDoAfterEvent : SimpleDoAfterEvent;

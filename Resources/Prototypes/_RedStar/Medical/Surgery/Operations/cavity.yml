@@ -1,0 +1,16 @@
+- type: entity
+  abstract: true
+  parent: SurgeryBase
+  id: SurgeryOpenCavityBase
+  components:
+  - type: Surgery
+    requirement: SurgeryOpenRibcage
+    steps:
+    - SurgeryStepSawBones
+    - SurgeryStepOpenOrganSlot
+  - type: SurgeryOrganSlotCondition
+    inverse: true
+  - type: SurgeryBodyComponentCondition
+    blacklist:
+      components:
+      - Silicon # cant open a cavity in clanker, plus they already have battery etc

@@ -1,3 +1,5 @@
+using System.Numerics;
+
 namespace Content.Shared._RedStar.Beekeeping.Components;
 
 /// <summary>
@@ -37,5 +39,5 @@ public sealed partial class BeeBuzzVisualsComponent : Component
     /// The layers' offsets from the prototype, read by the client before it starts moving them.
     /// </summary>
     [ViewVariables]
-    public List<System.Numerics.Vector2>? BaseOffsets;
+    public List<Vector2>? BaseOffsets;
 }

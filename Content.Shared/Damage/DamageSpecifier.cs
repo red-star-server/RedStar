@@ -86,6 +86,7 @@ namespace Content.Shared.Damage
         /// </summary>
         public DamageSpecifier(DamageSpecifier damageSpec)
         {
+            CopyMetadata(damageSpec); // RS14
             DamageDict = new(damageSpec.DamageDict);
         }
 
@@ -129,6 +130,7 @@ namespace Content.Shared.Damage
             // duller as you hit walls. Neat, but not FixedPoint2ended. And confusing, when you realize your fists don't work no
             // more cause they're just bloody stumps.
             DamageSpecifier newDamage = new();
+            newDamage.CopyMetadata(damageSpec); // RS14
             newDamage.DamageDict.EnsureCapacity(damageSpec.DamageDict.Count);
 
             foreach (var (key, value) in damageSpec.DamageDict)
@@ -342,6 +344,7 @@ namespace Content.Shared.Damage
         public static DamageSpecifier operator *(DamageSpecifier damageSpec, FixedPoint2 factor)
         {
             DamageSpecifier newDamage = new();
+            newDamage.CopyMetadata(damageSpec); // RS14
             foreach (var entry in damageSpec.DamageDict)
             {
                 newDamage.DamageDict.Add(entry.Key, entry.Value * factor);
@@ -352,6 +355,7 @@ namespace Content.Shared.Damage
         public static DamageSpecifier operator *(DamageSpecifier damageSpec, float factor)
         {
             DamageSpecifier newDamage = new();
+            newDamage.CopyMetadata(damageSpec); // RS14
             foreach (var entry in damageSpec.DamageDict)
             {
                 newDamage.DamageDict.Add(entry.Key, entry.Value * factor);
@@ -362,6 +366,7 @@ namespace Content.Shared.Damage
         public static DamageSpecifier operator /(DamageSpecifier damageSpec, FixedPoint2 factor)
         {
             DamageSpecifier newDamage = new();
+            newDamage.CopyMetadata(damageSpec); // RS14
             foreach (var entry in damageSpec.DamageDict)
             {
                 newDamage.DamageDict.Add(entry.Key, entry.Value / factor);
@@ -372,6 +377,7 @@ namespace Content.Shared.Damage
         public static DamageSpecifier operator /(DamageSpecifier damageSpec, float factor)
         {
             DamageSpecifier newDamage = new();
+            newDamage.CopyMetadata(damageSpec); // RS14
 
             foreach (var entry in damageSpec.DamageDict)
             {

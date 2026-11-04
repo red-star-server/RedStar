@@ -72,7 +72,12 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components
                         {
                             componentsValidated++;
 
-                            var componentType = component.GetNode("type").AsString();
+                            // RS14-start: partial !Remove entries do not have an ordinary type key.
+                            if (!component.TryGetNode("type", out var typeNode))
+                                continue;
+
+                            var componentType = typeNode.AsString();
+                            // RS14-end
                             var clientAvailability = cComponentFactory.GetComponentAvailability(componentType);
                             var serverAvailability = sComponentFactory.GetComponentAvailability(componentType);
 

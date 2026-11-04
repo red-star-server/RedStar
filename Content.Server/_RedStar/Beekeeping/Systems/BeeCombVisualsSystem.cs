@@ -1,8 +1,7 @@
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared._RedStar.Beekeeping.Components;
 using Content.Shared._RedStar.Beekeeping.Visuals;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server._RedStar.Beekeeping.Systems;
@@ -34,24 +33,23 @@ public sealed partial class BeeCombVisualsSystem : EntitySystem
 
     private void Update(Entity<BeeCombVisualsComponent> ent, Solution solution)
     {
-        float r = 0f, g = 0f, b = 0f, other = 0f, total = 0f;
+        var other = 0f;
         foreach (var (reagent, quantity) in solution.Contents)
         {
             var amount = quantity.Float();
-            total += amount;
             if (ent.Comp.HoneyReagents.Contains(reagent.Prototype) ||
-                !_proto.TryIndex<ReagentPrototype>(reagent.Prototype, out var proto))
+                !_proto.HasIndex(reagent.Prototype))
             {
                 continue;
             }
 
-            r += proto.SubstanceColor.R * amount;
-            g += proto.SubstanceColor.G * amount;
-            b += proto.SubstanceColor.B * amount;
             other += amount;
         }
 
-        _appearance.SetData(ent, BeeCombVisuals.Color, other > 0f ? new Color(r / other, g / other, b / other) : Color.White);
-        _appearance.SetData(ent, BeeCombVisuals.Share, total > 0f ? other / total : 0f);
+        var otherColor = other > 0f
+            ? solution.GetColorWithout(_proto, ent.Comp.HoneyReagents.ToArray())
+            : Color.White;
+        _appearance.SetData(ent, BeeCombVisuals.Color, otherColor);
+        _appearance.SetData(ent, BeeCombVisuals.Share, solution.Volume > 0 ? other / solution.Volume.Float() : 0f);
     }
 }

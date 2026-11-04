@@ -573,6 +573,10 @@
   - type: ChildOrgan
   - type: InternalChildOrgan
   # RS14-start
+    integrityThresholds:
+      Normal: 15
+      Damaged: 10
+      Destroyed: 0
   - type: Extractable
     grindableSolutionName: food
   - type: Solution

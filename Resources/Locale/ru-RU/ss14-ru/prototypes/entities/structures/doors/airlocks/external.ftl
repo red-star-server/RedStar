@@ -1,5 +1,4 @@
 ent-AirlockExternal = внешний шлюз
     .desc = Он открывается, он закрывается, он может раздавить вас, а за ним лишь космос.
-ent-AirlockExternalGlass = { ent-AirlockExternal }
+ent-AirlockExternalGlass = внешний стеклянный шлюз
     .desc = { ent-AirlockExternal.desc }
-    .suffix = Внешний, Стеклянный

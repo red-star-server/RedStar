@@ -16,7 +16,7 @@ public sealed partial class HandOrganSystem : EntitySystem
 
     private void OnGotInserted(Entity<HandOrganComponent> ent, ref OrganGotInsertedEvent args)
     {
-        _hands.AddHand(args.Target, ent.Comp.HandID, ent.Comp.Data);
+        _hands.AddHand(args.Target.Owner, ent.Comp.HandID, ent.Comp.Data); // RS14
     }
 
     private void OnGotRemoved(Entity<HandOrganComponent> ent, ref OrganGotRemovedEvent args)
@@ -25,6 +25,6 @@ public sealed partial class HandOrganSystem : EntitySystem
         if (LifeStage(args.Target) >= EntityLifeStage.Terminating)
             return;
 
-        _hands.RemoveHand(args.Target, ent.Comp.HandID);
+        _hands.RemoveHand(args.Target.Owner, ent.Comp.HandID); // RS14
     }
 }

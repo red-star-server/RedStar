@@ -105,12 +105,12 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
 
     private void OnMarkingsGotInserted(Entity<VisualOrganMarkingsComponent> ent, ref OrganGotInsertedEvent args)
     {
-        ApplyMarkings(ent, args.Target);
+        ApplyMarkings(ent, args.Target.Owner); // RS14
     }
 
     private void OnMarkingsGotRemoved(Entity<VisualOrganMarkingsComponent> ent, ref OrganGotRemovedEvent args)
     {
-        RemoveMarkings(ent, args.Target);
+        RemoveMarkings(ent, args.Target.Owner); // RS14
     }
 
     private void OnMarkingsState(Entity<VisualOrganMarkingsComponent> ent, ref AfterAutoHandleStateEvent args)

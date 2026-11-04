@@ -1,0 +1,73 @@
+- type: entity
+  id: BaseSpeciesAppearanceOrganless
+  components:
+  - type: Legs
+  - type: BodyEquipment
+  - type: InitialBody
+    relationships: !Remove
+
+- type: entity
+  parent: !Clear [ BaseSpeciesAppearanceOrganless ]
+  id: AppearanceSkeletonPerson
+
+- type: entity
+  id: AppearanceDiona
+  components:
+  - type: InitialBody
+    organs:
+      Tongue: OrganDionaTongue
+
+- type: entity
+  id: AppearanceSlimePerson
+  components:
+  - type: InitialBody
+    organs:
+      Tongue: OrganSlimePersonTongue
+
+- type: entity
+  id: OrganDionaTorso
+  components:
+  - type: BodyPart
+    slots: !Clear
+    - Head
+    - ArmLeft
+    - ArmRight
+    - LegLeft
+    - LegRight
+    - Appendix
+    - Lungs
+    - Stomach
+
+- type: entity
+  id: OrganSkeletonPerson
+  components:
+  - type: Inorganic
+
+- type: entity
+  id: OrganSlimePersonTorso
+  components:
+  - type: BodyPart
+    slots:
+    - Head
+    - ArmLeft
+    - ArmRight
+    - LegLeft
+    - LegRight
+    - Brain
+    - Lungs
+
+- type: entity
+  id: OrganSlimePersonHead
+  components:
+  - type: BodyPart
+    slots:
+    - Eyes
+    - Tongue
+    - Ears
+
+- type: entity
+  id: OrganSlimePersonCore
+  components:
+  - type: ChildOrgan
+    parents:
+    - Torso

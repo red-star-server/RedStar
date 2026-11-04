@@ -1,10 +1,9 @@
 #nullable enable
 using Content.IntegrationTests.Fixtures;
 using Content.Server._RedStar.Beekeeping.Systems;
-using Content.Shared.Containers.ItemSlots;
 using Content.Shared._RedStar.Beekeeping.Components;
 using Content.Shared._RedStar.Beekeeping.Data;
-using Robust.Shared.GameObjects;
+using Content.Shared.Containers.ItemSlots;
 
 namespace Content.IntegrationTests.Tests._RedStar.Beekeeping;
 

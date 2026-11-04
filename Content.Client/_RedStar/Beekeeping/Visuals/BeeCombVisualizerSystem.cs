@@ -32,10 +32,6 @@ public sealed class BeeCombVisualizerSystem : VisualizerSystem<BeeCombVisualsCom
         if (!SpriteSystem.LayerMapTryGet(sprite.AsNullable(), layer, out var index, false))
             return;
 
-        var mixed = new Color(
-            honey.R + (other.R - honey.R) * share,
-            honey.G + (other.G - honey.G) * share,
-            honey.B + (other.B - honey.B) * share);
-        SpriteSystem.LayerSetColor(sprite.AsNullable(), index, mixed);
+        SpriteSystem.LayerSetColor(sprite.AsNullable(), index, Color.InterpolateBetween(honey, other, share));
     }
 }

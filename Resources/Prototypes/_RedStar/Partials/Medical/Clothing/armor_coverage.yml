@@ -1,0 +1,2693 @@
+- type: entity
+  id: Clothing
+  components:
+  - type: Armor
+    coverage: &id004
+    - Torso
+    modifiers: {}
+
+- type: entity
+  id: ContentsExplosionResistanceBase
+  components:
+  - type: Armor
+    coverage: []
+    modifiers: {}
+
+- type: entity
+  id: ClothingBeltBase
+  components:
+  - type: Armor
+    coverage:
+    - Torso
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
+    traumaDeductions:
+      Dismemberment: 0
+      OrganDamage: 0.05
+      BoneDamage: 0.05
+      VeinsDamage: 0
+
+- type: entity
+  id: ClothingHeadset
+  components:
+  - type: Armor
+    coverage:
+    - Head
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
+
+- type: entity
+  id: ClothingEyesBase
+  components:
+  - type: Armor
+    coverage:
+    - Head
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
+
+- type: entity
+  id: ClothingEyesGlassesSecurity
+  components:
+  - type: Armor
+    coverage:
+    - Head
+    modifiers:
+      coefficients:
+        Heat: 0.9
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+    traumaDeductions:
+      Dismemberment: 0
+      OrganDamage: 0.13
+      BoneDamage: 0.13
+      VeinsDamage: 0
+
+- type: entity
+  id: ClothingEyesGlassesMercenary
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0
+      OrganDamage: 0.13
+      BoneDamage: 0.13
+      VeinsDamage: 0
+    coverage:
+    - Head
+    modifiers:
+      coefficients:
+        Heat: 0.9
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+
+- type: entity
+  id: ClothingEyesGlassesThermal
+  components:
+  - type: Armor
+    coverage:
+    - Head
+    modifiers:
+      coefficients:
+        Heat: 0.8
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
+    traumaDeductions:
+      Dismemberment: 0
+      OrganDamage: 0.13
+      BoneDamage: 0.13
+      VeinsDamage: 0
+
+- type: entity
+  id: ClothingEyesVisorNinja
+  components:
+  - type: Armor
+    coverage:
+    - Head
+    modifiers:
+      coefficients:
+        Heat: 0.9
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+    traumaDeductions:
+      Dismemberment: 0
+      OrganDamage: 0.07
+      BoneDamage: 0.07
+      VeinsDamage: 0
+
+- type: entity
+  id: ClothingHandsBase
+  components:
+  - type: Armor
+    coverage: &id001
+    - Hand
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
+
+- type: entity
+  id: ClothingHandsGlovesColorYellowBudget
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
+    coverage: *id001
+
+- type: entity
+  id: ClothingHandsGlovesCaptain
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
+        Shock: 0.75
+    coverage: *id001
+
+- type: entity
+  id: ClothingHandsGlovesHop
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.8
+        Piercing: 0.95
+    coverage: *id001
+
+- type: entity
+  id: ClothingHandsGlovesCombat
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Shock: 0.75
+    coverage: *id001
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+
+- type: entity
+  id: ClothingHandsTacticalMaidGloves
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Shock: 0.75
+    coverage: *id001
+
+- type: entity
+  id: ClothingHeadHardsuitBase
+  components:
+  - type: Armor
+    coverage: &id002
+    - Head
+    modifiers:
+      coefficients:
+        Blunt: 0.90
+        Slash: 0.90
+        Piercing: 0.95
+        Heat: 0.90
+        Radiation: 0.25
+    traumaDeductions:
+      Dismemberment: 0.2
+      OrganDamage: 0.2
+      BoneDamage: 0.2
+      VeinsDamage: 0
+
+- type: entity
+  id: ClothingHeadHatHoodWinterBase
+  components:
+  - type: Armor
+    modifiers:
+      coefficients: {}
+
+- type: entity
+  id: ClothingHeadHelmetSyndicate
+  components:
+  - type: Armor
+    coverage:
+    - Head
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Radiation: 0.5
+
+- type: entity
+  id: ClothingHeadHelmetVoidParamed
+  components:
+  - type: Armor
+    coverage:
+    - Head
+    modifiers:
+      coefficients:
+        Heat: 0.90
+        Radiation: 0.75
+        Caustic: 0.5
+    traumaDeductions:
+      Dismemberment: 0
+      OrganDamage: 0.14
+      BoneDamage: 0.14
+      VeinsDamage: 0
+
+- type: entity
+  id: ClothingHeadHatHardhatBase
+  components:
+  - type: Armor
+    coverage:
+    - Head
+    traumaDeductions:
+      Dismemberment: 0.1
+      OrganDamage: 0.1
+      BoneDamage: 0.15
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+
+- type: entity
+  id: ClothingHeadHatHardhatArmored
+  components:
+  - type: Armor
+    coverage:
+    - Head
+    traumaDeductions:
+      Dismemberment: 0.2
+      OrganDamage: 0.2
+      BoneDamage: 0.2
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.65
+        Slash: 0.75
+        Piercing: 0.75
+        Heat: 0.7
+
+- type: entity
+  id: ClothingHeadHelmetHardsuitAtmos
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.8
+        Radiation: 0.15
+    coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+
+- type: entity
+  id: ClothingHeadHelmetHardsuitEngineering
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Shock: 0.5
+        Caustic: 0.7
+        Radiation: 0.05
+    coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+
+- type: entity
+  id: ClothingHeadHelmetHardsuitSpatio
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Radiation: 0.5
+        Caustic: 0.8
+    coverage: *id002
+
+- type: entity
+  id: ClothingHeadHelmetHardsuitSalvage
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.75
+        Slash: 0.65
+        Piercing: 0.75
+        Heat: 0.75
+        Radiation: 0.1
+        Caustic: 0.7
+    coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+
+- type: entity
+  id: ClothingHeadHelmetHardsuitGoliath
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.75
+        Slash: 0.75
+        Piercing: 0.75
+        Heat: 0.75
+        Radiation: 0.1
+        Caustic: 0.8
+    coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+
+- type: entity
+  id: ClothingHeadHelmetHardsuitMaxim
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.3
+      OrganDamage: 0.3
+      BoneDamage: 0.3
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.65
+        Slash: 0.65
+        Piercing: 0.65
+        Heat: 0.35
+        Radiation: 0.01
+    coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
+
+- type: entity
+  id: ClothingHeadHelmetHardsuitSecurity
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.3
+      OrganDamage: 0.3
+      BoneDamage: 0.3
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.65
+        Slash: 0.65
+        Piercing: 0.65
+        Ballistic: 0.65
+        Heat: 0.8
+        Caustic: 0.7
+      flatReductions:
+        Ballistic: 2
+    coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+
+- type: entity
+  id: ClothingHeadHelmetHardsuitBrigmedic
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Ballistic: 0.75
+        Heat: 0.9
+        Radiation: 0.4
+        Caustic: 0.4
+      flatReductions:
+        Ballistic: 2
+    coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.7
+
+- type: entity
+  id: ClothingHeadHelmetHardsuitWarden
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.3
+      OrganDamage: 0.3
+      BoneDamage: 0.3
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.45
+        Slash: 0.55
+        Piercing: 0.55
+        Ballistic: 0.65
+        Heat: 0.8
+        Caustic: 0.7
+      flatReductions:
+        Ballistic: 3
+    coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+
+- type: entity
+  id: ClothingHeadHelmetHardsuitCap
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.3
+      OrganDamage: 0.3
+      BoneDamage: 0.3
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Ballistic: 0.75
+        Heat: 0.65
+        Radiation: 0.15
+        Caustic: 0.65
+    coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.65
+
+- type: entity
+  id: ClothingHeadHelmetHardsuitEngineeringWhite
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Heat: 0.4
+        Radiation: 0.0
+        Caustic: 0.7
+    coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
+
+- type: entity
+  id: ClothingHeadHelmetHardsuitMedical
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.1
+    coverage: *id002
+
+- type: entity
+  id: ClothingHeadHelmetHardsuitRd
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.9
+        Piercing: 0.95
+        Heat: 0.45
+        Radiation: 0.05
+        Caustic: 0.4
+    coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.55
+
+- type: entity
+  id: ClothingHeadHelmetHardsuitSecurityRed
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.3
+      OrganDamage: 0.3
+      BoneDamage: 0.3
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.7
+        Ballistic: 0.7
+        Heat: 0.8
+        Radiation: 0.5
+        Caustic: 0.5
+      flatReductions:
+        Ballistic: 3
+    coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+
+- type: entity
+  id: ClothingHeadHelmetHardsuitLuxury
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.8
+        Piercing: 0.9
+        Radiation: 0.15
+        Caustic: 0.8
+    coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+
+- type: entity
+  id: ClothingHeadHelmetHardsuitSyndie
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.5
+      OrganDamage: 0.5
+      BoneDamage: 0.5
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.3
+        Slash: 0.3
+        Piercing: 0.3
+        Ballistic: 0.3
+        Heat: 0.3
+        Radiation: 0.3
+      flatReductions:
+        Ballistic: 3
+    coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+
+- type: entity
+  id: ClothingHeadHelmetHardsuitSyndieElite
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.5
+      OrganDamage: 0.5
+      BoneDamage: 0.5
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Ballistic: 0.8
+        Heat: 0.3
+        Radiation: 0.01
+      flatReductions:
+        Ballistic: 2
+    coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
+
+- type: entity
+  id: ClothingHeadHelmetHardsuitSyndieCommander
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.6
+      OrganDamage: 0.6
+      BoneDamage: 0.6
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.4
+        Slash: 0.4
+        Piercing: 0.4
+        Ballistic: 0.35
+        Heat: 0.5
+        Radiation: 0.2
+        Caustic: 0.4
+      flatReductions:
+        Ballistic: 3
+    coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+
+- type: entity
+  id: ClothingHeadHelmetHardsuitCybersun
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 1
+      OrganDamage: 1
+      BoneDamage: 1
+      VeinsDamage: 1
+    modifiers:
+      coefficients:
+        Blunt: 0.2
+        Slash: 0.2
+        Piercing: 0.2
+        Ballistic: 0.2
+        Heat: 0.2
+        Radiation: 0.2
+      flatReductions:
+        Ballistic: 3
+    coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
+
+- type: entity
+  id: ClothingHeadHelmetHardsuitWizard
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 1
+      OrganDamage: 1
+      BoneDamage: 1
+      VeinsDamage: 1
+    modifiers:
+      coefficients:
+        Blunt: 0.4
+        Slash: 0.4
+        Piercing: 0.4
+        Ballistic: 0.4
+        Heat: 0.4
+        Radiation: 0.05
+        Caustic: 0.1
+      flatReductions:
+        Ballistic: 3
+    coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
+
+- type: entity
+  id: ClothingHeadHelmetHardsuitLing
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Heat: 0.5
+    coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
+
+- type: entity
+  id: ClothingHeadHelmetHardsuitPirateEVA
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.9
+        Ballistic: 0.4
+        Heat: 0.4
+        Caustic: 0.75
+    coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.7
+
+- type: entity
+  id: ClothingHeadHelmetHardsuitPirateCap
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.75
+        Slash: 0.8
+        Piercing: 0.85
+        Ballistic: 0.4
+        Heat: 0.4
+        Caustic: 0.75
+    coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.6
+
+- type: entity
+  id: ClothingHeadHelmetCBURN
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.75
+        Slash: 0.4
+        Piercing: 0.65
+        Heat: 0.15
+        Cold: 0.10
+        Shock: 0.15
+        Radiation: 0.1
+        Caustic: 0.1
+    coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.7
+
+- type: entity
+  id: ClothingHeadHelmetHardsuitDeathsquad
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 1
+      OrganDamage: 1
+      BoneDamage: 1
+      VeinsDamage: 1
+    modifiers:
+      coefficients:
+        Blunt: 0.15
+        Slash: 0.15
+        Piercing: 0.15
+        Ballistic: 0.15
+        Heat: 0.15
+        Cold: 0.1
+        Cellular: 0.1
+        Radiation: 0.1
+        Caustic: 0.1
+    coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
+
+- type: entity
+  id: ClothingHeadHelmetHardsuitClown
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.2
+      OrganDamage: 0.2
+      BoneDamage: 0.2
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Caustic: 0.8
+    coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
+
+- type: entity
+  id: ClothingHeadHelmetHardsuitMime
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.2
+      OrganDamage: 0.2
+      BoneDamage: 0.2
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Caustic: 0.8
+    coverage: *id002
+
+- type: entity
+  id: ClothingHeadHelmetHardsuitSanta
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.9
+        Piercing: 0.85
+        Caustic: 0.8
+    coverage: *id002
+  - type: ExplosionResistance
+    damageCoefficient: 0.85
+
+- type: entity
+  id: ClothingHeadHatWatermelon
+  components:
+  - type: Armor
+    coverage:
+    - Head
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+
+- type: entity
+  id: ClothingHeadHatHolyWatermelon
+  components:
+  - type: Armor
+    coverage:
+    - Head
+    modifiers:
+      coefficients:
+        Caustic: 0.9
+        Radiation: 0.9
+
+- type: entity
+  id: ClothingHeadHelmetBase
+  components:
+  - type: Armor
+    coverage: &id003
+    - Head
+
+- type: entity
+  id: ClothingHeadHelmetArmoredBase
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.2
+      OrganDamage: 0.2
+      BoneDamage: 0.2
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5
+        Ballistic: 0.1
+        Heat: 0.5
+      flatReductions:
+        Ballistic: 3.5
+    coverage: *id003
+
+- type: entity
+  id: ClothingHeadHelmetSwat
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.3
+      OrganDamage: 0.3
+      BoneDamage: 0.3
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.35
+        Slash: 0.35
+        Piercing: 0.35
+        Ballistic: 0.35
+        Heat: 0.35
+      flatReductions:
+        Ballistic: 3.5
+    coverage: *id003
+  - type: ExplosionResistance
+    damageCoefficient: 0.25
+
+- type: entity
+  id: ClothingHeadHelmetRiot
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.1
+        Slash: 0.1
+        Piercing: 0.1
+    coverage: *id003
+
+- type: entity
+  id: ClothingHeadHelmetBombSuit
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Heat: 0.8
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+    coverage: *id003
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
+
+- type: entity
+  id: ClothingHeadHelmetCult
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.45
+        Slash: 0.45
+        Piercing: 0.45
+        Heat: 0.45
+        Ballistic: 0.45
+    coverage: *id003
+
+- type: entity
+  id: ClothingHeadHelmetSpaceNinja
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Heat: 0.8
+    coverage: *id004
+
+- type: entity
+  id: ClothingHeadHelmetWizardHelm
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.45
+        Slash: 0.45
+        Piercing: 0.45
+        Heat: 0.45
+        Ballistic: 0.45
+    coverage: *id003
+
+- type: entity
+  id: ClothingHeadHelmetFire
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.2
+      OrganDamage: 0.2
+      BoneDamage: 0.2
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Slash: 0.95
+        Heat: 0.85
+        Cold: 0.85
+    coverage: *id003
+
+- type: entity
+  id: ClothingHeadHelmetAtmosFire
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.2
+      OrganDamage: 0.2
+      BoneDamage: 0.2
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Slash: 0.9
+        Heat: 0.8
+        Cold: 0.8
+    coverage: *id003
+
+- type: entity
+  id: ClothingHeadHelmetLing
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.4
+      OrganDamage: 0.4
+      BoneDamage: 0.4
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5
+        Ballistic: 0.5
+        Heat: 0.5
+        Caustic: 0.5
+    coverage: *id003
+
+- type: entity
+  id: ClothingHeadHelmetRaid
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.2
+      OrganDamage: 0.2
+      BoneDamage: 0.2
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.35
+        Slash: 0.35
+        Piercing: 0.35
+        Ballistic: 0.35
+        Heat: 0.35
+        Caustic: 0.35
+      flatReductions:
+        Ballistic: 3.5
+    coverage: *id003
+
+- type: entity
+  id: CardHelmet
+  components:
+  - type: Armor
+    coverage:
+    - Head
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+
+- type: entity
+  id: ClothingHeadHatHoodBioGeneral
+  components:
+  - type: Armor
+    coverage:
+    - Head
+    modifiers:
+      coefficients:
+        Caustic: 0.75
+
+- type: entity
+  id: ClothingHeadHatHoodBioSecurity
+  components:
+  - type: Armor
+    coverage:
+    - Head
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.7
+        Heat: 0.8
+        Caustic: 0.8
+
+- type: entity
+  id: ClothingHeadHatHoodRad
+  components:
+  - type: Armor
+    coverage:
+    - Head
+    modifiers:
+      coefficients:
+        Heat: 0.85
+        Radiation: 0.01
+
+- type: entity
+  id: ClothingHeadHelmetScrap
+  components:
+  - type: Armor
+    coverage:
+    - Head
+    modifiers:
+      coefficients:
+        Blunt: 0.4
+        Slash: 0.4
+        Piercing: 0.4
+        Heat: 0.9
+
+- type: entity
+  id: ClothingHeadHatSecsoft
+  components:
+  - type: Armor
+    coverage:
+    - Head
+    traumaDeductions:
+      Dismemberment: 0.2
+      OrganDamage: 0.2
+      BoneDamage: 0.2
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.7
+        Heat: 0.8
+
+- type: entity
+  id: ClothingMaskBase
+  components:
+  - type: Armor
+    coverage: &id005
+    - Head
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
+    traumaDeductions:
+      Dismemberment: 0
+      OrganDamage: 0.05
+      BoneDamage: 0.05
+      VeinsDamage: 0
+
+- type: entity
+  id: ClothingMaskGasSecurity
+  components:
+  - type: Armor
+    coverage:
+    - Head
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+
+- type: entity
+  id: ClothingMaskGasSyndicate
+  components:
+  - type: Armor
+    coverage:
+    - Head
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+
+- type: entity
+  id: ClothingMaskGasAtmos
+  components:
+  - type: Armor
+    coverage:
+    - Head
+    modifiers:
+      coefficients:
+        Heat: 0.5
+
+- type: entity
+  id: ClothingMaskGasExplorer
+  components:
+  - type: Armor
+    coverage:
+    - Head
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.9
+        Heat: 0.9
+
+- type: entity
+  id: ClothingMaskBreathMedicalSecurity
+  components:
+  - type: Armor
+    coverage:
+    - Head
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+        Caustic: 0.9
+
+- type: entity
+  id: ClothingMaskClownSecurity
+  components:
+  - type: Armor
+    coverage:
+    - Head
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+
+- type: entity
+  id: ClothingMaskGasSwat
+  components:
+  - type: Armor
+    coverage:
+    - Head
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.9
+        Heat: 0.9
+
+- type: entity
+  id: ClothingMaskGasMerc
+  components:
+  - type: Armor
+    coverage:
+    - Head
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Heat: 0.8
+
+- type: entity
+  id: ClothingMaskGasERT
+  components:
+  - type: Armor
+    coverage:
+    - Head
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+
+- type: entity
+  id: ClothingMaskGasDeathSquad
+  components:
+  - type: Armor
+    coverage:
+    - Head
+    modifiers:
+      coefficients:
+        Blunt: 0.75
+        Slash: 0.75
+        Piercing: 0.75
+        Heat: 0.75
+
+- type: entity
+  id: ClothingMaskMimeSecurity
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
+        Heat: 0.95
+    coverage: *id005
+
+- type: entity
+  id: ClothingOuterArmorBase
+  components:
+  - type: Armor
+    coverage: &id007
+    - Torso
+    traumaDeductions:
+      Dismemberment: 0.2
+      OrganDamage: 0.2
+      BoneDamage: 0.2
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.65
+        Slash: 0.65
+        Piercing: 0.65
+        Ballistic: 0.65
+        Heat: 0.80
+      flatReductions:
+        Ballistic: 2
+  - type: ExplosionResistance
+    damageCoefficient: 0.75
+
+- type: entity
+  id: ClothingOuterArmorBulletproof
+  components:
+  - type: Armor
+    coverage:
+    - Torso
+    - Tail
+    traumaDeductions:
+      Dismemberment: 0.1
+      OrganDamage: 0.1
+      BoneDamage: 0.1
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Ballistic: 0.3
+        Heat: 0.8
+      flatReductions:
+        Ballistic: 3
+  - type: ExplosionResistance
+    damageCoefficient: 0.65
+
+- type: entity
+  id: ClothingOuterArmorReflective
+  components:
+  - type: Armor
+    coverage:
+    - Torso
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Heat: 0.3
+
+- type: entity
+  id: ClothingOuterArmorCaptainCarapace
+  components:
+  - type: Armor
+    coverage:
+    - Torso
+    traumaDeductions:
+      Dismemberment: 0.2
+      OrganDamage: 0.2
+      BoneDamage: 0.2
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.6
+        Ballistic: 0.3
+        Heat: 0.5
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+
+- type: entity
+  id: ClothingOuterVestWeb
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.3
+      OrganDamage: 0.3
+      BoneDamage: 0.3
+      VeinsDamage: 0
+    coverage:
+    - Torso
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.7
+        Ballistic: 0.3
+        Heat: 0.8
+      flatReductions:
+        Ballistic: 3
+
+- type: entity
+  id: ClothingOuterVestWebElite
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.25
+      OrganDamage: 0.25
+      BoneDamage: 0.25
+      VeinsDamage: 0
+    coverage:
+    - Torso
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.7
+        Ballistic: 0.8
+        Heat: 0.3
+        Caustic: 0.3
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+
+- type: entity
+  id: ClothingOuterVestWebMerc
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.2
+      OrganDamage: 0.2
+      BoneDamage: 0.2
+      VeinsDamage: 0
+    coverage:
+    - Torso
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5
+        Ballistic: 0.5
+        Heat: 0.8
+      flatReductions:
+        Ballistic: 3
+
+- type: entity
+  id: ClothingOuterArmorRaid
+  components:
+  - type: Armor
+    coverage:
+    - Torso
+    - Arm
+    - Hand
+    - Leg
+    - Foot
+    - Tail
+    traumaDeductions:
+      Dismemberment: 0.5
+      OrganDamage: 0.5
+      BoneDamage: 0.5
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.3
+        Slash: 0.3
+        Piercing: 0.3
+        Ballistic: 0.3
+        Heat: 0.5
+      flatReductions:
+        Ballistic: 3
+  - type: ExplosionResistance
+    damageCoefficient: 0.35
+
+- type: entity
+  id: ClothingOuterArmorRiot
+  components:
+  - type: Armor
+    coverage:
+    - Torso
+    - Arm
+    - Leg
+    - Tail
+    traumaDeductions:
+      Dismemberment: 0.4
+      OrganDamage: 0.4
+      BoneDamage: 0.4
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.35
+        Slash: 0.35
+        Piercing: 0.35
+        Heat: 0.8
+  - type: ExplosionResistance
+    damageCoefficient: 0.75
+
+- type: entity
+  id: ClothingOuterArmorCult
+  components:
+  - type: Armor
+    coverage:
+    - Torso
+    - Tail
+    - Arm
+    - Leg
+    traumaDeductions:
+      Dismemberment: 0.33
+      OrganDamage: 0.33
+      BoneDamage: 0.33
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.4
+        Slash: 0.4
+        Piercing: 0.4
+        Ballistic: 0.5
+        Heat: 0.5
+  - type: ExplosionResistance
+    damageCoefficient: 0.75
+
+- type: entity
+  id: ClothingOuterArmorHeavy
+  components:
+  - type: Armor
+    coverage: &id006
+    - Torso
+    - Arm
+    - Hand
+    - Leg
+    - Foot
+    - Tail
+    traumaDeductions:
+      Dismemberment: 1
+      OrganDamage: 1
+      BoneDamage: 1
+      VeinsDamage: 1
+    modifiers:
+      coefficients:
+        Blunt: 0.2
+        Slash: 0.2
+        Piercing: 0.2
+        Ballistic: 0.2
+        Heat: 0.5
+        Radiation: 0
+      flatReductions:
+        Ballistic: 3
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+
+- type: entity
+  id: ClothingOuterArmorMagusblue
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.4
+        Slash: 0.4
+        Piercing: 0.4
+        Ballistic: 0.4
+        Heat: 0.4
+        Radiation: 0.1
+        Caustic: 0.1
+      flatReductions:
+        Ballistic: 3
+    coverage: *id006
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+
+- type: entity
+  id: ClothingOuterArmorChangeling
+  components:
+  - type: Armor
+    coverage:
+    - Torso
+    - Arm
+    - Hand
+    - Leg
+    - Foot
+    - Tail
+    - Wings
+    traumaDeductions:
+      Dismemberment: 0.4
+      OrganDamage: 0.4
+      BoneDamage: 0.4
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5
+        Ballistic: 0.5
+        Heat: 0.5
+        Caustic: 0.5
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+
+- type: entity
+  id: ClothingOuterArmorBone
+  components:
+  - type: Armor
+    coverage:
+    - Torso
+    - Arm
+    - Leg
+    - Tail
+    traumaDeductions:
+      Dismemberment: -1
+      OrganDamage: -1
+      BoneDamage: 1
+      VeinsDamage: -1
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.7
+  - type: ExplosionResistance
+    damageCoefficient: 0.35
+
+- type: entity
+  id: ClothingOuterArmorPodWars
+  components:
+  - type: Armor
+    coverage:
+    - Torso
+    - Arm
+    - Leg
+    - Tail
+    traumaDeductions:
+      Dismemberment: 0.27
+      OrganDamage: 0.27
+      BoneDamage: 0.27
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.3
+        Slash: 0.3
+        Piercing: 0.3
+        Heat: 0.7
+
+- type: entity
+  id: CardArmour
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+    coverage: *id007
+
+- type: entity
+  id: ClothingOuterHardsuitBase
+  components:
+  - type: Armor
+    coverage: &id009
+    - Torso
+    - Arm
+    - Hand
+    - Leg
+    - Foot
+    - Tail
+    - Wings
+    traumaDeductions:
+      Dismemberment: 0.2
+      OrganDamage: 0.2
+      BoneDamage: 0.2
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.90
+        Slash: 0.90
+        Piercing: 0.95
+        Heat: 0.90
+        Radiation: 0.25
+
+- type: entity
+  id: ClothingOuterBioGeneral
+  components:
+  - type: Armor
+    coverage: &id008
+    - Torso
+    - Arm
+    - Hand
+    - Leg
+    - Foot
+    - Tail
+    modifiers:
+      coefficients:
+        Caustic: 0.2
+      flatReductions:
+        Slash: 1
+
+- type: entity
+  id: ClothingOuterBioJanitor
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.4
+    coverage: *id008
+
+- type: entity
+  id: ClothingOuterBioSecurity
+  components:
+  - type: Armor
+    coverage:
+    - Torso
+    - Arm
+    - Hand
+    - Leg
+    - Foot
+    - Tail
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.7
+        Ballistic: 0.7
+        Heat: 0.8
+        Caustic: 0.2
+
+- type: entity
+  id: ClothingOuterCoatDetective
+  components:
+  - type: Armor
+    coverage:
+    - Torso
+    - Tail
+    - Arm
+    - Leg
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.7
+        Ballistic: 0.7
+        Heat: 0.8
+
+- type: entity
+  id: ClothingOuterArmorHoS
+  components:
+  - type: Armor
+    coverage: &id011
+    - Torso
+    - Tail
+    - Arm
+    - Leg
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.6
+        Ballistic: 0.55
+        Heat: 0.55
+        Caustic: 0.6
+      flatReductions:
+        Ballistic: 3
+
+- type: entity
+  id: ClothingOuterArmorWarden
+  components:
+  - type: Armor
+    coverage: &id012
+    - Torso
+    - Tail
+    - Arm
+    - Leg
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.6
+        Ballistic: 0.6
+        Heat: 0.7
+        Caustic: 0.9
+
+- type: entity
+  id: ClothingOuterCoatTrench
+  components:
+  - type: Armor
+    coverage:
+    - Torso
+    - Tail
+    - Arm
+    - Leg
+    modifiers:
+      coefficients:
+        Slash: 0.95
+
+- type: entity
+  id: ClothingOuterCoatLab
+  components:
+  - type: Armor
+    coverage:
+    - Torso
+    - Tail
+    - Arm
+    - Leg
+    modifiers:
+      coefficients:
+        Caustic: 0.65
+
+- type: entity
+  id: ClothingOuterCoatLabChem
+  components:
+  - type: Armor
+    coverage:
+    - Torso
+    - Tail
+    - Arm
+    - Leg
+    modifiers:
+      coefficients:
+        Caustic: 0.65
+
+- type: entity
+  id: ClothingOuterCoatLabViro
+  components:
+  - type: Armor
+    coverage:
+    - Torso
+    - Tail
+    - Arm
+    - Leg
+    modifiers:
+      coefficients:
+        Caustic: 0.65
+
+- type: entity
+  id: ClothingOuterCoatLabGene
+  components:
+  - type: Armor
+    coverage:
+    - Torso
+    - Tail
+    - Arm
+    - Leg
+    modifiers:
+      coefficients:
+        Caustic: 0.65
+
+- type: entity
+  id: ClothingOuterCoatLabCmo
+  components:
+  - type: Armor
+    coverage:
+    - Torso
+    - Tail
+    - Arm
+    - Leg
+    modifiers:
+      coefficients:
+        Slash: 0.9
+        Heat: 0.9
+        Caustic: 0.4
+
+- type: entity
+  id: ClothingOuterCoatRnd
+  components:
+  - type: Armor
+    coverage:
+    - Torso
+    - Tail
+    - Arm
+    - Leg
+    modifiers:
+      coefficients:
+        Caustic: 0.65
+
+- type: entity
+  id: ClothingOuterCoatRobo
+  components:
+  - type: Armor
+    coverage:
+    - Torso
+    - Tail
+    - Arm
+    - Leg
+    modifiers:
+      coefficients:
+        Caustic: 0.65
+
+- type: entity
+  id: ClothingOuterCoatRD
+  components:
+  - type: Armor
+    coverage:
+    - Torso
+    - Tail
+    - Arm
+    - Leg
+    modifiers:
+      coefficients:
+        Caustic: 0.6
+        Radiation: 0.6
+
+- type: entity
+  id: ClothingOuterDogi
+  components:
+  - type: Armor
+    coverage:
+    - Torso
+    - Tail
+    - Arm
+    - Leg
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.7
+
+- type: entity
+  id: ClothingOuterCoatAMG
+  components:
+  - type: Armor
+    coverage:
+    - Torso
+    - Tail
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.7
+        Ballistic: 0.7
+        Heat: 0.8
+        Caustic: 0.4
+
+- type: entity
+  id: ClothingOuterCoatLabSeniorResearcher
+  components:
+  - type: Armor
+    coverage:
+    - Torso
+    - Tail
+    - Arm
+    - Leg
+    modifiers:
+      coefficients:
+        Caustic: 0.65
+
+- type: entity
+  id: ClothingOuterCoatLabSeniorPhysician
+  components:
+  - type: Armor
+    coverage:
+    - Torso
+    - Tail
+    - Arm
+    - Leg
+    modifiers:
+      coefficients:
+        Caustic: 0.65
+
+- type: entity
+  id: ClothingOuterHardsuitAtmos
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Heat: 0.2
+        Radiation: 0.15
+    coverage: *id009
+
+- type: entity
+  id: ClothingOuterHardsuitEngineering
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Shock: 0.5
+        Heat: 0.7
+        Radiation: 0.05
+    coverage: *id009
+
+- type: entity
+  id: ClothingOuterHardsuitSpatio
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Radiation: 0.5
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Caustic: 0.8
+    coverage: *id009
+
+- type: entity
+  id: ClothingOuterHardsuitSalvage
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.7
+        Heat: 0.8
+        Radiation: 0.1
+    coverage: *id009
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+
+- type: entity
+  id: ClothingOuterHardsuitGoliath
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.7
+        Heat: 0.7
+        Radiation: 0.1
+    coverage: *id009
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+
+- type: entity
+  id: ClothingOuterHardsuitMaxim
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.3
+      OrganDamage: 0.3
+      BoneDamage: 0.3
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.6
+        Heat: 0.6
+        Radiation: 0.01
+    coverage: *id009
+
+- type: entity
+  id: ClothingOuterHardsuitSecurity
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.3
+      OrganDamage: 0.3
+      BoneDamage: 0.3
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.7
+        Ballistic: 0.7
+        Heat: 0.8
+      flatReductions:
+        Ballistic: 3
+    coverage: *id009
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+
+- type: entity
+  id: ClothingOuterHardsuitBrigmedic
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.85
+        Piercing: 0.85
+        Ballistic: 0.85
+        Heat: 0.85
+        Radiation: 0.05
+        Caustic: 0.4
+      flatReductions:
+        Ballistic: 2
+    coverage: *id009
+  - type: ExplosionResistance
+    damageCoefficient: 0.7
+
+- type: entity
+  id: ClothingOuterHardsuitWarden
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.3
+      OrganDamage: 0.3
+      BoneDamage: 0.3
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.6
+        Ballistic: 0.6
+        Heat: 0.7
+      flatReductions:
+        Ballistic: 3
+    coverage: *id009
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+
+- type: entity
+  id: ClothingOuterHardsuitCap
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.3
+      OrganDamage: 0.3
+      BoneDamage: 0.3
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.6
+        Ballistic: 0.6
+        Heat: 0.7
+        Radiation: 0.05
+    coverage: *id009
+  - type: ExplosionResistance
+    damageCoefficient: 0.65
+
+- type: entity
+  id: ClothingOuterHardsuitEngineeringWhite
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Heat: 0.2
+        Radiation: 0.0
+    coverage: *id009
+
+- type: entity
+  id: ClothingOuterHardsuitMedical
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.0
+    coverage: *id009
+
+- type: entity
+  id: ClothingOuterHardsuitRd
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.75
+        Slash: 0.85
+        Piercing: 0.95
+        Heat: 0.4
+        Radiation: 0.05
+    coverage: *id009
+  - type: ExplosionResistance
+    damageCoefficient: 0.55
+
+- type: entity
+  id: ClothingOuterHardsuitSecurityRed
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.3
+      OrganDamage: 0.3
+      BoneDamage: 0.3
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.6
+        Ballistic: 0.6
+        Heat: 0.7
+        Radiation: 0.5
+      flatReductions:
+        Ballistic: 3
+    coverage: *id009
+
+- type: entity
+  id: ClothingOuterHardsuitLuxury
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.7
+        Heat: 0.8
+        Radiation: 0.1
+    coverage: *id009
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+
+- type: entity
+  id: ClothingOuterHardsuitSyndie
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.5
+      OrganDamage: 0.5
+      BoneDamage: 0.5
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5
+        Ballistic: 0.5
+        Heat: 0.5
+        Radiation: 0.5
+      flatReductions:
+        Ballistic: 3
+    coverage: *id009
+
+- type: entity
+  id: ClothingOuterHardsuitSyndieElite
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.5
+      OrganDamage: 0.5
+      BoneDamage: 0.5
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Ballistic: 0.8
+        Heat: 0.2
+        Radiation: 0.01
+      flatReductions:
+        Ballistic: 2
+    coverage: *id009
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
+
+- type: entity
+  id: ClothingOuterHardsuitSyndieCommander
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.6
+      OrganDamage: 0.6
+      BoneDamage: 0.6
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.35
+        Slash: 0.35
+        Piercing: 0.35
+        Ballistic: 0.35
+        Heat: 0.35
+        Radiation: 0.35
+      flatReductions:
+        Ballistic: 3
+    coverage: *id009
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+
+- type: entity
+  id: ClothingOuterHardsuitJuggernaut
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 1
+      OrganDamage: 1
+      BoneDamage: 1
+      VeinsDamage: 1
+    modifiers:
+      coefficients:
+        Blunt: 0.2
+        Slash: 0.2
+        Piercing: 0.2
+        Ballistic: 0.2
+        Heat: 0.2
+        Radiation: 0.2
+      flatReductions:
+        Ballistic: 3
+    coverage: *id009
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
+
+- type: entity
+  id: ClothingOuterHardsuitWizard
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 1
+      OrganDamage: 1
+      BoneDamage: 1
+      VeinsDamage: 1
+    modifiers:
+      coefficients:
+        Blunt: 0.3
+        Slash: 0.3
+        Piercing: 0.3
+        Ballistic: 0.3
+        Heat: 0.3
+        Radiation: 0
+      flatReductions:
+        Ballistic: 3
+    coverage: *id009
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
+
+- type: entity
+  id: ClothingOuterHardsuitLing
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 1
+        Heat: 0.5
+    coverage: *id009
+
+- type: entity
+  id: ClothingOuterHardsuitPirateEVA
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.7
+        Ballistic: 0.7
+        Heat: 0.5
+    coverage: *id009
+
+- type: entity
+  id: ClothingOuterHardsuitPirateCap
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.6
+        Ballistic: 0.6
+        Heat: 0.4
+        Caustic: 0.75
+    coverage: *id009
+
+- type: entity
+  id: ClothingOuterHardsuitDeathsquad
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 1
+      OrganDamage: 1
+      BoneDamage: 1
+      VeinsDamage: 1
+    modifiers:
+      coefficients:
+        Blunt: 0.1
+        Slash: 0.1
+        Piercing: 0.1
+        Ballistic: 0.1
+        Heat: 0.1
+        Cold: 0.1
+        Cellular: 0.1
+        Radiation: 0.1
+        Caustic: 0.1
+    coverage: *id009
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
+
+- type: entity
+  id: ClothingOuterHardsuitCBURN
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.5
+        Piercing: 0.5
+        Radiation: 0.1
+        Caustic: 0.5
+    coverage: *id009
+
+- type: entity
+  id: ClothingOuterHardsuitClown
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Caustic: 0.8
+    coverage: *id009
+
+- type: entity
+  id: ClothingOuterHardsuitSanta
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.9
+        Piercing: 0.85
+        Caustic: 0.8
+    coverage: *id009
+
+- type: entity
+  id: ClothingOuterArmorScrap
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Heat: .9
+    coverage: *id004
+  - type: ExplosionResistance
+    damageCoefficient: 0.7
+
+- type: entity
+  id: ClothingOuterHardsuitVoidParamed
+  components:
+  - type: Armor
+    coverage:
+    - Torso
+    - Arm
+    - Hand
+    - Leg
+    - Foot
+    - Tail
+    - Wings
+    modifiers:
+      coefficients:
+        Radiation: 0.1
+        Caustic: 0.5
+
+- type: entity
+  id: ClothingOuterChameleon
+  components:
+  - type: Armor
+    coverage:
+    - Torso
+    - Tail
+    - Arm
+    modifiers:
+      coefficients:
+        Slash: 0.9
+        Heat: 0.8
+
+- type: entity
+  id: ClothingOuterSuitBomb
+  components:
+  - type: Armor
+    coverage:
+    - Torso
+    - Arm
+    - Hand
+    - Leg
+    - Foot
+    - Tail
+    - Wings
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.8
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
+
+- type: entity
+  id: ClothingOuterSuitFire
+  components:
+  - type: Armor
+    coverage:
+    - Torso
+    - Arm
+    - Hand
+    - Leg
+    - Foot
+    - Tail
+    - Wings
+    traumaDeductions:
+      Dismemberment: 0.2
+      OrganDamage: 0.2
+      BoneDamage: 0.2
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Slash: 0.9
+        Heat: 0.5
+        Cold: 0.8
+
+- type: entity
+  id: ClothingOuterSuitAtmosFire
+  components:
+  - type: Armor
+    coverage:
+    - Torso
+    - Arm
+    - Hand
+    - Leg
+    - Foot
+    - Tail
+    - Wings
+    traumaDeductions:
+      Dismemberment: 0.2
+      OrganDamage: 0.2
+      BoneDamage: 0.2
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.85
+        Heat: 0.6
+        Cold: 0.8
+        Piercing: 0.85
+
+- type: entity
+  id: ClothingOuterSuitRad
+  components:
+  - type: Armor
+    coverage:
+    - Torso
+    - Arm
+    - Hand
+    - Leg
+    - Foot
+    - Tail
+    - Wings
+    modifiers:
+      coefficients:
+        Heat: 0.85
+        Radiation: 0.01
+
+- type: entity
+  id: ClothingOuterSuitSpaceNinja
+  components:
+  - type: Armor
+    coverage:
+    - Torso
+    - Arm
+    - Hand
+    - Leg
+    - Foot
+    - Tail
+    - Wings
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Heat: 0.8
+
+- type: entity
+  id: ClothingOuterWinterCoat
+  components:
+  - type: Armor
+    coverage: &id010
+    - Torso
+    - Tail
+    - Arm
+    modifiers:
+      coefficients:
+        Slash: 0.9
+        Heat: 0.8
+
+- type: entity
+  id: ClothingOuterWinterChem
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.9
+        Heat: 0.8
+        Caustic: 0.6
+    coverage: *id010
+
+- type: entity
+  id: ClothingOuterWinterCMO
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.9
+        Heat: 0.8
+        Caustic: 0.6
+    coverage: *id010
+
+- type: entity
+  id: ClothingOuterWinterGen
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.9
+        Heat: 0.8
+        Caustic: 0.8
+    coverage: *id010
+
+- type: entity
+  id: ClothingOuterWinterHoS
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.7
+        Heat: 0.8
+    coverage: *id011
+
+- type: entity
+  id: ClothingOuterWinterJani
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.9
+        Heat: 0.8
+        Caustic: 0.8
+    coverage: *id010
+
+- type: entity
+  id: ClothingOuterWinterMed
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.9
+        Heat: 0.8
+        Caustic: 0.8
+    coverage: *id010
+
+- type: entity
+  id: ClothingOuterWinterPara
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.9
+        Heat: 0.65
+        Caustic: 0.8
+    coverage: *id010
+
+- type: entity
+  id: ClothingOuterWinterRD
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.9
+        Heat: 0.8
+        Caustic: 0.8
+    coverage: *id010
+
+- type: entity
+  id: ClothingOuterWinterSci
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.9
+        Heat: 0.8
+        Caustic: 0.8
+    coverage: *id010
+
+- type: entity
+  id: ClothingOuterWinterViro
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.9
+        Heat: 0.8
+        Caustic: 0.8
+    coverage: *id010
+
+- type: entity
+  id: ClothingOuterWinterWarden
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.7
+        Heat: 0.8
+    coverage: *id012
+
+- type: entity
+  id: ClothingShoesBase
+  components:
+  - type: Armor
+    coverage: &id013
+    - Foot
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
+
+- type: entity
+  id: ClothingShoesMilitaryBase
+  components:
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.1
+      OrganDamage: 0.1
+      BoneDamage: 0.1
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+    coverage: *id013
+
+- type: entity
+  id: ClothingBackpackDeathSquad
+  components:
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+
+- type: entity
+  id: ClothingBackpackDuffelCBURN
+  components:
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+
+- type: entity
+  id: ClothingBeltMilitaryWebbingMed
+  components:
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
+
+- type: entity
+  id: ClothingHandsMercGlovesCombat
+  components:
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+
+- type: entity
+  id: ClothingShoesBootsJack
+  components:
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+
+- type: entity
+  id: ClothingShoesBootsCombat
+  components:
+  - type: ExplosionResistance
+    damageCoefficient: 0.5

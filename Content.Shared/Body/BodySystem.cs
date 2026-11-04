@@ -51,16 +51,16 @@ public sealed partial class BodySystem : EntitySystem
 
     private void OnBodyEntInserted(Entity<BodyComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
-        if (args.Container.ID != BodyComponent.ContainerID)
+        if (args.Container.ID != BodyComponent.ContainerID || IsDetached(ent)) // RS14
             return;
 
         if (!_organQuery.TryComp(args.Entity, out var organ))
             return;
 
-        var body = new OrganInsertedIntoEvent(args.Entity);
+        var body = new OrganInsertedIntoEvent((args.Entity, organ)); // RS14
         RaiseLocalEvent(ent, ref body);
 
-        var ev = new OrganGotInsertedEvent(ent);
+        var ev = new OrganGotInsertedEvent(ent, organ); // RS14
         RaiseLocalEvent(args.Entity, ref ev);
 
         if (organ.Body != ent)
@@ -72,16 +72,16 @@ public sealed partial class BodySystem : EntitySystem
 
     private void OnBodyEntRemoved(Entity<BodyComponent> ent, ref EntRemovedFromContainerMessage args)
     {
-        if (args.Container.ID != BodyComponent.ContainerID)
+        if (args.Container.ID != BodyComponent.ContainerID || IsDetached(ent)) // RS14
             return;
 
         if (!_organQuery.TryComp(args.Entity, out var organ))
             return;
 
-        var body = new OrganRemovedFromEvent(args.Entity);
+        var body = new OrganRemovedFromEvent((args.Entity, organ)); // RS14
         RaiseLocalEvent(ent, ref body);
 
-        var ev = new OrganGotRemovedEvent(ent);
+        var ev = new OrganGotRemovedEvent(ent, organ); // RS14
         RaiseLocalEvent(args.Entity, ref ev);
 
         if (organ.Body == null)

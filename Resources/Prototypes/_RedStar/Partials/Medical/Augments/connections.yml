@@ -1,0 +1,77 @@
+- type: entity
+  id: APCBasic
+  components:
+  - type: BatteryDrinkerSource
+    maxAmount: 5000
+
+- type: entity
+  id: APCHighCapacity
+  components:
+  - type: BatteryDrinkerSource
+    maxAmount: 12000
+
+- type: entity
+  id: APCHyperCapacity
+  components:
+  - type: BatteryDrinkerSource
+    maxAmount: 26000
+
+- type: entity
+  id: APCSuperCapacity
+  components:
+  - type: BatteryDrinkerSource
+    maxAmount: 18000
+
+- type: entity
+  id: APCXenoborg
+  components:
+  - type: BatteryDrinkerSource
+    maxAmount: 5000
+
+- type: entity
+  id: BaseAPC
+  components:
+  - type: BatteryDrinkerSource
+    maxAmount: 10000
+
+- type: entity
+  id: BasePowerCell
+  components:
+  - type: BatteryDrinkerSource
+    maxAmount: 360
+
+- type: entity
+  id: BorgChargerCircuitboard
+  components:
+  - type: Tag
+    tags:
+    - AugmentStationBoard
+
+- type: entity
+  id: CellRechargerCircuitboard
+  components:
+  - type: Tag
+    tags:
+    - AugmentRechargerBoard
+
+- type: entity
+  id: ExosuitFabricator
+  components:
+  - type: Lathe
+    dynamicPacks:
+    - PowerAugments
+    - ToolAugments
+
+- type: entity
+  id: TurboItemRechargerCircuitboard
+  components:
+  - type: Tag
+    tags:
+    - AugmentStationBoard
+
+- type: entity
+  id: WeaponCapacitorRechargerCircuitboard
+  components:
+  - type: Tag
+    tags:
+    - AugmentStationBoard

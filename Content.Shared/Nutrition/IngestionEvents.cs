@@ -48,6 +48,7 @@ public record struct AttemptIngestEvent(EntityUid User, EntityUid Ingested, bool
 [ByRefEvent]
 public record struct IngestionAttemptEvent(SlotFlags TargetSlots, bool Cancelled = false) : IInventoryRelayEvent
 {
+    public EntityUid? User; // RS14
     /// <summary>
     ///     The equipment that is blocking consumption. Should only be non-null if the event was canceled.
     /// </summary>

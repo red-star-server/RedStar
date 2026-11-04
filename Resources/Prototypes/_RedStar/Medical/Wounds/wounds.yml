@@ -1,0 +1,386 @@
+- type: entity
+  abstract: true
+  id: WoundBase
+  components:
+  - type: Wound
+    damageType: Blunt
+  - type: ContainerContainer
+    containers:
+      Traumas: !type:Container
+        ents: []
+
+- type: entity
+  parent: WoundBase
+  id: WoundBlunt
+  components:
+  - type: Wound
+    damageType: Blunt
+    scarWound: BluntScar
+    mangleSeverity: Severe
+    textString: Blunt
+  - type: TraumaInflicter
+    severityThreshold: 12
+    allowedTraumas:
+    - Dismemberment
+    - OrganDamage
+    - BoneDamage
+    - VeinsDamage
+    allowArmourDeduction:
+    - Dismemberment
+    - OrganDamage
+    - BoneDamage
+    - VeinsDamage
+    traumasChances:
+      Dismemberment: -0.3
+      OrganDamage: 0.17
+      BoneDamage: 0.8
+      VeinsDamage: 0
+    mangledMultipliers:
+      BoneDamage: 1
+
+- type: entity
+  parent: WoundBlunt
+  id: Fracture
+  name: fracture
+  components:
+  - type: TraumaInflicter
+    severityThreshold: 0
+    traumasChances:
+      Dismemberment: -0.1
+      OrganDamage: 0.2
+      BoneDamage: 0.9
+      VeinsDamage: 0
+    mangledMultipliers:
+      BoneDamage: 1.2
+
+- type: entity
+  parent: WoundBase
+  id: Piercing
+  components:
+  - type: Wound
+    damageType: Piercing
+    scarWound: PiercingScar
+    mangleSeverity: Severe
+    textString: Pierce
+  - type: TraumaInflicter
+    severityThreshold: 12
+    allowedTraumas:
+    - Dismemberment
+    - OrganDamage
+    - BoneDamage
+    - VeinsDamage
+    allowArmourDeduction:
+    - Dismemberment
+    - OrganDamage
+    - BoneDamage
+    - VeinsDamage
+    traumasChances:
+      Dismemberment: -0.3
+      OrganDamage: 0.08
+      BoneDamage: 0.14
+      VeinsDamage: -0.4
+    mangledMultipliers:
+      BoneDamage: 0.1
+  - type: BleedInflicter
+    severityThreshold: 9
+    scalingSpeed: 0.5
+
+- type: entity
+  parent: Piercing
+  id: Puncture
+  name: puncture
+  components:
+  - type: TraumaInflicter
+    severityThreshold: 0
+    traumasChances:
+      Dismemberment: -0.1
+      OrganDamage: 0.12
+      BoneDamage: 0.2
+      VeinsDamage: -0.2
+    mangledMultipliers:
+      BoneDamage: 0.2
+  - type: BleedInflicter
+    severityThreshold: 0
+    scalingSpeed: 0.8
+
+- type: entity
+  parent: WoundBase
+  id: Ballistic
+  components:
+  - type: Wound
+    damageType: Ballistic
+    scarWound: PiercingScar
+    mangleSeverity: Severe
+    textString: Ballistic
+  - type: TraumaInflicter
+    severityThreshold: 12
+    allowedTraumas:
+    - OrganDamage
+    - BoneDamage
+    - VeinsDamage
+    allowArmourDeduction:
+    - OrganDamage
+    - BoneDamage
+    - VeinsDamage
+    traumasChances:
+      Dismemberment: -0.3
+      OrganDamage: 0.08
+      BoneDamage: 0.14
+      VeinsDamage: -0.4
+    mangledMultipliers:
+      BoneDamage: 0.1
+  - type: BleedInflicter
+    severityThreshold: 9
+    scalingSpeed: 0.5
+
+- type: entity
+  parent: WoundBase
+  id: Slash
+  components:
+  - type: Wound
+    damageType: Slash
+    scarWound: SlashScar
+    mangleSeverity: Severe
+    textString: Slash
+  - type: TraumaInflicter
+    severityThreshold: 9
+    allowedTraumas:
+    - Dismemberment
+    - VeinsDamage
+    allowArmourDeduction:
+    - Dismemberment
+    - VeinsDamage
+    traumasChances:
+      Dismemberment: 0.1
+      OrganDamage: 0
+      BoneDamage: 0
+      VeinsDamage: 0.27
+    mangledMultipliers:
+      BoneDamage: 0.2
+  - type: BleedInflicter
+    scalingSpeed: 1.7
+
+- type: entity
+  parent: Slash
+  id: Laceration
+  name: laceration
+  components:
+  - type: TraumaInflicter
+    severityThreshold: 0
+    traumasChances:
+      Dismemberment: 0.3
+      OrganDamage: 0
+      BoneDamage: 0
+      VeinsDamage: 0.4
+    mangledMultipliers:
+      BoneDamage: 0.3
+  - type: BleedInflicter
+    scalingSpeed: 2
+
+- type: entity
+  parent: WoundBase
+  id: Heat
+  components:
+  - type: Wound
+    damageType: Heat
+    scarWound: BurnScar
+    textString: Burn
+  - type: TraumaInflicter
+    severityThreshold: 17
+    allowedTraumas:
+    - OrganDamage
+    - VeinsDamage
+    allowArmourDeduction:
+    - OrganDamage
+    - VeinsDamage
+    traumasChances:
+      Dismemberment: 0
+      OrganDamage: -0.12
+      BoneDamage: 0
+      VeinsDamage: 0.34
+  - type: BleedRemover
+    severityThreshold: 3
+
+- type: entity
+  parent: Heat
+  id: Burns
+  name: burns
+  components:
+  - type: TraumaInflicter
+    severityThreshold: 0
+    traumasChances:
+      Dismemberment: 0
+      OrganDamage: -0.1
+      BoneDamage: 0
+      VeinsDamage: 0.45
+
+- type: entity
+  parent: WoundBase
+  id: Ion
+  categories: [HideSpawnMenu]
+  components:
+  - type: Wound
+    damageType: Ion
+    scarWound: BurnScar
+  - type: TraumaInflicter
+    severityThreshold: 0
+    allowedTraumas: []
+    traumasChances:
+      Dismemberment: 0
+      OrganDamage: 0
+      BoneDamage: 0
+      VeinsDamage: 0
+
+- type: entity
+  parent: WoundBase
+  id: Cold
+  components:
+  - type: Wound
+    damageType: Cold
+    scarWound: BurnScar
+    textString: Cold
+  - type: TraumaInflicter
+    severityThreshold: 12
+    allowedTraumas:
+    - VeinsDamage
+    traumasChances:
+      Dismemberment: 0
+      OrganDamage: 0
+      BoneDamage: 0
+      VeinsDamage: 0.5
+
+- type: entity
+  parent: WoundBase
+  id: Holy
+  components:
+  - type: Wound
+    damageType: Holy
+    textString: Holy
+  - type: TraumaInflicter
+    severityThreshold: 0
+    allowedTraumas: []
+    traumasChances:
+      Dismemberment: 0
+      OrganDamage: 0
+      BoneDamage: 0
+      VeinsDamage: 0
+
+- type: entity
+  parent: WoundBase
+  id: Shock
+  components:
+  - type: Wound
+    damageType: Shock
+    scarWound: BurnScar
+    textString: Shock
+  - type: TraumaInflicter
+    severityThreshold: 9
+    allowedTraumas:
+    - OrganDamage
+    - VeinsDamage
+    traumasChances:
+      Dismemberment: 0
+      OrganDamage: 0
+      BoneDamage: 0
+      VeinsDamage: 0.34
+
+- type: entity
+  parent: WoundBase
+  id: Cellular
+  components:
+  - type: Wound
+    damageType: Cellular
+    scarWound: BurnScar
+  - type: TraumaInflicter
+    severityThreshold: 0
+    allowedTraumas:
+    - OrganDamage
+    - BoneDamage
+    - VeinsDamage
+    traumasChances:
+      Dismemberment: 0
+      OrganDamage: 0
+      BoneDamage: 0
+      VeinsDamage: 0.17
+
+- type: entity
+  parent: WoundBase
+  id: Caustic
+  components:
+  - type: Wound
+    damageType: Caustic
+    scarWound: BurnScar
+    textString: Caustic
+  - type: TraumaInflicter
+    severityThreshold: 12
+    allowedTraumas:
+    - VeinsDamage
+    traumasChances:
+      Dismemberment: 0
+      OrganDamage: 0
+      BoneDamage: 0
+      VeinsDamage: 0.5
+
+- type: entity
+  parent: WoundBase
+  id: Radiation
+  components:
+  - type: Wound
+    damageType: Radiation
+    scarWound: RadiationScar
+  - type: TraumaInflicter
+    severityThreshold: 11
+    allowedTraumas:
+    - OrganDamage
+    - VeinsDamage
+    allowArmourDeduction:
+    - OrganDamage
+    traumasChances:
+      Dismemberment: 0
+      OrganDamage: 0.34
+      BoneDamage: 0
+      VeinsDamage: 0.34
+
+- type: entity
+  parent: WoundBase
+  id: Poison
+  components:
+  - type: Wound
+    damageType: Poison
+  - type: TraumaInflicter
+    severityThreshold: 7
+    allowedTraumas:
+    - OrganDamage
+    - VeinsDamage
+    traumasChances:
+      Dismemberment: 0
+      OrganDamage: -0.34
+      BoneDamage: 0
+      VeinsDamage: 0.12
+
+- type: entity
+  id: BoneDamage
+  components:
+  - type: Trauma
+    traumaType: BoneDamage
+    blocksHealing: true
+
+- type: entity
+  id: OrganDamage
+  components:
+  - type: Trauma
+    traumaType: OrganDamage
+    blocksHealing: true
+
+- type: entity
+  id: VeinsDamage
+  components:
+  - type: Trauma
+    traumaType: VeinsDamage
+
+- type: entity
+  id: Dismemberment
+  components:
+  - type: Trauma
+    traumaType: Dismemberment
+    blocksHealing: true

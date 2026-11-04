@@ -1,0 +1,77 @@
+- type: technology
+  id: AdvancedCybernetics
+  name: research-technology-advanced-cybernetics
+  icon:
+    sprite: _RedStar/Medical/Cybernetics/organs.rsi
+    state: heart-u-on
+  discipline: Experimental
+  tier: 3
+  cost: 15000
+  recipeUnlocks:
+  - UpgradedCyberneticLungs
+  - JawsOfLifeLeftArm
+  - JawsOfLifeRightArm
+  - DexLeftHand
+  - DexRightHand
+  - DiagnosticCyberneticEyes
+  - SecurityCyberneticEyes
+  - MedicalCyberneticEyes
+  technologyPrerequisites:
+  - BasicCybernetics
+
+- type: technology
+  id: BasicCybernetics
+  name: research-technology-basic-cybernetics
+  icon:
+    sprite: _RedStar/Medical/Cybernetics/organs.rsi
+    state: eyes
+  discipline: Experimental
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+  - LeftArmCybernetic
+  - RightArmCybernetic
+  - LeftHandCybernetic
+  - RightHandCybernetic
+  - LeftLegCybernetic
+  - RightLegCybernetic
+  - LeftFootCybernetic
+  - RightFootCybernetic
+  - BasicCyberneticEyes
+  - BasicCyberneticLungs
+  technologyPrerequisites:
+  - BasicAugmentation
+
+- type: technology
+  id: BasicAugmentation
+  name: research-technology-basic-augmentation
+  icon:
+    sprite: _RedStar/Medical/Augments/power.rsi
+    state: cell
+  discipline: Experimental
+  tier: 2
+  cost: 5000
+  technologyPrerequisites:
+  - BasicRobotics
+  recipeUnlocks:
+  - AugmentPowerCellSlotCasing
+  - AugmentRechargerCasing
+
+- type: technology
+  id: ImplantedTools
+  name: research-technology-implanted-tools
+  icon:
+    sprite: _RedStar/Medical/Augments/arm.rsi
+    state: base
+  discipline: Experimental
+  tier: 2
+  cost: 10000
+  technologyPrerequisites:
+  - BasicAugmentation
+  recipeUnlocks:
+  - AugmentToolPanelCasing
+  - AugmentUtilityPanelElectronics
+  - AugmentBotanyPanelElectronics
+  - AugmentSurgeryPanelElectronics
+  - AugmentStrengthCasing
+  - AugmentStrengthElectronics

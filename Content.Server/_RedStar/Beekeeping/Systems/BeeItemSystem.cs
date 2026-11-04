@@ -1,4 +1,7 @@
 using Content.Server._RedStar.Beekeeping.Components;
+using Content.Shared._RedStar.Beekeeping.Components;
+using Content.Shared._RedStar.Beekeeping.Data;
+using Content.Shared._RedStar.Beekeeping.Events;
 using Content.Shared.Body.Systems;
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Events;
@@ -11,9 +14,6 @@ using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
-using Content.Shared._RedStar.Beekeeping.Components;
-using Content.Shared._RedStar.Beekeeping.Data;
-using Content.Shared._RedStar.Beekeeping.Events;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -36,7 +36,6 @@ public sealed partial class BeeItemSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private PlantHolderSystem _plantHolder = default!;
     [Dependency] private PlantTraySystem _plantTray = default!;
-    [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private IGameTiming _timing = default!;
 
@@ -75,7 +74,7 @@ public sealed partial class BeeItemSystem : EntitySystem
             new BeeApplyDoAfterEvent(), ent, target: tray, used: ent)
         {
             BreakOnMove = true,
-            NeedHand = true,
+            NeedHand = true
         });
     }
 

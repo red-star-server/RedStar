@@ -1,0 +1,29 @@
+- type: entity
+  id: BaseSpeciesMobNoCrawl
+  components:
+  - type: CPRTraining
+  - type: MobState
+    allowedStates: !Clear
+    - Alive
+    - SoftCrit
+    - Critical
+    - Dead
+  - type: MobThresholds
+    thresholds: !Clear
+      0: Alive
+      100: SoftCrit
+      150: Critical
+      200: Dead
+
+- type: entity
+  id: MobSkeletonPerson
+  components:
+  - type: MobThresholds
+    thresholds: !Clear
+      0: Alive
+      100: Dead
+
+- type: entity
+  id: CryoPod
+  components:
+  - type: HealthAnalyzer

@@ -39,3 +39,22 @@ tool-quality-digging-tool-name = Shovel
 
 tool-quality-brushing-name = Brushing
 tool-quality-brushing-tool-name = Wire Brush
+
+tool-quality-cauterizing-name = Cauterizing
+tool-quality-cauterizing-tool-name = Cautery
+tool-quality-drilling-name = Drilling
+tool-quality-drilling-tool-name = Drill
+tool-quality-retracting-name = Retracting
+tool-quality-retracting-tool-name = Retractor
+tool-quality-clamping-name = Clamping
+tool-quality-clamping-tool-name = Hemostat
+tool-quality-suturing-name = Suturing
+tool-quality-suturing-tool-name = Sutures
+tool-quality-bone-healing-name = Bone healing
+tool-quality-bone-healing-tool-name = Bone gel
+tool-quality-bone-setting-name = Bone setting
+tool-quality-bone-setting-tool-name = Bone setter
+tool-quality-tending-name = Tending
+tool-quality-tending-tool-name = Hemostat
+tool-quality-manipulating-name = Manipulating
+tool-quality-manipulating-tool-name = Forceps

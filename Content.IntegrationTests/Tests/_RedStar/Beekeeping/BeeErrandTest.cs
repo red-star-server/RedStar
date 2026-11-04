@@ -1,7 +1,11 @@
 #nullable enable
 using Content.IntegrationTests.Fixtures;
+using Content.Server._RedStar.Beekeeping.Components;
 using Content.Server._RedStar.Beekeeping.Systems;
+using Content.Server.Atmos.EntitySystems;
 using Content.Shared._RedStar.Beekeeping.Components;
+using Content.Shared.Atmos;
+using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -25,13 +29,13 @@ public sealed class BeeErrandTest : GameTest
         await server.WaitPost(() =>
         {
             // Breathable air: bees do not fly into vacuum.
-            var air = new Content.Shared.Atmos.GasMixture(Content.Shared.Atmos.Atmospherics.CellVolume)
+            var air = new GasMixture(Atmospherics.CellVolume)
             {
-                Temperature = Content.Shared.Atmos.Atmospherics.T20C,
+                Temperature = Atmospherics.T20C,
             };
-            air.AdjustMoles(Content.Shared.Atmos.Gas.Oxygen, Content.Shared.Atmos.Atmospherics.OxygenMolesStandard);
-            air.AdjustMoles(Content.Shared.Atmos.Gas.Nitrogen, Content.Shared.Atmos.Atmospherics.NitrogenMolesStandard);
-            server.System<Content.Server.Atmos.EntitySystems.AtmosphereSystem>().SetMapAtmosphere(map.MapUid, false, air);
+            air.AdjustMoles(Gas.Oxygen, Atmospherics.OxygenMolesStandard);
+            air.AdjustMoles(Gas.Nitrogen, Atmospherics.NitrogenMolesStandard);
+            server.System<AtmosphereSystem>().SetMapAtmosphere(map.MapUid, false, air);
 
             var mapSystem = server.System<SharedMapSystem>();
             for (var x = 0; x <= 5; x++)
@@ -111,7 +115,7 @@ public sealed class BeeErrandTest : GameTest
         var map = await Pair.CreateTestMap();
         await Build(map);
         var server = Server;
-        var hands = server.System<Content.Shared.Hands.EntitySystems.SharedHandsSystem>();
+        var hands = server.System<SharedHandsSystem>();
         EntityUid bee = default;
         EntityUid user = default;
 
@@ -130,7 +134,7 @@ public sealed class BeeErrandTest : GameTest
             var item = server.EntMan.GetComponent<BeeItemComponent>(bee);
             Assert.Multiple(() =>
             {
-                Assert.That(server.EntMan.HasComponent<Content.Server._RedStar.Beekeeping.Components.BeeErrandComponent>(bee), Is.False,
+                Assert.That(server.EntMan.HasComponent<BeeErrandComponent>(bee), Is.False,
                     "the caught bee left its errand");
                 Assert.That(item.CountedOutside, "it is counted outside its hive");
                 Assert.That(item.SourceHive, Is.EqualTo(_hive));

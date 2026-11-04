@@ -79,6 +79,7 @@ public sealed partial class BlindableSystem : EntitySystem
             return;
 
         blindable.Comp.EyeDamage += amount;
+        UpdateEyeOrganDamage(blindable, amount); // RS14
         UpdateEyeDamage(blindable, true);
     }
 

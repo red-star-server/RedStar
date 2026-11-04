@@ -26,6 +26,7 @@ public sealed partial class MobThresholdsComponent : Component
     {
         {MobState.Alive, "HumanHealth"},
         {MobState.Critical, "HumanCrit"},
+        {MobState.SoftCrit, "HumanCrit"}, // RS14
         {MobState.Dead, "HumanDead"},
     };
 

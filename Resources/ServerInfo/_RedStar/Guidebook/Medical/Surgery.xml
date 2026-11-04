@@ -1,0 +1,41 @@
+<Document>
+# Хирургия
+Хирургические операции позволяют лечить раны, удалять и пересаживать органы и части тела.
+
+## Подготовка
+Пациент должен лежать. По возможности используйте наркоз: операция без него причиняет боль и может усугубить повреждения.
+<Box>
+<GuideEntityEmbed Entity="NitrousOxideTank" Caption="закись азота"/>
+<GuideEntityEmbed Entity="ClothingMaskBreathMedical" Caption="дыхательная маска"/>
+</Box>
+Чтобы не занести загрязнения в рану, наденьте маску и перчатки.
+<Box>
+<GuideEntityEmbed Entity="ClothingMaskSterile" Caption="маска"/>
+<GuideEntityEmbed Entity="ClothingHandsGlovesNitrile" Caption="перчатки"/>
+</Box>
+
+## Инструменты
+Возьмите хирургический инструмент и взаимодействуйте с пациентом. В меню выберите часть тела и операцию; её шаги покажут, какие инструменты нужны дальше.
+<Box>
+<GuideEntityEmbed Entity="Scalpel" Caption="скальпель"/>
+<GuideEntityEmbed Entity="Retractor" Caption="ретрактор"/>
+<GuideEntityEmbed Entity="Hemostat" Caption="гемостат"/>
+<GuideEntityEmbed Entity="Drill" Caption="дрель"/>
+</Box>
+<Box>
+<GuideEntityEmbed Entity="Saw" Caption="пила"/>
+<GuideEntityEmbed Entity="Cautery" Caption="прижигатель"/>
+<GuideEntityEmbed Entity="BoneGel" Caption="костный гель"/>
+</Box>
+
+## Подручные средства
+Некоторые обычные инструменты подходят для хирургии. Значок скальпеля при осмотре показывает, для каких действий и насколько хорошо подходит предмет.
+<Box>
+<GuideEntityEmbed Entity="Welder" Caption="сварочный аппарат"/>
+<GuideEntityEmbed Entity="Wirecutter" Caption="кусачки"/>
+<GuideEntityEmbed Entity="KitchenKnife" Caption="нож"/>
+<GuideEntityEmbed Entity="Crowbar" Caption="лом"/>
+<GuideEntityEmbed Entity="CableApcStack" Caption="низковольтный кабель"/>
+</Box>
+Подручные средства уступают настоящим хирургическим инструментам, но могут выручить в крайнем случае.
+</Document>

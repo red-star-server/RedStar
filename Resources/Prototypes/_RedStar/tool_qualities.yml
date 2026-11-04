@@ -1,0 +1,53 @@
+- type: tool
+  id: Cauterizing
+  name: tool-quality-cauterizing-name
+  toolName: tool-quality-cauterizing-tool-name
+  spawn: Cautery
+
+- type: tool
+  id: Drilling
+  name: tool-quality-drilling-name
+  toolName: tool-quality-drilling-tool-name
+  spawn: Drill
+
+- type: tool
+  id: Retracting
+  name: tool-quality-retracting-name
+  toolName: tool-quality-retracting-tool-name
+  spawn: Retractor
+
+- type: tool
+  id: Clamping
+  name: tool-quality-clamping-name
+  toolName: tool-quality-clamping-tool-name
+  spawn: Hemostat
+
+- type: tool
+  id: Suturing
+  name: tool-quality-suturing-name
+  toolName: tool-quality-suturing-tool-name
+  spawn: MedicalStitches
+
+- type: tool
+  id: BoneHealing
+  name: tool-quality-bone-healing-name
+  toolName: tool-quality-bone-healing-tool-name
+  spawn: BoneGel
+
+- type: tool
+  id: BoneSetting
+  name: tool-quality-bone-setting-name
+  toolName: tool-quality-bone-setting-tool-name
+  spawn: Bonesetter
+
+- type: tool
+  id: Tending
+  name: tool-quality-tending-name
+  toolName: tool-quality-tending-tool-name
+  spawn: Hemostat
+
+- type: tool
+  id: Manipulating
+  name: tool-quality-manipulating-name
+  toolName: tool-quality-manipulating-tool-name
+  spawn: Hemostat
