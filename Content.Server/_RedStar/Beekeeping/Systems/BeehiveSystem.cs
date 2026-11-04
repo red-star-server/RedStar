@@ -1,16 +1,15 @@
-using Content.Server.Atmos.EntitySystems;
 using Content.Server._RedStar.Beekeeping.Events;
-using Content.Shared.Atmos;
-using Content.Shared.Audio;
-using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Destructible;
-using Content.Shared.Examine;
+using Content.Server.Atmos.EntitySystems;
 using Content.Shared._RedStar.Beekeeping;
 using Content.Shared._RedStar.Beekeeping.Components;
 using Content.Shared._RedStar.Beekeeping.Data;
 using Content.Shared._RedStar.Beekeeping.Systems;
 using Content.Shared._RedStar.Beekeeping.Visuals;
+using Content.Shared.Atmos;
+using Content.Shared.Audio;
+using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Destructible;
+using Content.Shared.Examine;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
@@ -691,23 +690,11 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
     private Color GetCombColor(BeeFrameComponent frame)
     {
         var honey = Math.Max(frame.Combs, 1) * frame.HoneyPerComb;
-        var r = frame.HoneyColor.R * honey;
-        var g = frame.HoneyColor.G * honey;
-        var b = frame.HoneyColor.B * honey;
-        var total = honey;
-        foreach (var (reagent, quantity) in frame.Payload.Contents)
-        {
-            if (!Proto.TryIndex<ReagentPrototype>(reagent.Prototype, out var proto))
-                continue;
+        if (frame.Payload.Volume <= 0)
+            return frame.HoneyColor;
 
-            var amount = quantity.Float();
-            r += proto.SubstanceColor.R * amount;
-            g += proto.SubstanceColor.G * amount;
-            b += proto.SubstanceColor.B * amount;
-            total += amount;
-        }
-
-        return new Color(r / total, g / total, b / total);
+        var payloadShare = frame.Payload.Volume.Float() / (honey + frame.Payload.Volume.Float());
+        return Color.InterpolateBetween(frame.HoneyColor, frame.Payload.GetColor(Proto), payloadShare);
     }
 
     #endregion

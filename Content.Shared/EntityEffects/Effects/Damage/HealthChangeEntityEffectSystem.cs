@@ -1,3 +1,9 @@
+// RS14-start
+using Content.Shared._Trauma.Common.Damage;
+using Content.Shared._Trauma.Common.EntityEffects;
+using Content.Shared._Trauma.Common.Targeting;
+using Content.Shared.Temperature.Components;
+// RS14-end
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
@@ -23,11 +29,31 @@ public sealed partial class HealthChangeEntityEffectSystem : EntityEffectSystem<
 
         damageSpec *= args.Scale;
 
+        // RS14-start
+        if (args.Effect.ScaleByTemperature is { } scaleTemp)
+        {
+            damageSpec *= TryComp<TemperatureComponent>(entity, out var temp)
+                ? scaleTemp.GetEfficiencyMultiplier(temp.Temperature, false)
+                : FixedPoint2.Zero;
+        }
+
+        var ev = new OnHealthChangeEvent(damageSpec);
+        RaiseLocalEvent(entity, ref ev);
+        damageSpec = ev.Damage;
+        // RS14-end
+
         _damageable.TryChangeDamage(
                 entity.AsNullable(),
                 damageSpec,
                 args.Effect.IgnoreResistances,
-                interruptsDoAfters: false);
+                // RS14-start
+                interruptsDoAfters: false,
+                origin: args.User, // Trauma - without this the user's targeting is never used
+                targetPart: args.Effect.UseTargeting ? args.Effect.TargetPart : null,
+                ignoreBlockers: args.Effect.IgnoreBlockers,
+                splitDamage: args.Effect.SplitDamage,
+                increaseOnly: args.Effect.IncreaseOnly); // Trauma
+                // RS14-end
     }
 }
 
@@ -45,6 +71,29 @@ public sealed partial class HealthChange : EntityEffectBase<HealthChange>
     /// </summary>
     [DataField]
     public bool IgnoreResistances = true;
+
+    // RS14-start
+    /// <summary>
+    /// How to scale the effect based on the temperature of the target entity.
+    /// </summary>
+    [DataField]
+    public TemperatureScaling? ScaleByTemperature;
+
+    [DataField]
+    public SplitDamageBehavior SplitDamage = SplitDamageBehavior.SplitEnsureAllOrganic;
+
+    [DataField]
+    public bool UseTargeting = true;
+
+    [DataField]
+    public TargetBodyPart TargetPart = TargetBodyPart.All;
+
+    [DataField]
+    public bool IgnoreBlockers = true;
+
+    [DataField]
+    public bool IncreaseOnly;
+    // RS14-end
 
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         {

@@ -1,6 +1,6 @@
 ent-BaseAirlockIndestructible = шлюз
     .desc = Он открывается, он закрывается и он может вас раздавить.
-ent-Airlock = шлюз
+ent-Airlock = { ent-BaseAirlockIndestructible }
     .desc = Он открывается, он закрывается и он может вас раздавить.
 ent-AirlockRCDResistant = { ent-Airlock }
     .desc = { ent-Airlock.desc }

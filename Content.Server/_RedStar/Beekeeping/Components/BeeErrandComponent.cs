@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server._RedStar.Beekeeping.Data;
 using Content.Server._RedStar.Beekeeping.Systems;
 using Robust.Shared.Map;
@@ -92,10 +93,10 @@ public sealed partial class BeeErrandComponent : Component
     /// of it: its world positions at both ends, and when the glide is over.
     /// </summary>
     [ViewVariables]
-    public System.Numerics.Vector2? GlideFrom;
+    public Vector2? GlideFrom;
 
     [ViewVariables]
-    public System.Numerics.Vector2 GlideTo;
+    public Vector2 GlideTo;
 
     [ViewVariables]
     public TimeSpan GlideStart;

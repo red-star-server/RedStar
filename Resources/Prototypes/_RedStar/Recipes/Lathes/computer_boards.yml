@@ -1,0 +1,4 @@
+- type: latheRecipe
+  parent: [ BaseGoldCircuitboardRecipe, BaseResearchComputerRecipeCategory ]
+  id: ResearchPointDiskTerminalCircuitboard
+  result: ResearchPointDiskTerminalCircuitboard

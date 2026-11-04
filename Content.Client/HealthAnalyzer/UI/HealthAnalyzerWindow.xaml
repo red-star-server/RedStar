@@ -1,7 +1,7 @@
 <controls:FancyWindow
     xmlns="https://spacestation14.io"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-    xmlns:ui="clr-namespace:Content.Client.HealthAnalyzer.UI"
+    xmlns:ui="clr-namespace:Content.Client._Trauma.Medical.UI"
     MaxHeight="525"
     MinWidth="300">
     <ScrollContainer
@@ -9,6 +9,7 @@
         Margin="5 5 5 5"
         ReturnMeasure="True"
         VerticalExpand="True">
-        <ui:HealthAnalyzerControl Name="HealthAnalyzer"/>
+        <!-- RS14: use the Trauma medical interface. -->
+        <ui:TraumaHealthAnalyzerControl Name="HealthAnalyzer"/>
     </ScrollContainer>
 </controls:FancyWindow>

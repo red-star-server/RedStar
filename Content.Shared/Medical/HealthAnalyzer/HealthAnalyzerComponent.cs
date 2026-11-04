@@ -43,6 +43,11 @@ public sealed partial class HealthAnalyzerComponent : Component
     [DataField, AutoNetworkedField]
     public EntityUid? ScannedEntity;
 
+    // RS14-start
+    [DataField, AutoNetworkedField]
+    public EntityUid? CurrentBodyPart;
+
+    // RS14-end
     /// <summary>
     /// The maximum range in tiles at which the analyzer can receive continuous updates, a value of null will be infinite range.
     /// </summary>

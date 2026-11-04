@@ -1,9 +1,9 @@
 using Content.Server._RedStar.Beekeeping.Data;
-using Content.Shared.Botany.Components;
-using Content.Shared.Whitelist;
 using Content.Shared._RedStar.Beekeeping.Components;
 using Content.Shared._RedStar.Beekeeping.Data;
 using Content.Shared._RedStar.Beekeeping.Systems;
+using Content.Shared.Botany.Components;
+using Content.Shared.Whitelist;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 
@@ -144,7 +144,7 @@ public sealed partial class BeeScoutSystem
         {
             BeeSourceCheck.Ripe => ApiaryTrayState.Ripe,
             BeeSourceCheck.Unripe => ApiaryTrayState.Growing,
-            _ => ApiaryTrayState.Blind,
+            _ => ApiaryTrayState.Blind
         };
     }
 

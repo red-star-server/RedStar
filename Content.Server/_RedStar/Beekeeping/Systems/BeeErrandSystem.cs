@@ -1,26 +1,22 @@
-using Content.Server.Audio;
-using Content.Server.NPC.HTN;
-using Content.Server.NPC.Systems;
+using System.Numerics;
 using Content.Server._RedStar.Beekeeping.Components;
 using Content.Server._RedStar.Beekeeping.Data;
 using Content.Server._RedStar.Beekeeping.Events;
-using Content.Shared.Damage.Systems;
-using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Interaction;
-using Content.Shared.Mobs;
+using Content.Server.Audio;
+using Content.Server.NPC.HTN;
+using Content.Server.NPC.Systems;
+using Content.Shared._RedStar.Beekeeping.Components;
+using Content.Shared._RedStar.Beekeeping.Data;
+using Content.Shared._RedStar.Beekeeping.Visuals;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Tools.Systems;
-using Content.Shared._RedStar.Beekeeping.Components;
-using Content.Shared._RedStar.Beekeeping.Data;
-using Content.Shared._RedStar.Beekeeping.Visuals;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
-using Robust.Shared.Random;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -38,7 +34,6 @@ public sealed partial class BeeErrandSystem : EntitySystem
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private SharedContainerSystem _container = default!;
-    [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private BeehiveSystem _hive = default!;
     [Dependency] private HTNSystem _htn = default!;
     [Dependency] private NPCSystem _npc = default!;
@@ -46,7 +41,6 @@ public sealed partial class BeeErrandSystem : EntitySystem
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private BeeQueenSystem _queen = default!;
-    [Dependency] private IRobustRandom _random = default!;
     [Dependency] private BeeScoutSystem _scout = default!;
     [Dependency] private MovementSpeedModifierSystem _speed = default!;
     [Dependency] private IGameTiming _timing = default!;
@@ -97,7 +91,7 @@ public sealed partial class BeeErrandSystem : EntitySystem
 
             var total = (errand.GlideEnd - errand.GlideStart).TotalSeconds;
             var progress = total > 0 ? (float) Math.Clamp((now - errand.GlideStart).TotalSeconds / total, 0, 1) : 1f;
-            _transform.SetWorldPosition(uid, System.Numerics.Vector2.Lerp(from, errand.GlideTo, progress));
+            _transform.SetWorldPosition(uid, Vector2.Lerp(from, errand.GlideTo, progress));
             if (progress >= 1f)
                 errand.GlideFrom = null;
         }
@@ -230,7 +224,7 @@ public sealed partial class BeeErrandSystem : EntitySystem
 
         // It stops where it is to act: nothing steers it until the next stop is planned, and a flying body keeps
         // drifting.
-        _physics.SetLinearVelocity(uid, System.Numerics.Vector2.Zero);
+        _physics.SetLinearVelocity(uid, Vector2.Zero);
 
         var bee = new Entity<BeeErrandComponent>(uid, errand);
         if (errand.Stage == BeeErrandStage.Out)
@@ -338,7 +332,7 @@ public sealed partial class BeeErrandSystem : EntitySystem
                 return NextPipeStep(bee);
             case BeeErrandAct.Enter:
                 EnterHive(bee);
-                return HTNOperatorStatus.Finished;
+                break;
         }
 
         return HTNOperatorStatus.Finished;

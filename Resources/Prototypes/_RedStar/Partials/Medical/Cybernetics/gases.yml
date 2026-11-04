@@ -1,0 +1,738 @@
+- type: reagent
+  id: Oxygen
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:Oxygenate
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Human
+          - Animal
+          - Rat
+          - Plant
+          - Arachnid
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+      - !type:ModifyLungGas
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Vox
+          inverted: true
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+        ratios:
+          CarbonDioxide: 1.0
+          Oxygen: -1.0
+      - !type:HealthChange
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Vox
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+        ignoreResistances: true
+        damage:
+          types:
+            Poison: 1.5
+      - !type:AdjustAlert
+        alertType: Toxins
+        minScale: 1
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Vox
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+        clear: true
+        time: 5
+      - !type:Oxygenate
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+      - !type:ModifyLungGas
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+        ratios:
+          CarbonDioxide: 0.5
+          Oxygen: -0.5
+    Respiration:
+      effects:
+      - !type:Oxygenate
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Human
+          - Animal
+          - Rat
+          - Plant
+          - Arachnid
+          - Moth
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+      - !type:ModifyLungGas
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Vox
+          inverted: true
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+        ratios:
+          CarbonDioxide: 1.0
+          Oxygen: -1.0
+      - !type:HealthChange
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Vox
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+        ignoreResistances: true
+        damage:
+          types:
+            Poison: 0.7
+      - !type:AdjustAlert
+        alertType: Toxins
+        minScale: 0.5
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Vox
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+        clear: true
+        time: 5
+      - !type:Oxygenate
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+      - !type:ModifyLungGas
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+        ratios:
+          CarbonDioxide: 0.5
+          Oxygen: -0.5
+
+- type: reagent
+  id: Plasma
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1.5
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+      - !type:AdjustReagent
+        reagent: Inaprovaline
+        amount: -2.0
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+        reagent: Inaprovaline
+        amount: -2.0
+    Respiration:
+      effects:
+      - !type:HealthChange
+        ignoreResistances: true
+        damage:
+          types:
+            Poison: 0.1
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+      - !type:AdjustAlert
+        alertType: Toxins
+        minScale: 1.5
+        clear: true
+        time: 5
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+      - !type:AdjustAlert
+        alertType: Toxins
+        conditions:
+        - !type:ReagentCondition
+          reagent: Plasma
+          min: 1.5
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+        minScale: 1.5
+        clear: true
+        time: 5
+      - !type:HealthChange
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+        ignoreResistances: true
+        damage:
+          types:
+            Poison: 0.5
+
+- type: reagent
+  id: Tritium
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Radiation: 1.5
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+      - !type:HealthChange
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+        damage:
+          types:
+            Radiation: 1.5
+    Respiration:
+      effects:
+      - !type:HealthChange
+        ignoreResistances: true
+        damage:
+          types:
+            Radiation: 1
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+      - !type:AdjustAlert
+        alertType: Toxins
+        minScale: 1.5
+        clear: true
+        time: 5
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+      - !type:AdjustAlert
+        alertType: Toxins
+        minScale: 1.5
+        clear: true
+        time: 5
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+      - !type:HealthChange
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+        ignoreResistances: true
+        damage:
+          types:
+            Radiation: 0.5
+
+- type: reagent
+  id: CarbonDioxide
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:Oxygenate
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Plant
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+      - !type:HealthChange
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Plant
+          - Vox
+          inverted: true
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+        ignoreResistances: true
+        damage:
+          types:
+            Poison: 0.4
+      - !type:Oxygenate
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Plant
+          inverted: true
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+        factor: -4
+    Respiration:
+      effects:
+      - !type:Oxygenate
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Plant
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+      - !type:HealthChange
+        minScale: 0.5
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Plant
+          - Vox
+          inverted: true
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+        ignoreResistances: true
+        damage:
+          types:
+            Poison: 0.8
+      - !type:Oxygenate
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Plant
+          inverted: true
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+        factor: -4
+
+- type: reagent
+  id: Nitrogen
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Cold: 0.5
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+      - !type:HealthChange
+        damage:
+          types:
+            Cold: 0.5
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+    Respiration:
+      effects:
+      - !type:Oxygenate
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Vox
+          - Slime
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+      - !type:ModifyLungGas
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Vox
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+        ratios:
+          Ammonia: 1.0
+          Nitrogen: -1.0
+      - !type:ModifyLungGas
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Slime
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+        ratios:
+          NitrousOxide: 1.0
+          Nitrogen: -1.0
+      - !type:Oxygenate
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+      - !type:ModifyLungGas
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+        ratios:
+          NitrousOxide: 0.5
+          Nitrogen: -0.5
+
+- type: reagent
+  id: NitrousOxide
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+    Respiration:
+      effects:
+      - !type:Emote
+        minScale: 0.2
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Slime
+          inverted: true
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+        emote: Laugh
+        probability: 0.1
+      - !type:Emote
+        minScale: 0.2
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Slime
+          inverted: true
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+        emote: Scream
+        probability: 0.01
+      - !type:PopupMessage
+        minScale: 0.5
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Slime
+          inverted: true
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+        type: Local
+        visualType: Medium
+        messages:
+        - effect-sleepy
+        probability: 0.1
+      - !type:MovementSpeedModifier
+        minScale: 1
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Slime
+          inverted: true
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+        walkSpeedModifier: 0.65
+        sprintSpeedModifier: 0.65
+      - !type:ModifyStatusEffect
+        minScale: 1.8
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Slime
+          inverted: true
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+        effectProto: StatusEffectForcedSleeping
+        time: 3
+        type: Update
+      - !type:HealthChange
+        minScale: 3.5
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Slime
+          inverted: true
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+        ignoreResistances: true
+        scaling: true
+        damage:
+          types:
+            Poison: 1
+
+- type: reagent
+  id: Frezon
+  metabolisms: !Clear
+    Bloodstream:
+      effects:
+      - !type:HealthChange
+        ignoreResistances: true
+        damage:
+          types:
+            Cellular: 0.5
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
+        type: Add
+        time: 15
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+      - !type:Drunk
+        boozePower: 15
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+      - !type:PopupMessage
+        type: Local
+        messages:
+        - frezon-lungs-cold
+        probability: 0.1
+        minScale: 1
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - frezon-euphoric
+        probability: 0.1
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+        minScale: 2
+      - !type:HealthChange
+        ignoreResistances: true
+        damage:
+          types:
+            Cellular: 0.5
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
+        type: Add
+        time: 15
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+      - !type:Drunk
+        boozePower: 15
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+      - !type:PopupMessage
+        type: Local
+        messages:
+        - frezon-lungs-cold
+        probability: 0.1
+        minScale: 1
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - frezon-euphoric
+        probability: 0.1
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+        minScale: 2
+    Respiration:
+      effects:
+      - !type:HealthChange
+        minScale: 0.5
+        ignoreResistances: true
+        damage:
+          types:
+            Cellular: 0.05
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+      - !type:ModifyStatusEffect
+        minScale: 1
+        effectProto: StatusEffectSeeingRainbow
+        type: Add
+        time: 500
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+      - !type:Drunk
+        boozePower: 500
+        minScale: 1
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+      - !type:PopupMessage
+        type: Local
+        messages:
+        - frezon-lungs-cold
+        probability: 0.1
+        minScale: 1
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - frezon-euphoric
+        probability: 0.1
+        minScale: 1
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          inverted: true
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Frezon
+          min: 0.5
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+        minScale: 1
+        ignoreResistances: true
+        damage:
+          types:
+            Cellular: 0.025
+      - !type:ModifyStatusEffect
+        minScale: 1
+        effectProto: StatusEffectSeeingRainbow
+        type: Add
+        time: 500
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+      - !type:Drunk
+        boozePower: 500
+        minScale: 1
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+      - !type:PopupMessage
+        type: Local
+        messages:
+        - frezon-lungs-cold
+        probability: 0.1
+        minScale: 1
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - frezon-euphoric
+        probability: 0.1
+        minScale: 1
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic

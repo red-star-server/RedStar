@@ -1,2 +1,2 @@
-ent-HandheldGeneticAnalyzer = генетический анализатор
+ent-HandheldGeneticAnalyzer = анализатор генов
     .desc = Ручной сканер для определения генов организма и генетической нагрузки.

@@ -89,6 +89,7 @@ ui-options-hud-theme-clockwork = Clockwork
 ui-options-hud-theme-retro = Retro
 ui-options-hud-theme-minimalist = Minimalist
 ui-options-hud-theme-ashen = Ashen
+ui-options-hud-theme-trasen = Trasen-Knox
 ui-options-hud-layout-default = Default
 ui-options-hud-layout-separated = Separated
 ui-options-vp-stretch = Stretch viewport to fit game window
@@ -110,7 +111,12 @@ ui-options-vp-low-res = Low-resolution viewport
 ui-options-parallax-low-quality = Low-quality Parallax (background)
 ui-options-ambient-occlusion = Show Ambient Occlusion
 ## RS14-start
-ui-options-light-atmosphere = Atmospheric lighting
+ui-options-light-bloom = Fixture glow
+ui-options-light-bloom-strength = Glow intensity:
+ui-options-dark-ambient = Warm shadows
+ui-options-dark-ambient-strength = Shadow grading intensity:
+ui-options-dark-ambient-shadow-depth = Shadow depth:
+ui-options-dark-ambient-warmth = Shadow warmth:
 ## RS14-end
 ui-options-fps-counter = Show FPS counter
 ui-options-vp-width = Viewport width:

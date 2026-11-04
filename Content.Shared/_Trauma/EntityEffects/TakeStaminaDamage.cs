@@ -1,0 +1,52 @@
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
+using Content.Shared.EntityEffects;
+using Robust.Shared.Prototypes;
+
+namespace Content.Shared._Trauma.EntityEffects;
+
+public sealed partial class TakeStaminaDamage : EntityEffectBase<TakeStaminaDamage>
+{
+    /// <summary>
+    /// How much stamina damage to take.
+    /// </summary>
+    [DataField]
+    public int Amount = 10;
+
+    /// <summary>
+    /// Whether stamina damage should be applied immediately
+    /// </summary>
+    [DataField]
+    public bool Immediate;
+
+    /// <summary>
+    /// Should this ignore stam resistances
+    /// </summary>
+    [DataField]
+    public bool IgnoreResist;
+
+    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        => Loc.GetString("reagent-effect-guidebook-deal-stamina-damage",
+            ("immediate", Immediate),
+            ("amount", MathF.Abs(Amount)),
+            ("chance", Probability),
+            ("deltasign", MathF.Sign(Amount)));
+}
+
+public sealed partial class TakeStaminaDamageSystem : EntityEffectSystem<StaminaComponent, TakeStaminaDamage>
+{
+    [Dependency] private SharedStaminaSystem _stamina = default!;
+
+    protected override void Effect(Entity<StaminaComponent> ent, ref EntityEffectEvent<TakeStaminaDamage> args)
+    {
+        var amount = args.Effect.Amount * args.Scale;
+        var immediate = args.Effect.Immediate;
+        var ignoreResist = args.Effect.IgnoreResist;
+        _stamina.TakeStaminaDamage(ent.Owner,
+            amount,
+            ent.Comp,
+            visual: false,
+            ignoreResist: ignoreResist,
+            immediate: immediate);
+    }
+}

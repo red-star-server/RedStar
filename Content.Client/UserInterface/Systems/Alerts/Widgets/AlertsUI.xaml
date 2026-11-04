@@ -1,7 +1,12 @@
 <widgets:AlertsUI xmlns="https://spacestation14.io"
                   xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Alerts.Widgets"
                   MinSize="64 64">
-    <PanelContainer HorizontalAlignment="Right" VerticalAlignment="Top">
-        <BoxContainer Name="AlertContainer" Access="Public" Orientation="Vertical" />
-    </PanelContainer>
+    <!-- RS14-start -->
+    <BoxContainer Orientation="Vertical">
+        <PanelContainer HorizontalAlignment="Right" VerticalAlignment="Top">
+            <BoxContainer Name="AlertContainer" Access="Public" Orientation="Vertical" />
+        </PanelContainer>
+        <Control Name="PartStatus" Access="Public"/>
+    </BoxContainer>
+    <!-- RS14-end -->
 </widgets:AlertsUI>

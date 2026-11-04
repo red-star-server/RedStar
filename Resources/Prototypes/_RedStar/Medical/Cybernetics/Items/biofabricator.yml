@@ -1,0 +1,50 @@
+- type: entity
+  parent: BaseLathe
+  id: MedicalBiofabricator
+  name: medical biofabricator
+  description: Produces organs and other organic matter that can be surgically grafted onto patients with biomass.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Medical/Cybernetics/limbgrower.rsi
+    snapCardinals: true
+    layers:
+    - state: limbgrower_idleoff
+      map:
+      - "enum.LatheVisualLayers.IsRunning"
+#    - state: limbgrower_idleoff
+#      shader: unshaded
+#      map: ["enum.PowerDeviceVisualLayers.Powered"]
+#    - state: inserting
+#      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+#    - state: panel
+#      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Machine
+    board: MedicalBiofabMachineBoard
+  - type: MaterialStorage
+    whitelist:
+      tags:
+      - Sheet
+      - RawMaterial
+  - type: Lathe
+    idleState: limbgrower_idleoff
+    runningState: limbgrower_idleon
+    staticPacks:
+    - BiofabPartsStatic
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: MedicalBiofabMachineBoard
+  name: medical biofab machine board
+  description: A machine printed circuit board for a medical biofab.
+  components:
+  - type: Sprite
+    state: medical
+  - type: MachineBoard
+    prototype: MedicalBiofabricator
+    stackRequirements:
+      Manipulator: 4
+
+- type: latheRecipe
+  parent: BaseGoldCircuitboardRecipe
+  id: MedicalBiofabMachineBoard
+  result: MedicalBiofabMachineBoard

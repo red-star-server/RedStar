@@ -8,5 +8,5 @@ public enum ApiaryScanKind : byte
     Hive,
     Queen,
     Scout,
-    Pollinator,
+    Pollinator
 }

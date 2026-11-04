@@ -39,3 +39,22 @@ tool-quality-digging-tool-name = Лопата
 
 tool-quality-brushing-name = Оттирание
 tool-quality-brushing-tool-name = Проволочная щётка
+
+tool-quality-cauterizing-name = Прижигание
+tool-quality-cauterizing-tool-name = Каутер
+tool-quality-drilling-name = Сверление
+tool-quality-drilling-tool-name = Дрель
+tool-quality-retracting-name = Разведение тканей
+tool-quality-retracting-tool-name = Ретрактор
+tool-quality-clamping-name = Пережатие сосудов
+tool-quality-clamping-tool-name = Гемостат
+tool-quality-suturing-name = Наложение швов
+tool-quality-suturing-tool-name = Шовный материал
+tool-quality-bone-healing-name = Сращивание костей
+tool-quality-bone-healing-tool-name = Костный гель
+tool-quality-bone-setting-name = Вправление костей
+tool-quality-bone-setting-tool-name = Костоправ
+tool-quality-tending-name = Обработка тканей
+tool-quality-tending-tool-name = Гемостат
+tool-quality-manipulating-name = Манипуляция тканями
+tool-quality-manipulating-tool-name = Пинцет

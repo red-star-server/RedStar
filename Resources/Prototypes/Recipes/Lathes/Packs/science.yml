@@ -75,7 +75,7 @@
   - AutolatheHyperConvectionMachineCircuitboard
   - ProtolatheHyperConvectionMachineCircuitboard
   - CircuitImprinterHyperConvectionMachineCircuitboard
-  - TechDiskComputerCircuitboard
+  - ResearchPointDiskTerminalCircuitboard # RS14
   # RS14-start - Moved to SharedBoards.
   # - FlatpackerMachineCircuitboard
   # - SheetifierMachineCircuitboard

@@ -190,6 +190,12 @@ public sealed partial class ChatSystem : SharedChatSystem
             message = message[1..];
         }
 
+        // RS14-start
+        var typeEv = new SpeechTypeOverrideEvent(desiredType);
+        RaiseLocalEvent(source, ref typeEv);
+        desiredType = typeEv.DesiredType;
+        // RS14-end
+
         bool shouldCapitalize = (desiredType != InGameICChatType.Emote);
         bool shouldPunctuate = _configurationManager.GetCVar(CCVars.ChatPunctuation);
         // Capitalizing the word I only happens in English, so we check language here

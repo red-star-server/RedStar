@@ -1,11 +1,10 @@
 using System.Numerics;
 using Content.Server._RedStar.Beekeeping.Components;
 using Content.Server._RedStar.Beekeeping.Data;
-using Content.Shared.Botany.Components;
-using Content.Shared.Physics;
-using Content.Shared.Storage.Components;
 using Content.Shared._RedStar.Beekeeping.Components;
 using Content.Shared._RedStar.Beekeeping.Systems;
+using Content.Shared.Physics;
+using Content.Shared.Storage.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -259,8 +258,11 @@ public sealed partial class BeeScoutSystem : EntitySystem
         // Not the first hit the query returns: that is not always the nearest one.
         var ray = new CollisionRay(from.Position, direction, (int) CollisionGroup.FlyingMobMask);
         var free = maxLength;
-        foreach (var hit in _physics.IntersectRayWithPredicate(from.MapId, ray, maxLength,
-                     uid => uid == ignoreA || uid == ignoreB || uid == shellA || uid == shellB, returnOnFirstHit: false))
+        var ignored = (ignoreA, ignoreB, shellA, shellB);
+        foreach (var hit in _physics.IntersectRayWithPredicate(from.MapId, ray, ignored,
+                     static (uid, ignored) => uid == ignored.ignoreA || uid == ignored.ignoreB ||
+                                             uid == ignored.shellA || uid == ignored.shellB,
+                     maxLength, returnOnFirstHit: false))
         {
             free = Math.Min(free, hit.Distance);
         }

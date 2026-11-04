@@ -1,0 +1,8 @@
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: ResearchPointDiskTerminalCircuitboard
+  components:
+  - type: Sprite
+    state: cpu_science
+  - type: ComputerBoard
+    prototype: ComputerResearchPointDiskTerminal

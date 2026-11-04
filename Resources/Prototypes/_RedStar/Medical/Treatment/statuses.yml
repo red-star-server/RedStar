@@ -1,0 +1,44 @@
+- type: entity
+  parent: StatusEffectSlowdown
+  id: SarinSlowdownStatusEffect
+  name: sarin slowdown
+  components:
+  - type: MovementModStatusEffect
+    sprintSpeedModifier: 0.7
+    walkSpeedModifier: 0.7
+
+- type: entity
+  parent: StatusEffectSlowdown
+  id: ProbitalSlowdownStatusEffect
+  name: probital slowdown
+  components:
+  - type: MovementModStatusEffect
+    sprintSpeedModifier: 0.8
+    walkSpeedModifier: 0.8
+
+- type: entity
+  parent: StatusEffectSlowdown
+  id: TirimolSlowdownStatusEffect
+  name: tirimol slowdown
+  components:
+  - type: MovementModStatusEffect
+    sprintSpeedModifier: 0.75
+    walkSpeedModifier: 0.75
+
+- type: entity
+  parent: StatusEffectSlowdown
+  id: AtropineSlowdownStatusEffect
+  name: atropine slowdown
+  components:
+  - type: MovementModStatusEffect
+    sprintSpeedModifier: 0.75
+    walkSpeedModifier: 0.75
+
+- type: entity
+  parent: StatusEffectSpeed
+  id: EpinephrineStatusEffect
+  name: epinephrine rush
+  components:
+  - type: MovementModStatusEffect
+    sprintSpeedModifier: 1.1
+    walkSpeedModifier: 1.1

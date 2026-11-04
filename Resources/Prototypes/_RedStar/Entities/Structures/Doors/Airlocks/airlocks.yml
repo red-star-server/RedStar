@@ -1,0 +1,15 @@
+- type: entity
+  parent: AirlockScience
+  id: AirlockMedicalScience
+  suffix: Medical-Science
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Doors/Airlocks/Standart/medical-sci.rsi
+
+- type: entity
+  parent: AirlockScienceGlass
+  id: AirlockMedicalScienceGlass
+  suffix: Medical-Science, Glass
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Doors/Airlocks/Glass/medical-sci.rsi

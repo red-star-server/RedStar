@@ -52,6 +52,7 @@ public sealed partial class BeeSwarmSystem : EntitySystem
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private BeehiveSystem _hive = default!;
     [Dependency] private BeeErrandSystem _errands = default!;
+    [Dependency] private BeeQueenSystem _queen = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private BeeScoutSystem _scout = default!;
@@ -151,7 +152,7 @@ public sealed partial class BeeSwarmSystem : EntitySystem
         swarmComp.VentExit = ventRoute?.Exit;
         swarmComp.NestRange = range;
         swarmComp.Modifier = modifier.ID;
-        swarmComp.Searching = ventRoute == null && storage == null;
+        SetSearching((swarm, swarmComp), ventRoute == null && storage == null);
 
         var daughter = Spawn(comp.DaughterQueenPrototype, xform.Coordinates);
         if (TryComp<BeeQueenComponent>(daughter, out var daughterComp))
@@ -169,6 +170,15 @@ public sealed partial class BeeSwarmSystem : EntitySystem
         _adminLog.Add(LogType.Action, LogImpact.Low,
             $"{ToPrettyString(hive):hive} swarmed: the old queen left with {leaving} bees");
         return true;
+    }
+
+    /// <summary>
+    /// The swarm lost or found its destination. While it searches, the queen it carries is dying.
+    /// </summary>
+    public void SetSearching(Entity<BeeSwarmComponent> swarm, bool searching)
+    {
+        swarm.Comp.Searching = searching;
+        _queen.UpdateCarriedQueenLife(swarm);
     }
 
     /// <summary>
@@ -395,7 +405,7 @@ public sealed partial class BeeSwarmSystem : EntitySystem
         var origin = _transform.GetMapCoordinates(swarm, xform);
         if (PickNestStorage(swarm, queen.NestRange, grid, origin) is { } storage)
         {
-            swarm.Comp.Searching = false;
+            SetSearching(swarm, false);
             swarm.Comp.Storage = storage;
             _errands.SetTarget(swarm.Owner, storage);
             return true;

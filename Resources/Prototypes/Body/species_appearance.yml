@@ -75,7 +75,7 @@
       visible: false
 
 - type: entity
-  id: BaseSpeciesAppearance
+  id: BaseSpeciesAppearanceOrganless # RS14
   parent:
   - InventoryBase
   - BaseSpeciesLayers

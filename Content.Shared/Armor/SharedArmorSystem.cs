@@ -48,7 +48,33 @@ public abstract partial class SharedArmorSystem : EntitySystem
         if (TryComp<MaskComponent>(uid, out var mask) && mask.IsToggled)
             return;
 
-        args.Args.Damage = DamageSpecifier.ApplyModifierSet(args.Args.Damage, component.Modifiers);
+        // RS14-start
+        if (args.Args.TargetPart is {} partType && !component.ArmorCoverage.Contains(partType))
+            return;
+
+        var isPrecise = (args.Args.Damage.Flags & DamageSpecifier.DamageFlags.PreciseHit) != 0;
+        var ev = new Content.Shared._Trauma.Common.Armor.ArmorProtectAttemptEvent(args.Args.Origin, isPrecise);
+        RaiseLocalEvent(uid, ref ev);
+        var mult = ev.Multiplier;
+        if (mult <= 0f)
+            return;
+
+        var modifierSet = DamageSpecifier.PenetrateArmor(component.Modifiers, args.Args.Damage.ArmorPenetration);
+        if (mult.Equals(1f))
+        {
+            args.Args.Damage = DamageSpecifier.ApplyModifierSet(args.Args.Damage, modifierSet);
+            return;
+        }
+
+        var newModifierSet = new DamageModifierSet();
+        foreach (var (key, value) in modifierSet.Coefficients)
+        {
+            newModifierSet.Coefficients[key] = 1f - (1f - value) * mult;
+        }
+
+        newModifierSet.FlatReductions = modifierSet.FlatReductions;
+        args.Args.Damage = DamageSpecifier.ApplyModifierSet(args.Args.Damage, newModifierSet);
+        // RS14-end
     }
 
     private void OnBorgDamageModify(EntityUid uid, ArmorComponent component,
@@ -57,7 +83,8 @@ public abstract partial class SharedArmorSystem : EntitySystem
         if (TryComp<MaskComponent>(uid, out var mask) && mask.IsToggled)
             return;
 
-        args.Args.Damage = DamageSpecifier.ApplyModifierSet(args.Args.Damage, component.Modifiers);
+        args.Args.Damage = DamageSpecifier.ApplyModifierSet(args.Args.Damage,
+            DamageSpecifier.PenetrateArmor(component.Modifiers, args.Args.Damage.ArmorPenetration)); // RS14
     }
 
     private void OnArmorVerbExamine(EntityUid uid, ArmorComponent component, GetVerbsEvent<ExamineVerb> args)
@@ -65,7 +92,11 @@ public abstract partial class SharedArmorSystem : EntitySystem
         if (!args.CanInteract || !args.CanAccess || !component.ShowArmorOnExamine)
             return;
 
-        var examineMarkup = GetArmorExamine(component.Modifiers);
+        // RS14-start
+        if (component is { ArmourCoverageHidden: true, ArmourModifiersHidden: true })
+            return;
+        var examineMarkup = GetArmorExamine(component);
+        // RS14-end
 
         var ev = new ArmorExamineEvent(examineMarkup);
         RaiseLocalEvent(uid, ref ev);

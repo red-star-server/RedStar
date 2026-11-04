@@ -48,7 +48,7 @@ public sealed partial class OrganRelationSystem : EntitySystem
     [PublicAPI]
     public void Relate(Entity<ParentOrganComponent?> parent, Entity<ChildOrganComponent?> child)
     {
-        if (!_parent.Resolve(parent, ref parent.Comp) || !_child.Resolve(child, ref child.Comp))
+        if (!_parent.Resolve(parent, ref parent.Comp) || !_child.Resolve(child, ref child.Comp) || child.Comp.Parent == parent.Owner) // RS14
             return;
 
         DebugTools.Assert(child.Comp.Parent == null);

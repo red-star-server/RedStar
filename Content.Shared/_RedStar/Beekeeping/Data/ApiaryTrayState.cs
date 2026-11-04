@@ -10,5 +10,5 @@ public enum ApiaryTrayState : byte
     /// <summary>The plant is still growing.</summary>
     Growing,
     /// <summary>No plant, or the workers cannot reach the tray now.</summary>
-    Blind,
+    Blind
 }

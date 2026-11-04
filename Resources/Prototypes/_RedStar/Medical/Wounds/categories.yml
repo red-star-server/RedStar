@@ -1,0 +1,9 @@
+- type: entityCategory
+  id: Wounds
+  name: entity-category-name-wounds
+  hideSpawnMenu: true
+
+- type: entityCategory
+  id: Traumas
+  name: entity-category-name-traumas
+  hideSpawnMenu: true

@@ -1,0 +1,34 @@
+- type: technology
+  id: AdvancedTreatment
+  name: research-technology-advanced-treatment
+  icon:
+    sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/e-scalpel.rsi
+    state: e-scalpel-on
+  discipline: CivilianServices
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+  - DefibrillatorCompact
+  - EnergyScalpel
+  - AdvancedRetractor
+  - EnergyCautery
+  - AdvancedBoneGel
+  - BorgModuleAdvancedSurgery
+  - MedicalBiofabMachineBoard
+  technologyPrerequisites:
+  - AdvancedEntertainment
+
+- type: technology
+  id: HighEndSurgery
+  name: research-technology-high-end-surgery
+  icon:
+    sprite: _RedStar/Medical/Clothing/Hands/surgery_gloves.rsi
+    state: icon
+  discipline: CivilianServices
+  tier: 3
+  cost: 10000
+  recipeUnlocks:
+  - ClothingHandsGlovesSurgical
+  - OmnimedTool
+  technologyPrerequisites:
+  - AdvancedTreatment

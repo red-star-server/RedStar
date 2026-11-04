@@ -60,6 +60,7 @@ public sealed partial class BloodstreamComponent : Component
     /// This generally corresponds to an amount of damage and can't go above 100.
     /// </remarks>
     [DataField, AutoNetworkedField]
+    [Access(typeof(BloodstreamSystem), typeof(Content.Shared._Trauma.Body.BodyBloodstreamSystem))] // RS14
     public float BleedAmount;
 
     /// <summary>

@@ -11,5 +11,5 @@ public enum BeehiveNectarLevel : byte
     Empty,
     Low,
     Medium,
-    High,
+    High
 }

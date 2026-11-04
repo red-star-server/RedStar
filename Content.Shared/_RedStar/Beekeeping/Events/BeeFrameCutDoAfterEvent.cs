@@ -7,6 +7,4 @@ namespace Content.Shared._RedStar.Beekeeping.Events;
 /// Cutting the combs off a frame with a sharp tool. Raised on the frame.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class BeeFrameCutDoAfterEvent : SimpleDoAfterEvent
-{
-}
+public sealed partial class BeeFrameCutDoAfterEvent : SimpleDoAfterEvent;

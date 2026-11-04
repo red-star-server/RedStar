@@ -1,0 +1,27 @@
+- type: stack
+  id: Ointment
+  maxCount: 15
+
+- type: stack
+  id: AloeCream
+  maxCount: 15
+
+- type: stack
+  id: Gauze
+  maxCount: 15
+
+- type: stack
+  id: Brutepack
+  maxCount: 15
+
+- type: stack
+  id: Bloodpack
+  maxCount: 15
+
+- type: stack
+  id: MedicatedSuture
+  maxCount: 15
+
+- type: stack
+  id: RegenerativeMesh
+  maxCount: 15

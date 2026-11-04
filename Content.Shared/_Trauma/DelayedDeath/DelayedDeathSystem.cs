@@ -1,0 +1,67 @@
+using Content.Shared.Chat;
+using Content.Shared.Medical;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
+using Content.Shared.Popups;
+using Robust.Shared.Timing;
+
+namespace Content.Shared._Trauma.DelayedDeath;
+
+public sealed partial class DelayedDeathSystem : EntitySystem
+{
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private MobStateSystem _mob = default!;
+    [Dependency] private SharedChatSystem _chat = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+
+    [Dependency] private EntityQuery<MobStateComponent> _mobQuery;
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<DelayedDeathComponent>();
+        var now = _timing.CurTime;
+        while (query.MoveNext(out var ent, out var comp))
+        {
+            if (now < comp.NextDeath ||
+                !_mobQuery.TryComp(ent, out var mob) ||
+                _mob.IsDead(ent, mob))
+                continue;
+
+            // go crit then dead so deathgasp can happen
+            _mob.ChangeMobState(ent, MobState.Critical, mob);
+            _mob.ChangeMobState(ent, MobState.Dead, mob);
+
+            var ev = new DelayedDeathEvent(ent, PreventRevive: comp.PreventAllRevives);
+            RaiseLocalEvent(ent, ref ev);
+
+            if (ev.Cancelled)
+            {
+                RemCompDeferred(ent, comp);
+                continue;
+            }
+
+            if (!string.IsNullOrWhiteSpace(comp.DeathMessageId))
+                _popup.PopupEntity(Loc.GetString(comp.DeathMessageId), ent, ent, PopupType.LargeCaution);
+        }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnDefibZap(Entity<DelayedDeathComponent> ent, ref TargetBeforeDefibrillatorZapsEvent args)
+    {
+        // can't defib someone without a heart or brain pal
+        args.Cancel();
+
+        var failPopup = Loc.GetString(ent.Comp.DefibFailMessageId);
+        _chat.TrySendInGameICMessage(args.Defib, failPopup, InGameICChatType.Speak, true);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnMapInit(Entity<DelayedDeathComponent> ent, ref MapInitEvent args)
+    {
+        ent.Comp.NextDeath = _timing.CurTime + ent.Comp.DeathDelay;
+        Dirty(ent);
+    }
+}

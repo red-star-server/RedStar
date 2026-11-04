@@ -1,0 +1,12 @@
+- type: entity
+  parent: BaseAction
+  id: ActionBodyPartBurst
+  name: burst free!
+  description: Dig your way out of the flesh you are trapped in!
+  components:
+  - type: Action
+    useDelay: 15
+    sound:
+      path: /Audio/_RedStar/Medical/Surgery/bone_setter.ogg # crunch crunch
+  - type: InstantAction
+    event: !type:BodyPartBurstEvent

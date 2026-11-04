@@ -91,10 +91,6 @@
   name: shambling abomination # no more Urist McHorror
   description: Its gaping maw open, an ever-expanding, all consuming mass of flesh stands before you.
   components:
-  # RS14-start
-  - type: Genome
-    genomeId: Horror
-  # RS14-end
   - type: HumanoidProfile
     examinable: false
   # it speaks like a SPOOKY MONSTER!!!!

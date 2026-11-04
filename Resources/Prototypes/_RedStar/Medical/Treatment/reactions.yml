@@ -1,0 +1,373 @@
+- type: reaction
+  id: Barozine
+  reactants:
+    Chlorine:
+      amount: 1
+    Plasma:
+      amount: 1
+    Potassium:
+      amount: 1
+    Bicaridine:
+      amount: 1
+  products:
+    Barozine: 1
+
+- type: reaction
+  id: Probital
+  reactants:
+    Acetone:
+      amount: 2
+    Copper:
+      amount: 1
+    Phosphorus:
+      amount: 1
+  products:
+    Probital: 4
+
+- type: reaction
+  id: MitotrophinNutriment
+  sound:
+    path: /Audio/Effects/Chemistry/bubbles.ogg
+    params:
+      volume: -30
+      maxDistance: 1
+  reactants:
+    Mitogen:
+      amount: 1
+      catalyst: true
+    Nutriment:
+      amount: 1
+  products:
+    Mitotrophin: 1
+
+- type: reaction
+  id: MitotrophinProtein
+  sound:
+    path: /Audio/Effects/Chemistry/bubbles.ogg
+    params:
+      volume: -30
+      maxDistance: 1
+  reactants:
+    Mitogen:
+      amount: 1
+      catalyst: true
+    Protein:
+      amount: 2
+  products:
+    Mitotrophin: 3
+
+- type: reaction
+  id: MitotrophinVitamin
+  sound:
+    path: /Audio/Effects/Chemistry/bubbles.ogg
+    params:
+      volume: -30
+      maxDistance: 1
+  reactants:
+    Mitogen:
+      amount: 1
+      catalyst: true
+    Vitamin:
+      amount: 1
+  products:
+    Mitotrophin: 2
+
+- type: reaction
+  id: Tirimol
+  reactants:
+    Acetone:
+      amount: 2
+    SodiumPolyacrylate:
+      amount: 1
+    SulfuricAcid:
+      amount: 1
+  products:
+    Tirimol: 4
+
+- type: reaction
+  id: ProcenylLazideSludge
+  minTemp: 400
+  reactants:
+    Uranium:
+      amount: 2
+    Phenol:
+      amount: 1
+    SodiumCarbonate:
+      amount: 2
+    Aluite:
+      amount: 5
+  products:
+    ProcenylLazideSludge: 10
+
+- type: reaction
+  id: ProcenylLazide
+  maxTemp: 200
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    ProcenylLazideSludge:
+      amount: 10
+  products:
+    ProcenylLazide: 5
+    Aluite: 2
+    Uranium: 1
+    SodiumCarbonate: 1
+    Aluminium: 1
+
+- type: reaction
+  id: Multiver
+  maxTemp: 320
+  reactants:
+    Charcoal:
+      amount: 1
+    TableSalt:
+      amount: 1
+  products:
+    Multiver: 2
+
+- type: reaction
+  id: Monover
+  minTemp: 330
+  reactants:
+    Charcoal:
+      amount: 2
+    Chlorine:
+      amount: 1
+    Sodium:
+      amount: 1
+  products:
+    Monover: 4
+
+- type: reaction
+  id: Calomel
+  minTemp: 370
+  reactants:
+    Mercury:
+      amount: 1
+    Lithium:
+      amount: 1
+  products:
+    Calomel: 2
+
+- type: reaction
+  id: AmmoniatedMercury
+  reactants:
+    Calomel:
+      amount: 1
+    Ammonia:
+      amount: 1
+  products:
+    AmmoniatedMercury: 2
+
+- type: reaction
+  id: Antihol
+  reactants:
+    Charcoal:
+      amount: 2
+    Ethanol:
+      amount: 1
+  products:
+    Antihol: 3
+
+- type: reaction
+  id: Ibuprofen
+  reactants:
+    Charcoal:
+      amount: 1
+    Benzene:
+      amount: 1
+    Fluorine:
+      amount: 1
+  products:
+    Ibuprofen: 3
+
+- type: reaction
+  id: Synthcells
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    Synthflesh:
+      amount: 6
+  products:
+    Synthcells: 4
+    Sodium: 1
+    Carbon: 1
+
+- type: reaction
+  id: SalicylicAcid
+  minTemp: 370
+  reactants:
+    TranexamicAcid:
+      amount: 1
+    FluorosulfuricAcid:
+      amount: 1
+    SodiumHydroxide:
+      amount: 1
+    Bicaridine:
+      amount: 1
+  products:
+    SalicylicAcid: 4
+
+- type: reaction
+  id: Oxandrolone
+  reactants:
+    SodiumCarbonate:
+      amount: 1
+    Dermaline:
+      amount: 1
+    Phenol:
+      amount: 1
+    Leporazine:
+      amount: 1
+  products:
+    Oxandrolone: 4
+
+- type: reaction
+  id: PentenicAcid
+  reactants:
+    PolytrinicAcid:
+      amount: 1
+    PotassiumIodide:
+      amount: 1
+    Haloperidol:
+      amount: 1
+    Cyanide:
+      amount: 1
+  products:
+    PentenicAcid: 4
+
+- type: reaction
+  id: Atropine
+  reactants:
+    Acetone:
+      amount: 1
+    Diethylamine:
+      amount: 1
+    Phenol:
+      amount: 1
+    Ethanol:
+      amount: 1
+  products:
+    Atropine: 4
+
+- type: reaction
+  id: Hercuri
+  maxTemp: 100
+  reactants:
+    Cryostylane:
+      amount: 3
+    SodiumHydroxide:
+      amount: 1
+    PotassiumIodide:
+      amount: 1
+  products:
+    Hercuri: 5
+
+- type: reaction
+  id: Herignis
+  impact: Medium
+  minTemp: 600
+  reactants:
+    Hercuri:
+      amount: 3
+    Phlogiston:
+      amount: 2
+  products:
+    Herignis: 5
+
+- type: reaction
+  id: Tramadol
+  reactants:
+    Acetone:
+      amount: 1
+    Inaprovaline:
+      amount: 1
+    Ethanol:
+      amount: 1
+  products:
+    Tramadol: 3
+
+- type: reaction
+  id: Oxycodone
+  reactants:
+    Tramadol:
+      amount: 1
+    Heroin:
+      amount: 1
+    Epinephrine:
+      amount: 1
+    Plasma:
+      amount: 1
+      catalyst: true
+  products:
+    Oxycodone: 1
+
+- type: reaction
+  id: Formaldehyde
+  minTemp: 357
+  reactants:
+    Methanol:
+      amount: 1
+    Oxygen:
+      amount: 1
+    Silver:
+      amount: 1
+      catalyst: true
+  products:
+    Formaldehyde: 1
+    Water: 1
+
+- type: reaction
+  id: Artiplates
+  minTemp: 310
+  reactants:
+    Iron:
+      amount: 1
+    Copper:
+      amount: 1
+    TranexamicAcid:
+      amount: 2
+    Saline:
+      amount: 3
+  products:
+    Artiplates: 12
+
+- type: reaction
+  id: Cluoxadone
+  minTemp: 370
+  reactants:
+    Cryoxadone:
+      amount: 1
+    Dylovene:
+      amount: 2
+    Copper:
+      amount: 1
+  products:
+    Cluoxadone: 5
+
+- type: reaction
+  id: Suffocatium
+  reactants:
+    Leporazine:
+      amount: 1
+    SodiumHydroxide:
+      amount: 1
+    HeartbreakerToxin:
+      amount: 1
+    Lithium:
+      amount: 1
+  products:
+    Suffocatium: 2
+
+- type: reaction
+  id: Genecide
+  impact: Medium
+  reactants:
+    Phalanximine:
+      amount: 1
+    ChlorineTrifluoride:
+      amount: 1
+    Benzene:
+      amount: 1
+  products:
+    Genecide: 3
