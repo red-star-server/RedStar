@@ -25,6 +25,7 @@ beekeeping-hive-examine-nectar = Nectar: { $level ->
    *[High] plenty
 }.
 beekeeping-hive-examine-cramped = [color=yellow]The hive is cramped: the bees need more frames.[/color]
+beekeeping-hive-examine-abandon = [color=orange]The hive has no frames and the bees have nowhere to live: the colony leaves in { $minutes } min { $seconds } s.[/color]
 beekeeping-hive-examine-leaving = [color=red]Bees are leaving the hive: not enough frames.[/color]
 beekeeping-hive-examine-dying = [color=red]Without a queen the colony is dying out.[/color]
 beekeeping-hive-examine-scout-outside = The scout is out of the hive.
@@ -156,6 +157,7 @@ beekeeping-queen-slot-added = The queen has room for more traits: { $slots } slo
 beekeeping-queen-slots-max = The queen already has as many slots as she can.
 
 beekeeping-hive-crowd-swarm = The bees are too crowded: part of the colony flies off in a swarm!
+beekeeping-hive-abandon = The hive has no frames: the queen leaves it with all her bees!
 beekeeping-hive-swarm = The old queen leaves the hive with a swarm! A young queen stays behind.
 ## Apiary analyzer
 

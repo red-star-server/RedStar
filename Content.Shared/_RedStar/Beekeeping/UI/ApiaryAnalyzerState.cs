@@ -56,8 +56,8 @@ public sealed class ApiaryAnalyzerState : BoundUserInterfaceState
     public ApiaryNectarUse NectarUse;
 
     /// <summary>
-    /// Rough seconds until the queen makes the next bee; negative when it cannot be told (full colony, no queen, no
-    /// workers at home, the hive paused).
+    /// Whether the colony is growing: there is a queen, the hive works, workers are at home, there is room for more
+    /// bees and nectar is in stock or on its way.
     /// </summary>
     public bool BroodGoing;
 

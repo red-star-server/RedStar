@@ -89,8 +89,22 @@ public sealed partial class BeeSwarmSystem : EntitySystem
     /// </summary>
     public bool TrySwarm(Entity<BeehiveComponent> hive)
     {
+        return TryLeave(hive, false);
+    }
+
+    /// <summary>
+    /// A hive without frames is no home: the queen leaves it with every bee at home, however few, and no young queen
+    /// stays behind. Returns whether she left.
+    /// </summary>
+    public bool TryAbandon(Entity<BeehiveComponent> hive)
+    {
+        return TryLeave(hive, true);
+    }
+
+    private bool TryLeave(Entity<BeehiveComponent> hive, bool abandon)
+    {
         var comp = hive.Comp;
-        if (comp.Bees < comp.SwarmMinBees ||
+        if (!abandon && comp.Bees < comp.SwarmMinBees ||
             _hive.GetQueen(hive) is not { } oldQueen ||
             !TryComp<BeeQueenComponent>(oldQueen, out var oldQueenComp))
         {
@@ -143,7 +157,7 @@ public sealed partial class BeeSwarmSystem : EntitySystem
             return false;
         }
 
-        // The old queen goes with the swarm; a young one from the egg takes her place.
+        // The old queen goes with the swarm; when swarming, a young one from the egg takes her place.
         var slot = _container.EnsureContainer<ContainerSlot>(swarm, swarmComp.Container);
         if (!_itemSlots.TryGetSlot(hive.Owner, comp.QueenSlot, out var queenSlot) ||
             queenSlot.ContainerSlot is not { } queenContainer ||
@@ -161,7 +175,7 @@ public sealed partial class BeeSwarmSystem : EntitySystem
             return false;
         }
 
-        var leaving = Math.Max(1, (int) (comp.Bees * modifier.ColonyShare));
+        var leaving = abandon ? comp.Bees : Math.Max(1, (int) (comp.Bees * modifier.ColonyShare));
         comp.Bees -= leaving;
         swarmComp.Bees = leaving;
         swarmComp.WildHive = comp.WildHivePrototype;
@@ -201,6 +215,15 @@ public sealed partial class BeeSwarmSystem : EntitySystem
             _errands.SetRoute(swarm, chosenRoute.Entry, exit);
 
         SetSearching((swarm, swarmComp), ventRoute == null && storage == null);
+
+        if (abandon)
+        {
+            _hive.UpdateAmbience(hive);
+            _popup.PopupEntity(Loc.GetString("beekeeping-hive-abandon"), hive);
+            _adminLog.Add(LogType.Action, LogImpact.Low,
+                $"{ToPrettyString(hive):hive} was abandoned for having no frames: the queen left with {leaving} bees");
+            return true;
+        }
 
         var daughter = Spawn(comp.DaughterQueenPrototype, xform.Coordinates);
         if (TryComp<BeeQueenComponent>(daughter, out var daughterComp))

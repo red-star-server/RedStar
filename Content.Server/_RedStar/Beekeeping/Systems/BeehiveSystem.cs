@@ -41,6 +41,11 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
     private static readonly TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
 
     /// <summary>
+    /// How soon a queen that could not leave a hive without frames tries again.
+    /// </summary>
+    private static readonly TimeSpan AbandonRetry = TimeSpan.FromSeconds(30);
+
+    /// <summary>
     /// Longest stretch one update accounts for, so a long server hitch does not dump minutes of work at once.
     /// </summary>
     private const float MaxUpdateSeconds = 5f;
@@ -132,21 +137,30 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
         if (args.Cancelled || args.Slot.ID != ent.Comp.QueenSlot || !HasComp<BeeQueenComponent>(args.Item))
             return;
 
-        var map = Transform(ent).MapUid;
-        var active = 0;
-        var query = EntityQueryEnumerator<BeehiveComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var hive, out var xform))
-        {
-            if (uid != ent.Owner && xform.MapUid == map && GetQueen((uid, hive)) != null)
-                active++;
-        }
-
-        if (active < _cfg.GetCVar(BeekeepingCVars.ActiveHiveLimit))
+        if (HasRoomForQueen(ent))
             return;
 
         args.Cancelled = true;
         if (args.User is { } user)
             _popup.PopupEntity(Loc.GetString("beekeeping-queen-hive-limit"), ent, user);
+    }
+
+    /// <summary>
+    /// Whether a queen may go into this hive: the map has room for one more hive with a queen, this one not counted.
+    /// The same check that refuses her at the slot, so a flying queen can skip a hive that would turn her away.
+    /// </summary>
+    public bool HasRoomForQueen(Entity<BeehiveComponent> hive)
+    {
+        var map = Transform(hive).MapUid;
+        var active = 0;
+        var query = EntityQueryEnumerator<BeehiveComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var other, out var xform))
+        {
+            if (uid != hive.Owner && xform.MapUid == map && GetQueen((uid, other)) != null)
+                active++;
+        }
+
+        return active < _cfg.GetCVar(BeekeepingCVars.ActiveHiveLimit);
     }
 
     /// <summary>
@@ -286,6 +300,21 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
             }
         }
 
+        // No frames is no home: after a while the queen leaves with the whole colony. Wild hives have no frames.
+        if (!comp.Wild && hasQueen && comp.MaxBees == 0)
+        {
+            comp.AbandonAt ??= now + comp.AbandonTime;
+            if (now >= comp.AbandonAt)
+            {
+                // With nowhere to go (too many wild hives) she tries again a bit later.
+                comp.AbandonAt = _swarm.TryAbandon(hive) ? null : now + AbandonRetry;
+            }
+        }
+        else
+        {
+            comp.AbandonAt = null;
+        }
+
         // A worker takes the place of a lost scout once the delay is over and enough bees are home.
         if (comp.ScoutState == BeeScoutState.Lost &&
             now >= comp.ScoutReplaceAt &&
@@ -306,12 +335,27 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
 
         var scoutLeft = WorkersAtHome(comp) == 0 && comp.ScoutState == BeeScoutState.Home;
         comp.Bees--;
-        if (scoutLeft)
-        {
-            comp.ScoutState = BeeScoutState.Lost;
-            comp.ScoutReplaceAt = Timing.CurTime;
-        }
 
+        if (!scoutLeft)
+            return true;
+
+        comp.ScoutState = BeeScoutState.Lost;
+        comp.ScoutReplaceAt = Timing.CurTime;
+
+        return true;
+    }
+
+    /// <summary>
+    /// Takes one bee from home and counts it as outside the hive, like a bee taken out of it. The accounting of
+    /// <see cref="RemoveHomeBee"/> applies (a lost scout), and the caller then owns the bee: it must release it with
+    /// <see cref="ReleaseOutBee"/> or bring it back. Other systems go through this instead of touching the counters.
+    /// </summary>
+    public bool MoveHomeBeeOutside(Entity<BeehiveComponent> hive)
+    {
+        if (!RemoveHomeBee(hive))
+            return false;
+
+        hive.Comp.OutBees++;
         return true;
     }
 
@@ -543,6 +587,13 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
 
             if (!hasQueen && comp.Bees > 0)
                 args.PushMarkup(Loc.GetString("beekeeping-hive-examine-dying"));
+
+            if (comp.AbandonAt is { } abandonAt)
+            {
+                var left = abandonAt - Timing.CurTime;
+                args.PushMarkup(Loc.GetString("beekeeping-hive-examine-abandon",
+                    ("minutes", Math.Max(0, (int) left.TotalMinutes)), ("seconds", Math.Max(0, left.Seconds))));
+            }
 
             if (comp.HasEgg)
             {

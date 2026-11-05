@@ -81,7 +81,7 @@ public sealed partial class BeehiveComponent : Component
     /// <summary>
     /// Since when the colony has been raising a new queen.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoPausedField]
     public TimeSpan? EmergencyQueenSince;
 
     #endregion
@@ -127,13 +127,13 @@ public sealed partial class BeehiveComponent : Component
     /// <summary>
     /// Since when the colony has been full with enough nectar.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoPausedField]
     public TimeSpan? EggFullSince;
 
     /// <summary>
     /// No egg before this time.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoPausedField]
     public TimeSpan EggCooldownUntil;
 
     [DataField]
@@ -390,7 +390,7 @@ public sealed partial class BeehiveComponent : Component
     /// <summary>
     /// When the queen may lay the next bee.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoPausedField]
     public TimeSpan NextLay;
 
     /// <summary>
@@ -404,6 +404,12 @@ public sealed partial class BeehiveComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan CrowdingGrace = TimeSpan.FromMinutes(5);
+
+    /// <summary>
+    /// How long a queen stays in a hive without frames before she leaves it with all her bees as a swarm.
+    /// </summary>
+    [DataField]
+    public TimeSpan AbandonTime = TimeSpan.FromMinutes(3);
 
     /// <summary>
     /// After the grace period, one extra bee leaves this often.
@@ -570,7 +576,7 @@ public sealed partial class BeehiveComponent : Component
     /// <summary>
     /// The scout rests until then after a trip in someone's hands.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoPausedField]
     public TimeSpan ScoutRestsUntil;
 
     /// <summary>
@@ -670,6 +676,12 @@ public sealed partial class BeehiveComponent : Component
     public TimeSpan? CrowdedSince;
 
     /// <summary>
+    /// When the colony leaves this hive for having no frames, or null while it has frames or no queen.
+    /// </summary>
+    [ViewVariables, AutoPausedField]
+    public TimeSpan? AbandonAt;
+
+    /// <summary>
     /// When the next extra bee leaves an overcrowded hive.
     /// </summary>
     [ViewVariables, AutoPausedField]
@@ -721,7 +733,7 @@ public sealed partial class BeehiveComponent : Component
     [DataField]
     public TimeSpan DefenseCooldown = TimeSpan.FromSeconds(5);
 
-    [ViewVariables]
+    [ViewVariables, AutoPausedField]
     public TimeSpan NextDefense;
 
     /// <summary>
