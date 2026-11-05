@@ -1,4 +1,3 @@
-using Content.Server._RedStar.Beekeeping.Events;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared._RedStar.Beekeeping;
 using Content.Shared._RedStar.Beekeeping.Components;
@@ -55,11 +54,6 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
         UpdateHiveAppearance(ent);
         UpdateAmbience(ent);
         EnsureBeeIcons(ent);
-    }
-
-    protected override void OnQueenCaught(EntityUid flyer)
-    {
-        QueueDel(flyer);
     }
 
     [SubscribeLocalEvent]
@@ -154,17 +148,13 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
     }
 
     /// <summary>
-    /// A broken hive forgets its sources and calls its scout back; the rest of what it leaves is up to the systems
-    /// that listen to <see cref="BeehiveBrokenEvent"/>.
+    /// A broken hive forgets its sources and calls its scout back.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnHiveDestroyed(Entity<BeehiveComponent> ent, ref DestructionEventArgs args)
     {
         ent.Comp.KnownSources.Clear();
         _scout.RecallScout(ent.Comp);
-
-        var ev = new BeehiveBrokenEvent(ent);
-        RaiseLocalEvent(ref ev);
     }
 
     /// <summary>
@@ -644,8 +634,8 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
     }
 
     /// <summary>
-    /// Water vapor in the air calms bees: a hive standing in it lets no angry bees out, an angry bee in it calms down and
-    /// a bee in hand does not sting. The colony keeps working; this is how a botanist handles a vicious hive.
+    /// Water vapor in the air calms bees: an aggressive bee picked up in it does not sting. The colony keeps working;
+    /// this is how a botanist handles a vicious hive.
     /// </summary>
     public bool InCalmingVapor(EntityUid uid, BeehiveComponent? comp = null)
     {
@@ -655,7 +645,7 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
     }
 
     /// <summary>
-    /// Water vapor a bee out of any hive (an angry bee, a bee in hand) needs around it to calm down, in moles on its tile.
+    /// Water vapor a bee in hand needs around it to stay calm, in moles on its tile.
     /// </summary>
     public const float DefaultCalmVaporMoles = 1f;
 

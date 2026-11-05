@@ -20,5 +20,5 @@ public enum BeeSourceCheck : byte
     /// <summary>
     /// A ripe plant: a visit brings nectar.
     /// </summary>
-    Ripe,
+    Ripe
 }

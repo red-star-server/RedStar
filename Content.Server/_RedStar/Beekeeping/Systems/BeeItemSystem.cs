@@ -6,6 +6,8 @@ using Content.Shared.Body.Systems;
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Events;
 using Content.Shared.Botany.Systems;
+using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
@@ -323,8 +325,9 @@ public sealed partial class BeeItemSystem : EntitySystem
     #endregion
 
     /// <summary>
-    /// A hand picks up an aggressive bee. Without a sting it bites a bare hand; with a sting it stings through any
-    /// gloves except sting-proof ones, and injects its payload. Not in water vapor.
+    /// A hand picks up an aggressive bee. Without a sting it bites a bare hand; with a sting it stings, as much as
+    /// what the user wears lets through (<see cref="DamageOnInteractProtectionComponent"/>), and injects its payload.
+    /// Not in water vapor.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnBeePickedUp(Entity<BeeItemComponent> ent, ref GotEquippedHandEvent args)
@@ -339,11 +342,9 @@ public sealed partial class BeeItemSystem : EntitySystem
         if (_hive.InCalmingVapor(user))
             return;
 
-        _inventory.TryGetSlotEntity(user, "gloves", out var gloves);
-
         if (!totals.Sting)
         {
-            if (gloves != null || ent.Comp.BiteDamage == null)
+            if (_inventory.TryGetSlotEntity(user, "gloves", out _) || ent.Comp.BiteDamage == null)
                 return;
 
             _damageable.TryChangeDamage(user, ent.Comp.BiteDamage, origin: ent);
@@ -351,15 +352,16 @@ public sealed partial class BeeItemSystem : EntitySystem
             return;
         }
 
-        if (gloves is { } worn &&
-            MetaData(worn).EntityPrototype is { } glovesProto &&
-            ent.Comp.StingProofGloves.Contains(glovesProto.ID))
+        var damage = ent.Comp.StingDamage;
+        if (damage != null && GetTouchProtection(user) is { } protection)
         {
-            return;
+            damage = DamageSpecifier.ApplyModifierSet(damage, protection);
+            if (!damage.AnyPositive())
+                return;
         }
 
-        if (ent.Comp.StingDamage != null)
-            _damageable.TryChangeDamage(user, ent.Comp.StingDamage, origin: ent);
+        if (damage != null)
+            _damageable.TryChangeDamage(user, damage, origin: ent);
 
         if (ent.Comp.Payload.Volume > 0)
         {
@@ -368,5 +370,17 @@ public sealed partial class BeeItemSystem : EntitySystem
         }
 
         _popup.PopupEntity(Loc.GetString("beekeeping-bee-sting"), user, user, PopupType.SmallCaution);
+    }
+
+    /// <summary>
+    /// The protection against harm from touching things that the user wears, or has itself: found the way
+    /// <see cref="DamageOnInteractSystem"/> finds it for a hot bulb.
+    /// </summary>
+    private DamageModifierSet? GetTouchProtection(EntityUid user)
+    {
+        if (_inventory.TryGetInventoryEntity<DamageOnInteractProtectionComponent>(user, out var worn) && worn.Comp != null)
+            return worn.Comp.DamageProtection;
+
+        return CompOrNull<DamageOnInteractProtectionComponent>(user)?.DamageProtection;
     }
 }

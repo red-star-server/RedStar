@@ -48,14 +48,13 @@ public sealed partial class BeeItemComponent : Component
     public DamageSpecifier? BiteDamage = new() { DamageDict = { ["Piercing"] = 1 } };
 
     /// <summary>
-    /// An aggressive bee with a sting stings a hand that picks it up, gloves or not, unless the gloves are
-    /// <see cref="StingProofGloves"/>. The sting also injects some of <see cref="Payload"/>.
+    /// An aggressive bee with a sting stings a hand that picks it up. What the user wears can reduce the damage
+    /// (<see cref="Content.Shared.Damage.Components.DamageOnInteractProtectionComponent"/>, the protection gloves give
+    /// against a hot bulb); a sting that is stopped entirely injects nothing. The sting also injects some of
+    /// <see cref="Payload"/>.
     /// </summary>
     [DataField]
     public DamageSpecifier? StingDamage = new() { DamageDict = { ["Piercing"] = 1, ["Poison"] = 2 } };
-
-    [DataField]
-    public List<EntProtoId> StingProofGloves = new() { "ClothingHandsGlovesLeather" };
 
     /// <summary>
     /// What its sting carries, taken from the queen when the bee is taken out. Server only.

@@ -10,5 +10,5 @@ public enum BeeErrandStage : byte
     /// <summary>
     /// On the way home.
     /// </summary>
-    Back,
+    Back
 }

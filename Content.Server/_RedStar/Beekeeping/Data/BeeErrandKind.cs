@@ -13,17 +13,7 @@ public enum BeeErrandKind : byte
     Scout,
 
     /// <summary>
-    /// A meat colony's worker going for a creature.
+    /// A bee taken out of its hive and let go, flying back into it.
     /// </summary>
-    Hunt,
-
-    /// <summary>
-    /// A swarm or a lone queen on the way to a new home. It does not come back.
-    /// </summary>
-    Swarm,
-
-    /// <summary>
-    /// An angry bee whose time is up, flying back into its hive. Its count is the angry hive's.
-    /// </summary>
-    Return,
+    Return
 }

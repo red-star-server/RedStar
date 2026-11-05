@@ -6,12 +6,11 @@ using Content.Shared._RedStar.Beekeeping.Components;
 using Content.Shared._RedStar.Beekeeping.Data;
 using Content.Shared._RedStar.Beekeeping.Visuals;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server._RedStar.Beekeeping.Systems;
 
 /// <summary>
-/// Letting bees out: the hive's foragers and scout, an angry bee sent home, and the limits on how many are out.
+/// Letting bees out: the hive's foragers and scout, a bee sent home, and the limits on how many are out.
 /// </summary>
 public sealed partial class BeeErrandSystem
 {
@@ -50,21 +49,16 @@ public sealed partial class BeeErrandSystem
 
     /// <summary>
     /// A forager flies out to <paramref name="target"/>, if the hive has room for one more in the air and the area is not
-    /// full of bees. A meat colony's bee may go by a <paramref name="route"/> through the pipes.
+    /// full of bees.
     /// </summary>
-    public EntityUid? TrySpawnForager(Entity<BeehiveComponent> hive,
-        TransformComponent hiveXform,
-        EntityUid target,
-        int? limit = null,
-        EntProtoId? prototype = null,
-        (EntityUid Entry, EntityUid Exit)? route = null)
+    public EntityUid? TrySpawnForager(Entity<BeehiveComponent> hive, TransformComponent hiveXform, EntityUid target)
     {
         var comp = hive.Comp;
         comp.Foragers.RemoveAll(f => TerminatingOrDeleted(f));
-        if (comp.Foragers.Count >= (limit ?? comp.MaxForagers) || !AreaHasRoom(hiveXform.Coordinates))
+        if (comp.Foragers.Count >= comp.MaxForagers || !AreaHasRoom(hiveXform.Coordinates))
             return null;
 
-        if (Release(hive, hiveXform, prototype ?? comp.PollinatorPrototype, target, route) is not { } bee)
+        if (Release(hive, hiveXform, comp.PollinatorPrototype, target) is not { } bee)
             return null;
 
         comp.Foragers.Add(bee);
@@ -78,7 +72,7 @@ public sealed partial class BeeErrandSystem
     {
         if (found.Count == 0 ||
             !AreaHasRoom(hiveXform.Coordinates) ||
-            Release(hive, hiveXform, hive.Comp.ScoutPrototype, found[0], null, kind: BeeErrandKind.Scout) is not { } bee)
+            Release(hive, hiveXform, hive.Comp.ScoutPrototype, found[0], BeeErrandKind.Scout) is not { } bee)
         {
             return false;
         }
@@ -96,8 +90,6 @@ public sealed partial class BeeErrandSystem
         TransformComponent hiveXform,
         string prototype,
         EntityUid? target,
-        (EntityUid Entry, EntityUid Exit)? route,
-        EntityCoordinates? spot = null,
         BeeErrandKind kind = BeeErrandKind.Forage)
     {
         var bee = Spawn(prototype, hiveXform.Coordinates);
@@ -125,9 +117,6 @@ public sealed partial class BeeErrandSystem
         }
 
         errand.Target = target;
-        errand.Spot = spot;
-        errand.VentEntry = route?.Entry;
-        errand.VentExit = route?.Exit;
         // It grows out of the hive as it sets off.
         SetSize(bee, BeeFlightSize.Growing);
         return bee;
@@ -145,8 +134,8 @@ public sealed partial class BeeErrandSystem
     }
 
     /// <summary>
-    /// A bee that is already out (an angry bee whose time is up) flies home on a return errand: its task becomes the
-    /// errand's, it goes into the hive and the hive gets it back (<see cref="BeeErrandHomeEvent"/>).
+    /// A bee that is already out (taken out of its hive and let go) flies home on a return errand: its task becomes the
+    /// errand's and it goes back into the hive like one brought by hand.
     /// </summary>
     public void SendHome(EntityUid bee, EntityUid hive)
     {
