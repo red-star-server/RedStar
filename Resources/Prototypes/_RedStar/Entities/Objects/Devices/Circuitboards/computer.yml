@@ -1,6 +1,8 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: ResearchPointDiskTerminalCircuitboard
+  name: research point disk terminal board
+  description: A computer printed circuit board for a research point disk terminal.
   components:
   - type: Sprite
     state: cpu_science
