@@ -36,7 +36,11 @@ public partial class TraumaSystem
     /// </summary>
     public const float MinBleedToStopHealing = 5f;
 
-    private readonly List<Entity<TraumaComponent>> _traumas = new(8);
+    /// <summary>
+    /// Identifier of the organ integrity modifier created by organ damage traumas.
+    /// </summary>
+    public const string WoundableDamageModifier = "WoundableDamage";
+
 
     [SubscribeLocalEvent]
     private void OnTraumaInflicterInit(Entity<TraumaInflicterComponent> ent, ref ComponentInit args)
@@ -53,9 +57,7 @@ public partial class TraumaSystem
         if (_godmodeQuery.HasComp(part))
             return;
 
-        // Overflow is only used when we are capping the wound, so we use it over the computed delta
-        // which will be useless in this specific scenario.
-        var delta = args.Overflow ?? args.NewSeverity - args.OldSeverity;
+        var delta = args.RequestedChange;
         if (delta < wound.Comp.SeverityThreshold)
             return;
 
@@ -73,7 +75,7 @@ public partial class TraumaSystem
         if (args.IgnoreBlockers)
             return;
 
-        args.Cancelled = HasHealingBlockingTrauma(args.Woundable);
+        args.Cancelled |= HasHealingBlockingTrauma(args.Woundable);
     }
 
     [SubscribeLocalEvent]
@@ -201,15 +203,14 @@ public partial class TraumaSystem
 
     /// <summary>
     /// Get all traumas on a bodypart, optionally of a certain type.
-    /// The list is reused between calls, do not store it.
+    /// The list is a fresh copy owned by the caller.
     /// </summary>
     public bool GetPartTraumas(
         Entity<WoundableComponent?> part,
         out List<Entity<TraumaComponent>> traumas,
         TraumaType? traumaType = null)
     {
-        traumas = _traumas;
-        traumas.Clear();
+        traumas = new List<Entity<TraumaComponent>>();
         AddPartTraumas(part, traumas, traumaType);
         return traumas.Count > 0;
     }
@@ -236,19 +237,19 @@ public partial class TraumaSystem
 
     /// <summary>
     /// Get all traumas on a body, optionally of a certain type.
-    /// The returned list is reused between calls, do not store it.
+    /// The returned list is a fresh copy owned by the caller.
     /// </summary>
     public List<Entity<TraumaComponent>> GetBodyTraumas(
         Entity<BodyComponent?> body,
         TraumaType? traumaType = null)
     {
-        _traumas.Clear();
+        var traumas = new List<Entity<TraumaComponent>>();
         foreach (var part in _body.GetOrgans<WoundableComponent>(body))
         {
-            AddPartTraumas(part.AsNullable(), _traumas, traumaType);
+            AddPartTraumas(part.AsNullable(), traumas, traumaType);
         }
 
-        return _traumas;
+        return traumas;
     }
 
     /// <summary>
@@ -294,9 +295,11 @@ public partial class TraumaSystem
             if (!_armorQuery.TryComp(ent, out var armour))
                 continue;
 
-            var deductions = armour.TraumaDeductions;
-            var deduction = deductions[traumaType];
-            if (!inflicter.Comp.AllowArmourDeduction.Contains(traumaType) || deduction == 0)
+            if (!inflicter.Comp.AllowArmourDeduction.Contains(traumaType))
+                continue;
+
+            var deduction = armour.TraumaDeductions.GetValueOrDefault(traumaType, FixedPoint2.Zero);
+            if (deduction <= FixedPoint2.Zero)
                 continue;
 
             var covered = armour.ArmorCoverage;
@@ -388,7 +391,7 @@ public partial class TraumaSystem
         var chance = (target.Comp.IntegrityCap / (target.Comp.Integrity + bone.BoneIntegrity)
              - deduction + woundInflicter.Comp.TraumasChances[TraumaType.BoneDamage]).Float() * multiplier;
         chance = Math.Clamp(chance, 0f, 1f);
-        return SharedRandomExtensions.PredictedProb(_timing, (float) chance, GetNetEntity(target), GetNetEntity(woundInflicter));
+        return SharedRandomExtensions.PredictedProb(_timing, chance, GetNetEntity(target), GetNetEntity(woundInflicter));
     }
 
     /// <summary>
@@ -434,7 +437,7 @@ public partial class TraumaSystem
         var chance = (target.Comp.Integrity / target.Comp.IntegrityCap / totalIntegrity -
             deduction + woundInflicter.Comp.TraumasChances[TraumaType.OrganDamage]).Float() * multiplier;
         chance = Math.Clamp(chance, 0f, 1f);
-        return SharedRandomExtensions.PredictedProb(_timing, (float) chance, GetNetEntity(target), GetNetEntity(woundInflicter));
+        return SharedRandomExtensions.PredictedProb(_timing, chance, GetNetEntity(target), GetNetEntity(woundInflicter));
     }
 
     /// <summary>
@@ -550,10 +553,21 @@ public partial class TraumaSystem
     /// </summary>
     public void RemoveTrauma(Entity<TraumaComponent> trauma)
     {
+        var target = trauma.Comp.TraumaTarget;
+        var type = trauma.Comp.TraumaType;
+
         var ev = new TraumaBeingRemovedEvent(trauma);
         RaiseLocalEvent(trauma.Comp.Wound, ref ev);
 
         Del(trauma.Owner);
+
+        if (type == TraumaType.OrganDamage &&
+            target is {} organ &&
+            _internalQuery.TryComp(organ, out var internalOrgan) &&
+            internalOrgan.IntegrityModifiers.Remove((WoundableDamageModifier, trauma.Owner)))
+        {
+            UpdateOrganIntegrity((organ, internalOrgan));
+        }
     }
 
     #endregion
@@ -609,9 +623,9 @@ public partial class TraumaSystem
                     var traumaEnt = AddTrauma(targetChosen.Value, target, inflicter, TraumaType.OrganDamage, severity);
 
                     if (traumaEnt != EntityUid.Invalid
-                        && !TryChangeOrganDamageModifier(targetChosen.Value, severity, traumaEnt, "WoundableDamage"))
+                        && !TryChangeOrganDamageModifier(targetChosen.Value, severity, traumaEnt, WoundableDamageModifier))
                     {
-                        TryCreateOrganDamageModifier(targetChosen.Value, severity, traumaEnt, "WoundableDamage");
+                        TryCreateOrganDamageModifier(targetChosen.Value, severity, traumaEnt, WoundableDamageModifier);
                     }
 
                     break;
