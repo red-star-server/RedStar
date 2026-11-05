@@ -25,6 +25,7 @@ beekeeping-hive-examine-nectar = Запас нектара: { $level ->
    *[High] много
 }.
 beekeeping-hive-examine-cramped = [color=yellow]В улье тесно: пчёлам не хватает рамок.[/color]
+beekeeping-hive-examine-abandon = [color=orange]В улье нет рамок, пчёлам негде жить: колония улетит через { $minutes } мин. { $seconds } с.[/color]
 beekeeping-hive-examine-leaving = [color=red]Пчёлы покидают улей: не хватает рамок.[/color]
 beekeeping-hive-examine-dying = [color=red]Колония без матки вымирает.[/color]
 beekeeping-hive-examine-scout-outside = Разведчица вне улья.
@@ -157,6 +158,7 @@ beekeeping-queen-slot-added = У матки стало больше места �
 beekeeping-queen-slots-max = У матки уже столько слотов, сколько возможно.
 
 beekeeping-hive-crowd-swarm = Пчёлам тесно: часть колонии улетает роем!
+beekeeping-hive-abandon = В улье нет рамок: матка улетает из него со всеми пчёлами!
 beekeeping-hive-swarm = Старая матка улетает из улья с роем! В улье осталась молодая матка.
 ## Apiary analyzer
 

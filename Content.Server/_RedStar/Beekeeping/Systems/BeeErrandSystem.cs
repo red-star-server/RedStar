@@ -8,8 +8,6 @@ using Content.Server.NPC.Systems;
 using Content.Shared._RedStar.Beekeeping.Components;
 using Content.Shared._RedStar.Beekeeping.Data;
 using Content.Shared._RedStar.Beekeeping.Visuals;
-using Content.Shared.Movement.Components;
-using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Configuration;
@@ -42,7 +40,6 @@ public sealed partial class BeeErrandSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private BeeQueenSystem _queen = default!;
     [Dependency] private BeeScoutSystem _scout = default!;
-    [Dependency] private MovementSpeedModifierSystem _speed = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private WeldableSystem _weldable = default!;
@@ -171,7 +168,7 @@ public sealed partial class BeeErrandSystem : EntitySystem
     }
 
     /// <summary>
-    /// A new target or spot for a bee that is on its way out: a creature that moved, a swarm's next hop.
+    /// A new target or spot for a bee that is on its way out: a swarm's next hop or the locker it chose.
     /// </summary>
     public void SetTarget(Entity<BeeErrandComponent?> bee, EntityUid? target, EntityCoordinates? spot = null)
     {
@@ -180,34 +177,6 @@ public sealed partial class BeeErrandSystem : EntitySystem
 
         bee.Comp.Target = target;
         bee.Comp.Spot = spot;
-    }
-
-    /// <summary>
-    /// A way through the pipes from <paramref name="entry"/> to <paramref name="exit"/> for a bee on its way out.
-    /// </summary>
-    public void SetRoute(Entity<BeeErrandComponent?> bee, EntityUid entry, EntityUid exit)
-    {
-        if (!Resolve(bee, ref bee.Comp))
-            return;
-
-        bee.Comp.VentEntry = entry;
-        bee.Comp.VentExit = exit;
-        bee.Comp.PipedOut = false;
-    }
-
-    /// <summary>
-    /// The bee flies faster (or slower) than its prototype says: a furious meat colony's bees.
-    /// </summary>
-    public void SetSpeed(EntityUid bee, float multiplier)
-    {
-        if (!TryComp<MovementSpeedModifierComponent>(bee, out var move))
-            return;
-
-        _speed.ChangeBaseSpeed(bee,
-            move.BaseWalkSpeed * multiplier,
-            move.BaseSprintSpeed * multiplier,
-            move.Acceleration,
-            move);
     }
 
     #endregion
@@ -434,8 +403,6 @@ public sealed partial class BeeErrandSystem : EntitySystem
         if (bee.Comp.Kind == BeeErrandKind.Scout)
             _scout.LandScout(bee);
 
-        var ev = new BeeErrandHomeEvent(bee.Comp.Hive);
-        RaiseLocalEvent(bee, ref ev);
         End(bee);
     }
 

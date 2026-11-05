@@ -320,6 +320,12 @@ public sealed partial class BeehiveComponent : Component
     public TimeSpan CrowdingGrace = TimeSpan.FromMinutes(5);
 
     /// <summary>
+    /// How long a queen stays in a hive without frames before she leaves it with all her bees as a swarm.
+    /// </summary>
+    [DataField]
+    public TimeSpan AbandonTime = TimeSpan.FromMinutes(3);
+
+    /// <summary>
     /// After the grace period, one extra bee leaves this often.
     /// </summary>
     [DataField]
@@ -582,6 +588,12 @@ public sealed partial class BeehiveComponent : Component
     /// </summary>
     [ViewVariables, AutoPausedField]
     public TimeSpan? CrowdedSince;
+
+    /// <summary>
+    /// When the colony leaves this hive for having no frames, or null while it has frames or no queen.
+    /// </summary>
+    [ViewVariables, AutoPausedField]
+    public TimeSpan? AbandonAt;
 
     /// <summary>
     /// When the next extra bee leaves an overcrowded hive.

@@ -39,6 +39,11 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
     private static readonly TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
 
     /// <summary>
+    /// How soon a queen that could not leave a hive without frames tries again.
+    /// </summary>
+    private static readonly TimeSpan AbandonRetry = TimeSpan.FromSeconds(30);
+
+    /// <summary>
     /// Longest stretch one update accounts for, so a long server hitch does not dump minutes of work at once.
     /// </summary>
     private const float MaxUpdateSeconds = 5f;
@@ -289,6 +294,21 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
                     RemoveHomeBee(hive);
                 }
             }
+        }
+
+        // No frames is no home: after a while the queen leaves with the whole colony. Wild hives have no frames.
+        if (!comp.Wild && hasQueen && comp.MaxBees == 0)
+        {
+            comp.AbandonAt ??= now + comp.AbandonTime;
+            if (now >= comp.AbandonAt)
+            {
+                // With nowhere to go (too many wild hives) she tries again a bit later.
+                comp.AbandonAt = _swarm.TryAbandon(hive) ? null : now + AbandonRetry;
+            }
+        }
+        else
+        {
+            comp.AbandonAt = null;
         }
 
         // A worker takes the place of a lost scout once the delay is over and enough bees are home.
@@ -560,6 +580,13 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
 
             if (!hasQueen && comp.Bees > 0)
                 args.PushMarkup(Loc.GetString("beekeeping-hive-examine-dying"));
+
+            if (comp.AbandonAt is { } abandonAt)
+            {
+                var left = abandonAt - Timing.CurTime;
+                args.PushMarkup(Loc.GetString("beekeeping-hive-examine-abandon",
+                    ("minutes", Math.Max(0, (int) left.TotalMinutes)), ("seconds", Math.Max(0, left.Seconds))));
+            }
 
             if (comp.HasEgg)
             {

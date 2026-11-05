@@ -6,8 +6,8 @@ using Robust.Shared.Map;
 namespace Content.Server._RedStar.Beekeeping.Components;
 
 /// <summary>
-/// A bee out of its hive on an errand: a forager showing a visit, the scout bringing home what it found, a meat
-/// colony's bee after a creature, a swarm or a lone queen on the way to a new home. It is an NPC: its HTN task
+/// A bee out of its hive on an errand: a forager showing a visit, the scout bringing home what it found, a bee taken
+/// out of the hive and let go flying back, a swarm or a lone queen on the way to a new home. It is an NPC: its HTN task
 /// (<c>BeeErrandCompound</c>) asks <see cref="BeeErrandSystem"/> where to fly next, flies there with the engine's
 /// pathfinding and steering, and then does what the errand wants at that stop. The colony's numbers do not wait for it:
 /// a visit's nectar is counted by the hive when the visit is made; the bee only acts it out.
@@ -37,7 +37,7 @@ public sealed partial class BeeErrandComponent : Component
     public EntityUid Hive;
 
     /// <summary>
-    /// What it flies to: a tray, a creature, a locker to nest in.
+    /// What it flies to: a tray, a locker to nest in.
     /// </summary>
     [ViewVariables]
     public EntityUid? Target;
