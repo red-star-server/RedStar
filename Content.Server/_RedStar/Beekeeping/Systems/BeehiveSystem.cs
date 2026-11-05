@@ -158,26 +158,6 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
     }
 
     /// <summary>
-    /// The timestamps the generated pause handling cannot reach: lists of them. Without this a pause on the hive's map
-    /// would let tired workers rest for free and leave visible foragers waiting in the past.
-    /// </summary>
-    [SubscribeLocalEvent]
-    private void OnHiveUnpaused(Entity<BeehiveComponent> ent, ref EntityUnpausedEvent args)
-    {
-        var comp = ent.Comp;
-        for (var i = 0; i < comp.RestingWorkers.Count; i++)
-        {
-            comp.RestingWorkers[i] += args.PausedTime;
-        }
-
-        for (var i = 0; i < comp.PendingForagers.Count; i++)
-        {
-            var (tray, at) = comp.PendingForagers[i];
-            comp.PendingForagers[i] = (tray, at + args.PausedTime);
-        }
-    }
-
-    /// <summary>
     /// A queen put into a truly empty hive starts a colony. With bees still outside nothing happens, so taking
     /// the queen out and back in is not a free restart.
     /// </summary>
