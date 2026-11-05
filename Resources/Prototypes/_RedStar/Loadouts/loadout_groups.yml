@@ -626,3 +626,41 @@
   - UnderwearBottomBoxersWizard
   - UnderwearTopBraWizard
   - UnderwearBottomPantiesWizard
+
+# Medical
+
+- type: loadoutGroup
+  id: GeneticistHead
+  name: loadout-group-geneticist-head
+  minLimit: 0
+  loadouts:
+  - BrigmedicHat
+  - BlueSurgeryCap
+  - NurseHat
+
+- type: loadoutGroup
+  id: GeneticistJumpsuit
+  name: loadout-group-geneticist-jumpsuit
+  loadouts:
+  - GeneticistJumpsuit
+  - GeneticistJumpskirt
+  - MedicalDoctorJumpsuit
+  - MedicalDoctorJumpskirt
+  - MedicalBlueScrubs
+
+- type: loadoutGroup
+  id: GeneticBackpack
+  name: loadout-group-geneticist-backpack
+  loadouts:
+  - GeneticistBackpack
+  - GeneticistSatchel
+  - GeneticistDuffel
+
+- type: loadoutGroup
+  id: GeneticistOuterClothing
+  name: loadout-group-geneticist-outerclothing
+  minLimit: 0
+  loadouts:
+  - RegularLabCoat
+  - GeneticistLabCoat
+  - GeneticistWintercoat
