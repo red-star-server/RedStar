@@ -16,6 +16,7 @@
   id: OrganAnimalInternal
   abstract: true
   components:
+  - !Remove type: ChildOrgan
   - type: Sprite
     sprite: Mobs/Species/Human/organs.rsi
 
