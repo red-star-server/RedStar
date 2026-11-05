@@ -15,5 +15,5 @@ public enum BeeHomingFacing : byte
     /// <summary>
     /// Top-down view with the head up: rotated to point at the hive.
     /// </summary>
-    Rotate,
+    Rotate
 }

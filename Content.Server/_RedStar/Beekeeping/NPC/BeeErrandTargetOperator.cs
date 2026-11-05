@@ -7,7 +7,7 @@ using Content.Server.NPC.HTN.PrimitiveTasks;
 namespace Content.Server._RedStar.Beekeeping.NPC;
 
 /// <summary>
-/// Asks <see cref="BeeErrandSystem"/> where a bee on an errand flies next (the tray, a vent, a nest, home) and puts it
+/// Asks <see cref="BeeErrandSystem"/> where a bee on an errand flies next (the tray, home) and puts it
 /// where the move operator after it reads it. Fails when there is nowhere to go: the bee then idles.
 /// </summary>
 public sealed partial class BeeErrandTargetOperator : HTNOperator

@@ -38,9 +38,28 @@ public abstract partial class SharedBeehiveSystem
     /// </summary>
     protected virtual Type[] FrameInteractBefore => Array.Empty<Type>();
 
+    /// <summary>
+    /// How many frames the hive sprite can show: <see cref="BeehiveVisuals"/> has one key per frame.
+    /// </summary>
+    public const int VisualFrames = 4;
+
     private void InitializeFrames()
     {
         SubscribeLocalEvent<BeeFrameComponent, InteractUsingEvent>(OnFrameInteractUsing, before: FrameInteractBefore);
+    }
+
+    /// <summary>
+    /// <see cref="BeehiveComponent.FrameSlots"/> is a list in the prototype but the picture is fixed: a fifth slot
+    /// would hold a frame the sprite never draws. Say so when the prototype is wrong, not when a player wonders.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnHiveFramesInit(Entity<BeehiveComponent> ent, ref ComponentInit args)
+    {
+        if (ent.Comp.FrameSlots.Count > VisualFrames)
+        {
+            Log.Error($"{ToPrettyString(ent)} has {ent.Comp.FrameSlots.Count} frame slots, " +
+                      $"but only the first {VisualFrames} are drawn on its sprite.");
+        }
     }
 
     private void OnFrameInteractUsing(Entity<BeeFrameComponent> ent, ref InteractUsingEvent args)
@@ -59,11 +78,9 @@ public abstract partial class SharedBeehiveSystem
         {
             // The graph spawns the planks at the frame's own position, which in a hand is the holder:
             // dismantle only frames lying on the floor.
-            if (_frameTool.HasQuality(args.Used, PryingQuality) && _containers.IsEntityInContainer(ent))
-            {
-                args.Handled = true;
-                _popupShared.PopupEntity(Loc.GetString("beekeeping-frame-pry-in-hand"), ent, args.User);
-            }
+            if (!_frameTool.HasQuality(args.Used, PryingQuality) || !_containers.IsEntityInContainer(ent)) return;
+            args.Handled = true;
+            _popupShared.PopupEntity(Loc.GetString("beekeeping-frame-pry-in-hand"), ent, args.User);
 
             return;
         }

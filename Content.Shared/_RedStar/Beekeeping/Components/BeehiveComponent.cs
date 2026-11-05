@@ -42,7 +42,7 @@ public sealed partial class BeehiveComponent : Component
     public int Bees;
 
     /// <summary>
-    /// Bees of this hive that are outside, as items or angry bees. They count against <see cref="MaxBees"/> but do
+    /// Bees of this hive that are outside, as items in hands or foragers. They count against <see cref="MaxBees"/> but do
     /// no work.
     /// </summary>
     [DataField]
@@ -75,7 +75,7 @@ public sealed partial class BeehiveComponent : Component
     /// <summary>
     /// Since when the colony has been raising a new queen.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoPausedField]
     public TimeSpan? EmergencyQueenSince;
 
     #endregion
@@ -95,7 +95,7 @@ public sealed partial class BeehiveComponent : Component
     public TimeSpan EggDiesAt;
 
     /// <summary>
-    /// The colony has to stay full this long for an egg to appear. Bees in hands and angry bees outside count.
+    /// The colony has to stay full this long for an egg to appear. Bees in hands and foragers outside count.
     /// </summary>
     [DataField, GuidebookData]
     public TimeSpan EggFullTime = TimeSpan.FromMinutes(3);
@@ -121,13 +121,13 @@ public sealed partial class BeehiveComponent : Component
     /// <summary>
     /// Since when the colony has been full with enough nectar.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoPausedField]
     public TimeSpan? EggFullSince;
 
     /// <summary>
     /// No egg before this time.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoPausedField]
     public TimeSpan EggCooldownUntil;
 
     [DataField]
@@ -304,7 +304,7 @@ public sealed partial class BeehiveComponent : Component
     /// <summary>
     /// When the queen may lay the next bee.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoPausedField]
     public TimeSpan NextLay;
 
     /// <summary>
@@ -484,7 +484,7 @@ public sealed partial class BeehiveComponent : Component
     /// <summary>
     /// The scout rests until then after a trip in someone's hands.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoPausedField]
     public TimeSpan ScoutRestsUntil;
 
     /// <summary>
@@ -532,7 +532,7 @@ public sealed partial class BeehiveComponent : Component
     public float MaxTemperature = 323.15f;
 
     /// <summary>
-    /// Water vapor on the hive's tile, in moles, from which its bees are calm: no angry bees come out. They keep working.
+    /// Water vapor on the hive's tile, in moles, from which its bees are calm: aggressive bees picked up there do not sting. They keep working.
     /// </summary>
     [DataField]
     public float CalmVaporMoles = 1f;
@@ -628,15 +628,6 @@ public sealed partial class BeehiveComponent : Component
     /// </summary>
     [ViewVariables]
     public List<(EntityUid Tray, TimeSpan At)> PendingForagers = new();
-
-    /// <summary>
-    /// A forager or the scout hit by someone: the hive sends angry bees after them, at most this often.
-    /// </summary>
-    [DataField]
-    public TimeSpan DefenseCooldown = TimeSpan.FromSeconds(5);
-
-    [ViewVariables]
-    public TimeSpan NextDefense;
 
     /// <summary>
     /// Visits made at the same time are shown spread over this long.

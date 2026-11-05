@@ -12,7 +12,7 @@ namespace Content.Server._RedStar.Beekeeping.Components;
 /// pathfinding and steering, and then does what the errand wants at that stop. The colony's numbers do not wait for it:
 /// a visit's nectar is counted by the hive when the visit is made; the bee only acts it out.
 /// </summary>
-[RegisterComponent, Access(typeof(BeeErrandSystem))]
+[RegisterComponent, AutoGenerateComponentPause, Access(typeof(BeeErrandSystem))]
 public sealed partial class BeeErrandComponent : Component
 {
     [DataField]
@@ -85,7 +85,7 @@ public sealed partial class BeeErrandComponent : Component
     [ViewVariables]
     public int ActStep;
 
-    [ViewVariables]
+    [ViewVariables, AutoPausedField]
     public TimeSpan ActStepEnd;
 
     /// <summary>
@@ -98,10 +98,10 @@ public sealed partial class BeeErrandComponent : Component
     [ViewVariables]
     public Vector2 GlideTo;
 
-    [ViewVariables]
+    [ViewVariables, AutoPausedField]
     public TimeSpan GlideStart;
 
-    [ViewVariables]
+    [ViewVariables, AutoPausedField]
     public TimeSpan GlideEnd;
 
     /// <summary>

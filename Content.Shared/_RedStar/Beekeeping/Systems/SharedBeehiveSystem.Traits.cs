@@ -23,21 +23,25 @@ public abstract partial class SharedBeehiveSystem
 
     /// <summary>
     /// The weight of one outcome of a mutagen roll on a queen with the given instability. Gaining a bad trait gets
-    /// likelier (x1 + 0.2 per point), gaining a good one rarer (x1 - 0.1 per point, at least x0.3), losing a good
-    /// trait likelier (x1 + 0.2 per point). Losing a bad one is unchanged.
+    /// likelier, gaining a good one rarer, losing a good trait likelier; losing a bad one is unchanged. The steps are
+    /// the queen's <see cref="BeeQueenComponent.BadGainStep"/>, <see cref="BeeQueenComponent.GoodGainDecay"/>,
+    /// <see cref="BeeQueenComponent.GoodGainFloor"/> and <see cref="BeeQueenComponent.GoodLossStep"/>.
     /// </summary>
-    public static float RollWeight(BeeTraitPrototype trait, bool has, int instability)
+    public static float RollWeight(BeeTraitPrototype trait, bool has, int instability, BeeQueenComponent queen)
     {
         if (has)
-            return trait.LossWeight * (trait.Bad ? 1f : 1f + 0.2f * instability);
+            return trait.LossWeight * (trait.Bad ? 1f : 1f + queen.GoodLossStep * instability);
 
-        return trait.Weight * (trait.Bad ? 1f + 0.2f * instability : Math.Max(0.3f, 1f - 0.1f * instability));
+        return trait.Weight * (trait.Bad
+            ? 1f + queen.BadGainStep * instability
+            : Math.Max(queen.GoodGainFloor, 1f - queen.GoodGainDecay * instability));
     }
 
     /// <summary>
-    /// What a set of traits adds up to.
+    /// What a set of traits adds up to. It takes the list itself and walks it by index: this runs several times a
+    /// second per hive, and going through <see cref="IEnumerable{T}"/> would box an enumerator on every call.
     /// </summary>
-    public BeeTraitTotals GetTotals(IEnumerable<ProtoId<BeeTraitPrototype>> traits)
+    public BeeTraitTotals GetTotals(IReadOnlyList<ProtoId<BeeTraitPrototype>> traits)
     {
         var totals = new BeeTraitTotals();
         foreach (var id in traits)

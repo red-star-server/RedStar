@@ -232,7 +232,7 @@ public sealed partial class BeeQueenSystem : EntitySystem
         foreach (var trait in _proto.EnumeratePrototypes<BeeTraitPrototype>())
         {
             var has = comp.Traits.Contains(trait.ID);
-            var weight = SharedBeehiveSystem.RollWeight(trait, has, instability);
+            var weight = SharedBeehiveSystem.RollWeight(trait, has, instability, comp);
             if (weight > 0f)
                 _rollOutcomes[(trait.ID, !has)] = weight;
         }
@@ -334,7 +334,7 @@ public sealed partial class BeeQueenSystem : EntitySystem
         }
 
         comp.Nectar -= comp.EmergencyQueenNectar;
-        comp.Bees--;
+        _hive.RemoveHomeBee(hive);
         comp.ColonyTraits.Clear();
         _popup.PopupEntity(Loc.GetString("beekeeping-hive-emergency-queen"), hive);
     }
