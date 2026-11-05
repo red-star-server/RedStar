@@ -62,7 +62,7 @@ public sealed partial class BodyCacheSystem : CommonBodyCacheSystem
                 continue;
 
             if (_body.GetCategory(organ) is not {} category ||
-                GetParentOrgan(ent.AsNullable(), category, child.Parents, organ) is not { } parent)
+                GetParentOrgan(ent.AsNullable(), category, child.Parents) is not { } parent)
             {
                 Log.Error($"Organ {ToPrettyString(organ)} expected a parent of {child.Parents[0]} but none was found in {ToPrettyString(ent)}!");
                 continue;
@@ -103,7 +103,7 @@ public sealed partial class BodyCacheSystem : CommonBodyCacheSystem
             return;
 
         if (_body.GetCategory(ent.Owner) is not {} category ||
-            GetParentOrgan(args.Body, category, ent.Comp.Parents, ent.Owner) == null)
+            GetParentOrgan(args.Body, category, ent.Comp.Parents) == null)
             args.Cancelled = true;
     }
 
@@ -117,7 +117,7 @@ public sealed partial class BodyCacheSystem : CommonBodyCacheSystem
         // only reason this would not actually exist is:
         // - container fill, don't care MapInit will fix it
         // - insertion handlers that modify the organ hierarchy before the cache is updated
-        if (GetParentOrgan(args.Target.Owner, category, ent.Comp.Parents, ent.Owner) is not { } part)
+        if (GetParentOrgan(args.Target.Owner, category, ent.Comp.Parents) is not { } part)
             return;
 
         _relation.Relate(part, ent.AsNullable());
@@ -141,8 +141,8 @@ public sealed partial class BodyCacheSystem : CommonBodyCacheSystem
     [SubscribeLocalEvent]
     private void OnInserted(Entity<OrganComponent> ent, ref OrganGotInsertedEvent args)
     {
-        if (!_timing.ApplyingState)
-            _body.EnableOrgan(ent.AsNullable(), args.Target);
+        if (!_timing.ApplyingState) // components are networked this doesnt need to get trolled
+            _body.EnableOrgan(ent.AsNullable(), args.Target); // have to pass the body because it's null until after the events are raised
     }
 
     [SubscribeLocalEvent]
@@ -190,16 +190,14 @@ public sealed partial class BodyCacheSystem : CommonBodyCacheSystem
     /// </summary>
     public EntityUid? GetParentOrgan(Entity<BodyCacheComponent?> ent,
         [ForbidLiteral] ProtoId<OrganCategoryPrototype> child,
-        IReadOnlyList<ProtoId<OrganCategoryPrototype>> categories,
-        EntityUid childOrgan)
+        IReadOnlyList<ProtoId<OrganCategoryPrototype>> categories)
     {
         if (!_query.Resolve(ent, ref ent.Comp, false))
             return null;
 
         foreach (var category in categories)
         {
-            if (ent.Comp.Organs.TryGetValue(category, out var organ) &&
-                (_part.CanInsertOrgan(organ, child) || _part.GetOrgan(organ, child) == childOrgan))
+            if (ent.Comp.Organs.TryGetValue(category, out var organ) && _part.CanInsertOrgan(organ, child))
                 return organ;
         }
 
@@ -238,7 +236,6 @@ public sealed partial class BodyCacheSystem : CommonBodyCacheSystem
             _part.OrganRemoved(old, organ.Owner);
             _relation.Orphan(organ);
         }
-
         _relation.Relate(parent, organ);
         _part.OrganInserted(parent, organ.Owner);
     }

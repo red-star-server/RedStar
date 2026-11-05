@@ -41,8 +41,8 @@ namespace Content.Shared.Localizations
             _loc.AddFunction(culture, "UNITS", FormatUnits);
             _loc.AddFunction(culture, "TOSTRING", args => FormatToString(culture, args));
             _loc.AddFunction(culture, "LOC", FormatLoc);
-            _loc.AddFunction(culture, "NATURALFIXED", args => FormatNaturalFixed(culture, args)); // Corvax-Localization
-            _loc.AddFunction(culture, "NATURALPERCENT", args => FormatNaturalPercent(culture, args)); // Corvax-Localization
+            _loc.AddFunction(culture, "NATURALFIXED", FormatNaturalFixed);
+            _loc.AddFunction(culture, "NATURALPERCENT", FormatNaturalPercent);
             _loc.AddFunction(culture, "PLAYTIME", FormatPlaytime);
 
 
@@ -55,8 +55,6 @@ namespace Content.Shared.Localizations
 
             _loc.AddFunction(cultureEn, "MAKEPLURAL", FormatMakePlural);
             _loc.AddFunction(cultureEn, "MANY", FormatMany);
-            _loc.AddFunction(cultureEn, "NATURALFIXED", args => FormatNaturalFixed(cultureEn, args));
-            _loc.AddFunction(cultureEn, "NATURALPERCENT", args => FormatNaturalPercent(cultureEn, args));
         }
 
         private ILocValue FormatMany(LocArgs args)
@@ -73,20 +71,20 @@ namespace Content.Shared.Localizations
             }
         }
 
-        private static ILocValue FormatNaturalPercent(CultureInfo culture, LocArgs args)
+        private ILocValue FormatNaturalPercent(LocArgs args)
         {
             var number = ((LocValueNumber) args.Args[0]).Value * 100;
             var maxDecimals = (int)Math.Floor(((LocValueNumber) args.Args[1]).Value);
-            var formatter = (NumberFormatInfo)NumberFormatInfo.GetInstance(culture).Clone();
+            var formatter = (NumberFormatInfo)NumberFormatInfo.GetInstance(CultureInfo.GetCultureInfo(Culture)).Clone();
             formatter.NumberDecimalDigits = maxDecimals;
             return new LocValueString(string.Format(formatter, "{0:N}", number).TrimEnd('0').TrimEnd(char.Parse(formatter.NumberDecimalSeparator)) + "%");
         }
 
-        private static ILocValue FormatNaturalFixed(CultureInfo culture, LocArgs args)
+        private ILocValue FormatNaturalFixed(LocArgs args)
         {
             var number = ((LocValueNumber) args.Args[0]).Value;
             var maxDecimals = (int)Math.Floor(((LocValueNumber) args.Args[1]).Value);
-            var formatter = (NumberFormatInfo)NumberFormatInfo.GetInstance(culture).Clone();
+            var formatter = (NumberFormatInfo)NumberFormatInfo.GetInstance(CultureInfo.GetCultureInfo(Culture)).Clone();
             formatter.NumberDecimalDigits = maxDecimals;
             return new LocValueString(string.Format(formatter, "{0:N}", number).TrimEnd('0').TrimEnd(char.Parse(formatter.NumberDecimalSeparator)));
         }
