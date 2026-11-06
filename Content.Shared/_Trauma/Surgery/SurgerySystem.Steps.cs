@@ -56,7 +56,7 @@ public sealed partial class SurgerySystem
     /// </summary>
     private static readonly FixedPoint2 SepsisDamageLimit = FixedPoint2.New(90);
 
-    private readonly List<EntityUid> _nextStepList = new();
+    private readonly List<EntityUid> _nextStepList = [];
 
     #region Event Methods
     [SubscribeLocalEvent]
@@ -99,7 +99,7 @@ public sealed partial class SurgerySystem
     private void HandleOrganModifications(SurgeryStepEvent args, SurgeryStepComponent comp)
     {
         HandleOrganModification(args.Part, args.Body, comp.AddOrganOnAdd);
-        HandleOrganModification(args.Part, args.Body, comp.RemoveOrganOnAdd, true); // oh my goida code
+        HandleOrganModification(args.Part, args.Body, comp.RemoveOrganOnAdd, true);
     }
 
     [SubscribeLocalEvent]
@@ -865,13 +865,16 @@ public sealed partial class SurgerySystem
 
     private Dictionary<EntProtoId, int> GetStepIndex(Entity<SurgeryComponent> surgery)
     {
-        if (!_stepIndexCache.TryGetValue(surgery.Owner, out var index))
+        if (_stepIndexCache.TryGetValue(surgery.Owner, out var index))
+            return index;
+
+        index = new Dictionary<EntProtoId, int>(surgery.Comp.Steps.Count);
+        for (var i = 0; i < surgery.Comp.Steps.Count; i++)
         {
-            index = new Dictionary<EntProtoId, int>(surgery.Comp.Steps.Count);
-            for (var i = 0; i < surgery.Comp.Steps.Count; i++)
-                index[surgery.Comp.Steps[i]] = i;
-            _stepIndexCache[surgery.Owner] = index;
+            index[surgery.Comp.Steps[i]] = i;
         }
+
+        _stepIndexCache[surgery.Owner] = index;
 
         return index;
     }

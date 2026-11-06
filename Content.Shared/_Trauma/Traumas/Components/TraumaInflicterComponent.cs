@@ -22,7 +22,7 @@ public sealed partial class TraumaInflicterComponent : Component
     public Container TraumaContainer = new();
 
     /// <summary>
-    /// I like optimisation. So, instead of putting a '-1' in TraumasChance, just remove it from allowed traumas
+    /// Trauma types this inflicter can cause. Leave a type out instead of giving it a negative chance.
     /// </summary>
     [DataField(required: true), AutoNetworkedField]
     public List<TraumaType> AllowedTraumas = new();

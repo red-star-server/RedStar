@@ -59,8 +59,7 @@ public sealed partial class EyesSystem : EntitySystem
         const string identifier = "BlindableDamage";
         var previous = organ.IntegrityModifiers.GetValueOrDefault((identifier, args.Args.Body));
         var change = FixedPoint2.Max(previous + args.Args.Damage, 0) - previous;
-        if (!_trauma.TryChangeOrganDamageModifier(ent.Owner, change, args.Args.Body, identifier))
-            _trauma.TryCreateOrganDamageModifier(ent.Owner, change, args.Args.Body, identifier);
+        _trauma.AddOrganDamageModifier(ent.Owner, change, args.Args.Body, identifier);
     }
 
     private void CheckMissingEyes(EntityUid body)

@@ -267,8 +267,6 @@ public sealed partial class BodyBloodstreamSystem : EntitySystem
             // When bleeding is reopened, the severity is increased
         }
 
-        // dummy fix as me and pretty much nobody else currently knows HOW EXACTLY was is supposed to work, womp womp
-        // seems to work fine though so why not
         if (component.BleedingAmountRaw > 0)
             component.Scaling = 1;
 
@@ -276,9 +274,6 @@ public sealed partial class BodyBloodstreamSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    /// <summary>
-    /// Updates bleeding suppression when the remover wound severity changes.
-    /// </summary>
     public void OnBleedRemoverSeverityUpdate(Entity<BleedRemoverComponent> ent, ref WoundSeverityPointChangedEvent args)
     {
         var delta = args.NewSeverity - args.OldSeverity;

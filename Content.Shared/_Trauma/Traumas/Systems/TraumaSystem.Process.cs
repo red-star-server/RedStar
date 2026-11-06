@@ -431,9 +431,7 @@ public partial class TraumaSystem
 
         multiplier *= _organTraumaChanceMultipliers[target.Comp.WoundableSeverity];
 
-        // organ damage is like, very deadly, but not yet
-        // so like, like, yeah, we don't want a disabler to induce some EVIL ASS organ damage with a 0,000001% chance and ruin your round
-        // Very unlikely to happen if your woundables are in a good condition
+        // organ damage must stay very unlikely while the woundable is in a good condition
         var chance = (target.Comp.Integrity / target.Comp.IntegrityCap / totalIntegrity -
             deduction + woundInflicter.Comp.TraumasChances[TraumaType.OrganDamage]).Float() * multiplier;
         chance = Math.Clamp(chance, 0f, 1f);
@@ -622,11 +620,8 @@ public partial class TraumaSystem
                 case TraumaType.OrganDamage:
                     var traumaEnt = AddTrauma(targetChosen.Value, target, inflicter, TraumaType.OrganDamage, severity);
 
-                    if (traumaEnt != EntityUid.Invalid
-                        && !TryChangeOrganDamageModifier(targetChosen.Value, severity, traumaEnt, WoundableDamageModifier))
-                    {
+                    if (traumaEnt != EntityUid.Invalid)
                         TryCreateOrganDamageModifier(targetChosen.Value, severity, traumaEnt, WoundableDamageModifier);
-                    }
 
                     break;
 
@@ -649,14 +644,7 @@ public partial class TraumaSystem
 
         }
 
-        // TODO: veins, would have been very lovely to integrate this into vascular system
-        //if (RandomVeinsTraumaChance(woundable))
-        //{
-        //    traumaApplied = ApplyDamageToVeins(woundable.Veins!.ContainedEntities[0], severity * _veinsDamageMultipliers[woundable.WoundableSeverity]);
-        //    _sawmill.Info(traumaApplied
-        //        ? $"A new trauma (Raw Severity: {severity}) was created on target: {target} of type Vein damage"
-        //        : $"Tried to create a trauma on target: {target}, but no trauma was applied. Type: Vein damage.");
-        //}
+        // TODO: veins trauma
     }
 
 

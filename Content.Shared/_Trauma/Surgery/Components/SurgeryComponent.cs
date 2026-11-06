@@ -26,5 +26,5 @@ public sealed partial class SurgeryComponent : Component
     /// Ordered step prototypes that make up this operation.
     /// </summary>
     [DataField(required: true), AutoNetworkedField]
-    public List<EntProtoId> Steps = new();
+    public List<EntProtoId> Steps = [];
 }

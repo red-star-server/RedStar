@@ -3,7 +3,6 @@ using System.Linq;
 using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared._Trauma.Common.Damage;
-using Content.Shared._Trauma.Common.DoAfter;
 using Content.Shared._Trauma.Common.Healing;
 using Content.Shared._Trauma.Common.Medical;
 using Content.Shared._Trauma.Common.Wounds;
@@ -192,17 +191,6 @@ public sealed partial class WoundSystem
         }
 
         UpdateWoundableIntegrity(part);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnModifyDoAfterDelay(Entity<HandOrganComponent> ent, ref BodyRelayedEvent<ModifyDoAfterDelayEvent> args)
-    {
-        // TODO: Apply a do-after delay penalty when the hand is missing.
-        // Add DoAfterDelayMultiplierComponent to hand organ prototypes, or track hand count
-        // on the body (analogous to LegsComponent) and scale the multiplier there.
-        var ev = args.Args;
-        RaiseLocalEvent(ent, ref ev);
-        args.Args = ev;
     }
 
     #endregion
@@ -728,12 +716,12 @@ public sealed partial class WoundSystem
                 wound.Comp.WoundSeverity >= wound.Comp.MangleSeverity);
 
     /// <summary>
-    /// Returns you the sum of all wounds on this woundable
+    /// Returns the sum of the severity points of all wounds on this woundable.
     /// </summary>
     /// <param name="part">The woundable bodypart</param>
-    /// <param name="damageGroup">The damage group of said wounds</param>
-    /// <param name="healable">Are the wounds supposed to be healable</param>
-    /// <param name="ignoreBlockers"></param>
+    /// <param name="damageGroup">If set, only wounds of this damage group are counted</param>
+    /// <param name="healable">If true, only wounds that can currently be healed are counted</param>
+    /// <param name="ignoreBlockers">Whether healing blockers are ignored when checking if a wound is healable</param>
     /// <returns>The severity sum</returns>
     public FixedPoint2 GetWoundableSeverityPoint(
         Entity<WoundableComponent?> part,
@@ -741,48 +729,29 @@ public sealed partial class WoundSystem
         bool healable = false,
         bool ignoreBlockers = false)
     {
-        var wounds = GetWoundableWounds(part);
-
-        if (damageGroup != null)
-            wounds.RemoveAll(wound => wound.Comp.DamageGroup != damageGroup);
-
-        if (healable)
-            wounds.RemoveAll(wound => !CanHealWound(wound, ignoreBlockers));
-
         var sum = FixedPoint2.Zero;
-        foreach (var wound in wounds)
+        foreach (var wound in GetWoundableWounds(part))
         {
+            if (damageGroup != null && wound.Comp.DamageGroup != damageGroup)
+                continue;
+
+            if (healable && !CanHealWound(wound, ignoreBlockers))
+                continue;
+
             sum += wound.Comp.WoundSeverityPoint;
         }
 
         return sum;
     }
 
-    /// <summary>
-    /// Returns you the integrity damage the woundable has
-    /// </summary>
-    /// <param name="part"></param>
-    /// <param name="damageGroup">The damage group of wounds that induced the damage</param>
-    /// <param name="healable">Is the integrity damage healable</param>
-    /// <param name="ignoreBlockers"></param>
-    /// <returns>The integrity damage</returns>
+    /// <inheritdoc cref="GetWoundableSeverityPoint"/>
     public FixedPoint2 GetWoundableIntegrityDamage(
         Entity<WoundableComponent?> part,
         [ForbidLiteral] ProtoId<DamageGroupPrototype>? damageGroup = null,
         bool healable = false,
         bool ignoreBlockers = false)
     {
-        if (!_woundableQuery.Resolve(part, ref part.Comp) ||
-            part.Comp.Wounds.Count == 0)
-            return FixedPoint2.Zero;
-
-        var wounds = GetWoundableWounds(part);
-        if (damageGroup != null)
-            wounds.RemoveAll(wound => wound.Comp.DamageGroup != damageGroup);
-        if (healable)
-            wounds.RemoveAll(wound => !CanHealWound(wound, ignoreBlockers));
-
-        return wounds.Aggregate(FixedPoint2.Zero, (current, wound) => current + wound.Comp.WoundSeverityPoint);
+        return GetWoundableSeverityPoint(part, damageGroup, healable, ignoreBlockers);
     }
 
     #endregion

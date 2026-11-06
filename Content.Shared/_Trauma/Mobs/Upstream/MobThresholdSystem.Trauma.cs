@@ -17,8 +17,8 @@ public sealed partial class MobThresholdSystem
     [Dependency] private INetManager _net = default!;
     [Dependency] private BodySystem _body = default!;
     [Dependency] private BodyPartSystem _parts = default!;
-    [Dependency] private EntityQuery<BodyComponent> _bodyQuery = default!;
-    [Dependency] private EntityQuery<DamageableComponent> _damageQuery = default!;
+    [Dependency] private EntityQuery<BodyComponent> _bodyQuery;
+    [Dependency] private EntityQuery<DamageableComponent> _damageQuery;
 
     /// <summary>
     /// Version of GetScaledDamage that also gets the parts damage, indexed by organ category.
@@ -61,6 +61,9 @@ public sealed partial class MobThresholdSystem
             return null;
 
         var ent1DeadThreshold = GetLowestThreshold(target1);
+        if (ent1DeadThreshold <= FixedPoint2.Zero)
+            return null;
+
         var ent2DeadThreshold = GetLowestThreshold(target2);
 
         Dictionary<ProtoId<OrganCategoryPrototype>, DamageSpecifier> organDamages = new();
