@@ -84,8 +84,6 @@ public partial class TraumaSystem
 
         if (!ent.Comp.IntegrityModifiers.TryAdd((identifier, effectOwner), severity))
             return false;
-
-        //DirtyField(ent, ent.Comp, nameof(InternalChildOrganComponent.IntegrityModifiers));
         UpdateOrganIntegrity(ent);
 
         return true;
@@ -107,10 +105,21 @@ public partial class TraumaSystem
             return false;
 
         ent.Comp.IntegrityModifiers[key] = value + change;
-        //DirtyField(ent, ent.Comp, nameof(InternalChildOrganComponent.IntegrityModifiers));
         UpdateOrganIntegrity(ent);
 
         return true;
+    }
+
+    /// <summary>
+    /// Adds <paramref name="change"/> to a named adjustment to organ integrity, creating it if it does not exist yet.
+    /// </summary>
+    public bool AddOrganDamageModifier(Entity<InternalChildOrganComponent?> ent,
+        FixedPoint2 change,
+        EntityUid effectOwner,
+        string identifier)
+    {
+        return TryChangeOrganDamageModifier(ent, change, effectOwner, identifier) ||
+            TryCreateOrganDamageModifier(ent, change, effectOwner, identifier);
     }
 
     /// <summary>
@@ -125,8 +134,6 @@ public partial class TraumaSystem
 
         if (!ent.Comp.IntegrityModifiers.Remove((identifier, effectOwner)))
             return false;
-
-        //DirtyField(ent, ent.Comp, nameof(InternalChildOrganComponent.IntegrityModifiers));
 
         if (_traumaQuery.TryComp(effectOwner, out var trauma))
             RemoveTrauma((effectOwner, trauma));

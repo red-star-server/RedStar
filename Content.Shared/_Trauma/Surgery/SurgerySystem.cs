@@ -66,7 +66,7 @@ public sealed partial class SurgerySystem : EntitySystem
     /// </summary>
     private readonly Dictionary<EntityUid, Dictionary<EntProtoId, int>> _stepIndexCache = new();
 
-    private readonly List<EntProtoId> _allSurgeries = new();
+    private readonly List<EntProtoId> _allSurgeries = [];
 
     /// <summary>
     /// Every surgery entity prototype id.

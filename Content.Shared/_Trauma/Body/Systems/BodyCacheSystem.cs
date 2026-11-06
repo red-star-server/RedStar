@@ -48,6 +48,9 @@ public sealed partial class BodyCacheSystem : CommonBodyCacheSystem
         if (TerminatingOrDeleted(ent) || args.Organ.Comp.Category is not {} category)
             return;
 
+        if (!ent.Comp.Organs.TryGetValue(category, out var cached) || cached != args.Organ.Owner)
+            return;
+
         ent.Comp.Organs.Remove(category);
         Dirty(ent);
     }

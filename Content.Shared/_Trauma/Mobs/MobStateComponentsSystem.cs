@@ -11,7 +11,7 @@ namespace Content.Shared._Trauma.Mobs;
 public sealed partial class MobStateComponentsSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private EntityQuery<SleepingComponent> _sleepingQuery = default!;
+    [Dependency] private EntityQuery<SleepingComponent> _sleepingQuery;
 
     [SubscribeLocalEvent]
     private void OnMapInit(Entity<MobStateComponent> ent, ref MapInitEvent args)
@@ -37,7 +37,6 @@ public sealed partial class MobStateComponentsSystem : EntitySystem
 
     private void OnStateChanged<T>(EntityUid uid, T comp, ref MobStateChangedEvent args) where T: Component
     {
-        // client would chud out without this
         if (_timing.ApplyingState)
             return;
 
@@ -56,7 +55,6 @@ public sealed partial class MobStateComponentsSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnAliveShutdown(Entity<AliveMobComponent> ent, ref ComponentShutdown args)
     {
-        // client would chud out without this
         if (_timing.ApplyingState)
             return;
 
@@ -90,8 +88,6 @@ public sealed partial class MobStateComponentsSystem : EntitySystem
                 break;
             case MobState.Dead:
                 EnsureComp<DeadMobComponent>(uid);
-                break;
-            default:
                 break;
         }
     }

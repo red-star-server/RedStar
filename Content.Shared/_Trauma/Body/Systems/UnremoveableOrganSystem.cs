@@ -24,7 +24,7 @@ public sealed partial class UnremoveableOrganSystem : EntitySystem
         if (TerminatingOrDeleted(args.Target) || Transform(args.Target).MapID == MapId.Nullspace || _timing.ApplyingState)
             return; // all good if it's being deleted or leaving pvs range
 
-        // if you intentionally deleted the root part, please delete the body instead chud
+        // removing the root part is never an amputation, the body is deleted instead
         if (!HasComp<ChildOrganComponent>(ent))
         {
             Log.Warning($"Root part {ToPrettyString(ent)} was removed from {ToPrettyString(args.Target)}; deleting the body.");

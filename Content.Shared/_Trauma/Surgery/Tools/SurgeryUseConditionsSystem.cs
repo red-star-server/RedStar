@@ -31,7 +31,7 @@ public sealed partial class SurgeryUseConditionsSystem : EntitySystem
     private void OnGunUsed(Entity<GunComponent> ent, ref SurgeryUseAttemptEvent args)
     {
         var coords = Transform(args.User).Coordinates;
-        var ev = new TakeAmmoEvent(1, new List<(EntityUid? Entity, IShootable Shootable)>(), coords, args.User);
+        var ev = new TakeAmmoEvent(1, [], coords, args.User);
         RaiseLocalEvent(ent, ev);
 
         if (ev.Ammo.Count > 0)

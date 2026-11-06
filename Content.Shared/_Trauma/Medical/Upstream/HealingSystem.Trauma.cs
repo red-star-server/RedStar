@@ -21,7 +21,7 @@ public sealed partial class HealingSystem
     [Dependency] private BodyPartSystem _healingParts = default!;
 
     private ProtoId<OrganCategoryPrototype>[] _partHealingOrder =
-    {
+    [
         "Head",
         "Torso",
         "ArmLeft",
@@ -34,7 +34,7 @@ public sealed partial class HealingSystem
         "FootRight",
         "Tail",
         "Wings"
-    };
+    ];
 
     private bool AnyHealable(Entity<DamageableComponent?> part, DamageSpecifier healing)
     {
@@ -118,9 +118,11 @@ public sealed partial class HealingSystem
 
         foreach (var limb in _body.GetExternalOrgans(ent))
         {
+            if (!IsBodyDamaged((ent, body), null, healing, limb))
+                continue;
+
             part = limb;
-            if (IsBodyDamaged((ent, body), null, healing, limb))
-                return true;
+            return true;
         }
         return false;
     }
@@ -128,10 +130,10 @@ public sealed partial class HealingSystem
     [SubscribeLocalEvent]
     private void OnBodyDoAfter(Entity<BodyComponent> body, ref HealingDoAfterEvent args)
     {
-        HandleBodyDoAfter(body.Owner, body.Comp, ref args);
+        HandleBodyDoAfter(body.Owner, ref args);
     }
 
-    private void HandleBodyDoAfter(EntityUid ent, BodyComponent comp, ref HealingDoAfterEvent args)
+    private void HandleBodyDoAfter(EntityUid ent, ref HealingDoAfterEvent args)
     {
         if (_healingParts.GetRootPart(ent) == null)
             return;
@@ -162,7 +164,7 @@ public sealed partial class HealingSystem
         var healedTotal = new DamageSpecifier(); // Goobstation
         FixedPoint2 modifiedBleedStopAbility = 0;
         // Heal some bleeds
-        bool healedBleedLevel = false;
+        var healedBleedLevel = false;
         if (healing.BloodlossModifier != 0)
         {
             // Goobstation start
@@ -176,18 +178,18 @@ public sealed partial class HealingSystem
             if (healing.BloodlossModifier + modifiedBleedStopAbility < 0.0)
                 _bloodstreamSystem.TryModifyBleedAmount(ent, (healing.BloodlossModifier + modifiedBleedStopAbility).Float()); // Use the leftover bleed heal
             if (healedBleed)
+            {
                 _popupSystem.PopupEntity(bleedBefore + healing.BloodlossModifier <= 0.0
                         ? Loc.GetString("rebell-medical-item-stop-bleeding-fully")
                         : Loc.GetString("rebell-medical-item-stop-bleeding-partially"),
                     ent,
                     args.User);
+            }
             // Goobstation end
         }
 
         if (healing.ModifyBloodLevel != 0)
             healedBleedLevel = _bloodstreamSystem.TryModifyBloodLevel(ent, -healing.ModifyBloodLevel);
-
-        //healedBleed = healedBleedWound || healedBleedLevel;
 
         // Goobstation start
         var leftoverHealAndTrauma = false;
@@ -211,7 +213,6 @@ public sealed partial class HealingSystem
                 RaiseLocalEvent(targetedWoundable, ref ev);
                 if (ev.Cancelled)
                 {
-                    // if it wasn't healed then a trauma blocked it? goida
                     leftoverHealAndTrauma |= !healedBleedLevel;
                     continue;
                 }

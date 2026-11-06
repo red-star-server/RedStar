@@ -27,10 +27,9 @@ public sealed partial class PartStatusSystem : EntitySystem
     [Dependency] private ExamineSystemShared _examine = default!;
     [Dependency] private IChatManager _chat = default!;
     [Dependency] private MobStateSystem _mob = default!;
-    [Dependency] private TraumaSystem _trauma = default!;
     [Dependency] private WoundSystem _wound = default!;
-    [Dependency] private EntityQuery<BleedInflicterComponent> _bleedQuery = default!;
-    [Dependency] private EntityQuery<BoneComponent> _boneQuery = default!;
+    [Dependency] private EntityQuery<BleedInflicterComponent> _bleedQuery;
+    [Dependency] private EntityQuery<BoneComponent> _boneQuery;
 
     private static readonly BodyPartType[] BodyPartOrder =
     [
@@ -316,7 +315,7 @@ public sealed partial class PartStatusSystem : EntitySystem
     {
         var descriptions = new List<string>();
 
-        // TODO: Dehardcode this guscode from bone traumas when we actually have more organ traumas.
+        // TODO: Move this bone trauma special case out once there are more organ traumas.
 
         // Add bone trauma
         if (partStatus.BoneSeverity > BoneSeverity.Normal)

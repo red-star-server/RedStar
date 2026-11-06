@@ -3,7 +3,6 @@ using System.Linq;
 using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared._Trauma.Common.Damage;
-using Content.Shared._Trauma.Common.DoAfter;
 using Content.Shared._Trauma.Common.Healing;
 using Content.Shared._Trauma.Common.Medical;
 using Content.Shared._Trauma.Common.Wounds;
@@ -12,7 +11,6 @@ using Content.Shared.Body;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
-using Content.Shared.Gibbing;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
@@ -22,7 +20,6 @@ namespace Content.Shared._Trauma.Wounds;
 public sealed partial class WoundSystem
 {
     [Dependency] private BodyStatusSystem _bodyStatus = default!;
-    [Dependency] private GibbingSystem _gibbing = default!;
 
     private static readonly EntProtoId BluntWound = "WoundBlunt";
 
@@ -30,8 +27,6 @@ public sealed partial class WoundSystem
     public static readonly ProtoId<DamageTypePrototype> Blunt = "Blunt";
     public static readonly ProtoId<DamageGroupPrototype> Brute = "Brute";
     public static readonly ProtoId<OrganCategoryPrototype> HeadCategory = "Head";
-
-    private readonly List<Entity<WoundComponent>> _wounds = new();
 
     #region Event Handling
 
@@ -60,11 +55,9 @@ public sealed partial class WoundSystem
         if (_woundableQuery.HasComp(args.Organ))
             CheckWoundableSeverityThresholds(args.Organ);
 
-        if (_body.GetBody(parent.Owner) is {} body)
-        {
-            _bodyStatus.UpdateStatus(body);
-            _trauma.UpdateBodyBoneAlert(body);
-        }
+        if (_body.GetBody(parent.Owner) is not { } body) return;
+        _bodyStatus.UpdateStatus(body);
+        _trauma.UpdateBodyBoneAlert(body);
     }
 
     [SubscribeLocalEvent]
@@ -132,15 +125,15 @@ public sealed partial class WoundSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnWoundSeverityChanged(EntityUid wound, WoundComponent woundComponent, WoundSeverityChangedEvent args)
+    private void OnWoundSeverityChanged(Entity<WoundComponent> ent, ref WoundSeverityChangedEvent args)
     {
         if (args.NewSeverity != WoundSeverity.Healed)
             return;
 
-        RemoveWound(wound);
+        RemoveWound(ent);
     }
 
-    [SubscribeLocalEvent(after: new[] { typeof(DamageableSystem) })]
+    [SubscribeLocalEvent(after: [typeof(DamageableSystem)])]
     private void OnDamageDealt(Entity<WoundableComponent> ent, ref DamageDealtEvent args)
     {
         if (!ent.Comp.AllowWounds)
@@ -198,17 +191,6 @@ public sealed partial class WoundSystem
         }
 
         UpdateWoundableIntegrity(part);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnModifyDoAfterDelay(Entity<HandOrganComponent> ent, ref BodyRelayedEvent<ModifyDoAfterDelayEvent> args)
-    {
-        // TODO: Apply a do-after delay penalty when the hand is missing.
-        // Add DoAfterDelayMultiplierComponent to hand organ prototypes, or track hand count
-        // on the body (analogous to LegsComponent) and scale the multiplier there.
-        var ev = args.Args;
-        RaiseLocalEvent(ent, ref ev);
-        args.Args = ev;
     }
 
     #endregion
@@ -313,6 +295,7 @@ public sealed partial class WoundSystem
     /// <param name="id">Wound entity's ID.</param>
     /// <param name="severity">Severity to apply.</param>
     /// <param name="woundContinued">The wound the severity was applied to, if any</param>
+    /// <param name="user"></param>
     /// <returns>Returns true, if wound was continued.</returns>
     public bool TryContinueWound(
         Entity<WoundableComponent?> part,
@@ -347,6 +330,8 @@ public sealed partial class WoundSystem
     /// </summary>
     /// <param name="wound">Wound to which severity is applied.</param>
     /// <param name="severity">Severity to set.</param>
+    /// <param name="woundable"></param>
+    /// <param name="user"></param>
     public FixedPoint2 SetWoundSeverity(Entity<WoundComponent> wound,
         FixedPoint2 severity,
         WoundableComponent? woundable = null,
@@ -358,7 +343,7 @@ public sealed partial class WoundSystem
             return change;
 
         var old = wound.Comp.WoundSeverityPoint;
-        var overflow = severity - old;
+        var requested = severity - old;
 
         var upperLimit = woundable.IntegrityCap;
         severity = FixedPoint2.Clamp(severity, 0, upperLimit);
@@ -377,7 +362,7 @@ public sealed partial class WoundSystem
             _trauma.ApplyMangledTraumas((part, woundable), wound.Owner, severity, user);
         }
 
-        WoundSeverityChanged(wound, old, overflow);
+        WoundSeverityChanged(wound, old, requested);
 
         CheckSeverityThresholds(wound, (part, woundable));
 
@@ -391,6 +376,8 @@ public sealed partial class WoundSystem
     /// </summary>
     /// <param name="wound">Wound to which severity is applied.</param>
     /// <param name="severity">Severity to add.</param>
+    /// <param name="woundable"></param>
+    /// <param name="user"></param>
     public FixedPoint2 ChangeWoundSeverity(
         Entity<WoundComponent> wound,
         FixedPoint2 severity,
@@ -443,10 +430,6 @@ public sealed partial class WoundSystem
         }
 
         var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(part));
-        var direction = rand.NextAngle().ToWorldVec();
-        var dropAngle = rand.NextFloat(0.8f, 1.2f);
-        var worldRotation = _transform.GetWorldRotation(part).ToVec();
-
         _throwing.TryThrow(
             part.Owner,
             rand.NextAngle().ToWorldVec() * rand.NextFloat(0.8f, 5f),
@@ -461,10 +444,10 @@ public sealed partial class WoundSystem
 
     #region Private API
 
-    private void WoundSeverityChanged(Entity<WoundComponent> wound, FixedPoint2 old, FixedPoint2? overflow = null)
+    private void WoundSeverityChanged(Entity<WoundComponent> wound, FixedPoint2 old, FixedPoint2 requested)
     {
         var total = wound.Comp.WoundSeverityPoint;
-        var ev = new WoundSeverityPointChangedEvent(wound.Comp, old, total, overflow);
+        var ev = new WoundSeverityPointChangedEvent(wound.Comp, old, total, requested);
         RaiseLocalEvent(wound, ref ev);
     }
 
@@ -525,7 +508,14 @@ public sealed partial class WoundSystem
                 return false;
         }
 
-        Del(wound);
+        if (comp.HoldingWoundable != EntityUid.Invalid &&
+            _woundableQuery.TryComp(comp.HoldingWoundable, out var woundable))
+        {
+            if (_container.Remove(wound, woundable.Wounds, reparent: false, force: true))
+                return true;
+        }
+
+        QueueDel(wound);
         return true;
     }
 
@@ -626,7 +616,6 @@ public sealed partial class WoundSystem
     /// Checks if the specified prototype ID corresponds to a valid EntityPrototype in the collection,
     /// ensuring it contains the necessary WoundComponent.
     /// </summary>
-    /// <param name="protoId">The prototype ID to be validated.</param>
     /// <returns>True if the wound prototype is valid, otherwise false.</returns>
     private bool IsWoundPrototypeValid([ForbidLiteral] EntProtoId id)
         => ProtoMan.TryIndex(id, out var proto)
@@ -698,23 +687,23 @@ public sealed partial class WoundSystem
     }
 
     /// <summary>
-    /// Get the wounds present on a specific woundable
-    /// The returned list is reused between calls, do not store it
+    /// Get a snapshot of the wounds present on a specific woundable.
+    /// The returned list is a fresh copy owned by the caller, so it is safe to modify it
+    /// or to change/remove wounds while iterating over it.
     /// </summary>
-    /// <param name="targetEntity">Entity that owns the woundable</param>
-    /// <param name="targetWoundable">Woundable component</param>
-    /// <returns>An enumerable pointing to one of the found wounds</returns>
+    /// <param name="part">The woundable to get wounds of</param>
+    /// <returns>A new list with all wounds of the woundable</returns>
     public List<Entity<WoundComponent>> GetWoundableWounds(Entity<WoundableComponent?> part)
     {
-        if (!_woundableQuery.Resolve(part, ref part.Comp) || part.Comp.Wounds == default) // it can be null while applying state if the entity is entering pvs right now
+        if (!_woundableQuery.Resolve(part, ref part.Comp)) // it can be null while applying state if the entity is entering pvs right now
             return [];
 
-        _wounds.Clear();
+        var wounds = new List<Entity<WoundComponent>>(part.Comp.Wounds.Count);
         foreach (var wound in part.Comp.Wounds.ContainedEntities)
         {
-            _wounds.Add((wound, _query.Comp(wound)));
+            wounds.Add((wound, _query.Comp(wound)));
         }
-        return _wounds;
+        return wounds;
     }
 
     /// <summary>
@@ -727,11 +716,12 @@ public sealed partial class WoundSystem
                 wound.Comp.WoundSeverity >= wound.Comp.MangleSeverity);
 
     /// <summary>
-    /// Returns you the sum of all wounds on this woundable
+    /// Returns the sum of the severity points of all wounds on this woundable.
     /// </summary>
     /// <param name="part">The woundable bodypart</param>
-    /// <param name="damageGroup">The damage group of said wounds</param>
-    /// <param name="healable">Are the wounds supposed to be healable</param>
+    /// <param name="damageGroup">If set, only wounds of this damage group are counted</param>
+    /// <param name="healable">If true, only wounds that can currently be healed are counted</param>
+    /// <param name="ignoreBlockers">Whether healing blockers are ignored when checking if a wound is healable</param>
     /// <returns>The severity sum</returns>
     public FixedPoint2 GetWoundableSeverityPoint(
         Entity<WoundableComponent?> part,
@@ -739,48 +729,29 @@ public sealed partial class WoundSystem
         bool healable = false,
         bool ignoreBlockers = false)
     {
-        var wounds = GetWoundableWounds(part);
-
-        if (damageGroup != null)
-            wounds.RemoveAll(wound => wound.Comp.DamageGroup != damageGroup);
-
-        if (healable)
-            wounds.RemoveAll(wound => !CanHealWound(wound, ignoreBlockers));
-
         var sum = FixedPoint2.Zero;
-        foreach (var wound in wounds)
+        foreach (var wound in GetWoundableWounds(part))
         {
+            if (damageGroup != null && wound.Comp.DamageGroup != damageGroup)
+                continue;
+
+            if (healable && !CanHealWound(wound, ignoreBlockers))
+                continue;
+
             sum += wound.Comp.WoundSeverityPoint;
         }
 
         return sum;
     }
 
-    /// <summary>
-    /// Returns you the integrity damage the woundable has
-    /// </summary>
-    /// <param name="targetEntity">The woundable uid</param>
-    /// <param name="targetWoundable">The component</param>
-    /// <param name="damageGroup">The damage group of wounds that induced the damage</param>
-    /// <param name="healable">Is the integrity damage healable</param>
-    /// <returns>The integrity damage</returns>
+    /// <inheritdoc cref="GetWoundableSeverityPoint"/>
     public FixedPoint2 GetWoundableIntegrityDamage(
         Entity<WoundableComponent?> part,
         [ForbidLiteral] ProtoId<DamageGroupPrototype>? damageGroup = null,
         bool healable = false,
         bool ignoreBlockers = false)
     {
-        if (!_woundableQuery.Resolve(part, ref part.Comp) ||
-            part.Comp.Wounds.Count == 0)
-            return FixedPoint2.Zero;
-
-        var wounds = GetWoundableWounds(part);
-        if (damageGroup != null)
-            wounds.RemoveAll(wound => wound.Comp.DamageGroup != damageGroup);
-        if (healable)
-            wounds.RemoveAll(wound => !CanHealWound(wound, ignoreBlockers));
-
-        return wounds.Aggregate(FixedPoint2.Zero, (current, wound) => current + wound.Comp.WoundSeverityPoint);
+        return GetWoundableSeverityPoint(part, damageGroup, healable, ignoreBlockers);
     }
 
     #endregion

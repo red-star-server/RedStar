@@ -354,7 +354,6 @@ public sealed partial class BodySystem
         return ev.Handled;
     }
 
-    // no marking api anymore lol have to write one myself
     #region Markings
 
     /// <summary>
@@ -470,14 +469,14 @@ public sealed partial class BodySystem
             return TargetBodyPart.Chest;
 
         if (_mob.IsIncapacitated(target)
-            || _standing.IsDown(target))
+            || _standing.IsDown(target) || !targetComp.TargetOdds.TryGetValue(targetPart, out var odds))
             return targetPart;
 
-        var totalWeight = targetComp.TargetOdds[targetPart].Values.Sum();
+        var totalWeight = odds.Values.Sum();
         var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(target));
         var randomValue = rand.NextFloat() * totalWeight;
 
-        foreach (var (part, weight) in targetComp.TargetOdds[targetPart])
+        foreach (var (part, weight) in odds)
         {
             if (randomValue <= weight)
                 return part;
