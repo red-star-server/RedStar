@@ -78,6 +78,7 @@ public sealed class BodyTest : GameTest
   components:
   - type: Organ
     category: Heart
+  - type: VitalOrgan
   - type: ChildOrgan
     parents: [Torso]
   - type: InternalChildOrgan

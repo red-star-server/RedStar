@@ -10,3 +10,10 @@ loadout-group-brigmedic-shoes = Бригмедик, обувь
 # Command
 loadout-group-captain-shoes = Капитан, обувь
 loadout-group-hop-shoes = Начальник отдела кадров, обувь
+
+# Medical
+
+loadout-group-geneticist-head = Генетик, голова
+loadout-group-geneticist-jumpsuit = Генетик, комбинезон
+loadout-group-geneticist-backpack = Генетик, рюкзак
+loadout-group-geneticist-outerclothing = Генетик, верхняя одежда
