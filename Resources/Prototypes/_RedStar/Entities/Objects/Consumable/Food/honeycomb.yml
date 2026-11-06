@@ -1,0 +1,49 @@
+# Cut from a hive frame. Not tagged as a vegetable: it does not count for vegetable recipes and bounties.
+- type: entity
+  parent: [ SolutionTiny, FoodInjectableBase ]
+  id: FoodHoneycomb
+  name: honeycomb
+  description: A comb full of honey, cut from a hive frame.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Objects/Specific/Beekeeping/honeycomb.rsi
+    # Grey overlays tinted with the color of what is in the comb; the shine stays as it is.
+    layers:
+    - state: drips
+      color: "#EB8423"
+      map: [ "enum.BeeCombVisualLayers.Drips" ]
+    - state: cells
+      color: "#FFAC30"
+      map: [ "enum.BeeCombVisualLayers.Cells" ]
+    - state: outline
+      color: "#FFB70A"
+      map: [ "enum.BeeCombVisualLayers.Outline" ]
+    - state: shine
+  - type: Appearance
+  - type: BeeCombVisuals
+  # Stacks up to 30; the grinder and the juicer handle the whole stack.
+  - type: Stack
+    stackType: Honeycomb
+    count: 1
+  - type: FlavorProfile
+    flavors:
+    - honey
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Honey
+        Quantity: 5
+      - ReagentId: Vitamin
+        Quantity: 2
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Honey
+        Quantity: 5
+    grindableSolutionName: food
+  - type: Tag
+    tags:
+    - Honeycomb
+  - type: GuideHelp
+    guides:
+    - Beekeeping

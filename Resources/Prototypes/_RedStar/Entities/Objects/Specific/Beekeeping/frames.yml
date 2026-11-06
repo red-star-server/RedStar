@@ -1,0 +1,123 @@
+- type: entity
+  parent: BaseItem
+  id: BeeFrame
+  name: hive frame
+  description: A wooden frame with a wax foundation. Bees build their combs on it.
+  components:
+  - type: BeeFrame
+  - type: Sprite
+    sprite: _RedStar/Objects/Specific/Beekeeping/frame.rsi
+    layers:
+    - state: foundation
+      map: [ "enum.BeeFrameVisualLayers.Base" ]
+    # Grey overlays: the comb takes the colour of its reagent, the cap layer stays as it is.
+    - state: comb
+      color: "#EDC200"
+      visible: false
+      map: [ "enum.BeeFrameVisualLayers.Comb" ]
+    - state: comb
+      visible: false
+      map: [ "enum.BeeFrameVisualLayers.Caps" ]
+    - state: outline
+      color: "#EDC200"
+      visible: false
+      map: [ "enum.BeeFrameVisualLayers.Outline" ]
+  - type: Item
+    size: Normal
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.BeeFrameVisuals.Fill:
+        enum.BeeFrameVisualLayers.Comb:
+          None: { visible: false }
+          Honey: { visible: true }
+          Wax: { visible: false }
+        enum.BeeFrameVisualLayers.Caps:
+          None: { visible: false }
+          Honey: { visible: false }
+          Wax: { visible: true }
+        enum.BeeFrameVisualLayers.Outline:
+          None: { visible: false }
+          Honey: { visible: true }
+          Wax: { visible: true }
+  - type: Damageable
+    damageModifierSet: WoodMod
+  - type: Injurable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 2
+            max: 2
+          Beeswax:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: BeeFrame
+    node: frame
+  - type: Tag
+    tags:
+    - Wooden
+  - type: GuideHelp
+    guides:
+    - Beekeeping
+
+# The same frame spawned further along, for maps and the guidebook. It is the same entity as it fills and empties.
+- type: entity
+  parent: BeeFrame
+  id: BeeFrameUncapped
+  suffix: Filling
+  components:
+  - type: BeeFrame
+    combs: 1
+    # Full, with its caps already cut off: the honey stage of a one-comb frame.
+    uncapped: true
+  - type: Sprite
+    layers:
+    - state: foundation
+      map: [ "enum.BeeFrameVisualLayers.Base" ]
+    # Grey overlays: the comb takes the colour of its reagent, the cap layer stays as it is.
+    - state: comb
+      color: "#EDC200"
+      visible: true
+      map: [ "enum.BeeFrameVisualLayers.Comb" ]
+    - state: comb
+      visible: false
+      map: [ "enum.BeeFrameVisualLayers.Caps" ]
+    - state: outline
+      color: "#EDC200"
+      visible: true
+      map: [ "enum.BeeFrameVisualLayers.Outline" ]
+
+
+- type: entity
+  parent: BeeFrame
+  id: BeeFrameCapped
+  suffix: Capped
+  components:
+  - type: BeeFrame
+    combs: 1
+  - type: Sprite
+    layers:
+    - state: foundation
+      map: [ "enum.BeeFrameVisualLayers.Base" ]
+    # Grey overlays: the comb takes the colour of its reagent, the cap layer stays as it is.
+    - state: comb
+      color: "#EDC200"
+      visible: false
+      map: [ "enum.BeeFrameVisualLayers.Comb" ]
+    - state: comb
+      visible: true
+      map: [ "enum.BeeFrameVisualLayers.Caps" ]
+    - state: outline
+      color: "#EDC200"
+      visible: true
+      map: [ "enum.BeeFrameVisualLayers.Outline" ]

@@ -1,0 +1,9 @@
+- type: cargoProduct
+  id: HydroponicsBeekeeping
+  icon:
+    sprite: _RedStar/Objects/Specific/Beekeeping/beehive.rsi
+    state: frames-2
+  product: CrateHydroponicsBeekeeping
+  cost: 1000
+  category: cargoproduct-category-name-hydroponics
+  group: market

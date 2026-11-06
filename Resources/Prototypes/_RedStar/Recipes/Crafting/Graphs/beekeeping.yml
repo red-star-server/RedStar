@@ -1,0 +1,44 @@
+- type: constructionGraph
+  id: BeeFrame
+  start: start
+  graph:
+  - node: start
+    actions:
+    - !type:DestroyEntity {}
+    edges:
+    - to: frame
+      steps:
+      - material: WoodPlank
+        amount: 3
+        doAfter: 2
+      - material: Beeswax
+        amount: 2
+        doAfter: 2
+  - node: frame
+    entity: BeeFrame
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialWoodPlank
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: Beeswax
+        amount: 1
+      steps:
+      - tool: Prying
+        doAfter: 2
+
+- type: constructionGraph
+  id: BeeswaxCandle
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: candle
+      steps:
+      - material: Beeswax
+        amount: 1
+        doAfter: 1
+  - node: candle
+    entity: CandleBeeswax

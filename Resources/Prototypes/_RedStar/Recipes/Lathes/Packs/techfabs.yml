@@ -20,6 +20,11 @@
   - HandheldGeneticAnalyzer
 
 - type: latheRecipePack
+  id: BeekeepingStatic
+  recipes:
+  - ApiaryAnalyzer
+
+- type: latheRecipePack
   id: MiningToolsStatic
   recipes:
   - Fulton

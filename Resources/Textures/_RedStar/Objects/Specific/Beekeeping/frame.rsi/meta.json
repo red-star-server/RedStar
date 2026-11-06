@@ -1,0 +1,20 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Based on the honey_frame state of tgstation icons/obj/service/hydroponics/equipment.dmi at commit https://github.com/tgstation/tgstation/commit/a28d7aba8fd21609596d0412d9e680686fa0b238, modified by KAVALDi (github). The comb and outline overlays are drawn by KAVALDi (github).",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "foundation"
+        },
+        {
+            "name": "comb"
+        },
+        {
+            "name": "outline"
+        }
+    ]
+}

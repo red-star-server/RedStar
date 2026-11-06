@@ -1,0 +1,20 @@
+# A bee on an errand (BeeErrandComponent): fly to the next stop the errand names and act there, again and again until
+# the errand is over. With nowhere to go (no path, the hive is gone) it idles about.
+- type: htnCompound
+  id: BeeErrandCompound
+  branches:
+  - tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:BeeErrandTargetOperator
+    - !type:HTNPrimitiveTask
+      operator: !type:MoveToOperator
+        pathfindInPlanning: true
+        removeKeyOnFinish: false
+        targetKey: TargetCoordinates
+        pathfindKey: TargetPathfind
+        rangeKey: MovementRange
+    - !type:HTNPrimitiveTask
+      operator: !type:BeeErrandActOperator
+  - tasks:
+    - !type:HTNCompoundTask
+      task: IdleCompound

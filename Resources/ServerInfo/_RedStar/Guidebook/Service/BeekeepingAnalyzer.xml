@@ -1,0 +1,86 @@
+<Document>
+# Анализатор пасеки
+<Box>
+<GuideEntityEmbed Entity="ApiaryAnalyzer" Caption=""/>
+</Box>
+Главный инструмент пчеловода. Показывает, что творится в улье, сколько в нём пчёл и нектара, какие рамки полные и какие лотки пчёлы знают. Выдаёт [bold]БотаМакс[/bold], печатает сервисный техфаб.
+
+Ткните анализатором в улей, матку или пчелу в руке. Через полсекунды откроется окно. Оно обновляется само, пока вы стоите рядом, так что можно смотреть, как улей работает.
+
+## Улей
+Слева в окне сам улей: [bold]признаки колонии[/bold], слоты признаков, реагенты в матке и [bold]характеристики[/bold] (о них ниже). Справа его жизнь.
+
+Сверху справа четыре полоски:
+- [color=#FFD700]Пчёлы[/color]: сколько пчёл дома из предела улья. В скобках с плюсом стоят те, кто сейчас снаружи (летят за нектаром или вылетели злыми): они ещё часть колонии, пока живы. Предел растёт с каждой рамкой.
+- [color=#FFA500]Нектар[/color]: запас нектара. Обычно почти пустой, потому что нектар сразу тратят. Наведите на значок [bold]i[/bold] справа, и он скажет, куда нектар уходит сейчас.
+- [color=#F0E68C]Соты[/color]: соты во всех рамках вместе и сколько ещё влезет.
+- [color=#DC143C]Прочность[/color]: сколько улей ещё выдержит.
+
+<ColorBox Color="#2e422e" OutlineColor="#5B5C6E">
+<Box Orientation="Vertical" HorizontalAlignment="Stretch">
+[bold]Куда уходит нектар[/bold]
+- [color=#FFD700]На пчёл и соты[/color]: колония растёт, а лишний нектар уже идёт в мёд.
+- [color=#FFD700]Копится на новых пчёл[/color]: колония растёт, а сотам нет места.
+- [color=#F0E68C]На соты[/color]: колония полная, мёд идёт.
+- [color=#FFA500]Копится, все рамки полные[/color]: пора срезать соты или добавить рамку.
+- [color=#FFA500]Копится, рабочих нет дома[/color]: все в полёте или у вас в руках.
+- [color=#FFA500]Копится, нет рамок[/color]: верните рамки в улей.
+- [color=#9A9A9A]Без матки не тратится[/color]: верните матку.
+</Box>
+</ColorBox>
+
+Под полосками три блока:
+- [bold]Колония.[/bold] Пчёлы дома, есть ли матка и [textlink="яйцо матки" link="BeekeepingQueen"], сколько пчёл летят за нектаром прямо сейчас (строка [bold]В полёте[/bold]) и растёт ли колония (строка [bold]Потомство[/bold], последняя: [bold]есть[/bold], если есть матка, рабочие дома, место для новых пчёл и нектар, иначе [bold]нет[/bold]).
+- [bold]Рамки.[/bold] Каждая рамка картинкой и числом сот. Картинка та же, что у настоящей рамки: видно, где мёд, а где пора срезать.
+- [bold]Известные лотки.[/bold] Каждый лоток, который нашла разведчица, с растением в нём. Слева от каждого лотка цветная полоска: [color=#98C379]зелёная[/color] значит растение спелое и рабочие его посещают, [color=#E5C07B]жёлтая[/color] значит растение ещё растёт, [color=#E06C75]красная[/color] значит лоток пустой или рабочие до него не долетят. Если список пуст, разведчица ещё никуда не долетела или растения закрыты стенами.
+
+## Матка и пчела в руке
+Справа будет каждый признак с объяснением, слева строки про саму пчелу:
+
+<Table Columns="2">
+<ColorBox Color="#453a59" OutlineColor="#5B5C6E"><Box>[bold]Кого смотрим[/bold]</Box></ColorBox>
+<ColorBox Color="#453a59" OutlineColor="#5B5C6E"><Box>[bold]Что покажет[/bold]</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Матка</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Слоты признаков, нестабильность и реагенты.</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Разведчица</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Цел ли её улей и сколько лотков она запомнила.</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Опылительница</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Сколько опылений осталось.</Box></ColorBox>
+</Table>
+
+Пчелу в полёте можно посмотреть так же, как пчелу в руке, но проще сначала поймать её. Злые пчёлы анализатору не показываются.
+
+## Характеристики
+Здесь собрано, что все [textlink="признаки" link="BeekeepingQueen"] колонии дают вместе. ×1 значит как у обычных пчёл. [color=#32CD32]Зелёное[/color] лучше обычного, [color=#DC143C]красное[/color] хуже, серое без изменений.
+
+<Table Columns="2">
+<ColorBox Color="#453a59" OutlineColor="#5B5C6E"><Box>[bold]Строка[/bold]</Box></ColorBox>
+<ColorBox Color="#453a59" OutlineColor="#5B5C6E"><Box>[bold]Что значит[/bold]</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Скорость сот</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Как быстро рабочие строят соты.</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Нектар на соту</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Сколько нектара съедает одна сота. Меньше лучше.</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Нектар за визит</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Сколько нектара пчела приносит с растения.</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Шанс удвоить урожай</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Как часто опыление даёт двойной урожай.</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Опылений у пчелы</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Сколько растений опылит пчела в руке.</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Цена новой пчелы</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Сколько нектара стоит новая пчела. Меньше значит колония растёт быстрее.</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Скорость размножения</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Как часто матка делает новую пчелу. Обычно раз в минуту.</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Ожидание яйца</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Сколько полная колония ждёт, прежде чем матка отложит яйцо. Обычно 3 минуты.</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Жизнь яйца</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Сколько яйцо живёт, пока его не собрали. Обычно 5 минут.</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Кулдаун яйца</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Сколько ждать следующего яйца после прошлого. Обычно 10 минут.</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Жизнь вне улья</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Сколько живёт пчела, взятая в руки.</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Лотков за вылет</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Сколько лотков разведчица находит за раз.</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Мутация при опылении</Box></ColorBox>
+<ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Сколько нестабильного мутагена получает растение при опылении.</Box></ColorBox>
+</Table>
+</Document>
