@@ -1,0 +1,3 @@
+# Role timers
+
+JobGeneticist = генетик
