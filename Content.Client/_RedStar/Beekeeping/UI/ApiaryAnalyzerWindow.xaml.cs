@@ -189,6 +189,8 @@ public sealed partial class ApiaryAnalyzerWindow : FancyWindow
         Egg.Text = Loc.GetString(state.HasEgg ? "apiary-analyzer-yes" : "apiary-analyzer-no");
         Foraging.Text = state.Foraging.ToString();
 
+        // A wild hive builds its combs right inside, with no frames.
+        FramesPanel.Visible = !state.Wild;
         FramesHeading.Text = Loc.GetString("apiary-analyzer-section-frames", ("count", state.Frames.Count));
         Frames.RemoveAllChildren();
         if (state.Frames.Count == 0)

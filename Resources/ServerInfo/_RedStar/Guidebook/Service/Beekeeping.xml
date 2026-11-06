@@ -43,7 +43,7 @@
 
 <ColorBox Color="#59563a" OutlineColor="#5B5C6E">
 <Box Orientation="Vertical" HorizontalAlignment="Stretch">
-[bold]Не отпускайте матку где попало.[/bold] Без улья она живёт 5 минут, а отпущенная на пол улетает сама в пустой улей поблизости, если он есть.
+[bold]Не отпускайте матку где попало.[/bold] Без улья она живёт 5 минут, а отпущенная на пол улетает сама: в пустой улей поблизости, а если его нет, строить [textlink="дикий улей" link="BeekeepingWild"] в шкафу.
 </Box>
 </ColorBox>
 
@@ -96,6 +96,7 @@
 <ColorBox Color="#59563a" OutlineColor="#5B5C6E">
 <Box Orientation="Vertical" HorizontalAlignment="Stretch">
 [bold]Не держите рамки снаружи долго.[/bold] Без рамок пчёлам тесно. Через 5 минут лишние пчёлы начнут улетать из улья.
+А если в улье с маткой не осталось ни одной рамки, через 3 минуты матка улетит из него роем вместе со всеми пчёлами. Осмотр улья показывает, сколько осталось.
 </Box>
 </ColorBox>
 
@@ -157,5 +158,5 @@
 <ColorBox OutlineColor="#5B5C6E"><Box Margin="4" HorizontalAlignment="Left">Растение уже опылено, уже созрело, собирает себя само или погибло.</Box></ColorBox>
 </Table>
 
-Дальше: [textlink="анализатор пасеки" link="BeekeepingAnalyzer"], [textlink="матка и признаки" link="BeekeepingQueen"].
+Дальше: [textlink="анализатор пасеки" link="BeekeepingAnalyzer"], [textlink="матка и признаки" link="BeekeepingQueen"], [textlink="рои и дикие ульи" link="BeekeepingWild"].
 </Document>

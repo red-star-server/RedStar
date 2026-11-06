@@ -147,11 +147,81 @@ public sealed partial class BeehiveComponent : Component
 
     #endregion
 
+    #region Swarm and wild hive
+
     /// <summary>
-    /// The young queen an emergency queen trait raises in a hive left without one.
+    /// A wild hive built by a swarm: no frames, a fixed bee limit, combs kept inside. Taken only by breaking it.
+    /// </summary>
+    [DataField]
+    public bool Wild;
+
+    /// <summary>
+    /// Bee limit of a wild hive.
+    /// </summary>
+    [DataField]
+    public int WildMaxBees = 15;
+
+    /// <summary>
+    /// Combs inside a wild hive. They fall out when it is broken. Server only.
+    /// </summary>
+    [DataField]
+    public int WildCombs;
+
+    /// <summary>
+    /// Most combs a wild hive holds.
+    /// </summary>
+    [DataField]
+    public int MaxWildCombs = 8;
+
+    /// <summary>
+    /// The quirk of the swarm that built this wild hive, shown when it is examined.
+    /// </summary>
+    [DataField]
+    public ProtoId<SwarmModifierPrototype>? SwarmModifier;
+
+    /// <summary>
+    /// The honey shows on a wild hive from this share of its combs.
+    /// </summary>
+    [DataField]
+    public float WildHoneyShown = 0.5f;
+
+    /// <summary>
+    /// Fewest bees at home for a swarm to leave when an egg dies.
+    /// </summary>
+    [DataField]
+    public int SwarmMinBees = 4;
+
+    /// <summary>
+    /// How far a swarm looks for a new home, in tiles.
+    /// </summary>
+    [DataField]
+    public float SwarmRange = 12f;
+
+    [DataField]
+    public EntProtoId SwarmPrototype = "BeeSwarm";
+
+    /// <summary>
+    /// The bees that leave a crowded hive together, with no queen.
+    /// </summary>
+    [DataField]
+    public EntProtoId LeavingSwarmPrototype = "BeeSwarmLeaving";
+
+    [DataField]
+    public EntProtoId WildHivePrototype = "WildBeehive";
+
+    /// <summary>
+    /// What one comb of a wild hive becomes when the hive is broken.
+    /// </summary>
+    [DataField]
+    public EntProtoId WildCombPrototype = "FoodHoneycomb";
+
+    /// <summary>
+    /// The young queen hatched from the egg, left behind in the hive when the old one swarms out.
     /// </summary>
     [DataField]
     public EntProtoId DaughterQueenPrototype = "BeeQueen";
+
+    #endregion
 
     /// <summary>
     /// Payload each bee of a colony with a sting takes from the queen when it leaves the hive.
@@ -248,6 +318,12 @@ public sealed partial class BeehiveComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan CrowdingGrace = TimeSpan.FromMinutes(5);
+
+    /// <summary>
+    /// How long a queen stays in a hive without frames before she leaves it with all her bees as a swarm.
+    /// </summary>
+    [DataField]
+    public TimeSpan AbandonTime = TimeSpan.FromMinutes(3);
 
     /// <summary>
     /// After the grace period, one extra bee leaves this often.
@@ -512,6 +588,12 @@ public sealed partial class BeehiveComponent : Component
     /// </summary>
     [ViewVariables, AutoPausedField]
     public TimeSpan? CrowdedSince;
+
+    /// <summary>
+    /// When the colony leaves this hive for having no frames, or null while it has frames or no queen.
+    /// </summary>
+    [ViewVariables, AutoPausedField]
+    public TimeSpan? AbandonAt;
 
     /// <summary>
     /// When the next extra bee leaves an overcrowded hive.

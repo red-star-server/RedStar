@@ -58,7 +58,7 @@ public sealed partial class BeeErrandSystem
         if (comp.Foragers.Count >= comp.MaxForagers || !AreaHasRoom(hiveXform.Coordinates))
             return null;
 
-        if (Release(hive, hiveXform, comp.PollinatorPrototype, target) is not { } bee)
+        if (Release(hive, hiveXform, comp.PollinatorPrototype, target, null) is not { } bee)
             return null;
 
         comp.Foragers.Add(bee);
@@ -72,7 +72,7 @@ public sealed partial class BeeErrandSystem
     {
         if (found.Count == 0 ||
             !AreaHasRoom(hiveXform.Coordinates) ||
-            Release(hive, hiveXform, hive.Comp.ScoutPrototype, found[0], BeeErrandKind.Scout) is not { } bee)
+            Release(hive, hiveXform, hive.Comp.ScoutPrototype, found[0], null, kind: BeeErrandKind.Scout) is not { } bee)
         {
             return false;
         }
@@ -90,6 +90,8 @@ public sealed partial class BeeErrandSystem
         TransformComponent hiveXform,
         string prototype,
         EntityUid? target,
+        (EntityUid Entry, EntityUid Exit)? route,
+        EntityCoordinates? spot = null,
         BeeErrandKind kind = BeeErrandKind.Forage)
     {
         var bee = Spawn(prototype, hiveXform.Coordinates);
@@ -117,6 +119,9 @@ public sealed partial class BeeErrandSystem
         }
 
         errand.Target = target;
+        errand.Spot = spot;
+        errand.VentEntry = route?.Entry;
+        errand.VentExit = route?.Exit;
         // It grows out of the hive as it sets off.
         SetSize(bee, BeeFlightSize.Growing);
         return bee;
