@@ -27,7 +27,8 @@ public sealed partial class BeeQueenSystem
             // The egg lives on its own timer, paused hive or not.
             if (now >= comp.EggDiesAt)
             {
-                // Nobody collected the jelly: the egg is gone.
+                // Nobody collected the jelly: the old queen may swarm out and leave the young one behind.
+                _swarm.TrySwarm(hive);
                 EndEgg(hive);
             }
             return;

@@ -15,7 +15,26 @@ public sealed class BeekeepingCVars
         CVarDef.Create("beekeeping.active_hive_limit", 8, CVar.SERVERONLY);
 
     /// <summary>
-    /// Bees out of their hives (on errands) within <see cref="AreaBeeRadius"/> of a hive. Past it the hive lets
+    /// Angry bees alive on one map, from all hives together. Past it a hit still counts, but no bee flies out.
+    /// </summary>
+    public static readonly CVarDef<int> AngryBeeLimit =
+        CVarDef.Create("beekeeping.angry_bee_limit", 30, CVar.SERVERONLY);
+
+    /// <summary>
+    /// Wild hives on one map. Past it an egg that dies uncollected just dies, and no swarm leaves.
+    /// </summary>
+    public static readonly CVarDef<int> WildHiveLimit =
+        CVarDef.Create("beekeeping.wild_hive_limit", 3, CVar.SERVERONLY);
+
+    /// <summary>
+    /// Meat hives (wild hives that live on blood) on one map, swarms still on their way included. Past it a swarm that
+    /// would be a meat one turns into a plain plant swarm.
+    /// </summary>
+    public static readonly CVarDef<int> MeatHiveLimit =
+        CVarDef.Create("beekeeping.meat_hive_limit", 2, CVar.SERVERONLY);
+
+    /// <summary>
+    /// Bees out of their hives (on errands or angry) within <see cref="AreaBeeRadius"/> of a hive. Past it the hive lets
     /// no more out: the colony keeps working, only fewer bees are seen.
     /// </summary>
     public static readonly CVarDef<int> AreaBeeLimit =

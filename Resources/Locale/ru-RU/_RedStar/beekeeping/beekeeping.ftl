@@ -1,6 +1,8 @@
 guide-entry-beekeeping = Пчеловодство
 guide-entry-beekeeping-analyzer = Анализатор пасеки
 guide-entry-beekeeping-queen = Матка и признаки
+guide-entry-beekeeping-wild = Рои, дикие и злые пчёлы
+
 ## Улей
 
 beekeeping-slot-queen = Матка
@@ -23,6 +25,7 @@ beekeeping-hive-examine-nectar = Запас нектара: { $level ->
    *[High] много
 }.
 beekeeping-hive-examine-cramped = [color=yellow]В улье тесно: пчёлам не хватает рамок.[/color]
+beekeeping-hive-examine-abandon = [color=orange]В улье нет рамок, пчёлам негде жить: колония улетит через { $minutes } мин. { $seconds } с.[/color]
 beekeeping-hive-examine-leaving = [color=red]Пчёлы покидают улей: не хватает рамок.[/color]
 beekeeping-hive-examine-dying = [color=red]Колония без матки вымирает.[/color]
 beekeeping-hive-examine-scout-outside = Разведчица вне улья.
@@ -138,6 +141,10 @@ beekeeping-queen-trait-lost = Матка потеряла признак: { $tra
 beekeeping-queen-trait-replaced = Матка получила признак { $trait } вместо признака { $old }.
 beekeeping-queen-trait-nothing = Мутаген не подействовал: у матки нет места для признаков.
 
+cmd-beekeeping_clear-desc = Убирает со своей карты злых пчёл, злых маток, рои, заблудившихся пчёл и дикие ульи. С "all" со всех карт.
+cmd-beekeeping_clear-help = Использование: beekeeping_clear [all]
+cmd-beekeeping_clear-no-map = Нет своей карты: зайдите в тело или укажите "all".
+cmd-beekeeping_clear-done = Убрано: { $count }.
 beekeeping-queen-hive-limit = Матка не приживается: в секторе слишком много ульев.
 beekeeping-bee-bite = Пчела кусает вас за руку!
 beekeeping-bee-sting = Пчела жалит вас в руку!
@@ -150,6 +157,9 @@ beekeeping-jelly-collected = Вы собрали маточное молочко
 beekeeping-queen-slot-added = У матки стало больше места для признаков: слотов { $slots }.
 beekeeping-queen-slots-max = У матки уже столько слотов, сколько возможно.
 
+beekeeping-hive-crowd-swarm = Пчёлам тесно: часть колонии улетает роем!
+beekeeping-hive-abandon = В улье нет рамок: матка улетает из него со всеми пчёлами!
+beekeeping-hive-swarm = Старая матка улетает из улья с роем! В улье осталась молодая матка.
 ## Apiary analyzer
 
 apiary-analyzer-section-traits = Признаки
@@ -157,7 +167,7 @@ apiary-analyzer-section-colony-traits = Признаки колонии
 apiary-analyzer-section-stats = Характеристики
 apiary-analyzer-section-colony = Колония
 apiary-analyzer-section-frames = Рамки ({ $count })
-apiary-analyzer-section-trays = Известные лотки ({ $count })
+apiary-analyzer-section-trays = Известные источники ({ $count })
 apiary-analyzer-section-queen = Матка
 apiary-analyzer-section-scout = Разведчица
 apiary-analyzer-section-pollinator = Опылительница
@@ -185,7 +195,7 @@ apiary-analyzer-yes = есть
 apiary-analyzer-no = нет
 apiary-analyzer-frames-none = Рамок нет.
 apiary-analyzer-frame-combs = { $combs } из { $max } сот
-apiary-analyzer-trays-none = Разведчица ещё не нашла ни одного лотка.
+apiary-analyzer-trays-none = Разведчица ещё не нашла ни одного источника.
 apiary-analyzer-tray-empty = пустой лоток
 apiary-analyzer-tray-ripe = Растение спелое, рабочие его посещают.
 apiary-analyzer-tray-growing = Растение ещё растёт.
@@ -244,4 +254,38 @@ bee-trait-lazy-queen = Вялая матка
 bee-trait-lazy-queen-desc = Яйцо матки откладывается заметно позже.
 bee-trait-fragile-egg = Хрупкое яйцо
 bee-trait-fragile-egg-desc = Яйцо матки живёт вдвое меньше, молочко нужно собирать быстро.
+beekeeping-hive-examine-swarm-modifier = Рой был особенный: [color={ $color }]{ $name }[/color]. { $desc }
+swarm-modifier-plain = Обычный рой
+swarm-modifier-plain-desc = Ничем не примечателен.
+swarm-modifier-shy = Робкий рой
+swarm-modifier-shy-desc = Ушла только треть колонии.
+swarm-modifier-homebody = Домосед
+swarm-modifier-homebody-desc = Вентиляцию не искал и поселился рядом с ульем.
+swarm-modifier-rich = Богатый улей
+swarm-modifier-rich-desc = Вмещает 12 сот вместо 8.
+swarm-modifier-huge = Крупный рой
+swarm-modifier-huge-desc = Ушли три четверти колонии.
+swarm-modifier-wanderer = Странник
+swarm-modifier-wanderer-desc = Искал вентиляцию и гнездо вдвое дальше.
+swarm-modifier-fierce = Свирепый рой
+swarm-modifier-fierce-desc = Злые пчёлы этого улья живут вдвое дольше.
+swarm-modifier-tainted = Заражённый улей
+swarm-modifier-tainted-desc = В сотах что-то подозрительное.
 apiary-analyzer-row-instability = Нестабильность
+bee-trait-hotheaded = Вспыльчивость
+bee-trait-hotheaded-desc = Каждый удар по улью выпускает две пчелы вместо одной, а слабее удар выпускает ещё.
+bee-trait-guarded-scout = Охраняемая разведчица
+bee-trait-guarded-scout-desc = Разведчица вылетает злой последней и только когда рабочих дома не осталось.
+beekeeping-hive-examine-meat = Эти пчёлы кормятся не растениями, а кровью: рой вылетел туда, где были живые существа и не было растений.
+apiary-analyzer-row-diet = Питание
+apiary-analyzer-diet-meat = кровь
+apiary-analyzer-creature-ripe = Рабочие могут его кусать.
+apiary-analyzer-creature-blind = Существо далеко, в укрытии или без крови: рабочие его сейчас не достанут.
+apiary-analyzer-meat = Мясо
+apiary-analyzer-meat-help = Столько кусков мяса выпадет, если разбить улей сейчас: { $base } всегда и ещё по одному за каждые { $per } укуса по мёртвым, не больше { $max }. Что может выпасть, по шансу на каждый кусок:
+apiary-analyzer-meat-chance = { $name }: { $percent }%
+apiary-analyzer-section-chemicals = Химический состав улья
+apiary-analyzer-chemicals-none = В улье пока нет химических веществ.
+apiary-analyzer-section-targets = Недавние цели ({ $count })
+apiary-analyzer-targets-none = Пчёлы ещё никого не кусали.
+beekeeping-bite-blocked = Герметичный костюм не даёт пчеле укусить.

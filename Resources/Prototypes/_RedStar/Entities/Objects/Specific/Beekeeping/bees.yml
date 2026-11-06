@@ -179,6 +179,18 @@
     amplitude: 0.08
     speed: 1.4
 
+# The forager of a meat colony: it flies at a creature and bites it. Never in a hand: it bites. The colony does not
+# forget whoever hits one: the fewer bees are left, the angrier it gets.
+- type: entity
+  parent: BaseBeeWorker
+  id: BeeForagerMeat
+  name: bee
+  description: A worker bee. It looks hungry.
+  components:
+  - type: BeeErrand
+    kind: Hunt
+  - type: BeeHunter
+
 # A worker. Out of the hive it acts out a visit to a flower: flies there, dives in, comes back out and flies home.
 # Taken from the hive or caught on the way, it pollinates the plant it is held to.
 - type: entity

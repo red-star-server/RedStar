@@ -27,6 +27,15 @@ public sealed class BeehiveSource
     [ViewVariables]
     public TimeSpan NextVisit;
 
+    /// <summary>
+    /// A creature source: bites taken in the current window, and when that window started.
+    /// </summary>
+    [ViewVariables]
+    public int Bites;
+
+    [ViewVariables]
+    public TimeSpan BiteWindowStart;
+
     public BeehiveSource(EntityUid tray, TimeSpan lastSeen)
     {
         Tray = tray;

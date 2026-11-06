@@ -84,7 +84,7 @@ public sealed partial class BeehiveSystem
     /// </summary>
     private string? TakeBeeBlocker(BeehiveComponent comp, BeeRole role)
     {
-        if (comp.OutBees >= comp.MaxOutBees)
+        if (comp.OutBees - comp.AngryOut >= comp.MaxOutBees)
             return "beekeeping-take-too-many";
 
         if (role == BeeRole.Scout && (comp.ScoutState != BeeScoutState.Home || comp.Bees <= 0))

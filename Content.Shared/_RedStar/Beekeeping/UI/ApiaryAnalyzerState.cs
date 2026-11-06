@@ -29,12 +29,25 @@ public sealed class ApiaryAnalyzerState : BoundUserInterfaceState
 
     public int UsedSlots;
     public int Instability;
+    public BeehiveDiet Diet;
+
+    /// <summary>
+    /// A meat hive: pieces of meat that would fall out if it were broken now, the most it gives, the bites on the dead
+    /// that add one more piece, the chance of each kind and what the hive holds.
+    /// </summary>
+    public int MeatDrops;
+    public int MeatMax;
+    public int MeatBase;
+    public int MeatPerDrop;
+    public List<ApiaryMeatChance> MeatChances = new();
+    public List<ApiaryReagentData> Chemicals = new();
     public int Slots;
     public float Payload;
     public float PayloadCap;
 
     #region Hive
 
+    public bool Wild;
     public int Bees;
     public int OutBees;
     public int MaxBees;

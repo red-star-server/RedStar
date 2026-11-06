@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Server._RedStar.Beekeeping.Components;
 using Content.Server._RedStar.Beekeeping.Data;
 using Content.Shared._RedStar.Beekeeping.Components;
+using Content.Shared._RedStar.Beekeeping.Data;
 using Content.Shared._RedStar.Beekeeping.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Storage.Components;
@@ -23,6 +24,7 @@ public sealed partial class BeeScoutSystem : EntitySystem
 {
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private BeeErrandSystem _errands = default!;
+    [Dependency] private MeatBeehiveSystem _meat = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private BeehiveSystem _hive = default!;
     [Dependency] private IGameTiming _timing = default!;
@@ -38,6 +40,14 @@ public sealed partial class BeeScoutSystem : EntitySystem
     {
         var comp = hive.Comp;
         var now = _timing.CurTime;
+
+        // A meat colony has no scout: its workers find their own targets.
+        if (comp.Diet == BeehiveDiet.Meat)
+        {
+            RecallScout(comp);
+            comp.NextScoutTrip = TimeSpan.Zero;
+            return;
+        }
 
         if (SharedBeehiveSystem.ScoutsAtHome(comp) <= 0)
         {

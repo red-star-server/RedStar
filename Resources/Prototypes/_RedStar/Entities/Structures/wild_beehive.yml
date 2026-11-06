@@ -1,0 +1,264 @@
+# A wild hive, built by a swarm inside a locker, closet or crate, or in a wall corner. It is a loose lump: it can be
+# pulled, and a closing locker takes it in like anything small, but it cannot be picked up. No frames: the bees keep
+# the combs inside, and the honey shows once it is half full. The combs come out only when the hive is broken, and
+# then the colony flies out angry.
+- type: entity
+  parent: StructureHealthContainer
+  id: WildBeehive
+  name: wild beehive
+  description: A lumpy wax nest built by a swarm. It hums.
+  components:
+  - type: Beehive
+    wild: true
+  # Loose, with the same body as an item: it lies where it was left, people walk through it, and a closing locker
+  # takes it in like anything small.
+  - type: Transform
+    anchored: false
+  - type: Clickable
+  - type: GravityAffected
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 40
+        mask:
+        - ItemMask
+  - type: Sprite
+    sprite: _RedStar/Objects/Specific/Beekeeping/wild-beehive.rsi
+    noRot: true
+    layers:
+    - state: base
+    # Grey stripes of a meat hive; the tint is the color of what the hive lives on (for now one color for all meat).
+    - state: stripes
+      color: "#965151"
+      visible: false
+      map: [ "enum.WildBeehiveVisuals.Meat" ]
+    - state: honey
+      color: "#EDC200"
+      visible: false
+      map: [ "enum.WildBeehiveVisuals.Honey" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.WildBeehiveVisuals.Honey:
+        enum.WildBeehiveVisuals.Honey:
+          True: { visible: true }
+          False: { visible: false }
+      enum.WildBeehiveVisuals.Meat:
+        enum.WildBeehiveVisuals.Meat:
+          True: { visible: true }
+          False: { visible: false }
+  - type: ItemSlots
+    slots:
+      queen:
+        name: beekeeping-slot-queen
+        whitelist:
+          components:
+          - BeeQueen
+        swap: false
+        ejectOnBreak: false # the queen flies out to defend it
+        disableEject: true
+        priority: 0
+  - type: ContainerContainer
+    containers:
+      queen: !type:ContainerSlot
+      scout_icon: !type:ContainerSlot
+      pollinator_icon: !type:ContainerSlot
+  - type: AmbientSound
+    enabled: false
+    range: 4
+    volume: -6
+    sound:
+      path: /Audio/_RedStar/Ambience/Beekeeping/beehive.ogg
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 60
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: InteractionOutline
+  - type: Tag
+    tags:
+    - Structure
+  - type: GuideHelp
+    guides:
+    - Beekeeping
+
+# A swarm on its way to a new home: a cloud of bees around the old queen. An NPC on an errand (BeeErrand) like the
+# hive's other bees, but it cannot be caught or hurt and pushes nobody about.
+- type: entity
+  parent: [ BaseMob, FlyingMobBase ]
+  id: BeeSwarm
+  name: bee swarm
+  description: A buzzing cloud of bees following their queen to a new home.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.2
+        density: 30
+        mask:
+        - FlyingMobMask
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 1
+    baseSprintSpeed: 1
+    # A bee hovers and turns on the spot: it stops where it wants, gravity or not, instead of drifting on.
+    baseAcceleration: 20
+    baseFriction: 20
+    baseWeightlessModifier: 1
+    baseWeightlessAcceleration: 20
+    baseWeightlessFriction: 20
+  - type: HTN
+    rootTask:
+      task: BeeErrandCompound
+  - type: BeeErrand
+    kind: Swarm
+  - type: BeeSwarm
+  - type: Sprite
+    sprite: _RedStar/Objects/Specific/Beekeeping/bees.rsi
+    drawdepth: Mobs
+    noRot: true
+    layers:
+    - state: worker-base
+      offset: -0.2,0.1
+    - state: worker-grey
+      color: "#E79A3F"
+      offset: -0.2,0.1
+    - state: worker-wings
+      offset: -0.2,0.1
+    - state: worker-base
+      offset: 0.2,0.15
+    - state: worker-grey
+      color: "#E79A3F"
+      offset: 0.2,0.15
+    - state: worker-wings
+      offset: 0.2,0.15
+    - state: queen-base
+    - state: queen-grey
+      color: "#E79A3F"
+    - state: queen-wings
+    - state: worker-base
+      offset: 0,-0.2
+    - state: worker-grey
+      color: "#E79A3F"
+      offset: 0,-0.2
+    - state: worker-wings
+      offset: 0,-0.2
+  - type: Appearance
+  - type: BeeShrinkVisuals
+    shrinkTime: 0.6
+  # Every bee of the cloud, the queen too, buzzes about on its own.
+  - type: BeeBuzzVisuals
+    amplitude: 0.12
+    speed: 1
+    layerGroup: 3
+  - type: AmbientSound
+    range: 4
+    volume: -10
+    sound:
+      path: /Audio/_RedStar/Ambience/Beekeeping/bee_flying.ogg
+  - type: ContainerContainer
+    containers:
+      queen: !type:ContainerSlot
+  # Safety net: the system builds the hive when the swarm arrives; a search for a free locker can take a while.
+  - type: TimedDespawn
+    lifetime: 400
+
+# A queen left with no hive to go back to, flying off alone to found one.
+- type: entity
+  parent: BeeSwarm
+  id: BeeQueenNesting
+  name: queen bee
+  description: A queen bee looking for a new home.
+  categories: [ HideSpawnMenu ]
+  components:
+  # Unlike a swarm she is alone: a quick hand can catch her.
+  - type: Clickable
+  - type: InteractionOutline
+  - type: BeeCatchableQueen
+  # Searching takes a while; she dies of age before this.
+  - type: TimedDespawn
+    lifetime: 400
+  # Alone, she buzzes about as loud as a single bee.
+  - type: AmbientSound
+    range: 3
+    volume: -10
+    sound:
+      path: /Audio/_RedStar/Ambience/Beekeeping/bee_flying.ogg
+  # Alone and heavier than a worker: a slower, calmer wobble.
+  - type: BeeBuzzVisuals
+    amplitude: 0.1
+    speed: 0.7
+  - type: Sprite
+    sprite: _RedStar/Objects/Specific/Beekeeping/bees.rsi
+    drawdepth: Mobs
+    noRot: true
+    layers:
+    - state: queen-base
+      map: [ "enum.BeeForagerVisualLayers.Body" ]
+    - state: queen-grey
+      color: "#E79A3F"
+      map: [ "enum.BeeForagerVisualLayers.Grey" ]
+    - state: queen-wings
+      map: [ "enum.BeeForagerVisualLayers.Wings" ]
+  # Side view facing left; mirrored while she flies to the right.
+  - type: GenericVisualizer
+    visuals:
+      enum.BeeForagerVisuals.FacingRight:
+        enum.BeeForagerVisualLayers.Body:
+          True: { scale: "-1,1" }
+          False: { scale: "1,1" }
+        enum.BeeForagerVisualLayers.Grey:
+          True: { scale: "-1,1" }
+          False: { scale: "1,1" }
+        enum.BeeForagerVisualLayers.Wings:
+          True: { scale: "-1,1" }
+          False: { scale: "1,1" }
+
+# Bees leaving a crowded hive together, with no queen: they fly off and scatter.
+- type: entity
+  parent: BeeSwarm
+  id: BeeSwarmLeaving
+  name: bee swarm
+  description: A buzzing cloud of bees that had no room left in their hive.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _RedStar/Objects/Specific/Beekeeping/bees.rsi
+    drawdepth: Mobs
+    noRot: true
+    layers:
+    - state: worker-base
+      offset: -0.2,0.1
+    - state: worker-grey
+      color: "#E79A3F"
+      offset: -0.2,0.1
+    - state: worker-wings
+      offset: -0.2,0.1
+    - state: worker-base
+      offset: 0.2,0.15
+    - state: worker-grey
+      color: "#E79A3F"
+      offset: 0.2,0.15
+    - state: worker-wings
+      offset: 0.2,0.15
+    - state: worker-base
+      offset: 0,-0.2
+    - state: worker-grey
+      color: "#E79A3F"
+      offset: 0,-0.2
+    - state: worker-wings
+      offset: 0,-0.2
