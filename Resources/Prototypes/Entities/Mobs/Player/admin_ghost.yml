@@ -4,6 +4,9 @@
   name: admin observer
   categories: [ HideSpawnMenu ]
   components:
+  - type: MovementSpeedModifier
+    baseSprintSpeed: 12
+    baseWalkSpeed: 25
   - type: ContentEye
     maxZoom: 8.916104, 8.916104
   - type: Tag
