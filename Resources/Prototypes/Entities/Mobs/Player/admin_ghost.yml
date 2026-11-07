@@ -4,9 +4,11 @@
   name: admin observer
   categories: [ HideSpawnMenu ]
   components:
+  #RS14 Start
   - type: MovementSpeedModifier
     baseSprintSpeed: 12
     baseWalkSpeed: 25
+  #RS14 End
   - type: ContentEye
     maxZoom: 8.916104, 8.916104
   - type: Tag
