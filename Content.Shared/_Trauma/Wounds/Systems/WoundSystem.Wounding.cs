@@ -1,3 +1,4 @@
+using Content.Shared._Trauma.Common.Thresholds;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared._Trauma.Body;
@@ -575,23 +576,9 @@ public sealed partial class WoundSystem
         if (!_woundableQuery.Resolve(part, ref part.Comp))
             return;
 
-        var nearestSeverity = part.Comp.WoundableSeverity;
-        if (part.Comp.Thresholds.Count > 0 && part.Comp.Integrity >= part.Comp.IntegrityCap)
-        {
-            nearestSeverity = WoundableSeverity.Healthy;
-        }
-        else
-        {
-            FixedPoint2? nearestThreshold = null;
-            foreach (var (severity, value) in part.Comp.Thresholds)
-            {
-                if (part.Comp.Integrity < value || nearestThreshold >= value)
-                    continue;
-
-                nearestSeverity = severity;
-                nearestThreshold = value;
-            }
-        }
+        var nearestSeverity = part.Comp.Thresholds.Count > 0 && part.Comp.Integrity >= part.Comp.IntegrityCap
+            ? WoundableSeverity.Healthy
+            : SeverityThresholds.Nearest(part.Comp.Thresholds, part.Comp.Integrity, part.Comp.WoundableSeverity);
 
         if (nearestSeverity == part.Comp.WoundableSeverity)
             return;

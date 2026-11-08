@@ -6,10 +6,18 @@ namespace Content.Shared._Trauma.Common.DoAfter;
 [ByRefEvent]
 public record struct ModifyDoAfterDelayEvent(float Multiplier = 1f)
 {
-    public const float MaxMultiplier = 10f;
+    public const float MaxSlowdown = 10f;
+
+    private float _slowdown;
+    private float _speedup;
 
     public void Scale(float factor)
     {
-        Multiplier = Math.Min(Multiplier * factor, MaxMultiplier);
+        if (factor >= 1f)
+            _slowdown = Math.Min((_slowdown == 0f ? 1f : _slowdown) * factor, MaxSlowdown);
+        else
+            _speedup = (_speedup == 0f ? 1f : _speedup) * factor;
+
+        Multiplier = (_slowdown == 0f ? 1f : _slowdown) * (_speedup == 0f ? 1f : _speedup);
     }
 }

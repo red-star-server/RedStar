@@ -24,7 +24,7 @@ public sealed partial class VitalOrganSystem : EntitySystem
             return;
 
         var death = EnsureComp<DelayedDeathComponent>(args.Target);
-        if (_body.GetCategory(ent.Owner) is { } category && death.MissingOrgans.Add(category))
+        if (death.MissingOrgans.Add(GetKey(ent.Owner)))
             Dirty(args.Target, death);
     }
 
@@ -35,7 +35,7 @@ public sealed partial class VitalOrganSystem : EntitySystem
             !TryComp<DelayedDeathComponent>(args.Target, out var death))
             return;
 
-        if (_body.GetCategory(ent.Owner) is { } category && death.MissingOrgans.Remove(category))
+        if (death.MissingOrgans.Remove(GetKey(ent.Owner)))
             Dirty(args.Target, death);
 
         TryClearDelayedDeath((args.Target, death));
@@ -47,11 +47,23 @@ public sealed partial class VitalOrganSystem : EntitySystem
     public bool TryClearDelayedDeath(Entity<DelayedDeathComponent?> body)
     {
         if (!Resolve(body, ref body.Comp, false) ||
-            body.Comp.MissingOrgans.Count > 0 ||
             _body.GetOrgan(body.Owner, Brain) == null)
+            return false;
+
+        if (body.Comp.MissingOrgans.Remove(Brain.Id))
+            Dirty(body);
+
+        if (body.Comp.MissingOrgans.Count > 0)
             return false;
 
         RemComp(body.Owner, body.Comp);
         return true;
+    }
+
+    private string GetKey(EntityUid organ)
+    {
+        return _body.GetCategory(organ)?.Id
+            ?? MetaData(organ).EntityPrototype?.ID
+            ?? organ.ToString();
     }
 }

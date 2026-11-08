@@ -1,3 +1,4 @@
+using Content.Shared._Trauma.Common.Thresholds;
 using Content.Shared._Trauma.Common.DoAfter;
 using Content.Shared._Trauma.Common.Traumas;
 using Content.Shared.Body;
@@ -146,16 +147,7 @@ public partial class TraumaSystem
         if (!_boneQuery.Resolve(bone, ref bone.Comp))
             return;
 
-        var nearestSeverity = bone.Comp.BoneSeverity;
-        FixedPoint2? nearestThreshold = null;
-        foreach (var (severity, value) in bone.Comp.SeverityThresholds)
-        {
-            if (bone.Comp.BoneIntegrity < value || nearestThreshold >= value)
-                continue;
-
-            nearestSeverity = severity;
-            nearestThreshold = value;
-        }
+        var nearestSeverity = SeverityThresholds.Nearest(bone.Comp.SeverityThresholds, bone.Comp.BoneIntegrity, bone.Comp.BoneSeverity);
 
         if (nearestSeverity == bone.Comp.BoneSeverity)
             return;

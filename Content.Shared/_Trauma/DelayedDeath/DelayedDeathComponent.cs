@@ -1,7 +1,5 @@
 using Content.Shared._Trauma.Body;
-using Content.Shared.Body;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared._Trauma.DelayedDeath;
@@ -33,7 +31,7 @@ public sealed partial class DelayedDeathComponent : Component
     public TimeSpan NextDeath;
 
     [DataField, AutoNetworkedField]
-    public HashSet<ProtoId<OrganCategoryPrototype>> MissingOrgans = [];
+    public HashSet<string> MissingOrgans = [];
 
     /// <summary>
     /// What message is displayed when the time runs out - Goobstation

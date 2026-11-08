@@ -497,4 +497,5 @@ public sealed partial class BodySystem
 
     #endregion
 
+    private bool IsDetached(EntityUid uid) => (MetaData(uid).Flags & MetaDataFlags.Detached) != 0;
 }

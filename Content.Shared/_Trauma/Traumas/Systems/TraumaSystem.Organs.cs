@@ -1,3 +1,4 @@
+using Content.Shared._Trauma.Common.Thresholds;
 using System.Linq;
 using Content.Shared._Trauma.Common.Traumas;
 using Content.Shared._Trauma.Wounds;
@@ -166,16 +167,7 @@ public partial class TraumaSystem
         RaiseLocalEvent(ent, ref ev);
 
         var oldSeverity = ent.Comp.OrganSeverity;
-        var nearestSeverity = oldSeverity;
-        FixedPoint2? nearestThreshold = null;
-        foreach (var (severity, value) in ent.Comp.IntegrityThresholds)
-        {
-            if (ent.Comp.OrganIntegrity < value || nearestThreshold >= value)
-                continue;
-
-            nearestSeverity = severity;
-            nearestThreshold = value;
-        }
+        var nearestSeverity = SeverityThresholds.Nearest(ent.Comp.IntegrityThresholds, ent.Comp.OrganIntegrity, oldSeverity);
 
         if (nearestSeverity == ent.Comp.OrganSeverity)
             return;
