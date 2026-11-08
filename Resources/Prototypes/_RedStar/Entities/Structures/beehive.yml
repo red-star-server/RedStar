@@ -1,0 +1,183 @@
+- type: entity
+  parent: [ BaseStructureDynamic, StructureHealthContainer ]
+  id: Beehive
+  name: beehive
+  description: A wooden hive. Put a queen and frames in, keep ripe plants nearby, and the bees make honey and wax.
+  components:
+  - type: Beehive
+  # Narrower than a full tile, like a crate, so it can be dragged through doors.
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,-0.35,0.35,0.35"
+        density: 60
+        mask:
+        - CrateMask
+        layer:
+        - MachineLayer
+  - type: Sprite
+    sprite: _RedStar/Objects/Specific/Beekeeping/beehive.rsi
+    noRot: true
+    layers:
+    - state: frames-0
+      map: [ "enum.BeehiveVisualLayers.Base" ]
+    - state: honey-1
+      visible: false
+      map: [ "enum.BeehiveVisualLayers.Honey1" ]
+    - state: honey-2
+      visible: false
+      map: [ "enum.BeehiveVisualLayers.Honey2" ]
+    - state: honey-3
+      visible: false
+      map: [ "enum.BeehiveVisualLayers.Honey3" ]
+    - state: honey-4
+      visible: false
+      map: [ "enum.BeehiveVisualLayers.Honey4" ]
+  - type: Appearance
+  # The honey overlays are grey in the sprite; the colour comes from the tint here:
+  # yellow for a frame that is filling, wax grey for a capped one.
+  - type: GenericVisualizer
+    visuals:
+      enum.BeehiveVisuals.Frames:
+        enum.BeehiveVisualLayers.Base:
+          0: { state: frames-0 }
+          1: { state: frames-1 }
+          2: { state: frames-2 }
+          3: { state: frames-3 }
+          4: { state: frames-4 }
+      enum.BeehiveVisuals.Frame1:
+        enum.BeehiveVisualLayers.Honey1:
+          None: { visible: false }
+          Honey: { visible: true, color: "#FFD100" }
+          Wax: { visible: true, color: "#F4EFE4" }
+      enum.BeehiveVisuals.Frame2:
+        enum.BeehiveVisualLayers.Honey2:
+          None: { visible: false }
+          Honey: { visible: true, color: "#FFD100" }
+          Wax: { visible: true, color: "#F4EFE4" }
+      enum.BeehiveVisuals.Frame3:
+        enum.BeehiveVisualLayers.Honey3:
+          None: { visible: false }
+          Honey: { visible: true, color: "#FFD100" }
+          Wax: { visible: true, color: "#F4EFE4" }
+      enum.BeehiveVisuals.Frame4:
+        enum.BeehiveVisualLayers.Honey4:
+          None: { visible: false }
+          Honey: { visible: true, color: "#FFD100" }
+          Wax: { visible: true, color: "#F4EFE4" }
+  - type: ItemSlots
+    slots:
+      queen:
+        name: beekeeping-slot-queen
+        whitelist:
+          components:
+          - BeeQueen
+        swap: false
+        ejectOnBreak: false # when the hive breaks, the queen flies out to defend it
+        disableEject: true # the hive builds its own "Take out" menus
+        insertSound: null
+        ejectSound: null
+        priority: 0
+      frame1:
+        name: beekeeping-slot-frame-1
+        whitelist:
+          components:
+          - BeeFrame
+        swap: false
+        ejectOnBreak: true
+        disableEject: true
+        priority: 1
+      frame2:
+        name: beekeeping-slot-frame-2
+        whitelist:
+          components:
+          - BeeFrame
+        swap: false
+        ejectOnBreak: true
+        disableEject: true
+        priority: 2
+      frame3:
+        name: beekeeping-slot-frame-3
+        whitelist:
+          components:
+          - BeeFrame
+        swap: false
+        ejectOnBreak: true
+        disableEject: true
+        priority: 3
+      frame4:
+        name: beekeeping-slot-frame-4
+        whitelist:
+          components:
+          - BeeFrame
+        swap: false
+        ejectOnBreak: true
+        disableEject: true
+        priority: 4
+  - type: ContainerContainer
+    containers:
+      queen: !type:ContainerSlot
+      frame1: !type:ContainerSlot
+      frame2: !type:ContainerSlot
+      frame3: !type:ContainerSlot
+      frame4: !type:ContainerSlot
+      scout_icon: !type:ContainerSlot
+      pollinator_icon: !type:ContainerSlot
+  - type: AmbientSound
+    enabled: false
+    range: 4
+    volume: -6
+    sound:
+      path: /Audio/_RedStar/Ambience/Beekeeping/beehive.ogg
+  - type: Damageable
+    damageModifierSet: WoodMod
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 10
+            max: 10
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: Beehive
+    node: beehive
+  - type: InteractionOutline
+  - type: Tag
+    tags:
+    - Structure
+    - Wooden
+  - type: GuideHelp
+    guides:
+    - Beekeeping
+
+# For testing: the same hive with every timer of the colony cut short, so a colony grows, scouts and fills its frames
+# in a few minutes. Put a queen and frames in as usual.
+- type: entity
+  parent: Beehive
+  id: BeehiveFast
+  suffix: Debug, fast
+  categories: [ Debug ]
+  components:
+  - type: Beehive
+    layInterval: 5
+    visitInterval: 5
+    combsPerWorkerPerMinute: 2
+    scoutTripMin: 10
+    scoutTripMax: 15
+    firstScoutDelay: 2
+    eggFullTime: 20
+    eggLifetime: 60
+    eggCooldown: 30
+    workedRest: 20
+    scoutReplaceDelay: 20

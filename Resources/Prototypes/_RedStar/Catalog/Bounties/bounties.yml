@@ -1,0 +1,34 @@
+# Only combs and wax from a beehive count.
+
+- type: cargoBounty
+  id: BountyHoneycomb
+  reward: 10000
+  description: bounty-description-honeycomb
+  entries:
+  - name: bounty-item-honeycomb
+    amount: 10
+    whitelist:
+      tags:
+      - Honeycomb
+
+- type: cargoBounty
+  id: BountyHoneycombLarge
+  reward: 20000
+  description: bounty-description-honeycomb-large
+  entries:
+  - name: bounty-item-honeycomb
+    amount: 20
+    whitelist:
+      tags:
+      - Honeycomb
+
+- type: cargoBounty
+  id: BountyBeeswax
+  reward: 8000
+  description: bounty-description-beeswax
+  entries:
+  - name: bounty-item-beeswax
+    amount: 10
+    whitelist:
+      tags:
+      - Beeswax

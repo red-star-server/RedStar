@@ -125,3 +125,14 @@
       amount: 1
   products:
     Boyarsky: 6
+
+# Mead from honey. The sugar recipe in the upstream Mead reaction stays as it is.
+- type: reaction
+  id: MeadHoney
+  reactants:
+    Honey:
+      amount: 1
+    Enzyme:
+      amount: 1
+  products:
+    Mead: 2

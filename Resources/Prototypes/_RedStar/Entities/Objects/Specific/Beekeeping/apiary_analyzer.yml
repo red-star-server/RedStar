@@ -1,0 +1,26 @@
+- type: entity
+  parent: BaseItem
+  id: ApiaryAnalyzer
+  name: apiary analyzer
+  description: A scanner for beekeepers. Shows a hive's colony, combs and known trays, and the traits of a queen or a bee.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Objects/Specific/Beekeeping/apiary-analyzer.rsi
+    layers:
+    - state: icon
+    - state: antennae
+    # The screen and the buttons glow in the dark.
+    - state: screen
+      shader: unshaded
+    - state: buttons
+      shader: unshaded
+  - type: Item
+    storedRotation: -90
+  - type: UserInterface
+    interfaces:
+      enum.ApiaryAnalyzerUiKey.Key:
+        type: ApiaryAnalyzerBoundUserInterface
+  - type: ApiaryAnalyzer
+  - type: GuideHelp
+    guides:
+    - BeekeepingAnalyzer
