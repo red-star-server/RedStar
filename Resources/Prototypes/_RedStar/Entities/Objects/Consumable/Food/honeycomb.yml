@@ -25,6 +25,9 @@
   - type: Stack
     stackType: Honeycomb
     count: 1
+  # Priced per comb: the solution is one comb's worth for the whole stack, so it cannot price the stack.
+  - type: StackPrice
+    price: 50
   - type: FlavorProfile
     flavors:
     - honey
