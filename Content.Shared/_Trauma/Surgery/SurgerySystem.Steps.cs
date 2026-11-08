@@ -467,7 +467,8 @@ public sealed partial class SurgerySystem
             if (!_bleedQuery.TryComp(wound, out var bleeds) || !bleeds.IsBleeding)
                 continue;
 
-            DirtyField(wound, bleeds, nameof(BleedInflicterComponent.Scaling));
+            bleeds.ScalingFinishesAt = TimeSpan.Zero;
+            DirtyFields(wound, bleeds, null, nameof(BleedInflicterComponent.Scaling), nameof(BleedInflicterComponent.ScalingFinishesAt));
             if (bleeds.Scaling > healAmount)
             {
                 bleeds.Scaling -= healAmount;

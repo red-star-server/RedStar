@@ -292,7 +292,7 @@ public partial class WoundSystem
 
         foreach (var part in _body.GetOrgans<WoundableComponent>(body))
         {
-            if (part.Comp.Wounds.Count > 0)
+            if (part.Comp.Wounds is { Count: > 0 })
                 woundables.Add(part);
         }
 

@@ -31,7 +31,7 @@ public sealed partial class DelayedDeathComponent : Component
     public TimeSpan NextDeath;
 
     [DataField, AutoNetworkedField]
-    public HashSet<string> MissingOrgans = [];
+    public Dictionary<string, int> MissingOrgans = [];
 
     /// <summary>
     /// What message is displayed when the time runs out - Goobstation

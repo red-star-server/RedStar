@@ -54,8 +54,16 @@ public sealed partial class WoundSystem
         if (_timing.ApplyingState)
             return;
 
-        if (_woundableQuery.HasComp(args.Organ))
+        if (_woundableQuery.TryComp(args.Organ, out var child))
+        {
+            if (child.WoundableSeverity == WoundableSeverity.Severed)
+            {
+                child.WoundableSeverity = WoundableSeverity.Healthy;
+                DirtyField(args.Organ, child, nameof(WoundableComponent.WoundableSeverity));
+            }
+
             CheckWoundableSeverityThresholds(args.Organ);
+        }
 
         if (_body.GetBody(parent.Owner) is not { } body) return;
         _bodyStatus.UpdateStatus(body);
@@ -574,6 +582,9 @@ public sealed partial class WoundSystem
     private void CheckWoundableSeverityThresholds(Entity<WoundableComponent?> part)
     {
         if (!_woundableQuery.Resolve(part, ref part.Comp))
+            return;
+
+        if (part.Comp.WoundableSeverity == WoundableSeverity.Severed)
             return;
 
         var nearestSeverity = part.Comp.Thresholds.Count > 0 && part.Comp.Integrity >= part.Comp.IntegrityCap

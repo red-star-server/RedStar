@@ -24,8 +24,9 @@ public sealed partial class VitalOrganSystem : EntitySystem
             return;
 
         var death = EnsureComp<DelayedDeathComponent>(args.Target);
-        if (death.MissingOrgans.Add(GetKey(ent.Owner)))
-            Dirty(args.Target, death);
+        var key = GetKey(ent.Owner);
+        death.MissingOrgans[key] = death.MissingOrgans.GetValueOrDefault(key) + 1;
+        Dirty(args.Target, death);
     }
 
     [SubscribeLocalEvent]
@@ -35,8 +36,16 @@ public sealed partial class VitalOrganSystem : EntitySystem
             !TryComp<DelayedDeathComponent>(args.Target, out var death))
             return;
 
-        if (death.MissingOrgans.Remove(GetKey(ent.Owner)))
+        var key = GetKey(ent.Owner);
+        if (death.MissingOrgans.TryGetValue(key, out var count))
+        {
+            if (count > 1)
+                death.MissingOrgans[key] = count - 1;
+            else
+                death.MissingOrgans.Remove(key);
+
             Dirty(args.Target, death);
+        }
 
         TryClearDelayedDeath((args.Target, death));
     }
@@ -50,7 +59,7 @@ public sealed partial class VitalOrganSystem : EntitySystem
             _body.GetOrgan(body.Owner, Brain) == null)
             return false;
 
-        if (body.Comp.MissingOrgans.Remove(Brain.Id))
+        if (body.Comp.MissingOrgans.Remove(CategoryKey(Brain)))
             Dirty(body);
 
         if (body.Comp.MissingOrgans.Count > 0)
@@ -60,10 +69,13 @@ public sealed partial class VitalOrganSystem : EntitySystem
         return true;
     }
 
+    private static string CategoryKey(ProtoId<OrganCategoryPrototype> category) => $"category:{category.Id}";
+
     private string GetKey(EntityUid organ)
     {
-        return _body.GetCategory(organ)?.Id
-            ?? MetaData(organ).EntityPrototype?.ID
-            ?? organ.ToString();
+        if (_body.GetCategory(organ) is { } category)
+            return CategoryKey(category);
+
+        return MetaData(organ).EntityPrototype is { } proto ? $"prototype:{proto.ID}" : $"entity:{organ}";
     }
 }

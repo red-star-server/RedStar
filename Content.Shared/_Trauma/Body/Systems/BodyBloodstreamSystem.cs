@@ -10,6 +10,7 @@ using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
+using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -21,6 +22,7 @@ public sealed partial class BodyBloodstreamSystem : EntitySystem
     [Dependency] private BodySystem _body = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private INetManager _net = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private WoundSystem _wound = default!;
@@ -42,16 +44,43 @@ public sealed partial class BodyBloodstreamSystem : EntitySystem
     {
         base.Update(frameTime);
 
+        var now = _timing.CurTime;
         var bleedsQuery = EntityQueryEnumerator<BleedInflicterComponent>();
         while (bleedsQuery.MoveNext(out var ent, out var bleeds))
         {
             var bleeding = bleeds.BleedingAmount > 0 && CanWoundBleed((ent, bleeds));
-            if (bleeding == bleeds.IsBleeding)
-                continue;
+            if (bleeding != bleeds.IsBleeding)
+            {
+                bleeds.IsBleeding = bleeding;
+                DirtyField(ent, bleeds, nameof(BleedInflicterComponent.IsBleeding));
+            }
 
-            bleeds.IsBleeding = bleeding;
-            DirtyField(ent, bleeds, nameof(BleedInflicterComponent.IsBleeding));
+            if (!_net.IsClient && bleeds.IsBleeding && now < bleeds.ScalingFinishesAt)
+                UpdateScaling((ent, bleeds), now);
         }
+    }
+
+    private void UpdateScaling(Entity<BleedInflicterComponent> ent, TimeSpan now)
+    {
+        var duration = ent.Comp.ScalingFinishesAt - ent.Comp.ScalingStartsAt;
+        if (duration <= TimeSpan.Zero)
+            return;
+
+        var progress = (float) Math.Clamp((now - ent.Comp.ScalingStartsAt) / duration, 0.0, 1.0);
+        var target = FixedPoint2.New(1f + (ent.Comp.ScalingLimit.Float() - 1f) * progress);
+        if (target <= ent.Comp.Scaling)
+            return;
+
+        ent.Comp.Scaling = target;
+        DirtyField(ent, ent.Comp, nameof(BleedInflicterComponent.Scaling));
+
+        if (!TryComp<WoundComponent>(ent, out var wound) ||
+            _body.GetBody(wound.HoldingWoundable) is not { } body ||
+            !HasComp<BloodstreamComponent>(body))
+            return;
+
+        var update = new BloodstreamUpdateEvent();
+        RaiseLocalEvent(body, ref update);
     }
 
     /// <summary>
@@ -229,11 +258,7 @@ public sealed partial class BodyBloodstreamSystem : EntitySystem
             || args.NewSeverity < args.OldSeverity)
             return;
 
-        var oldBleedsAmount = args.OldSeverity * _bleedingSeverity;
         component.BleedingAmountRaw = args.NewSeverity * _bleedingSeverity;
-
-        var severityPenalty = component.BleedingAmountRaw - oldBleedsAmount / _bleedScaleTime;
-        component.SeverityPenalty += severityPenalty;
 
         var formula = (float) (args.NewSeverity / _bleedScaleTime * component.ScalingSpeed);
         component.ScalingFinishesAt = _timing.CurTime + TimeSpan.FromSeconds(formula);

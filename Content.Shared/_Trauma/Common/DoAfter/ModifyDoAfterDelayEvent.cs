@@ -8,16 +8,19 @@ public record struct ModifyDoAfterDelayEvent(float Multiplier = 1f)
 {
     public const float MaxSlowdown = 10f;
 
-    private float _slowdown;
-    private float _speedup;
+    private float? _slowdown;
+    private float? _speedup;
 
     public void Scale(float factor)
     {
-        if (factor >= 1f)
-            _slowdown = Math.Min((_slowdown == 0f ? 1f : _slowdown) * factor, MaxSlowdown);
-        else
-            _speedup = (_speedup == 0f ? 1f : _speedup) * factor;
+        if (factor < 0f)
+            return;
 
-        Multiplier = (_slowdown == 0f ? 1f : _slowdown) * (_speedup == 0f ? 1f : _speedup);
+        if (factor >= 1f)
+            _slowdown = Math.Min((_slowdown ?? 1f) * factor, MaxSlowdown);
+        else
+            _speedup = (_speedup ?? 1f) * factor;
+
+        Multiplier = (_slowdown ?? 1f) * (_speedup ?? 1f);
     }
 }

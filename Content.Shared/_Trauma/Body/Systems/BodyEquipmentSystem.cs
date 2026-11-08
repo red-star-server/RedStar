@@ -22,9 +22,9 @@ public sealed partial class BodyEquipmentSystem : EntitySystem
     public static SlotFlags GetRequiringSlots(BodyPartType type) => type switch
     {
         BodyPartType.Head => SlotFlags.EYES | SlotFlags.EARS | SlotFlags.HEAD | SlotFlags.MASK,
-        BodyPartType.Torso => SlotFlags.INNERCLOTHING | SlotFlags.OUTERCLOTHING,
-        BodyPartType.Hand => SlotFlags.GLOVES,
-        BodyPartType.Foot => SlotFlags.FEET,
+        BodyPartType.Torso => SlotFlags.INNERCLOTHING | SlotFlags.OUTERCLOTHING | SlotFlags.UNDERWEART | SlotFlags.UNDERWEARB,
+        BodyPartType.Hand => SlotFlags.GLOVES | SlotFlags.HANDACCESSORY,
+        BodyPartType.Foot => SlotFlags.FEET | SlotFlags.SOCKS,
         _ => SlotFlags.NONE
     };
 
