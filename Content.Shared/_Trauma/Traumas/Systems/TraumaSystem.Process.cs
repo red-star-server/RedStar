@@ -377,10 +377,10 @@ public partial class TraumaSystem
             TraumaType.BoneDamage,
             partType);
 
-        if (deduction == 1)
+        if (deduction >= 1)
             return false;
 
-        multiplier *= _boneTraumaChanceMultipliers[target.Comp.WoundableSeverity];
+        multiplier *= bone.TraumaChanceMultipliers.GetValueOrDefault(target.Comp.WoundableSeverity);
         if (multiplier <= 0f)
             return false;
 
@@ -426,10 +426,10 @@ public partial class TraumaSystem
             TraumaType.OrganDamage,
             partType);
 
-        if (deduction == 1)
+        if (deduction >= 1)
             return false;
 
-        multiplier *= _organTraumaChanceMultipliers[target.Comp.WoundableSeverity];
+        multiplier *= target.Comp.OrganTraumaChanceMultipliers.GetValueOrDefault(target.Comp.WoundableSeverity);
 
         // organ damage must stay very unlikely while the woundable is in a good condition
         var chance = (target.Comp.Integrity / target.Comp.IntegrityCap / totalIntegrity -
@@ -462,20 +462,13 @@ public partial class TraumaSystem
             TraumaType.Dismemberment,
             partType);
 
-        if (deduction == 1)
+        if (deduction >= 1)
             return false;
 
         // Healthy bones decrease the chance of your limb getting delimbed
         if (_boneQuery.TryComp(target, out var bone))
         {
-            multiplier *= bone.BoneSeverity switch
-            {
-                BoneSeverity.Normal => 0.3f, // decreases delimb change by 70%
-                BoneSeverity.Damaged => 0.6f, // 40%
-                BoneSeverity.Cracked => 1f, // 0%,
-                BoneSeverity.Broken => 1.2f, // increases by 20%
-                _ => 1f
-            };
+            multiplier *= bone.DismembermentChanceMultipliers.GetValueOrDefault(bone.BoneSeverity, 1f);
         }
 
         var chance = (1f - (MathF.Pow(target.Comp.Integrity.Float() / target.Comp.IntegrityCap.Float(), 0.5f) +
@@ -575,7 +568,7 @@ public partial class TraumaSystem
     private void ApplyTraumas(Entity<WoundableComponent> target, Entity<TraumaInflicterComponent> inflicter,
         List<TraumaType> traumas, FixedPoint2 severity, EntityUid? user = null)
     {
-        if (!_organQuery.TryComp(target, out var organ) || organ.Body is not { } body)
+        if (!_organQuery.TryComp(target, out var organ) || organ.Body is null)
             return;
 
         var category = organ.Category;
@@ -621,7 +614,7 @@ public partial class TraumaSystem
                     var traumaEnt = AddTrauma(targetChosen.Value, target, inflicter, TraumaType.OrganDamage, severity);
 
                     if (traumaEnt != EntityUid.Invalid)
-                        TryCreateOrganDamageModifier(targetChosen.Value, severity, traumaEnt, WoundableDamageModifier);
+                        AddOrganDamageModifier(targetChosen.Value, severity, traumaEnt, WoundableDamageModifier);
 
                     break;
 

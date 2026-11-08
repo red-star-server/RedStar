@@ -167,13 +167,14 @@ public partial class TraumaSystem
 
         var oldSeverity = ent.Comp.OrganSeverity;
         var nearestSeverity = oldSeverity;
-        foreach (var (severity, value) in ent.Comp.IntegrityThresholds.OrderByDescending(kv => kv.Value))
+        FixedPoint2? nearestThreshold = null;
+        foreach (var (severity, value) in ent.Comp.IntegrityThresholds)
         {
-            if (ent.Comp.OrganIntegrity < value)
+            if (ent.Comp.OrganIntegrity < value || nearestThreshold >= value)
                 continue;
 
             nearestSeverity = severity;
-            break;
+            nearestThreshold = value;
         }
 
         if (nearestSeverity == ent.Comp.OrganSeverity)

@@ -23,16 +23,35 @@ public sealed partial class VitalOrganSystem : EntitySystem
         if (TerminatingOrDeleted(args.Target) || _timing.ApplyingState)
             return;
 
-        EnsureComp<DelayedDeathComponent>(args.Target);
+        var death = EnsureComp<DelayedDeathComponent>(args.Target);
+        if (_body.GetCategory(ent.Owner) is { } category && death.MissingOrgans.Add(category))
+            Dirty(args.Target, death);
     }
 
     [SubscribeLocalEvent]
     private void OnInserted(Entity<VitalOrganComponent> ent, ref OrganGotInsertedEvent args)
     {
-        if (_timing.ApplyingState || TerminatingOrDeleted(ent) || TerminatingOrDeleted(args.Target))
+        if (_timing.ApplyingState || TerminatingOrDeleted(ent) || TerminatingOrDeleted(args.Target) ||
+            !TryComp<DelayedDeathComponent>(args.Target, out var death))
             return;
 
-        if (_body.GetOrgan(args.Target, Brain) != null)
-            RemComp<DelayedDeathComponent>(args.Target);
+        if (_body.GetCategory(ent.Owner) is { } category && death.MissingOrgans.Remove(category))
+            Dirty(args.Target, death);
+
+        TryClearDelayedDeath((args.Target, death));
+    }
+
+    /// <summary>
+    /// Removes <see cref="DelayedDeathComponent"/> if no vital organ is missing and the body has a brain.
+    /// </summary>
+    public bool TryClearDelayedDeath(Entity<DelayedDeathComponent?> body)
+    {
+        if (!Resolve(body, ref body.Comp, false) ||
+            body.Comp.MissingOrgans.Count > 0 ||
+            _body.GetOrgan(body.Owner, Brain) == null)
+            return false;
+
+        RemComp(body.Owner, body.Comp);
+        return true;
     }
 }

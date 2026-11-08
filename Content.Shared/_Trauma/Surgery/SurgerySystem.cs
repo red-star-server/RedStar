@@ -24,7 +24,6 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.Shared._Trauma.Surgery;
 
@@ -489,6 +488,7 @@ public sealed partial class SurgerySystem : EntitySystem
             Del(uid);
         }
         _surgeries.Clear();
+        _stepIndexCache.Clear();
 
         _allSurgeries.Clear();
         foreach (var entity in ProtoMan.EnumeratePrototypes<EntityPrototype>())

@@ -61,7 +61,7 @@ public sealed partial class CyberneticsSystem : EntitySystem
             return;
 
         var ev = args.Args;
-        ev.Multiplier *= 10;
+        ev.Scale(ent.Comp.DisabledDoAfterMultiplier);
         args.Args = ev;
     }
 }

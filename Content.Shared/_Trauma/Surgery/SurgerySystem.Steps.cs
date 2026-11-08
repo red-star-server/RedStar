@@ -670,8 +670,10 @@ public sealed partial class SurgerySystem
         return false;
     }
 
-    private bool TryDoSurgeryStep(EntityUid body, EntityUid targetPart, EntityUid user, EntProtoId surgeryId, EntProtoId stepId)
-        => TryDoSurgeryStep(body, targetPart, user, surgeryId, stepId, out _);
+    private void TryDoSurgeryStep(EntityUid body, EntityUid targetPart, EntityUid user, EntProtoId surgeryId, EntProtoId stepId)
+    {
+        TryDoSurgeryStep(body, targetPart, user, surgeryId, stepId, out _);
+    }
 
     /// <summary>
     /// Do a surgery step on a part, if it can be done.
@@ -890,20 +892,7 @@ public sealed partial class SurgerySystem
     {
         var type = _partQuery.CompOrNull(part)?.PartType ?? BodyPartType.Other;
 
-        var slot = type switch
-        {
-            BodyPartType.Head => SlotFlags.HEAD,
-            BodyPartType.Torso => SlotFlags.OUTERCLOTHING | SlotFlags.INNERCLOTHING,
-            BodyPartType.Arm => SlotFlags.OUTERCLOTHING | SlotFlags.INNERCLOTHING,
-            BodyPartType.Hand => SlotFlags.GLOVES,
-            BodyPartType.Leg => SlotFlags.OUTERCLOTHING | SlotFlags.LEGS,
-            BodyPartType.Foot => SlotFlags.FEET,
-            BodyPartType.Tail => SlotFlags.NONE,
-            BodyPartType.Other => SlotFlags.NONE,
-            _ => SlotFlags.NONE
-        };
-
-        var check = new SurgeryCanPerformStepEvent(user, body, tool, slot);
+        var check = new SurgeryCanPerformStepEvent(user, body, tool, BodyEquipmentSystem.GetCoveringSlots(type));
         RaiseLocalEvent(step, ref check);
 
         popup = check.Popup;

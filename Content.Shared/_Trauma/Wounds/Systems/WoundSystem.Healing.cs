@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared._Trauma.Traumas;
 using Content.Shared.Body;
@@ -74,7 +73,7 @@ public partial class WoundSystem
             .Select(x => x.Woundable)
             .ToList();
 
-        var remainingHealAmount = healAmount * sortedWoundables.Count();
+        var remainingHealAmount = healAmount;
         var anyHealed = false;
 
         // Apply healing to each woundable in order
@@ -235,43 +234,7 @@ public partial class WoundSystem
             healed.Add(type, typeHealed);
         }
 
-        return healed.Any();
-    }
-
-    /// <summary>
-    /// Finds the body part with the greatest damage matching the requested group.
-    /// </summary>
-    public bool TryGetWoundableWithMostDamage(
-        EntityUid body,
-        [NotNullWhen(true)] out Entity<WoundableComponent>? woundable,
-        [ForbidLiteral] ProtoId<DamageGroupPrototype>? damageGroup = null,
-        bool healable = false)
-    {
-        var biggestDamage = FixedPoint2.Zero;
-
-        woundable = null;
-        foreach (var part in _body.GetOrgans<WoundableComponent>(body))
-        {
-            var woundableDamage = GetWoundableSeverityPoint(part.AsNullable(), damageGroup, healable);
-            if (woundableDamage <= biggestDamage)
-                continue;
-
-            biggestDamage = woundableDamage;
-            woundable = part;
-        }
-
-        return woundable != null;
-    }
-
-    /// <summary>
-    /// Checks whether the part has damage in the requested group.
-    /// </summary>
-    public bool HasDamageOfGroup(
-        EntityUid woundable,
-        [ForbidLiteral] ProtoId<DamageGroupPrototype> damageGroup)
-    {
-        var wounds = GetWoundableWounds(woundable);
-        return wounds.Any(wound => wound.Comp.DamageGroup == damageGroup);
+        return healed.Count != 0;
     }
 
     /// <summary>

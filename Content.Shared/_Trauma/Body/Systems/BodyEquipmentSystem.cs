@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared._Trauma.Common.Clothing;
 using Content.Shared.Body;
@@ -18,27 +17,43 @@ public sealed partial class BodyEquipmentSystem : EntitySystem
     [Dependency] private EntityQuery<InventoryComponent> _inventoryQuery;
 
     /// <summary>
-    /// Inventory slots that require each body-part type.
+    /// Inventory slots that need each body-part type to be present to be worn.
     /// </summary>
-    public static readonly Dictionary<BodyPartType, string[]> PartInventorySlots = new()
+    public static SlotFlags GetRequiringSlots(BodyPartType type) => type switch
     {
-        { BodyPartType.Head, [ "eyes", "ears", "head", "mask" ] },
-        { BodyPartType.Torso, [ "innerclothing", "outerclothing" ] },
-        { BodyPartType.Hand, [ "gloves" ] },
-        { BodyPartType.Foot, [ "shoes" ] }
+        BodyPartType.Head => SlotFlags.EYES | SlotFlags.EARS | SlotFlags.HEAD | SlotFlags.MASK,
+        BodyPartType.Torso => SlotFlags.INNERCLOTHING | SlotFlags.OUTERCLOTHING,
+        BodyPartType.Hand => SlotFlags.GLOVES,
+        BodyPartType.Foot => SlotFlags.FEET,
+        _ => SlotFlags.NONE
     };
 
     /// <summary>
-    /// Reverse lookup: slot name → required body-part type. Derived from <see cref="PartInventorySlots"/>.
+    /// Inventory slots whose contents block access to each body-part type.
     /// </summary>
-    private static readonly Dictionary<string, BodyPartType> _slotToPart = PartInventorySlots
-        .SelectMany(kv => kv.Value.Select(slot => (slot, kv.Key)))
-        .ToDictionary(t => t.slot, t => t.Key);
+    public static SlotFlags GetCoveringSlots(BodyPartType type) => type switch
+    {
+        BodyPartType.Head => SlotFlags.HEAD,
+        BodyPartType.Torso => SlotFlags.OUTERCLOTHING | SlotFlags.INNERCLOTHING,
+        BodyPartType.Arm => SlotFlags.OUTERCLOTHING | SlotFlags.INNERCLOTHING,
+        BodyPartType.Hand => SlotFlags.GLOVES,
+        BodyPartType.Leg => SlotFlags.OUTERCLOTHING | SlotFlags.LEGS,
+        BodyPartType.Foot => SlotFlags.FEET,
+        _ => SlotFlags.NONE
+    };
+
+    private static readonly BodyPartType[] RequiringTypes =
+    [
+        BodyPartType.Head,
+        BodyPartType.Torso,
+        BodyPartType.Hand,
+        BodyPartType.Foot
+    ];
 
     [SubscribeLocalEvent]
     private void OnEquippingTargetAttempt(Entity<BodyEquipmentComponent> ent, ref IsEquippingTargetAttemptEvent args)
     {
-        if (GetInventoryPart(args.Slot) is not {} part ||
+        if (GetRequiredPart(ent.Owner, args.Slot) is not {} part ||
             HasBodyPart(ent.Owner, part))
             return;
 
@@ -53,7 +68,7 @@ public sealed partial class BodyEquipmentSystem : EntitySystem
     private void OnCheckEquipmentPart(Entity<BodyEquipmentComponent> ent, ref CheckEquipmentPartEvent args)
     {
         // If there's no body part associated with the slot, just allow it
-        if (GetInventoryPart(args.Slot) is not {} part)
+        if (GetRequiredPart(ent.Owner, args.Slot) is not {} part)
         {
             args.Handled = true;
             return;
@@ -74,10 +89,21 @@ public sealed partial class BodyEquipmentSystem : EntitySystem
         => _part.FindBodyPart(body, part) != null;
 
     /// <summary>
-    /// Resolves the body-part type required by an inventory slot, if any.
+    /// Resolves the body-part type required by an inventory slot of the body, if any.
     /// </summary>
-    public static BodyPartType? GetInventoryPart(string slot)
-        => _slotToPart.TryGetValue(slot, out var part) ? part : null;
+    public BodyPartType? GetRequiredPart(EntityUid body, string slot)
+    {
+        if (!_inventory.TryGetSlot(body, slot, out var definition))
+            return null;
+
+        foreach (var type in RequiringTypes)
+        {
+            if ((GetRequiringSlots(type) & definition.SlotFlags) != SlotFlags.NONE)
+                return type;
+        }
+
+        return null;
+    }
 
     /// <summary>
     /// Drop items worn by a body part, unless there is another of the same type of part.
@@ -89,12 +115,17 @@ public sealed partial class BodyEquipmentSystem : EntitySystem
             // only care about parts being removed
             _part.GetPartType(part) is not { } type ||
             // do nothing if there's e.g. a second foot to wear shoes with. there's no individual shoe items.
-            _part.GetBodyParts(ent.Owner, type).Count != 0 || !PartInventorySlots.TryGetValue(type, out var slots))
+            _part.GetBodyParts(ent.Owner, type).Count != 0)
             return;
 
-        foreach (var slot in slots)
+        var slots = GetRequiringSlots(type);
+        if (slots == SlotFlags.NONE ||
+            !_inventory.TryGetContainerSlotEnumerator(ent.Owner, out var enumerator, slots))
+            return;
+
+        while (enumerator.MoveNext(out var slot))
         {
-            _inventory.DropSlotContents(ent, slot);
+            _inventory.DropSlotContents(ent, slot.ID);
         }
     }
 }

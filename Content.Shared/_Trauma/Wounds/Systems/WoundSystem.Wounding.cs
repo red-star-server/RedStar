@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared._Trauma.Common.Damage;
+using Content.Shared._Trauma.Common.DoAfter;
 using Content.Shared._Trauma.Common.Healing;
 using Content.Shared._Trauma.Common.Medical;
 using Content.Shared._Trauma.Common.Wounds;
@@ -148,7 +149,7 @@ public sealed partial class WoundSystem
 
             if (damageValue < 0)
             {
-                TryHealWoundsOfType(part, -damageValue, damageType, out var healed, ignoreBlockers: args.IgnoreBlockers);
+                TryHealWoundsOfType(part, -damageValue, damageType, out _, ignoreBlockers: args.IgnoreBlockers);
             }
             else
             {
@@ -193,6 +194,14 @@ public sealed partial class WoundSystem
         UpdateWoundableIntegrity(part);
     }
 
+    [SubscribeLocalEvent]
+    private void OnModifyDoAfterDelay(Entity<HandOrganComponent> ent, ref BodyRelayedEvent<ModifyDoAfterDelayEvent> args)
+    {
+        var ev = args.Args;
+        RaiseLocalEvent(ent, ref ev);
+        args.Args = ev;
+    }
+
     #endregion
 
     #region Public API
@@ -211,6 +220,11 @@ public sealed partial class WoundSystem
         return null;
     }
 
+    private static EntProtoId ResolveWoundId(EntProtoId id)
+    {
+        return id.Id == Blunt.Id ? BluntWound : id;
+    }
+
     /// <summary>
     /// Attempts to apply severity to a wound of the requested type on the part.
     /// </summary>
@@ -223,11 +237,10 @@ public sealed partial class WoundSystem
         ProtoId<DamageTypePrototype>? damageType = null,
         EntityUid? user = null)
     {
-        if (id.Id is "Blunt" or "WoundBlunt")
-        {
-            id = BluntWound;
+        if (id.Id == Blunt.Id || id == BluntWound)
             damageType ??= Blunt;
-        }
+
+        id = ResolveWoundId(id);
         woundInduced = null;
         if (severity <= FixedPoint2.Zero || !_woundableQuery.Resolve(part, ref part.Comp))
             return false;
@@ -260,8 +273,7 @@ public sealed partial class WoundSystem
         [NotNullWhen(true)] out Entity<WoundComponent>? woundCreated,
         ProtoId<DamageGroupPrototype>? damageGroup)
     {
-        if (id.Id == "Blunt")
-            id = BluntWound;
+        id = ResolveWoundId(id);
         woundCreated = null;
 
         // allows 0 severity wounds for dismemberment traumas to exist
@@ -304,8 +316,7 @@ public sealed partial class WoundSystem
         [NotNullWhen(true)] out Entity<WoundComponent>? woundContinued,
         EntityUid? user = null)
     {
-        if (id.Id == "Blunt")
-            id = BluntWound;
+        id = ResolveWoundId(id);
         woundContinued = null;
         if (severity == FixedPoint2.Zero ||
             !IsWoundPrototypeValid(id))
@@ -392,6 +403,7 @@ public sealed partial class WoundSystem
     /// </summary>
     /// <param name="parent">Parent of the woundable entity. Yes.</param>
     /// <param name="part">The vulnerable body part</param>
+    /// <param name="user"></param>
     public bool AmputateWoundable(Entity<WoundableComponent?> parent, Entity<WoundableComponent?> part, EntityUid? user = null)
     {
         if (_timing.ApplyingState ||
@@ -456,7 +468,7 @@ public sealed partial class WoundSystem
     /// </summary>
     public void UpdateWoundableIntegrity(Entity<WoundableComponent?> part)
     {
-        if (!_woundableQuery.Resolve(part, ref part.Comp) || part.Comp.Wounds == default) // it can be null while applying state if the entity is entering pvs right now
+        if (!_woundableQuery.Resolve(part, ref part.Comp)) // it can be null while applying state if the entity is entering pvs right now
             return;
 
         // Calculate total damage on this part
@@ -476,24 +488,6 @@ public sealed partial class WoundSystem
 
         part.Comp.Integrity = newIntegrity;
         DirtyField(part, part.Comp, nameof(WoundableComponent.Integrity));
-    }
-
-    /// <summary>
-    /// Attaches the wound to the part and updates the affected integrity state.
-    /// </summary>
-    public bool AddWound(
-        Entity<WoundableComponent?> part,
-        Entity<WoundComponent?> wound,
-        FixedPoint2 woundSeverity,
-        ProtoId<DamageGroupPrototype>? damageGroup)
-    {
-        if (!_woundableQuery.Resolve(part, ref part.Comp) ||
-            !_query.Resolve(wound, ref wound.Comp) ||
-            !_timing.IsFirstTimePredicted ||
-            part.Comp.Wounds.Contains(wound))
-            return false;
-
-        return _container.Insert(wound.Owner, part.Comp.Wounds);
     }
 
     private bool RemoveWound(EntityUid wound)
@@ -551,17 +545,17 @@ public sealed partial class WoundSystem
 
         var nearestSeverity = wound.Comp.WoundSeverity;
         var scale = part.Comp.IntegrityCap / 100;
-        foreach (var (severity, value) in _woundThresholds.OrderByDescending(kv => kv.Value))
+        FixedPoint2? nearestThreshold = null;
+        foreach (var (severity, value) in _woundThresholds)
         {
             var scaledThreshold = value * scale;
-            if (wound.Comp.WoundSeverityPoint < scaledThreshold)
-                continue;
-
-            if (severity == WoundSeverity.Healed && wound.Comp.WoundSeverityPoint > 0)
+            if (wound.Comp.WoundSeverityPoint < scaledThreshold ||
+                nearestThreshold >= scaledThreshold ||
+                severity == WoundSeverity.Healed && wound.Comp.WoundSeverityPoint > 0)
                 continue;
 
             nearestSeverity = severity;
-            break;
+            nearestThreshold = scaledThreshold;
         }
 
         if (nearestSeverity == wound.Comp.WoundSeverity)
@@ -582,19 +576,21 @@ public sealed partial class WoundSystem
             return;
 
         var nearestSeverity = part.Comp.WoundableSeverity;
-        foreach (var (severity, value) in part.Comp.Thresholds.OrderByDescending(kv => kv.Value))
+        if (part.Comp.Thresholds.Count > 0 && part.Comp.Integrity >= part.Comp.IntegrityCap)
         {
-            if (part.Comp.Integrity >= part.Comp.IntegrityCap)
+            nearestSeverity = WoundableSeverity.Healthy;
+        }
+        else
+        {
+            FixedPoint2? nearestThreshold = null;
+            foreach (var (severity, value) in part.Comp.Thresholds)
             {
-                nearestSeverity = WoundableSeverity.Healthy;
-                break;
+                if (part.Comp.Integrity < value || nearestThreshold >= value)
+                    continue;
+
+                nearestSeverity = severity;
+                nearestThreshold = value;
             }
-
-            if (part.Comp.Integrity < value)
-                continue;
-
-            nearestSeverity = severity;
-            break;
         }
 
         if (nearestSeverity == part.Comp.WoundableSeverity)
@@ -631,46 +627,6 @@ public sealed partial class WoundSystem
         {
             if (_body.GetCategory(part.Owner) is {} category)
                 result[category] = part.Comp.WoundableSeverity;
-        }
-
-        return result;
-    }
-
-    /// <summary>
-    /// Collects the injury severity state of each damageable body-part category.
-    /// </summary>
-    public Dictionary<ProtoId<OrganCategoryPrototype>, WoundableSeverity> GetDamageableStatesOnBody(EntityUid body)
-    {
-        var result = SeveredStates();
-        foreach (var part in _body.GetOrgans<WoundableComponent>(body))
-        {
-            if (_body.GetCategory(part.Owner) is not {} category)
-                continue;
-
-            var nearestSeverity = WoundableSeverity.Severed;
-            var damage = _damageable.GetTotalDamage(part.Owner);
-            foreach (var (severity, threshold) in part.Comp.Thresholds.OrderByDescending(kv => kv.Value))
-            {
-                if (damage <= 0)
-                {
-                    nearestSeverity = WoundableSeverity.Healthy;
-                    break;
-                }
-
-                if (damage >= part.Comp.IntegrityCap)
-                {
-                    nearestSeverity = WoundableSeverity.Mangled;
-                    break;
-                }
-
-                if (damage > part.Comp.IntegrityCap - threshold)
-                    continue;
-
-                nearestSeverity = severity;
-                break;
-            }
-
-            result[category] = nearestSeverity;
         }
 
         return result;
@@ -742,16 +698,6 @@ public sealed partial class WoundSystem
         }
 
         return sum;
-    }
-
-    /// <inheritdoc cref="GetWoundableSeverityPoint"/>
-    public FixedPoint2 GetWoundableIntegrityDamage(
-        Entity<WoundableComponent?> part,
-        [ForbidLiteral] ProtoId<DamageGroupPrototype>? damageGroup = null,
-        bool healable = false,
-        bool ignoreBlockers = false)
-    {
-        return GetWoundableSeverityPoint(part, damageGroup, healable, ignoreBlockers);
     }
 
     #endregion

@@ -4,4 +4,12 @@ namespace Content.Shared._Trauma.Common.DoAfter;
 /// Raised on the target, relayed to bodyparts and bone entities in hand organ entities.
 /// </summary>
 [ByRefEvent]
-public record struct ModifyDoAfterDelayEvent(float Multiplier = 1f);
+public record struct ModifyDoAfterDelayEvent(float Multiplier = 1f)
+{
+    public const float MaxMultiplier = 10f;
+
+    public void Scale(float factor)
+    {
+        Multiplier = Math.Min(Multiplier * factor, MaxMultiplier);
+    }
+}

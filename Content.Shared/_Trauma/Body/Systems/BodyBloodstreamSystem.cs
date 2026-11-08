@@ -43,35 +43,14 @@ public sealed partial class BodyBloodstreamSystem : EntitySystem
         base.Update(frameTime);
 
         var bleedsQuery = EntityQueryEnumerator<BleedInflicterComponent>();
-        var now = _timing.CurTime;
         while (bleedsQuery.MoveNext(out var ent, out var bleeds))
         {
             var bleeding = bleeds.BleedingAmount > 0 && CanWoundBleed((ent, bleeds));
-            if (bleeding != bleeds.IsBleeding)
-            {
-                bleeds.IsBleeding = bleeding;
-                DirtyField(ent, bleeds, nameof(BleedInflicterComponent.IsBleeding));
-            }
-
-            if (!bleeds.IsBleeding)
+            if (bleeding == bleeds.IsBleeding)
                 continue;
 
-            var totalTime = bleeds.ScalingFinishesAt - bleeds.ScalingStartsAt;
-            var currentTime = bleeds.ScalingFinishesAt - now;
-
-            if (totalTime <= currentTime || bleeds.ScalingLimit >= bleeds.Scaling)
-                continue;
-
-            var newBleeds = FixedPoint2.Clamp(
-                (totalTime / currentTime) / (bleeds.ScalingLimit - bleeds.Scaling),
-                0,
-                bleeds.ScalingLimit);
-
-            if (bleeds.Scaling == newBleeds)
-                continue;
-
-            bleeds.Scaling = newBleeds;
-            DirtyField(ent, bleeds, nameof(BleedInflicterComponent.Scaling));
+            bleeds.IsBleeding = bleeding;
+            DirtyField(ent, bleeds, nameof(BleedInflicterComponent.IsBleeding));
         }
     }
 

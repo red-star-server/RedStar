@@ -33,7 +33,17 @@ public sealed partial class MobThresholdSystem
         if (!GetScaledDamage(target1, target2, out damage))
             return false;
 
-        woundableDamage = GetScaledPartsDamage(target1, target2);
+        if (!_bodyQuery.HasComp(target1) || !_bodyQuery.HasComp(target2))
+            return true;
+
+        var ent1DeadThreshold = GetLowestThreshold(target1);
+        if (ent1DeadThreshold <= FixedPoint2.Zero)
+        {
+            damage = null;
+            return false;
+        }
+
+        woundableDamage = GetScaledPartsDamage(target1, target2, ent1DeadThreshold);
         return true;
     }
 
@@ -50,20 +60,9 @@ public sealed partial class MobThresholdSystem
         return threshold.Value;
     }
 
-    private Dictionary<ProtoId<OrganCategoryPrototype>, DamageSpecifier>? GetScaledPartsDamage(EntityUid target1, EntityUid target2)
+    private Dictionary<ProtoId<OrganCategoryPrototype>, DamageSpecifier> GetScaledPartsDamage(EntityUid target1, EntityUid target2, FixedPoint2 ent1DeadThreshold)
     {
-        // If the receiver is a simplemob, we don't care about any of this. Just grab the damage and go.
-        if (!_bodyQuery.HasComp(target2))
-            return null;
-
-        // However if they are valid for woundmed, we first check if the sender is also valid for it to build a dict.
-        if (!_bodyQuery.TryComp(target1, out var oldBody))
-            return null;
-
-        var ent1DeadThreshold = GetLowestThreshold(target1);
-        if (ent1DeadThreshold <= FixedPoint2.Zero)
-            return null;
-
+        var oldBody = _bodyQuery.Comp(target1);
         var ent2DeadThreshold = GetLowestThreshold(target2);
 
         Dictionary<ProtoId<OrganCategoryPrototype>, DamageSpecifier> organDamages = new();
