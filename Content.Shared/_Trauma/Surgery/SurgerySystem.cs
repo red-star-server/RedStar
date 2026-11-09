@@ -106,6 +106,7 @@ public sealed partial class SurgerySystem : EntitySystem
 
 
         InitializeStart();
+        InitializeWorldTarget();
 
         LoadPrototypes();
     }
