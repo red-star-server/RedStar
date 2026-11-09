@@ -12,3 +12,28 @@
         - id: BeeFrame
           amount: 2
         - id: BeeQueenPackage
+
+- type: entity
+  parent: CrateHydroponics
+  id: CrateHydroponicsBeeQueen
+  name: queen bee crate
+  description: A packaged queen bee. Put her into a hive with frames, and a colony starts.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: BeeQueenPackage
+
+- type: entity
+  parent: CrateHydroponics
+  id: CrateHydroponicsBeeFrames
+  name: hive frames crate
+  description: Four empty hive frames.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: BeeFrame
+          amount: 4

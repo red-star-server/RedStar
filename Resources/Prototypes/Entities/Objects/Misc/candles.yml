@@ -53,6 +53,18 @@
           shader: unshaded
     - type: Damageable
       damageModifierSet: Wood
+    # RS14-start
+    # A candle ground in a blender gives liquid wax; heated, it sets into beeswax for hive frames.
+    - type: Solution
+      id: wax
+      solution:
+        maxVol: 5
+        reagents:
+        - ReagentId: LiquidBeeswax
+          Quantity: 5
+    - type: Extractable
+      grindableSolutionName: wax
+    # RS14-end
 
 - type: entity
   name: red candle
@@ -160,6 +172,15 @@
       normalState: fire-small
     - type: Flammable
       firestacksOnIgnite: 2.0
+    # RS14-start
+    - type: Solution
+      id: wax
+      solution:
+        maxVol: 2
+        reagents:
+        - ReagentId: LiquidBeeswax
+          Quantity: 2
+    # RS14-end
 
 - type: entity
   name: small red candle
