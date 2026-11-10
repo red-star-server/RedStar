@@ -24,6 +24,14 @@
     - id: SpiderSpawnHorde
     - id: VendorMalfunction
     - id: VentClog
+    # RS14-start
+    - id: ArgocyteSpawnHorde
+    - id: ArgocyteSpawnHordeLowPop
+    - id: SlimesSpawnHordeLowPop
+    - id: SnakeSpawnHordeLowPop
+    - id: SpiderClownSpawnHordeLowPop
+    - id: SpiderSpawnHordeLowPop
+    # RS14-end
 
 - type: entityTable
   id: BasicAntagEventsTable

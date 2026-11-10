@@ -1,0 +1,37 @@
+- type: entity
+  id: ArgocyteSpawnHorde
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-vent-creatures-start-horde-announcement
+    startAudio:
+      path: /Audio/_Corvax/Announcements/attention.ogg
+    earliestStart: 20
+    minimumPlayers: 25
+    weight: 5
+    duration: 5
+    maxDuration: 20
+  - type: VentHordeRule
+    table: !type:GroupSelector
+      rolls: 2, 4
+      children:
+      - id: MobArgocyteMolder
+      - id: MobArgocytePouncer
+      - id: MobArgocyteGlider
+      - id: MobArgocyteHarvester
+      - id: MobArgocyteCrawler
+
+- type: entity
+  id: ArgocyteSpawnHordeLowPop
+  parent: ArgocyteSpawnHorde
+  components:
+  - type: StationEvent
+    minimumPlayers: 0
+    maximumPlayers: 14
+  - type: VentHordeRule
+    table: !type:GroupSelector
+      rolls: 1, 2
+      children:
+      - id: MobArgocyteSlurva
+      - id: MobArgocyteSkitter
+      - id: MobArgocyteSwiper

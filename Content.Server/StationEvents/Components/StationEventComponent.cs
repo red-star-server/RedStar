@@ -70,6 +70,14 @@ public sealed partial class StationEventComponent : Component
     [DataField]
     public int MinimumPlayers;
 
+    // RS14-start
+    /// <summary>
+    ///     The maximum server player count at which this event can run. Unbounded by default.
+    /// </summary>
+    [DataField]
+    public int MaximumPlayers = int.MaxValue;
+    // RS14-end
+
     /// <summary>
     ///     How many times this even can occur in a single round
     /// </summary>
