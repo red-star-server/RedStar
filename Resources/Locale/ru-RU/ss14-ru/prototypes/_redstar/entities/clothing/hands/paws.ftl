@@ -1,5 +1,7 @@
 ent-ClothingHandsCatPawsBase = { ent-ClothingHandsGlovesSyntheticBase }
     .desc = { ent-ClothingHandsGlovesSyntheticBase.desc }
+ent-ClothingHandsCatPawsWhite = white cat paws
+    .desc = Super soft white cat paws, especially for the most brutal station workers.
 ent-ClothingHandsCatPawsBrown = коричневые кошачьи лапки
     .desc = Супер мягкие коричневые кошачьи лапки.
 ent-ClothingHandsCatPawsBlack = черные кошачьи лапки

@@ -28,3 +28,6 @@ ent-DrinkPalomaGlass = { ent-DrinkGlass }
 ent-DrinkYorshGlass = { ent-DrinkGlass }
     .desc = { ent-DrinkGlass.desc }
     .suffix = Ёрш
+ent-DrinkCherryBlossom = стакан-метаморф
+    .desc = Лёгкий освежающий напиток с нежным ароматом цветущей сакуры.
+    .suffix = расцвет сакуры
