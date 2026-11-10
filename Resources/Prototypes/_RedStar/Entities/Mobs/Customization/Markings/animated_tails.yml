@@ -11,7 +11,7 @@
   bodyPart: Tail
   groupWhitelist: []
   sprites:
-  - sprite: _RedStar/Mobs/Customization/slime_cat_parts.rsi
+  - sprite: _RedStar/Mobs/Customization/SlimePerson/slime_cat_parts.rsi
     state: slime_tail_cat_wag
 
 - type: marking
@@ -19,10 +19,58 @@
   bodyPart: Tail
   groupWhitelist: []
   sprites:
-  - sprite: _RedStar/Mobs/Customization/slime_cat_parts.rsi
+  - sprite: _RedStar/Mobs/Customization/SlimePerson/slime_cat_parts.rsi
     state: slime_tail_cat_wag_stripes_prime
-  - sprite: _RedStar/Mobs/Customization/slime_cat_parts.rsi
+  - sprite: _RedStar/Mobs/Customization/SlimePerson/slime_cat_parts.rsi
     state: slime_tail_cat_wag_stripes_second
+
+- type: marking
+  id: SlimeTailGlassleaf
+  bodyPart: Tail
+  groupWhitelist: [SlimePerson]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/SlimePerson/tail.rsi
+    state: glassleaf
+
+- type: marking
+  id: SlimeTailGummyCat
+  bodyPart: Tail
+  groupWhitelist: [SlimePerson]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/SlimePerson/tail.rsi
+    state: gummy_cat
+
+- type: marking
+  id: SlimeTailHoppingSlime
+  bodyPart: Tail
+  groupWhitelist: [SlimePerson]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/SlimePerson/tail.rsi
+    state: hopping_slime
+
+- type: marking
+  id: SlimeTailNudibranchi
+  bodyPart: Tail
+  groupWhitelist: [SlimePerson]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/SlimePerson/tail.rsi
+    state: nudibranchi
+
+- type: marking
+  id: SlimeTailVulpish
+  bodyPart: Tail
+  groupWhitelist: [SlimePerson]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/SlimePerson/tail.rsi
+    state: vulpish
+
+- type: marking
+  id: SlimeTailWaggableMassWag
+  bodyPart: Tail
+  groupWhitelist: [SlimePerson]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/SlimePerson/tail.rsi
+    state: waggable_mass_wagging
 
 - type: marking
   id: HumanFoxTailAnimated
