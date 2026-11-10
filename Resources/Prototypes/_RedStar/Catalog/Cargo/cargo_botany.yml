@@ -4,7 +4,27 @@
     sprite: _RedStar/Objects/Specific/Beekeeping/beehive.rsi
     state: frames-2
   product: CrateHydroponicsBeekeeping
+  cost: 1500
+  category: cargoproduct-category-name-hydroponics
+  group: market
+
+- type: cargoProduct
+  id: HydroponicsBeeQueen
+  icon:
+    sprite: _RedStar/Objects/Specific/Beekeeping/queen-package.rsi
+    state: icon
+  product: CrateHydroponicsBeeQueen
   cost: 1000
+  category: cargoproduct-category-name-hydroponics
+  group: market
+
+- type: cargoProduct
+  id: HydroponicsBeeFrames
+  icon:
+    sprite: _RedStar/Objects/Specific/Beekeeping/frame.rsi
+    state: foundation
+  product: CrateHydroponicsBeeFrames
+  cost: 300
   category: cargoproduct-category-name-hydroponics
   group: market
 
