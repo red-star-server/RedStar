@@ -245,6 +245,7 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
     {
         var comp = hive.Comp;
         var now = Timing.CurTime;
+        var waitingToAbandon = !comp.Wild && hasQueen && comp.MaxBees == 0;
 
         // Without a queen the colony slowly dies out.
         if (hasQueen || comp.Bees <= 0)
@@ -257,8 +258,8 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
             RemoveHomeBee(hive);
         }
 
-        // Too many bees for the frames: a grace period to bring the frames back, then extra bees leave.
-        if (comp.Bees + comp.OutBees <= comp.MaxBees)
+        // Excess bees leave after a grace period. A colony waiting to abandon a frameless hive stays together.
+        if (waitingToAbandon || comp.Bees + comp.OutBees <= comp.MaxBees)
         {
             comp.CrowdedSince = null;
             comp.Crowding = BeehiveCrowding.None;
@@ -297,7 +298,7 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
         }
 
         // No frames is no home: after a while the queen leaves with the whole colony. Wild hives have no frames.
-        if (!comp.Wild && hasQueen && comp.MaxBees == 0)
+        if (waitingToAbandon)
         {
             comp.AbandonAt ??= now + comp.AbandonTime;
             if (now >= comp.AbandonAt)

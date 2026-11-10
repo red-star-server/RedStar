@@ -1,8 +1,10 @@
 #nullable enable
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server._RedStar.Beekeeping.Components;
 using Content.Server.Atmos.EntitySystems;
+using Content.Shared._RedStar.Beekeeping;
 using Content.Shared._RedStar.Beekeeping.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Containers.ItemSlots;
@@ -83,6 +85,39 @@ public sealed class HiveAbandonTest : GameTest
                 var swarm = Server.EntMan.EntityQuery<BeeSwarmComponent>().Single();
                 Assert.That(swarm.Bees, Is.EqualTo(4));
             });
+        });
+    }
+
+    [Test]
+    public async Task FramelessColonyWaitsForNestSpace()
+    {
+        const int bees = 4;
+        var server = Server;
+        await OverrideCVar(Side.Server, BeekeepingCVars.WildHiveLimit, 1);
+        await Build(bees);
+
+        EntityUid wildHive = default;
+        await server.WaitPost(() =>
+        {
+            wildHive = server.EntMan.SpawnAttachedTo("WildBeehive", _map.GridCoords);
+            var comp = server.EntMan.GetComponent<BeehiveComponent>(_hive);
+            comp.CrowdingGrace = ShortAbandon + TimeSpan.FromSeconds(3);
+        });
+
+        await RunSeconds((float) ShortAbandon.TotalSeconds * 2);
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(QueenHome(), Is.True, "the queen left while the wild hive limit was full");
+            Assert.That(server.EntMan.GetComponent<BeehiveComponent>(_hive).Bees, Is.EqualTo(bees),
+                "bees left the hive before the queen");
+        });
+
+        await server.WaitPost(() => server.EntMan.DeleteEntity(wildHive));
+        await RunSeconds(30);
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(QueenInSwarm(), Is.True, "the queen did not leave after a nest slot opened");
+            Assert.That(server.EntMan.EntityQuery<BeeSwarmComponent>().Single().Bees, Is.EqualTo(bees));
         });
     }
 
