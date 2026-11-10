@@ -26,7 +26,7 @@ reagent-effect-condition-guidebook-unique-bloodstream-chem-threshold =
                *[other] в крови присутствует от {$min} до {$max} реагентов
             }
         *[other] { $min ->
-                    [-1] в крови присутствует не более {$max} реагентов
+                    [-1] в крови присутствует менее {$max} реагентов
                     *[other] в крови присутствует от {$min} до {$max} реагентов
                  }
     }
