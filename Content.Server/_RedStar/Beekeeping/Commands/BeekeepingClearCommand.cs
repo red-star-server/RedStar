@@ -3,6 +3,7 @@ using Content.Server._RedStar.Beekeeping.Components;
 using Content.Shared.Administration;
 using Content.Shared._RedStar.Beekeeping.Components;
 using Robust.Shared.Console;
+using Robust.Shared.Containers;
 
 namespace Content.Server._RedStar.Beekeeping.Commands;
 
@@ -14,6 +15,7 @@ namespace Content.Server._RedStar.Beekeeping.Commands;
 public sealed partial class BeekeepingClearCommand : LocalizedEntityCommands
 {
     [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedContainerSystem _containers = default!;
 
     public override string Command => "beekeeping_clear";
 
@@ -41,11 +43,8 @@ public sealed partial class BeekeepingClearCommand : LocalizedEntityCommands
         var hives = EntityManager.EntityQueryEnumerator<BeehiveComponent, TransformComponent>();
         while (hives.MoveNext(out var uid, out var hive, out var xform))
         {
-            if (hive.Wild && (map == null || xform.MapUid == map))
-            {
-                EntityManager.QueueDeleteEntity(uid);
+            if (hive.Wild && (map == null || xform.MapUid == map) && EntityManager.TryQueueDeleteEntity(uid))
                 removed++;
-            }
         }
 
         shell.WriteLine(Loc.GetString("cmd-beekeeping_clear-done", ("count", removed)));
@@ -60,8 +59,16 @@ public sealed partial class BeekeepingClearCommand : LocalizedEntityCommands
             if (map != null && xform.MapUid != map)
                 continue;
 
-            EntityManager.QueueDeleteEntity(uid);
-            count++;
+            // A normal swarm deletion drops its queen, but clearing the swarm must remove her too.
+            if (EntityManager.TryGetComponent<BeeSwarmComponent>(uid, out var swarm) &&
+                _containers.TryGetContainer(uid, swarm.Container, out var container) &&
+                container is ContainerSlot { ContainedEntity: { } queen })
+            {
+                EntityManager.DeleteEntity(queen);
+            }
+
+            if (EntityManager.TryQueueDeleteEntity(uid))
+                count++;
         }
 
         return count;

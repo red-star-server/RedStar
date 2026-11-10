@@ -9,6 +9,7 @@ using Content.Shared._RedStar.Beekeeping.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.Containers;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests._RedStar.Beekeeping;
@@ -156,6 +157,28 @@ public sealed class HiveAbandonTest : GameTest
         {
             Assert.That(QueenHome(), Is.False, "a lone queen stayed in a hive without frames");
             Assert.That(QueenInSwarm(), "the lone queen did not fly off");
+        });
+    }
+
+    [Test]
+    public async Task ClearingSwarmsDeletesTheirQueens()
+    {
+        await Build(4);
+        await RunSeconds((float) ShortAbandon.TotalSeconds + 2);
+
+        var server = Server;
+        await server.WaitPost(() =>
+        {
+            Assert.That(QueenInSwarm(), Is.True);
+            server.ResolveDependency<IConsoleHost>().ExecuteCommand("beekeeping_clear all");
+        });
+
+        await RunTicksSync(2);
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(server.EntMan.EntityQuery<BeeSwarmComponent>(), Is.Empty);
+            Assert.That(server.EntMan.Deleted(_queen), Is.True, "the cleared swarm left its queen behind");
+            Assert.That(server.EntMan.Deleted(_hive), Is.False);
         });
     }
 }
