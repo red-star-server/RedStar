@@ -25,3 +25,8 @@
       - sakura
   - type: Produce
     plantId: SakuraPlants
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: SakuraJuice
+        Quantity: 5
