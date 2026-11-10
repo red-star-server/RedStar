@@ -447,7 +447,7 @@ public sealed partial class BeeQueenSystem : EntitySystem
     /// <summary>
     /// A new comb takes some of the queen's payload; it goes into the honeycombs when the frame is cut.
     /// </summary>
-    public void TakeCombPayload(Entity<BeehiveComponent> hive, BeeFrameComponent? frame)
+    public void TakeCombPayload(Entity<BeehiveComponent> hive, BeeFrameComponent frame)
     {
         if (_hive.GetQueen(hive) is not { } queenUid ||
             !TryComp<BeeQueenComponent>(queenUid, out var queen) ||
@@ -458,7 +458,7 @@ public sealed partial class BeeQueenSystem : EntitySystem
         }
 
         var taken = _solutions.SplitSolution(soln.Value, FixedPoint2.Min(queen.PayloadPerComb, solution.Volume));
-        frame?.Payload.AddSolution(taken, _proto);
+        frame.Payload.AddSolution(taken, _proto);
         UpdateQueenVisuals((queenUid, queen));
     }
 }

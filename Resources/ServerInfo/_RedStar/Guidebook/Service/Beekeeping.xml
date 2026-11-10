@@ -43,7 +43,7 @@
 
 <ColorBox Color="#59563a" OutlineColor="#5B5C6E">
 <Box Orientation="Vertical" HorizontalAlignment="Stretch">
-[bold]Не отпускайте матку где попало.[/bold] Без улья она живёт 5 минут, а отпущенная на пол улетает сама: в пустой улей поблизости, а если его нет, строить [textlink="дикий улей" link="BeekeepingWild"] в шкафу.
+[bold]Не отпускайте матку где попало.[/bold] Без улья она живёт 5 минут, а отпущенная на пол улетает сама: в пустой улей поблизости, а если его нет, то строит [textlink="дикий улей" link="BeekeepingWild"] в шкафу.
 </Box>
 </ColorBox>
 

@@ -709,7 +709,6 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
             return false;
 
         hive.Comp.WildCombs++;
-        _queen.TakeCombPayload(hive, null);
 
         return true;
     }
