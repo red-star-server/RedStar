@@ -458,6 +458,14 @@ public sealed partial class BeeSwarmSystem : EntitySystem
     public void LandSwarm(Entity<BeeSwarmComponent> swarm)
     {
         var xform = Transform(swarm);
+
+        // Another swarm may have settled while this one was in flight.
+        if (CountWildHives(xform.MapUid) >= _cfg.GetCVar(BeekeepingCVars.WildHiveLimit))
+        {
+            DropSwarmQueen(swarm);
+            return;
+        }
+
         var wild = Spawn(swarm.Comp.WildHive, xform.Coordinates);
         if (!TryComp<BeehiveComponent>(wild, out var wildComp) ||
             !_container.TryGetContainer(swarm, swarm.Comp.Container, out var container))
