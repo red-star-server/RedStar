@@ -18,8 +18,8 @@ reagent-effect-condition-guidebook-typed-damage-threshold = цель превы�
 reagent-effect-condition-guidebook-unique-bloodstream-chem-threshold =
     { $max ->
         [2147483648] { $min ->
-                        [1] в крови присутствует не менее {$min} реагента
-                        *[other] в крови присутствует не менее {$min} реагентов
+                        [1] в крови присутствует более {$min} реагента
+                        *[other] в крови присутствует более {$min} реагентов
                      }
         [1] { $min ->
                [0] в крови присутствует не более {$max} реагента
