@@ -85,6 +85,8 @@ public sealed class HiveAbandonTest : GameTest
                 Assert.That(comp.Bees, Is.Zero, "bees stayed behind");
                 var swarm = Server.EntMan.EntityQuery<BeeSwarmComponent>().Single();
                 Assert.That(swarm.Bees, Is.EqualTo(4));
+                Assert.That(swarm.Searching, Is.True);
+                Assert.That(Server.EntMan.GetComponent<BeeQueenComponent>(_queen).DiesAt, Is.Not.Null);
             });
         });
     }
