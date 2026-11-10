@@ -1,5 +1,7 @@
 ent-ClothingHandsCatPawsBase = { ent-ClothingHandsGlovesSyntheticBase }
     .desc = { ent-ClothingHandsGlovesSyntheticBase.desc }
+ent-ClothingHandsCatPawsWhite = белые кошачьи лапки
+    .desc = Супер мягкие белые кошачьи лапки.
 ent-ClothingHandsCatPawsBrown = коричневые кошачьи лапки
     .desc = Супер мягкие коричневые кошачьи лапки.
 ent-ClothingHandsCatPawsBlack = черные кошачьи лапки

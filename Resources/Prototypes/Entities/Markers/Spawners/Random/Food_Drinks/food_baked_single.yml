@@ -97,4 +97,7 @@
         - id: FoodBreadMeatXenoSlice
         - id: FoodPieXenoSlice
         - id: FoodBakedCannabisBrownie
+        # RS14-start
+        - id: FoodSakuraCakeSlice
+        # RS14-end
     offset: 0.0

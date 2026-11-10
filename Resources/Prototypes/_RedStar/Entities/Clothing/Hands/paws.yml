@@ -1,13 +1,9 @@
 ﻿- type: entity
   abstract: true
-  parent: [ ClothingHandsGlovesSyntheticBase ]
+  parent: ClothingHandsGlovesSyntheticBase
   id: ClothingHandsCatPawsBase
   categories: [ DoNotMap ]
   components:
-  - type: Sprite
-    sprite: _RedStar/Clothing/Hands/Gloves/paws.rsi
-  - type: Clothing
-    sprite: _RedStar/Clothing/Hands/Gloves/paws.rsi
   - type: MeleeWeapon
     soundHit:
       collection: ToySqueak
@@ -19,16 +15,27 @@
 
 - type: entity
   parent: ClothingHandsCatPawsBase
-  id: ClothingHandsCatPawsBrown
-  name: brown cat paws
-  description: Super-soft brown cat paws, made specially for the most brutal agents.
+  id: ClothingHandsCatPawsWhite
+  name: white cat paws
+  description: Super soft white cat paws, especially for the most brutal station workers.
   components:
   - type: Sprite
-    state: brown-icon
+    sprite: _RedStar/Clothing/Hands/Gloves/white.rsi
   - type: Clothing
-    clothingVisuals:
-      gloves:
-      - state: brown-equipped-HAND
+    sprite: _RedStar/Clothing/Hands/Gloves/white.rsi
+  - type: Fiber
+    fiberColor: fibers-white
+
+- type: entity
+  parent: ClothingHandsCatPawsBase
+  id: ClothingHandsCatPawsBrown
+  name: brown cat paws
+  description: Super soft brown cat paws, especially for the most brutal station workers.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Hands/Gloves/brown.rsi
+  - type: Clothing
+    sprite: _RedStar/Clothing/Hands/Gloves/brown.rsi
   - type: Fiber
     fiberColor: fibers-brown
 
@@ -36,14 +43,12 @@
   parent: ClothingHandsCatPawsBase
   id: ClothingHandsCatPawsBlack
   name: black cat paws
-  description: Super-soft black paws, made specially for the most brutal agents.
+  description: Super soft black cat paws, especially for the most brutal station workers.
   components:
   - type: Sprite
-    state: black-icon
+    sprite: _RedStar/Clothing/Hands/Gloves/black.rsi
   - type: Clothing
-    clothingVisuals:
-      gloves:
-      - state: black-equipped-HAND
+    sprite: _RedStar/Clothing/Hands/Gloves/black.rsi
   - type: Fiber
     fiberColor: fibers-black
 
@@ -51,13 +56,11 @@
   parent: ClothingHandsCatPawsBase
   id: ClothingHandsCatPawsBlackWhite
   name: black and white cat paws
-  description: Super-soft black and white cat paws, made specially for the most brutal agents.
+  description: Super soft black-and-white cat paws, especially for the most brutal station workers.
   components:
   - type: Sprite
-    state: blackwhite-icon
+    sprite: _RedStar/Clothing/Hands/Gloves/black_white.rsi
   - type: Clothing
-    clothingVisuals:
-      gloves:
-      - state: blackwhite-equipped-HAND
+    sprite: _RedStar/Clothing/Hands/Gloves/black_white.rsi
   - type: Fiber
     fiberColor: fibers-grey

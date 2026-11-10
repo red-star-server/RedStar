@@ -137,3 +137,17 @@
   - type: Icon
     sprite: _RedStar/Objects/Consumable/Drinks/yorsh.rsi
     state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkCherryBlossomGlass
+  suffix: cherry blossom
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: CherryBlossom
+        Quantity: 30
+  - type: Icon
+    sprite: _RedStar/Objects/Consumable/Drinks/cherryblossom.rsi
+    state: icon
