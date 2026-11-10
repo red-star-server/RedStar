@@ -21,3 +21,42 @@
   components:
   - type: Sprite
     state: treepalm03
+
+- type: entity
+  parent: BaseTree
+  id: Sakura
+  name: sakura
+  description: Looking at her, you begin to feel calm in your soul and remember your younger years
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Flora/sakura.rsi
+    state: sakuratree
+    offset: 0,0.7
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/tree_fell.ogg
+          params:
+            volume: 5
+            variation: 0.05
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Log:
+            min: 2
+            max: 8
+          sakuraleaf:
+            min: 2
+            max: 3
