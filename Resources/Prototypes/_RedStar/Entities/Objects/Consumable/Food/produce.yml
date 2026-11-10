@@ -1,22 +1,27 @@
 ﻿- type: entity
+  parent: FoodProduceBase
   id: FoodSakuraFlower
-  parent: FoodBase
-  name: цветок сакуры
-  description: Источает аромат любви и романтических вечеров.
+  name: sakura blossom
+  description: A delicate pink blossom carrying the faint scent of spring.
   components:
   - type: Sprite
     sprite: _RedStar/Objects/Specific/Hydroponics/sakura.rsi
-    state: produce
   - type: Clothing
     slots:
     - HEAD
     quickEquip: false
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+      - ReagentId: SakuraJuice
+        Quantity: 5
+  - type: Tag
+    tags:
+    - Flower
   - type: FlavorProfile
     flavors:
-      - sweet
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: SakuraJuice
-          Quantity: 5
+      - sakura
+  - type: Produce
+    plantId: SakuraPlants

@@ -140,18 +140,14 @@
 
 - type: entity
   parent: DrinkGlass
-  id: DrinkCherryBlossom
-  suffix: расцвет сакуры
-  name: стакан-метаморф
-  description: Лёгкий освежающий напиток с нежным ароматом цветущей сакуры.
+  id: DrinkCherryBlossomGlass
+  suffix: cherry blossom
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: CherryBlossom
-          Quantity: 30
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: CherryBlossom
+        Quantity: 30
   - type: Icon
     sprite: _RedStar/Objects/Consumable/Drinks/cherryblossom.rsi
     state: icon

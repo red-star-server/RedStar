@@ -9,18 +9,18 @@
   recognizable: true
 
 - type: reagent
+  parent: BaseJuice
   id: SakuraJuice
   name: reagent-name-sakurajuice
-  parent: BaseAlcohol
   desc: reagent-desc-sakurajuice
   physicalDesc: reagent-physical-desc-aromatic
   flavor: sakura
   color: "#d2a2bc"
 
 - type: reagent
+  parent: BaseAlcohol
   id: CherryBlossom
   name: reagent-name-cherryblossom
-  parent: BaseAlcohol
   desc: reagent-desc-cherryblossom
   physicalDesc: reagent-physical-desc-aromatic
   flavor: cherryblossom

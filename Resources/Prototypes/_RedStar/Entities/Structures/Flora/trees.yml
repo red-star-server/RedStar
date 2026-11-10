@@ -25,8 +25,8 @@
 - type: entity
   parent: BaseTree
   id: Sakura
-  name: sakura
-  description: Looking at her, you begin to feel calm in your soul and remember your younger years
+  name: sakura tree
+  description: A blossoming cherry tree. Looking at it settles your mind and reminds you of younger years.
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Flora/sakura.rsi
@@ -36,13 +36,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 400
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
+        damage: 80
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -57,6 +51,6 @@
           Log:
             min: 2
             max: 8
-          sakuraleaf:
+          FoodSakuraFlower:
             min: 2
             max: 3

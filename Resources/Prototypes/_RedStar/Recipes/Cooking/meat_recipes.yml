@@ -8,12 +8,3 @@
     FoodBowlBig: 1
     FoodMeatMeatball: 1
     FoodDoughSlice: 3
-
-- type: microwaveMealRecipe
-  id: RecipeSakuraCake
-  result: FoodSakuraCake
-  time: 15
-  group: Cake
-  solids:
-    FoodCakePlain: 1
-    FoodSakuraFlower: 3

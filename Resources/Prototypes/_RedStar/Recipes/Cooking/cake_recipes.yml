@@ -1,0 +1,8 @@
+- type: microwaveMealRecipe
+  id: RecipeSakuraCake
+  result: FoodSakuraCake
+  time: 15
+  group: Cake
+  solids:
+    FoodCakePlain: 1
+    FoodSakuraFlower: 3

@@ -1,9 +1,9 @@
 ﻿- type: entity
   parent: SeedBase
-  name: пакет семян сакуры
   id: SakuraSeeds
+  name: packet of sakura seeds
   components:
-  - type: Seed
-    seedId: sakura
   - type: Sprite
     sprite: _RedStar/Objects/Specific/Hydroponics/sakura.rsi
+  - type: Seed
+    plantId: SakuraPlants
