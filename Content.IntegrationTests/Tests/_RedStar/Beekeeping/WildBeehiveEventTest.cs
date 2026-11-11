@@ -189,6 +189,33 @@ public sealed class WildBeehiveEventTest : GameTest
     }
 
     [Test]
+    [PairConfig(nameof(StationScenario))]
+    public async Task SwarmFliesFromTheVentIntoTheLockerAndIsAnnounced()
+    {
+        var server = Server;
+        var map = await Pair.CreateTestMap();
+        var entities = server.EntMan;
+        EntityUid locker = default;
+        await server.WaitAssertion(() =>
+        {
+            BuildRoom(map);
+            var grid = map.Grid.Owner;
+            entities.SpawnEntity("GasVentPump", At(grid, 0, 0));
+            locker = entities.SpawnEntity("ClosetMaintenance", At(grid, 4, 0));
+            Plant(At(grid, -1, 1));
+            StartEvent();
+            Assert.That(entities.EntityQuery<WildBeehiveEventSwarmComponent>(), Is.Not.Empty);
+        });
+        await RunSeconds(30);
+        await server.WaitAssertion(() =>
+        {
+            var storage = entities.GetComponent<EntityStorageComponent>(locker);
+            Assert.That(storage.Contents.ContainedEntities.Any(uid => entities.HasComponent<BeehiveComponent>(uid)), Is.True,
+                "the swarm flew into the locker and built its hive there");
+        });
+    }
+
+    [Test]
     public async Task WithNoPlantsTheSwarmHuntsFromTheQuietestVent()
     {
         var server = Server;

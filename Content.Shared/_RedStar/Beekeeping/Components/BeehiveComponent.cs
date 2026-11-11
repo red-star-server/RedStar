@@ -360,7 +360,7 @@ public sealed partial class BeehiveComponent : Component
     /// Bees a colony starts with when a queen is put into a truly empty hive: one scout and the rest workers.
     /// </summary>
     [DataField]
-    public int StartingBees = 5;
+    public int StartingBees = 4;
 
     /// <summary>
     /// How many of the bees at home scout instead of carrying nectar.

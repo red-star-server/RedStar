@@ -265,7 +265,7 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
         }
 
         // Excess bees leave after a grace period. A colony waiting to abandon a frameless hive stays together.
-        if (waitingToAbandon || comp.Bees + comp.OutBees <= comp.MaxBees)
+        if (waitingToAbandon || ColonySize(hive) <= comp.MaxBees)
         {
             comp.CrowdedSince = null;
             comp.Crowding = BeehiveCrowding.None;
@@ -291,7 +291,7 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
                     if (comp.HasEgg && _swarm.TrySwarm(hive))
                         _queen.EndEgg(hive);
                     else
-                        _swarm.LeaveInSwarm(hive, comp.Bees + comp.OutBees - comp.MaxBees);
+                        _swarm.LeaveInSwarm(hive, ColonySize(hive) - comp.MaxBees);
                 }
 
                 comp.Crowding = BeehiveCrowding.Leaving;
@@ -391,7 +391,7 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
         var traits = GetHiveTotals(hive);
 
         // The queen lays a bee when she is ready and there is room; whatever nectar is left goes into combs.
-        if (comp.Bees + comp.OutBees < comp.MaxBees && Timing.CurTime >= comp.NextLay)
+        if (ColonySize(hive) < comp.MaxBees && Timing.CurTime >= comp.NextLay)
         {
             var beeCost = comp.BeeCost * traits.BeeCost;
             var take = Math.Min(beeCost - comp.BeeProgress, comp.Nectar);
@@ -454,7 +454,7 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
         return GetQueen(hive) != null &&
                comp.Pause == BeehivePauseReason.None &&
                WorkersAtHome(comp) > 0 &&
-               comp.Bees + comp.OutBees < comp.MaxBees &&
+               ColonySize(hive) < comp.MaxBees &&
                (comp.Nectar > 0f || comp.BeeProgress > 0f || comp.OutBees > 0);
     }
 
@@ -471,7 +471,7 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
         if (!comp.Wild && _frames.Count == 0)
             return ApiaryNectarUse.NoFrames;
 
-        var growing = comp.Bees + comp.OutBees < comp.MaxBees;
+        var growing = ColonySize(hive) < comp.MaxBees;
         var room = comp.Wild ? comp.WildCombs < comp.MaxWildCombs : HasRoomForComb(_frames);
         var workers = WorkersAtHome(comp) > 0;
 
@@ -561,7 +561,7 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
             if (comp.Bees > 0 || comp.OutBees > 0)
             {
                 args.PushMarkup(Loc.GetString("beekeeping-hive-examine-bees",
-                    ("bees", comp.Bees), ("max", comp.MaxBees), ("outside", comp.OutBees)));
+                    ("bees", comp.Bees + (GetQueen(ent) != null ? 1 : 0)), ("max", comp.MaxBees), ("outside", comp.OutBees)));
             }
 
             args.PushMarkup(Loc.GetString("beekeeping-hive-examine-nectar",

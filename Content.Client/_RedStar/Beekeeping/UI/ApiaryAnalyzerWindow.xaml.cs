@@ -171,11 +171,13 @@ public sealed partial class ApiaryAnalyzerWindow : FancyWindow
         // A meat colony lives on blood; the usual one does not need a line.
         if (state.Diet == BeehiveDiet.Meat)
             AddRow(BeeInfo, "apiary-analyzer-row-diet", Loc.GetString("apiary-analyzer-diet-meat"), Color.Crimson);
-        // The bees at home, with the ones out (foragers, angry bees, bees in hands) in brackets: those out still belong to the colony
-        // until they are lost, but a hive that just let its bees out should not look full.
+        // The bees at home with the queen, who takes a place too, and the ones out (foragers, angry bees, bees in hands) in
+        // brackets: those out still belong to the colony until they are lost, but a hive that just let its bees out should
+        // not look full.
+        var colony = state.Bees + (state.HasQueen ? 1 : 0);
         Bees.Update(Loc.GetString("apiary-analyzer-bees"),
-            (state.OutBees > 0 ? $"{state.Bees} (+{state.OutBees})" : $"{state.Bees}") + $" / {state.MaxBees}",
-            progress: state.MaxBees > 0 ? (float) state.Bees / state.MaxBees : 0f);
+            (state.OutBees > 0 ? $"{colony} (+{state.OutBees})" : $"{colony}") + $" / {state.MaxBees}",
+            progress: state.MaxBees > 0 ? (float) colony / state.MaxBees : 0f);
         if (state.Diet == BeehiveDiet.Meat)
         {
             // A meat hive shows how much meat it would give, and the info mark says which kinds can fall.

@@ -182,7 +182,7 @@ public sealed partial class BeehiveSystem
             reason = "beekeeping-return-wrong-hive";
         else if (TerminatingOrDeleted(hive))
             reason = "beekeeping-return-wrong-hive";
-        else if (!HasRoomForReturn(hive.Comp))
+        else if (!HasRoomForReturn(hive))
             reason = "beekeeping-return-crowded";
 
         if (reason != null)
@@ -219,9 +219,10 @@ public sealed partial class BeehiveSystem
     /// A bee may come back while the hive is within its limit, and also during the grace period after frames
     /// were taken out, so a normal harvest does not cost bees. After the grace period it is refused.
     /// </summary>
-    private bool HasRoomForReturn(BeehiveComponent comp)
+    private bool HasRoomForReturn(Entity<BeehiveComponent> hive)
     {
-        if (comp.Bees + comp.OutBees <= comp.MaxBees)
+        var comp = hive.Comp;
+        if (ColonySize(hive) <= comp.MaxBees)
             return true;
 
         return comp.CrowdedSince == null || Timing.CurTime - comp.CrowdedSince.Value < comp.CrowdingGrace;

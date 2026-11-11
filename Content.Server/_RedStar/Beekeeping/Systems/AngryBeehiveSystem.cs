@@ -622,6 +622,15 @@ public sealed partial class AngryBeehiveSystem : EntitySystem
 
             queen.NextCheck = now + TimeSpan.FromSeconds(1);
 
+            // Caught by someone she cannot sting (a sealed suit and hood), she gives up at once.
+            if (_container.TryGetContainingContainer(uid, out var held) &&
+                HasComp<HandsComponent>(held.Owner) &&
+                IsStingProof(held.Owner))
+            {
+                LandAngryQueen((uid, queen));
+                continue;
+            }
+
             var queenMap = _transform.GetMapCoordinates(uid);
             foreach (var target in exceptions.Hostiles)
             {

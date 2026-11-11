@@ -29,7 +29,7 @@ public sealed partial class MeatBeehiveSystem
             return 0f;
         }
 
-        var left = comp.MaxBees > 0 ? (comp.Bees + comp.OutBees) / (float) comp.MaxBees : 0f;
+        var left = comp.MaxBees > 0 ? _hive.ColonySize(hive) / (float) comp.MaxBees : 0f;
         return Math.Clamp(Math.Max(meatComp.RageMin, 1f - left), 0f, 1f);
     }
 
