@@ -27,7 +27,7 @@
 - type: marking
   id: SlimeTailGlassleaf
   bodyPart: Tail
-  groupWhitelist: [SlimePerson]
+  groupWhitelist: [Slime]
   sprites:
   - sprite: _RedStar/Mobs/Customization/SlimePerson/tail.rsi
     state: glassleaf
@@ -35,7 +35,7 @@
 - type: marking
   id: SlimeTailGummyCat
   bodyPart: Tail
-  groupWhitelist: [SlimePerson]
+  groupWhitelist: [Slime]
   sprites:
   - sprite: _RedStar/Mobs/Customization/SlimePerson/tail.rsi
     state: gummy_cat
@@ -43,7 +43,7 @@
 - type: marking
   id: SlimeTailHoppingSlime
   bodyPart: Tail
-  groupWhitelist: [SlimePerson]
+  groupWhitelist: [Slime]
   sprites:
   - sprite: _RedStar/Mobs/Customization/SlimePerson/tail.rsi
     state: hopping_slime
@@ -51,7 +51,7 @@
 - type: marking
   id: SlimeTailNudibranchi
   bodyPart: Tail
-  groupWhitelist: [SlimePerson]
+  groupWhitelist: [Slime]
   sprites:
   - sprite: _RedStar/Mobs/Customization/SlimePerson/tail.rsi
     state: nudibranchi
@@ -59,7 +59,7 @@
 - type: marking
   id: SlimeTailVulpish
   bodyPart: Tail
-  groupWhitelist: [SlimePerson]
+  groupWhitelist: [Slime]
   sprites:
   - sprite: _RedStar/Mobs/Customization/SlimePerson/tail.rsi
     state: vulpish
@@ -67,7 +67,7 @@
 - type: marking
   id: SlimeTailWaggableMassWag
   bodyPart: Tail
-  groupWhitelist: [SlimePerson]
+  groupWhitelist: [Slime]
   sprites:
   - sprite: _RedStar/Mobs/Customization/SlimePerson/tail.rsi
     state: waggable_mass_wagging

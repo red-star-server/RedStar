@@ -165,7 +165,7 @@
 - type: marking
   id: SlimeEarsBunks
   bodyPart: HeadTop
-  groupWhitelist: [SlimePerson]
+  groupWhitelist: [Slime]
   sprites:
   - sprite: _RedStar/Mobs/Customization/SlimePerson/ears.rsi
     state: bunks
@@ -173,7 +173,7 @@
 - type: marking
   id: SlimeEarsCarblunkle
   bodyPart: HeadTop
-  groupWhitelist: [SlimePerson]
+  groupWhitelist: [Slime]
   sprites:
   - sprite: _RedStar/Mobs/Customization/SlimePerson/ears.rsi
     state: carblunkle
@@ -181,7 +181,7 @@
 - type: marking
   id: SlimeEarsHoppers
   bodyPart: HeadTop
-  groupWhitelist: [SlimePerson]
+  groupWhitelist: [Slime]
   sprites:
   - sprite: _RedStar/Mobs/Customization/SlimePerson/ears.rsi
     state: hoppers
@@ -189,7 +189,7 @@
 - type: marking
   id: SlimeEarsStalks
   bodyPart: HeadTop
-  groupWhitelist: [SlimePerson]
+  groupWhitelist: [Slime]
   sprites:
   - sprite: _RedStar/Mobs/Customization/SlimePerson/ears.rsi
     state: stalks
@@ -197,7 +197,7 @@
 - type: marking
   id: SlimeEarsStalksSmall
   bodyPart: HeadTop
-  groupWhitelist: [SlimePerson]
+  groupWhitelist: [Slime]
   sprites:
   - sprite: _RedStar/Mobs/Customization/SlimePerson/ears.rsi
     state: stalks_small
@@ -205,7 +205,7 @@
 - type: marking
   id: SlimeEarsThorns
   bodyPart: HeadTop
-  groupWhitelist: [SlimePerson]
+  groupWhitelist: [Slime]
   sprites:
   - sprite: _RedStar/Mobs/Customization/SlimePerson/ears.rsi
     state: thorns
