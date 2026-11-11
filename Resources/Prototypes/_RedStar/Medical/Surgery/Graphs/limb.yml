@@ -1,0 +1,267 @@
+- type: surgeryGraph
+  id: SurgeryGraphLimb
+  name: Limb surgery
+  startNode: Closed
+  nodes:
+  - name: Closed
+    label: Closed
+    edges:
+    - id: OpenIncision
+      target: Incised
+      label: Open incision
+      conditions:
+      - !type:PartTypeCondition
+        parts: [Arm, Hand, Leg, Foot, Tail, Wings]
+      - !type:PartPresentCondition
+      - !type:PartComponentCondition
+        inverted: true
+        components:
+        - type: XenoBodyPart
+      steps:
+      - name: Cut with a scalpel
+        quality: Slicing
+        duration: 2
+        effects:
+        - !type:DamageEffect
+          sleepModifier: 0.5
+          damage:
+            types:
+              Bloodloss: 10
+      - name: Retract the skin
+        quality: Retracting
+        duration: 2
+  - name: Incised
+    label: Incision open
+    packages:
+    - SurgeryTendWounds
+    - SurgeryTissueIncised
+    edges:
+    - id: CloseIncision
+      target: Closed
+      label: Close incision
+      steps:
+      - name: Close incision
+        quality: Cauterizing
+        duration: 2
+        effects:
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Heat: -5
+        - !type:ComponentEffect
+          remove:
+          - type: OrganReattached
+    - id: Amputate
+      target: Closed
+      label: Amputate part
+      conditions:
+      - !type:HasBodyCondition
+      steps:
+      - name: Saw through bones
+        quality: Sawing
+        duration: 4
+      - name: Clamp internal bleeders
+        quality: Clamping
+        duration: 2
+        effects:
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Bloodloss: -5
+      - name: Amputate part
+        quality: Sawing
+        duration: 8
+        effects:
+        - !type:RemovePartEffect
+    - id: AttachLeftHand
+      target: Closed
+      label: Attach left hand
+      conditions:
+      - !type:PartTypeCondition
+        parts: [Arm]
+        symmetry: Left
+      - !type:PartRemovedCondition
+        category: HandLeft
+      - !type:TraumaPresentCondition
+        trauma: Dismemberment
+        inverted: true
+      steps:
+      - name: Insert part
+        organ: HandLeft
+        duration: 6
+        effects:
+        - !type:InsertPartEffect
+          category: HandLeft
+      - name: Seal wounds
+        quality: Cauterizing
+        duration: 2
+        effects:
+        - !type:AffixPartEffect
+          category: HandLeft
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Heat: -5
+    - id: AttachRightHand
+      target: Closed
+      label: Attach right hand
+      conditions:
+      - !type:PartTypeCondition
+        parts: [Arm]
+        symmetry: Right
+      - !type:PartRemovedCondition
+        category: HandRight
+      - !type:TraumaPresentCondition
+        trauma: Dismemberment
+        inverted: true
+      steps:
+      - name: Insert part
+        organ: HandRight
+        duration: 6
+        effects:
+        - !type:InsertPartEffect
+          category: HandRight
+      - name: Seal wounds
+        quality: Cauterizing
+        duration: 2
+        effects:
+        - !type:AffixPartEffect
+          category: HandRight
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Heat: -5
+    - id: AttachLeftFoot
+      target: Closed
+      label: Attach left foot
+      conditions:
+      - !type:PartTypeCondition
+        parts: [Leg]
+        symmetry: Left
+      - !type:PartRemovedCondition
+        category: FootLeft
+      - !type:TraumaPresentCondition
+        trauma: Dismemberment
+        inverted: true
+      steps:
+      - name: Insert part
+        organ: FootLeft
+        duration: 6
+        effects:
+        - !type:InsertPartEffect
+          category: FootLeft
+      - name: Seal wounds
+        quality: Cauterizing
+        duration: 2
+        effects:
+        - !type:AffixPartEffect
+          category: FootLeft
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Heat: -5
+    - id: AttachRightFoot
+      target: Closed
+      label: Attach right foot
+      conditions:
+      - !type:PartTypeCondition
+        parts: [Leg]
+        symmetry: Right
+      - !type:PartRemovedCondition
+        category: FootRight
+      - !type:TraumaPresentCondition
+        trauma: Dismemberment
+        inverted: true
+      steps:
+      - name: Insert part
+        organ: FootRight
+        duration: 6
+        effects:
+        - !type:InsertPartEffect
+          category: FootRight
+      - name: Seal wounds
+        quality: Cauterizing
+        duration: 2
+        effects:
+        - !type:AffixPartEffect
+          category: FootRight
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Heat: -5
+    - id: OpenArmAugment
+      target: Incised
+      label: Create arm augment slot
+      conditions:
+      - !type:PartTypeCondition
+        parts: [Arm]
+      - !type:OrganSlotCondition
+        organSlot: ArmAugment
+        inverted: true
+      - !type:BodyComponentCondition
+        blacklist:
+          components:
+          - Silicon
+      steps:
+      - name: Carve out a cavity
+        quality: Slicing
+        duration: 6
+        effects:
+        - !type:AddOrganSlotEffect
+          organSlot: ArmAugment
+    - id: InsertArmAugment
+      target: Incised
+      label: Insert arm augment
+      conditions:
+      - !type:PartTypeCondition
+        parts: [Arm]
+      - !type:OrganSlotCondition
+        organSlot: ArmAugment
+      - !type:OrganPresentCondition
+        organ: ArmAugment
+        inverted: true
+      steps:
+      - name: Add organ
+        organ: ArmAugment
+        duration: 6
+        effects:
+        - !type:InsertOrganEffect
+          organ: ArmAugment
+      - name: Seal wounds
+        quality: Cauterizing
+        duration: 2
+        effects:
+        - !type:AffixOrganEffect
+          organ: ArmAugment
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Heat: -5
+    - id: RemoveArmAugment
+      target: Incised
+      label: Remove arm augment
+      conditions:
+      - !type:PartTypeCondition
+        parts: [Arm]
+      - !type:OrganPresentCondition
+        organ: ArmAugment
+      steps:
+      - name: Clamp the bleeders
+        quality: Clamping
+        duration: 4
+        effects:
+        - !type:BleedsTreatmentEffect
+          amount: 2
+      - name: Remove organ
+        quality: Manipulating
+        duration: 8
+        effects:
+        - !type:RemoveOrganEffect
+          organ: ArmAugment

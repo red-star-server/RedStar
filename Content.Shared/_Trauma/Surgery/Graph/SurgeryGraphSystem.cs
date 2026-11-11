@@ -1,8 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared._Trauma.Surgery.Graph.Conditions;
 using Content.Shared.Body;
+using Content.Shared.Buckle.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Popups;
+using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
@@ -21,8 +23,6 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-
-        SubscribeLocalEvent<OperatedComponent, SurgeryGraphStepDoAfterEvent>(OnStepDoAfter);
 
         InitializeInteraction();
     }
@@ -207,7 +207,7 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         comp.IsOperating = true;
 
         var ev = new SurgeryGraphStepDoAfterEvent(edge.Id, stepIndex);
-        var args = new DoAfterArgs(EntityManager, surgeon, step.Duration, ev, target, target: target, used: heldItem)
+        var args = new DoAfterArgs(EntityManager, surgeon, GetStepDuration(step, surgeon, target, heldItem), ev, target, target: target, used: heldItem)
         {
             BreakOnMove = true,
             NeedHand = true,
@@ -229,6 +229,24 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
             _audio.PlayPredicted(sound, target, surgeon);
     }
 
+    private TimeSpan GetStepDuration(SurgeryStepEntry step, EntityUid surgeon, EntityUid part, EntityUid heldItem)
+    {
+        var speed = 1f;
+        if (TryComp<ToolComponent>(heldItem, out var tool))
+            speed *= tool.SpeedModifier;
+
+        var body = _body.GetBody(part) ?? part;
+        if (TryComp<BuckleComponent>(body, out var buckle) &&
+            TryComp<OperatingTableComponent>(buckle.BuckledTo, out var table))
+            speed *= table.SpeedModifier;
+
+        if (TryComp<SurgerySpeedModifierComponent>(surgeon, out var surgeonSpeed))
+            speed *= surgeonSpeed.SpeedModifier;
+
+        return step.Duration / speed;
+    }
+
+    [SubscribeLocalEvent]
     private void OnStepDoAfter(Entity<OperatedComponent> ent, ref SurgeryGraphStepDoAfterEvent args)
     {
         var comp = ent.Comp;

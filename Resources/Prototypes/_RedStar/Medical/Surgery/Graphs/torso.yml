@@ -621,3 +621,131 @@
         effects:
         - !type:CavityEffect
           remove: true
+    - id: OpenPowerCellSlot
+      target: BonesOpen
+      label: Create power cell slot
+      conditions:
+      - !type:OrganSlotCondition
+        organSlot: AugmentPowerCell
+        inverted: true
+      - !type:BodyComponentCondition
+        blacklist:
+          components:
+          - Silicon
+      steps:
+      - name: Carve out a cavity
+        quality: Slicing
+        duration: 6
+        effects:
+        - !type:AddOrganSlotEffect
+          organSlot: AugmentPowerCell
+    - id: InsertPowerCellSlot
+      target: BonesOpen
+      label: Insert power cell slot
+      conditions:
+      - !type:OrganSlotCondition
+        organSlot: AugmentPowerCell
+      - !type:OrganPresentCondition
+        organ: AugmentPowerCell
+        inverted: true
+      steps:
+      - name: Add organ
+        organ: AugmentPowerCell
+        duration: 6
+        effects:
+        - !type:InsertOrganEffect
+          organ: AugmentPowerCell
+      - name: Seal wounds
+        quality: Cauterizing
+        duration: 2
+        effects:
+        - !type:AffixOrganEffect
+          organ: AugmentPowerCell
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Heat: -5
+    - id: RemovePowerCellSlot
+      target: BonesOpen
+      label: Remove power cell slot
+      conditions:
+      - !type:OrganPresentCondition
+        organ: AugmentPowerCell
+      steps:
+      - name: Clamp the bleeders
+        quality: Clamping
+        duration: 4
+        effects:
+        - !type:BleedsTreatmentEffect
+          amount: 2
+      - name: Remove organ
+        quality: Manipulating
+        duration: 8
+        effects:
+        - !type:RemoveOrganEffect
+          organ: AugmentPowerCell
+    - id: OpenPowerCellCharger
+      target: BonesOpen
+      label: Create power cell charger slot
+      conditions:
+      - !type:OrganSlotCondition
+        organSlot: AugmentCharger
+        inverted: true
+      - !type:BodyComponentCondition
+        blacklist:
+          components:
+          - Silicon
+      steps:
+      - name: Carve out a cavity
+        quality: Slicing
+        duration: 6
+        effects:
+        - !type:AddOrganSlotEffect
+          organSlot: AugmentCharger
+    - id: InsertPowerCellCharger
+      target: BonesOpen
+      label: Insert power cell charger
+      conditions:
+      - !type:OrganSlotCondition
+        organSlot: AugmentCharger
+      - !type:OrganPresentCondition
+        organ: AugmentCharger
+        inverted: true
+      steps:
+      - name: Add organ
+        organ: AugmentCharger
+        duration: 6
+        effects:
+        - !type:InsertOrganEffect
+          organ: AugmentCharger
+      - name: Seal wounds
+        quality: Cauterizing
+        duration: 2
+        effects:
+        - !type:AffixOrganEffect
+          organ: AugmentCharger
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Heat: -5
+    - id: RemovePowerCellCharger
+      target: BonesOpen
+      label: Remove power cell charger
+      conditions:
+      - !type:OrganPresentCondition
+        organ: AugmentCharger
+      steps:
+      - name: Clamp the bleeders
+        quality: Clamping
+        duration: 4
+        effects:
+        - !type:BleedsTreatmentEffect
+          amount: 2
+      - name: Remove organ
+        quality: Manipulating
+        duration: 8
+        effects:
+        - !type:RemoveOrganEffect
+          organ: AugmentCharger

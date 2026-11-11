@@ -15,28 +15,11 @@ public sealed partial class SurgeryGraphPrototype : IPrototype
     [DataField]
     public string Name = string.Empty;
 
-    [DataField]
-    public ProtoId<SurgeryGraphCategoryPrototype>? Category;
-
     [DataField(required: true)]
     public string StartNode = default!;
 
     [DataField("nodes")]
     public List<SurgeryGraphNode> Nodes = [];
-}
-
-[Prototype]
-public sealed partial class SurgeryGraphCategoryPrototype : IPrototype
-{
-    [ViewVariables]
-    [IdDataField]
-    public string ID { get; private set; } = default!;
-
-    [DataField]
-    public string Name = string.Empty;
-
-    [DataField]
-    public ProtoId<SurgeryGraphCategoryPrototype>? Parent;
 }
 
 [DataDefinition]

@@ -1,7 +1,6 @@
 using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared._Trauma.Common.CCVar;
-using Content.Shared._Trauma.Surgery;
 using Content.Shared.Body;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Damage;
@@ -43,20 +42,10 @@ public sealed partial class SurgeryGraphSystem
     {
         Subs.CVar(_cfg, SurgeryCVars.CanOperateOnSelf, x => _noSelfOperate = !x, true);
 
-        SubscribeLocalEvent<BodyComponent, MapInitEvent>(OnBodyMapInit);
-        SubscribeLocalEvent<SurgeryTargetComponent, InteractUsingEvent>(OnBodyInteractUsing);
-        SubscribeLocalEvent<BodyPartComponent, InteractUsingEvent>(OnPartInteractUsing);
-        SubscribeLocalEvent<OrganComponent, InteractUsingEvent>(OnOrganInteractUsing);
-        SubscribeLocalEvent<SurgeryTargetComponent, ExaminedEvent>(OnExamined);
-        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
-
-        SubscribeLocalEvent<HandsComponent, SurgerySanitizationEvent>(RelaySanitization);
-        SubscribeLocalEvent<SanitizedComponent, HeldRelayedEvent<SurgerySanitizationEvent>>(OnHeldSanitization);
-        SubscribeLocalEvent<SanitizedComponent, SurgerySanitizationEvent>(OnSanitization);
-
         LoadGraphs();
     }
 
+    [SubscribeLocalEvent]
     private void OnBodyMapInit(Entity<BodyComponent> ent, ref MapInitEvent args)
     {
         EnsureComp<SurgeryTargetComponent>(ent);
@@ -68,6 +57,7 @@ public sealed partial class SurgeryGraphSystem
         RaiseLocalEvent(ent, ref ev);
     }
 
+    [SubscribeLocalEvent]
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
     {
         if (args.WasModified<SurgeryGraphPrototype>())
@@ -85,6 +75,7 @@ public sealed partial class SurgeryGraphSystem
 
     #region Interaction
 
+    [SubscribeLocalEvent]
     private void OnBodyInteractUsing(Entity<SurgeryTargetComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled || args.Used != _hands.GetActiveItemOrSelf(args.User))
@@ -95,6 +86,7 @@ public sealed partial class SurgeryGraphSystem
             args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnPartInteractUsing(Entity<BodyPartComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled || args.Used != _hands.GetActiveItemOrSelf(args.User))
@@ -105,6 +97,7 @@ public sealed partial class SurgeryGraphSystem
             args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnOrganInteractUsing(Entity<OrganComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled || args.Used != _hands.GetActiveItemOrSelf(args.User))
@@ -161,6 +154,7 @@ public sealed partial class SurgeryGraphSystem
         return TryPerformStep(part, user, used, focusOrgan);
     }
 
+    [SubscribeLocalEvent]
     private void OnExamined(Entity<SurgeryTargetComponent> ent, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange || !IsLyingDown(ent, args.Examiner, false))
@@ -240,6 +234,7 @@ public sealed partial class SurgeryGraphSystem
         _damage.ChangeDamage(part, sepsis, true, origin: user, ignoreBlockers: true);
     }
 
+    [SubscribeLocalEvent]
     private void RelaySanitization(Entity<HandsComponent> ent, ref SurgerySanitizationEvent args)
     {
         var ev = new HeldRelayedEvent<SurgerySanitizationEvent>(args);
@@ -251,12 +246,14 @@ public sealed partial class SurgeryGraphSystem
         args = ev.Args;
     }
 
+    [SubscribeLocalEvent]
     private void OnHeldSanitization(Entity<SanitizedComponent> ent, ref HeldRelayedEvent<SurgerySanitizationEvent> args)
     {
         if (ent.Comp.WorksInHands)
             args.Args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnSanitization(Entity<SanitizedComponent> ent, ref SurgerySanitizationEvent args)
     {
         args.Handled = true;
