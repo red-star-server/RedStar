@@ -466,6 +466,8 @@ trauma-surgery-heavy-bleeding-self = You're bleeding too heavily!
 
 trauma-surgery-needs-tool = You need {$tool} to perform this step!
 
+surgery-graph-ambiguous = Several procedures fit this tool. Be more specific.
+
 trauma-surgery-no-bleeding-other = The subject isn't bleeding
 
 trauma-surgery-no-bleeding-self = You aren't bleeding

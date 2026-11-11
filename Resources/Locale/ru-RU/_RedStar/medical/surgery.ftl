@@ -463,6 +463,8 @@ trauma-surgery-heavy-bleeding-self = У вас слишком сильное к�
 
 trauma-surgery-needs-tool = Для этого этапа требуется: {$tool}!
 
+surgery-graph-ambiguous = Этому инструменту подходит несколько процедур. Уточните действие.
+
 trauma-surgery-no-bleeding-other = У пациента нет кровотечения.
 
 trauma-surgery-no-bleeding-self = У вас нет кровотечения.

@@ -1,0 +1,153 @@
+- type: surgeryEdgePackage
+  id: SurgeryTendWounds
+  edges:
+  - id: TendWoundsBrute
+    target: Incised
+    label: Tend bruise wounds
+    conditions:
+    - !type:WoundedCondition
+      damageGroup: Brute
+    steps:
+    - name: Repair damaged tissue
+      quality: Tending
+      duration: 1
+      effects:
+      - !type:TendWoundsEffect
+        mainGroup: Brute
+        healMultiplier: 0.07
+        damage:
+          types:
+            Blunt: -5
+            Slash: -5
+            Piercing: -5
+    - name: Seal the wound
+      quality: Cauterizing
+      duration: 2
+      effects:
+      - !type:DamageEffect
+        sleepModifier: 2
+        damage:
+          types:
+            Heat: -5
+  - id: TendWoundsBurn
+    target: Incised
+    label: Tend burn wounds
+    conditions:
+    - !type:WoundedCondition
+      damageGroup: Burn
+    steps:
+    - name: Repair burnt tissue
+      quality: Tending
+      duration: 1
+      effects:
+      - !type:TendWoundsEffect
+        mainGroup: Burn
+        healMultiplier: 0.07
+        damage:
+          types:
+            Heat: -5
+            Cold: -5
+            Shock: -5
+            Caustic: -5
+    - name: Seal the wound
+      quality: Cauterizing
+      duration: 2
+      effects:
+      - !type:DamageEffect
+        sleepModifier: 2
+        damage:
+          types:
+            Heat: -5
+
+- type: surgeryEdgePackage
+  id: SurgeryTissueIncised
+  edges:
+  - id: StopBlood
+    target: Incised
+    label: Stop constant blood output
+    conditions:
+    - !type:BleedsPresentCondition
+    steps:
+    - name: Clamp the bleeders
+      quality: Clamping
+      duration: 4
+      effects:
+      - !type:BleedsTreatmentEffect
+        amount: 2
+    - name: Stitch up destroyed tissues
+      quality: Suturing
+      duration: 5
+  - id: MendBones
+    target: Incised
+    label: Mend bones
+    conditions:
+    - !type:BleedsPresentCondition
+      inverted: true
+    - !type:TraumaPresentCondition
+      trauma: BoneDamage
+    steps:
+    - name: Saw through bones
+      quality: Sawing
+      duration: 4
+    - name: Clamp internal bleeders
+      quality: Clamping
+      duration: 2
+      effects:
+      - !type:DamageEffect
+        sleepModifier: 2
+        damage:
+          types:
+            Bloodloss: -5
+    - name: Mend bones
+      quality: BoneHealing
+      duration: 7
+      effects:
+      - !type:TraumaTreatmentEffect
+        traumaType: BoneDamage
+        amount: 17
+  - id: HealOrgans
+    target: Incised
+    label: Heal organs
+    conditions:
+    - !type:BleedsPresentCondition
+      inverted: true
+    - !type:TraumaPresentCondition
+      trauma: OrganDamage
+    steps:
+    - name: Clamp internal bleeders
+      quality: Clamping
+      duration: 2
+      effects:
+      - !type:DamageEffect
+        sleepModifier: 2
+        damage:
+          types:
+            Bloodloss: -5
+    - name: Heal organs
+      quality: Tending
+      duration: 7
+      effects:
+      - !type:TraumaTreatmentEffect
+        traumaType: OrganDamage
+        amount: 17
+  - id: FixDismemberment
+    target: Incised
+    label: Fix dismemberment leftovers
+    conditions:
+    - !type:BleedsPresentCondition
+      inverted: true
+    - !type:TraumaPresentCondition
+      trauma: Dismemberment
+    steps:
+    - name: Remove the dead skin
+      quality: Slicing
+      duration: 4
+    - name: Clear up bone leftovers
+      quality: Sawing
+      duration: 5
+    - name: Stitch up the dismemberment wound
+      quality: Suturing
+      duration: 8
+      effects:
+      - !type:TraumaTreatmentEffect
+        traumaType: Dismemberment
