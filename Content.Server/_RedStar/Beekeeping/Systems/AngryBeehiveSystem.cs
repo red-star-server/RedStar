@@ -16,6 +16,8 @@ using Content.Shared.Destructible;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands;
+using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -73,6 +75,7 @@ public sealed partial class AngryBeehiveSystem : EntitySystem
     [Dependency] private BloodstreamSystem _bloodstream = default!;
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private NPCSystem _npc = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
 
     private readonly HashSet<Entity<MobStateComponent>> _nearbyMobs = new();
 
@@ -645,9 +648,28 @@ public sealed partial class AngryBeehiveSystem : EntitySystem
     /// </summary>
     private void LandAngryQueen(Entity<BeehiveAngryQueenComponent> queen)
     {
+        // Caught and held, she calms down in the hand: the hand keeps the queen item, she does not slip out of it.
+        EntityUid? holder = _container.TryGetContainingContainer(queen.Owner, out var held) && HasComp<HandsComponent>(held.Owner)
+            ? held.Owner
+            : null;
+
         if (_container.TryGetContainer(queen, queen.Comp.Container, out var container))
         {
-            foreach (var item in new List<EntityUid>(container.ContainedEntities))
+            var items = new List<EntityUid>(container.ContainedEntities);
+            if (holder is { } catcher)
+            {
+                foreach (var item in items)
+                    _container.Remove(item, container);
+
+                // Gone at once, so her hand is free for the item.
+                Del(queen);
+                foreach (var item in items)
+                    _hands.PickupOrDrop(catcher, item, animate: false);
+
+                return;
+            }
+
+            foreach (var item in items)
             {
                 _container.Remove(item, container);
                 _transform.DropNextTo(item, queen.Owner);

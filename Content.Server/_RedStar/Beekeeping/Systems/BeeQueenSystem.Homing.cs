@@ -94,7 +94,7 @@ public sealed partial class BeeQueenSystem
 
             FaceHome((uid, homing), xform, delta);
 
-            if (distance <= homing.Speed * frameTime)
+            if (distance <= MathF.Max(homing.Speed * frameTime, homing.ArriveRange))
             {
                 if (TryComp<PhysicsComponent>(uid, out var snapBody))
                     _physics.SetLinearVelocity(uid, Vector2.Zero, body: snapBody);
