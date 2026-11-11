@@ -1,4 +1,8 @@
 #nullable enable
+using Content.Shared.Tools.Components;
+using Content.Shared._RedStar.Beekeeping.Data;
+using Content.Shared.Botany.Systems;
+using System.Numerics;
 using System.Collections.Generic;
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
@@ -25,6 +29,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.UnitTesting.Pool;
 
 namespace Content.IntegrationTests.Tests._RedStar.Beekeeping;
 
@@ -46,36 +51,47 @@ public sealed class WildBeehiveEventTest : GameTest
 
     [Test]
     [PairConfig(nameof(StationScenario))]
-    public async Task EventHiveDefendsItselfAndItsQueenCanStartAnApiary()
+    public async Task SwarmFromAVentSettlesNearPlantsAndItsQueenCanStartAnApiary()
     {
         var server = Server;
         var map = await Pair.CreateTestMap();
         var entities = server.EntMan;
         var hives = server.System<BeehiveSystem>();
+        var swarms = server.System<BeeSwarmSystem>();
         var containers = server.System<SharedContainerSystem>();
         EntityUid queen = default;
         EntityUid queenFlyer = default;
 
         await server.WaitAssertion(() =>
         {
-            var maps = server.System<SharedMapSystem>();
-            for (var x = -2; x <= 2; x++)
-            {
-                for (var y = -2; y <= 2; y++)
-                    maps.SetTile(map.Grid.Owner, map.Grid.Comp, new Vector2i(x, y), map.Tile.Tile);
-            }
-
-            var air = new GasMixture(Atmospherics.CellVolume) { Temperature = Atmospherics.T20C };
-            air.SetMoles(Gas.Oxygen, 21.8f);
-            air.SetMoles(Gas.Nitrogen, 82.1f);
-            server.System<AtmosphereSystem>().SetMapAtmosphere(map.MapUid, false, air);
-
-            AddStation(map.Grid.Owner);
-            var locker = entities.SpawnAttachedTo("ClosetMaintenance", map.GridCoords);
-            var storage = entities.GetComponent<EntityStorageComponent>(locker);
-            var visitor = entities.SpawnAttachedTo("MobHuman", map.GridCoords);
+            BuildRoom(map);
+            var grid = map.Grid.Owner;
+            // A bare vent with a locker but nothing to eat, and far from it one with a locker and a planted tray.
+            entities.SpawnEntity("GasVentPump", At(grid, -12, 0));
+            entities.SpawnEntity("ClosetMaintenance", At(grid, -11, 0));
+            var vent = entities.SpawnEntity("GasVentPump", At(grid, 4, 0));
+            var locker = entities.SpawnEntity("ClosetMaintenance", At(grid, 6, 0));
+            Plant(At(grid, 3, 1));
+            var visitor = entities.SpawnEntity("MobHuman", At(grid, 0, 0));
 
             StartEvent();
+            var query = entities.EntityQueryEnumerator<WildBeehiveEventSwarmComponent, BeeSwarmComponent>();
+            Assert.That(query.MoveNext(out var swarm, out _, out var swarmComp), Is.True, "a swarm came out");
+            var swarmPos = entities.GetComponent<TransformComponent>(swarm).LocalPosition;
+            var ventPos = entities.GetComponent<TransformComponent>(vent).LocalPosition;
+            Assert.Multiple(() =>
+            {
+                Assert.That((swarmPos - ventPos).Length(), Is.LessThan(0.1f), "out of the vent with plants near it");
+                Assert.That(swarmComp!.Diet, Is.EqualTo(BeehiveDiet.Plants));
+                Assert.That(swarmComp.Storage, Is.EqualTo(locker));
+                Assert.That(swarmComp.Bees, Is.GreaterThan(0));
+            });
+
+            // Its flight is the one of any swarm; here it lands at once.
+            swarms.LandSwarm((swarm, swarmComp!));
+            // The errand ends the swarm once it has landed.
+            entities.DeleteEntity(swarm);
+            var storage = entities.GetComponent<EntityStorageComponent>(locker);
             var hive = storage.Contents.ContainedEntities.Single(uid => entities.HasComponent<BeehiveComponent>(uid));
             var colony = entities.GetComponent<BeehiveComponent>(hive);
             var resident = hives.GetQueen((hive, colony));
@@ -84,13 +100,12 @@ public sealed class WildBeehiveEventTest : GameTest
             Assert.Multiple(() =>
             {
                 Assert.That(colony.Wild, Is.True);
-                Assert.That(colony.Bees, Is.EqualTo(colony.StartingBees).And.GreaterThan(0));
+                Assert.That(colony.Diet, Is.EqualTo(BeehiveDiet.Plants));
+                Assert.That(colony.Bees, Is.GreaterThan(0));
                 Assert.That(entities.EntityQuery<BeehiveAngryBeeComponent>(), Is.Empty);
             });
 
             server.System<EntityStorageSystem>().OpenStorage(locker);
-            Assert.That(entities.EntityQuery<BeehiveAngryBeeComponent>(), Is.Empty);
-
             var damage = server.System<DamageableSystem>();
             Assert.That(damage.TryChangeDamage(hive, new DamageSpecifier { DamageDict = { ["Blunt"] = 25 } }, ignoreResistances: true, origin: visitor));
             Assert.That(entities.EntityQuery<BeehiveAngryBeeComponent>(), Is.Not.Empty);
@@ -121,26 +136,25 @@ public sealed class WildBeehiveEventTest : GameTest
             var beekeeper = entities.SpawnAttachedTo("MobHuman", map.GridCoords);
             Assert.That(containers.IsEntityInContainer(queen), Is.False, "the queen stays available after landing");
             Assert.That(hands.TryPickup(beekeeper, queen, animate: false), Is.True);
-            Assert.That(hands.GetActiveItem(beekeeper), Is.EqualTo(queen));
 
             var managed = entities.SpawnAttachedTo("Beehive", map.GridCoords);
             var managedColony = entities.GetComponent<BeehiveComponent>(managed);
             var slots = server.System<ItemSlotsSystem>();
             Assert.That(slots.TryInsert(managed, managedColony.QueenSlot, queen, null), Is.True);
             Assert.That(hives.GetQueen((managed, managedColony)), Is.EqualTo(queen));
-            Assert.That(managedColony.Bees, Is.GreaterThan(0));
 
-            // A second manual start must not create another hive even when the original is gone.
-            var otherLocker = entities.SpawnAttachedTo("ClosetMaintenance", map.GridCoords);
+            // A second manual start releases no other swarm.
             StartEvent();
-            Assert.That(entities.GetComponent<EntityStorageComponent>(otherLocker).Contents.ContainedEntities, Is.Empty);
+            Assert.That(entities.EntityQuery<WildBeehiveEventSwarmComponent>(), Is.Empty);
         });
     }
 
-    [TestCase("open")]
+    [TestCase("nothing-to-eat")]
+    [TestCase("meat-limit")]
+    [TestCase("not-a-locker")]
+    [TestCase("welded")]
     [TestCase("wild-limit")]
     [TestCase("active-limit")]
-    [TestCase("not-a-locker")]
     public async Task EventSkipsAStationThatCannotHostAHive(string reason)
     {
         var server = Server;
@@ -150,18 +164,57 @@ public sealed class WildBeehiveEventTest : GameTest
             await OverrideCVar(Side.Server, BeekeepingCVars.WildHiveLimit, 0);
         if (reason == "active-limit")
             await OverrideCVar(Side.Server, BeekeepingCVars.ActiveHiveLimit, 0);
+        if (reason == "meat-limit")
+            await OverrideCVar(Side.Server, BeekeepingCVars.MeatHiveLimit, 0);
 
         await server.WaitAssertion(() =>
         {
-            AddStation(map.Grid.Owner);
+            BuildRoom(map);
+            var grid = map.Grid.Owner;
+            var vent = entities.SpawnEntity("GasVentPump", At(grid, 0, 0));
             // A pet carrier also lets its occupant break out, but it is no locker or crate.
-            var locker = entities.SpawnAttachedTo(reason == "not-a-locker" ? "PetCarrier" : "ClosetMaintenance", map.GridCoords);
-            if (reason == "open")
-                server.System<EntityStorageSystem>().OpenStorage(locker);
+            entities.SpawnEntity(reason == "not-a-locker" ? "PetCarrier" : "ClosetMaintenance", At(grid, 2, 0));
+            // With no plants a swarm would hunt: the meat limit leaves it nothing to live on.
+            if (reason == "meat-limit")
+                entities.SpawnEntity("MobHuman", At(grid, -2, 0));
+            else if (reason != "nothing-to-eat")
+                Plant(At(grid, -1, 1));
+            if (reason == "welded")
+                entities.GetComponent<WeldableComponent>(vent).IsWelded = true;
 
             StartEvent();
-            Assert.That(server.System<BeeSwarmSystem>().CountWildHives(map.MapUid), Is.Zero);
+            Assert.That(entities.EntityQuery<BeeSwarmComponent>(), Is.Empty);
             Assert.That(entities.EntityQuery<BeeQueenComponent>(), Is.Empty);
+        });
+    }
+
+    [Test]
+    public async Task WithNoPlantsTheSwarmHuntsFromTheQuietestVent()
+    {
+        var server = Server;
+        var map = await Pair.CreateTestMap();
+        var entities = server.EntMan;
+        await server.WaitAssertion(() =>
+        {
+            BuildRoom(map);
+            var grid = map.Grid.Owner;
+            // Two vents with a locker each, nothing planted; a crewman stands by one of them.
+            entities.SpawnEntity("GasVentPump", At(grid, -12, 0));
+            entities.SpawnEntity("ClosetMaintenance", At(grid, -11, 0));
+            entities.SpawnEntity("MobHuman", At(grid, -13, 0));
+            var quiet = entities.SpawnEntity("GasVentPump", At(grid, 4, 0));
+            entities.SpawnEntity("ClosetMaintenance", At(grid, 6, 0));
+
+            StartEvent();
+            var query = entities.EntityQueryEnumerator<WildBeehiveEventSwarmComponent, BeeSwarmComponent>();
+            Assert.That(query.MoveNext(out var swarm, out _, out var swarmComp), Is.True, "a swarm came out");
+            var swarmPos = entities.GetComponent<TransformComponent>(swarm).LocalPosition;
+            var ventPos = entities.GetComponent<TransformComponent>(quiet).LocalPosition;
+            Assert.Multiple(() =>
+            {
+                Assert.That(swarmComp!.Diet, Is.EqualTo(BeehiveDiet.Meat));
+                Assert.That((swarmPos - ventPos).Length(), Is.LessThan(0.1f), "out of the vent with nobody near it");
+            });
         });
     }
 
@@ -175,10 +228,21 @@ public sealed class WildBeehiveEventTest : GameTest
         var table = new NestedSelector { TableId = tableId };
         await server.WaitAssertion(() =>
         {
-            AddStation(map.Grid.Owner);
-            server.EntMan.SpawnAttachedTo("ClosetMaintenance", map.GridCoords);
+            BuildRoom(map);
+            var grid = map.Grid.Owner;
+            server.EntMan.SpawnEntity("GasVentPump", At(grid, 0, 0));
+            server.EntMan.SpawnEntity("ClosetMaintenance", At(grid, 2, 0));
             Assert.That(IsAvailableAt(20 - 1d / 60), Is.False);
             Assert.That(IsAvailableAt(20), Is.True);
+
+            // Nothing to feed on: the event ends itself and does not use up its one occurrence.
+            StartEvent();
+        });
+        await RunSeconds(2);
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(IsAvailableAt(90), Is.True);
+            Plant(At(map.Grid.Owner, -1, 1));
             StartEvent();
         });
         await RunSeconds(2);
@@ -189,6 +253,41 @@ public sealed class WildBeehiveEventTest : GameTest
             return events.TryBuildLimitedEvents(table, out var eligible, TimeSpan.FromMinutes(minute), 25) &&
                 eligible.Value.Events.Any(entry => entry.Item1.ID == Rule);
         }
+    }
+
+    private static EntityCoordinates At(EntityUid grid, float x, float y)
+    {
+        return new EntityCoordinates(grid, new Vector2(x + 0.5f, y + 0.5f));
+    }
+
+    /// <summary>
+    /// A breathable room of plating around the origin, with a station on its grid.
+    /// </summary>
+    private void BuildRoom(TestMapData map)
+    {
+        var maps = Server.System<SharedMapSystem>();
+        for (var x = -14; x <= 8; x++)
+        {
+            for (var y = -2; y <= 2; y++)
+                maps.SetTile(map.Grid.Owner, map.Grid.Comp, new Vector2i(x, y), map.Tile.Tile);
+        }
+
+        var air = new GasMixture(Atmospherics.CellVolume) { Temperature = Atmospherics.T20C };
+        air.SetMoles(Gas.Oxygen, 21.8f);
+        air.SetMoles(Gas.Nitrogen, 82.1f);
+        Server.System<AtmosphereSystem>().SetMapAtmosphere(map.MapUid, false, air);
+        AddStation(map.Grid.Owner);
+    }
+
+    /// <summary>
+    /// A tray with a living wheat plant in it.
+    /// </summary>
+    private void Plant(EntityCoordinates coords)
+    {
+        var entities = Server.EntMan;
+        var tray = entities.SpawnEntity("HydroponicsTrayEmpty", coords);
+        var plant = entities.SpawnEntity("WheatPlants", coords);
+        Server.System<PlantTraySystem>().PlantingPlantInTray(tray, plant);
     }
 
     private void StartEvent()

@@ -108,6 +108,12 @@ public sealed partial class MeatBeehiveSystem
     /// </summary>
     private int CountDietCreatures(Entity<BeehiveComponent> hive, MapCoordinates center, float range)
     {
+        return CountDietCreatures(hive.Comp, center, range);
+    }
+
+    /// <inheritdoc cref="CountDietCreatures(Entity{BeehiveComponent}, MapCoordinates, float)"/>
+    public int CountDietCreatures(BeehiveComponent hive, MapCoordinates center, float range)
+    {
         _dietMobs.Clear();
         _lookup.GetEntitiesInRange(center, range, _dietMobs);
 
@@ -119,13 +125,13 @@ public sealed partial class MeatBeehiveSystem
                 continue;
 
             var mass = TryComp<PhysicsComponent>(mob, out var physics) ? physics.FixturesMass : float.MaxValue;
-            if (mass < hive.Comp.SmallCreatureMass)
+            if (mass < hive.SmallCreatureMass)
                 small++;
             else
                 large++;
         }
 
-        return large + (small >= hive.Comp.MinSmallCreatures ? small : 0);
+        return large + (small >= hive.MinSmallCreatures ? small : 0);
     }
 
     private readonly HashSet<Entity<MobStateComponent>> _quietMobs = new();

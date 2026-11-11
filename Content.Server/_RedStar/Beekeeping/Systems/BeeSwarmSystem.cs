@@ -133,7 +133,7 @@ public sealed partial class BeeSwarmSystem : EntitySystem
         List<EntityUid>? nestExits = null;
         if (ventRoute is { } found)
         {
-            nestExits = NestExits(found.Exits, range, grid);
+            nestExits = NestExits(found.Exits, range, grid, oldQueenComp.NestParents);
             ventRoute = nestExits.Count > 0 ? (found.Entry, _random.Pick(nestExits), nestExits) : null;
         }
 
@@ -143,7 +143,7 @@ public sealed partial class BeeSwarmSystem : EntitySystem
         }
         else
         {
-            storage = PickNestStorage(hive, range, grid, hiveMap);
+            storage = PickNestStorage(hive, range, grid, hiveMap, nestParents: oldQueenComp.NestParents);
             site = storage is { } chosen
                 ? _transform.WithEntityId(Transform(chosen).Coordinates, grid).Position
                 : SearchHop(hive, hiveMap, (grid, gridComp), SearchHopLength);
@@ -202,7 +202,7 @@ public sealed partial class BeeSwarmSystem : EntitySystem
         {
             if (nestExits is { Count: > 0 } && QuietestExit(nestExits, QuietRadius) is { } quietExit)
                 swarmComp.VentExit = quietExit;
-            else if (ventRoute == null && PickNestStorage(hive, range, grid, hiveMap, QuietRadius) is { } quietStorage)
+            else if (ventRoute == null && PickNestStorage(hive, range, grid, hiveMap, QuietRadius, oldQueenComp.NestParents) is { } quietStorage)
             {
                 // It flies to the place it settles in, not to the first one it saw.
                 swarmComp.Storage = quietStorage;
@@ -338,7 +338,7 @@ public sealed partial class BeeSwarmSystem : EntitySystem
     /// and that has room. Null if there is none.
     /// </summary>
     public EntityUid? PickNestStorage(EntityUid origin, float range, EntityUid grid, MapCoordinates hiveMap,
-        float quietRadius = 0f)
+        float quietRadius = 0f, IReadOnlyCollection<EntProtoId>? nestParents = null)
     {
         _nestStorages.Clear();
         _lookup.GetEntitiesInRange(hiveMap, range, _nestStorages);
@@ -362,6 +362,7 @@ public sealed partial class BeeSwarmSystem : EntitySystem
         {
             var xform = Transform(storage);
             if (xform.GridUid != grid ||
+                nestParents is { Count: > 0 } && !MadeFrom(storage, nestParents) ||
                 _container.IsEntityInContainer(storage) ||
                 storage.Comp.Contents.ContainedEntities.Count >= storage.Comp.Capacity ||
                 NestTaken(storage, xform) ||
@@ -396,6 +397,36 @@ public sealed partial class BeeSwarmSystem : EntitySystem
         }
 
         return _random.Pick(_storageCandidates);
+    }
+
+    /// <summary>
+    /// Whether the entity's prototype is one of these or inherits one. Abstract bases are never indexed, so they are
+    /// matched by name in the parents lists of the prototypes that are.
+    /// </summary>
+    private bool MadeFrom(EntityUid uid, IReadOnlyCollection<EntProtoId> bases)
+    {
+        if (MetaData(uid).EntityPrototype is not { } proto)
+            return false;
+
+        foreach (var known in _proto.EnumerateParents(proto, includeSelf: true))
+        {
+            if (bases.Contains(known.ID) || known.Parents?.Any(parent => bases.Contains(parent)) == true)
+                return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// The queen a swarm carries, if it still has one.
+    /// </summary>
+    private BeeQueenComponent? CarriedQueen(Entity<BeeSwarmComponent> swarm)
+    {
+        return _container.TryGetContainer(swarm, swarm.Comp.Container, out var container) &&
+               container.ContainedEntities.Count > 0 &&
+               TryComp<BeeQueenComponent>(container.ContainedEntities[0], out var queen)
+            ? queen
+            : null;
     }
 
     /// <summary>
@@ -499,7 +530,7 @@ public sealed partial class BeeSwarmSystem : EntitySystem
         }
 
         var origin = _transform.GetMapCoordinates(swarm, xform);
-        if (PickNestStorage(swarm, queen.NestRange, grid, origin) is { } storage)
+        if (PickNestStorage(swarm, queen.NestRange, grid, origin, nestParents: queen.NestParents) is { } storage)
         {
             SetSearching(swarm, false);
             swarm.Comp.Storage = storage;
@@ -583,6 +614,9 @@ public sealed partial class BeeSwarmSystem : EntitySystem
 
         _adminLog.Add(LogType.EntitySpawn, LogImpact.Low,
             $"A bee swarm built {ToPrettyString(wild):hive} with {wildComp.Bees} bees");
+
+        var landed = new BeeSwarmLandedEvent(wild);
+        RaiseLocalEvent(swarm, ref landed);
     }
 
     /// <summary>

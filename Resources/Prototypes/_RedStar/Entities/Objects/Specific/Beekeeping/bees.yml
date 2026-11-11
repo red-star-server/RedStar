@@ -7,6 +7,12 @@
   - type: BeeQueen
     traits:
     - PestControl
+    # Her swarm nests in lockers and crates, not in fridges, machines or pet carriers.
+    nestParents:
+    - ClosetBase
+    - BaseWallCloset
+    - SuitStorageBase
+    - BaseCrate
   # What is injected into her: mutagen is used up at once, the rest is payload (with a sting).
   - type: Solution
     id: queen

@@ -1,44 +1,41 @@
-using System.Linq;
 using System.Numerics;
 using Content.Server._RedStar.Beekeeping.Components;
-using Content.Server.Resist;
+using Content.Server._RedStar.Beekeeping.Events;
+using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.StationEvents.Events;
-using Content.Server.Storage.Components;
-using Content.Server.Storage.EntitySystems;
 using Content.Shared._RedStar.Beekeeping;
 using Content.Shared._RedStar.Beekeeping.Components;
-using Content.Shared.Access.Components;
-using Content.Shared.Containers.ItemSlots;
+using Content.Shared._RedStar.Beekeeping.Data;
 using Content.Shared.GameTicking.Components;
-using Content.Shared.Lock;
-using Content.Shared.Mobs.Components;
-using Content.Shared.Storage.Components;
+using Content.Shared.Station.Components;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
-using Robust.Shared.Localization;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 
 namespace Content.Server._RedStar.Beekeeping.Systems;
 
+/// <summary>
+/// A wild swarm comes out of a station vent with a locker or crate and something to feed on near it, and settles there
+/// by the usual swarm rules. The station hears about it once the hive is built.
+/// </summary>
 public sealed partial class WildBeehiveRuleSystem : StationEventSystem<WildBeehiveRuleComponent>
 {
     [Dependency] private BeeSwarmSystem _swarms = default!;
     [Dependency] private BeehiveSystem _hives = default!;
-    [Dependency] private EntityLookupSystem _lookup = default!;
-    [Dependency] private EntityStorageSystem _storage = default!;
+    [Dependency] private MeatBeehiveSystem _meat = default!;
     [Dependency] private IConfigurationManager _config = default!;
-    [Dependency] private ItemSlotsSystem _slots = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private SharedContainerSystem _containers = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
-    [Dependency] private LockSystem _locks = default!;
-    [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private WeldableSystem _weldable = default!;
 
+    private static readonly EntProtoId Swarm = "BeeSwarm";
     private static readonly EntProtoId WildHive = "WildBeehive";
     private static readonly EntProtoId Queen = "BeeQueen";
+
+    private readonly List<EntityUid> _vents = new();
 
     protected override void Started(Entity<WildBeehiveRuleComponent, GameRuleComponent> ent, ref GameRuleStartedEvent args)
     {
@@ -48,97 +45,103 @@ public sealed partial class WildBeehiveRuleSystem : StationEventSystem<WildBeehi
         var previous = EntityQueryEnumerator<WildBeehiveRuleComponent>();
         while (previous.MoveNext(out _, out var rule))
         {
-            if (rule.SpawnedHive)
+            if (rule.Released)
+            {
+                ForceEndSelf((ent.Owner, ent.Comp2));
                 return;
+            }
         }
 
-        var storages = Station.GetEntitiesWithComponentOnStation<EntityStorageComponent>(false, out var station);
-        if (station is not { } target ||
-            Station.GetLargestGrid(target.Owner) is not { } grid ||
-            !TryComp<MapGridComponent>(grid, out var gridComp) ||
+        if (!Station.TryGetRandomStation<StationEventEligibleComponent>(out var station) ||
+            Station.GetLargestGrid((station.Value.Owner, station.Value.Comp1)) is not { } grid ||
             Transform(grid).MapUid is not { } map ||
             _swarms.CountWildHives(map) >= _config.GetCVar(BeekeepingCVars.WildHiveLimit) ||
-            !_hives.HasRoomForQueenOnMap(map))
+            !_hives.HasRoomForQueenOnMap(map) ||
+            !_proto.Index(Queen).TryGetComponent<BeeQueenComponent>(out var queenData, Factory) ||
+            !_proto.Index(WildHive).TryGetComponent<BeehiveComponent>(out var hiveData, Factory))
         {
+            ForceEndSelf((ent.Owner, ent.Comp2));
             return;
         }
 
-        var lockers = new List<Entity<EntityStorageComponent>>();
-        foreach (var storage in storages)
+        _vents.Clear();
+        var vents = EntityQueryEnumerator<GasVentPumpComponent, TransformComponent>();
+        while (vents.MoveNext(out var vent, out _, out var xform))
         {
-            if (IsSuitableLocker(storage, ent.Comp1))
-                lockers.Add(storage);
+            if (xform.GridUid == grid && !_weldable.IsWelded(vent))
+                _vents.Add(vent);
         }
 
-        if (lockers.Count == 0)
-            return;
-
-        RobustRandom.Shuffle(lockers);
-        var hive = SpawnAttachedTo(WildHive, Transform(lockers[0]).Coordinates);
-        var size = _lookup.GetAABBNoContainer(hive, Vector2.Zero, 0).Size;
-        foreach (var locker in lockers)
+        // Like any swarm, it lives on plants if there are any near a vent it can nest by; with none it hunts, out of
+        // the quietest such vent. With nothing to feed on anywhere, no swarm comes: the hive would only sit there.
+        var nests = _swarms.NestExits(_vents, queenData.NestRange, grid, queenData.NestParents);
+        EntityUid exit;
+        BeehiveDiet diet;
+        if (_swarms.RichestExit(nests, hiveData.DietRange) is { } plantExit)
         {
-            if (locker.Comp.MaxSize < MathF.Max(size.X, size.Y) || !_storage.Insert(hive, locker, locker.Comp))
-                continue;
-
-            var queen = SpawnAttachedTo(Queen, Transform(locker).Coordinates);
-            if (!_slots.TryInsert(hive, Comp<BeehiveComponent>(hive).QueenSlot, queen, null))
-            {
-                Del(queen);
-                break;
-            }
-
-            ent.Comp1.SpawnedHive = true;
-            var offset = _transform.GetRelativePosition(Transform(locker), grid) - gridComp.LocalAABB.Center;
-            var sector = GetSector(offset, gridComp.LocalAABB.Size);
-            ChatSystem.DispatchStationAnnouncement(target.Owner,
-                Loc.GetString("station-event-wild-beehive-announcement", ("sector", Loc.GetString(sector))));
+            exit = plantExit;
+            diet = BeehiveDiet.Plants;
+        }
+        else if (HasPrey(nests, hiveData) &&
+                 _meat.CountMeatHives(map) < _config.GetCVar(BeekeepingCVars.MeatHiveLimit) &&
+                 _swarms.QuietestExit(nests, BeeSwarmSystem.QuietRadius) is { } quietExit)
+        {
+            exit = quietExit;
+            diet = BeehiveDiet.Meat;
+        }
+        else
+        {
+            ForceEndSelf((ent.Owner, ent.Comp2));
             return;
         }
 
-        Del(hive);
+        var coords = Transform(exit).Coordinates;
+        var swarm = Spawn(Swarm, coords);
+        var swarmComp = Comp<BeeSwarmComponent>(swarm);
+        var queen = Spawn(Queen, coords);
+        var slot = _containers.EnsureContainer<ContainerSlot>(swarm, swarmComp.Container);
+        if (!_containers.Insert(queen, slot, force: true))
+        {
+            Del(queen);
+            Del(swarm);
+            ForceEndSelf((ent.Owner, ent.Comp2));
+            return;
+        }
+
+        swarmComp.Bees = hiveData.StartingBees;
+        swarmComp.Diet = diet;
+        swarmComp.NestRange = queenData.NestRange;
+        EnsureComp<WildBeehiveEventSwarmComponent>(swarm).Rule = ent.Owner;
+        ent.Comp1.Released = true;
+        _swarms.SwarmLeftVent((swarm, swarmComp));
     }
 
-    private bool IsSuitableLocker(Entity<EntityStorageComponent> locker, WildBeehiveRuleComponent rule)
+    private bool HasPrey(List<EntityUid> nests, BeehiveComponent hiveData)
     {
-        if (MetaData(locker).EntityPrototype is not { } proto ||
-            !MadeFrom(proto, rule.StorageParents))
+        foreach (var vent in nests)
         {
-            return false;
-        }
-
-        var storage = locker.Comp;
-        if (storage.Open || storage.ShowContents || storage.DeleteContentsOnDestruction ||
-            storage.Contents.ContainedEntities.Count >= storage.Capacity ||
-            !HasComp<ResistLockerComponent>(locker) || HasComp<AccessReaderComponent>(locker) ||
-            HasComp<BluespaceLockerComponent>(locker) || _weldable.IsWelded(locker) || _locks.IsLocked(locker.Owner) ||
-            _containers.IsEntityInContainer(locker))
-        {
-            return false;
-        }
-
-        foreach (var item in storage.Contents.ContainedEntities)
-        {
-            if (HasComp<BeehiveComponent>(item) || HasComp<MobStateComponent>(item))
-                return false;
-        }
-
-        return true;
-    }
-
-    /// <summary>
-    /// Whether the prototype is one of these or inherits one. Abstract bases are never indexed, so they are matched
-    /// by name in the parents lists of the prototypes that are.
-    /// </summary>
-    private bool MadeFrom(EntityPrototype proto, List<EntProtoId> bases)
-    {
-        foreach (var known in _proto.EnumerateParents(proto, includeSelf: true))
-        {
-            if (bases.Contains(known.ID) || known.Parents?.Any(parent => bases.Contains(parent)) == true)
+            if (_meat.CountDietCreatures(hiveData, _transform.GetMapCoordinates(vent), hiveData.DietRange) > 0)
                 return true;
         }
 
         return false;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnSwarmLanded(Entity<WildBeehiveEventSwarmComponent> ent, ref BeeSwarmLandedEvent args)
+    {
+        var xform = Transform(args.Hive);
+        if (Station.GetOwningStation(args.Hive, xform) is not { } station ||
+            xform.GridUid is not { } grid ||
+            !TryComp<MapGridComponent>(grid, out var gridComp))
+        {
+            return;
+        }
+
+        var offset = _transform.GetRelativePosition(xform, grid) - gridComp.LocalAABB.Center;
+        var sector = GetSector(offset, gridComp.LocalAABB.Size);
+        ChatSystem.DispatchStationAnnouncement(station,
+            Loc.GetString("station-event-wild-beehive-announcement", ("sector", Loc.GetString(sector))));
     }
 
     private static LocId GetSector(Vector2 offset, Vector2 gridSize)

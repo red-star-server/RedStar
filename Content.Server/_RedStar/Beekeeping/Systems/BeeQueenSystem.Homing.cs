@@ -244,7 +244,7 @@ public sealed partial class BeeQueenSystem
 
         // Only into a locker or a crate, never a bare corner. With none in sight she sets off to look for one.
         var origin = _transform.GetMapCoordinates(homing, xform);
-        var storage = _swarm.PickNestStorage(homing, queen.NestRange, grid, origin);
+        var storage = _swarm.PickNestStorage(homing, queen.NestRange, grid, origin, nestParents: queen.NestParents);
         var home = xform.LocalPosition;
         Vector2 site;
         if (storage is { } chosen)
