@@ -1,0 +1,10 @@
+# Melted wax from candles. A chemist heats it back into a piece of beeswax for hive frames.
+- type: reagent
+  id: LiquidBeeswax
+  name: reagent-name-liquid-beeswax
+  group: Biological
+  desc: reagent-desc-liquid-beeswax
+  physicalDesc: reagent-physical-desc-viscous
+  color: "#E8D49A"
+  viscosity: 0.6
+  recognizable: true

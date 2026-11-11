@@ -1,0 +1,1 @@
+﻿seeds-sakura-name = сакура

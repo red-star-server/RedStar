@@ -53,6 +53,18 @@
           shader: unshaded
     - type: Damageable
       damageModifierSet: Wood
+    # RS14-start
+    # A candle ground in a blender gives liquid wax; heated, it sets into beeswax for hive frames.
+    - type: Solution
+      id: wax
+      solution:
+        maxVol: 5
+        reagents:
+        - ReagentId: LiquidBeeswax
+          Quantity: 5
+    - type: Extractable
+      grindableSolutionName: wax
+    # RS14-end
 
 - type: entity
   name: red candle
@@ -160,6 +172,15 @@
       normalState: fire-small
     - type: Flammable
       firestacksOnIgnite: 2.0
+    # RS14-start
+    - type: Solution
+      id: wax
+      solution:
+        maxVol: 2
+        reagents:
+        - ReagentId: LiquidBeeswax
+          Quantity: 2
+    # RS14-end
 
 - type: entity
   name: small red candle
@@ -272,6 +293,17 @@
     color: "#e39c40"
     radius: 2.5
     power: 10
+  # RS14-start
+  - type: Solution
+    id: wax
+    solution:
+      maxVol: 5
+      reagents:
+      - ReagentId: LiquidBeeswax
+        Quantity: 5
+  - type: Extractable
+    grindableSolutionName: wax
+  # RS14-end
 
 - type: entity
   name: magic red candle
@@ -392,6 +424,15 @@
       right:
       - state: inhand-right
         color: "#a12349"
+  # RS14-start
+  - type: Solution
+    id: wax
+    solution:
+      maxVol: 2
+      reagents:
+      - ReagentId: LiquidBeeswax
+        Quantity: 2
+  # RS14-end
 
 - type: entity
   name: small magic blue candle
@@ -412,6 +453,15 @@
       right:
       - state: inhand-right
         color: "#425d7d"
+  # RS14-start
+  - type: Solution
+    id: wax
+    solution:
+      maxVol: 2
+      reagents:
+      - ReagentId: LiquidBeeswax
+        Quantity: 2
+  # RS14-end
 
 - type: entity
   name: small magic black candle
@@ -432,6 +482,15 @@
       right:
       - state: inhand-right
         color: "#1b1724"
+  # RS14-start
+  - type: Solution
+    id: wax
+    solution:
+      maxVol: 2
+      reagents:
+      - ReagentId: LiquidBeeswax
+        Quantity: 2
+  # RS14-end
 
 - type: entity
   name: small magic green candle
@@ -452,6 +511,15 @@
       right:
       - state: inhand-right
         color: "#5d997e"
+  # RS14-start
+  - type: Solution
+    id: wax
+    solution:
+      maxVol: 2
+      reagents:
+      - ReagentId: LiquidBeeswax
+        Quantity: 2
+  # RS14-end
 
 - type: entity
   name: small magic purple candle
@@ -472,3 +540,12 @@
       right:
       - state: inhand-right
         color: "#984aa1"
+  # RS14-start
+  - type: Solution
+    id: wax
+    solution:
+      maxVol: 2
+      reagents:
+      - ReagentId: LiquidBeeswax
+        Quantity: 2
+  # RS14-end

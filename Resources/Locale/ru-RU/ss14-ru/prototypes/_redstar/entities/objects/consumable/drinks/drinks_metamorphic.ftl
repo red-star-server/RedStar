@@ -28,3 +28,6 @@ ent-DrinkPalomaGlass = { ent-DrinkGlass }
 ent-DrinkYorshGlass = { ent-DrinkGlass }
     .desc = { ent-DrinkGlass.desc }
     .suffix = Ёрш
+ent-DrinkCherryBlossomGlass = { ent-DrinkGlass }
+    .desc = { ent-DrinkGlass.desc }
+    .suffix = Расцвет сакуры

@@ -99,9 +99,9 @@
   bodyPart: HeadTop
   groupWhitelist: [ Slime ]
   sprites:
-  - sprite: _RedStar/Mobs/Customization/slime_cat_parts.rsi
+  - sprite: _RedStar/Mobs/Customization/SlimePerson/slime_cat_parts.rsi
     state: ears_slime_cat_outer
-  - sprite: _RedStar/Mobs/Customization/slime_cat_parts.rsi
+  - sprite: _RedStar/Mobs/Customization/SlimePerson/slime_cat_parts.rsi
     state: ears_slime_cat_inner
 
 - type: marking
@@ -109,7 +109,7 @@
   bodyPart: Tail
   groupWhitelist: [ Slime ]
   sprites:
-  - sprite: _RedStar/Mobs/Customization/slime_cat_parts.rsi
+  - sprite: _RedStar/Mobs/Customization/SlimePerson/slime_cat_parts.rsi
     state: slime_tail_cat
 
 - type: marking
@@ -117,9 +117,9 @@
   bodyPart: HeadTop
   groupWhitelist: [ Slime ]
   sprites:
-  - sprite: _RedStar/Mobs/Customization/slime_cat_parts.rsi
+  - sprite: _RedStar/Mobs/Customization/SlimePerson/slime_cat_parts.rsi
     state: ears_slime_stubby_outer
-  - sprite: _RedStar/Mobs/Customization/slime_cat_parts.rsi
+  - sprite: _RedStar/Mobs/Customization/SlimePerson/slime_cat_parts.rsi
     state: ears_slime_stubby_inner
 
 - type: marking
@@ -127,9 +127,9 @@
   bodyPart: HeadTop
   groupWhitelist: [ Slime ]
   sprites:
-  - sprite: _RedStar/Mobs/Customization/slime_cat_parts.rsi
+  - sprite: _RedStar/Mobs/Customization/SlimePerson/slime_cat_parts.rsi
     state: ears_slime_curled_outer
-  - sprite: _RedStar/Mobs/Customization/slime_cat_parts.rsi
+  - sprite: _RedStar/Mobs/Customization/SlimePerson/slime_cat_parts.rsi
     state: ears_slime_curled_inner
 
 - type: marking
@@ -137,9 +137,9 @@
   bodyPart: HeadTop
   groupWhitelist: [ Slime ]
   sprites:
-  - sprite: _RedStar/Mobs/Customization/slime_cat_parts.rsi
+  - sprite: _RedStar/Mobs/Customization/SlimePerson/slime_cat_parts.rsi
     state: ears_slime_torn_outer
-  - sprite: _RedStar/Mobs/Customization/slime_cat_parts.rsi
+  - sprite: _RedStar/Mobs/Customization/SlimePerson/slime_cat_parts.rsi
     state: ears_slime_torn_inner
 
 - type: marking
@@ -147,9 +147,9 @@
   bodyPart: Tail
   groupWhitelist: [ Slime ]
   sprites:
-  - sprite: _RedStar/Mobs/Customization/slime_cat_parts.rsi
+  - sprite: _RedStar/Mobs/Customization/SlimePerson/slime_cat_parts.rsi
     state: slime_tail_cat_stripes_prime
-  - sprite: _RedStar/Mobs/Customization/slime_cat_parts.rsi
+  - sprite: _RedStar/Mobs/Customization/SlimePerson/slime_cat_parts.rsi
     state: slime_tail_cat_stripes_second
 
 - type: marking
@@ -157,7 +157,55 @@
   bodyPart: HeadTop
   groupWhitelist: [ Slime ]
   sprites:
-  - sprite: _RedStar/Mobs/Customization/slime_fox_parts.rsi
+  - sprite: _RedStar/Mobs/Customization/SlimePerson/slime_fox_parts.rsi
     state: ears_slime_fox_outer
-  - sprite: _RedStar/Mobs/Customization/slime_fox_parts.rsi
+  - sprite: _RedStar/Mobs/Customization/SlimePerson/slime_fox_parts.rsi
     state: ears_slime_fox_inner
+
+- type: marking
+  id: SlimeEarsBunks
+  bodyPart: HeadTop
+  groupWhitelist: [Slime]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/SlimePerson/ears.rsi
+    state: bunks
+
+- type: marking
+  id: SlimeEarsCarblunkle
+  bodyPart: HeadTop
+  groupWhitelist: [Slime]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/SlimePerson/ears.rsi
+    state: carblunkle
+
+- type: marking
+  id: SlimeEarsHoppers
+  bodyPart: HeadTop
+  groupWhitelist: [Slime]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/SlimePerson/ears.rsi
+    state: hoppers
+
+- type: marking
+  id: SlimeEarsStalks
+  bodyPart: HeadTop
+  groupWhitelist: [Slime]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/SlimePerson/ears.rsi
+    state: stalks
+
+- type: marking
+  id: SlimeEarsStalksSmall
+  bodyPart: HeadTop
+  groupWhitelist: [Slime]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/SlimePerson/ears.rsi
+    state: stalks_small
+
+- type: marking
+  id: SlimeEarsThorns
+  bodyPart: HeadTop
+  groupWhitelist: [Slime]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/SlimePerson/ears.rsi
+    state: thorns

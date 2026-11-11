@@ -2441,6 +2441,7 @@
     name: seeds-cherry-name
     packetPrototype: CherrySeeds
     productPrototypes: [ FoodCherry ]
+    mutationPrototypes: [ SakuraPlants ] # RS14
   - type: Plant
     lifespan: 55
     maturation: 6
