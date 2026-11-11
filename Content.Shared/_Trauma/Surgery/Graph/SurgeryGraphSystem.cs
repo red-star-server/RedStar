@@ -175,6 +175,25 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         return false;
     }
 
+    public bool TryPerformEdgeStep(EntityUid target, EntityUid surgeon, EntityUid heldItem, string edgeId)
+    {
+        if (!TryComp<OperatedComponent>(target, out var comp) || IsBusy(comp))
+            return false;
+
+        if (!TryGetGraph(comp, out var graph) || GetEdge(graph, comp.CurrentNode, edgeId) is not { } edge)
+            return false;
+
+        if (edge.Steps.Count == 0 || !EdgeConditionsMet(target, edge))
+            return false;
+
+        var index = GetStepIndex(comp, edge);
+        if (!TryMatchTool(edge.Steps[index], heldItem))
+            return false;
+
+        StartStep(surgeon, target, comp, edge, index, heldItem);
+        return true;
+    }
+
     #endregion
 
     #region Step execution

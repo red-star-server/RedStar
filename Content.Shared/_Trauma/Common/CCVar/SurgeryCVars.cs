@@ -13,13 +13,6 @@ public sealed class SurgeryCVars : CVars
         CVarDef.Create("surgery.can_operate_on_self", true, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
-    /// Whether using a surgery tool on a lying patient performs the next surgery step on the targeted body part
-    /// instead of requiring the surgery menu.
-    /// </summary>
-    public static readonly CVarDef<bool> WorldTarget =
-        CVarDef.Create("surgery.world_target", true, CVar.SERVER | CVar.REPLICATED);
-
-    /// <summary>
     /// The rate at which severity (wound) points get exchanged into bleeding; e.g., 50 severity would be 3.5 bleeding points.
     /// </summary>
     public static readonly CVarDef<float> BleedingSeverityTrade =
