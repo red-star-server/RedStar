@@ -150,13 +150,15 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
     /// The same check that refuses her at the slot, so a flying queen can skip a hive that would turn her away.
     /// </summary>
     public bool HasRoomForQueen(Entity<BeehiveComponent> hive)
+        => HasRoomForQueenOnMap(Transform(hive).MapUid, hive.Owner);
+
+    public bool HasRoomForQueenOnMap(EntityUid? map, EntityUid? excludedHive = null)
     {
-        var map = Transform(hive).MapUid;
         var active = 0;
         var query = EntityQueryEnumerator<BeehiveComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var other, out var xform))
         {
-            if (uid != hive.Owner && xform.MapUid == map && GetQueen((uid, other)) != null)
+            if (uid != excludedHive && xform.MapUid == map && GetQueen((uid, other)) != null)
                 active++;
         }
 

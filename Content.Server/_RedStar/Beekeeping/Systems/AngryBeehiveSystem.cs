@@ -651,6 +651,10 @@ public sealed partial class AngryBeehiveSystem : EntitySystem
             {
                 _container.Remove(item, container);
                 _transform.DropNextTo(item, queen.Owner);
+
+                // Give players time to pick her up before she flies home or starts another nest.
+                if (TryComp<BeeHomingComponent>(item, out var homing))
+                    homing.NextCheck = _timing.CurTime + homing.NestRetry;
             }
         }
 
