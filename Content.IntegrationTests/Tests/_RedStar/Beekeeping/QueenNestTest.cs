@@ -7,6 +7,8 @@ using Content.Shared.Storage.Components;
 using Content.Shared._RedStar.Beekeeping.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Spawners;
+using Robust.Shared.Containers;
 
 namespace Content.IntegrationTests.Tests._RedStar.Beekeeping;
 
@@ -136,5 +138,45 @@ public sealed class QueenNestTest : GameTest
         await RunSeconds(4);
 
         await server.WaitAssertion(() => Assert.That(server.EntMan.Deleted(queen)));
+    }
+
+    [Test]
+    public async Task SearchingQueenKeepsHerLifetime()
+    {
+        var server = Server;
+        var map = await Pair.CreateTestMap();
+        EntityUid queen = default;
+        await server.WaitPost(() => queen = server.EntMan.SpawnAttachedTo("BeeQueen", map.GridCoords));
+
+        await RunSeconds(3);
+        await server.WaitAssertion(() =>
+        {
+            var containers = server.System<SharedContainerSystem>();
+            Assert.That(containers.TryGetContainingContainer(queen, out var container), Is.True);
+            Assert.That(server.EntMan.GetComponent<BeeSwarmComponent>(container!.Owner).Searching, Is.True);
+            Assert.That(server.EntMan.GetComponent<BeeQueenComponent>(queen).DiesAt, Is.Not.Null);
+            Assert.That(server.EntMan.HasComponent<TimedDespawnComponent>(queen), Is.True);
+        });
+    }
+
+    [Test]
+    public async Task InvalidNestFlyerIsRemoved()
+    {
+        var server = Server;
+        var map = await Pair.CreateTestMap();
+        EntityUid queen = default;
+        await server.WaitPost(() =>
+        {
+            server.EntMan.SpawnAttachedTo("ClosetMaintenance", map.GridCoords);
+            queen = server.EntMan.SpawnAttachedTo("BeeQueen", map.GridCoords);
+            server.EntMan.GetComponent<BeeQueenComponent>(queen).NestFlyerPrototype = "BeePollinator";
+        });
+
+        await RunTicksSync(3);
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(server.EntMan.GetComponent<BeeHomingComponent>(queen).NextNestTry, Is.GreaterThan(TimeSpan.Zero));
+            Assert.That(server.EntMan.EntityQuery<BeeErrandComponent>(), Is.Empty);
+        });
     }
 }
