@@ -1,0 +1,23 @@
+﻿- type: entity
+  parent: [BaseStructure, StructureHealthFurnitureStrong]
+  id: LavalandTendril
+  name: tendril
+  description: A grotesque growth emerging from deep beneath the surface. Something seems to be stirring within it.
+  components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path: /Audio/Weapons/slash.ogg
+  - type: Injurable
+    damageContainer: StructuralBiological
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 80
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: gib
+  - type: Sprite
+    sprite: _RedStar/Objects/Decoration/tendril.rsi
+    state: tendril

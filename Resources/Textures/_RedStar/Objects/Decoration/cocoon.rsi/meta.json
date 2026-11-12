@@ -1,0 +1,29 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/HEAD/icons/effects/web.dmi",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "cocoon_large1"
+        },
+        {
+            "name": "cocoon_large2"
+        },
+        {
+            "name": "cocoon_large3"
+        },
+        {
+            "name": "cocoon1"
+        },
+        {
+            "name": "cocoon2"
+        },
+        {
+            "name": "cocoon3"
+        }
+    ]
+}

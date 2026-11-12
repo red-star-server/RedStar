@@ -8,34 +8,33 @@
     - proto: MobGiantSpiderGuardAngry
       cost: 2
     - proto: MobGiantSpiderMidwifeAngry
-      cost: 2
+      cost: 5
     - proto: MobGiantSpiderNurseAngry
-      cost: 2
+      cost: 5
     - proto: MobGiantSpiderClownAngry
       cost: 5
       prob: 0.02
   configs:
-    DefenseStructure: XenoWardingTower
+    DefenseStructure: SpiderCocoon # Maybe?
     Megafauna: MobGiantSpiderClownAngry # TODO: Change to SpiderQueen
 
 - type: salvageFaction
-  id: Carps
+  id: Lavaland
   desc: salvage-faction-carps
   entries:
-    - proto: MobCarpDungeon
-    # These do too much damage for salvage, need nerfs
-    #- proto: MobCarpHolo
-    #  cost: 5
-    #  prob: 0.1
-    #- proto: MobCarpMagic
-    #  cost: 5
-    #  prob: 0.1
-    - proto: MobCarpRainbow # carp version of rouny...
+    - proto: MobWatcherLavaland
+    - proto: MobWatcherMagmawing
+      cost: 5
+      prob: 0.1
+    - proto: MobWatcherIcewing
+      cost: 5
+      prob: 0.1
+    - proto: MobHivelord
       cost: 3
       prob: 0.05
-    - proto: MobDragonDungeon
+    - proto: MobGoliath
       cost: 10
       prob: 0.02
   configs:
-    DefenseStructure: CarpStatue
-    Megafauna: MobDragonDungeon
+    DefenseStructure: LavalandTendril
+    Megafauna: MobGoliath
