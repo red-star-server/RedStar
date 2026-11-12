@@ -1,0 +1,130 @@
+﻿# Concrete
+- type: entity
+  parent: FloorTileItemBase
+  id: FloorTileItemIronSandConcrete
+  name: iron sand concrete tile
+  components:
+  - type: Sprite
+    state: ironsandconcrete
+  - type: Item
+    heldPrefix: generic
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorIronSandConcrete
+  - type: Stack
+    stackType: FloorTileIronSandConcrete
+
+- type: entity
+  parent: FloorTileItemIronSandConcrete
+  id: FloorTileItemIronSandConcreteMono
+  name: iron sand concrete mono tile
+  components:
+  - type: Sprite
+    state: ironsandconcrete-mono
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorIronSandConcreteMono
+  - type: Stack
+    stackType: FloorTileIronSandConcreteMono
+
+- type: entity
+  parent: FloorTileItemIronSandConcrete
+  id: FloorTileItemIronSandConcreteSmooth
+  name: iron sand concrete smooth
+  components:
+  - type: Sprite
+    state: ironsandconcrete-smooth
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorIronSandConcreteSmooth
+  - type: Stack
+    stackType: FloorTileIronSandConcreteSmooth
+
+- type: entity
+  parent: FloorTileItemBase
+  id: FloorTileItemOldConcrete
+  name: old concrete tile
+  components:
+  - type: Sprite
+    state: oldconcrete
+  - type: Item
+    heldPrefix: generic
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorOldConcrete
+  - type: Stack
+    stackType: FloorTileOldConcrete
+
+- type: entity
+  parent: FloorTileItemOldConcrete
+  id: FloorTileItemOldConcreteMono
+  name: old concrete mono tile
+  components:
+  - type: Sprite
+    state: oldconcrete-mono
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorOldConcreteMono
+  - type: Stack
+    stackType: FloorTileOldConcreteMono
+
+- type: entity
+  parent: FloorTileItemOldConcrete
+  id: FloorTileItemOldConcreteSmooth
+  name: old concrete smooth
+  components:
+  - type: Sprite
+    state: oldconcrete-smooth
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorOldConcreteSmooth
+  - type: Stack
+    stackType: FloorTileOldConcreteSmooth
+
+- type: entity
+  parent: FloorTileItemConcrete
+  id: FloorTileItemWhiteConcrete
+  name: white concrete tile
+  components:
+  - type: Sprite
+    state: concrete
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorWhiteConcrete
+  - type: Stack
+    stackType: FloorTileWhiteConcrete
+
+- type: entity
+  parent: FloorTileItemConcrete
+  id: FloorTileItemWhiteConcreteMono
+  name: white concrete mono tile
+  components:
+  - type: Sprite
+    state: concrete-mono
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorWhiteConcreteMono
+  - type: Stack
+    stackType: FloorTileWhiteConcreteMono
+
+- type: entity
+  parent: FloorTileItemConcrete
+  id: FloorTileItemWhiteConcreteSmooth
+  name: white concrete smooth
+  components:
+  - type: Sprite
+    state: concrete-smooth
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorWhiteConcreteSmooth
+  - type: Stack
+    stackType: FloorTileWhiteConcreteSmooth

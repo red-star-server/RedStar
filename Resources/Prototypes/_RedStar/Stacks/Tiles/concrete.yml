@@ -1,0 +1,55 @@
+﻿# Tiles made of concrete
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileIronSandConcrete
+  name: stack-iron-sand-concrete-tile
+  spawn: FloorTileItemIronSandConcrete
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileIronSandConcreteMono
+  name: stack-iron-sand-concrete-mono-tile
+  spawn: FloorTileItemIronSandConcreteMono
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileIronSandConcreteSmooth
+  name: stack-iron-sand-concrete-smooth
+  spawn: FloorTileItemIronSandConcreteSmooth
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileOldConcrete
+  name: stack-old-concrete-tile
+  spawn: FloorTileItemOldConcrete
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileOldConcreteMono
+  name: stack-old-concrete-mono-tile
+  spawn: FloorTileItemOldConcreteMono
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileOldConcreteSmooth
+  name: stack-old-concrete-smooth
+  spawn: FloorTileItemOldConcreteSmooth
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileWhiteConcrete
+  name: stack-white-concrete-tile
+  spawn: FloorTileItemWhiteConcrete
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileWhiteConcreteMono
+  name: stack-white-concrete-mono-tile
+  spawn: FloorTileItemWhiteConcreteMono
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileWhiteConcreteSmooth
+  name: stack-white-concrete-smooth
+  spawn: FloorTileItemWhiteConcreteSmooth
