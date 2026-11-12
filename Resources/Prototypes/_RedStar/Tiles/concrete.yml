@@ -1,0 +1,86 @@
+﻿- type: tile
+  id: FloorIronsandConcrete
+  parent: BaseStationTile
+  name: tiles-ironsand-concrete-tile
+  sprite: /Textures/_RedStar/Tiles/Concrete/ironsandconcrete.png
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemIronsandConcrete
+
+- type: tile
+  id: FloorIronsandConcreteMono
+  parent: BaseStationTile
+  name: tiles-ironsand-concrete-slab
+  sprite: /Textures/_RedStar/Tiles/Concrete/ironsandconcrete-mono.png
+  variants: 2
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemIronsandConcreteMono
+
+- type: tile
+  id: FloorIronsandConcreteSmooth
+  parent: BaseStationTile
+  name: tiles-ironsand-concrete-smooth
+  sprite: /Textures/_RedStar/Tiles/Concrete/ironsandconcrete-smooth.png
+  variants: 2
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemIronsandConcreteSmooth
+
+- type: tile
+  id: FloorOldConcrete
+  parent: BaseStationTile
+  name: tiles-old-concrete-tile
+  sprite: /Textures/_RedStar/Tiles/Concrete/oldconcrete.png
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemOldConcrete
+
+- type: tile
+  id: FloorOldConcreteMono
+  parent: BaseStationTile
+  name: tiles-old-concrete-slab
+  sprite: /Textures/_RedStar/Tiles/Concrete/oldconcrete-mono.png
+  variants: 2
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemOldConcreteMono
+
+- type: tile
+  id: FloorOldConcreteSmooth
+  parent: BaseStationTile
+  name: tiles-old-concrete-smooth
+  sprite: /Textures/_RedStar/Tiles/Concrete/oldconcrete-smooth.png
+  variants: 2
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemOldConcreteSmooth
+
+- type: tile
+  id: FloorWhiteConcrete
+  parent: BaseStationTile
+  name: tiles-white-concrete-tile
+  sprite: /Textures/_RedStar/Tiles/Concrete/whiteconcrete.png
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemWhiteConcrete
+
+- type: tile
+  id: FloorWhiteConcreteMono
+  parent: BaseStationTile
+  name: tiles-white-concrete-slab
+  sprite: /Textures/_RedStar/Tiles/Concrete/whiteconcrete-mono.png
+  variants: 2
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemWhiteConcreteMono
+
+- type: tile
+  id: FloorWhiteConcreteSmooth
+  parent: BaseStationTile
+  name: tiles-white-concrete-smooth
+  sprite: /Textures/_RedStar/Tiles/Concrete/whiteconcrete-smooth.png
+  variants: 2
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemWhiteConcreteSmooth

@@ -1,0 +1,34 @@
+- type: salvageFaction
+  id: Spiders
+  desc: salvage-faction-spiders
+  entries:
+  - proto: MobGiantSpiderTarantulaAngry
+  - proto: MobGiantSpiderHunterAngry
+    cost: 2
+  - proto: MobGiantSpiderGuardAngry
+    cost: 2
+  - proto: MobGiantSpiderMidwifeAngry
+    cost: 5
+  - proto: MobGiantSpiderNurseAngry
+    cost: 5
+  - proto: MobGiantSpiderClownAngry
+    cost: 5
+    prob: 0.02
+
+- type: salvageFaction
+  id: Lavaland
+  desc: salvage-faction-lavaland
+  entries:
+  - proto: MobWatcherLavaland
+  - proto: MobWatcherMagmawing
+    cost: 5
+    prob: 0.1
+  - proto: MobWatcherIcewing
+    cost: 5
+    prob: 0.1
+  - proto: MobHivelord
+    cost: 3
+    prob: 0.05
+  - proto: MobGoliath
+    cost: 10
+    prob: 0.02
