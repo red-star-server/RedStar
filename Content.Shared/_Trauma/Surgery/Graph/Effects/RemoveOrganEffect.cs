@@ -11,13 +11,15 @@ public sealed partial class RemoveOrganEffect : SurgeryStepEffect
     [DataField(required: true)]
     public ProtoId<OrganCategoryPrototype> Organ;
 
-    public override void Apply(EntityUid target, EntityUid? surgeon, EntityUid? usedItem, IEntityManager entityManager)
+    public override bool Apply(EntityUid target, EntityUid? surgeon, EntityUid? usedItem, IEntityManager entityManager)
     {
         var part = entityManager.System<BodyPartSystem>();
         if (part.GetOrgan(target, Organ) is not { } organ || !part.RemoveOrgan(target, organ))
-            return;
+            return false;
 
         if (surgeon is { } user)
             entityManager.System<SharedHandsSystem>().TryPickupAnyHand(user, organ);
+
+        return true;
     }
 }

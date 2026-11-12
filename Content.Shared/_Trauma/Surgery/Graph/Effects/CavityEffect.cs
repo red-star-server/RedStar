@@ -10,15 +10,15 @@ public sealed partial class CavityEffect : SurgeryStepEffect
     [DataField]
     public bool Remove;
 
-    public override void Apply(EntityUid target, EntityUid? surgeon, EntityUid? usedItem, IEntityManager entityManager)
+    public override bool Apply(EntityUid target, EntityUid? surgeon, EntityUid? usedItem, IEntityManager entityManager)
     {
         if (surgeon is not { } user)
-            return;
+            return true;
 
         var ev = new GetBodyPartCavityEvent();
         entityManager.EventBus.RaiseLocalEvent(target, ref ev);
         if (ev.Container is not { } container)
-            return;
+            return true;
 
         var hands = entityManager.System<SharedHandsSystem>();
         if (Remove)
@@ -32,5 +32,7 @@ public sealed partial class CavityEffect : SurgeryStepEffect
             if (item is { } held)
                 entityManager.System<SharedContainerSystem>().Insert(held, container);
         }
+
+        return true;
     }
 }

@@ -158,11 +158,8 @@
       target: Incised
       label: Insert tongue
       conditions:
-      - !type:OrganSlotCondition
-        organSlot: Tongue
-      - !type:OrganPresentCondition
-        organ: Tongue
-        inverted: true
+      - !type:PartRemovedCondition
+        category: Tongue
       steps:
       - name: Add organ
         organ: Tongue
@@ -255,11 +252,8 @@
       target: SkullOpen
       label: Insert brain
       conditions:
-      - !type:OrganSlotCondition
-        organSlot: Brain
-      - !type:OrganPresentCondition
-        organ: Brain
-        inverted: true
+      - !type:PartRemovedCondition
+        category: Brain
       steps:
       - name: Add organ
         organ: Brain
@@ -301,11 +295,8 @@
       target: SkullOpen
       label: Insert eyes
       conditions:
-      - !type:OrganSlotCondition
-        organSlot: Eyes
-      - !type:OrganPresentCondition
-        organ: Eyes
-        inverted: true
+      - !type:PartRemovedCondition
+        category: Eyes
       steps:
       - name: Add organ
         organ: Eyes
@@ -350,11 +341,8 @@
       target: SkullOpen
       label: Insert ear organs
       conditions:
-      - !type:OrganSlotCondition
-        organSlot: Ears
-      - !type:OrganPresentCondition
-        organ: Ears
-        inverted: true
+      - !type:PartRemovedCondition
+        category: Ears
       steps:
       - name: Add organ
         organ: Ears

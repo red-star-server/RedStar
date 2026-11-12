@@ -20,13 +20,13 @@ public sealed partial class TendWoundsEffect : SurgeryStepEffect
     [DataField]
     public float HealMultiplier = 0.07f;
 
-    public override void Apply(EntityUid target, EntityUid? surgeon, EntityUid? usedItem, IEntityManager entityManager)
+    public override bool Apply(EntityUid target, EntityUid? surgeon, EntityUid? usedItem, IEntityManager entityManager)
     {
         var wounds = entityManager.System<WoundSystem>();
         if (wounds.GetWoundableSeverityPoint(target, MainGroup, healable: true) <= 0)
-            return;
+            return true;
 
-        var bonus = HealMultiplier * wounds.GetWoundableSeverityPoint(target, MainGroup);
+        var bonus = HealMultiplier * wounds.GetWoundableSeverityPoint(target, MainGroup, healable: true);
         var body = entityManager.System<BodySystem>().GetBody(target) ?? target;
         if (entityManager.System<MobStateSystem>().IsDead(body))
             bonus *= 0.2;
@@ -40,5 +40,6 @@ public sealed partial class TendWoundsEffect : SurgeryStepEffect
 
         entityManager.System<DamageableSystem>()
             .ChangeDamage(target, adjusted, true, origin: surgeon, ignoreBlockers: true);
+        return true;
     }
 }

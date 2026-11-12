@@ -18,7 +18,7 @@ public sealed partial class DamageEffect : SurgeryStepEffect
     [DataField]
     public float SleepModifier = 0.5f;
 
-    public override void Apply(EntityUid target, EntityUid? surgeon, EntityUid? usedItem, IEntityManager entityManager)
+    public override bool Apply(EntityUid target, EntityUid? surgeon, EntityUid? usedItem, IEntityManager entityManager)
     {
         var damage = new DamageSpecifier(Damage);
         var body = entityManager.System<BodySystem>().GetBody(target) ?? target;
@@ -27,5 +27,6 @@ public sealed partial class DamageEffect : SurgeryStepEffect
 
         entityManager.System<DamageableSystem>()
             .ChangeDamage(target, damage, IgnoreResistances, origin: surgeon, ignoreBlockers: true);
+        return true;
     }
 }

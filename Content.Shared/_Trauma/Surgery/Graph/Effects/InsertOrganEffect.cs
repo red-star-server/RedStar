@@ -11,15 +11,18 @@ public sealed partial class InsertOrganEffect : SurgeryStepEffect
     [DataField]
     public ProtoId<OrganCategoryPrototype>? Organ;
 
-    public override void Apply(EntityUid target, EntityUid? surgeon, EntityUid? usedItem, IEntityManager entityManager)
+    public override bool Apply(EntityUid target, EntityUid? surgeon, EntityUid? usedItem, IEntityManager entityManager)
     {
         if (usedItem is not { } item || entityManager.System<BodySystem>().GetCategory(item) is not { } category)
-            return;
+            return false;
 
         if (Organ is { } required && category != required)
-            return;
+            return false;
 
-        if (entityManager.System<BodyPartSystem>().InsertOrgan(target, item))
-            entityManager.EnsureComponent<OrganReattachedComponent>(item);
+        if (!entityManager.System<BodyPartSystem>().InsertOrgan(target, item))
+            return false;
+
+        entityManager.EnsureComponent<OrganReattachedComponent>(item);
+        return true;
     }
 }

@@ -18,7 +18,7 @@ public sealed partial class ComponentEffect : SurgeryStepEffect
     [DataField]
     public ComponentRegistry? BodyRemove;
 
-    public override void Apply(EntityUid target, EntityUid? surgeon, EntityUid? usedItem, IEntityManager entityManager)
+    public override bool Apply(EntityUid target, EntityUid? surgeon, EntityUid? usedItem, IEntityManager entityManager)
     {
         if (Add is { } add)
             entityManager.AddComponents(target, add);
@@ -26,12 +26,14 @@ public sealed partial class ComponentEffect : SurgeryStepEffect
             entityManager.RemoveComponents(target, remove);
 
         if (BodyAdd is null && BodyRemove is null)
-            return;
+            return true;
 
         var body = entityManager.System<BodySystem>().GetBody(target) ?? target;
         if (BodyAdd is { } bodyAdd)
             entityManager.AddComponents(body, bodyAdd);
         if (BodyRemove is { } bodyRemove)
             entityManager.RemoveComponents(body, bodyRemove);
+
+        return true;
     }
 }

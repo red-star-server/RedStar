@@ -80,5 +80,4 @@ damage-type-ballistic = Ballistic
 damage-type-ion = Ion
 damage-group-electronic = Electronic
 
-
 armor-point-blank-examine = Protection is [color=red]multiplied by { $penalty }x[/color] within a { $range }m range on a precise hit

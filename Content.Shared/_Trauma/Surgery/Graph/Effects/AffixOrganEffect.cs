@@ -11,9 +11,11 @@ public sealed partial class AffixOrganEffect : SurgeryStepEffect
     [DataField(required: true)]
     public ProtoId<OrganCategoryPrototype> Organ;
 
-    public override void Apply(EntityUid target, EntityUid? surgeon, EntityUid? usedItem, IEntityManager entityManager)
+    public override bool Apply(EntityUid target, EntityUid? surgeon, EntityUid? usedItem, IEntityManager entityManager)
     {
         if (entityManager.System<BodyPartSystem>().GetOrgan(target, Organ) is { } organ)
             entityManager.RemoveComponent<OrganReattachedComponent>(organ);
+
+        return true;
     }
 }

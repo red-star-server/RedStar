@@ -353,11 +353,8 @@
       target: BonesOpen
       label: Insert heart
       conditions:
-      - !type:OrganSlotCondition
-        organSlot: Heart
-      - !type:OrganPresentCondition
-        organ: Heart
-        inverted: true
+      - !type:PartRemovedCondition
+        category: Heart
       steps:
       - name: Add organ
         organ: Heart
@@ -399,11 +396,8 @@
       target: BonesOpen
       label: Insert lungs
       conditions:
-      - !type:OrganSlotCondition
-        organSlot: Lungs
-      - !type:OrganPresentCondition
-        organ: Lungs
-        inverted: true
+      - !type:PartRemovedCondition
+        category: Lungs
       steps:
       - name: Add organ
         organ: Lungs
@@ -445,11 +439,8 @@
       target: BonesOpen
       label: Insert liver
       conditions:
-      - !type:OrganSlotCondition
-        organSlot: Liver
-      - !type:OrganPresentCondition
-        organ: Liver
-        inverted: true
+      - !type:PartRemovedCondition
+        category: Liver
       steps:
       - name: Add organ
         organ: Liver
@@ -491,11 +482,8 @@
       target: BonesOpen
       label: Insert stomach
       conditions:
-      - !type:OrganSlotCondition
-        organSlot: Stomach
-      - !type:OrganPresentCondition
-        organ: Stomach
-        inverted: true
+      - !type:PartRemovedCondition
+        category: Stomach
       steps:
       - name: Add organ
         organ: Stomach
@@ -537,11 +525,8 @@
       target: BonesOpen
       label: Insert kidneys
       conditions:
-      - !type:OrganSlotCondition
-        organSlot: Kidneys
-      - !type:OrganPresentCondition
-        organ: Kidneys
-        inverted: true
+      - !type:PartRemovedCondition
+        category: Kidneys
       steps:
       - name: Add organ
         organ: Kidneys
@@ -583,11 +568,8 @@
       target: BonesOpen
       label: Insert appendix
       conditions:
-      - !type:OrganSlotCondition
-        organSlot: Appendix
-      - !type:OrganPresentCondition
-        organ: Appendix
-        inverted: true
+      - !type:PartRemovedCondition
+        category: Appendix
       steps:
       - name: Add organ
         organ: Appendix
@@ -643,11 +625,8 @@
       target: BonesOpen
       label: Insert power cell slot
       conditions:
-      - !type:OrganSlotCondition
-        organSlot: AugmentPowerCell
-      - !type:OrganPresentCondition
-        organ: AugmentPowerCell
-        inverted: true
+      - !type:PartRemovedCondition
+        category: AugmentPowerCell
       steps:
       - name: Add organ
         organ: AugmentPowerCell
@@ -707,11 +686,8 @@
       target: BonesOpen
       label: Insert power cell charger
       conditions:
-      - !type:OrganSlotCondition
-        organSlot: AugmentCharger
-      - !type:OrganPresentCondition
-        organ: AugmentCharger
-        inverted: true
+      - !type:PartRemovedCondition
+        category: AugmentCharger
       steps:
       - name: Add organ
         organ: AugmentCharger

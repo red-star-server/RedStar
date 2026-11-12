@@ -221,11 +221,8 @@
       conditions:
       - !type:PartTypeCondition
         parts: [Arm]
-      - !type:OrganSlotCondition
-        organSlot: ArmAugment
-      - !type:OrganPresentCondition
-        organ: ArmAugment
-        inverted: true
+      - !type:PartRemovedCondition
+        category: ArmAugment
       steps:
       - name: Add organ
         organ: ArmAugment

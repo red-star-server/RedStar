@@ -13,12 +13,13 @@ public sealed partial class EmoteEffect : SurgeryStepEffect
     [DataField]
     public ProtoId<EmotePrototype> Emote = "Scream";
 
-    public override void Apply(EntityUid target, EntityUid? surgeon, EntityUid? usedItem, IEntityManager entityManager)
+    public override bool Apply(EntityUid target, EntityUid? surgeon, EntityUid? usedItem, IEntityManager entityManager)
     {
         var body = entityManager.System<BodySystem>().GetBody(target) ?? target;
         if (entityManager.System<StatusEffectsSystem>().HasEffectComp<ForcedSleepingStatusEffectComponent>(body))
-            return;
+            return true;
 
         entityManager.System<SharedChatSystem>().TryEmoteWithChat(body, Emote, ignoreActionBlocker: true);
+        return true;
     }
 }

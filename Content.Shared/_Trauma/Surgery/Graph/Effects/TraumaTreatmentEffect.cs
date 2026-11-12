@@ -16,7 +16,7 @@ public sealed partial class TraumaTreatmentEffect : SurgeryStepEffect
     [DataField]
     public FixedPoint2 Amount = 5;
 
-    public override void Apply(EntityUid target, EntityUid? surgeon, EntityUid? usedItem, IEntityManager entityManager)
+    public override bool Apply(EntityUid target, EntityUid? surgeon, EntityUid? usedItem, IEntityManager entityManager)
     {
         var trauma = entityManager.System<TraumaSystem>();
         var healAmount = Amount;
@@ -30,8 +30,12 @@ public sealed partial class TraumaTreatmentEffect : SurgeryStepEffect
 
                     foreach (var modifier in organ.IntegrityModifiers.ToArray())
                     {
+                        // Only heal wound-based organ damage; leave other integrity modifiers (e.g. eye damage) alone.
+                        if (modifier.Key.Item1 != TraumaSystem.WoundableDamageModifier)
+                            continue;
+
                         if (healAmount <= 0)
-                            return;
+                            return true;
 
                         if (modifier.Value <= healAmount)
                         {
@@ -41,7 +45,7 @@ public sealed partial class TraumaTreatmentEffect : SurgeryStepEffect
                         else
                         {
                             trauma.TryChangeOrganDamageModifier((organUid, organ), -healAmount, modifier.Key.Item2, modifier.Key.Item1);
-                            return;
+                            return true;
                         }
                     }
                 }
@@ -56,5 +60,7 @@ public sealed partial class TraumaTreatmentEffect : SurgeryStepEffect
                 trauma.RemoveTraumas(target, TraumaType.Dismemberment);
                 break;
         }
+
+        return true;
     }
 }

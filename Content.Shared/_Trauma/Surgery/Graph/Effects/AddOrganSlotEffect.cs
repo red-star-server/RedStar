@@ -10,8 +10,9 @@ public sealed partial class AddOrganSlotEffect : SurgeryStepEffect
     [DataField(required: true)]
     public ProtoId<OrganCategoryPrototype> OrganSlot;
 
-    public override void Apply(EntityUid target, EntityUid? surgeon, EntityUid? usedItem, IEntityManager entityManager)
+    public override bool Apply(EntityUid target, EntityUid? surgeon, EntityUid? usedItem, IEntityManager entityManager)
     {
         entityManager.System<BodyPartSystem>().TryAddSlot(target, OrganSlot);
+        return true;
     }
 }

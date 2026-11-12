@@ -75,4 +75,18 @@ public sealed partial class OrganComponentsSystem : EntitySystem
         ent.Comp.AddedKeys.Clear();
         Dirty(ent);
     }
+
+    /// <summary>
+    /// Reconcile the body's components after OnAdd/OnRemove were edited externally (e.g. by surgery),
+    /// respecting <see cref="OrganComponentsComponent.OnlyWhileEnabled"/> and the organ's enabled state.
+    /// </summary>
+    public void RefreshOrganComponents(Entity<OrganComponentsComponent> organ, EntityUid body)
+    {
+        if (_timing.ApplyingState)
+            return;
+
+        RemoveComponents(organ, body);
+        if (!organ.Comp.OnlyWhileEnabled || HasComp<EnabledOrganComponent>(organ))
+            ApplyComponents(organ, body);
+    }
 }

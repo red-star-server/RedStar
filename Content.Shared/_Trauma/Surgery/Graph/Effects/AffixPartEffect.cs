@@ -17,14 +17,15 @@ public sealed partial class AffixPartEffect : SurgeryStepEffect
 
     private static readonly ProtoId<DamageGroupPrototype> Brute = "Brute";
 
-    public override void Apply(EntityUid target, EntityUid? surgeon, EntityUid? usedItem, IEntityManager entityManager)
+    public override bool Apply(EntityUid target, EntityUid? surgeon, EntityUid? usedItem, IEntityManager entityManager)
     {
         var body = entityManager.System<BodySystem>();
         var patient = body.GetBody(target) ?? target;
         if (body.GetOrgan(patient, Category) is not { } part)
-            return;
+            return true;
 
         entityManager.System<WoundSystem>().TryHealWounds(part, HealAmount, out _, damageGroup: Brute);
         entityManager.RemoveComponent<OrganReattachedComponent>(part);
+        return true;
     }
 }

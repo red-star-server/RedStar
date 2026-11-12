@@ -146,8 +146,7 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         if (active >= 0)
         {
             var chosen = candidates[active];
-            StartStep(surgeon, target, comp, chosen.Edge, chosen.Index, heldItem);
-            return true;
+            return StartStep(surgeon, target, comp, chosen.Edge, chosen.Index, heldItem);
         }
 
         var specific = candidates.FindAll(c => c.Edge.Steps[c.Index].Organ != null || c.Edge.Steps[c.Index].Quality != null);
@@ -161,8 +160,7 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         }
 
         var match = candidates[0];
-        StartStep(surgeon, target, comp, match.Edge, match.Index, heldItem);
-        return true;
+        return StartStep(surgeon, target, comp, match.Edge, match.Index, heldItem);
     }
 
     private static bool EdgeConcernsOrgan(SurgeryGraphEdge edge, ProtoId<OrganCategoryPrototype> organ)
@@ -191,8 +189,7 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         if (!TryMatchTool(edge.Steps[index], heldItem))
             return false;
 
-        StartStep(surgeon, target, comp, edge, index, heldItem);
-        return true;
+        return StartStep(surgeon, target, comp, edge, index, heldItem);
     }
 
     #endregion
@@ -218,16 +215,22 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         return false;
     }
 
-    private void StartStep(EntityUid surgeon, EntityUid target, OperatedComponent comp, SurgeryGraphEdge edge, int stepIndex, EntityUid heldItem)
+    private bool StartStep(EntityUid surgeon, EntityUid target, OperatedComponent comp, SurgeryGraphEdge edge, int stepIndex, EntityUid heldItem)
     {
         var step = edge.Steps[stepIndex];
+
+        var prevEdge = comp.ActiveEdgeId;
+        var prevSteps = comp.CompletedSteps;
 
         comp.ActiveEdgeId = edge.Id;
         comp.CompletedSteps = stepIndex;
         comp.IsOperating = true;
 
+        // Range/accessibility is checked against the body, not the internal organ:
+        // a part inside the body container is not accessible from outside and would cancel the DoAfter.
+        var body = _body.GetBody(target) ?? target;
         var ev = new SurgeryGraphStepDoAfterEvent(edge.Id, stepIndex);
-        var args = new DoAfterArgs(EntityManager, surgeon, GetStepDuration(step, surgeon, target, heldItem), ev, target, target: target, used: heldItem)
+        var args = new DoAfterArgs(EntityManager, surgeon, GetStepDuration(step, surgeon, target, heldItem), ev, target, target: body, used: heldItem)
         {
             BreakOnMove = true,
             NeedHand = true,
@@ -238,8 +241,10 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
 
         if (!_doAfter.TryStartDoAfter(args, out var doAfter))
         {
+            comp.ActiveEdgeId = prevEdge;
+            comp.CompletedSteps = prevSteps;
             comp.IsOperating = false;
-            return;
+            return false;
         }
 
         comp.DoAfter = doAfter;
@@ -247,6 +252,8 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
 
         if (step.Sound is { } sound)
             _audio.PlayPredicted(sound, target, surgeon);
+
+        return true;
     }
 
     private TimeSpan GetStepDuration(SurgeryStepEntry step, EntityUid surgeon, EntityUid part, EntityUid heldItem)
@@ -298,12 +305,24 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
             return;
         }
 
-        comp.CompletedSteps = args.StepIndex + 1;
+        // The patient may have stood up during the DoAfter; abort before mutating anything.
+        if (!IsLyingDown(_body.GetBody(ent) ?? ent, surgeon, false))
+        {
+            args.Handled = true;
+            return;
+        }
 
+        // A failed mandatory effect aborts the step without advancing the graph.
         foreach (var effect in step.Effects)
         {
-            effect.Apply(ent, surgeon, used, EntityManager);
+            if (!effect.Apply(ent, surgeon, used, EntityManager))
+            {
+                args.Handled = true;
+                return;
+            }
         }
+
+        comp.CompletedSteps = args.StepIndex + 1;
 
         HandleSanitization(ent, _body.GetBody(ent) ?? ent, surgeon);
 
@@ -311,7 +330,11 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         {
             foreach (var effect in edge.Effects)
             {
-                effect.Apply(ent, surgeon, used, EntityManager);
+                if (!effect.Apply(ent, surgeon, used, EntityManager))
+                {
+                    args.Handled = true;
+                    return;
+                }
             }
 
             AdvanceNode(ent, comp, graph, edge.Target);
