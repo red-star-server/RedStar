@@ -8,7 +8,7 @@
     edges:
     - id: OpenIncision
       target: Incised
-      label: Open incision
+      label: surgery-edge-open-incision
       conditions:
       - !type:PartTypeCondition
         parts: [Head]
@@ -38,7 +38,7 @@
     edges:
     - id: CloseIncision
       target: Closed
-      label: Close incision
+      label: surgery-edge-close-incision
       steps:
       - name: Close incision
         quality: Cauterizing
@@ -54,7 +54,7 @@
           - type: OrganReattached
     - id: OpenSkull
       target: SkullOpen
-      label: Open skull
+      label: surgery-edge-open-skull
       steps:
       - name: Saw through bones
         quality: Sawing
@@ -64,7 +64,7 @@
         duration: 2
     - id: Lobotomize
       target: Closed
-      label: Lobotomize patient
+      label: surgery-edge-lobotomize-patient
       conditions:
       - !type:OrganPresentCondition
         organ: Brain
@@ -106,7 +106,7 @@
           - type: OrganReattached
     - id: MendBrainTissue
       target: Closed
-      label: Mend brain tissue
+      label: surgery-edge-mend-brain-tissue
       conditions:
       - !type:OrganPresentCondition
         organ: Brain
@@ -143,7 +143,7 @@
           - type: OrganReattached
     - id: RemoveTongue
       target: Incised
-      label: Remove tongue
+      label: surgery-edge-remove-tongue
       conditions:
       - !type:OrganPresentCondition
         organ: Tongue
@@ -156,7 +156,7 @@
           organ: Tongue
     - id: InsertTongue
       target: Incised
-      label: Insert tongue
+      label: surgery-edge-insert-tongue
       conditions:
       - !type:PartRemovedCondition
         category: Tongue
@@ -180,7 +180,7 @@
               Heat: -5
     - id: Amputate
       target: Closed
-      label: Amputate head
+      label: surgery-edge-amputate-head
       conditions:
       - !type:HasBodyCondition
       steps:
@@ -206,7 +206,7 @@
     edges:
     - id: CloseSkull
       target: Closed
-      label: Close skull
+      label: surgery-edge-close-skull
       steps:
       - name: Close bones
         quality: Retracting
@@ -228,7 +228,7 @@
           - type: OrganReattached
     - id: RemoveBrain
       target: SkullOpen
-      label: Remove brain
+      label: surgery-edge-remove-brain
       conditions:
       - !type:OrganPresentCondition
         organ: Brain
@@ -250,7 +250,7 @@
           organ: Brain
     - id: InsertBrain
       target: SkullOpen
-      label: Insert brain
+      label: surgery-edge-insert-brain
       conditions:
       - !type:PartRemovedCondition
         category: Brain
@@ -274,7 +274,7 @@
               Heat: -5
     - id: RemoveEyes
       target: SkullOpen
-      label: Remove eyes
+      label: surgery-edge-remove-eyes
       conditions:
       - !type:OrganPresentCondition
         organ: Eyes
@@ -293,7 +293,7 @@
           organ: Eyes
     - id: InsertEyes
       target: SkullOpen
-      label: Insert eyes
+      label: surgery-edge-insert-eyes
       conditions:
       - !type:PartRemovedCondition
         category: Eyes
@@ -317,7 +317,7 @@
               Heat: -5
     - id: RemoveEars
       target: SkullOpen
-      label: Remove ear organs
+      label: surgery-edge-remove-ear-organs
       conditions:
       - !type:OrganPresentCondition
         organ: Ears
@@ -339,7 +339,7 @@
           organ: Ears
     - id: InsertEars
       target: SkullOpen
-      label: Insert ear organs
+      label: surgery-edge-insert-ear-organs
       conditions:
       - !type:PartRemovedCondition
         category: Ears

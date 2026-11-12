@@ -8,7 +8,7 @@
     edges:
     - id: OpenIncision
       target: Incised
-      label: Open incision
+      label: surgery-edge-open-incision
       conditions:
       - !type:PartTypeCondition
         parts: [Torso]
@@ -38,7 +38,7 @@
     edges:
     - id: CloseIncision
       target: Closed
-      label: Close incision
+      label: surgery-edge-close-incision
       steps:
       - name: Close incision
         quality: Cauterizing
@@ -54,7 +54,7 @@
           - type: OrganReattached
     - id: OpenBones
       target: BonesOpen
-      label: Open ribcage
+      label: surgery-edge-open-ribcage
       steps:
       - name: Saw through bones
         quality: Sawing
@@ -64,7 +64,7 @@
         duration: 2
     - id: AttachHead
       target: Closed
-      label: Attach head
+      label: surgery-edge-attach-head
       conditions:
       - !type:PartRemovedCondition
         category: Head
@@ -91,7 +91,7 @@
               Heat: -5
     - id: AttachLeftArm
       target: Closed
-      label: Attach left arm
+      label: surgery-edge-attach-left-arm
       conditions:
       - !type:PartRemovedCondition
         category: ArmLeft
@@ -118,7 +118,7 @@
               Heat: -5
     - id: AttachRightArm
       target: Closed
-      label: Attach right arm
+      label: surgery-edge-attach-right-arm
       conditions:
       - !type:PartRemovedCondition
         category: ArmRight
@@ -145,7 +145,7 @@
               Heat: -5
     - id: AttachLeftLeg
       target: Closed
-      label: Attach left leg
+      label: surgery-edge-attach-left-leg
       conditions:
       - !type:PartRemovedCondition
         category: LegLeft
@@ -172,7 +172,7 @@
               Heat: -5
     - id: AttachRightLeg
       target: Closed
-      label: Attach right leg
+      label: surgery-edge-attach-right-leg
       conditions:
       - !type:PartRemovedCondition
         category: LegRight
@@ -199,7 +199,7 @@
               Heat: -5
     - id: AttachTail
       target: Closed
-      label: Attach tail
+      label: surgery-edge-attach-tail
       conditions:
       - !type:PartRemovedCondition
         category: Tail
@@ -226,7 +226,7 @@
               Heat: -5
     - id: AttachWings
       target: Closed
-      label: Attach wings
+      label: surgery-edge-attach-wings
       conditions:
       - !type:PartRemovedCondition
         category: Wings
@@ -253,7 +253,7 @@
               Heat: -5
     - id: OpenTailSlot
       target: Incised
-      label: Create tail joint
+      label: surgery-edge-create-tail-joint
       conditions:
       - !type:OrganSlotCondition
         organSlot: Tail
@@ -280,7 +280,7 @@
           organSlot: Tail
     - id: OpenWingsSlot
       target: Incised
-      label: Create wing joints
+      label: surgery-edge-create-wing-joints
       conditions:
       - !type:OrganSlotCondition
         organSlot: Wings
@@ -310,7 +310,7 @@
     edges:
     - id: CloseBones
       target: Closed
-      label: Close ribcage
+      label: surgery-edge-close-ribcage
       steps:
       - name: Close bones
         quality: Retracting
@@ -332,7 +332,7 @@
           - type: OrganReattached
     - id: RemoveHeart
       target: BonesOpen
-      label: Remove heart
+      label: surgery-edge-remove-heart
       conditions:
       - !type:OrganPresentCondition
         organ: Heart
@@ -351,7 +351,7 @@
           organ: Heart
     - id: InsertHeart
       target: BonesOpen
-      label: Insert heart
+      label: surgery-edge-insert-heart
       conditions:
       - !type:PartRemovedCondition
         category: Heart
@@ -375,7 +375,7 @@
               Heat: -5
     - id: RemoveLungs
       target: BonesOpen
-      label: Remove lungs
+      label: surgery-edge-remove-lungs
       conditions:
       - !type:OrganPresentCondition
         organ: Lungs
@@ -394,7 +394,7 @@
           organ: Lungs
     - id: InsertLungs
       target: BonesOpen
-      label: Insert lungs
+      label: surgery-edge-insert-lungs
       conditions:
       - !type:PartRemovedCondition
         category: Lungs
@@ -418,7 +418,7 @@
               Heat: -5
     - id: RemoveLiver
       target: BonesOpen
-      label: Remove liver
+      label: surgery-edge-remove-liver
       conditions:
       - !type:OrganPresentCondition
         organ: Liver
@@ -437,7 +437,7 @@
           organ: Liver
     - id: InsertLiver
       target: BonesOpen
-      label: Insert liver
+      label: surgery-edge-insert-liver
       conditions:
       - !type:PartRemovedCondition
         category: Liver
@@ -461,7 +461,7 @@
               Heat: -5
     - id: RemoveStomach
       target: BonesOpen
-      label: Remove stomach
+      label: surgery-edge-remove-stomach
       conditions:
       - !type:OrganPresentCondition
         organ: Stomach
@@ -480,7 +480,7 @@
           organ: Stomach
     - id: InsertStomach
       target: BonesOpen
-      label: Insert stomach
+      label: surgery-edge-insert-stomach
       conditions:
       - !type:PartRemovedCondition
         category: Stomach
@@ -504,7 +504,7 @@
               Heat: -5
     - id: RemoveKidneys
       target: BonesOpen
-      label: Remove kidneys
+      label: surgery-edge-remove-kidneys
       conditions:
       - !type:OrganPresentCondition
         organ: Kidneys
@@ -523,7 +523,7 @@
           organ: Kidneys
     - id: InsertKidneys
       target: BonesOpen
-      label: Insert kidneys
+      label: surgery-edge-insert-kidneys
       conditions:
       - !type:PartRemovedCondition
         category: Kidneys
@@ -547,7 +547,7 @@
               Heat: -5
     - id: RemoveAppendix
       target: BonesOpen
-      label: Remove appendix
+      label: surgery-edge-remove-appendix
       conditions:
       - !type:OrganPresentCondition
         organ: Appendix
@@ -566,7 +566,7 @@
           organ: Appendix
     - id: InsertAppendix
       target: BonesOpen
-      label: Insert appendix
+      label: surgery-edge-insert-appendix
       conditions:
       - !type:PartRemovedCondition
         category: Appendix
@@ -590,7 +590,7 @@
               Heat: -5
     - id: CavityImplant
       target: BonesOpen
-      label: Implant or retrieve cavity item
+      label: surgery-edge-implant-or-retrieve-cavity-item
       steps:
       - name: Insert item into cavity
         anyItem: true
@@ -605,7 +605,7 @@
           remove: true
     - id: OpenPowerCellSlot
       target: BonesOpen
-      label: Create power cell slot
+      label: surgery-edge-create-power-cell-slot
       conditions:
       - !type:OrganSlotCondition
         organSlot: AugmentPowerCell
@@ -623,7 +623,7 @@
           organSlot: AugmentPowerCell
     - id: InsertPowerCellSlot
       target: BonesOpen
-      label: Insert power cell slot
+      label: surgery-edge-insert-power-cell-slot
       conditions:
       - !type:PartRemovedCondition
         category: AugmentPowerCell
@@ -647,7 +647,7 @@
               Heat: -5
     - id: RemovePowerCellSlot
       target: BonesOpen
-      label: Remove power cell slot
+      label: surgery-edge-remove-power-cell-slot
       conditions:
       - !type:OrganPresentCondition
         organ: AugmentPowerCell
@@ -666,7 +666,7 @@
           organ: AugmentPowerCell
     - id: OpenPowerCellCharger
       target: BonesOpen
-      label: Create power cell charger slot
+      label: surgery-edge-create-power-cell-charger-slot
       conditions:
       - !type:OrganSlotCondition
         organSlot: AugmentCharger
@@ -684,7 +684,7 @@
           organSlot: AugmentCharger
     - id: InsertPowerCellCharger
       target: BonesOpen
-      label: Insert power cell charger
+      label: surgery-edge-insert-power-cell-charger
       conditions:
       - !type:PartRemovedCondition
         category: AugmentCharger
@@ -708,7 +708,7 @@
               Heat: -5
     - id: RemovePowerCellCharger
       target: BonesOpen
-      label: Remove power cell charger
+      label: surgery-edge-remove-power-cell-charger
       conditions:
       - !type:OrganPresentCondition
         organ: AugmentCharger

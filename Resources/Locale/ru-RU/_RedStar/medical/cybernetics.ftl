@@ -1,0 +1,13 @@
+research-technology-basic-augmentation = Базовая аугментация
+research-technology-implanted-tools = Имплантированные инструменты
+research-technology-basic-cybernetics = Базовая кибернетика
+research-technology-advanced-cybernetics = Продвинутая кибернетика
+reagent-name-microplastics = микропластик
+reagent-desc-microplastics = Слаботоксичный загрязнитель, содержащийся во многих повседневных предметах. Похоже, его токсичное воздействие не влияет на воксов.
+reagent-name-lab-grown-nutriment = выращенные в лаборатории питательные вещества
+reagent-desc-lab-grown-nutriment = Вы не уверены, откуда это вообще берётся...
+reagent-popup-lab-grown-nutriment = После этого у вас болит сердце.
+metabolizer-type-cybernetic = Кибернетический
+stack-screw = винт
+tool-quality-hammering-name = Забивание
+tool-quality-hammering-tool-name = Молоток

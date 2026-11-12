@@ -21,16 +21,4 @@
   description: An expanded surgical omnitool capable of accelerated function compared to the normal compact version.
   components:
   - type: Tool
-    qualities:
-      - Clamping
-      - Slicing
-      - Drilling
-      - BoneSetting
-      - Retracting
-      - Cauterizing
-      - BoneHealing
-      - Sawing
-      - Manipulating
-      - Tending
-      - Suturing
     speedModifier: 2

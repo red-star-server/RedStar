@@ -1,1 +1,1 @@
-﻿surgery-world-target-hint = [color=gray]Хирургия, {$part}: следующий шаг — {$steps}.[/color]
+﻿surgery-world-target-hint = [color=gray]{$part}: {$steps}.[/color]

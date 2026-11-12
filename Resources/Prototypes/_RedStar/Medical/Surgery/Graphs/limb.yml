@@ -8,7 +8,7 @@
     edges:
     - id: OpenIncision
       target: Incised
-      label: Open incision
+      label: surgery-edge-open-incision
       conditions:
       - !type:PartTypeCondition
         parts: [Arm, Hand, Leg, Foot, Tail, Wings]
@@ -38,7 +38,7 @@
     edges:
     - id: CloseIncision
       target: Closed
-      label: Close incision
+      label: surgery-edge-close-incision
       steps:
       - name: Close incision
         quality: Cauterizing
@@ -54,7 +54,7 @@
           - type: OrganReattached
     - id: Amputate
       target: Closed
-      label: Amputate part
+      label: surgery-edge-amputate-part
       conditions:
       - !type:HasBodyCondition
       steps:
@@ -77,7 +77,7 @@
         - !type:RemovePartEffect
     - id: AttachLeftHand
       target: Closed
-      label: Attach left hand
+      label: surgery-edge-attach-left-hand
       conditions:
       - !type:PartTypeCondition
         parts: [Arm]
@@ -107,7 +107,7 @@
               Heat: -5
     - id: AttachRightHand
       target: Closed
-      label: Attach right hand
+      label: surgery-edge-attach-right-hand
       conditions:
       - !type:PartTypeCondition
         parts: [Arm]
@@ -137,7 +137,7 @@
               Heat: -5
     - id: AttachLeftFoot
       target: Closed
-      label: Attach left foot
+      label: surgery-edge-attach-left-foot
       conditions:
       - !type:PartTypeCondition
         parts: [Leg]
@@ -167,7 +167,7 @@
               Heat: -5
     - id: AttachRightFoot
       target: Closed
-      label: Attach right foot
+      label: surgery-edge-attach-right-foot
       conditions:
       - !type:PartTypeCondition
         parts: [Leg]
@@ -197,7 +197,7 @@
               Heat: -5
     - id: OpenArmAugment
       target: Incised
-      label: Create arm augment slot
+      label: surgery-edge-create-arm-augment-slot
       conditions:
       - !type:PartTypeCondition
         parts: [Arm]
@@ -217,7 +217,7 @@
           organSlot: ArmAugment
     - id: InsertArmAugment
       target: Incised
-      label: Insert arm augment
+      label: surgery-edge-insert-arm-augment
       conditions:
       - !type:PartTypeCondition
         parts: [Arm]
@@ -243,7 +243,7 @@
               Heat: -5
     - id: RemoveArmAugment
       target: Incised
-      label: Remove arm augment
+      label: surgery-edge-remove-arm-augment
       conditions:
       - !type:PartTypeCondition
         parts: [Arm]

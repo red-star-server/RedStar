@@ -3,7 +3,7 @@
   edges:
   - id: TendWoundsBrute
     target: Incised
-    label: Tend bruise wounds
+    label: surgery-edge-tend-bruise-wounds
     conditions:
     - !type:WoundedCondition
       damageGroup: Brute
@@ -31,7 +31,7 @@
             Heat: -5
   - id: TendWoundsBurn
     target: Incised
-    label: Tend burn wounds
+    label: surgery-edge-tend-burn-wounds
     conditions:
     - !type:WoundedCondition
       damageGroup: Burn
@@ -64,7 +64,7 @@
   edges:
   - id: StopBlood
     target: Incised
-    label: Stop constant blood output
+    label: surgery-edge-stop-constant-blood-output
     conditions:
     - !type:BleedsPresentCondition
     steps:
@@ -79,7 +79,7 @@
       duration: 5
   - id: MendBones
     target: Incised
-    label: Mend bones
+    label: surgery-edge-mend-bones
     conditions:
     - !type:BleedsPresentCondition
       inverted: true
@@ -107,7 +107,7 @@
         amount: 17
   - id: HealOrgans
     target: Incised
-    label: Heal organs
+    label: surgery-edge-heal-organs
     conditions:
     - !type:BleedsPresentCondition
       inverted: true
@@ -132,7 +132,7 @@
         amount: 17
   - id: FixDismemberment
     target: Incised
-    label: Fix dismemberment leftovers
+    label: surgery-edge-fix-dismemberment-leftovers
     conditions:
     - !type:BleedsPresentCondition
       inverted: true

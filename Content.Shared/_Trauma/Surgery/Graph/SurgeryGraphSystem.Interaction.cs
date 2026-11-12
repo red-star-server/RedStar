@@ -30,7 +30,7 @@ public sealed partial class SurgeryGraphSystem
     [Dependency] private StandingStateSystem _standing = default!;
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private DamageableSystem _damage = default!;
-    [Dependency] private EntityQuery<SurgeryTargetComponent> _targetQuery = default!;
+    [Dependency] private EntityQuery<SurgeryTargetComponent> _targetQuery;
 
     private static readonly ProtoId<DamageTypePrototype> Poison = "Poison";
     private static readonly FixedPoint2 SepsisDamageLimit = FixedPoint2.New(90);
@@ -172,7 +172,9 @@ public sealed partial class SurgeryGraphSystem
             if (!EdgeConditionsMet(part, edge))
                 continue;
 
-            var label = edge.Label is { Length: > 0 } text ? text : edge.Id;
+            var label = edge.Label is { Length: > 0 } text
+                ? Loc.TryGetString(text, out var localized) ? localized : text
+                : edge.Id;
             if (!labels.Contains(label))
                 labels.Add(label);
 

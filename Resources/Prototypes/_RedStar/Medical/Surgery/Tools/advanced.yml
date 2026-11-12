@@ -12,6 +12,7 @@
     qualities:
       - BoneSetting
     useSound: /Audio/_RedStar/Medical/Surgery/bone_setter.ogg
+
 - type: entity
   parent: BaseToolSurgery
   id: BoneGel
@@ -24,6 +25,7 @@
   - type: Tool
     qualities:
       - BoneHealing
+
 - type: entity
   parent: BaseToolSurgery
   id: MedicalStitches
@@ -37,6 +39,7 @@
     qualities:
       - Suturing
     useSound: /Audio/_RedStar/Medical/Surgery/saw.ogg # TODO: SOUND
+
 - type: entity
   parent: Scalpel
   id: EnergyScalpel
@@ -75,6 +78,7 @@
       - Sawing
     speedModifier: 3
     useSound: /Audio/_RedStar/Medical/Surgery/scalpel1.ogg
+
 - type: entity
   parent: Retractor
   id: AdvancedRetractor
@@ -112,6 +116,7 @@
       - Retracting
     speedModifier: 3
     useSound: /Audio/_RedStar/Medical/Surgery/retractor1.ogg
+
 - type: entity
   parent: Cautery
   id: EnergyCautery
@@ -149,6 +154,7 @@
       - Cauterizing
     speedModifier: 3
     useSound: /Audio/_RedStar/Medical/Surgery/cautery1.ogg
+
 - type: entity
   parent: BoneGel
   id: AdvancedBoneGel
@@ -186,6 +192,8 @@
       - BoneSetting
     speedModifier: 3
     useSound: /Audio/_RedStar/Medical/Surgery/bone_setter.ogg
+
+
 - type: entity
   parent: BaseToolSurgery
   id: OmnimedTool
@@ -198,20 +206,105 @@
   - type: Item
     size: Normal
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/omnimed.rsi
+  - type: MultipleTool
+    statusShowBehavior: true
+    entries:
+    - behavior: [Slicing]
+      sprite:
+        sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/omnimed.rsi
+        state: omnimed
+      useSound:
+        path: /Audio/_RedStar/Medical/Surgery/scalpel1.ogg
+      changeSound:
+        path: /Audio/Effects/sparks4.ogg
+    - behavior: [Sawing]
+      sprite:
+        sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/omnimed.rsi
+        state: omnimed
+      useSound:
+        path: /Audio/_RedStar/Medical/Surgery/scalpel1.ogg
+      changeSound:
+        path: /Audio/Effects/sparks4.ogg
+    - behavior: [Drilling]
+      sprite:
+        sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/omnimed.rsi
+        state: omnimed
+      useSound:
+        path: /Audio/_RedStar/Medical/Surgery/scalpel1.ogg
+      changeSound:
+        path: /Audio/Effects/sparks4.ogg
+    - behavior: [Retracting]
+      sprite:
+        sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/omnimed.rsi
+        state: omnimed
+      useSound:
+        path: /Audio/_RedStar/Medical/Surgery/retractor1.ogg
+      changeSound:
+        path: /Audio/Effects/sparks4.ogg
+    - behavior: [Clamping]
+      sprite:
+        sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/omnimed.rsi
+        state: omnimed
+      useSound:
+        path: /Audio/_RedStar/Medical/Surgery/retractor1.ogg
+      changeSound:
+        path: /Audio/Effects/sparks4.ogg
+    - behavior: [Manipulating]
+      sprite:
+        sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/omnimed.rsi
+        state: omnimed
+      useSound:
+        path: /Audio/_RedStar/Medical/Surgery/retractor1.ogg
+      changeSound:
+        path: /Audio/Effects/sparks4.ogg
+    - behavior: [Cauterizing]
+      sprite:
+        sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/omnimed.rsi
+        state: omnimed
+      useSound:
+        path: /Audio/_RedStar/Medical/Objects/Specific/Medical/Surgery/omnimed.rsi
+        state: omnimed
+      useSound:
+        path: /Audio/_RedStar/Medical/Surgery/cautery1.ogg
+      changeSound:
+        path: /Audio/Effects/sparks4.ogg
+    - behavior: [Suturing]
+      sprite:
+        sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/omnimed.rsi
+        state: omnimed
+      useSound:
+        path: /Audio/_RedStar/Medical/Surgery/cautery1.ogg
+      changeSound:
+        path: /Audio/Effects/sparks4.ogg
+    - behavior: [Tending]
+      sprite:
+        sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/omnimed.rsi
+        state: omnimed
+      useSound:
+        path: /Audio/_RedStar/Medical/Surgery/cautery1.ogg
+      changeSound:
+        path: /Audio/Effects/sparks4.ogg
+    - behavior: [BoneHealing]
+      sprite:
+        sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/omnimed.rsi
+        state: omnimed
+      useSound:
+        path: /Audio/_RedStar/Medical/Surgery/bone_setter.ogg
+      changeSound:
+        path: /Audio/Effects/sparks4.ogg
+    - behavior: [BoneSetting]
+      sprite:
+        sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/omnimed.rsi
+        state: omnimed
+      useSound:
+        path: /Audio/_RedStar/Medical/Surgery/bone_setter.ogg
+      changeSound:
+        path: /Audio/Effects/sparks4.ogg
   - type: Tool
     qualities:
-      - Slicing
-      - Sawing
-      - Cauterizing
-      - Drilling
-      - Retracting
-      - Clamping
-      - Suturing
-      - BoneHealing
-      - BoneSetting
-      - Tending
-      - Manipulating
-    useSound: /Audio/_RedStar/Medical/Surgery/saw.ogg
+    - Slicing
+    useSound: /Audio/_RedStar/Medical/Surgery/scalpel1.ogg
+
 - type: entity
   parent: [ OmnimedTool, BaseSyndicateContraband ]
   id: OmnimedToolSyndie
@@ -232,16 +325,4 @@
   suffix: Admeme
   components:
   - type: Tool
-    qualities:
-      - Slicing
-      - Sawing
-      - Cauterizing
-      - Drilling
-      - Retracting
-      - Clamping
-      - Suturing
-      - BoneHealing
-      - BoneSetting
-      - Tending
-      - Manipulating
     speedModifier: 10
