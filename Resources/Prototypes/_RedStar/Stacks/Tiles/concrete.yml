@@ -3,19 +3,19 @@
 - type: stack
   parent: BaseTileStack
   id: FloorTileIronSandConcrete
-  name: stack-iron-sand-concrete-tile
+  name: stack-ironsand-concrete-tile
   spawn: FloorTileItemIronSandConcrete
 
 - type: stack
   parent: BaseTileStack
   id: FloorTileIronSandConcreteMono
-  name: stack-iron-sand-concrete-mono-tile
+  name: stack-ironsand-concrete-mono-tile
   spawn: FloorTileItemIronSandConcreteMono
 
 - type: stack
   parent: BaseTileStack
   id: FloorTileIronSandConcreteSmooth
-  name: stack-iron-sand-concrete-smooth
+  name: stack-ironsand-concrete-smooth
   spawn: FloorTileItemIronSandConcreteSmooth
 
 - type: stack

@@ -1,0 +1,41 @@
+- type: salvageFaction
+  id: Spiders
+  desc: salvage-faction-spiders
+  entries:
+    - proto: MobGiantSpiderTarantulaAngry
+    - proto: MobGiantSpiderHunterAngry
+      cost: 2
+    - proto: MobGiantSpiderGuardAngry
+      cost: 2
+    - proto: MobGiantSpiderMidwifeAngry
+      cost: 2
+    - proto: MobGiantSpiderNurseAngry
+      cost: 2
+    - proto: MobGiantSpiderClownAngry
+      cost: 5
+      prob: 0.02
+  configs:
+    DefenseStructure: XenoWardingTower
+    Megafauna: MobGiantSpiderClownAngry # TODO: Change to SpiderQueen
+
+- type: salvageFaction
+  id: Carps
+  desc: salvage-faction-carps
+  entries:
+    - proto: MobCarpDungeon
+    # These do too much damage for salvage, need nerfs
+    #- proto: MobCarpHolo
+    #  cost: 5
+    #  prob: 0.1
+    #- proto: MobCarpMagic
+    #  cost: 5
+    #  prob: 0.1
+    - proto: MobCarpRainbow # carp version of rouny...
+      cost: 3
+      prob: 0.05
+    - proto: MobDragonDungeon
+      cost: 10
+      prob: 0.02
+  configs:
+    DefenseStructure: CarpStatue
+    Megafauna: MobDragonDungeon
