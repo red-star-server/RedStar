@@ -18,6 +18,11 @@
       - !type:PlaySoundBehavior
         sound:
           collection: gib
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FoodMeatRotten:
+            min: 1
+            max: 3
   - type: Sprite
     sprite: _RedStar/Objects/Decoration/tendril.rsi
     state: tendril
