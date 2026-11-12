@@ -1,1 +1,1 @@
-﻿chem-master-window-unknown-reagent-text = Неизвестный реагент
+chem-master-window-unknown-reagent-text = Неизвестный реагент

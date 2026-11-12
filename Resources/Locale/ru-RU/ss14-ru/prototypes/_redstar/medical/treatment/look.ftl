@@ -1,4 +1,4 @@
-﻿examine-border-line = ═════════════════════
+examine-border-line = ═════════════════════
 flavor-base-futuristic = футуристичный
 group-organ-status = {$organ}: работоспособность {$capacity}%
 group-solution-contents = {$reagent}: {$quantity}

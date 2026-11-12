@@ -1,4 +1,4 @@
-﻿tiles-ironsand-concrete-tile = железопесчаный бетонный пол
+tiles-ironsand-concrete-tile = железопесчаный бетонный пол
 tiles-ironsand-concrete-slab = железопесчаная бетонная плита
 tiles-ironsand-concrete-smooth = гладкий железопесчаный бетонный пол
 
