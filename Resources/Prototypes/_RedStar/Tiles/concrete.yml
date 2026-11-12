@@ -3,7 +3,7 @@
   parent: BaseStationTile
   name: tiles-ironsand-concrete-tile
   sprite: /Textures/_RedStar/Tiles/Concrete/ironsandconcrete.png
-  footstepsSounds:
+  footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemIronsandConcrete
 
@@ -13,7 +13,7 @@
   name: tiles-ironsand-concrete-slab
   sprite: /Textures/_RedStar/Tiles/Concrete/ironsandconcrete-mono.png
   variants: 2
-  footstepsSounds:
+  footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemIronsandConcreteMono
 
@@ -23,7 +23,7 @@
   name: tiles-ironsand-concrete-smooth
   sprite: /Textures/_RedStar/Tiles/Concrete/ironsandconcrete-smooth.png
   variants: 2
-  footstepsSounds:
+  footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemIronsandConcreteSmooth
 
@@ -32,7 +32,7 @@
   parent: BaseStationTile
   name: tiles-old-concrete-tile
   sprite: /Textures/_RedStar/Tiles/Concrete/oldconcrete.png
-  footstepsSounds:
+  footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemOldConcrete
 
@@ -42,7 +42,7 @@
   name: tiles-old-concrete-slab
   sprite: /Textures/_RedStar/Tiles/Concrete/oldconcrete-mono.png
   variants: 2
-  footstepsSounds:
+  footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemOldConcreteMono
 
@@ -52,7 +52,7 @@
   name: tiles-old-concrete-smooth
   sprite: /Textures/_RedStar/Tiles/Concrete/oldconcrete-smooth.png
   variants: 2
-  footstepsSounds:
+  footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemOldConcreteSmooth
 
@@ -61,7 +61,7 @@
   parent: BaseStationTile
   name: tiles-white-concrete-tile
   sprite: /Textures/_RedStar/Tiles/Concrete/whiteconcrete.png
-  footstepsSounds:
+  footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemWhiteConcrete
 
@@ -71,7 +71,7 @@
   name: tiles-white-concrete-slab
   sprite: /Textures/_RedStar/Tiles/Concrete/whiteconcrete-mono.png
   variants: 2
-  footstepsSounds:
+  footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemWhiteConcreteMono
 
@@ -81,6 +81,6 @@
   name: tiles-white-concrete-smooth
   sprite: /Textures/_RedStar/Tiles/Concrete/whiteconcrete-smooth.png
   variants: 2
-  footstepsSounds:
+  footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemWhiteConcreteSmooth
