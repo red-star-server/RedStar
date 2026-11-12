@@ -1,9 +1,9 @@
-ent-FloorTileItemIronSandConcrete = железопесчаная бетонная плитка
+ent-FloorTileItemIronsandConcrete = железопесчаная бетонная плитка
     .desc = { ent-FloorTileItemBase.desc }
-ent-FloorTileItemIronSandConcreteMono = монолитная бетонная плитка из железного песка
-    .desc = { ent-FloorTileItemIronSandConcrete.desc }
-ent-FloorTileItemIronSandConcreteSmooth = гладкий бетонный пол из железного песка
-    .desc = { ent-FloorTileItemIronSandConcrete.desc }
+ent-FloorTileItemIronsandConcreteMono = монолитная бетонная плитка из железного песка
+    .desc = { ent-FloorTileItemIronsandConcrete.desc }
+ent-FloorTileItemIronsandConcreteSmooth = гладкий бетонный пол из железного песка
+    .desc = { ent-FloorTileItemIronsandConcrete.desc }
 ent-FloorTileItemOldConcrete = старая бетонная плитка
     .desc = { ent-FloorTileItemBase.desc }
 ent-FloorTileItemOldConcreteMono = старая бетонная плита

@@ -1,31 +1,31 @@
 ﻿- type: tile
-  id: FloorIronSandConcrete
+  id: FloorIronsandConcrete
   parent: BaseStationTile
   name: tiles-ironsand-concrete-tile
   sprite: /Textures/_RedStar/Tiles/Concrete/ironsandconcrete.png
   footstepsSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemIronSandConcrete
+  itemDrop: FloorTileItemIronsandConcrete
 
 - type: tile
-  id: FloorIronSandConcreteMono
+  id: FloorIronsandConcreteMono
   parent: BaseStationTile
   name: tiles-ironsand-concrete-slab
   sprite: /Textures/_RedStar/Tiles/Concrete/ironsandconcrete-mono.png
   variants: 2
   footstepsSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemIronSandConcreteMono
+  itemDrop: FloorTileItemIronsandConcreteMono
 
 - type: tile
-  id: FloorIronSandConcreteSmooth
+  id: FloorIronsandConcreteSmooth
   parent: BaseStationTile
   name: tiles-ironsand-concrete-smooth
   sprite: /Textures/_RedStar/Tiles/Concrete/ironsandconcrete-smooth.png
   variants: 2
   footstepsSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemIronSandConcreteSmooth
+  itemDrop: FloorTileItemIronsandConcreteSmooth
 
 - type: tile
   id: FloorOldConcrete

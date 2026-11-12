@@ -1,7 +1,7 @@
 ﻿# Concrete
 - type: entity
   parent: FloorTileItemBase
-  id: FloorTileItemIronSandConcrete
+  id: FloorTileItemIronsandConcrete
   name: iron sand concrete tile
   components:
   - type: Sprite
@@ -11,13 +11,13 @@
   - type: FloorTile
     outputs:
     - Plating
-    - FloorIronSandConcrete
+    - FloorIronsandConcrete
   - type: Stack
-    stackType: FloorTileIronSandConcrete
+    stackType: FloorTileIronsandConcrete
 
 - type: entity
-  parent: FloorTileItemIronSandConcrete
-  id: FloorTileItemIronSandConcreteMono
+  parent: FloorTileItemIronsandConcrete
+  id: FloorTileItemIronsandConcreteMono
   name: iron sand concrete mono tile
   components:
   - type: Sprite
@@ -25,13 +25,13 @@
   - type: FloorTile
     outputs:
     - Plating
-    - FloorIronSandConcreteMono
+    - FloorIronsandConcreteMono
   - type: Stack
-    stackType: FloorTileIronSandConcreteMono
+    stackType: FloorTileIronsandConcreteMono
 
 - type: entity
-  parent: FloorTileItemIronSandConcrete
-  id: FloorTileItemIronSandConcreteSmooth
+  parent: FloorTileItemIronsandConcrete
+  id: FloorTileItemIronsandConcreteSmooth
   name: iron sand concrete smooth
   components:
   - type: Sprite
@@ -39,9 +39,9 @@
   - type: FloorTile
     outputs:
     - Plating
-    - FloorIronSandConcreteSmooth
+    - FloorIronsandConcreteSmooth
   - type: Stack
-    stackType: FloorTileIronSandConcreteSmooth
+    stackType: FloorTileIronsandConcreteSmooth
 
 - type: entity
   parent: FloorTileItemBase
