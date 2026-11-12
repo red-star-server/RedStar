@@ -1,10 +1,9 @@
 using Content.Shared.Body;
 using Content.Shared.Whitelist;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared._Trauma.Surgery.Graph.Conditions;
 
-[Serializable, NetSerializable]
+[Serializable]
 public sealed partial class BodyComponentCondition : SurgeryStepCondition
 {
     [DataField]

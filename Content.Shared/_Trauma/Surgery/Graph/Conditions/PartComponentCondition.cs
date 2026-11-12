@@ -1,9 +1,8 @@
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared._Trauma.Surgery.Graph.Conditions;
 
-[Serializable, NetSerializable]
+[Serializable]
 public sealed partial class PartComponentCondition : SurgeryStepCondition
 {
     [DataField(required: true)]

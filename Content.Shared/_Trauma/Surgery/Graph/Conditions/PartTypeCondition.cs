@@ -1,10 +1,9 @@
 using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Common.Body;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared._Trauma.Surgery.Graph.Conditions;
 
-[Serializable, NetSerializable]
+[Serializable]
 public sealed partial class PartTypeCondition : SurgeryStepCondition
 {
     [DataField]

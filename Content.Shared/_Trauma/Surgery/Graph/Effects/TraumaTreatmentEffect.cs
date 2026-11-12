@@ -4,11 +4,10 @@ using Content.Shared._Trauma.Common.Traumas;
 using Content.Shared._Trauma.Traumas;
 using Content.Shared.Body;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared._Trauma.Surgery.Graph.Effects;
 
-[Serializable, NetSerializable]
+[Serializable]
 public sealed partial class TraumaTreatmentEffect : SurgeryStepEffect
 {
     [DataField]

@@ -1,10 +1,9 @@
 using Content.Shared.Body;
 using Content.Shared.Hands.EntitySystems;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared._Trauma.Surgery.Graph.Effects;
 
-[Serializable, NetSerializable]
+[Serializable]
 public sealed partial class RemovePartEffect : SurgeryStepEffect
 {
     public override void Apply(EntityUid target, EntityUid? surgeon, EntityUid? usedItem, IEntityManager entityManager)

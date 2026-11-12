@@ -1,10 +1,9 @@
 using Content.Shared.Body;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared._Trauma.Surgery.Graph.Effects;
 
-[Serializable, NetSerializable]
+[Serializable]
 public sealed partial class SpawnEffect : SurgeryStepEffect
 {
     [DataField(required: true)]

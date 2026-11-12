@@ -5,11 +5,10 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared._Trauma.Surgery.Graph.Effects;
 
-[Serializable, NetSerializable]
+[Serializable]
 public sealed partial class TendWoundsEffect : SurgeryStepEffect
 {
     [DataField]

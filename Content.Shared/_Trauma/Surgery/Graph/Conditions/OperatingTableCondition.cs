@@ -1,10 +1,9 @@
 using Content.Shared.Body;
 using Content.Shared.Buckle.Components;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared._Trauma.Surgery.Graph.Conditions;
 
-[Serializable, NetSerializable]
+[Serializable]
 public sealed partial class OperatingTableCondition : SurgeryStepCondition
 {
     public override bool Check(EntityUid target, IEntityManager entityManager)

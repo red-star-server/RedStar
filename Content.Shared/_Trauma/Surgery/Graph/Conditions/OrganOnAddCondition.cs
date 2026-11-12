@@ -2,12 +2,10 @@ using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared.Body;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared._Trauma.Surgery.Graph.Conditions;
 
-// Inverse passes when a listed component is missing; otherwise when at least one is applied.
-[Serializable, NetSerializable]
+[Serializable]
 public sealed partial class OrganOnAddCondition : SurgeryStepCondition
 {
     [DataField(required: true)]

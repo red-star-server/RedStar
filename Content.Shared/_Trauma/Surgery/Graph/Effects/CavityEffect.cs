@@ -1,11 +1,10 @@
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.Containers;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared._Trauma.Surgery.Graph.Effects;
 
-[Serializable, NetSerializable]
+[Serializable]
 public sealed partial class CavityEffect : SurgeryStepEffect
 {
     [DataField]

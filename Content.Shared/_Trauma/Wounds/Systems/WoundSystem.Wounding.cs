@@ -499,27 +499,23 @@ public sealed partial class WoundSystem
         DirtyField(part, part.Comp, nameof(WoundableComponent.Integrity));
     }
 
-    private bool RemoveWound(EntityUid wound)
+    private void RemoveWound(EntityUid wound)
     {
-        if (!_query.TryComp(wound, out var comp))
-            return false;
+        if (!_query.TryComp(wound, out var comp)) return;
 
         // We prevent removal if theres at least one wound holding traumas left.
         foreach (var trauma in _trauma.GetAllWoundTraumas(wound))
         {
-            if (trauma.Comp.BlocksHealing)
-                return false;
+            if (trauma.Comp.BlocksHealing) return;
         }
 
         if (comp.HoldingWoundable != EntityUid.Invalid &&
             _woundableQuery.TryComp(comp.HoldingWoundable, out var woundable))
         {
-            if (_container.Remove(wound, woundable.Wounds, reparent: false, force: true))
-                return true;
+            if (_container.Remove(wound, woundable.Wounds, reparent: false, force: true)) return;
         }
 
         QueueDel(wound);
-        return true;
     }
 
     [SubscribeLocalEvent]
@@ -649,13 +645,14 @@ public sealed partial class WoundSystem
     /// <returns>A new list with all wounds of the woundable</returns>
     public List<Entity<WoundComponent>> GetWoundableWounds(Entity<WoundableComponent?> part)
     {
-        if (!_woundableQuery.Resolve(part, ref part.Comp)) // it can be null while applying state if the entity is entering pvs right now
+        if (!_woundableQuery.Resolve(part, ref part.Comp) || part.Comp.Wounds is not { } container)
             return [];
 
-        var wounds = new List<Entity<WoundComponent>>(part.Comp.Wounds.Count);
-        foreach (var wound in part.Comp.Wounds.ContainedEntities)
+        var wounds = new List<Entity<WoundComponent>>(container.Count);
+        foreach (var wound in container.ContainedEntities)
         {
-            wounds.Add((wound, _query.Comp(wound)));
+            if (_query.TryComp(wound, out var woundComp))
+                wounds.Add((wound, woundComp));
         }
         return wounds;
     }

@@ -3,11 +3,10 @@ using Content.Shared.Body;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.StatusEffectNew;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared._Trauma.Surgery.Graph.Effects;
 
-[Serializable, NetSerializable]
+[Serializable]
 public sealed partial class DamageEffect : SurgeryStepEffect
 {
     [DataField(required: true)]
