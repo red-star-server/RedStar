@@ -2,3 +2,8 @@
   parent: [ BaseGoldCircuitboardRecipe, BaseResearchComputerRecipeCategory ]
   id: ResearchPointDiskTerminalCircuitboard
   result: ResearchPointDiskTerminalCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseGoldCircuitboardRecipe, BaseSupplyComputerRecipeCategory ]
+  id: SalvageExpeditionsComputerCircuitboard
+  result: SalvageExpeditionsComputerCircuitboard
