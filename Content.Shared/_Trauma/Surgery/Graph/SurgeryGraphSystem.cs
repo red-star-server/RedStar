@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Surgery.Graph.Conditions;
 using Content.Shared.Body;
 using Content.Shared.Buckle.Components;
@@ -282,6 +283,9 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
             return;
 
         if (args.StepIndex >= edge.Steps.Count || !EdgeConditionsMet(ent, edge))
+            return;
+
+        if (HasComp<BodyPartComponent>(ent) && _body.GetBody(ent) is null)
             return;
 
         var step = edge.Steps[args.StepIndex];

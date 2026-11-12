@@ -44,11 +44,14 @@ public sealed partial class SurgeryTest
             strength = SSpawn("AugmentStrength");
             battery = SSpawn("PowerCellHigh");
         });
-        await Operate(surgeon, patient, torso, "SurgeryOpenPowerCellSlot");
-        await Operate(surgeon, patient, torso, "SurgeryInsertPowerCellSlot", slot);
+        await OperateEdge(surgeon, torso, "SurgeryGraphTorso", "OpenIncision");
+        await OperateEdge(surgeon, torso, "SurgeryGraphTorso", "OpenBones");
+        await OperateEdge(surgeon, torso, "SurgeryGraphTorso", "OpenPowerCellSlot");
+        await OperateEdge(surgeon, torso, "SurgeryGraphTorso", "InsertPowerCellSlot", slot);
         await Server.WaitAssertion(() => InsertAugmentCell(slot, battery));
-        await Operate(surgeon, patient, arm, "SurgeryOpenArmAugment");
-        await Operate(surgeon, patient, arm, "SurgeryInsertArmAugment", strength);
+        await OperateEdge(surgeon, arm, "SurgeryGraphLimb", "OpenIncision");
+        await OperateEdge(surgeon, arm, "SurgeryGraphLimb", "OpenArmAugment");
+        await OperateEdge(surgeon, arm, "SurgeryGraphLimb", "InsertArmAugment", strength);
         await Server.WaitAssertion(() =>
         {
             Assert.That(_parts.GetOrgan(arm, ArmAugment), Is.EqualTo(strength));
