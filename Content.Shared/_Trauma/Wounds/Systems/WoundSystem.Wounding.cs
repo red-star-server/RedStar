@@ -474,7 +474,7 @@ public sealed partial class WoundSystem
     /// </summary>
     public void UpdateWoundableIntegrity(Entity<WoundableComponent?> part)
     {
-        if (!_woundableQuery.Resolve(part, ref part.Comp)) // it can be null while applying state if the entity is entering pvs right now
+        if (!_woundableQuery.Resolve(part, ref part.Comp) || part.Comp.Wounds == default) // it can be null while applying state if the entity is entering pvs right now
             return;
 
         var damage = FixedPoint2.Zero;
@@ -701,7 +701,7 @@ public sealed partial class WoundSystem
     /// <returns>An enumerable pointing to one of the found wounds</returns>
     public List<Entity<WoundComponent>> GetWoundableWounds(Entity<WoundableComponent?> part)
     {
-        if (!_woundableQuery.Resolve(part, ref part.Comp)) // it can be null while applying state if the entity is entering pvs right now
+        if (!_woundableQuery.Resolve(part, ref part.Comp) || part.Comp.Wounds == default) // it can be null while applying state if the entity is entering pvs right now
             return [];
 
         _wounds.Clear();
