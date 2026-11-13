@@ -18,7 +18,6 @@ namespace Content.IntegrationTests.Tests._Trauma;
 public sealed partial class SurgeryTest
 {
     private static readonly ProtoId<OrganCategoryPrototype> AugmentCell = "AugmentPowerCell";
-    private static readonly ProtoId<OrganCategoryPrototype> ArmAugment = "ArmAugment";
 
     private void InsertAugmentCell(EntityUid slot, EntityUid battery)
     {
