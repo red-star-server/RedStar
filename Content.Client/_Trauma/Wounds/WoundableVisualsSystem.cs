@@ -20,11 +20,9 @@ namespace Content.Client._Trauma.Wounds;
 /// </summary>
 public sealed partial class WoundableVisualsSystem : EntitySystem
 {
-    [Dependency] private AppearanceSystem _appearance = default!;
     [Dependency] private BodySystem _body = default!;
     [Dependency] private BodyPartSystem _part = default!;
     [Dependency] private DisplacementMapSystem _displacement = default!;
-    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private WoundSystem _wound = default!;
@@ -144,7 +142,7 @@ public sealed partial class WoundableVisualsSystem : EntitySystem
         if (_body.GetBody(uid) is {} body)
             UpdateWoundableVisuals((uid, visuals), body);
         else
-            UpdateWoundableVisuals((uid, visuals), uid); // use part's sprite
+            UpdateWoundableVisuals((uid, visuals), uid);
     }
 
     #region Layer Management
@@ -180,7 +178,7 @@ public sealed partial class WoundableVisualsSystem : EntitySystem
         string mapKey,
         Color? color = null)
     {
-        if (!_spriteQuery.Resolve(ent, ref ent.Comp) || _sprite.LayerExists(ent, mapKey)) // prevent dupes
+        if (!_spriteQuery.Resolve(ent, ref ent.Comp) || _sprite.LayerExists(ent, mapKey))
             return;
 
         var newLayer = _sprite.AddLayer(ent,

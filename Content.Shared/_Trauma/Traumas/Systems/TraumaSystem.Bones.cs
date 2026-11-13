@@ -24,7 +24,7 @@ public partial class TraumaSystem
     [SubscribeLocalEvent]
     private void OnBoneSeverityChanged(Entity<BoneComponent> bone, ref BoneSeverityChangedEvent args)
     {
-        if (args.NewSeverity < args.OldSeverity || // dgaf about healing
+        if (args.NewSeverity < args.OldSeverity ||
             !_organQuery.TryComp(bone, out var organ) ||
             organ.Category is not {} category ||
             organ.Body is not {} body)
@@ -137,7 +137,6 @@ public partial class TraumaSystem
             break;
         }
 
-        // Update the alert based on whether any bones are broken
         if (hasBrokenBones)
             _alert.ShowAlert(body.Owner, _brokenBonesAlertId);
         else

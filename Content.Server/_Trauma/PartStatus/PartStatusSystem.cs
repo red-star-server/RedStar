@@ -27,10 +27,9 @@ public sealed partial class PartStatusSystem : EntitySystem
     [Dependency] private ExamineSystemShared _examine = default!;
     [Dependency] private IChatManager _chat = default!;
     [Dependency] private MobStateSystem _mob = default!;
-    [Dependency] private TraumaSystem _trauma = default!;
     [Dependency] private WoundSystem _wound = default!;
-    [Dependency] private EntityQuery<BleedInflicterComponent> _bleedQuery = default!;
-    [Dependency] private EntityQuery<BoneComponent> _boneQuery = default!;
+    [Dependency] private EntityQuery<BleedInflicterComponent> _bleedQuery;
+    [Dependency] private EntityQuery<BoneComponent> _boneQuery;
 
     private static readonly BodyPartType[] BodyPartOrder =
     [
@@ -48,9 +47,6 @@ public sealed partial class PartStatusSystem : EntitySystem
         BodyPartSymmetry.Right,
         BodyPartSymmetry.None,
     ];
-
-    private const string BleedLocaleStr = "inspect-wound-Bleeding-moderate";
-    private const string BoneLocaleStr = "inspect-trauma-BoneDamage";
 
     [SubscribeNetworkEvent]
     private void OnGetPartStatus(GetPartStatusEvent message, EntitySessionEventArgs args)
@@ -107,7 +103,6 @@ public sealed partial class PartStatusSystem : EntitySystem
     {
         var partStatusSet = CollectPartStatuses(uid);
         var text = GetExamineText(uid, examiner, partStatusSet, false);
-        // Anything else want to add on to this?
         RaiseLocalEvent(uid, new HealthBeingExaminedEvent(text), true);
 
         return text;
@@ -125,11 +120,11 @@ public sealed partial class PartStatusSystem : EntitySystem
                 continue;
 
             var (damageSeverities, isBleeding) = AnalyzeWounds(woundable);
-            var boneSev = _boneQuery.CompOrNull(woundable)?.BoneSeverity ?? BoneSeverity.Normal; // fallback for boneless limbs like slimes
+            var boneSev = _boneQuery.CompOrNull(woundable)?.BoneSeverity ?? BoneSeverity.Normal;
             partStatusSet.Add(new PartStatus(
                 part.PartType,
                 part.Symmetry,
-                ProtoMan.Index(category).Name.ToLowerInvariant(), // looks better lowercase
+                ProtoMan.Index(category).Name.ToLowerInvariant(),
                 woundable.Comp.WoundableSeverity,
                 damageSeverities,
                 boneSev,
@@ -175,7 +170,7 @@ public sealed partial class PartStatusSystem : EntitySystem
 
         if (styling)
         {
-            message.PushTag(new MarkupNode("examineborder", null, null)); // border
+            message.PushTag(new MarkupNode("examineborder", null, null));
             message.PushNewline();
         }
         else
@@ -236,7 +231,6 @@ public sealed partial class PartStatusSystem : EntitySystem
         var sb = new StringBuilder();
         var hasStatus = false;
 
-        // Get overall wound severity
         var overallSeverity = GetOverallWoundSeverity(partStatus.DamageSeverities);
         if (overallSeverity != WoundSeverity.Healed)
         {
@@ -245,7 +239,6 @@ public sealed partial class PartStatusSystem : EntitySystem
             hasStatus = true;
         }
 
-        // Add damage group descriptions
         var damageDescriptions = GetDamageGroupDescriptions(partStatus.DamageSeverities, inspectingSelf);
         if (damageDescriptions.Count > 0)
         {
@@ -256,7 +249,6 @@ public sealed partial class PartStatusSystem : EntitySystem
             hasStatus = true;
         }
 
-        // Add trauma descriptions
         var traumaDescriptions = GetTraumaDescriptions(partStatus, inspectingSelf);
         if (traumaDescriptions.Count > 0)
         {
@@ -318,21 +310,18 @@ public sealed partial class PartStatusSystem : EntitySystem
 
         // TODO: Dehardcode this guscode from bone traumas when we actually have more organ traumas.
 
-        // Add bone trauma
         if (partStatus.BoneSeverity > BoneSeverity.Normal)
         {
             var localeText = inspectingSelf ? "self-inspect-trauma-BoneDamage" : "inspect-trauma-BoneDamage";
             descriptions.Add(Loc.GetString(localeText));
         }
 
-        // Add bleeding status
         if (partStatus.Bleeding)
         {
             var localeText = "inspect-wound-Bleeding-moderate";
             descriptions.Add(Loc.GetString(localeText));
         }
 
-        // If we have multiple traumas, add "and it" before the last one
         if (descriptions.Count <= 1) return descriptions;
         var lastDescription = descriptions[^1];
         descriptions[^1] = Loc.GetString("inspect-part-status-and") + lastDescription;

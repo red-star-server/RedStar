@@ -38,7 +38,7 @@ public sealed partial class CoveredPartSystem : EntitySystem
     private void OnBodyUnequip(Entity<BodyComponent> ent, ref DidUnequipEvent args)
     {
         if (TerminatingOrDeleted(ent))
-            return; // don't care about part coverage if the body is being deleted...
+            return;
 
         var item = args.Equipment;
         if (!_armorQuery.TryComp(item, out var armor))
@@ -64,9 +64,8 @@ public sealed partial class CoveredPartSystem : EntitySystem
             _part.GetPartType(ent) is not {} partType)
             return;
 
-        ent.Comp.Covered.Clear(); // just incase..?
+        ent.Comp.Covered.Clear();
 
-        // update coverage retroactively when (re)attaching parts
         var flags = SlotFlags.WITHOUT_POCKET;
         var slots = new InventorySystem.InventorySlotEnumerator(inventory, flags);
         while (slots.NextItem(out var item))

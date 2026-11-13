@@ -49,7 +49,6 @@ public sealed partial class BodyPartCavitySystem : EntitySystem
         if (args.Container.ID != ent.Comp.ContainerId)
             return;
 
-        // this will give a mob inserted into someones chest an action to burst out
         _insideBodyPart.InsertedIntoPart(args.Entity, ent);
         var ev = new InsertedIntoCavityEvent(ent);
         RaiseLocalEvent(args.Entity, ref ev);
@@ -61,7 +60,6 @@ public sealed partial class BodyPartCavitySystem : EntitySystem
         if (args.Container.ID != ent.Comp.ContainerId)
             return;
 
-        // this will remove the chest burst action
         _insideBodyPart.RemovedFromPart(args.Entity);
         var ev = new RemovedFromCavityEvent(ent);
         RaiseLocalEvent(args.Entity, ref ev);

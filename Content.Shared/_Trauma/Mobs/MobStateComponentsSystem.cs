@@ -68,7 +68,7 @@ public sealed partial class MobStateComponentsSystem : EntitySystem
     {
         if (args.FellAsleep)
             RemComp<AwakeMobComponent>(ent);
-        else // woke up while alive, must be awake
+        else
             EnsureComp<AwakeMobComponent>(ent);
     }
 
@@ -90,8 +90,6 @@ public sealed partial class MobStateComponentsSystem : EntitySystem
                 break;
             case MobState.Dead:
                 EnsureComp<DeadMobComponent>(uid);
-                break;
-            default:
                 break;
         }
     }

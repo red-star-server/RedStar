@@ -36,13 +36,13 @@ public abstract partial class SharedCPRSystem : EntitySystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private EntityQuery<ActiveCPRComponent> _activeQuery = default!;
-    [Dependency] private EntityQuery<CPRTrainingComponent> _trainingQuery = default!;
-    [Dependency] private EntityQuery<DamageableComponent> _damageQuery = default!;
-    [Dependency] private EntityQuery<MobStateComponent> _mobQuery = default!;
-    [Dependency] private EntityQuery<InternalChildOrganComponent> _organQuery = default!;
-    [Dependency] private EntityQuery<RottingComponent> _rottingQuery = default!;
-    [Dependency] private EntityQuery<UnrevivableComponent> _unrevivableQuery = default!;
+    [Dependency] private EntityQuery<ActiveCPRComponent> _activeQuery;
+    [Dependency] private EntityQuery<CPRTrainingComponent> _trainingQuery;
+    [Dependency] private EntityQuery<DamageableComponent> _damageQuery;
+    [Dependency] private EntityQuery<MobStateComponent> _mobQuery;
+    [Dependency] private EntityQuery<InternalChildOrganComponent> _organQuery;
+    [Dependency] private EntityQuery<RottingComponent> _rottingQuery;
+    [Dependency] private EntityQuery<UnrevivableComponent> _unrevivableQuery;
 
     /// <summary>
     /// Modifier for inhale volume on mobs that have CPR being done on them.
@@ -194,7 +194,7 @@ public abstract partial class SharedCPRSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnModifyInhaledVolume(Entity<ActiveCPRComponent> ent, ref ModifyInhaledVolumeEvent args)
     {
-        args.Volume *= InhaleModifier; // you are being assisted
+        args.Volume *= InhaleModifier;
     }
 
     private bool HasHealthyLungs(EntityUid uid)
@@ -206,7 +206,6 @@ public abstract partial class SharedCPRSystem : EntitySystem
     private bool CanRevive(EntityUid uid)
         // no cpr major reviving ling husks
         => !_unrevivableQuery.HasComp(uid) &&
-            // has to be below death threshold
             _threshold.TryGetThresholdForState(uid, MobState.Dead, out var threshold) &&
             _damageQuery.TryComp(uid, out var damage) &&
             _threshold.CheckVitalDamage((uid, damage)) < threshold;

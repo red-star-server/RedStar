@@ -13,43 +13,39 @@ public sealed partial class BrainSystem
     [SubscribeLocalEvent]
     private void OnRemoved(EntityUid uid, BrainComponent brain, ref OrganGotRemovedEvent args)
     {
-        // <Goob>
         var attemptEv = new BeforeBrainRemovedEvent();
         RaiseLocalEvent(args.Target, ref attemptEv);
 
         if (attemptEv.Blocked)
             return;
-        // </Goob>
 
         brain.Active = false;
         Dirty(uid, brain);
-        if (!HasBrain(args.Target))
-        {
-            // Prevents revival, should kill the user within a given timespan too.
-            if (!TerminatingOrDeleted(args.Target) && !_timing.ApplyingState)
-                EnsureComp<DebrainedComponent>(args.Target);
-            HandleMind(uid, args.Target);
-        }
+        if (HasBrain(args.Target))
+            return;
+
+        // Prevents revival, should kill the user within a given timespan too.
+        if (!TerminatingOrDeleted(args.Target) && !_timing.ApplyingState)
+            EnsureComp<DebrainedComponent>(args.Target);
+        HandleMind(uid, args.Target);
     }
 
     [SubscribeLocalEvent]
     private void OnAdded(EntityUid uid, BrainComponent brain, ref OrganGotInsertedEvent args)
     {
-        // <Goob>
         var attemptEv = new BeforeBrainAddedEvent();
         RaiseLocalEvent(args.Target, ref attemptEv);
 
         if (attemptEv.Blocked)
             return;
-        // </Goob>
 
         brain.Active = true;
         Dirty(uid, brain);
-        if (HasBrain(args.Target))
-        {
-            RemComp<DebrainedComponent>(args.Target);
-            HandleMind(args.Target, uid);
-        }
+        if (!HasBrain(args.Target))
+            return;
+
+        RemComp<DebrainedComponent>(args.Target);
+        HandleMind(args.Target, uid);
     }
 
     private bool HasBrain(EntityUid entity)
@@ -57,7 +53,7 @@ public sealed partial class BrainSystem
         if (!TryComp<BodyComponent>(entity, out var body))
             return false;
 
-        if (HasComp<BrainComponent>(entity)) // sentient brain...
+        if (HasComp<BrainComponent>(entity))
             return true;
 
         foreach (var brain in _body.GetOrgans<BrainComponent>((entity, body)))

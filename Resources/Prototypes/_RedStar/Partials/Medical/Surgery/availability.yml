@@ -18,17 +18,15 @@
         - id: Retractor
         - id: Cautery
         - id: Drill
-        - id: SawElectric # Goob - was Saw
+        - id: SawElectric
         - id: Hemostat
         - id: ClothingMaskSterile
-        # <Goob>
         - id: BoneGel
         - id: MedicalStitches
         - id: BoxLatexGloves
         - id: BoxSterileMask
         - id: NitrousOxideTankFilled
         - id: ClothingMaskBreath
-        # </Goob>
 
 - type: latheRecipePack
   id: BorgModulesStatic

@@ -61,7 +61,7 @@ public sealed partial class DebrainedSystem : EntitySystem
         args.Cancel();
     }
 
-    [SubscribeLocalEvent(before: new []{ typeof(DamageableSystem), typeof(BodyRestoreSystem) })]
+    [SubscribeLocalEvent(before: [typeof(DamageableSystem), typeof(BodyRestoreSystem)])]
     private void OnRejuvenate(Entity<DebrainedComponent> ent, ref RejuvenateEvent args)
     {
         RemCompDeferred(ent, ent.Comp);
