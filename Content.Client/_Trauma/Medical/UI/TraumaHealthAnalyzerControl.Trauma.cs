@@ -126,8 +126,6 @@ public sealed partial class TraumaHealthAnalyzerControl
         var humanoid = _entityManager.HasComponent<HumanoidProfileComponent>(target);
         SetActiveButtons(humanoid);
 
-        // Patient Information
-
         DamageLabelVital.Text = state.VitalDamage.ToString();
 
         if (humanoid)
@@ -276,7 +274,7 @@ public sealed partial class TraumaHealthAnalyzerControl
         GroupsContainer.RemoveAllChildren();
         foreach (var organ in _body.GetInternalOrgans(body))
         {
-            if (organ.Comp.IntegrityCap == 0) // avoid division by zero
+            if (organ.Comp.IntegrityCap == 0)
                 continue;
 
             DrawOrganDiagnostics(organ, 100 * organ.Comp.OrganIntegrity / organ.Comp.IntegrityCap);
@@ -475,7 +473,7 @@ public sealed partial class TraumaHealthAnalyzerControl
                         continue;
 
                     var reagentName = Loc.GetString("chem-master-window-unknown-reagent-text");
-                    if (_prototypes.Resolve<ReagentPrototype>(reagent.Reagent.Prototype, out var proto))
+                    if (_prototypes.Resolve(reagent.Reagent.Prototype, out var proto))
                         reagentName = proto.LocalizedName;
 
                     var reagentString = $"{Loc.GetString(

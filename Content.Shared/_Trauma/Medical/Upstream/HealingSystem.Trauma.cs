@@ -21,7 +21,7 @@ public sealed partial class HealingSystem
     [Dependency] private BodyPartSystem _healingParts = default!;
 
     private ProtoId<OrganCategoryPrototype>[] _partHealingOrder =
-    {
+    [
         "Head",
         "Torso",
         "ArmLeft",
@@ -34,7 +34,7 @@ public sealed partial class HealingSystem
         "FootRight",
         "Tail",
         "Wings"
-    };
+    ];
 
     private bool AnyHealable(Entity<DamageableComponent?> part, DamageSpecifier healing)
     {
@@ -54,7 +54,7 @@ public sealed partial class HealingSystem
             return false;
 
         return HasDamage(healing, (target, targetDamage)) ||
-            TryComp<BodyComponent>(target, out var bodyComp) && // I'm paranoid, sorry.
+            TryComp<BodyComponent>(target, out var bodyComp) &&
             IsBodyDamaged((target, bodyComp), user, healing.Comp) ||
             healing.Comp.ModifyBloodLevel < 0 // Special case if healing item can restore lost blood...
                 && TryComp<BloodstreamComponent>(target, out var bloodstream)
@@ -72,7 +72,6 @@ public sealed partial class HealingSystem
     /// <returns> Wether or not the targeted part can be healed. </returns>
     public bool IsBodyDamaged(Entity<BodyComponent> target, EntityUid? user, HealingComponent healing, EntityUid? targetedPart = null)
     {
-        // try get targeted part from the user if not specified
         if (targetedPart == null && user != null)
         {
             var partEv = new GetTargetedPartEvent(target);
@@ -80,18 +79,15 @@ public sealed partial class HealingSystem
             targetedPart = partEv.Part;
         }
 
-        // no limb can be targeted at all
         if (targetedPart is not {} part || !TryComp<DamageableComponent>(part, out var damageable))
         {
             _popupSystem.PopupEntity(Loc.GetString("missing-body-part"), target, user, PopupType.MediumCaution);
             return false;
         }
 
-        // see if there is any damage that can be healed
         if (AnyHealable((part, damageable), healing.Damage))
             return true;
 
-        // see if there are any wounds to heal
         var ev2 = new CheckPartWoundedEvent(healing.Damage.DamageDict.Keys.Select(x => x.Id).ToList());
         RaiseLocalEvent(part, ref ev2);
         if (ev2.Wounded)
@@ -100,7 +96,6 @@ public sealed partial class HealingSystem
         if (healing.BloodlossModifier == 0)
             return false;
 
-        // see if there are any bleeding wounds to stop
         var ev = new CheckPartBleedingEvent();
         RaiseLocalEvent(part, ref ev);
         return ev.Bleeding;
@@ -110,7 +105,7 @@ public sealed partial class HealingSystem
     ///     This function tries to return the first limb that has one of the damage type we are trying to heal
     ///     Returns true or false if next damaged part exists.
     /// </summary>
-    public bool TryGetNextDamagedPart(EntityUid ent, HealingComponent healing, out EntityUid? part) // Goob edit: private => public, used in RepairableSystems.cs
+    public bool TryGetNextDamagedPart(EntityUid ent, HealingComponent healing, out EntityUid? part)
     {
         part = null;
         if (!TryComp<BodyComponent>(ent, out var body))
@@ -159,13 +154,12 @@ public sealed partial class HealingSystem
             return;
 
         var healedBleed = false;
-        var healedTotal = new DamageSpecifier(); // Goobstation
+        var healedTotal = new DamageSpecifier();
         FixedPoint2 modifiedBleedStopAbility = 0;
         // Heal some bleeds
         bool healedBleedLevel = false;
         if (healing.BloodlossModifier != 0)
         {
-            // Goobstation start
             var bleedBefore = 0.0;
             if (TryComp<BloodstreamComponent>(ent, out var bloodstream))
                 bleedBefore = bloodstream.BleedAmountFromWounds + bloodstream.BleedAmountNotFromWounds;
@@ -176,11 +170,13 @@ public sealed partial class HealingSystem
             if (healing.BloodlossModifier + modifiedBleedStopAbility < 0.0)
                 _bloodstreamSystem.TryModifyBleedAmount(ent, (healing.BloodlossModifier + modifiedBleedStopAbility).Float()); // Use the leftover bleed heal
             if (healedBleed)
+            {
                 _popupSystem.PopupEntity(bleedBefore + healing.BloodlossModifier <= 0.0
                         ? Loc.GetString("rebell-medical-item-stop-bleeding-fully")
                         : Loc.GetString("rebell-medical-item-stop-bleeding-partially"),
                     ent,
                     args.User);
+            }
             // Goobstation end
         }
 
@@ -189,7 +185,6 @@ public sealed partial class HealingSystem
 
         //healedBleed = healedBleedWound || healedBleedLevel;
 
-        // Goobstation start
         var leftoverHealAndTrauma = false;
         var leftoverHealAndBleed = false;
         var healingLeft = healing.Damage * _damageable.UniversalTopicalsHealModifier;
@@ -244,9 +239,7 @@ public sealed partial class HealingSystem
                 _popupSystem.PopupEntity(Loc.GetString("medical-item-cant-use-rebell", ("target", ent)), ent, args.User);
             return;
         }
-        // Goobstation end
 
-        // Re-verify that we can heal the damage.
         if (TryComp<StackComponent>(args.Used.Value, out var stackComp))
         {
             _stacks.TryUse((args.Used.Value, stackComp), 1);
@@ -271,15 +264,13 @@ public sealed partial class HealingSystem
         }
         _audio.PlayPredicted(healing.HealingEndSound, ent, ent, AudioParams.Default.WithVariation(0.125f).WithVolume(1f)); // Goob edit
 
-        // Logic to determine whether or not to repeat the healing action
-        args.Repeat = !dontRepeat && IsAnythingToHeal(args.User, ent, (args.Used.Value, healing)); // GOOBEDIT
+        args.Repeat = !dontRepeat && IsAnythingToHeal(args.User, ent, (args.Used.Value, healing));
         args.Handled = true;
 
         if (args.Repeat || dontRepeat)
             return;
 
         if (modifiedBleedStopAbility != -healing.BloodlossModifier)
-            // Goobstation predicted --> client
             _popupSystem.PopupEntity(Loc.GetString("medical-item-finished-using", ("item", args.Used)), ent, args.User, PopupType.Medium);
     }
 }

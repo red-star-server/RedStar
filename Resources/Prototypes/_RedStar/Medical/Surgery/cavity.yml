@@ -7,6 +7,6 @@
   - type: Action
     useDelay: 15
     sound:
-      path: /Audio/_RedStar/Medical/Surgery/bone_setter.ogg # crunch crunch
+      path: /Audio/_RedStar/Medical/Surgery/bone_setter.ogg
   - type: InstantAction
     event: !type:BodyPartBurstEvent

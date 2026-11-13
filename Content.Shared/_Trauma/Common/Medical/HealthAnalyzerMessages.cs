@@ -4,7 +4,6 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared._Trauma.Common.Medical.HealthAnalyzer;
 
-// Part selection message (from client to server)
 [Serializable, NetSerializable]
 public sealed class HealthAnalyzerPartMessage(ProtoId<OrganCategoryPrototype>? category) : BoundUserInterfaceMessage
 {

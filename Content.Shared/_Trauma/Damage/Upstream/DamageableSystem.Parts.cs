@@ -83,16 +83,12 @@ public sealed partial class DamageableSystem
         if (targetPart != null
             && targetPart != 0 && (targetPart & (targetPart - 1)) != 0)
         {
-            // Extract only the body parts that are targeted in the bitmask
             var targetedBodyParts = new List<Entity<DamageableComponent>>();
-            // Get only the primitive flags (powers of 2) - these are the actual individual body parts
             foreach (var flag in PrimitiveParts)
             {
-                // Check if this specific flag is set in our targetPart bitmask
                 if (!targetPart.Value.HasFlag(flag))
                     continue;
 
-                // and that it exists on the target
                 var (type, symmetry) = _body.ConvertTargetBodyPart(flag);
                 foreach (var part in _part.GetBodyParts(uid, type, symmetry))
                 {
@@ -101,7 +97,6 @@ public sealed partial class DamageableSystem
                 }
             }
 
-            // If we couldn't find any of the targeted parts, fall back to all body parts
             if (targetedBodyParts.Count == 0)
             {
                 foreach (var part in _body.GetExternalOrgans(uid))
@@ -111,7 +106,7 @@ public sealed partial class DamageableSystem
                 }
 
                 if (targetedBodyParts.Count == 0)
-                    return new DamageSpecifier(); // erm no parts
+                    return new DamageSpecifier();
             }
 
             List<float>? multipliers = null;
@@ -135,7 +130,6 @@ public sealed partial class DamageableSystem
                     modifiedDamage *= multipliers[i];
                 modifiedDamage += surplusHealing;
 
-                // Apply damage to this part
                 var partDamageResult = ChangeDamage((partId, partDamageable), modifiedDamage, ignoreResistances,
                     interruptsDoAfters, origin, ignoreBlockers: ignoreBlockers,
                     increaseOnly: increaseOnly, ignoreGlobalModifiers: ignoreGlobalModifiers);
@@ -170,7 +164,6 @@ public sealed partial class DamageableSystem
             return appliedDamage;
         }
 
-        // Target a specific body part
         TargetBodyPart? target;
         var totalDamage = damage.GetTotal();
 
@@ -192,7 +185,6 @@ public sealed partial class DamageableSystem
             }
         }
 
-        // No body parts at all?
         if (possibleTargets.Count == 0)
             return new DamageSpecifier();
 
@@ -255,7 +247,6 @@ public sealed partial class DamageableSystem
         if (!_damageableQuery.TryComp(body, out var bodyDamage))
             return false;
 
-        // Reset the parent's damage values
         foreach (var type in bodyDamage.Damage.DamageDict.Keys.ToList())
         {
             bodyDamage.Damage.DamageDict[type] = FixedPoint2.Zero;
@@ -263,7 +254,6 @@ public sealed partial class DamageableSystem
 
         Dirty(body, bodyDamage);
 
-        // Sum up damage from all body parts
         foreach (var part in _body.EnumerateOrgans(body, _damageableQuery))
         {
             if (_internalQuery.HasComp(part)) // don't count internal organs, for now at least
@@ -279,7 +269,6 @@ public sealed partial class DamageableSystem
             }
         }
 
-        // Raise the damage changed event on the parent
         if (TerminatingOrDeleted(body))
             return false;
 

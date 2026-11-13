@@ -28,7 +28,7 @@ public sealed partial class BodyCacheSystem : CommonBodyCacheSystem
     [SubscribeLocalEvent]
     private void OnBodyRemove(Entity<BodyComponent> ent, ref ComponentRemove args)
     {
-        if (_query.TryComp(ent, out var cache)) // prevent deleting already deleted comp
+        if (_query.TryComp(ent, out var cache))
             RemCompDeferred(ent, cache);
     }
 
@@ -70,7 +70,6 @@ public sealed partial class BodyCacheSystem : CommonBodyCacheSystem
 
             _relation.Relate(parent, (organ, child));
 
-            // let the part track its child too
             _part.OrganInserted(parent, organ);
         }
     }

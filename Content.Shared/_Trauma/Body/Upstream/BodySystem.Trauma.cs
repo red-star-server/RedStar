@@ -68,8 +68,6 @@ public sealed partial class BodySystem
         "Torso"
     ];
 
-    private readonly HashSet<ProtoId<OrganCategoryPrototype>> _coveredParts = new();
-
     /// <summary>
     /// Tries to enable a given organ, letting systems run logic.
     /// Returns true if it is valid and now enabled.
@@ -81,7 +79,7 @@ public sealed partial class BodySystem
             return false;
 
         if (HasComp<EnabledOrganComponent>(organ))
-            return true; // already enabled
+            return true;
 
         var attemptEv = new OrganEnableAttemptEvent(body);
         RaiseLocalEvent(organ, ref attemptEv);
@@ -90,7 +88,6 @@ public sealed partial class BodySystem
 
         EnsureComp<EnabledOrganComponent>(organ);
 
-        // let other systems do their logic now
         var ev = new OrganEnabledEvent(body);
         RaiseLocalEvent(organ, ref ev);
         return true;
@@ -106,7 +103,7 @@ public sealed partial class BodySystem
             return false;
 
         if (!TryComp<EnabledOrganComponent>(organ, out var enabled))
-            return true; // already disabled
+            return true;
 
         // no attempt event that wouldn't make any sense
 
@@ -180,8 +177,8 @@ public sealed partial class BodySystem
             return 1f;
 
         // VitalParts is a static array; moving it to OrganCategoryPrototype would allow data-driven configuration.
-        int total = 0;
-        int vital = 0;
+        var total = 0;
+        var vital = 0;
         foreach (var organ in organs)
         {
             if (GetCategory(organ) is not {} category || !BodyParts.Contains(category))
@@ -205,7 +202,7 @@ public sealed partial class BodySystem
         if (!_bodyQuery.Resolve(body, ref body.Comp, false) || body.Comp.Organs?.ContainedEntities is not {} organs)
             return 1;
 
-        int vital = 0;
+        var vital = 0;
         foreach (var organ in organs)
         {
             if (GetCategory(organ) is {} category && VitalParts.Contains(category))
@@ -290,16 +287,14 @@ public sealed partial class BodySystem
             return false;
 
         if (container.Contains(organ))
-            return true; // it was already inserted
+            return true;
 
         var ev = new OrganInsertAttemptEvent(body, organ);
         RaiseLocalEvent(body, ref ev);
         if (!ev.Cancelled)
             RaiseLocalEvent(organ, ref ev);
-        if (ev.Cancelled)
-            return false;
 
-        return _container.Insert(organ.Owner, container);
+        return !ev.Cancelled && _container.Insert(organ.Owner, container);
     }
 
     /// <summary>
@@ -314,16 +309,14 @@ public sealed partial class BodySystem
             return false;
 
         if (!container.Contains(organ))
-            return true; // it was already removed
+            return true;
 
         var ev = new OrganRemoveAttemptEvent(body, organ);
         RaiseLocalEvent(body, ref ev);
         if (!ev.Cancelled)
             RaiseLocalEvent(organ, ref ev);
-        if (ev.Cancelled)
-            return false;
 
-        return _container.Remove(organ.Owner, container);
+        return !ev.Cancelled && _container.Remove(organ.Owner, container);
     }
 
     /// <summary>
@@ -367,10 +360,7 @@ public sealed partial class BodySystem
         Color? color = null,
         bool force = false)
     {
-        if (GetOrgan(body, category) is not {} organ)
-            return false; // no organ found
-
-        return AddOrganMarking(organ, marking, color, force);
+        return GetOrgan(body, category) is {} organ && AddOrganMarking(organ, marking, color, force);
     }
 
     /// <summary>
@@ -383,7 +373,7 @@ public sealed partial class BodySystem
         bool force = false)
     {
         if (!Resolve(organ, ref organ.Comp))
-            return false; // organ doesn't support markings
+            return false;
 
         var markingData = organ.Comp.MarkingData;
         var proto = ProtoMan.Index(marking);
@@ -391,28 +381,25 @@ public sealed partial class BodySystem
         if (!force)
         {
             if (proto.GroupWhitelist?.Contains(markingData.Group) == false)
-                return false; // marking isn't whitelisted for this species/group
+                return false;
 
             if (!markingData.Layers.Contains(layer))
-                return false; // this organ doesn't support the needed marking layer
+                return false;
         }
 
         var markings = organ.Comp.Markings;
-        // ensure there's a list of markings for the given layer
         if (!markings.TryGetValue(layer, out var list))
         {
             list = [];
             markings[layer] = list;
         }
 
-        // check for duplicates first
         foreach (var data in list)
         {
             if (data.MarkingId == marking)
-                return false; // duplicate found, skip adding it
+                return false;
         }
 
-        // good to go
         list.Add(new Marking(marking, color != null
             ? Enumerable.Repeat(color.Value, proto.Sprites.Count)
             : []));

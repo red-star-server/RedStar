@@ -10,7 +10,7 @@ public sealed partial class BodyRestoreSystem : EntitySystem
     [Dependency] private BodySystem _body = default!;
     [Dependency] private BodyPartSystem _part = default!;
 
-    [SubscribeLocalEvent(before: new[] { typeof(DamageableSystem), typeof(BloodstreamSystem) })]
+    [SubscribeLocalEvent(before: [typeof(DamageableSystem), typeof(BloodstreamSystem)])]
     private void OnRejuvenate(Entity<BodyComponent> ent, ref RejuvenateEvent args)
     {
         if (_part.GetRootPart(ent.AsNullable()) == null)
@@ -30,7 +30,7 @@ public sealed partial class BodyRestoreSystem : EntitySystem
     public void RestoreBody(Entity<BodyComponent?> body)
     {
         if (_part.GetRootPart(body) is {} root)
-            _part.RestoreInitialOrgans(root.AsNullable()); // recursively restore the body from its prototype
+            _part.RestoreInitialOrgans(root.AsNullable());
         else
             Log.Error($"Tried to restore body {ToPrettyString(body)} which had no root part!");
     }

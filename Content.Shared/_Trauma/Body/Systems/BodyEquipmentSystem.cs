@@ -59,7 +59,6 @@ public sealed partial class BodyEquipmentSystem : EntitySystem
             return;
         }
 
-        // only allow if this body has the required part
         if (HasBodyPart(ent, part))
             args.Handled = true;
     }

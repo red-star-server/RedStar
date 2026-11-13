@@ -13,7 +13,7 @@
         Quantity: 10
   - type: Solution
     solution:
-      reagents: # really bad stuff
+      reagents:
       - ReagentId: Microplastics
         Quantity: 5
       - ReagentId: LabGrownNutriment
@@ -61,8 +61,6 @@
   parent: [ OrganBaseLegRight, OrganBioSynthExternal ]
   id: OrganBioSynthLegRight
 
-# the kojima special
-
 - type: entity
   parent: [ OrganBaseFootLeft, OrganBioSynthExternal ]
   id: OrganBioSynthFootLeft
@@ -72,8 +70,6 @@
   id: OrganBioSynthFootRight
 
 ## Organs
-
-# no brain because it's not terribly useful
 
 - type: entity
   parent: [ OrganBaseEyes, OrganBioSynthInternal ]
@@ -89,8 +85,6 @@
 - type: entity
   parent: [ OrganBaseTongue, OrganBioSynthInternal ]
   id: OrganBioSynthTongue
-
-# no appendix because it's useless
 
 - type: entity
   parent: [ OrganBaseEars, OrganBioSynthInternal ]
