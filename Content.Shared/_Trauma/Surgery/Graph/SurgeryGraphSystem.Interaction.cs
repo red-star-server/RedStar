@@ -87,37 +87,45 @@ public sealed partial class SurgeryGraphSystem
         if (args.Handled || args.Used != _hands.GetActiveItemOrSelf(args.User))
             return;
 
-        var part = ResolveClickedPart(ent.Owner, args.ClickLocation);
+        var part = ResolveClickedPart(ent.Owner, _transform.ToMapCoordinates(args.ClickLocation));
         if (TryOperate(ent.Owner, part, args.User, args.Used))
             args.Handled = true;
     }
 
-    private EntityUid ResolveClickedPart(EntityUid body, EntityCoordinates clickLocation)
+    /// <summary>
+    /// Resolves which body part was clicked in the world from the click position relative to the
+    /// body, accounting for the body's facing. This is surgery's own world targeting and is
+    /// deliberately independent of the combat targeting doll. Falls back to the torso.
+    /// </summary>
+    public EntityUid ResolveClickedPart(EntityUid body, MapCoordinates clickLocation)
     {
         var torso = _part.FindBodyPart(body, BodyPartType.Torso)?.Owner ?? body;
 
         var xform = Transform(body);
-        var offset = _transform.ToMapCoordinates(clickLocation).Position - _transform.GetWorldPosition(xform);
+        var offset = clickLocation.Position - _transform.GetWorldPosition(xform);
         var local = (-xform.LocalRotation).RotateVec(offset);
 
         var type = ClassifyRegion(local);
         if (type == BodyPartType.Torso)
             return torso;
 
-        var symmetry = local.X < 0 ? BodyPartSymmetry.Left : BodyPartSymmetry.Right;
+        var symmetry = local.X > 0 ? BodyPartSymmetry.Left : BodyPartSymmetry.Right;
         return _part.FindBodyPart(body, type, symmetry)?.Owner ?? torso;
     }
 
     private static BodyPartType ClassifyRegion(Vector2 local)
     {
-        if (local.Y > 0.55f)
+        if (local.Y > 0.17f)
             return BodyPartType.Head;
 
-        if (local.Y < -0.35f)
-            return local.Y < -0.85f ? BodyPartType.Foot : BodyPartType.Leg;
+        if (MathF.Abs(local.X) > 0.17f)
+            return local.Y < -0.05f ? BodyPartType.Hand : BodyPartType.Arm;
 
-        if (MathF.Abs(local.X) > 0.35f)
-            return MathF.Abs(local.X) > 0.7f ? BodyPartType.Hand : BodyPartType.Arm;
+        if (local.Y < -0.40f)
+            return BodyPartType.Foot;
+
+        if (local.Y < -0.17f)
+            return BodyPartType.Leg;
 
         return BodyPartType.Torso;
     }
@@ -227,9 +235,17 @@ public sealed partial class SurgeryGraphSystem
                 continue;
 
             args.PushMarkup(Loc.GetString("surgery-world-target-hint",
-                ("part", MetaData(part).EntityName),
+                ("part", GetPartName(part)),
                 ("steps", string.Join(", ", labels))));
         }
+    }
+
+    private string GetPartName(Entity<BodyPartComponent> part)
+    {
+        var key = part.Comp.Symmetry == BodyPartSymmetry.None
+            ? part.Comp.PartType.ToString()
+            : $"{part.Comp.PartType}{part.Comp.Symmetry}";
+        return Loc.GetString("surgery-part-name", ("part", key));
     }
 
     private bool IsLyingDown(EntityUid entity, EntityUid user, bool showPopup)
