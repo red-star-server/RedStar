@@ -43,7 +43,6 @@
 - type: latheRecipePack
   id: Surgery
   recipes:
-  - ClothingHandsGlovesSurgical
   - DefibrillatorCompact
 
 - type: borgType
@@ -52,6 +51,5 @@
   - BorgModuleSurgery
   addComponents:
   - type: Sanitized
-  - type: SurgeryIgnoreClothing
   - type: SurgerySpeedModifier
     speedModifier: 1.5

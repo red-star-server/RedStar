@@ -325,7 +325,6 @@
   id: MedicalBorgChassisDerelict
   components:
   - type: Sanitized
-  - type: SurgeryIgnoreClothing
   - type: SurgerySpeedModifier
     speedModifier: 1.5
 

@@ -313,7 +313,6 @@
   - type: Item
     size: Small
     heldPrefix: evil
-  - type: SurgeryIgnoreClothing
 
 - type: entity
   parent: OmnimedToolSyndie
