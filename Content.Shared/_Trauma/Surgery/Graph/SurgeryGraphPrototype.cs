@@ -32,7 +32,7 @@ public sealed partial class SurgeryGraphNode
     public string Label = string.Empty;
 
     [DataField]
-    public SurgeryOverlay? Overlay;
+    public List<SurgeryOverlay> Overlays = [];
 
     [DataField]
     public List<SurgeryGraphEdge> Edges = [];
