@@ -41,12 +41,6 @@
   spawn: Bonesetter
 
 - type: tool
-  id: Tending
-  name: tool-quality-tending-name
-  toolName: tool-quality-tending-tool-name
-  spawn: Hemostat
-
-- type: tool
   id: Manipulating
   name: tool-quality-manipulating-name
   toolName: tool-quality-manipulating-tool-name

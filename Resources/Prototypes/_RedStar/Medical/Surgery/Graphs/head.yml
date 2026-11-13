@@ -1,0 +1,366 @@
+- type: surgeryGraph
+  id: SurgeryGraphHead
+  startNode: Closed
+  nodes:
+  - name: Closed
+    edges:
+    - id: OpenIncision
+      target: Incised
+      label: surgery-edge-open-incision
+      conditions:
+      - !type:PartTypeCondition
+        parts: [Head]
+      - !type:PartPresentCondition
+      - !type:PartComponentCondition
+        inverted: true
+        components:
+        - type: XenoBodyPart
+      steps:
+      - name: Cut with a scalpel
+        quality: Slicing
+        duration: 2
+        effects:
+        - !type:DamageEffect
+          sleepModifier: 0.5
+          damage:
+            types:
+              Bloodloss: 10
+      - name: Retract the skin
+        quality: Retracting
+        duration: 2
+  - name: Incised
+    # TODO: сделать спрайт разреза на голове (сейчас заглушка из bleeding_damage)
+    overlays:
+    - rsi: _RedStar/Medical/Mobs/Effects/bleeding_damage.rsi
+      stateSuffix: Minor
+    packages:
+    - SurgeryTissueIncised
+    edges:
+    - id: CloseIncision
+      target: Closed
+      label: surgery-edge-close-incision
+      steps:
+      - name: Close incision
+        quality: Cauterizing
+        duration: 2
+        effects:
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Heat: -5
+        - !type:ComponentEffect
+          remove:
+          - type: OrganReattached
+    - id: OpenSkull
+      target: SkullOpen
+      label: surgery-edge-open-skull
+      steps:
+      - name: Saw through bones
+        quality: Sawing
+        duration: 4
+      - name: Prise the bones open
+        quality: Retracting
+        duration: 2
+    - id: Lobotomize
+      target: Closed
+      label: surgery-edge-lobotomize-patient
+      conditions:
+      - !type:OrganPresentCondition
+        organ: Brain
+      - !type:OrganOnAddCondition
+        inverse: true
+        components:
+          Brain:
+          - type: SimpleAccent
+            accent: Ohio
+          - type: RatvarianLanguage
+      steps:
+      - name: Lobotomize patient
+        quality: Drilling
+        duration: 5
+        effects:
+        - !type:EmoteEffect
+          emote: Scream
+        - !type:DamageEffect
+          damage:
+            types:
+              Piercing: 10
+        - !type:OrganComponentsEffect
+          add:
+            Brain:
+            - type: SimpleAccent
+              accent: Ohio
+            - type: RatvarianLanguage
+      - name: Close incision
+        quality: Cauterizing
+        duration: 2
+        effects:
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Heat: -5
+        - !type:ComponentEffect
+          remove:
+          - type: OrganReattached
+    - id: MendBrainTissue
+      target: Closed
+      label: surgery-edge-mend-brain-tissue
+      conditions:
+      - !type:OrganPresentCondition
+        organ: Brain
+      - !type:OrganOnAddCondition
+        components:
+          Brain:
+          - type: SimpleAccent
+            accent: Ohio
+          - type: RatvarianLanguage
+      steps:
+      - name: Mend brain tissue
+        quality: Clamping
+        duration: 4
+        effects:
+        - !type:EmoteEffect
+          emote: Scream
+        - !type:OrganComponentsEffect
+          remove:
+            Brain:
+            - type: SimpleAccent
+              accent: Ohio
+            - type: RatvarianLanguage
+      - name: Close incision
+        quality: Cauterizing
+        duration: 2
+        effects:
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Heat: -5
+        - !type:ComponentEffect
+          remove:
+          - type: OrganReattached
+    - id: RemoveTongue
+      target: Incised
+      label: surgery-edge-remove-tongue
+      conditions:
+      - !type:OrganPresentCondition
+        organ: Tongue
+      steps:
+      - name: Pull out the tongue
+        anyItem: true
+        duration: 8
+        effects:
+        - !type:RemoveOrganEffect
+          organ: Tongue
+    - id: InsertTongue
+      target: Incised
+      label: surgery-edge-insert-tongue
+      conditions:
+      - !type:PartRemovedCondition
+        category: Tongue
+      steps:
+      - name: Add organ
+        organ: Tongue
+        duration: 6
+        effects:
+        - !type:InsertOrganEffect
+          organ: Tongue
+      - name: Seal wounds
+        quality: Cauterizing
+        duration: 2
+        effects:
+        - !type:AffixOrganEffect
+          organ: Tongue
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Heat: -5
+    - id: Amputate
+      target: Closed
+      label: surgery-edge-amputate-head
+      conditions:
+      - !type:HasBodyCondition
+      steps:
+      - name: Saw through bones
+        quality: Sawing
+        duration: 4
+      - name: Clamp internal bleeders
+        quality: Clamping
+        duration: 2
+        effects:
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Bloodloss: -5
+      - name: Amputate part
+        quality: Sawing
+        duration: 8
+        effects:
+        - !type:RemovePartEffect
+  - name: SkullOpen
+    # TODO: сделать спрайт раскрытого черепа (сейчас заглушка из bleeding_damage)
+    overlays:
+    - rsi: _RedStar/Medical/Mobs/Effects/bleeding_damage.rsi
+      stateSuffix: Severe
+    edges:
+    - id: CloseSkull
+      target: Closed
+      label: surgery-edge-close-skull
+      steps:
+      - name: Close bones
+        quality: Retracting
+        duration: 2
+      - name: Seal skull
+        quality: BoneHealing
+        duration: 2
+      - name: Close incision
+        quality: Cauterizing
+        duration: 2
+        effects:
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Heat: -5
+        - !type:ComponentEffect
+          remove:
+          - type: OrganReattached
+    - id: RemoveBrain
+      target: SkullOpen
+      label: surgery-edge-remove-brain
+      conditions:
+      - !type:OrganPresentCondition
+        organ: Brain
+      steps:
+      - name: Clamp internal bleeders
+        quality: Clamping
+        duration: 2
+        effects:
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Bloodloss: -5
+      - name: Remove organ
+        quality: Manipulating
+        duration: 8
+        effects:
+        - !type:RemoveOrganEffect
+          organ: Brain
+    - id: InsertBrain
+      target: SkullOpen
+      label: surgery-edge-insert-brain
+      conditions:
+      - !type:PartRemovedCondition
+        category: Brain
+      steps:
+      - name: Add organ
+        organ: Brain
+        duration: 6
+        effects:
+        - !type:InsertOrganEffect
+          organ: Brain
+      - name: Seal wounds
+        quality: Cauterizing
+        duration: 2
+        effects:
+        - !type:AffixOrganEffect
+          organ: Brain
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Heat: -5
+    - id: RemoveEyes
+      target: SkullOpen
+      label: surgery-edge-remove-eyes
+      conditions:
+      - !type:OrganPresentCondition
+        organ: Eyes
+      steps:
+      - name: Clamp the bleeders
+        quality: Clamping
+        duration: 4
+        effects:
+        - !type:BleedsTreatmentEffect
+          amount: 2
+      - name: Remove organ
+        quality: Manipulating
+        duration: 8
+        effects:
+        - !type:RemoveOrganEffect
+          organ: Eyes
+    - id: InsertEyes
+      target: SkullOpen
+      label: surgery-edge-insert-eyes
+      conditions:
+      - !type:PartRemovedCondition
+        category: Eyes
+      steps:
+      - name: Add organ
+        organ: Eyes
+        duration: 6
+        effects:
+        - !type:InsertOrganEffect
+          organ: Eyes
+      - name: Seal wounds
+        quality: Cauterizing
+        duration: 2
+        effects:
+        - !type:AffixOrganEffect
+          organ: Eyes
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Heat: -5
+    - id: RemoveEars
+      target: SkullOpen
+      label: surgery-edge-remove-ear-organs
+      conditions:
+      - !type:OrganPresentCondition
+        organ: Ears
+      steps:
+      - name: Clamp internal bleeders
+        quality: Clamping
+        duration: 2
+        effects:
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Bloodloss: -5
+      - name: Remove organ
+        quality: Manipulating
+        duration: 8
+        effects:
+        - !type:RemoveOrganEffect
+          organ: Ears
+    - id: InsertEars
+      target: SkullOpen
+      label: surgery-edge-insert-ear-organs
+      conditions:
+      - !type:PartRemovedCondition
+        category: Ears
+      steps:
+      - name: Add organ
+        organ: Ears
+        duration: 6
+        effects:
+        - !type:InsertOrganEffect
+          organ: Ears
+      - name: Seal wounds
+        quality: Cauterizing
+        duration: 2
+        effects:
+        - !type:AffixOrganEffect
+          organ: Ears
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Heat: -5

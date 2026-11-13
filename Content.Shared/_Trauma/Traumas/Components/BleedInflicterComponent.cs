@@ -49,12 +49,6 @@ public sealed partial class BleedInflicterComponent : Component
     public FixedPoint2 ScalingSpeed = FixedPoint2.New(1);
 
     /// <summary>
-    /// Accumulated penalty applied while updating bleeding severity.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public FixedPoint2 SeverityPenalty = FixedPoint2.New(1);
-
-    /// <summary>
     /// Current multiplier applied to the wound's raw bleeding amount.
     /// </summary>
     [DataField, AutoNetworkedField]

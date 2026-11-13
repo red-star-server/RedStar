@@ -50,12 +50,15 @@ public sealed partial class TypedDamageCondition : EntityConditionBase<TypedDama
             if (MathF.Abs(groupDamage.Float() - MathF.Round(groupDamage.Float())) < 0.02)
                 groupDamage = MathF.Round(groupDamage.Float());
             if (groupDamage > 0)
+            {
                 damages.Add(
-                Loc.GetString("health-change-display",
-                    ("kind", group.LocalizedName),
-                    ("amount", MathF.Abs(groupDamage.Float())),
-                    ("deltasign", 1))
+                    Loc.GetString("health-change-display",
+                        ("kind", group.LocalizedName),
+                        ("amount", MathF.Abs(groupDamage.Float())),
+                        ("deltasign", 1))
                 );
+            }
+
             foreach (var damageType in group.DamageTypes)
             {
                 comparison.DamageDict[damageType] -= lowestDamage;

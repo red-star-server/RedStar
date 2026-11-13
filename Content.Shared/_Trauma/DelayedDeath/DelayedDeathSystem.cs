@@ -30,10 +30,6 @@ public sealed partial class DelayedDeathSystem : EntitySystem
                 _mob.IsDead(ent, mob))
                 continue;
 
-            // go crit then dead so deathgasp can happen
-            _mob.ChangeMobState(ent, MobState.Critical, mob);
-            _mob.ChangeMobState(ent, MobState.Dead, mob);
-
             var ev = new DelayedDeathEvent(ent, PreventRevive: comp.PreventAllRevives);
             RaiseLocalEvent(ent, ref ev);
 
@@ -42,6 +38,10 @@ public sealed partial class DelayedDeathSystem : EntitySystem
                 RemCompDeferred(ent, comp);
                 continue;
             }
+
+            // go crit then dead so deathgasp can happen
+            _mob.ChangeMobState(ent, MobState.Critical, mob);
+            _mob.ChangeMobState(ent, MobState.Dead, mob);
 
             if (!string.IsNullOrWhiteSpace(comp.DeathMessageId))
                 _popup.PopupEntity(Loc.GetString(comp.DeathMessageId), ent, ent, PopupType.LargeCaution);

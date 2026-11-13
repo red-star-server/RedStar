@@ -1,0 +1,92 @@
+- type: surgeryEdgePackage
+  id: SurgeryTissueIncised
+  edges:
+  - id: StopBlood
+    target: Incised
+    label: surgery-edge-stop-constant-blood-output
+    conditions:
+    - !type:BleedsPresentCondition
+    steps:
+    - name: Clamp the bleeders
+      quality: Clamping
+      duration: 4
+      effects:
+      - !type:BleedsTreatmentEffect
+        amount: 2
+    - name: Stitch up destroyed tissues
+      quality: Suturing
+      duration: 5
+  - id: MendBones
+    target: Incised
+    label: surgery-edge-mend-bones
+    conditions:
+    - !type:BleedsPresentCondition
+      inverted: true
+    - !type:TraumaPresentCondition
+      trauma: BoneDamage
+    steps:
+    - name: Saw through bones
+      quality: Sawing
+      duration: 4
+    - name: Clamp internal bleeders
+      quality: Clamping
+      duration: 2
+      effects:
+      - !type:DamageEffect
+        sleepModifier: 2
+        damage:
+          types:
+            Bloodloss: -5
+    - name: Mend bones
+      quality: BoneHealing
+      duration: 7
+      effects:
+      - !type:TraumaTreatmentEffect
+        traumaType: BoneDamage
+        amount: 17
+  - id: HealOrgans
+    target: Incised
+    label: surgery-edge-heal-organs
+    conditions:
+    - !type:BleedsPresentCondition
+      inverted: true
+    - !type:TraumaPresentCondition
+      trauma: OrganDamage
+    steps:
+    - name: Clamp internal bleeders
+      quality: Clamping
+      duration: 2
+      effects:
+      - !type:DamageEffect
+        sleepModifier: 2
+        damage:
+          types:
+            Bloodloss: -5
+    - name: Heal organs
+      quality: Manipulating
+      duration: 7
+      effects:
+      - !type:TraumaTreatmentEffect
+        traumaType: OrganDamage
+        amount: 17
+  - id: FixDismemberment
+    target: Incised
+    label: surgery-edge-fix-dismemberment-leftovers
+    conditions:
+    - !type:BleedsPresentCondition
+      inverted: true
+    - !type:TraumaPresentCondition
+      trauma: Dismemberment
+    steps:
+    - name: Remove the dead skin
+      quality: Slicing
+      duration: 4
+    - name: Clear up bone leftovers
+      quality: Sawing
+      duration: 5
+    - name: Stitch up the dismemberment wound
+      quality: Suturing
+      duration: 8
+      effects:
+      - !type:TraumaTreatmentEffect
+        traumaType: Dismemberment

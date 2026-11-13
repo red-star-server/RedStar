@@ -325,7 +325,6 @@ public sealed partial class DamageableSystem
 
                 foreach (var (type, val) in newDamage.DamageDict)
                 {
-                    // project 0 comments :face_holding_back_tears:
                     if (val > 0)
                     {
                         if (parts.Count > 0)

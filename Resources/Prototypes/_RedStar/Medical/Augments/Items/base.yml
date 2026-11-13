@@ -4,6 +4,8 @@
   id: BaseAugment
   components:
   - type: Augment
+  - type: Item
+    size: Small
   - type: InternalChildOrgan
     intCap: 30
     integrity: 30

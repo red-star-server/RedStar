@@ -53,7 +53,7 @@ public sealed partial class TraumaHealthAnalyzerControl : BoxContainer
         var target = _entityManager.GetEntity(state.TargetEntity);
 
         if (target == null
-            || !_entityManager.TryGetComponent<DamageableComponent>(target, out var damageable))
+            || !_entityManager.TryGetComponent<DamageableComponent>(target, out _))
         {
             NoPatientDataText.Visible = true;
             return;
@@ -99,7 +99,6 @@ public sealed partial class TraumaHealthAnalyzerControl : BoxContainer
 
         DamageLabel.Text = _damageable.GetTotalDamage(target.Value).ToString();
 
-
         var showAlerts = state.Unrevivable == true || state.Bleeding.Count > 0;
 
         AlertsDivider.Visible = showAlerts;
@@ -108,7 +107,7 @@ public sealed partial class TraumaHealthAnalyzerControl : BoxContainer
         if (showAlerts)
             AlertsContainer.RemoveAllChildren();
 
-        if (state.Unrevivable == true)
+        if (state.Unrevivable)
         {
             AlertsContainer.AddChild(new RichTextLabel
             {
@@ -203,7 +202,7 @@ public sealed partial class TraumaHealthAnalyzerControl : BoxContainer
         var rsiSprite = new SpriteSpecifier.Rsi(rsiPath, texture);
 
         var rsi = _cache.GetResource<RSIResource>(rsiSprite.RsiPath).RSI;
-        if (!rsi.TryGetState(rsiSprite.RsiState, out var state))
+        if (!rsi.TryGetState(rsiSprite.RsiState, out _))
         {
             rsiSprite = new SpriteSpecifier.Rsi(rsiPath, "unknown");
         }

@@ -7,7 +7,7 @@ namespace Content.Shared._Trauma.Wounds;
 public record struct WoundAddedEvent(WoundComponent Component, WoundableComponent Woundable);
 
 [ByRefEvent]
-public record struct WoundSeverityPointChangedEvent(WoundComponent Component, FixedPoint2 OldSeverity, FixedPoint2 NewSeverity, FixedPoint2? Overflow = null);
+public record struct WoundSeverityPointChangedEvent(WoundComponent Component, FixedPoint2 OldSeverity, FixedPoint2 NewSeverity, FixedPoint2 RequestedChange);
 
 [ByRefEvent]
 public record struct WoundSeverityChangedEvent(WoundSeverity OldSeverity, WoundSeverity NewSeverity);
@@ -17,9 +17,3 @@ public record struct WoundHealAttemptEvent(Entity<WoundableComponent> Woundable,
 
 [ByRefEvent]
 public record struct WoundHealAttemptOnWoundableEvent(EntityUid Wound, bool Cancelled = false);
-
-[Serializable, DataRecord]
-public partial record struct WoundableSeverityMultiplier(FixedPoint2 Change, string Identifier = "Unspecified");
-
-[Serializable, DataRecord]
-public partial record struct WoundableHealingMultiplier(FixedPoint2 Change, string Identifier = "Unspecified");

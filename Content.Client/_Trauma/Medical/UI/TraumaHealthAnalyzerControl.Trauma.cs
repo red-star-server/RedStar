@@ -10,7 +10,6 @@ using Content.Shared.Atmos.Rotting;
 using Content.Shared.Body;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
@@ -167,6 +166,7 @@ public sealed partial class TraumaHealthAnalyzerControl
     /// </summary>
     public void PopulateBody(EntityUid target, ref HealthAnalyzerUiState state, bool bloodLevelLow = false)
     {
+        var body = target;
         var selectedPart = _entityManager.GetEntity(state.Part);
         if (selectedPart != null)
             target = selectedPart.Value;
@@ -227,7 +227,7 @@ public sealed partial class TraumaHealthAnalyzerControl
             });
         }
 
-        foreach (var part in _body.GetOrgans<WoundableComponent>(target))
+        foreach (var part in _body.GetOrgans<WoundableComponent>(body))
         {
             if (isPart && part.Owner != selectedPart)
                 continue;

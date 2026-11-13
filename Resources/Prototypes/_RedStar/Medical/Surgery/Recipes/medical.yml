@@ -78,17 +78,6 @@
     Silver: 300
 
 - type: latheRecipe
-  parent: BaseSurgicalRecipe
-  id: ClothingHandsGlovesSurgical
-  result: ClothingHandsGlovesSurgical
-  completetime: 2
-  materials:
-    Plastic: 300
-    Durathread: 300
-    Cloth: 300
-    BlueSpaceCrystal: 100
-
-- type: latheRecipe
   id: DefibrillatorCompact
   result: DefibrillatorCompactEmpty
   completetime: 5

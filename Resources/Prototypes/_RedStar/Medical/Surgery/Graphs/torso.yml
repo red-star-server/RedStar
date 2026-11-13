@@ -1,0 +1,730 @@
+- type: surgeryGraph
+  id: SurgeryGraphTorso
+  startNode: Closed
+  nodes:
+  - name: Closed
+    edges:
+    - id: OpenIncision
+      target: Incised
+      label: surgery-edge-open-incision
+      conditions:
+      - !type:PartTypeCondition
+        parts: [Torso]
+      - !type:PartPresentCondition
+      - !type:PartComponentCondition
+        inverted: true
+        components:
+        - type: XenoBodyPart
+      steps:
+      - name: Cut with a scalpel
+        quality: Slicing
+        duration: 2
+        effects:
+        - !type:DamageEffect
+          sleepModifier: 0.5
+          damage:
+            types:
+              Bloodloss: 10
+      - name: Retract the skin
+        quality: Retracting
+        duration: 2
+  - name: Incised
+    # TODO: сделать спрайт разреза на груди (сейчас заглушка из bleeding_damage)
+    overlays:
+    - rsi: _RedStar/Medical/Mobs/Effects/bleeding_damage.rsi
+      stateSuffix: Minor
+    packages:
+    - SurgeryTissueIncised
+    edges:
+    - id: CloseIncision
+      target: Closed
+      label: surgery-edge-close-incision
+      steps:
+      - name: Close incision
+        quality: Cauterizing
+        duration: 2
+        effects:
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Heat: -5
+        - !type:ComponentEffect
+          remove:
+          - type: OrganReattached
+    - id: OpenBones
+      target: BonesOpen
+      label: surgery-edge-open-ribcage
+      steps:
+      - name: Saw through bones
+        quality: Sawing
+        duration: 4
+      - name: Prise the bones open
+        quality: Retracting
+        duration: 2
+    - id: AttachHead
+      target: Closed
+      label: surgery-edge-attach-head
+      conditions:
+      - !type:PartRemovedCondition
+        category: Head
+      - !type:TraumaPresentCondition
+        trauma: Dismemberment
+        inverted: true
+      steps:
+      - name: Insert part
+        organ: Head
+        duration: 6
+        effects:
+        - !type:InsertPartEffect
+          category: Head
+      - name: Seal wounds
+        quality: Cauterizing
+        duration: 2
+        effects:
+        - !type:AffixPartEffect
+          category: Head
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Heat: -5
+    - id: AttachLeftArm
+      target: Closed
+      label: surgery-edge-attach-left-arm
+      conditions:
+      - !type:PartRemovedCondition
+        category: ArmLeft
+      - !type:TraumaPresentCondition
+        trauma: Dismemberment
+        inverted: true
+      steps:
+      - name: Insert part
+        organ: ArmLeft
+        duration: 6
+        effects:
+        - !type:InsertPartEffect
+          category: ArmLeft
+      - name: Seal wounds
+        quality: Cauterizing
+        duration: 2
+        effects:
+        - !type:AffixPartEffect
+          category: ArmLeft
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Heat: -5
+    - id: AttachRightArm
+      target: Closed
+      label: surgery-edge-attach-right-arm
+      conditions:
+      - !type:PartRemovedCondition
+        category: ArmRight
+      - !type:TraumaPresentCondition
+        trauma: Dismemberment
+        inverted: true
+      steps:
+      - name: Insert part
+        organ: ArmRight
+        duration: 6
+        effects:
+        - !type:InsertPartEffect
+          category: ArmRight
+      - name: Seal wounds
+        quality: Cauterizing
+        duration: 2
+        effects:
+        - !type:AffixPartEffect
+          category: ArmRight
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Heat: -5
+    - id: AttachLeftLeg
+      target: Closed
+      label: surgery-edge-attach-left-leg
+      conditions:
+      - !type:PartRemovedCondition
+        category: LegLeft
+      - !type:TraumaPresentCondition
+        trauma: Dismemberment
+        inverted: true
+      steps:
+      - name: Insert part
+        organ: LegLeft
+        duration: 6
+        effects:
+        - !type:InsertPartEffect
+          category: LegLeft
+      - name: Seal wounds
+        quality: Cauterizing
+        duration: 2
+        effects:
+        - !type:AffixPartEffect
+          category: LegLeft
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Heat: -5
+    - id: AttachRightLeg
+      target: Closed
+      label: surgery-edge-attach-right-leg
+      conditions:
+      - !type:PartRemovedCondition
+        category: LegRight
+      - !type:TraumaPresentCondition
+        trauma: Dismemberment
+        inverted: true
+      steps:
+      - name: Insert part
+        organ: LegRight
+        duration: 6
+        effects:
+        - !type:InsertPartEffect
+          category: LegRight
+      - name: Seal wounds
+        quality: Cauterizing
+        duration: 2
+        effects:
+        - !type:AffixPartEffect
+          category: LegRight
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Heat: -5
+    - id: AttachTail
+      target: Closed
+      label: surgery-edge-attach-tail
+      conditions:
+      - !type:PartRemovedCondition
+        category: Tail
+      - !type:TraumaPresentCondition
+        trauma: Dismemberment
+        inverted: true
+      steps:
+      - name: Insert part
+        organ: Tail
+        duration: 6
+        effects:
+        - !type:InsertPartEffect
+          category: Tail
+      - name: Seal wounds
+        quality: Cauterizing
+        duration: 2
+        effects:
+        - !type:AffixPartEffect
+          category: Tail
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Heat: -5
+    - id: AttachWings
+      target: Closed
+      label: surgery-edge-attach-wings
+      conditions:
+      - !type:PartRemovedCondition
+        category: Wings
+      - !type:TraumaPresentCondition
+        trauma: Dismemberment
+        inverted: true
+      steps:
+      - name: Insert part
+        organ: Wings
+        duration: 6
+        effects:
+        - !type:InsertPartEffect
+          category: Wings
+      - name: Seal wounds
+        quality: Cauterizing
+        duration: 2
+        effects:
+        - !type:AffixPartEffect
+          category: Wings
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Heat: -5
+    - id: OpenTailSlot
+      target: Incised
+      label: surgery-edge-create-tail-joint
+      conditions:
+      - !type:OrganSlotCondition
+        organSlot: Tail
+        inverted: true
+      - !type:BodyComponentCondition
+        blacklist:
+          components:
+          - Silicon
+      steps:
+      - name: Saw through bones
+        quality: Sawing
+        duration: 4
+      - name: Create joint
+        quality: BoneHealing
+        duration: 2
+      - name: Stitch joint blood vessels
+        quality: Suturing
+        duration: 5
+      - name: Carve out a cavity
+        quality: Slicing
+        duration: 6
+        effects:
+        - !type:AddOrganSlotEffect
+          organSlot: Tail
+    - id: OpenWingsSlot
+      target: Incised
+      label: surgery-edge-create-wing-joints
+      conditions:
+      - !type:OrganSlotCondition
+        organSlot: Wings
+        inverted: true
+      - !type:BodyComponentCondition
+        blacklist:
+          components:
+          - Silicon
+      steps:
+      - name: Saw through bones
+        quality: Sawing
+        duration: 4
+      - name: Create joint
+        quality: BoneHealing
+        duration: 2
+      - name: Stitch joint blood vessels
+        quality: Suturing
+        duration: 5
+      - name: Carve out a cavity
+        quality: Slicing
+        duration: 6
+        effects:
+        - !type:AddOrganSlotEffect
+          organSlot: Wings
+  - name: BonesOpen
+    # TODO: сделать спрайт раскрытой грудной клетки (сейчас заглушка из bleeding_damage)
+    overlays:
+    - rsi: _RedStar/Medical/Mobs/Effects/bleeding_damage.rsi
+      stateSuffix: Severe
+    edges:
+    - id: CloseBones
+      target: Closed
+      label: surgery-edge-close-ribcage
+      steps:
+      - name: Close bones
+        quality: Retracting
+        duration: 2
+      - name: Seal ribcage
+        quality: BoneHealing
+        duration: 2
+      - name: Close incision
+        quality: Cauterizing
+        duration: 2
+        effects:
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Heat: -5
+        - !type:ComponentEffect
+          remove:
+          - type: OrganReattached
+    - id: RemoveHeart
+      target: BonesOpen
+      label: surgery-edge-remove-heart
+      conditions:
+      - !type:OrganPresentCondition
+        organ: Heart
+      steps:
+      - name: Clamp the bleeders
+        quality: Clamping
+        duration: 4
+        effects:
+        - !type:BleedsTreatmentEffect
+          amount: 2
+      - name: Remove organ
+        quality: Manipulating
+        duration: 8
+        effects:
+        - !type:RemoveOrganEffect
+          organ: Heart
+    - id: InsertHeart
+      target: BonesOpen
+      label: surgery-edge-insert-heart
+      conditions:
+      - !type:PartRemovedCondition
+        category: Heart
+      steps:
+      - name: Add organ
+        organ: Heart
+        duration: 6
+        effects:
+        - !type:InsertOrganEffect
+          organ: Heart
+      - name: Seal wounds
+        quality: Cauterizing
+        duration: 2
+        effects:
+        - !type:AffixOrganEffect
+          organ: Heart
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Heat: -5
+    - id: RemoveLungs
+      target: BonesOpen
+      label: surgery-edge-remove-lungs
+      conditions:
+      - !type:OrganPresentCondition
+        organ: Lungs
+      steps:
+      - name: Clamp the bleeders
+        quality: Clamping
+        duration: 4
+        effects:
+        - !type:BleedsTreatmentEffect
+          amount: 2
+      - name: Remove organ
+        quality: Manipulating
+        duration: 8
+        effects:
+        - !type:RemoveOrganEffect
+          organ: Lungs
+    - id: InsertLungs
+      target: BonesOpen
+      label: surgery-edge-insert-lungs
+      conditions:
+      - !type:PartRemovedCondition
+        category: Lungs
+      steps:
+      - name: Add organ
+        organ: Lungs
+        duration: 6
+        effects:
+        - !type:InsertOrganEffect
+          organ: Lungs
+      - name: Seal wounds
+        quality: Cauterizing
+        duration: 2
+        effects:
+        - !type:AffixOrganEffect
+          organ: Lungs
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Heat: -5
+    - id: RemoveLiver
+      target: BonesOpen
+      label: surgery-edge-remove-liver
+      conditions:
+      - !type:OrganPresentCondition
+        organ: Liver
+      steps:
+      - name: Clamp the bleeders
+        quality: Clamping
+        duration: 4
+        effects:
+        - !type:BleedsTreatmentEffect
+          amount: 2
+      - name: Remove organ
+        quality: Manipulating
+        duration: 8
+        effects:
+        - !type:RemoveOrganEffect
+          organ: Liver
+    - id: InsertLiver
+      target: BonesOpen
+      label: surgery-edge-insert-liver
+      conditions:
+      - !type:PartRemovedCondition
+        category: Liver
+      steps:
+      - name: Add organ
+        organ: Liver
+        duration: 6
+        effects:
+        - !type:InsertOrganEffect
+          organ: Liver
+      - name: Seal wounds
+        quality: Cauterizing
+        duration: 2
+        effects:
+        - !type:AffixOrganEffect
+          organ: Liver
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Heat: -5
+    - id: RemoveStomach
+      target: BonesOpen
+      label: surgery-edge-remove-stomach
+      conditions:
+      - !type:OrganPresentCondition
+        organ: Stomach
+      steps:
+      - name: Clamp the bleeders
+        quality: Clamping
+        duration: 4
+        effects:
+        - !type:BleedsTreatmentEffect
+          amount: 2
+      - name: Remove organ
+        quality: Manipulating
+        duration: 8
+        effects:
+        - !type:RemoveOrganEffect
+          organ: Stomach
+    - id: InsertStomach
+      target: BonesOpen
+      label: surgery-edge-insert-stomach
+      conditions:
+      - !type:PartRemovedCondition
+        category: Stomach
+      steps:
+      - name: Add organ
+        organ: Stomach
+        duration: 6
+        effects:
+        - !type:InsertOrganEffect
+          organ: Stomach
+      - name: Seal wounds
+        quality: Cauterizing
+        duration: 2
+        effects:
+        - !type:AffixOrganEffect
+          organ: Stomach
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Heat: -5
+    - id: RemoveKidneys
+      target: BonesOpen
+      label: surgery-edge-remove-kidneys
+      conditions:
+      - !type:OrganPresentCondition
+        organ: Kidneys
+      steps:
+      - name: Clamp the bleeders
+        quality: Clamping
+        duration: 4
+        effects:
+        - !type:BleedsTreatmentEffect
+          amount: 2
+      - name: Remove organ
+        quality: Manipulating
+        duration: 8
+        effects:
+        - !type:RemoveOrganEffect
+          organ: Kidneys
+    - id: InsertKidneys
+      target: BonesOpen
+      label: surgery-edge-insert-kidneys
+      conditions:
+      - !type:PartRemovedCondition
+        category: Kidneys
+      steps:
+      - name: Add organ
+        organ: Kidneys
+        duration: 6
+        effects:
+        - !type:InsertOrganEffect
+          organ: Kidneys
+      - name: Seal wounds
+        quality: Cauterizing
+        duration: 2
+        effects:
+        - !type:AffixOrganEffect
+          organ: Kidneys
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Heat: -5
+    - id: RemoveAppendix
+      target: BonesOpen
+      label: surgery-edge-remove-appendix
+      conditions:
+      - !type:OrganPresentCondition
+        organ: Appendix
+      steps:
+      - name: Clamp the bleeders
+        quality: Clamping
+        duration: 4
+        effects:
+        - !type:BleedsTreatmentEffect
+          amount: 2
+      - name: Remove organ
+        quality: Manipulating
+        duration: 8
+        effects:
+        - !type:RemoveOrganEffect
+          organ: Appendix
+    - id: InsertAppendix
+      target: BonesOpen
+      label: surgery-edge-insert-appendix
+      conditions:
+      - !type:PartRemovedCondition
+        category: Appendix
+      steps:
+      - name: Add organ
+        organ: Appendix
+        duration: 6
+        effects:
+        - !type:InsertOrganEffect
+          organ: Appendix
+      - name: Seal wounds
+        quality: Cauterizing
+        duration: 2
+        effects:
+        - !type:AffixOrganEffect
+          organ: Appendix
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Heat: -5
+    - id: CavityImplant
+      target: BonesOpen
+      label: surgery-edge-implant-or-retrieve-cavity-item
+      steps:
+      - name: Insert item into cavity
+        anyItem: true
+        duration: 4
+        effects:
+        - !type:CavityEffect
+      - name: Remove item from cavity
+        anyItem: true
+        duration: 4
+        effects:
+        - !type:CavityEffect
+          remove: true
+    - id: OpenPowerCellSlot
+      target: BonesOpen
+      label: surgery-edge-create-power-cell-slot
+      conditions:
+      - !type:OrganSlotCondition
+        organSlot: AugmentPowerCell
+        inverted: true
+      - !type:BodyComponentCondition
+        blacklist:
+          components:
+          - Silicon
+      steps:
+      - name: Carve out a cavity
+        quality: Slicing
+        duration: 6
+        effects:
+        - !type:AddOrganSlotEffect
+          organSlot: AugmentPowerCell
+    - id: InsertPowerCellSlot
+      target: BonesOpen
+      label: surgery-edge-insert-power-cell-slot
+      conditions:
+      - !type:PartRemovedCondition
+        category: AugmentPowerCell
+      steps:
+      - name: Add organ
+        organ: AugmentPowerCell
+        duration: 6
+        effects:
+        - !type:InsertOrganEffect
+          organ: AugmentPowerCell
+      - name: Seal wounds
+        quality: Cauterizing
+        duration: 2
+        effects:
+        - !type:AffixOrganEffect
+          organ: AugmentPowerCell
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Heat: -5
+    - id: RemovePowerCellSlot
+      target: BonesOpen
+      label: surgery-edge-remove-power-cell-slot
+      conditions:
+      - !type:OrganPresentCondition
+        organ: AugmentPowerCell
+      steps:
+      - name: Clamp the bleeders
+        quality: Clamping
+        duration: 4
+        effects:
+        - !type:BleedsTreatmentEffect
+          amount: 2
+      - name: Remove organ
+        quality: Manipulating
+        duration: 8
+        effects:
+        - !type:RemoveOrganEffect
+          organ: AugmentPowerCell
+    - id: OpenPowerCellCharger
+      target: BonesOpen
+      label: surgery-edge-create-power-cell-charger-slot
+      conditions:
+      - !type:OrganSlotCondition
+        organSlot: AugmentCharger
+        inverted: true
+      - !type:BodyComponentCondition
+        blacklist:
+          components:
+          - Silicon
+      steps:
+      - name: Carve out a cavity
+        quality: Slicing
+        duration: 6
+        effects:
+        - !type:AddOrganSlotEffect
+          organSlot: AugmentCharger
+    - id: InsertPowerCellCharger
+      target: BonesOpen
+      label: surgery-edge-insert-power-cell-charger
+      conditions:
+      - !type:PartRemovedCondition
+        category: AugmentCharger
+      steps:
+      - name: Add organ
+        organ: AugmentCharger
+        duration: 6
+        effects:
+        - !type:InsertOrganEffect
+          organ: AugmentCharger
+      - name: Seal wounds
+        quality: Cauterizing
+        duration: 2
+        effects:
+        - !type:AffixOrganEffect
+          organ: AugmentCharger
+        - !type:DamageEffect
+          sleepModifier: 2
+          damage:
+            types:
+              Heat: -5
+    - id: RemovePowerCellCharger
+      target: BonesOpen
+      label: surgery-edge-remove-power-cell-charger
+      conditions:
+      - !type:OrganPresentCondition
+        organ: AugmentCharger
+      steps:
+      - name: Clamp the bleeders
+        quality: Clamping
+        duration: 4
+        effects:
+        - !type:BleedsTreatmentEffect
+          amount: 2
+      - name: Remove organ
+        quality: Manipulating
+        duration: 8
+        effects:
+        - !type:RemoveOrganEffect
+          organ: AugmentCharger

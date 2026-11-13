@@ -1,0 +1,33 @@
+body-part-burst-finished = {CAPITALIZE($burst)} bursts out of {$victim}'s body!
+body-part-burst-starting = Something starts to dig its way out of {$victim}'s {$part}!
+ent-ActionBodyPartBurst = burst free!
+    .desc = Dig your way out of the flesh you are trapped in!
+
+ent-AdvancedBoneGel = bone multitool
+    .desc = A mechanized bone healer, also serves as bone setter in its powered state.
+ent-AdvancedRetractor = power pinches
+    .desc = A retractor with mechanical pinches, also serves as a hemostat in its powered state.
+ent-BoneGel = bottle of bone gel
+    .desc = A container for bone gel that often needs to be refilled from a specialized machine.
+ent-BoneGelMakeshift = makeshift bone gel
+    .desc = A poorly made substitute for bone gel. One hell of a last resort...
+ent-Bonesetter = bone setter
+    .desc = Used for setting bones back into place.
+ent-BorgOmnimedTool = integrated surgery omnitool
+    .desc = An expanded surgical omnitool capable of accelerated function compared to the normal compact version.
+ent-EnergyCautery = energy stapler
+    .desc = A cautery with an energy tip, also serves as stitches in its powered state.
+ent-EnergyScalpel = tissue cutter
+    .desc = A scalpel which uses an energy blade, also serves as a drill in its powered state.
+ent-MedicalStitches = medical stitches
+    .desc = A fine, curved needle with a length of absorbable polyglycolide suture thread.
+ent-OmnimedTool = surgical omnitool
+    .desc = A compact surgical omnitool conveniently packed like a Swiss Army knife.
+ent-OmnimedToolDebug = experimental surgical omnitool
+    .desc = { "" }
+ent-OmnimedToolSyndie = gorlex surgical omnitool
+    .desc = A compact surgical omnitool conveniently packed like a Swiss Army knife, except that its user has probably violated a couple of Swiss conventions. Can perform surgery through clothing.
+
+surgery-error-laying = They need to be laying down!
+surgery-error-self-surgery = You can't perform surgery on yourself!
+surgery-graph-ambiguous = Several procedures fit this tool. Be more specific.
