@@ -25,9 +25,3 @@ public record struct HealBleedingWoundsEvent(float BloodlossModifier, FixedPoint
 /// </summary>
 [ByRefEvent]
 public record struct PartHealAttemptEvent(bool Cancelled = false, bool Bleeding = false);
-
-/// <summary>
-/// Raised on a mob to modify self healing speed with topicals.
-/// </summary>
-[ByRefEvent]
-public record struct ModifySelfHealSpeedEvent(float Modifier = 1f);

@@ -17,9 +17,3 @@ public record struct WoundHealAttemptEvent(Entity<WoundableComponent> Woundable,
 
 [ByRefEvent]
 public record struct WoundHealAttemptOnWoundableEvent(EntityUid Wound, bool Cancelled = false);
-
-[Serializable, DataRecord]
-public partial record struct WoundableSeverityMultiplier(FixedPoint2 Change, string Identifier = "Unspecified");
-
-[Serializable, DataRecord]
-public partial record struct WoundableHealingMultiplier(FixedPoint2 Change, string Identifier = "Unspecified");
