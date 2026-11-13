@@ -32,6 +32,10 @@
         duration: 2
   - name: Incised
     label: Incision open
+    # TODO: сделать спрайт разреза на груди (сейчас заглушка из bleeding_damage)
+    overlay:
+      rsi: _RedStar/Medical/Mobs/Effects/bleeding_damage.rsi
+      stateSuffix: Minor
     packages:
     - SurgeryTendWounds
     - SurgeryTissueIncised
@@ -307,6 +311,10 @@
           organSlot: Wings
   - name: BonesOpen
     label: Ribcage open
+    # TODO: сделать спрайт раскрытой грудной клетки (сейчас заглушка из bleeding_damage)
+    overlay:
+      rsi: _RedStar/Medical/Mobs/Effects/bleeding_damage.rsi
+      stateSuffix: Severe
     edges:
     - id: CloseBones
       target: Closed

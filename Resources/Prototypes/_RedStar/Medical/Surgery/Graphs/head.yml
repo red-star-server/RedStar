@@ -32,6 +32,10 @@
         duration: 2
   - name: Incised
     label: Incision open
+    # TODO: сделать спрайт разреза на голове (сейчас заглушка из bleeding_damage)
+    overlay:
+      rsi: _RedStar/Medical/Mobs/Effects/bleeding_damage.rsi
+      stateSuffix: Minor
     packages:
     - SurgeryTendWounds
     - SurgeryTissueIncised
@@ -203,6 +207,10 @@
         - !type:RemovePartEffect
   - name: SkullOpen
     label: Skull open
+    # TODO: сделать спрайт раскрытого черепа (сейчас заглушка из bleeding_damage)
+    overlay:
+      rsi: _RedStar/Medical/Mobs/Effects/bleeding_damage.rsi
+      stateSuffix: Severe
     edges:
     - id: CloseSkull
       target: Closed

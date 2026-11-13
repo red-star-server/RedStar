@@ -18,7 +18,7 @@ public sealed partial class SurgeryGraphPrototype : IPrototype
     [DataField(required: true)]
     public string StartNode = default!;
 
-    [DataField("nodes")]
+    [DataField]
     public List<SurgeryGraphNode> Nodes = [];
 }
 
@@ -32,10 +32,23 @@ public sealed partial class SurgeryGraphNode
     public string Label = string.Empty;
 
     [DataField]
+    public SurgeryOverlay? Overlay;
+
+    [DataField]
     public List<SurgeryGraphEdge> Edges = [];
 
     [DataField]
     public List<ProtoId<SurgeryEdgePackagePrototype>> Packages = [];
+}
+
+[DataDefinition]
+public sealed partial class SurgeryOverlay
+{
+    [DataField(required: true)]
+    public string Rsi = default!;
+
+    [DataField(required: true)]
+    public string StateSuffix = default!;
 }
 
 [DataDefinition]
@@ -67,7 +80,7 @@ public sealed partial class SurgeryEdgePackagePrototype : IPrototype
     [IdDataField]
     public string ID { get; private set; } = default!;
 
-    [DataField("edges", required: true)]
+    [DataField(required: true)]
     public List<SurgeryGraphEdge> Edges = [];
 }
 

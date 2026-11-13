@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared._Trauma.Common.CCVar;
@@ -15,7 +16,9 @@ using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Content.Shared.Standing;
+using Content.Shared.Tag;
 using Robust.Shared.Configuration;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Trauma.Surgery.Graph;
@@ -30,8 +33,11 @@ public sealed partial class SurgeryGraphSystem
     [Dependency] private StandingStateSystem _standing = default!;
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private DamageableSystem _damage = default!;
+    [Dependency] private TagSystem _tag = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private EntityQuery<SurgeryTargetComponent> _targetQuery;
 
+    private static readonly ProtoId<TagPrototype> SurgeryToolTag = "SurgeryTool";
     private static readonly ProtoId<DamageTypePrototype> Poison = "Poison";
     private static readonly FixedPoint2 SepsisDamageLimit = FixedPoint2.New(90);
 
@@ -81,9 +87,39 @@ public sealed partial class SurgeryGraphSystem
         if (args.Handled || args.Used != _hands.GetActiveItemOrSelf(args.User))
             return;
 
-        var part = _part.FindBodyPart(ent.Owner, BodyPartType.Torso)?.Owner ?? ent.Owner;
+        var part = ResolveClickedPart(ent.Owner, args.ClickLocation);
         if (TryOperate(ent.Owner, part, args.User, args.Used))
             args.Handled = true;
+    }
+
+    private EntityUid ResolveClickedPart(EntityUid body, EntityCoordinates clickLocation)
+    {
+        var torso = _part.FindBodyPart(body, BodyPartType.Torso)?.Owner ?? body;
+
+        var xform = Transform(body);
+        var offset = _transform.ToMapCoordinates(clickLocation).Position - _transform.GetWorldPosition(xform);
+        var local = (-xform.LocalRotation).RotateVec(offset);
+
+        var type = ClassifyRegion(local);
+        if (type == BodyPartType.Torso)
+            return torso;
+
+        var symmetry = local.X < 0 ? BodyPartSymmetry.Left : BodyPartSymmetry.Right;
+        return _part.FindBodyPart(body, type, symmetry)?.Owner ?? torso;
+    }
+
+    private static BodyPartType ClassifyRegion(Vector2 local)
+    {
+        if (local.Y > 0.55f)
+            return BodyPartType.Head;
+
+        if (local.Y < -0.35f)
+            return local.Y < -0.85f ? BodyPartType.Foot : BodyPartType.Leg;
+
+        if (MathF.Abs(local.X) > 0.35f)
+            return MathF.Abs(local.X) > 0.7f ? BodyPartType.Hand : BodyPartType.Arm;
+
+        return BodyPartType.Torso;
     }
 
     [SubscribeLocalEvent]
@@ -160,34 +196,40 @@ public sealed partial class SurgeryGraphSystem
         if (!args.IsInDetailsRange || !IsLyingDown(ent, args.Examiner, false))
             return;
 
-        var part = _part.FindBodyPart(ent.Owner, BodyPartType.Torso)?.Owner ?? ent.Owner;
-        if (!TryComp<OperatedComponent>(part, out var operated)
-            || !TryGetGraph(operated, out var graph)
-            || GetNode(graph, operated.CurrentNode) is not { } node)
+        var held = _hands.GetActiveItemOrSelf(args.Examiner);
+        if (!_tag.HasTag(held, SurgeryToolTag))
             return;
 
-        var labels = new List<string>();
-        foreach (var edge in GetAllEdges(node))
+        foreach (var part in _part.GetBodyParts(ent.Owner))
         {
-            if (!EdgeConditionsMet(part, edge))
+            if (!TryComp<OperatedComponent>(part.Owner, out var operated)
+                || !TryGetGraph(operated, out var graph)
+                || GetNode(graph, operated.CurrentNode) is not { } node)
                 continue;
 
-            var label = edge.Label is { Length: > 0 } text
-                ? Loc.TryGetString(text, out var localized) ? localized : text
-                : edge.Id;
-            if (!labels.Contains(label))
-                labels.Add(label);
+            var labels = new List<string>();
+            foreach (var edge in GetAllEdges(node))
+            {
+                if (!EdgeConditionsMet(part, edge))
+                    continue;
 
-            if (labels.Count >= MaxHintedEdges)
-                break;
+                var label = edge.Label is { Length: > 0 } text
+                    ? Loc.TryGetString(text, out var localized) ? localized : text
+                    : edge.Id;
+                if (!labels.Contains(label))
+                    labels.Add(label);
+
+                if (labels.Count >= MaxHintedEdges)
+                    break;
+            }
+
+            if (labels.Count == 0)
+                continue;
+
+            args.PushMarkup(Loc.GetString("surgery-world-target-hint",
+                ("part", MetaData(part).EntityName),
+                ("steps", string.Join(", ", labels))));
         }
-
-        if (labels.Count == 0)
-            return;
-
-        args.PushMarkup(Loc.GetString("surgery-world-target-hint",
-            ("part", MetaData(part).EntityName),
-            ("steps", string.Join(", ", labels))));
     }
 
     private bool IsLyingDown(EntityUid entity, EntityUid user, bool showPopup)
@@ -195,7 +237,6 @@ public sealed partial class SurgeryGraphSystem
         if (_standing.IsDown(entity))
             return true;
 
-        // Non-humanoid bodies without buckle can still be operated on.
         if (!TryComp<BuckleComponent>(entity, out var buckle))
             return true;
 

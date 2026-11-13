@@ -32,6 +32,10 @@
         duration: 2
   - name: Incised
     label: Incision open
+    # TODO: сделать спрайт разреза на конечности (сейчас заглушка из bleeding_damage)
+    overlay:
+      rsi: _RedStar/Medical/Mobs/Effects/bleeding_damage.rsi
+      stateSuffix: Minor
     packages:
     - SurgeryTendWounds
     - SurgeryTissueIncised
