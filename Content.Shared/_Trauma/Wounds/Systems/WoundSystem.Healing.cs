@@ -18,7 +18,7 @@ public partial class WoundSystem
     [SubscribeLocalEvent]
     private void OnRejuvenate(Entity<WoundableComponent> ent, ref RejuvenateEvent args)
     {
-        _container.CleanContainer(ent.Comp.Wounds); // no more wounds
+        _container.CleanContainer(ent.Comp.Wounds);
         ent.Comp.Bleeds = FixedPoint2.Zero;
         DirtyField(ent, ent.Comp, nameof(WoundableComponent.Bleeds));
         UpdateWoundableIntegrity(ent.AsNullable());
@@ -48,7 +48,6 @@ public partial class WoundSystem
             return false;
         }
 
-        // Collect all woundables and their total bleeding amounts
         var bleedingWoundables = new List<(EntityUid Woundable, FixedPoint2 BleedAmount)>();
         foreach (var part in _body.GetOrgans<WoundableComponent>(body))
         {
@@ -67,7 +66,6 @@ public partial class WoundSystem
                 bleedingWoundables.Add((part.Owner, totalBleedAmount));
         }
 
-        // Sort woundables by bleeding amount (descending)
         var sortedWoundables = bleedingWoundables
             .OrderByDescending(x => x.BleedAmount)
             .Select(x => x.Woundable)
@@ -76,7 +74,6 @@ public partial class WoundSystem
         var remainingHealAmount = healAmount;
         var anyHealed = false;
 
-        // Apply healing to each woundable in order
         foreach (var woundable in sortedWoundables)
         {
             if (remainingHealAmount <= 0)

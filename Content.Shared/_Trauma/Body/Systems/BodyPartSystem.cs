@@ -27,7 +27,6 @@ public sealed partial class BodyPartSystem : CommonBodyPartSystem
         if (_timing.ApplyingState)
             return;
 
-        // fresh part, no organs inside
         if (GetSeveredOrgansContainer(ent.AsNullable()) is not {} container)
             return;
 
@@ -55,7 +54,6 @@ public sealed partial class BodyPartSystem : CommonBodyPartSystem
         var body = args.Target.AsNullable();
         if (TerminatingOrDeleted(ent))
         {
-            // this part is being deleted so detach the children
             foreach (var organ in ent.Comp.Children.Values.ToArray())
             {
                 _body.RemoveOrgan(body, organ);
@@ -66,12 +64,9 @@ public sealed partial class BodyPartSystem : CommonBodyPartSystem
         var container = EnsureSeveredOrgansContainer(ent);
         foreach (var (category, organ) in ent.Comp.Children.ToArray())
         {
-            // slot has an organ so try to put it in the container
             if (!_container.Insert(organ, container))
             {
-                // probably from failing to be removed, suspicious
                 Log.Error($"Failed to store {ToPrettyString(ent)}'s {category} organ {ToPrettyString(organ)}!");
-                continue;
             }
         }
     }
@@ -82,7 +77,6 @@ public sealed partial class BodyPartSystem : CommonBodyPartSystem
         if (GetSeveredOrgansContainer(ent.AsNullable()) is not {} container)
             return;
 
-        // gibbing a severed head spills its brains out >:D
         foreach (var organ in container.ContainedEntities)
         {
             args.Giblets.Add(organ);
@@ -94,7 +88,7 @@ public sealed partial class BodyPartSystem : CommonBodyPartSystem
         DebugTools.Assert(part.Owner != organ.Owner);
         if (!_query.Resolve(part, ref part.Comp) ||
             _body.GetCategory(organ) is not {} category ||
-            !CanInsertOrgan(part, category)) // just incase
+            !CanInsertOrgan(part, category))
             return;
 
         part.Comp.Children[category] = organ;

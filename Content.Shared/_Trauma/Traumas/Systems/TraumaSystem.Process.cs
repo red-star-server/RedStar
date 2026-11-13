@@ -264,7 +264,6 @@ public partial class TraumaSystem
         if (!_woundableQuery.Resolve(part, ref part.Comp))
             return traumaList;
 
-        // Trauma chance is higher based on part integrity damage delta
         var multiplier = MathF.Log(MathHelper.E + 0.1f * severity.Float());
 
         var target = (part, part.Comp);
@@ -361,7 +360,7 @@ public partial class TraumaSystem
     {
         if (_body.GetBody(target.Owner) is not {} body ||
             _part.GetPartType(target) is not {} partType)
-            return false; // Can't sever if already severed
+            return false;
 
         if (!_boneQuery.TryComp(target, out var bone))
             return false;
@@ -404,7 +403,7 @@ public partial class TraumaSystem
     {
         if (_body.GetBody(target.Owner) is not {} body ||
             _part.GetPartType(target) is not {} partType)
-            return false; // No entity to apply traumas to
+            return false;
 
         var totalIntegrity = FixedPoint2.Zero;
         foreach (var organ in _part.GetPartOrgans(target.Owner).Values)
@@ -415,7 +414,7 @@ public partial class TraumaSystem
             totalIntegrity += organComp.OrganIntegrity;
         }
 
-        if (totalIntegrity <= 0) // No surviving organs
+        if (totalIntegrity <= 0)
             return false;
 
         var deduction = GetTraumaChanceDeduction(
@@ -446,7 +445,6 @@ public partial class TraumaSystem
         Entity<TraumaInflicterComponent> woundInflicter,
         float multiplier)
     {
-        // Can't sever if already severed
         if (_body.GetBody(target.Owner) is not {} body ||
             _part.GetPartType(target.Owner) is not {} partType ||
             // can't dismember the root part

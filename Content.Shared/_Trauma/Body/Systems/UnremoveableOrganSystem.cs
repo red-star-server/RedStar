@@ -22,7 +22,7 @@ public sealed partial class UnremoveableOrganSystem : EntitySystem
     private void OnRemoved(Entity<UnremoveableOrganComponent> ent, ref OrganGotRemovedEvent args)
     {
         if (TerminatingOrDeleted(args.Target) || Transform(args.Target).MapID == MapId.Nullspace || _timing.ApplyingState)
-            return; // all good if it's being deleted or leaving pvs range
+            return;
 
         // removing the root part is never an amputation, the body is deleted instead
         if (!HasComp<ChildOrganComponent>(ent))

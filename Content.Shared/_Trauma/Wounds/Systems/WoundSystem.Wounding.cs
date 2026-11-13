@@ -149,12 +149,11 @@ public sealed partial class WoundSystem
         if (!ent.Comp.AllowWounds)
             return;
 
-        // Create or update wounds based on damage changes
         var part = ent.AsNullable();
         foreach (var (damageType, damageValue) in args.ModifiedDamage.DamageDict)
         {
             if (damageValue == 0)
-                continue; // Only create wounds for damage or healing
+                continue;
 
             if (damageValue < 0)
             {
@@ -162,7 +161,6 @@ public sealed partial class WoundSystem
             }
             else
             {
-                // Only create wound if it's a valid damage type for wounds
                 var id = args.Damage.GetWoundId(damageType);
                 if (!IsWoundPrototypeValid(id))
                     continue;
@@ -177,7 +175,6 @@ public sealed partial class WoundSystem
             }
         }
 
-        // Update woundable integrity based on new damage
         UpdateWoundableIntegrity(part);
         CheckWoundableSeverityThresholds(part);
     }
@@ -419,7 +416,7 @@ public sealed partial class WoundSystem
             !_woundableQuery.Resolve(parent, ref parent.Comp) ||
             !_woundableQuery.Resolve(part, ref part.Comp) ||
             _body.GetBody(parent) is not {} body ||
-            _body.GetBody(part) != body || // the parts have to be from the same body
+            _body.GetBody(part) != body ||
             !_body.RemoveOrgan(body, part.Owner))
             return false;
 
@@ -480,12 +477,11 @@ public sealed partial class WoundSystem
         if (!_woundableQuery.Resolve(part, ref part.Comp)) // it can be null while applying state if the entity is entering pvs right now
             return;
 
-        // Calculate total damage on this part
         var damage = FixedPoint2.Zero;
         foreach (var wound in part.Comp.Wounds.ContainedEntities)
         {
             var woundComp = _query.Comp(wound);
-            if (woundComp.IsScar) // scars don't affect limb integrity
+            if (woundComp.IsScar)
                 continue;
 
             damage += woundComp.WoundSeverityPoint;

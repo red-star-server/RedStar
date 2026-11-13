@@ -69,7 +69,6 @@ public sealed partial class SoftCritSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnSpeechTypeOverride(Entity<SoftCritMobComponent> ent, ref SpeechTypeOverrideEvent args)
     {
-        // Soft critical state limits speech.
         if (args.DesiredType == InGameICChatType.Speak)
             args.DesiredType = InGameICChatType.Whisper;
     }
@@ -98,7 +97,6 @@ public sealed partial class SoftCritSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnUnbuckleAttempt(Entity<SoftCritMobComponent> ent, ref UnbuckleAttemptEvent args)
     {
-        // can't unbuckle yourself if you are in softcrit
         args.Cancelled |= args.Buckle.Owner == args.User;
     }
 

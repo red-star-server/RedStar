@@ -77,7 +77,7 @@ public sealed partial class BodySystem
             return false;
 
         if (HasComp<EnabledOrganComponent>(organ))
-            return true; // already enabled
+            return true;
 
         var attemptEv = new OrganEnableAttemptEvent(body);
         RaiseLocalEvent(organ, ref attemptEv);
@@ -86,7 +86,6 @@ public sealed partial class BodySystem
 
         EnsureComp<EnabledOrganComponent>(organ);
 
-        // let other systems do their logic now
         var ev = new OrganEnabledEvent(body);
         RaiseLocalEvent(organ, ref ev);
         return true;
@@ -102,7 +101,7 @@ public sealed partial class BodySystem
             return false;
 
         if (!TryComp<EnabledOrganComponent>(organ, out var enabled))
-            return true; // already disabled
+            return true;
 
         // no attempt event that wouldn't make any sense
 
@@ -258,7 +257,7 @@ public sealed partial class BodySystem
             return false;
 
         if (container.Contains(organ))
-            return true; // it was already inserted
+            return true;
 
         var ev = new OrganInsertAttemptEvent(body, organ);
         RaiseLocalEvent(body, ref ev);
@@ -282,7 +281,7 @@ public sealed partial class BodySystem
             return false;
 
         if (!container.Contains(organ))
-            return true; // it was already removed
+            return true;
 
         var ev = new OrganRemoveAttemptEvent(body, organ);
         RaiseLocalEvent(body, ref ev);
@@ -335,7 +334,7 @@ public sealed partial class BodySystem
         bool force = false)
     {
         if (GetOrgan(body, category) is not {} organ)
-            return false; // no organ found
+            return false;
 
         return AddOrganMarking(organ, marking, color, force);
     }
@@ -350,7 +349,7 @@ public sealed partial class BodySystem
         bool force = false)
     {
         if (!Resolve(organ, ref organ.Comp))
-            return false; // organ doesn't support markings
+            return false;
 
         var markingData = organ.Comp.MarkingData;
         var proto = ProtoMan.Index(marking);
@@ -358,28 +357,25 @@ public sealed partial class BodySystem
         if (!force)
         {
             if (proto.GroupWhitelist?.Contains(markingData.Group) == false)
-                return false; // marking isn't whitelisted for this species/group
+                return false;
 
             if (!markingData.Layers.Contains(layer))
-                return false; // this organ doesn't support the needed marking layer
+                return false;
         }
 
         var markings = organ.Comp.Markings;
-        // ensure there's a list of markings for the given layer
         if (!markings.TryGetValue(layer, out var list))
         {
             list = [];
             markings[layer] = list;
         }
 
-        // check for duplicates first
         foreach (var data in list)
         {
             if (data.MarkingId == marking)
-                return false; // duplicate found, skip adding it
+                return false;
         }
 
-        // good to go
         list.Add(new Marking(marking, color != null
             ? Enumerable.Repeat(color.Value, proto.Sprites.Count)
             : []));

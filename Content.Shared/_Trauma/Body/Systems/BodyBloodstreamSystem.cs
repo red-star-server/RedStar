@@ -196,7 +196,7 @@ public sealed partial class BodyBloodstreamSystem : EntitySystem
 
         var nearestModifier = ent.Comp.BleedingModifiers.FirstOrNull();
         if (nearestModifier == null)
-            return true; // No modifiers. return true
+            return true;
 
         var lastCanBleed = true;
         var lastPriority = int.MinValue;
@@ -220,8 +220,6 @@ public sealed partial class BodyBloodstreamSystem : EntitySystem
             args.Component.WoundSeverityPoint < component.SeverityThreshold)
             return;
 
-        // wounds that BLEED will not HEAL.
-        // wounds that bleed. will you heal them, to me?
         component.BleedingAmountRaw = args.Component.WoundSeverityPoint * _bleedingSeverity;
 
         var formula = (float) (args.Component.WoundSeverityPoint / _bleedScaleTime * component.ScalingSpeed);
@@ -268,7 +266,6 @@ public sealed partial class BodyBloodstreamSystem : EntitySystem
         {
             component.ScalingLimit += 0.6;
             component.IsBleeding = true;
-            // When bleeding is reopened, the severity is increased
         }
 
         if (component.BleedingAmountRaw > 0)
@@ -310,7 +307,7 @@ public sealed partial class BodyBloodstreamSystem : EntitySystem
             var totalPartBleeds = FixedPoint2.Zero;
             foreach (var wound in _wound.GetWoundableWounds(part.AsNullable()))
             {
-            if (_bleedQuery.TryComp(wound, out var bleeds) && bleeds.IsBleeding)
+                if (_bleedQuery.TryComp(wound, out var bleeds) && bleeds.IsBleeding)
                     totalPartBleeds += bleeds.BleedingAmount;
             }
             total += totalPartBleeds;

@@ -1,13 +1,7 @@
 using System.Linq;
-using Content.Shared._Trauma.Augments;
-using Content.Shared.Actions.Components;
 using Content.Shared.Body;
-using Content.Shared.Item.ItemToggle;
 using Content.Shared.Power.EntitySystems;
-using Content.Shared.PowerCell.Components;
-using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Verbs;
-using Content.Shared.Weapons.Melee;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -18,7 +12,6 @@ namespace Content.IntegrationTests.Tests._Trauma;
 public sealed partial class SurgeryTest
 {
     private static readonly ProtoId<OrganCategoryPrototype> AugmentCell = "AugmentPowerCell";
-    private static readonly ProtoId<OrganCategoryPrototype> ArmAugment = "ArmAugment";
 
     private void InsertAugmentCell(EntityUid slot, EntityUid battery)
     {

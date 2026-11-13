@@ -142,12 +142,6 @@ public sealed partial class TargetingSystem : SharedTargetingSystem
 
         var max = (int) TargetBodyPartNonFlag.Max;
 
-        // delta = 1
-        // 0 -> 1 (1 % 13)
-        // 12 -> 0 (13 % 13)
-        // delta = -1
-        // 0 -> 12
-        // 12 -> 11
         var next = (int) targeting.TargetNonFlag + delta;
         if (next < 0)
             next = max;

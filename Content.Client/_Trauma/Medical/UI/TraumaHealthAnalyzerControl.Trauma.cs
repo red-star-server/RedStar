@@ -10,7 +10,6 @@ using Content.Shared.Atmos.Rotting;
 using Content.Shared.Body;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
@@ -125,8 +124,6 @@ public sealed partial class TraumaHealthAnalyzerControl
         _target = target;
         var humanoid = _entityManager.HasComponent<HumanoidProfileComponent>(target);
         SetActiveButtons(humanoid);
-
-        // Patient Information
 
         DamageLabelVital.Text = state.VitalDamage.ToString();
 
@@ -277,7 +274,7 @@ public sealed partial class TraumaHealthAnalyzerControl
         GroupsContainer.RemoveAllChildren();
         foreach (var organ in _body.GetInternalOrgans(body))
         {
-            if (organ.Comp.IntegrityCap == 0) // avoid division by zero
+            if (organ.Comp.IntegrityCap == 0)
                 continue;
 
             DrawOrganDiagnostics(organ, 100 * organ.Comp.OrganIntegrity / organ.Comp.IntegrityCap);
@@ -476,7 +473,7 @@ public sealed partial class TraumaHealthAnalyzerControl
                         continue;
 
                     var reagentName = Loc.GetString("chem-master-window-unknown-reagent-text");
-                    if (_prototypes.Resolve<ReagentPrototype>(reagent.Reagent.Prototype, out var proto))
+                    if (_prototypes.Resolve(reagent.Reagent.Prototype, out var proto))
                         reagentName = proto.LocalizedName;
 
                     var reagentString = $"{Loc.GetString(

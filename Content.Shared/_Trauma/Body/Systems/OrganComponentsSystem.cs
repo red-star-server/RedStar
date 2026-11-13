@@ -66,7 +66,6 @@ public sealed partial class OrganComponentsSystem : EntitySystem
         if (ent.Comp.OnAdd is not { } added)
             return;
 
-        // Only remove components that this organ actually granted; leave pre-existing ones alone.
         foreach (var name in ent.Comp.AddedKeys)
         {
             var type = Factory.GetRegistration(name).Type;

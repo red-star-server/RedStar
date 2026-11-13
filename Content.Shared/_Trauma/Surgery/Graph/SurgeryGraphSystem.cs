@@ -83,17 +83,6 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         return true;
     }
 
-    public bool HasAvailableEdge(EntityUid target, SurgeryGraphNode node)
-    {
-        foreach (var edge in GetAllEdges(node))
-        {
-            if (EdgeConditionsMet(target, edge))
-                return true;
-        }
-
-        return false;
-    }
-
     public static bool IsBusy(OperatedComponent comp) => comp.IsOperating;
 
     #endregion
@@ -172,24 +161,6 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         }
 
         return false;
-    }
-
-    public bool TryPerformEdgeStep(EntityUid target, EntityUid surgeon, EntityUid heldItem, string edgeId)
-    {
-        if (!TryComp<OperatedComponent>(target, out var comp) || IsBusy(comp))
-            return false;
-
-        if (!TryGetGraph(comp, out var graph) || GetEdge(graph, comp.CurrentNode, edgeId) is not { } edge)
-            return false;
-
-        if (edge.Steps.Count == 0 || !EdgeConditionsMet(target, edge))
-            return false;
-
-        var index = GetStepIndex(comp, edge);
-        if (!TryMatchTool(edge.Steps[index], heldItem))
-            return false;
-
-        return StartStep(surgeon, target, comp, edge, index, heldItem);
     }
 
     #endregion

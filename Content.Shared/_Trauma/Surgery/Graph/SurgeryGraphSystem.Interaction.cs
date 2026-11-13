@@ -130,32 +130,6 @@ public sealed partial class SurgeryGraphSystem
         return BodyPartType.Torso;
     }
 
-    [SubscribeLocalEvent]
-    private void OnPartInteractUsing(Entity<BodyPartComponent> ent, ref InteractUsingEvent args)
-    {
-        if (args.Handled || args.Used != _hands.GetActiveItemOrSelf(args.User))
-            return;
-
-        var body = _body.GetBody(ent.Owner) ?? ent.Owner;
-        if (TryOperate(body, ent.Owner, args.User, args.Used))
-            args.Handled = true;
-    }
-
-    [SubscribeLocalEvent]
-    private void OnOrganInteractUsing(Entity<OrganComponent> ent, ref InteractUsingEvent args)
-    {
-        if (args.Handled || args.Used != _hands.GetActiveItemOrSelf(args.User))
-            return;
-
-        if (_body.GetCategory(ent.Owner) is not { } category)
-            return;
-
-        var part = _part.GetOuterOrgan(ent.Owner);
-        var body = _body.GetBody(part) ?? part;
-        if (TryOperate(body, part, args.User, args.Used, category))
-            args.Handled = true;
-    }
-
     private bool TryOperate(EntityUid body, EntityUid part, EntityUid user, EntityUid used, ProtoId<OrganCategoryPrototype>? focusOrgan = null)
     {
         if (!IsLyingDown(body, user, true))

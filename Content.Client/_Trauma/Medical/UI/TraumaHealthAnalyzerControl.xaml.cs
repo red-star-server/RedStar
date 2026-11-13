@@ -53,7 +53,7 @@ public sealed partial class TraumaHealthAnalyzerControl : BoxContainer
         var target = _entityManager.GetEntity(state.TargetEntity);
 
         if (target == null
-            || !_entityManager.TryGetComponent<DamageableComponent>(target, out var damageable))
+            || !_entityManager.TryGetComponent<DamageableComponent>(target, out _))
         {
             NoPatientDataText.Visible = true;
             return;
@@ -61,15 +61,11 @@ public sealed partial class TraumaHealthAnalyzerControl : BoxContainer
 
         NoPatientDataText.Visible = false;
 
-        // Scan Mode
-
         ScanModeLabel.Text = state.ScanMode
             ? Loc.GetString("health-analyzer-window-scan-mode-active")
             : Loc.GetString("health-analyzer-window-scan-mode-inactive");
 
         ScanModeLabel.FontColorOverride = state.ScanMode ? Color.Green : Color.Red;
-
-        // Patient Information
 
         SpriteView.SetEntity(target.Value);
         SpriteView.Visible = state.ScanMode;
@@ -88,8 +84,6 @@ public sealed partial class TraumaHealthAnalyzerControl : BoxContainer
                 ? Loc.GetString(_prototypes.Index(humanoidComponent.Species).Name)
                 : Loc.GetString("health-analyzer-window-entity-unknown-species-text");
 
-        // Basic Diagnostic
-
         TemperatureLabel.Text = !float.IsNaN(state.Temperature)
             ? $"{state.Temperature - Atmospherics.T0C:F1} °C ({state.Temperature:F1} K)"
             : Loc.GetString("health-analyzer-window-entity-unknown-value-text");
@@ -103,13 +97,9 @@ public sealed partial class TraumaHealthAnalyzerControl : BoxContainer
                 ? GetStatus(mobStateComponent.CurrentState)
                 : Loc.GetString("health-analyzer-window-entity-unknown-text");
 
-        // Total Damage
-
         DamageLabel.Text = _damageable.GetTotalDamage(target.Value).ToString();
 
-        // Alerts
-
-        var showAlerts = state.Unrevivable == true || state.Bleeding.Count > 0; // Show alerts when any body part is bleeding.
+        var showAlerts = state.Unrevivable == true || state.Bleeding.Count > 0;
 
         AlertsDivider.Visible = showAlerts;
         AlertsContainer.Visible = showAlerts;
@@ -117,7 +107,7 @@ public sealed partial class TraumaHealthAnalyzerControl : BoxContainer
         if (showAlerts)
             AlertsContainer.RemoveAllChildren();
 
-        if (state.Unrevivable == true)
+        if (state.Unrevivable)
         {
             AlertsContainer.AddChild(new RichTextLabel
             {
@@ -137,8 +127,6 @@ public sealed partial class TraumaHealthAnalyzerControl : BoxContainer
             });
         }
 
-        // Damage Groups
-
         var damageSortedGroups =
             _damageable.GetDamagePerGroup(target.Value)
                 .OrderByDescending(damage => damage.Value)
@@ -156,7 +144,7 @@ public sealed partial class TraumaHealthAnalyzerControl : BoxContainer
         return mobState switch
         {
             MobState.Alive => Loc.GetString("health-analyzer-window-entity-alive-text"),
-            MobState.SoftCrit => Loc.GetString("health-analyzer-window-entity-critical-text"), // Trauma - include softcrit
+            MobState.SoftCrit => Loc.GetString("health-analyzer-window-entity-critical-text"),
             MobState.Critical => Loc.GetString("health-analyzer-window-entity-critical-text"),
             MobState.Dead => Loc.GetString("health-analyzer-window-entity-dead-text"),
             _ => Loc.GetString("health-analyzer-window-entity-unknown-text"),
@@ -176,7 +164,7 @@ public sealed partial class TraumaHealthAnalyzerControl : BoxContainer
 
             var groupTitleText = $"{Loc.GetString(
                 "health-analyzer-window-damage-group-text",
-                ("damageGroup", _prototypes.Index<DamageGroupPrototype>(damageGroupId).LocalizedName),
+                ("damageGroup", _prototypes.Index(damageGroupId).LocalizedName),
                 ("amount", damageAmount)
             )}";
 
@@ -190,8 +178,7 @@ public sealed partial class TraumaHealthAnalyzerControl : BoxContainer
 
             GroupsContainer.AddChild(groupContainer);
 
-            // Show the damage for each type in that group.
-            var group = _prototypes.Index<DamageGroupPrototype>(damageGroupId);
+            var group = _prototypes.Index(damageGroupId);
 
             foreach (var type in group.DamageTypes)
             {
@@ -200,7 +187,7 @@ public sealed partial class TraumaHealthAnalyzerControl : BoxContainer
 
                 var damageString = Loc.GetString(
                     "health-analyzer-window-damage-type-text",
-                    ("damageType", _prototypes.Index<DamageTypePrototype>(type).LocalizedName),
+                    ("damageType", _prototypes.Index(type).LocalizedName),
                     ("amount", typeAmount)
                 );
 
@@ -215,7 +202,7 @@ public sealed partial class TraumaHealthAnalyzerControl : BoxContainer
         var rsiSprite = new SpriteSpecifier.Rsi(rsiPath, texture);
 
         var rsi = _cache.GetResource<RSIResource>(rsiSprite.RsiPath).RSI;
-        if (!rsi.TryGetState(rsiSprite.RsiState, out var state))
+        if (!rsi.TryGetState(rsiSprite.RsiState, out _))
         {
             rsiSprite = new SpriteSpecifier.Rsi(rsiPath, "unknown");
         }

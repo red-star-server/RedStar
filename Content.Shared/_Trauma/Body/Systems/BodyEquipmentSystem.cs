@@ -67,14 +67,12 @@ public sealed partial class BodyEquipmentSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnCheckEquipmentPart(Entity<BodyEquipmentComponent> ent, ref CheckEquipmentPartEvent args)
     {
-        // If there's no body part associated with the slot, just allow it
         if (GetRequiredPart(ent.Owner, args.Slot) is not {} part)
         {
             args.Handled = true;
             return;
         }
 
-        // only allow if this body has the required part
         if (HasBodyPart(ent, part))
             args.Handled = true;
     }
@@ -112,7 +110,6 @@ public sealed partial class BodyEquipmentSystem : EntitySystem
     {
         // don't drop for mobs being deleted, gibbing etc would handle it themselves
         if (TerminatingOrDeleted(ent) || !_inventoryQuery.Resolve(ent, ref ent.Comp) ||
-            // only care about parts being removed
             _part.GetPartType(part) is not { } type ||
             // do nothing if there's e.g. a second foot to wear shoes with. there's no individual shoe items.
             _part.GetBodyParts(ent.Owner, type).Count != 0)

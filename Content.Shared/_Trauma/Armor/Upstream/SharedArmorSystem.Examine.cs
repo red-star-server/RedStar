@@ -22,7 +22,6 @@ public abstract partial class SharedArmorSystem
 
         if (!component.ArmourCoverageHidden)
         {
-            // <Trauma>
             var coveredParts = coverage.Where(coveragePart => coveragePart != BodyPartType.Other).ToList();
             List<string> coverageText = [];
             foreach (var part in coveredParts)
@@ -32,7 +31,6 @@ public abstract partial class SharedArmorSystem
 
             msg.PushNewline();
             msg.AddMarkupOrThrow(Loc.GetString("armor-coverage-value", ("type", ContentLocalizationManager.FormatList(coverageText))));
-            // </Trauma>
         }
 
         if (component.ArmourModifiersHidden) return msg;
@@ -40,7 +38,7 @@ public abstract partial class SharedArmorSystem
         {
             msg.PushNewline();
             var armorType = GetArmorDamageTypeName(coefficientArmor.Key);
-            msg.AddMarkupOrThrow(Loc.GetString("armor-coefficient-value-trauma", // Trauma - better locale string
+            msg.AddMarkupOrThrow(Loc.GetString("armor-coefficient-value-trauma",
                 ("type", armorType),
                 ("value", MathF.Abs(1f - coefficientArmor.Value) * 100), ("protect", coefficientArmor.Value < 1f) // Trauma - better values
             ));

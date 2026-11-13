@@ -7,5 +7,5 @@
     DrinkWaterBottleFull: 1 # Available in survival boxes; this recipe currently requires an explicit prototype.
     MaterialCloth1: 1
   reagents:
-    Milk: 10 # good for bones
+    Milk: 10
     SpaceGlue: 15

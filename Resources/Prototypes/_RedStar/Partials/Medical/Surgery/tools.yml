@@ -34,7 +34,7 @@
     useSound: /Audio/_RedStar/Medical/Surgery/cautery1.ogg
 
 - type: entity
-  parent: [ BaseToolSurgery, BaseMedicalScienceContraband ] # Trauma - Made it contraband
+  parent: [ BaseToolSurgery, BaseMedicalScienceContraband ]
   id: Drill
   name: drill
   description: A surgical drill for making holes into hard material.
@@ -61,7 +61,7 @@
     useSound: /Audio/_RedStar/Medical/Surgery/saw.ogg
 
 - type: entity
-  parent: [ BaseToolSurgery, BaseMedicalScienceContraband ] # Trauma - Made it contraband
+  parent: [ BaseToolSurgery, BaseMedicalScienceContraband ]
   id: Scalpel
   name: scalpel
   description: A surgical tool used to make incisions into flesh.
@@ -73,7 +73,7 @@
   - type: Tool
     qualities:
       - Slicing
-    speedModifier: 0.66 # pretend the sixes go on forever :)
+    speedModifier: 0.66
     useSound: /Audio/_RedStar/Medical/Surgery/scalpel1.ogg
   - type: Utensil
     types:
@@ -95,10 +95,10 @@
       path: /Audio/Weapons/bladeslice.ogg
 
 - type: entity
-  parent: [ Scalpel, BaseMinorContraband] # Trauma - Contraband the prison shiv.
+  parent: [ Scalpel, BaseMinorContraband]
   id: ScalpelShiv
   name: shiv
-  description: A pointy piece of glass, abraded to an edge and wrapped in tape for a handle. # Could become a decent tool or weapon with right tool mods.
+  description: A pointy piece of glass, abraded to an edge and wrapped in tape for a handle.
   components:
   - type: Sprite
     sprite: _RedStar/Medical/LegacyTools/scalpel.rsi
@@ -185,7 +185,7 @@
     useSound: /Audio/_RedStar/Medical/Surgery/retractor1.ogg
 
 - type: entity
-  parent: [ BaseToolSurgery, BaseMedicalScienceContraband ] # Trauma - Made it contraband
+  parent: [ BaseToolSurgery, BaseMedicalScienceContraband ]
   id: Saw
   name: metal saw
   description: For cutting wood and other objects to pieces. Or sawing bones, in case of emergency.
@@ -201,17 +201,17 @@
     sprite: _RedStar/Medical/LegacyTools/saw.rsi
     storedRotation: 90
   - type: Tool
-    useSound: # Trauma
+    useSound:
       path: /Audio/_RedStar/Medical/Surgery/bone_saw.ogg
     qualities:
       - Sawing
       - Slicing
 
 - type: entity
-  parent: [Saw, BaseMinorContraband] # Trauma - add contraband mark
+  parent: [Saw, BaseMinorContraband]
   id: SawImprov
   name: choppa
-  description: A wicked serrated blade made of whatever nasty sharp things you could find. # It would make a pretty decent weapon, given there are more space for some tool mods too.
+  description: A wicked serrated blade made of whatever nasty sharp things you could find.
   components:
   - type: Sprite
     state: improv
@@ -238,7 +238,6 @@
   - type: Tag
     tags:
     - SurgeryTool
-    - CircularSaw
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/circular-saw.rsi
     state: circular-saw
@@ -255,7 +254,7 @@
     qualities:
       - Sawing
     speedModifier: 1.5
-    useSound: # Trauma
+    useSound:
       path: /Audio/_RedStar/Medical/Surgery/saw.ogg
 
 - type: entity
