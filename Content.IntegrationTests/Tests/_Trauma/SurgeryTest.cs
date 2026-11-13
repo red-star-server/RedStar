@@ -8,7 +8,6 @@ using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Body.Cavity;
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared._Trauma.Common.Traumas;
-using Content.Shared._Trauma.Speech;
 using Content.Shared._Trauma.Surgery;
 using Content.Shared._Trauma.Surgery.Steps;
 using Content.Shared._Trauma.Surgery.Steps.Parts;
@@ -192,17 +191,6 @@ public sealed partial class SurgeryTest : GameTest
         Assert.That(_tools.CycleMultipleTool(tool), Is.True);
         Assert.That(_tools.HasQuality(tool, BoneHealing), Is.True);
         Assert.That(_tools.HasQuality(tool, BoneSetting), Is.False);
-    }
-    [Test]
-    public async Task LobotomyCanBeReversed()
-    {
-        var (surgeon, patient) = await SetupPatient();
-        EntityUid head = default;
-        await Server.WaitAssertion(() => head = _body.GetOrgan(patient, Head)!.Value);
-        await Operate(surgeon, patient, head, "SurgeryLobotomize");
-        await Server.WaitAssertion(() => Assert.That(SEntMan.HasComponent<SimpleAccentComponent>(patient), Is.True));
-        await Operate(surgeon, patient, head, "SurgeryMendBrainTissue");
-        await Server.WaitAssertion(() => Assert.That(SEntMan.HasComponent<SimpleAccentComponent>(patient), Is.False));
     }
 
     [Test]

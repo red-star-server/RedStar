@@ -11,11 +11,3 @@
       Normal: 30
       Damaged: 12
       Destroyed: 0
-
-- type: entity
-  abstract: true
-  parent: BaseAction
-  id: BaseAugmentAction
-  components:
-  - type: InstantAction
-    event: !type:AugmentActionEvent
