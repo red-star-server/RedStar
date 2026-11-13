@@ -50,7 +50,3 @@ ent-SurgeryTendWoundsBurn = Обработать ожоги
     .desc = { ent-SurgeryBase.desc }
 ent-SurgeryInsertItem = Имплантировать предмет в полость
     .desc = { ent-SurgeryBase.desc }
-ent-SurgeryLobotomize = Провести лоботомию
-    .desc = { ent-SurgeryBase.desc }
-ent-SurgeryMendBrainTissue = Восстановить ткани мозга
-    .desc = { ent-SurgeryBase.desc }
