@@ -32,3 +32,34 @@
   - proto: MobGoliath
     cost: 10
     prob: 0.02
+
+- type: salvageFaction
+  id: Argocytes
+  desc: salvage-faction-argocytes
+  entries:
+  - proto: MobArgocyteSlurva
+  - proto: MobArgocyteBarrier
+  - proto: MobArgocyteSkitter
+  - proto: MobArgocyteSwiper
+  - proto: MobArgocyteMolder
+  - proto: MobArgocytePouncer
+    cost: 2
+    prob: 0.1
+  - proto: MobArgocyteGlider
+    cost: 1
+    prob: 0.1
+  - proto: MobArgocyteHarvester
+    cost: 5
+    prob: 0.1
+  - proto: MobArgocyteCrawler
+    cost: 5
+    prob: 0.1
+  - proto: MobArgocyteEnforcer
+    cost: 10
+    prob: 0.02
+  - proto: MobArgocyteFounder
+    cost: 10
+    prob: 0.02
+  - proto: MobArgocyteLeviathing
+    cost: 15
+    prob: 0.01
