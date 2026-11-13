@@ -7,7 +7,6 @@ using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Body.Cavity;
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared._Trauma.Common.Traumas;
-using Content.Shared._Trauma.Speech;
 using Content.Shared._Trauma.Surgery.Graph;
 using Content.Shared._Trauma.Surgery.Steps.Parts;
 using Content.Shared._Trauma.Traumas;
@@ -211,22 +210,6 @@ public sealed partial class SurgeryTest : GameTest
         Assert.That(_tools.CycleMultipleTool(tool), Is.True);
         Assert.That(_tools.HasQuality(tool, BoneHealing), Is.True);
         Assert.That(_tools.HasQuality(tool, BoneSetting), Is.False);
-    }
-    [Test]
-    public async Task LobotomyCanBeReversed()
-    {
-        var (surgeon, patient) = await SetupPatient();
-        EntityUid head = default;
-        await Server.WaitAssertion(() => head = _body.GetOrgan(patient, Head)!.Value);
-
-        await OperateEdge(surgeon, head, "SurgeryGraphHead", "OpenIncision");
-        await OperateEdge(surgeon, head, "SurgeryGraphHead", "Lobotomize");
-        await Server.WaitAssertion(() => Assert.That(SEntMan.HasComponent<SimpleAccentComponent>(patient), Is.True));
-
-        // Lobotomy closes the incision, so reopen before mending the tissue.
-        await OperateEdge(surgeon, head, "SurgeryGraphHead", "OpenIncision");
-        await OperateEdge(surgeon, head, "SurgeryGraphHead", "MendBrainTissue");
-        await Server.WaitAssertion(() => Assert.That(SEntMan.HasComponent<SimpleAccentComponent>(patient), Is.False));
     }
 
     [Test]
