@@ -107,7 +107,7 @@
       sprite: { sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/adv-retractor.rsi, state: adv-retractor }
       useSound: /Audio/_RedStar/Medical/Surgery/retractor1.ogg
       changeSound: { path: /Audio/Effects/sparks4.ogg }
-    - behavior: [ Clamping, Manipulating, Tending ]
+    - behavior: [ Clamping, Manipulating ]
       sprite: { sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/adv-retractor.rsi, state: adv-retractor-on }
       useSound: /Audio/_RedStar/Medical/Surgery/hemostat1.ogg
       changeSound: { path: /Audio/Effects/sparks4.ogg }
@@ -266,14 +266,6 @@
       changeSound:
         path: /Audio/Effects/sparks4.ogg
     - behavior: [Suturing]
-      sprite:
-        sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/omnimed.rsi
-        state: omnimed
-      useSound:
-        path: /Audio/_RedStar/Medical/Surgery/cautery1.ogg
-      changeSound:
-        path: /Audio/Effects/sparks4.ogg
-    - behavior: [Tending]
       sprite:
         sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/omnimed.rsi
         state: omnimed

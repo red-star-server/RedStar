@@ -37,15 +37,6 @@
     speedModifier: 0.45
 
 - type: entity
-  id: Pen
-  components:
-  - type: Tool
-    qualities:
-      - Tending
-    speedModifier: 0.55
-    useSound: /Audio/_RedStar/Medical/Surgery/retractor1.ogg
-
-- type: entity
   id: UtensilBase
   components:
   - type: Tool
@@ -153,7 +144,6 @@
     qualities:
       - Clamping
       - Manipulating
-      - Tending
     useSound: /Audio/_RedStar/Medical/Surgery/retractor1.ogg
 
 - type: entity
@@ -245,7 +235,6 @@
   components:
   - type: Tool
     qualities:
-      - Tending
       - Drilling
     speedModifier: 1
     useSound: /Audio/Items/drill_use.ogg

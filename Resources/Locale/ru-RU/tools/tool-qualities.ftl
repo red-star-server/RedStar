@@ -54,7 +54,5 @@ tool-quality-bone-healing-name = Сращивание костей
 tool-quality-bone-healing-tool-name = Костный гель
 tool-quality-bone-setting-name = Вправление костей
 tool-quality-bone-setting-tool-name = Костоправ
-tool-quality-tending-name = Обработка тканей
-tool-quality-tending-tool-name = Гемостат
 tool-quality-manipulating-name = Манипуляция тканями
 tool-quality-manipulating-tool-name = Пинцет

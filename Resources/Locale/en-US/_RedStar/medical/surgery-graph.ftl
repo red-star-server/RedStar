@@ -59,7 +59,5 @@ surgery-edge-create-power-cell-charger-slot = Create power cell charger slot
 surgery-edge-insert-power-cell-charger = Insert power cell charger
 surgery-edge-remove-power-cell-charger = Remove power cell charger
 
-surgery-edge-tend-bruise-wounds = Tend bruise wounds
-surgery-edge-tend-burn-wounds = Tend burn wounds
 surgery-edge-heal-organs = Heal organs
 surgery-edge-fix-dismemberment-leftovers = Fix dismemberment leftovers

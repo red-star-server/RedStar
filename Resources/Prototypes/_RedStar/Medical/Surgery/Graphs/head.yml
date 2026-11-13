@@ -1,10 +1,8 @@
 - type: surgeryGraph
   id: SurgeryGraphHead
-  name: Head surgery
   startNode: Closed
   nodes:
   - name: Closed
-    label: Closed
     edges:
     - id: OpenIncision
       target: Incised
@@ -31,13 +29,11 @@
         quality: Retracting
         duration: 2
   - name: Incised
-    label: Incision open
     # TODO: сделать спрайт разреза на голове (сейчас заглушка из bleeding_damage)
     overlays:
     - rsi: _RedStar/Medical/Mobs/Effects/bleeding_damage.rsi
       stateSuffix: Minor
     packages:
-    - SurgeryTendWounds
     - SurgeryTissueIncised
     edges:
     - id: CloseIncision
@@ -206,7 +202,6 @@
         effects:
         - !type:RemovePartEffect
   - name: SkullOpen
-    label: Skull open
     # TODO: сделать спрайт раскрытого черепа (сейчас заглушка из bleeding_damage)
     overlays:
     - rsi: _RedStar/Medical/Mobs/Effects/bleeding_damage.rsi

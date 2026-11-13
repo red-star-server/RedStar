@@ -54,7 +54,5 @@ tool-quality-bone-healing-name = Bone healing
 tool-quality-bone-healing-tool-name = Bone gel
 tool-quality-bone-setting-name = Bone setting
 tool-quality-bone-setting-tool-name = Bone setter
-tool-quality-tending-name = Tending
-tool-quality-tending-tool-name = Hemostat
 tool-quality-manipulating-name = Manipulating
 tool-quality-manipulating-tool-name = Forceps

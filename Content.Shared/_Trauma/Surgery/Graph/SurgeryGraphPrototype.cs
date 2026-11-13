@@ -12,9 +12,6 @@ public sealed partial class SurgeryGraphPrototype : IPrototype
     [IdDataField]
     public string ID { get; private set; } = default!;
 
-    [DataField]
-    public string Name = string.Empty;
-
     [DataField(required: true)]
     public string StartNode = default!;
 
@@ -27,9 +24,6 @@ public sealed partial class SurgeryGraphNode
 {
     [DataField(required: true)]
     public string Name = default!;
-
-    [DataField]
-    public string Label = string.Empty;
 
     [DataField]
     public List<SurgeryOverlay> Overlays = [];

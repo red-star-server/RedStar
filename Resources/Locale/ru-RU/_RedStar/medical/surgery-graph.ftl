@@ -59,7 +59,5 @@ surgery-edge-create-power-cell-charger-slot = Создать слот заряд
 surgery-edge-insert-power-cell-charger = Вставить зарядное устройство батареи
 surgery-edge-remove-power-cell-charger = Извлечь зарядное устройство батареи
 
-surgery-edge-tend-bruise-wounds = Обработать ушибы
-surgery-edge-tend-burn-wounds = Обработать ожоги
 surgery-edge-heal-organs = Восстановить органы
 surgery-edge-fix-dismemberment-leftovers = Устранить последствия ампутации

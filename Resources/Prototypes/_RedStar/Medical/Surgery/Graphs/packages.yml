@@ -1,65 +1,4 @@
 - type: surgeryEdgePackage
-  id: SurgeryTendWounds
-  edges:
-  - id: TendWoundsBrute
-    target: Incised
-    label: surgery-edge-tend-bruise-wounds
-    conditions:
-    - !type:WoundedCondition
-      damageGroup: Brute
-    steps:
-    - name: Repair damaged tissue
-      quality: Tending
-      duration: 1
-      effects:
-      - !type:TendWoundsEffect
-        mainGroup: Brute
-        healMultiplier: 0.07
-        damage:
-          types:
-            Blunt: -5
-            Slash: -5
-            Piercing: -5
-    - name: Seal the wound
-      quality: Cauterizing
-      duration: 2
-      effects:
-      - !type:DamageEffect
-        sleepModifier: 2
-        damage:
-          types:
-            Heat: -5
-  - id: TendWoundsBurn
-    target: Incised
-    label: surgery-edge-tend-burn-wounds
-    conditions:
-    - !type:WoundedCondition
-      damageGroup: Burn
-    steps:
-    - name: Repair burnt tissue
-      quality: Tending
-      duration: 1
-      effects:
-      - !type:TendWoundsEffect
-        mainGroup: Burn
-        healMultiplier: 0.07
-        damage:
-          types:
-            Heat: -5
-            Cold: -5
-            Shock: -5
-            Caustic: -5
-    - name: Seal the wound
-      quality: Cauterizing
-      duration: 2
-      effects:
-      - !type:DamageEffect
-        sleepModifier: 2
-        damage:
-          types:
-            Heat: -5
-
-- type: surgeryEdgePackage
   id: SurgeryTissueIncised
   edges:
   - id: StopBlood
@@ -124,7 +63,7 @@
           types:
             Bloodloss: -5
     - name: Heal organs
-      quality: Tending
+      quality: Manipulating
       duration: 7
       effects:
       - !type:TraumaTreatmentEffect

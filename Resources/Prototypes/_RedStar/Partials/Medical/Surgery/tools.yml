@@ -182,7 +182,6 @@
     qualities:
       - Clamping
       - Manipulating
-      - Tending
     useSound: /Audio/_RedStar/Medical/Surgery/retractor1.ogg
 
 - type: entity
