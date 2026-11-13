@@ -262,9 +262,6 @@
         sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/omnimed.rsi
         state: omnimed
       useSound:
-        path: /Audio/_RedStar/Medical/Objects/Specific/Medical/Surgery/omnimed.rsi
-        state: omnimed
-      useSound:
         path: /Audio/_RedStar/Medical/Surgery/cautery1.ogg
       changeSound:
         path: /Audio/Effects/sparks4.ogg
