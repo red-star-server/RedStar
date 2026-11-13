@@ -121,7 +121,6 @@
   id: OrganJWLArmRight
   name: J.W.L right arm
 
-# W SPEED
 
 - type: entity
   abstract: true

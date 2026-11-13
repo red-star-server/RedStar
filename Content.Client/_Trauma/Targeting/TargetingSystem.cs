@@ -129,7 +129,7 @@ public sealed partial class TargetingSystem : SharedTargetingSystem
     {
         if (session == null
             || session.AttachedEntity is not { } uid
-            || !TryComp<TargetingComponent>(uid, out var targeting))
+            || !TryComp<TargetingComponent>(uid, out _))
             return;
 
         TargetChange?.Invoke(target);
