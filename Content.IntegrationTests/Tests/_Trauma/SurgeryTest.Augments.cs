@@ -21,8 +21,8 @@ public sealed partial class SurgeryTest
     }
 
     private static readonly ProtoId<OrganCategoryPrototype> AugmentCharger = "AugmentCharger";
-
     private static readonly ProtoId<OrganCategoryPrototype> CyberneticEyes = "Eyes";
+    private static readonly ProtoId<OrganCategoryPrototype> Head = "Head";
 
     [Test]
     public async Task CyberneticEffectsFollowOrganState()
@@ -35,17 +35,17 @@ public sealed partial class SurgeryTest
             Assert.That(_parts.RemoveOrgan(head, oldEyes), Is.True);
             var eyes = SSpawn("OrganCyberneticEyesMedical");
             Assert.That(_parts.InsertOrgan(head, eyes), Is.True);
-            Assert.That(SEntMan.HasComponent<Content.Shared.Flash.Components.FlashImmunityComponent>(patient), Is.True);
+            Assert.That(SEntMan.HasComponent<Shared.Flash.Components.FlashImmunityComponent>(patient), Is.True);
 
             Assert.That(_body.DisableOrgan(eyes), Is.True);
-            Assert.That(SEntMan.HasComponent<Content.Shared.Flash.Components.FlashImmunityComponent>(patient), Is.False);
+            Assert.That(SEntMan.HasComponent<Shared.Flash.Components.FlashImmunityComponent>(patient), Is.False);
             Assert.That(_body.EnableOrgan(eyes), Is.True);
-            Assert.That(SEntMan.HasComponent<Content.Shared.Flash.Components.FlashImmunityComponent>(patient), Is.True);
+            Assert.That(SEntMan.HasComponent<Shared.Flash.Components.FlashImmunityComponent>(patient), Is.True);
 
             Assert.That(_body.DisableOrgan(eyes), Is.True);
             Assert.That(_parts.RemoveOrgan(head, eyes), Is.True);
             Assert.That(_body.EnableOrgan(eyes), Is.False);
-            Assert.That(SEntMan.HasComponent<Content.Shared.Flash.Components.FlashImmunityComponent>(patient), Is.False);
+            Assert.That(SEntMan.HasComponent<Shared.Flash.Components.FlashImmunityComponent>(patient), Is.False);
         });
     }
 
