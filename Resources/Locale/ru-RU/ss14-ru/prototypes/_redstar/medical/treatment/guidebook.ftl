@@ -1,4 +1,4 @@
-﻿entity-condition-guidebook-on-fire = цель
+entity-condition-guidebook-on-fire = цель
     { $invert ->
         [true] не горит
         *[false] горит
