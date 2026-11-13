@@ -35,7 +35,6 @@ public sealed partial class SurgerySystem
 {
     [Dependency] private BodyPartSystem _part = default!;
     [Dependency] private DamageableSystem _damage = default!;
-    [Dependency] private SharedChatSystem _chat = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private StatusEffectsSystem _status = default!;
     [Dependency] private SharedToolSystem _sharedTool = default!;
@@ -519,15 +518,6 @@ public sealed partial class SurgerySystem
             damageChange *= ent.Comp.SleepModifier;
 
         _damage.ChangeDamage(args.Part, damageChange, true, origin: args.User, ignoreBlockers: true);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnStepScreamComplete(Entity<SurgeryStepEmoteEffectComponent> ent, ref SurgeryStepEvent args)
-    {
-        if (_status.HasEffectComp<ForcedSleepingStatusEffectComponent>(args.Body))
-            return;
-
-        _chat.TryEmoteWithChat(args.Body, ent.Comp.Emote, ignoreActionBlocker: true);
     }
 
     [SubscribeLocalEvent]
