@@ -1,4 +1,4 @@
-- type: gameMap
+﻿- type: gameMap
   id: Saltern
   mapName: 'Saltern'
   mapPath: /Maps/_RedStar/Saltern.yml
