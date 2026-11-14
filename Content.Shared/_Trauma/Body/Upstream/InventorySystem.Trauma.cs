@@ -13,22 +13,14 @@ public partial class InventorySystem : EntitySystem
     /// </summary>
     public void DropSlotContents(Entity<InventoryComponent?> ent, string slotName)
     {
-        if (!Resolve(ent, ref ent.Comp) || Transform(ent).MapID == MapId.Nullspace)
+        if (!Resolve(ent, ref ent.Comp) ||
+            Transform(ent).MapID == MapId.Nullspace ||
+            !TryGetSlotContainer(ent, slotName, out var container, out _, ent.Comp) ||
+            container.ContainedEntity is not { } item ||
+            !_containerSystem.Remove(item, container))
             return;
 
-        foreach (var slot in ent.Comp.Slots)
-        {
-            if (slot.Name != slotName)
-                continue;
-
-            if (!TryGetSlotContainer(ent, slotName, out var container, out _, ent.Comp) ||
-                container.ContainedEntity is not { } item ||
-                !_containerSystem.Remove(item, container))
-                break;
-
-            _transform.AttachToGridOrMap(item);
-            _randomHelper.RandomOffset(item, 0.5f);
-            return;
-        }
+        _transform.AttachToGridOrMap(item);
+        _randomHelper.RandomOffset(item, 0.5f);
     }
 }

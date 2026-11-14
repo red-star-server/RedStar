@@ -113,9 +113,11 @@ public sealed partial class HealingSystem
 
         foreach (var limb in _body.GetExternalOrgans(ent))
         {
+            if (!IsBodyDamaged((ent, body), null, healing, limb))
+                continue;
+
             part = limb;
-            if (IsBodyDamaged((ent, body), null, healing, limb))
-                return true;
+            return true;
         }
         return false;
     }
@@ -123,10 +125,10 @@ public sealed partial class HealingSystem
     [SubscribeLocalEvent]
     private void OnBodyDoAfter(Entity<BodyComponent> body, ref HealingDoAfterEvent args)
     {
-        HandleBodyDoAfter(body.Owner, body.Comp, ref args);
+        HandleBodyDoAfter(body.Owner, ref args);
     }
 
-    private void HandleBodyDoAfter(EntityUid ent, BodyComponent comp, ref HealingDoAfterEvent args)
+    private void HandleBodyDoAfter(EntityUid ent, ref HealingDoAfterEvent args)
     {
         if (_healingParts.GetRootPart(ent) == null)
             return;
@@ -156,8 +158,7 @@ public sealed partial class HealingSystem
         var healedBleed = false;
         var healedTotal = new DamageSpecifier();
         FixedPoint2 modifiedBleedStopAbility = 0;
-        // Heal some bleeds
-        bool healedBleedLevel = false;
+        var healedBleedLevel = false;
         if (healing.BloodlossModifier != 0)
         {
             var bleedBefore = 0.0;
@@ -177,13 +178,10 @@ public sealed partial class HealingSystem
                     ent,
                     args.User);
             }
-            // Goobstation end
         }
 
         if (healing.ModifyBloodLevel != 0)
             healedBleedLevel = _bloodstreamSystem.TryModifyBloodLevel(ent, -healing.ModifyBloodLevel);
-
-        //healedBleed = healedBleedWound || healedBleedLevel;
 
         var leftoverHealAndTrauma = false;
         var leftoverHealAndBleed = false;
@@ -206,7 +204,6 @@ public sealed partial class HealingSystem
                 RaiseLocalEvent(targetedWoundable, ref ev);
                 if (ev.Cancelled)
                 {
-                    // if it wasn't healed then a trauma blocked it? goida
                     leftoverHealAndTrauma |= !healedBleedLevel;
                     continue;
                 }

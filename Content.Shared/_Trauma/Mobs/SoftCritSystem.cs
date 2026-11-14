@@ -47,7 +47,7 @@ public sealed partial class SoftCritSystem : EntitySystem
     [SubscribeLocalEvent(before: [typeof(VocalSystem)])]
     private void OnEmoteAction(Entity<SoftCritMobComponent> ent, ref EmoteActionEvent args)
     {
-        args.Handled = true; // shush
+        args.Handled = true;
     }
 
     [SubscribeLocalEvent]
@@ -103,6 +103,6 @@ public sealed partial class SoftCritSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnRadioSendAttempt(Entity<SoftCritMobComponent> ent, ref RadioSendAttemptEvent args)
     {
-        args.Cancelled = true; // no yapping on radio chuddy
+        args.Cancelled = true;
     }
 }
