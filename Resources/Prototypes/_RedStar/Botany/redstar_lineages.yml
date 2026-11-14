@@ -1,0 +1,185 @@
+# RS14: RedStar plant lineages replacing DeadSpace-only prototype dependencies.
+# The referenced RSI files retain their own CC-BY-SA-3.0 metadata and attribution.
+
+- type: entity
+  parent: BasePlant
+  id: RedStarMangoPlants
+  name: mango tree
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Specific/Hydroponics/mango.rsi
+  - type: PlantData
+    name: seeds-mango-name
+    packetPrototype: RedStarMangoSeeds
+    productPrototypes: [RedStarFoodMango]
+    mutations: [{ target: RmcmangoPlants, chance: 0.1 }]
+  - type: Plant
+    lifespan: 55
+    maturation: 6
+    production: 6
+    yield: 3
+    potency: 10
+  - type: PlantHarvest
+    harvestRepeat: Repeat
+  - type: PlantChemicals
+    chemicals:
+      Nutriment: { min: 1, max: 5, potencyDivisor: 20 }
+      Vitamin: { min: 1, max: 4, potencyDivisor: 25 }
+
+- type: entity
+  parent: BasePlant
+  id: RedStarCactusPlants
+  name: cactus
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Specific/Hydroponics/cactus.rsi
+  - type: PlantData
+    name: seeds-cactus-name
+    packetPrototype: RedStarCactusSeeds
+    productPrototypes: [RedStarFoodCactus]
+    mutations: [{ target: RedStarCoralCactusPlants, chance: 0.2 }]
+  - type: Plant
+    lifespan: 90
+    maturation: 10
+    production: 8
+    yield: 2
+    potency: 10
+  - type: PlantHarvest
+    harvestRepeat: Repeat
+  - type: PlantChemicals
+    chemicals:
+      Nutriment: { min: 1, max: 4, potencyDivisor: 20 }
+
+- type: entity
+  parent: RedStarCactusPlants
+  id: RedStarCoralCactusPlants
+  name: coral cactus
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Specific/Hydroponics/cactus_coral.rsi
+  - type: PlantData
+    name: seeds-cactus-coral-name
+    packetPrototype: RedStarCoralCactusSeeds
+    productPrototypes: [RedStarFoodCoralCactus]
+    mutations: [{ target: RedStarBubbleCactusPlants, chance: 0.1 }]
+
+- type: entity
+  parent: RedStarCactusPlants
+  id: RedStarBubbleCactusPlants
+  name: bubble cactus
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Specific/Hydroponics/cactus_bubble.rsi
+  - type: PlantData
+    name: seeds-cactus-bubble-name
+    packetPrototype: RedStarBubbleCactusSeeds
+    productPrototypes: [RedStarFoodBubbleCactus]
+    mutations: [{ target: RedStarAshCactusPlants, chance: 0.06 }]
+
+- type: entity
+  parent: RedStarCactusPlants
+  id: RedStarAshCactusPlants
+  name: ash cactus
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Lavaland/AshWalkers/cactus.rsi
+  - type: PlantData
+    name: seeds-cactus-ash-name
+    packetPrototype: RedStarAshCactusSeeds
+    productPrototypes: [RedStarFoodAshCactus]
+    mutations:
+    - target: RedStarBombCactusPlants
+      chance: 0.02
+      requirements:
+        minPotency: 75
+        minGeneticInstability: 60
+        reagents:
+        - id: UnstableMutagen
+          minAmount: 5
+
+- type: entity
+  parent: RedStarCactusPlants
+  id: RedStarBombCactusPlants
+  name: explosive cactus
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Specific/Hydroponics/cactus_bomb.rsi
+  - type: PlantData
+    name: seeds-cactus-bomb-name
+    packetPrototype: RedStarBombCactusSeeds
+    productPrototypes: [RedStarFoodBombCactus]
+    mutations: []
+
+- type: entity
+  parent: BasePlant
+  id: RedStarAshPorciniPlants
+  name: ash porcini
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Lavaland/AshWalkers/porcini.rsi
+  - type: PlantData
+    noun: seeds-noun-spores
+    name: seeds-ash-porcini-name
+    packetPrototype: RedStarAshPorciniSeeds
+    productPrototypes: [RedStarFoodAshPorcini]
+    mutations: [{ target: RedStarAshInocybePlants, chance: 0.2 }]
+  - type: Plant
+    lifespan: 75
+    maturation: 10
+    production: 7
+    yield: 3
+    potency: 10
+  - type: PlantHarvest
+    harvestRepeat: Repeat
+  - type: PlantChemicals
+    chemicals:
+      Nutriment: { min: 1, max: 4, potencyDivisor: 20 }
+
+- type: entity
+  parent: RedStarAshPorciniPlants
+  id: RedStarAshInocybePlants
+  name: ash inocybe
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Lavaland/AshWalkers/inocybe.rsi
+  - type: PlantData
+    noun: seeds-noun-spores
+    name: seeds-ash-inocybe-name
+    packetPrototype: RedStarAshInocybeSeeds
+    productPrototypes: [RedStarFoodAshInocybe]
+    mutations: [{ target: RedStarAshPolyporePlants, chance: 0.1 }]
+
+- type: entity
+  parent: RedStarAshPorciniPlants
+  id: RedStarAshPolyporePlants
+  name: ash polypore
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Lavaland/AshWalkers/polypore.rsi
+  - type: PlantData
+    noun: seeds-noun-spores
+    name: seeds-ash-polypore-name
+    packetPrototype: RedStarAshPolyporeSeeds
+    productPrototypes: [RedStarFoodAshPolypore]
+    mutations: [{ target: RedStarAshEmberPlants, chance: 0.06 }]
+
+- type: entity
+  parent: RedStarAshPorciniPlants
+  id: RedStarAshEmberPlants
+  name: ember mushroom
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Lavaland/AshWalkers/ember.rsi
+  - type: PlantData
+    noun: seeds-noun-spores
+    name: seeds-ash-ember-name
+    packetPrototype: RedStarAshEmberSeeds
+    productPrototypes: [RedStarFoodAshEmber]
+    mutations:
+    - target: GlasscapPlants
+      chance: 0.025
+      requirements:
+        minPotency: 70
+        minGeneticInstability: 55
+        environment:
+          minTemperature: 310
