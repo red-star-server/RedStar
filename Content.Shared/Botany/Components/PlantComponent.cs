@@ -64,4 +64,10 @@ public sealed partial class PlantComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public float Potency = 1f;
+
+    /// <summary>
+    /// Inherited genetic instability, independent of the current growth cycle. // RS14
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float GeneticInstability; // RS14
 }
