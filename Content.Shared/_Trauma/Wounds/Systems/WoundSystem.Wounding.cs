@@ -474,7 +474,7 @@ public sealed partial class WoundSystem
     /// </summary>
     public void UpdateWoundableIntegrity(Entity<WoundableComponent?> part)
     {
-        if (!_woundableQuery.Resolve(part, ref part.Comp)) // it can be null while applying state if the entity is entering pvs right now
+        if (!_woundableQuery.Resolve(part, ref part.Comp) || part.Comp.Wounds == default) // it can be null while applying state if the entity is entering pvs right now
             return;
 
         var damage = FixedPoint2.Zero;
@@ -544,7 +544,9 @@ public sealed partial class WoundSystem
         if (!_woundableQuery.Resolve(part, ref part.Comp))
             return;
 
-        var nearestSeverity = wound.Comp.WoundSeverity;
+        var nearestSeverity = wound.Comp.WoundSeverityPoint > 0
+            ? WoundSeverity.Minor
+            : wound.Comp.WoundSeverity;
         var scale = part.Comp.IntegrityCap / 100;
         FixedPoint2? nearestThreshold = null;
         foreach (var (severity, value) in _woundThresholds)

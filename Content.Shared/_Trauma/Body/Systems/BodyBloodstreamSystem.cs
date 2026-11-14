@@ -55,7 +55,7 @@ public sealed partial class BodyBloodstreamSystem : EntitySystem
                 DirtyField(ent, bleeds, nameof(BleedInflicterComponent.IsBleeding));
             }
 
-            if (!_net.IsClient && bleeds.IsBleeding && now < bleeds.ScalingFinishesAt)
+            if (!_net.IsClient && bleeds.IsBleeding && bleeds.Scaling < bleeds.ScalingLimit)
                 UpdateScaling((ent, bleeds), now);
         }
     }
