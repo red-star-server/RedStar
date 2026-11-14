@@ -1,3 +1,4 @@
+using Content.Shared._Trauma.Body;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -28,6 +29,9 @@ public sealed partial class DelayedDeathComponent : Component
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoPausedField, AutoNetworkedField]
     public TimeSpan NextDeath;
+
+    [DataField, AutoNetworkedField]
+    public Dictionary<string, int> MissingOrgans = [];
 
     /// <summary>
     /// What message is displayed when the time runs out - Goobstation

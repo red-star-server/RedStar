@@ -239,7 +239,7 @@ public sealed partial class PartStatusSystem : EntitySystem
             hasStatus = true;
         }
 
-        var damageDescriptions = GetDamageGroupDescriptions(partStatus.DamageSeverities, inspectingSelf);
+        var damageDescriptions = GetDamageGroupDescriptions(partStatus.DamageSeverities);
         if (damageDescriptions.Count > 0)
         {
             if (hasStatus)
@@ -279,7 +279,7 @@ public sealed partial class PartStatusSystem : EntitySystem
         return maxSeverity;
     }
 
-    private List<string> GetDamageGroupDescriptions(Dictionary<string, WoundSeverity> damageSeverities, bool inspectingSelf)
+    private List<string> GetDamageGroupDescriptions(Dictionary<string, WoundSeverity> damageSeverities)
     {
         var descriptions = new List<string>();
         foreach (var (type, severity) in damageSeverities)
@@ -308,7 +308,7 @@ public sealed partial class PartStatusSystem : EntitySystem
     {
         var descriptions = new List<string>();
 
-        // TODO: Dehardcode this guscode from bone traumas when we actually have more organ traumas.
+        // TODO: Move this bone trauma special case out once there are more organ traumas.
 
         if (partStatus.BoneSeverity > BoneSeverity.Normal)
         {

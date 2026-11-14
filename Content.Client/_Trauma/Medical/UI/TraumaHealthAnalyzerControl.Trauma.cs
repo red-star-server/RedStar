@@ -10,7 +10,6 @@ using Content.Shared.Atmos.Rotting;
 using Content.Shared.Body;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
@@ -167,6 +166,7 @@ public sealed partial class TraumaHealthAnalyzerControl
     /// </summary>
     public void PopulateBody(EntityUid target, ref HealthAnalyzerUiState state, bool bloodLevelLow = false)
     {
+        var body = target;
         var selectedPart = _entityManager.GetEntity(state.Part);
         if (selectedPart != null)
             target = selectedPart.Value;
@@ -197,7 +197,7 @@ public sealed partial class TraumaHealthAnalyzerControl
 
         ConditionsListContainer.RemoveAllChildren();
 
-        if (state.Unrevivable == true)
+        if (state.Unrevivable)
         {
             ConditionsListContainer.AddChild(new RichTextLabel
             {
@@ -227,7 +227,7 @@ public sealed partial class TraumaHealthAnalyzerControl
             });
         }
 
-        foreach (var part in _body.GetOrgans<WoundableComponent>(target))
+        foreach (var part in _body.GetOrgans<WoundableComponent>(body))
         {
             if (isPart && part.Owner != selectedPart)
                 continue;
@@ -381,12 +381,12 @@ public sealed partial class TraumaHealthAnalyzerControl
         if (!_entityManager.TryGetComponent<SpriteComponent>(_spriteViewEntity, out var sprite))
             return null;
 
-        int layer = 0;
+        var layer = 0;
         foreach (var (part, integrity) in body)
         {
             // TODO: Move body status presentation into a UI controller.
             var name = part.ToString().ToLowerInvariant();
-            int enumValue = (int) integrity;
+            var enumValue = (int) integrity;
             var baseRsiPath = new ResPath($"/Textures/_RedStar/Medical/Interface/Targeting/Status/{name}.rsi");
             var rsi = new SpriteSpecifier.Rsi(baseRsiPath, $"{enumValue}");
             CreateOrAddToLayer((_spriteViewEntity.Value, sprite), rsi, layer);
@@ -430,7 +430,7 @@ public sealed partial class TraumaHealthAnalyzerControl
 
     private void DrawOrganDiagnostics(EntityUid ent, FixedPoint2 damage)
     {
-        TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+        var textInfo = new CultureInfo("en-US", false).TextInfo;
         var name = _entityManager.GetComponent<MetaDataComponent>(ent).EntityName;
         var groupTitleText = Loc.GetString("group-organ-status",
             ("organ", textInfo.ToTitleCase(name)),
@@ -449,7 +449,7 @@ public sealed partial class TraumaHealthAnalyzerControl
 
     private void DrawSolutionDiagnostics(List<EntityUid> sources)
     {
-        TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+        var textInfo = new CultureInfo("en-US", false).TextInfo;
         foreach (var uid in sources)
         {
             foreach (var (name, ent) in _solution.EnumerateSolutions(uid))

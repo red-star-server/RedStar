@@ -19,11 +19,9 @@ public sealed partial class BodySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private MobStateSystem _mob = default!;
     [Dependency] private StandingStateSystem _standing = default!;
-    private readonly List<EntityUid> _extremities = [];
 
     [Dependency] private CommonBodyCacheSystem _cache = default!;
     [Dependency] private CommonBodyPartSystem _part = default!;
-    [Dependency] private OrganRelationSystem _relation = default!;
     [Dependency] private EntityQuery<InternalChildOrganComponent> _internalQuery;
 
     /// <summary>
@@ -164,34 +162,6 @@ public sealed partial class BodySystem
         }
 
         return vital;
-    }
-
-    /// <summary>
-    /// Gets the fraction of bodyparts that are vital.
-    /// For a torso or torso+head this is 1, for invalid bodies this is 0.
-    /// Non-bodies will return 1 for damage scaling etc.
-    /// </summary>
-    public float GetVitalBodyPartRatio(Entity<BodyComponent?> body)
-    {
-        if (!_bodyQuery.Resolve(body, ref body.Comp, false) || body.Comp.Organs?.ContainedEntities is not {} organs)
-            return 1f;
-
-        // VitalParts is a static array; moving it to OrganCategoryPrototype would allow data-driven configuration.
-        var total = 0;
-        var vital = 0;
-        foreach (var organ in organs)
-        {
-            if (GetCategory(organ) is not {} category || !BodyParts.Contains(category))
-                continue;
-
-            total++;
-            if (VitalParts.Contains(category))
-                vital++;
-        }
-
-        return vital == 0
-            ? 0f // no dividing by zero incase a body somehow has no parts?!
-            : (float) total / vital;
     }
 
     /// <summary>
@@ -347,7 +317,6 @@ public sealed partial class BodySystem
         return ev.Handled;
     }
 
-    // no marking api anymore lol have to write one myself
     #region Markings
 
     /// <summary>
@@ -409,20 +378,6 @@ public sealed partial class BodySystem
 
     #endregion
 
-    /// <summary>
-    /// Returns true if a bodypart has no child parts.
-    /// </summary>
-    public bool IsExtremity(EntityUid part)
-    {
-        foreach (var child in _relation.AllChildren(part))
-        {
-            if (!_internalQuery.HasComp(child))
-                return false;
-        }
-
-        return true;
-    }
-
     #region Targeting
 
     /// <summary>
@@ -457,14 +412,14 @@ public sealed partial class BodySystem
             return TargetBodyPart.Chest;
 
         if (_mob.IsIncapacitated(target)
-            || _standing.IsDown(target))
+            || _standing.IsDown(target) || !targetComp.TargetOdds.TryGetValue(targetPart, out var odds))
             return targetPart;
 
-        var totalWeight = targetComp.TargetOdds[targetPart].Values.Sum();
+        var totalWeight = odds.Values.Sum();
         var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(target));
         var randomValue = rand.NextFloat() * totalWeight;
 
-        foreach (var (part, weight) in targetComp.TargetOdds[targetPart])
+        foreach (var (part, weight) in odds)
         {
             if (randomValue <= weight)
                 return part;
@@ -527,29 +482,6 @@ public sealed partial class BodySystem
             return attackerComp.Target;
 
         return GetRandomBodyPart(target);
-    }
-
-    /// <summary>
-    /// Gets a random bodypart that has no child parts, like a hand or an arm with no hand attached.
-    /// </summary>
-    public TargetBodyPart GetRandomExtremity(Entity<BodyComponent?> body)
-    {
-        if (!_bodyQuery.Resolve(body, ref body.Comp, false))
-            return TargetBodyPart.Chest;
-
-        _extremities.Clear();
-        foreach (var part in GetExternalOrgans(body))
-        {
-            if (IsExtremity(part))
-                _extremities.Add(part);
-        }
-
-        if (_extremities.Count == 0)
-            return TargetBodyPart.Chest; // should never happen...
-
-        var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(body));
-        var picked = rand.Pick(_extremities);
-        return _part.GetTargetBodyPart(picked) ?? TargetBodyPart.Chest;
     }
 
     #endregion

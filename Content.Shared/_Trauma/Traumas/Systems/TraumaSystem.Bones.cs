@@ -1,4 +1,4 @@
-using System.Linq;
+using Content.Shared._Trauma.Common.Thresholds;
 using Content.Shared._Trauma.Common.DoAfter;
 using Content.Shared._Trauma.Common.Traumas;
 using Content.Shared.Body;
@@ -59,13 +59,7 @@ public partial class TraumaSystem
     [SubscribeLocalEvent]
     private void OnModifyDoAfterDelay(Entity<BoneComponent> bone, ref ModifyDoAfterDelayEvent args)
     {
-        args.Multiplier /= bone.Comp.BoneSeverity switch
-        {
-            BoneSeverity.Damaged => 0.92f,
-            BoneSeverity.Cracked => 0.84f,
-            BoneSeverity.Broken => 0.75f,
-            _ => 1f
-        };
+        args.Scale(1f / bone.Comp.DoAfterSpeedMultipliers.GetValueOrDefault(bone.Comp.BoneSeverity, 1f));
     }
 
     #endregion
@@ -129,7 +123,7 @@ public partial class TraumaSystem
     /// </summary>
     public void UpdateBodyBoneAlert(Entity<BodyComponent?> body)
     {
-        bool hasBrokenBones = false;
+        var hasBrokenBones = false;
         foreach (var bone in _body.EnumerateOrgans<BoneComponent>(body, _boneQuery))
         {
             if (bone.Comp2.BoneSeverity != BoneSeverity.Broken) continue;
@@ -152,15 +146,7 @@ public partial class TraumaSystem
         if (!_boneQuery.Resolve(bone, ref bone.Comp))
             return;
 
-        var nearestSeverity = bone.Comp.BoneSeverity;
-        foreach (var (severity, value) in _boneThresholds.OrderByDescending(kv => kv.Value))
-        {
-            if (bone.Comp.BoneIntegrity < value)
-                continue;
-
-            nearestSeverity = severity;
-            break;
-        }
+        var nearestSeverity = SeverityThresholds.Nearest(bone.Comp.SeverityThresholds, bone.Comp.BoneIntegrity, bone.Comp.BoneSeverity);
 
         if (nearestSeverity == bone.Comp.BoneSeverity)
             return;

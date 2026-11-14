@@ -7,7 +7,7 @@ namespace Content.Shared._Trauma.Wounds;
 public record struct WoundAddedEvent(WoundComponent Component, WoundableComponent Woundable);
 
 [ByRefEvent]
-public record struct WoundSeverityPointChangedEvent(WoundComponent Component, FixedPoint2 OldSeverity, FixedPoint2 NewSeverity, FixedPoint2? Overflow = null);
+public record struct WoundSeverityPointChangedEvent(WoundComponent Component, FixedPoint2 OldSeverity, FixedPoint2 NewSeverity, FixedPoint2 RequestedChange);
 
 [ByRefEvent]
 public record struct WoundSeverityChangedEvent(WoundSeverity OldSeverity, WoundSeverity NewSeverity);

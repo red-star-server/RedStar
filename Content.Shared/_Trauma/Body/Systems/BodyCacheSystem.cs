@@ -48,6 +48,9 @@ public sealed partial class BodyCacheSystem : CommonBodyCacheSystem
         if (TerminatingOrDeleted(ent) || args.Organ.Comp.Category is not {} category)
             return;
 
+        if (!ent.Comp.Organs.TryGetValue(category, out var cached) || cached != args.Organ.Owner)
+            return;
+
         ent.Comp.Organs.Remove(category);
         Dirty(ent);
     }
@@ -64,7 +67,9 @@ public sealed partial class BodyCacheSystem : CommonBodyCacheSystem
             if (_body.GetCategory(organ) is not {} category ||
                 GetParentOrgan(ent.AsNullable(), category, child.Parents) is not { } parent)
             {
-                Log.Error($"Organ {ToPrettyString(organ)} expected a parent of {child.Parents[0]} but none was found in {ToPrettyString(ent)}!");
+                if (HasAnyOrgan(ent.Comp, child.Parents))
+                    Log.Error($"Organ {ToPrettyString(organ)} expected a parent of {child.Parents[0]} but none was found in {ToPrettyString(ent)}!");
+
                 continue;
             }
 
@@ -182,6 +187,17 @@ public sealed partial class BodyCacheSystem : CommonBodyCacheSystem
         }
 
         return null;
+    }
+
+    private static bool HasAnyOrgan(BodyCacheComponent cache, IReadOnlyList<ProtoId<OrganCategoryPrototype>> categories)
+    {
+        foreach (var category in categories)
+        {
+            if (cache.Organs.ContainsKey(category))
+                return true;
+        }
+
+        return false;
     }
 
     /// <summary>

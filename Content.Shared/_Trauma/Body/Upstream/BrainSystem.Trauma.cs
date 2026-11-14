@@ -21,9 +21,7 @@ public sealed partial class BrainSystem
 
         brain.Active = false;
         Dirty(uid, brain);
-        if (HasBrain(args.Target))
-            return;
-
+        if (HasBrain(args.Target)) return;
         // Prevents revival, should kill the user within a given timespan too.
         if (!TerminatingOrDeleted(args.Target) && !_timing.ApplyingState)
             EnsureComp<DebrainedComponent>(args.Target);
@@ -41,9 +39,7 @@ public sealed partial class BrainSystem
 
         brain.Active = true;
         Dirty(uid, brain);
-        if (!HasBrain(args.Target))
-            return;
-
+        if (!HasBrain(args.Target)) return;
         RemComp<DebrainedComponent>(args.Target);
         HandleMind(args.Target, uid);
     }

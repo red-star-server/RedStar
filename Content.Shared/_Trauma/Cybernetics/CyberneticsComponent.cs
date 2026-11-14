@@ -22,6 +22,9 @@ public sealed partial class CyberneticsComponent : Component
     [DataField]
     public float DisableChance = 1f;
 
+    [DataField]
+    public float DisabledDoAfterMultiplier = 10f;
+
     /// <summary>
     /// Damage to deal to the part containing this organ, or the part itself.
     /// </summary>
