@@ -23,6 +23,21 @@ public sealed partial class BeeQueenComponent : Component
     public EntityUid? LastHive;
 
     /// <summary>
+    /// With no hive to fly back to, she looks for a new home this far away.
+    /// </summary>
+    [DataField]
+    public float NestRange = 12f;
+
+    /// <summary>
+    /// What flies off with her when she leaves to found a hive.
+    /// </summary>
+    [DataField]
+    public EntProtoId NestFlyerPrototype = "BeeQueenNesting";
+
+    [DataField]
+    public EntProtoId WildHivePrototype = "WildBeehive";
+
+    /// <summary>
     /// How long she lives outside a hive: from unpacking or from being taken out. In a hive the clock stops.
     /// </summary>
     [DataField]

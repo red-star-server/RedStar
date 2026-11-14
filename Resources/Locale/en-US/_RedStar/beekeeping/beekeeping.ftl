@@ -1,6 +1,8 @@
 guide-entry-beekeeping = Beekeeping
 guide-entry-beekeeping-analyzer = Apiary analyzer
 guide-entry-beekeeping-queen = Queen and traits
+guide-entry-beekeeping-wild = Swarms and wild hives
+
 ## Hive
 
 beekeeping-slot-queen = Queen
@@ -23,6 +25,7 @@ beekeeping-hive-examine-nectar = Nectar: { $level ->
    *[High] plenty
 }.
 beekeeping-hive-examine-cramped = [color=yellow]The hive is cramped: the bees need more frames.[/color]
+beekeeping-hive-examine-abandon = [color=orange]The hive has no frames and the bees have nowhere to live: the colony leaves in { $minutes } min { $seconds } s.[/color]
 beekeeping-hive-examine-leaving = [color=red]Bees are leaving the hive: not enough frames.[/color]
 beekeeping-hive-examine-dying = [color=red]Without a queen the colony is dying out.[/color]
 beekeeping-hive-examine-scout-outside = The scout is out of the hive.
@@ -137,6 +140,10 @@ beekeeping-queen-trait-lost = The queen lost a trait: { $trait }.
 beekeeping-queen-trait-replaced = The queen gained { $trait } in place of { $old }.
 beekeeping-queen-trait-nothing = The mutagen did nothing: the queen has no room for traits.
 
+cmd-beekeeping_clear-desc = Removes angry bees, angry queens, swarms, lost bees and wild hives from your map. With "all", from every map.
+cmd-beekeeping_clear-help = Usage: beekeeping_clear [all]
+cmd-beekeeping_clear-no-map = You have no map: take a body or pass "all".
+cmd-beekeeping_clear-done = Removed: { $count }.
 beekeeping-queen-hive-limit = The queen does not take: there are too many hives in the sector.
 beekeeping-bee-bite = The bee bites your hand!
 beekeeping-bee-sting = The bee stings your hand!
@@ -149,6 +156,9 @@ beekeeping-jelly-collected = You collect the royal jelly.
 beekeeping-queen-slot-added = The queen has room for more traits: { $slots } slots.
 beekeeping-queen-slots-max = The queen already has as many slots as she can.
 
+beekeeping-hive-crowd-swarm = The bees are too crowded: part of the colony flies off in a swarm!
+beekeeping-hive-abandon = The hive has no frames: the queen leaves it with all her bees!
+beekeeping-hive-swarm = The old queen leaves the hive with a swarm! A young queen stays behind.
 ## Apiary analyzer
 
 apiary-analyzer-section-traits = Traits
@@ -243,4 +253,19 @@ bee-trait-lazy-queen = Lazy queen
 bee-trait-lazy-queen-desc = The queen's egg comes much later.
 bee-trait-fragile-egg = Fragile egg
 bee-trait-fragile-egg-desc = The queen's egg lives half as long, collect the jelly fast.
+beekeeping-hive-examine-swarm-modifier = The swarm was special: [color={ $color }]{ $name }[/color]. { $desc }
+swarm-modifier-plain = Plain swarm
+swarm-modifier-plain-desc = Nothing special about it.
+swarm-modifier-shy = Shy swarm
+swarm-modifier-shy-desc = Only a third of the colony left.
+swarm-modifier-homebody = Homebody
+swarm-modifier-homebody-desc = It did not look for a vent and settled near the hive.
+swarm-modifier-rich = Rich hive
+swarm-modifier-rich-desc = Holds 12 combs instead of 8.
+swarm-modifier-huge = Huge swarm
+swarm-modifier-huge-desc = Three quarters of the colony left.
+swarm-modifier-wanderer = Wanderer
+swarm-modifier-wanderer-desc = It looked for a vent and a nest twice as far.
+swarm-modifier-tainted = Tainted hive
+swarm-modifier-tainted-desc = Something is off about the combs.
 apiary-analyzer-row-instability = Instability

@@ -111,6 +111,7 @@ public sealed partial class ApiaryAnalyzerSystem : SharedApiaryAnalyzerSystem
     private void FillHive(Entity<BeehiveComponent> hive, ApiaryAnalyzerState state)
     {
         var comp = hive.Comp;
+        state.Wild = comp.Wild;
         state.Bees = comp.Bees;
         state.OutBees = comp.OutBees;
         state.MaxBees = comp.MaxBees;
@@ -125,18 +126,26 @@ public sealed partial class ApiaryAnalyzerSystem : SharedApiaryAnalyzerSystem
         if (_beehive.GetQueen(hive) is { } queenUid && TryComp<BeeQueenComponent>(queenUid, out var queen))
             FillQueen((queenUid, queen), state);
 
-        _beehive.GetFrames(hive, _frames);
-        foreach (var frame in _frames)
+        if (comp.Wild)
         {
-            state.Combs += frame.Comp.Combs;
-            state.MaxCombs += frame.Comp.MaxCombs;
-            state.Frames.Add(new ApiaryFrameData
+            state.Combs = comp.WildCombs;
+            state.MaxCombs = comp.MaxWildCombs;
+        }
+        else
+        {
+            _beehive.GetFrames(hive, _frames);
+            foreach (var frame in _frames)
             {
-                Frame = GetNetEntity(frame),
-                Prototype = MetaData(frame).EntityPrototype?.ID,
-                Combs = frame.Comp.Combs,
-                MaxCombs = frame.Comp.MaxCombs
-            });
+                state.Combs += frame.Comp.Combs;
+                state.MaxCombs += frame.Comp.MaxCombs;
+                state.Frames.Add(new ApiaryFrameData
+                {
+                    Frame = GetNetEntity(frame),
+                    Prototype = MetaData(frame).EntityPrototype?.ID,
+                    Combs = frame.Comp.Combs,
+                    MaxCombs = frame.Comp.MaxCombs
+                });
+            }
         }
 
         foreach (var source in comp.KnownSources)

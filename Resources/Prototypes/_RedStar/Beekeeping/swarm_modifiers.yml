@@ -1,0 +1,56 @@
+# One quirk per swarm, rolled when it leaves. The weights add up to 100.
+
+- type: swarmModifier
+  id: Plain
+  name: swarm-modifier-plain
+  description: swarm-modifier-plain-desc
+  color: "#9A9A9A"
+  weight: 47.5
+
+- type: swarmModifier
+  id: ShySwarm
+  name: swarm-modifier-shy
+  description: swarm-modifier-shy-desc
+  color: "#7CC46A"
+  weight: 10
+  colonyShare: 0.3333
+
+- type: swarmModifier
+  id: Homebody
+  name: swarm-modifier-homebody
+  description: swarm-modifier-homebody-desc
+  color: "#7CC46A"
+  weight: 10
+  skipVents: true
+
+- type: swarmModifier
+  id: RichHive
+  name: swarm-modifier-rich
+  description: swarm-modifier-rich-desc
+  color: "#7CC46A"
+  weight: 10
+  wildCombs: 12
+
+- type: swarmModifier
+  id: HugeSwarm
+  name: swarm-modifier-huge
+  description: swarm-modifier-huge-desc
+  color: "#E0603A"
+  weight: 7.5
+  colonyShare: 0.75
+
+- type: swarmModifier
+  id: Wanderer
+  name: swarm-modifier-wanderer
+  description: swarm-modifier-wanderer-desc
+  color: "#E0603A"
+  weight: 7.5
+  rangeMultiplier: 2
+
+- type: swarmModifier
+  id: TaintedHive
+  name: swarm-modifier-tainted
+  description: swarm-modifier-tainted-desc
+  color: "#E0603A"
+  weight: 7.5
+  combReagent: RandomPickBotanyGeneralReagent

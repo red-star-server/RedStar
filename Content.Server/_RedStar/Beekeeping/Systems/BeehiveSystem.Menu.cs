@@ -70,6 +70,10 @@ public sealed partial class BeehiveSystem
 
         _queen.AddJellyVerb(ent, ref args);
 
+        // A wild hive has no frames to take out and no bees to catch.
+        if (comp.Wild)
+            return;
+
         // Frames come first, in slot order, so the alt-click takes out a frame rather than a bee.
         for (var i = 0; i < comp.FrameSlots.Count; i++)
         {
