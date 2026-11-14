@@ -1,10 +1,12 @@
 #nullable enable
 using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server._RedStar.Beekeeping.Components;
 using Content.Server._RedStar.Beekeeping.Systems;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared._RedStar.Beekeeping.Components;
 using Content.Shared.Atmos;
+using Content.Shared.CCVar;
 using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -25,6 +27,8 @@ public sealed class BeeErrandTest : GameTest
 
     private async Task Build(TestMapData map)
     {
+        await OverrideCVar(Side.Server, CCVars.PathfindingEnabled, true);
+
         var server = Server;
         await server.WaitPost(() =>
         {
