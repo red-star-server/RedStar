@@ -1,3 +1,5 @@
+loadout-group-sex-restriction = Этот предмет недоступен для вашего пола.
+
 # Security
 loadout-group-brigmedic-head = Бригмедик, голова
 loadout-group-brigmedic-jumpsuit = Бригмедик, комбинезон
