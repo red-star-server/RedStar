@@ -44,6 +44,7 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
     [Dependency] private DamageableSystem _damage = default!;
     [Dependency] private EntityQuery<SurgeryTargetComponent> _targetQuery;
     [Dependency] private EntityQuery<StackComponent> _stackQuery;
+    [Dependency] private EntityQuery<SurgeryIgnoreClothingComponent> _ignoreClothingQuery;
 
     private static readonly ProtoId<DamageTypePrototype> Poison = "Poison";
     private static readonly FixedPoint2 SepsisDamageLimit = FixedPoint2.New(90);
@@ -55,7 +56,6 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         base.Initialize();
 
         Subs.CVar(_cfg, SurgeryCVars.CanOperateOnSelf, x => _noSelfOperate = !x, true);
-        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
         ValidatePrototypes();
     }
 
@@ -172,13 +172,14 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
     /// </summary>
     public bool TryPerformStep(EntityUid part, EntityUid user, SurgeryProcedureInstance instance, int stepIndex)
     {
-        if (!ValidateStep(part, user, instance, stepIndex, out var popup, out var procedure, out var comp, out var body))
+        if (!ValidateStep(part, user, instance, stepIndex, out var popup, out var procedure, out _, out var body))
         {
             if (popup is { } text)
                 _popup.PopupEntity(text, user, user, PopupType.Medium);
             return false;
         }
 
+        var comp = EnsureComp<OperatedComponent>(part);
         var held = _hands.GetActiveItemOrSelf(user);
         var step = procedure.Steps[stepIndex];
 
@@ -230,7 +231,7 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
     }
 
     private bool ValidateStep(EntityUid part, EntityUid user, SurgeryProcedureInstance instance, int stepIndex,
-        out string? popup, out SurgeryProcedurePrototype procedure, out OperatedComponent comp, out EntityUid body)
+        out string? popup, out SurgeryProcedurePrototype procedure, out OperatedComponent? comp, out EntityUid body)
     {
         popup = null;
         procedure = default!;
@@ -256,7 +257,7 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
             return false;
         }
 
-        if (IsCovered(part, body))
+        if (IsCovered(part, body, user, _hands.GetActiveItemOrSelf(user)))
         {
             popup = Loc.GetString("surgery-ui-window-steps-error-armor");
             return false;
@@ -266,17 +267,16 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
             return false;
 
         procedure = proc;
-        comp = EnsureComp<OperatedComponent>(part);
+        TryComp(part, out comp);
 
-        if (comp.IsOperating)
+        if (comp is { IsOperating: true })
             return false;
 
-        var stage = comp.Stage ?? DefaultStage;
+        var stage = comp?.Stage ?? DefaultStage;
         if (!procedure.From.Contains(stage))
             return false;
 
-        // Continuing the active procedure requires the exact next step; switching procedures starts over.
-        if (comp.ActiveProcedure is { } active)
+        if (comp?.ActiveProcedure is { } active)
         {
             if (active == instance.Procedure && comp.ActiveOrgan == instance.Organ)
             {
@@ -400,9 +400,12 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         return step.Duration / speed;
     }
 
-    private bool IsCovered(EntityUid part, EntityUid body)
+    private bool IsCovered(EntityUid part, EntityUid body, EntityUid user, EntityUid held)
     {
         if (!TryComp<BodyPartComponent>(part, out var partComp))
+            return false;
+
+        if (_ignoreClothingQuery.HasComp(user) || _ignoreClothingQuery.HasComp(held))
             return false;
 
         var slots = BodyEquipmentSystem.GetCoveringSlots(partComp.PartType);
@@ -411,7 +414,7 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
 
         while (enumerator.MoveNext(out var slot))
         {
-            if (slot.ContainedEntity is not null)
+            if (slot.ContainedEntity is { } item && !_ignoreClothingQuery.HasComp(item))
                 return true;
         }
 

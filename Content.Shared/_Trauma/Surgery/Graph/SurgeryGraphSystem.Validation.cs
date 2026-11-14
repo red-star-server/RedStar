@@ -5,6 +5,7 @@ namespace Content.Shared._Trauma.Surgery.Graph;
 
 public sealed partial class SurgeryGraphSystem
 {
+    [SubscribeLocalEvent]
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
     {
         if (args.WasModified<SurgeryProcedurePrototype>() || args.WasModified<SurgeryStagePrototype>())
