@@ -1,0 +1,28 @@
+﻿- type: surgeryStage
+  id: Closed
+  name: surgery-stage-closed
+  depth: 0
+
+- type: surgeryStage
+  id: Incised
+  name: surgery-stage-incised
+  depth: 1
+  overlays:
+  - rsi: _RedStar/Medical/Mobs/Effects/bleeding_damage.rsi
+    stateSuffix: Minor
+
+- type: surgeryStage
+  id: SkullOpen
+  name: surgery-stage-skull-open
+  depth: 2
+  overlays:
+  - rsi: _RedStar/Medical/Mobs/Effects/bleeding_damage.rsi
+    stateSuffix: Severe
+
+- type: surgeryStage
+  id: RibcageOpen
+  name: surgery-stage-ribcage-open
+  depth: 2
+  overlays:
+  - rsi: _RedStar/Medical/Mobs/Effects/bleeding_damage.rsi
+    stateSuffix: Severe

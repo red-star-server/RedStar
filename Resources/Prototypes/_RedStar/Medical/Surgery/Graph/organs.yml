@@ -1,0 +1,91 @@
+﻿- type: surgeryProcedure
+  id: RemoveOrgan
+  name: surgery-procedure-remove-organ
+  from: [Incised, SkullOpen, RibcageOpen]
+  organMode: Focus
+  categories: [Brain, Eyes, Ears, Heart, Lungs, Liver, Stomach, Kidneys, Appendix, AugmentPowerCell, AugmentCharger]
+  conditions:
+  - !type:OrganExposedCondition
+  - !type:OrganPresentCondition
+  steps:
+  - name: surgery-step-clamp-bleeders
+    quality: Clamping
+    duration: 4
+    effects:
+    - !type:BleedsTreatmentEffect
+      amount: 2
+  - name: surgery-step-remove-organ
+    quality: Manipulating
+    duration: 8
+    effects:
+    - !type:RemoveOrganEffect
+
+- type: surgeryProcedure
+  id: InsertOrgan
+  name: surgery-procedure-insert-organ
+  from: [Incised, SkullOpen, RibcageOpen]
+  organMode: HeldItem
+  categories: [Brain, Eyes, Ears, Heart, Lungs, Liver, Stomach, Kidneys, Appendix, Tongue, AugmentPowerCell, AugmentCharger]
+  conditions:
+  - !type:OrganExposedCondition
+  - !type:PartRemovedCondition
+  steps:
+  - name: surgery-step-insert-organ
+    procedureOrgan: true
+    duration: 6
+    effects:
+    - !type:InsertOrganEffect
+  - name: surgery-step-affix-organ
+    quality: Cauterizing
+    duration: 2
+    effects:
+    - !type:AffixOrganEffect
+    - !type:DamageEffect
+      sleepModifier: 2
+      damage:
+        types:
+          Heat: -5
+
+- type: surgeryProcedure
+  id: RemoveTongue
+  name: surgery-procedure-remove-tongue
+  from: [Incised]
+  categories: [Tongue]
+  conditions:
+  - !type:OrganPresentCondition
+    organ: Tongue
+  steps:
+  - name: surgery-step-pull-out-organ
+    anyItem: true
+    duration: 8
+    effects:
+    - !type:RemoveOrganEffect
+      organ: Tongue
+
+- type: surgeryProcedure
+  id: AttachPart
+  name: surgery-procedure-attach-part
+  from: [Incised, SkullOpen, RibcageOpen]
+  organMode: HeldItem
+  conditions:
+  - !type:PartRemovedCondition
+  - !type:TraumaPresentCondition
+    trauma: Dismemberment
+    inverted: true
+  steps:
+  - name: surgery-step-insert-part
+    procedureOrgan: true
+    duration: 6
+    effects:
+    - !type:InsertPartEffect
+  - name: surgery-step-affix-part
+    quality: Cauterizing
+    duration: 2
+    effects:
+    - !type:AffixPartEffect
+      healAmount: 12
+    - !type:DamageEffect
+      sleepModifier: 2
+      damage:
+        types:
+          Heat: -5
