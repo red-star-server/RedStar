@@ -15,12 +15,12 @@ public sealed partial class CavityEffect : SurgeryStepEffect
     public override bool Apply(EntityUid target, EntityUid? surgeon, EntityUid? usedItem, ProtoId<OrganCategoryPrototype>? organ, IEntityManager entityManager)
     {
         if (surgeon is not { } user)
-            return true;
+            return false;
 
         var ev = new GetBodyPartCavityEvent();
         entityManager.EventBus.RaiseLocalEvent(target, ref ev);
         if (ev.Container is not { } container)
-            return true;
+            return false;
 
         var hands = entityManager.System<SharedHandsSystem>();
         if (Remove)
@@ -28,7 +28,7 @@ public sealed partial class CavityEffect : SurgeryStepEffect
             return container.ContainedEntity is not { } contained || hands.TryPickupAnyHand(user, contained);
         }
 
-        var item = usedItem ?? hands.GetActiveItem(user);
-        return item is not { } held || entityManager.System<SharedContainerSystem>().Insert(held, container);
+        return usedItem is { } held && held != user &&
+               entityManager.System<SharedContainerSystem>().Insert(held, container);
     }
 }

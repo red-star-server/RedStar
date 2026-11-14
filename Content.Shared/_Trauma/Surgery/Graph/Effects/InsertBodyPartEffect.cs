@@ -1,21 +1,19 @@
-using Content.Shared._Trauma.Body;
+﻿using Content.Shared._Trauma.Body;
 using Content.Shared.Body;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Trauma.Surgery.Graph.Effects;
 
 [Serializable]
-public sealed partial class InsertPartEffect : SurgeryStepEffect
+public sealed partial class InsertBodyPartEffect : SurgeryStepEffect
 {
     [DataField]
     public ProtoId<OrganCategoryPrototype>? Category;
 
     public override bool Apply(EntityUid target, EntityUid? surgeon, EntityUid? usedItem, ProtoId<OrganCategoryPrototype>? organ, IEntityManager entityManager)
     {
-        if (usedItem is not { } item)
-            return false;
-
-        if (entityManager.System<BodySystem>().GetCategory(item) is not { } category)
+        if (usedItem is not { } item ||
+            entityManager.System<BodySystem>().GetCategory(item) is not { } category)
             return false;
 
         if ((Category ?? organ) is { } required && category != required)
