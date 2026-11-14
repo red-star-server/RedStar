@@ -35,8 +35,8 @@ public sealed partial class SurgeryGraphSystem
                     Log.Error($"Surgery procedure '{procedure.ID}' references unknown stage '{from}'.");
             }
 
-            if (!_proto.HasIndex(procedure.To))
-                Log.Error($"Surgery procedure '{procedure.ID}' references unknown stage '{procedure.To}'.");
+            if (procedure.To is { } to && !_proto.HasIndex(to))
+                Log.Error($"Surgery procedure '{procedure.ID}' references unknown stage '{to}'.");
         }
 
         for (var i = 0; i < procedures.Count; i++)
@@ -47,6 +47,10 @@ public sealed partial class SurgeryGraphSystem
                 var b = procedures[j];
 
                 if (a.OrganMode != b.OrganMode || !SharesStage(a, b) || !SameConditions(a, b))
+                    continue;
+
+                // Disjoint category filters can never produce the same concrete instance.
+                if (a.Categories.Count > 0 && b.Categories.Count > 0 && !a.Categories.Any(b.Categories.Contains))
                     continue;
 
                 var prefix = StrictStepPrefix(a, b) ? a : StrictStepPrefix(b, a) ? b : null;

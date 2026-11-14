@@ -104,6 +104,9 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
                 case SurgeryOrganMode.Focus:
                     foreach (var category in _part.GetPartOrgans(part).Keys)
                     {
+                        if (procedure.Categories.Count > 0 && !procedure.Categories.Contains(category))
+                            continue;
+
                         if (ConditionsMet(part, procedure, category))
                             result.Add(new SurgeryProcedureInstance(procedure.ID, category));
                     }
@@ -113,10 +116,21 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
                     if (!TryComp<BodyPartComponent>(part, out var partComp))
                         break;
 
-                    foreach (var category in partComp.Slots)
+                    if (procedure.Categories.Count > 0)
                     {
-                        if (ConditionsMet(part, procedure, category))
-                            result.Add(new SurgeryProcedureInstance(procedure.ID, category));
+                        foreach (var category in procedure.Categories)
+                        {
+                            if (ConditionsMet(part, procedure, category))
+                                result.Add(new SurgeryProcedureInstance(procedure.ID, category));
+                        }
+                    }
+                    else
+                    {
+                        foreach (var category in partComp.Slots)
+                        {
+                            if (ConditionsMet(part, procedure, category))
+                                result.Add(new SurgeryProcedureInstance(procedure.ID, category));
+                        }
                     }
                     break;
             }
@@ -293,6 +307,8 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         var comp = ent.Comp;
         comp.IsOperating = false;
         comp.DoAfter = null;
+        // Any bail-out below must also stop a running repeat loop.
+        args.Repeat = false;
 
         if (args.Cancelled || args.Handled)
             return;
@@ -333,6 +349,18 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
                 QueueDel(consumed);
         }
 
+        // Repeatable steps keep the do-after running while work remains (bleeding, trauma, wounds).
+        if (step.Repeatable && step.RepeatWhile is { } repeatWhile &&
+            repeatWhile.CheckWithInvert(ent, args.Organ, EntityManager))
+        {
+            args.Repeat = true;
+            comp.IsOperating = true;
+            HandleSanitization(ent, body, surgeon);
+            Dirty(ent, comp);
+            args.Handled = true;
+            return;
+        }
+
         comp.CompletedSteps = args.StepIndex + 1;
 
         HandleSanitization(ent, body, surgeon);
@@ -345,7 +373,7 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
                     return;
             }
 
-            comp.Stage = procedure.To;
+            comp.Stage = procedure.To ?? comp.Stage;
             comp.ActiveProcedure = null;
             comp.ActiveOrgan = null;
             comp.CompletedSteps = 0;

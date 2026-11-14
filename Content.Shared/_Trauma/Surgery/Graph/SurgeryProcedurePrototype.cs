@@ -34,11 +34,20 @@ public sealed partial class SurgeryProcedurePrototype : IPrototype
     [DataField(required: true)]
     public List<ProtoId<SurgeryStagePrototype>> From = [];
 
-    [DataField(required: true)]
-    public ProtoId<SurgeryStagePrototype> To = default!;
+    /// <summary>
+    /// Stage the part moves to on completion. Null keeps the current stage (e.g. organ removal).
+    /// </summary>
+    [DataField]
+    public ProtoId<SurgeryStagePrototype>? To;
 
     [DataField]
     public SurgeryOrganMode OrganMode;
+
+    /// <summary>
+    /// Restricts organ expansion to these categories. Empty means every organ/slot of the part.
+    /// </summary>
+    [DataField]
+    public List<ProtoId<OrganCategoryPrototype>> Categories = [];
 
     /// <summary>
     /// Ordering in the surgery UI.
@@ -94,6 +103,18 @@ public sealed partial class SurgeryStepEntry
     /// </summary>
     [DataField]
     public bool Consume;
+
+    /// <summary>
+    /// Repeat the step's do-after while <see cref="RepeatWhile"/> is met instead of advancing.
+    /// </summary>
+    [DataField]
+    public bool Repeatable;
+
+    /// <summary>
+    /// Work-remaining check for repeatable steps, e.g. bleeding or trauma still present.
+    /// </summary>
+    [DataField]
+    public SurgeryStepCondition? RepeatWhile;
 
     [DataField]
     public List<SurgeryStepEffect> Effects = [];
