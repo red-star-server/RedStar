@@ -1,4 +1,3 @@
-using Content.Shared._Trauma.Augments;
 using Content.Shared._Trauma.Body;
 using Content.Shared._Trauma.Common.CCVar;
 using Content.Shared._Trauma.Surgery.Tools;
@@ -183,7 +182,7 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         var held = _hands.GetActiveItemOrSelf(user);
         var step = procedure.Steps[stepIndex];
 
-        var usedEv = new SurgeryUseAttemptEvent(user, body) { IgnoreToggle = HasComp<AugmentComponent>(held) };
+        var usedEv = new SurgeryUseAttemptEvent(user, body);
         RaiseLocalEvent(held, ref usedEv);
         if (usedEv.Cancelled)
             return false;

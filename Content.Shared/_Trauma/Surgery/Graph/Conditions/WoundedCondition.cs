@@ -1,5 +1,6 @@
 using Content.Shared._Trauma.Wounds;
 using Content.Shared.Body;
+using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Trauma.Surgery.Graph.Conditions;
@@ -11,7 +12,7 @@ namespace Content.Shared._Trauma.Surgery.Graph.Conditions;
 public sealed partial class WoundedCondition : SurgeryStepCondition
 {
     [DataField]
-    public string DamageGroup = "Brute";
+    public ProtoId<DamageGroupPrototype> DamageGroup = "Brute";
 
     public override bool Check(EntityUid target, ProtoId<OrganCategoryPrototype>? organ, IEntityManager entityManager)
     {
