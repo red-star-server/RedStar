@@ -54,7 +54,6 @@ public sealed partial class SurgeryTest : GameTest
             patient = SSpawnAtPosition("MobHuman", map.GridCoords.Offset(new Vector2(1, 0)));
             foreach (var mob in new[] { surgeon, patient })
             {
-                // Keep the test about surgery, without unrelated vacuum and temperature damage.
                 SEntMan.RemoveComponent<BarotraumaComponent>(mob);
                 SEntMan.RemoveComponent<RespiratorComponent>(mob);
                 SEntMan.RemoveComponent<TemperatureDamageComponent>(mob);
@@ -67,9 +66,13 @@ public sealed partial class SurgeryTest : GameTest
         return (surgeon, patient);
     }
 
-    /// <summary>
-    /// Runs every step of a procedure, picking the tool each step asks for.
-    /// </summary>
+    private EntityUid GetPartByType(EntityUid body, BodyPartType partType, BodyPartSymmetry? symmetry = null)
+    {
+        var found = _parts.FindBodyPart(body, partType, symmetry);
+        Assert.That(found, Is.Not.Null, $"No {partType} {(symmetry?.ToString() ?? "")} part found");
+        return found!.Value.Owner;
+    }
+
     private async Task Operate(EntityUid surgeon, EntityUid part,
         ProtoId<SurgeryProcedurePrototype> procedure,
         ProtoId<OrganCategoryPrototype>? organ = null,
@@ -96,7 +99,6 @@ public sealed partial class SurgeryTest : GameTest
                 Assert.That(_graph.TryPerformStep(part, surgeon, instance, index), Is.True,
                     $"{procedure}[{index}]: step refused");
 
-                // Repeatable treatment needs several cycles to drain the remaining work.
                 duration = (float) step.Duration.TotalSeconds * (step.Repeatable ? 8 : 1) + 1;
             });
             await RunSeconds(duration);
@@ -142,24 +144,24 @@ public sealed partial class SurgeryTest : GameTest
     public async Task BoneTreatmentCanBeCompletedAndIncisionClosed()
     {
         var (surgeon, patient) = await SetupPatient();
-        EntityUid arm = default;
+        EntityUid armPart = default;
         await Server.WaitAssertion(() =>
         {
-            arm = _body.GetOrgan(patient, Arm)!.Value;
-            Assert.That(_wounds.TryInduceWound(arm, BluntWound, 5, out var wound), Is.True);
-            Assert.That(_trauma.ApplyBoneTrauma(arm, (wound!.Value.Owner, SComp<TraumaInflicterComponent>(wound.Value.Owner)), 34), Is.True);
+            armPart = GetPartByType(patient, BodyPartType.Arm, BodyPartSymmetry.Left);
+            Assert.That(_wounds.TryInduceWound(armPart, BluntWound, 5, out var wound), Is.True);
+            Assert.That(_trauma.ApplyBoneTrauma(armPart, (wound!.Value.Owner, SComp<TraumaInflicterComponent>(wound.Value.Owner)), 34), Is.True);
         });
 
-        await Operate(surgeon, arm, "OpenIncision");
-        await Operate(surgeon, arm, "MendBones");
-        await Operate(surgeon, arm, "CloseIncision");
+        await Operate(surgeon, armPart, "OpenIncision");
+        await Operate(surgeon, armPart, "MendBones");
+        await Operate(surgeon, armPart, "CloseIncision");
 
         await Server.WaitAssertion(() =>
         {
-            var bone = SComp<BoneComponent>(arm);
+            var bone = SComp<BoneComponent>(armPart);
             Assert.That(bone.BoneIntegrity, Is.EqualTo(bone.IntegrityCap));
-            Assert.That(_trauma.HasWoundableTrauma(arm, TraumaType.BoneDamage), Is.False);
-            Assert.That(_graph.GetStage(arm), Is.EqualTo(Closed));
+            Assert.That(_trauma.HasWoundableTrauma(armPart, TraumaType.BoneDamage), Is.False);
+            Assert.That(_graph.GetStage(armPart), Is.EqualTo(Closed));
         });
     }
 
@@ -169,23 +171,24 @@ public sealed partial class SurgeryTest : GameTest
     {
         var (surgeon, patient) = await SetupPatient();
         ProtoId<OrganCategoryPrototype> category = organCategory;
-        EntityUid torso = default;
+        EntityUid torsoPart = default;
         EntityUid organ = default;
         await Server.WaitAssertion(() =>
         {
-            torso = _body.GetOrgan(patient, Torso)!.Value;
+            torsoPart = GetPartByType(patient, BodyPartType.Torso);
             organ = _body.GetOrgan(patient, category)!.Value;
         });
 
-        await Operate(surgeon, torso, "OpenRibcage");
-        await Operate(surgeon, torso, "RemoveOrgan", category);
+        await Operate(surgeon, torsoPart, "OpenIncision");
+        await Operate(surgeon, torsoPart, "OpenRibcage");
+        await Operate(surgeon, torsoPart, "RemoveOrgan", category);
         await Server.WaitAssertion(() => Assert.That(_body.GetOrgan(patient, category), Is.Null));
 
-        await Operate(surgeon, torso, "InsertOrgan", category, organ);
+        await Operate(surgeon, torsoPart, "InsertOrgan", category, organ);
         await Server.WaitAssertion(() =>
         {
             Assert.That(_body.GetOrgan(patient, category), Is.EqualTo(organ));
-            Assert.That(_parts.GetOrgan(torso, category), Is.EqualTo(organ));
+            Assert.That(_parts.GetOrgan(torsoPart, category), Is.EqualTo(organ));
             Assert.That(SEntMan.HasComponent<EnabledOrganComponent>(organ), Is.True);
         });
     }
@@ -209,24 +212,26 @@ public sealed partial class SurgeryTest : GameTest
     public async Task DetachedPartCancelsSurgeryAndCanBeReattached()
     {
         var (surgeon, patient) = await SetupPatient();
-        EntityUid arm = default;
+        EntityUid armPart = default;
+        EntityUid torsoPart = default;
         await Server.WaitAssertion(() =>
         {
-            arm = _body.GetOrgan(patient, Arm)!.Value;
+            armPart = GetPartByType(patient, BodyPartType.Arm, BodyPartSymmetry.Left);
             Assert.That(_hands.TryPickupAnyHand(surgeon, SSpawn("Scalpel")), Is.True);
-            Assert.That(_graph.TryPerformStep(arm, surgeon, new SurgeryProcedureInstance("OpenIncision", null), 0), Is.True);
-            Assert.That(_body.RemoveOrgan(patient, arm), Is.True);
+            Assert.That(_graph.TryPerformStep(armPart, surgeon, new SurgeryProcedureInstance("OpenIncision", null), 0), Is.True);
+            Assert.That(_body.RemoveOrgan(patient, armPart), Is.True);
         });
         await RunSeconds(8);
-        await Server.WaitAssertion(() => Assert.That(_graph.GetStage(arm), Is.EqualTo(Closed)));
+        await Server.WaitAssertion(() => Assert.That(_graph.GetStage(armPart), Is.EqualTo(Closed)));
 
-        EntityUid torso = default;
-        await Server.WaitAssertion(() => torso = _body.GetOrgan(patient, Torso)!.Value);
-        await Operate(surgeon, torso, "AttachPart", Arm, arm);
+        await Server.WaitAssertion(() => torsoPart = GetPartByType(patient, BodyPartType.Torso));
+
+        await Operate(surgeon, torsoPart, "OpenIncision");
+        await Operate(surgeon, torsoPart, "AttachPart", Arm, armPart);
         await Server.WaitAssertion(() =>
         {
-            Assert.That(_body.GetOrgan(patient, Arm), Is.EqualTo(arm));
-            Assert.That(SEntMan.HasComponent<OrganReattachedComponent>(arm), Is.False);
+            Assert.That(_body.GetOrgan(patient, Arm), Is.EqualTo(armPart));
+            Assert.That(SEntMan.HasComponent<OrganReattachedComponent>(armPart), Is.False);
         });
     }
 
@@ -236,10 +241,10 @@ public sealed partial class SurgeryTest : GameTest
         var (surgeon, patient) = await SetupPatient();
         await Server.WaitAssertion(() =>
         {
-            var torso = _body.GetOrgan(patient, Torso)!.Value;
+            var torsoPart = GetPartByType(patient, BodyPartType.Torso);
             Assert.That(_inventory.TryEquip(patient, SSpawn("ClothingUniformJumpsuitColorGrey"), "innerclothing", force: true), Is.True);
             Assert.That(_hands.TryPickupAnyHand(surgeon, SSpawn("Scalpel")), Is.True);
-            Assert.That(_graph.CanPerformStep(torso, surgeon, new SurgeryProcedureInstance("OpenIncision", null), 0, out _), Is.False);
+            Assert.That(_graph.CanPerformStep(torsoPart, surgeon, new SurgeryProcedureInstance("OpenIncision", null), 0, out _), Is.False);
         });
     }
 
@@ -247,27 +252,28 @@ public sealed partial class SurgeryTest : GameTest
     public async Task CavityInsertionUsesTheActiveHand()
     {
         var (surgeon, patient) = await SetupPatient();
-        EntityUid torso = default;
+        EntityUid torsoPart = default;
         EntityUid selected = default;
-        await Server.WaitAssertion(() => torso = _body.GetOrgan(patient, Torso)!.Value);
-        await Operate(surgeon, torso, "OpenRibcage");
+        await Server.WaitAssertion(() => torsoPart = GetPartByType(patient, BodyPartType.Torso));
+
+        await Operate(surgeon, torsoPart, "OpenIncision");
+        await Operate(surgeon, torsoPart, "OpenRibcage");
 
         await Server.WaitAssertion(() =>
         {
-            // Leave the last tool in the first hand and select an item in the other hand.
             selected = SSpawn("Pen");
             Assert.That(_hands.TryGetEmptyHand(surgeon, out var hand), Is.True);
             Assert.That(_hands.TryPickupAnyHand(surgeon, selected), Is.True);
             Assert.That(_hands.TrySetActiveHand(surgeon, hand), Is.True);
-            Assert.That(_graph.TryPerformStep(torso, surgeon, new SurgeryProcedureInstance("InsertCavityItem", null), 0), Is.True);
+            Assert.That(_graph.TryPerformStep(torsoPart, surgeon, new SurgeryProcedureInstance("InsertCavityItem", null), 0), Is.True);
         });
         await RunSeconds(14);
         await Server.WaitAssertion(() =>
         {
             var containers = Server.System<SharedContainerSystem>();
-            Assert.That(containers.TryGetContainer(torso, "_part_cavity", out var cavity), Is.True);
+            Assert.That(containers.TryGetContainer(torsoPart, "_part_cavity", out var cavity), Is.True);
             Assert.That(cavity!.ContainedEntities, Does.Contain(selected));
-            Assert.That(_graph.TryPerformStep(torso, surgeon, new SurgeryProcedureInstance("RemoveCavityItem", null), 0), Is.True);
+            Assert.That(_graph.TryPerformStep(torsoPart, surgeon, new SurgeryProcedureInstance("RemoveCavityItem", null), 0), Is.True);
         });
         await RunSeconds(14);
         await Server.WaitAssertion(() =>
@@ -275,7 +281,7 @@ public sealed partial class SurgeryTest : GameTest
             Assert.That(_hands.GetActiveItem(surgeon), Is.EqualTo(selected));
             Assert.That(_hands.TryDrop(surgeon, selected), Is.True);
             var containers = Server.System<SharedContainerSystem>();
-            Assert.That(containers.TryGetContainer(torso, "_part_cavity", out var cavity), Is.True);
+            Assert.That(containers.TryGetContainer(torsoPart, "_part_cavity", out var cavity), Is.True);
             var mouse = SSpawn("MobMouse");
             SEntMan.RemoveComponent<BarotraumaComponent>(mouse);
             SEntMan.RemoveComponent<RespiratorComponent>(mouse);
@@ -286,12 +292,11 @@ public sealed partial class SurgeryTest : GameTest
             SEntMan.EventBus.RaiseLocalEvent(mouse, burst);
             Assert.That(burst.Handled, Is.True);
         });
-        // Let the burst and its temporary paralysis finish before fixture cleanup.
         await RunSeconds(20);
         await Server.WaitAssertion(() =>
         {
             Assert.That(SEntMan.HasComponent<InsideBodyPartComponent>(selected), Is.False);
-            Assert.That(_trauma.HasWoundableTrauma(torso, TraumaType.BoneDamage), Is.True);
+            Assert.That(_trauma.HasWoundableTrauma(torsoPart, TraumaType.BoneDamage), Is.True);
         });
     }
 }
