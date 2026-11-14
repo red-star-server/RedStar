@@ -398,7 +398,7 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         return step.Duration / speed;
     }
 
-    private bool IsLyingDown(EntityUid entity, EntityUid user, bool showPopup)
+    public bool IsLyingDown(EntityUid entity, EntityUid user, bool showPopup)
     {
         if (_standing.IsDown(entity))
             return true;

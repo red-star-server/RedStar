@@ -1,21 +1,17 @@
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared._Trauma.Surgery.Graph;
 using Content.Shared.Body;
-using Content.Shared.Buckle.Components;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Popups;
-using Content.Shared.Standing;
 
 namespace Content.Shared._Trauma.Surgery;
 
 public sealed partial class SurgerySystem : EntitySystem
 {
-    [Dependency] private BodySystem _body = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private StandingStateSystem _standing = default!;
     [Dependency] private SurgeryGraphSystem _graph = default!;
     [Dependency] private EntityQuery<SurgeryTargetComponent> _targetQuery;
 
@@ -60,8 +56,11 @@ public sealed partial class SurgerySystem : EntitySystem
     private void OnBodyMapInit(Entity<BodyComponent> ent, ref MapInitEvent args)
     {
         EnsureComp<SurgeryTargetComponent>(ent);
-        if (!HasComp<InitialBodyComponent>(ent))
-            RaiseLocalEvent(ent, new BodyInitEvent());
+        if (HasComp<InitialBodyComponent>(ent))
+            return;
+
+        var ev = new BodyInitEvent();
+        RaiseLocalEvent(ent, ref ev);
     }
 
     [SubscribeLocalEvent]
@@ -78,25 +77,12 @@ public sealed partial class SurgerySystem : EntitySystem
     private void OnStepChosenMessage(Entity<SurgeryTargetComponent> ent, ref SurgeryStepChosenBuiMsg args)
     {
         var part = GetEntity(args.Part);
-        _graph.TryPerformStep(part, args.Procedure, args.Organ, args.StepIndex, args.Actor);
+        var instance = new SurgeryProcedureInstance(args.Procedure, args.Organ);
+        _graph.TryPerformStep(part, args.Actor, instance, args.StepIndex);
     }
 
     #endregion
 
-    /// <summary>
-    /// Checks if someone is lying down or on an operating table.
-    /// </summary>
     public bool IsLyingDown(EntityUid entity, EntityUid user, bool showPopup = true)
-    {
-        if (_standing.IsDown(entity))
-            return true;
-        if (!TryComp<BuckleComponent>(entity, out var buckle))
-            return true;
-        if (TryComp<StrapComponent>(buckle.BuckledTo, out var strap) &&
-            strap.Rotation.GetCardinalDir() is Direction.West or Direction.East)
-            return true;
-        if (showPopup)
-            _popup.PopupEntity(Loc.GetString("surgery-error-laying"), user, user);
-        return false;
-    }
+        => _graph.IsLyingDown(entity, user, showPopup);
 }

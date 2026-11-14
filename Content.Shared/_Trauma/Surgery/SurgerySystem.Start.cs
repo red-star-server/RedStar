@@ -35,9 +35,12 @@ public sealed partial class SurgerySystem
     {
         if (!args.CanInteract || !args.CanAccess || !_targetQuery.HasComp(args.Target))
             return;
+
+        var user = args.User;
+        var target = args.Target;
         args.Verbs.Add(new UtilityVerb
         {
-            Act = () => AttemptStartSurgery(args.User, args.Target),
+            Act = () => AttemptStartSurgery(user, target),
             Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Objects/Specific/Medical/Surgery/scalpel.rsi"), "scalpel"),
             Text = Loc.GetString("surgery-verb-text"),
             Message = Loc.GetString("surgery-verb-message"),
