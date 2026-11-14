@@ -25,16 +25,10 @@ public sealed partial class CavityEffect : SurgeryStepEffect
         var hands = entityManager.System<SharedHandsSystem>();
         if (Remove)
         {
-            if (container.ContainedEntity is { } contained)
-                hands.TryPickupAnyHand(user, contained);
-        }
-        else
-        {
-            var item = usedItem ?? hands.GetActiveItem(user);
-            if (item is { } held)
-                entityManager.System<SharedContainerSystem>().Insert(held, container);
+            return container.ContainedEntity is not { } contained || hands.TryPickupAnyHand(user, contained);
         }
 
-        return true;
+        var item = usedItem ?? hands.GetActiveItem(user);
+        return item is not { } held || entityManager.System<SharedContainerSystem>().Insert(held, container);
     }
 }

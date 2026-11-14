@@ -90,7 +90,18 @@ public sealed partial class SurgeryWindow : FancyWindow
     }
 
     private void ViewParts() { _part = null; _selected = null; View(ViewType.Parts); }
-    private void ViewPart(EntityUid part) { _part = part; _procedures.Clear(); UpdateProcedures(part); View(ViewType.Surgeries); }
+
+    private void ViewPart(EntityUid part)
+    {
+        _part = part;
+        _selected = null;
+        _procedures.Clear();
+        Surgeries.RemoveAllChildren();
+        Steps.RemoveAllChildren();
+        UpdateProcedures(part);
+        View(ViewType.Surgeries);
+    }
+
     private void Update() { UpdateParts();
         if (_part is not { } p) return;
         UpdateProcedures(p); UpdateSteps(p);
@@ -149,10 +160,11 @@ public sealed partial class SurgeryWindow : FancyWindow
     {
         var valid = _graph.GetAvailableProcedures(part);
         var changed = false;
+        var deselected = false;
         _procedures.RemoveAll(e =>
         {
             if (valid.Contains(e)) return false;
-            if (_selected == e) _selected = null;
+            if (_selected == e) { _selected = null; deselected = true; }
             changed = true; return true;
         });
         foreach (var e in valid)
@@ -160,8 +172,13 @@ public sealed partial class SurgeryWindow : FancyWindow
             if (_procedures.Contains(e)) continue;
             _procedures.Add(e); changed = true;
         }
-
         if (changed) ProceduresChanged(part);
+
+        if (!deselected)
+            return;
+
+        Steps.RemoveAllChildren();
+        View(ViewType.Surgeries);
     }
 
     private void ProceduresChanged(EntityUid part)

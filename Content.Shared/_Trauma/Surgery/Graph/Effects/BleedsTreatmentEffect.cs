@@ -43,13 +43,12 @@ public sealed partial class BleedsTreatmentEffect : SurgeryStepEffect
         if (!changed)
             return true;
 
-        // Keep the bloodstream's bloodloss calculation in sync with the wound state we just changed.
         var body = entityManager.System<BodySystem>().GetBody(target) ?? target;
-        if (entityManager.HasComponent<BloodstreamComponent>(body))
-        {
-            var update = new BloodstreamUpdateEvent();
-            entityManager.EventBus.RaiseLocalEvent(body, ref update);
-        }
+        if (!entityManager.HasComponent<BloodstreamComponent>(body))
+            return true;
+
+        var update = new BloodstreamUpdateEvent();
+        entityManager.EventBus.RaiseLocalEvent(body, ref update);
 
         return true;
     }

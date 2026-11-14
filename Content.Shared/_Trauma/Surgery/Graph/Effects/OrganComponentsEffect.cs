@@ -52,7 +52,6 @@ public sealed partial class OrganComponentsEffect : SurgeryStepEffect
             }
 
             entityManager.Dirty(organ, comp);
-            // Let the organ system apply/defer the components based on its enabled state.
             system.RefreshOrganComponents(new Entity<OrganComponentsComponent>(organ.Owner, comp), body);
         }
     }

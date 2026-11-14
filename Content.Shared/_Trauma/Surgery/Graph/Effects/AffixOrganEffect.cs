@@ -7,9 +7,6 @@ namespace Content.Shared._Trauma.Surgery.Graph.Effects;
 [Serializable]
 public sealed partial class AffixOrganEffect : SurgeryStepEffect
 {
-    /// <summary>
-    /// Fixed category; when unset, the procedure instance's organ is used.
-    /// </summary>
     [DataField]
     public ProtoId<OrganCategoryPrototype>? Organ;
 

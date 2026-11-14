@@ -198,8 +198,6 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         comp.CompletedSteps = stepIndex;
         comp.IsOperating = true;
 
-        // Range/accessibility is checked against the body, not the internal part:
-        // a part inside the body container is not accessible from outside and would cancel the DoAfter.
         var ev = new SurgeryGraphStepDoAfterEvent(instance.Procedure, instance.Organ, stepIndex);
         var args = new DoAfterArgs(EntityManager, user, GetStepDuration(step, user, body, held), ev, part, target: body, used: held)
         {
@@ -235,7 +233,7 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
     {
         popup = null;
         procedure = default!;
-        comp = default!;
+        comp = null;
         body = default!;
 
         if (!TryComp<BodyPartComponent>(part, out _))
@@ -257,7 +255,8 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
             return false;
         }
 
-        if (IsCovered(part, body, user, _hands.GetActiveItemOrSelf(user)))
+        var held = _hands.GetActiveItemOrSelf(user);
+        if (IsCovered(part, body, user, held))
         {
             popup = Loc.GetString("surgery-ui-window-steps-error-armor");
             return false;
@@ -267,20 +266,29 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
             return false;
 
         procedure = proc;
-        TryComp(part, out comp);
 
-        if (comp is { IsOperating: true })
+        if (!InstanceAllowed(part, proc, instance))
             return false;
 
+        TryComp(part, out comp);
+
+        var operating = comp?.IsOperating ?? false;
         var stage = comp?.Stage ?? DefaultStage;
+        var activeProc = comp?.ActiveProcedure;
+        var activeOrgan = comp?.ActiveOrgan;
+        var completed = comp?.CompletedSteps ?? 0;
+
+        if (operating)
+            return false;
+
         if (!procedure.From.Contains(stage))
             return false;
 
-        if (comp?.ActiveProcedure is { } active)
+        if (activeProc is { } active)
         {
-            if (active == instance.Procedure && comp.ActiveOrgan == instance.Organ)
+            if (active == instance.Procedure && activeOrgan == instance.Organ)
             {
-                if (stepIndex != comp.CompletedSteps)
+                if (stepIndex != completed)
                     return false;
             }
             else if (stepIndex != 0)
@@ -296,13 +304,29 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         if (!ConditionsMet(part, procedure, instance.Organ))
             return false;
 
-        var held = _hands.GetActiveItemOrSelf(user);
         if (MatchTool(procedure.Steps[stepIndex], held, instance.Organ))
             return true;
 
         popup = Loc.GetString("surgery-graph-wrong-tool");
         return false;
 
+    }
+
+    private bool InstanceAllowed(EntityUid part, SurgeryProcedurePrototype procedure, SurgeryProcedureInstance instance)
+    {
+        if (procedure.OrganMode == SurgeryOrganMode.None)
+            return instance.Organ is null;
+
+        if (instance.Organ is not { } organ)
+            return false;
+
+        if (procedure.Categories.Count > 0 && !procedure.Categories.Contains(organ))
+            return false;
+
+        if (procedure.OrganMode == SurgeryOrganMode.Focus)
+            return _part.HasOrgan(part, organ);
+
+        return TryComp<BodyPartComponent>(part, out var partComp) && partComp.Slots.Contains(organ);
     }
 
     [SubscribeLocalEvent]
@@ -335,6 +359,9 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         if (!IsLyingDown(body, surgeon, false))
             return;
 
+        if (IsCovered(ent, body, surgeon, used ?? _hands.GetActiveItemOrSelf(surgeon)))
+            return;
+
         var step = procedure.Steps[args.StepIndex];
         if (used is { } item && !MatchTool(step, item, args.Organ))
             return;
@@ -363,11 +390,9 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
             return;
         }
 
-        comp.CompletedSteps = args.StepIndex + 1;
-
         HandleSanitization(ent, body, surgeon);
 
-        if (comp.CompletedSteps >= procedure.Steps.Count)
+        if (args.StepIndex + 1 >= procedure.Steps.Count)
         {
             foreach (var effect in procedure.Effects)
             {
@@ -379,6 +404,10 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
             comp.ActiveProcedure = null;
             comp.ActiveOrgan = null;
             comp.CompletedSteps = 0;
+        }
+        else
+        {
+            comp.CompletedSteps = args.StepIndex + 1;
         }
 
         Dirty(ent, comp);

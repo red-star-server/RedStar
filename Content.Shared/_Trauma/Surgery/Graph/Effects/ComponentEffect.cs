@@ -20,15 +20,11 @@ public sealed partial class ComponentEffect : SurgeryStepEffect
 
     public override bool Apply(EntityUid target, EntityUid? surgeon, EntityUid? usedItem, ProtoId<OrganCategoryPrototype>? organ, IEntityManager entityManager)
     {
+        var body = entityManager.System<BodySystem>().GetBody(target) ?? target;
         if (Add is { } add)
             entityManager.AddComponents(target, add);
         if (Remove is { } remove)
             entityManager.RemoveComponents(target, remove);
-
-        if (BodyAdd is null && BodyRemove is null)
-            return true;
-
-        var body = entityManager.System<BodySystem>().GetBody(target) ?? target;
         if (BodyAdd is { } bodyAdd)
             entityManager.AddComponents(body, bodyAdd);
         if (BodyRemove is { } bodyRemove)

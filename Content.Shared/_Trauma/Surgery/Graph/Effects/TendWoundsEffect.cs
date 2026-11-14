@@ -8,9 +8,6 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Trauma.Surgery.Graph.Effects;
 
-/// <summary>
-/// Heals wounds of a damage group, scaling with the patient's total wound severity.
-/// </summary>
 [Serializable]
 public sealed partial class TendWoundsEffect : SurgeryStepEffect
 {
@@ -26,11 +23,11 @@ public sealed partial class TendWoundsEffect : SurgeryStepEffect
     public override bool Apply(EntityUid target, EntityUid? surgeon, EntityUid? usedItem, ProtoId<OrganCategoryPrototype>? organ, IEntityManager entityManager)
     {
         var wounds = entityManager.System<WoundSystem>();
-        if (wounds.GetWoundableSeverityPoint(target, MainGroup, healable: true) <= 0)
+        var severity = wounds.GetWoundableSeverityPoint(target, MainGroup, healable: true, ignoreBlockers: true);
+        if (severity <= 0)
             return true;
 
-        var bonus = HealMultiplier * wounds.GetWoundableSeverityPoint(target, MainGroup);
-
+        var bonus = HealMultiplier * severity;
         var body = entityManager.System<BodySystem>().GetBody(target) ?? target;
         if (entityManager.System<MobStateSystem>().IsDead(body))
             bonus *= 0.2f;

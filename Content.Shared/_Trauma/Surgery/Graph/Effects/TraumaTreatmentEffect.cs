@@ -31,7 +31,6 @@ public sealed partial class TraumaTreatmentEffect : SurgeryStepEffect
 
                     foreach (var modifier in childOrgan.IntegrityModifiers.ToArray())
                     {
-                        // Only heal wound-based organ damage; leave other integrity modifiers (e.g. eye damage) alone.
                         if (modifier.Key.Item1 != TraumaSystem.WoundableDamageModifier)
                             continue;
 
