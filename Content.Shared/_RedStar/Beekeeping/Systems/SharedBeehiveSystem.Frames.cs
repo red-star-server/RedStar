@@ -143,7 +143,7 @@ public abstract partial class SharedBeehiveSystem
         }
     }
 
-    public void UpdateHiveAppearance(Entity<BeehiveComponent> hive)
+    public virtual void UpdateHiveAppearance(Entity<BeehiveComponent> hive)
     {
         GetFrames(hive, _appearanceFrames);
         Appearance.SetData(hive, BeehiveVisuals.Frames, _appearanceFrames.Count);

@@ -1,0 +1,147 @@
+# Bees of an angry hive. They come out of the colony, attack everyone around, and after a minute the survivors fly
+# back into the hive. Killed ones are lost. A sealed suit (pressure-proof outer clothing and helmet) stops their sting.
+# Water or foam calms one down for a few seconds.
+- type: entity
+  abstract: true
+  parent: MobAngryBee
+  id: BaseMobBeehiveAngry
+  components:
+  - type: Sprite
+    sprite: _RedStar/Objects/Specific/Beekeeping/bees.rsi
+    drawdepth: Mobs
+    noRot: true
+    layers:
+    - state: worker-base
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+    - state: worker-grey
+      color: "#E79A3F"
+      map: [ "enum.BeeForagerVisualLayers.Grey" ]
+    - state: worker-wings
+    - state: worker-base-angry
+      map: [ "enum.BeeForagerVisualLayers.Angry" ]
+  # Killed bees are removed at once; the body keeps its flying look meanwhile, so no layer goes out of step.
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: worker-base
+      Critical:
+        Base: worker-base
+      Dead:
+        Base: worker-base
+  - type: Appearance
+  - type: BeeTraitVisuals
+  # Never hangs still: circles over someone hiding in a locker and is harder to hit.
+  - type: BeeBuzzVisuals
+  - type: AmbientSound
+    range: 3
+    volume: -8
+    sound:
+      path: /Audio/_RedStar/Ambience/Beekeeping/bee_flying.ogg
+  # Not something to catch and sell: it goes back to its hive or dies.
+  - type: MobPrice
+    price: 0
+  - type: Reactive
+    groups:
+      Extinguish: [ Touch ]
+    reactions:
+    - reagents: [ Water ]
+      methods: [ Touch ]
+      effects:
+      - !type:GenericStatusEffect
+        key: Pacified
+        component: Pacified
+        time: 4
+  - type: GuideHelp
+    guides:
+    - Beekeeping
+
+- type: entity
+  parent: BaseMobBeehiveAngry
+  id: MobBeehiveAngryBee
+  name: angry bee
+  description: A worker of a beehive, and it is angry.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: BeehiveAngryBee
+
+- type: entity
+  parent: BaseMobBeehiveAngry
+  id: MobBeehiveAngryScout
+  name: angry scout bee
+  description: The scout of a beehive, and it is angry.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: BeehiveAngryBee
+    scout: true
+  - type: Sprite
+    sprite: _RedStar/Objects/Specific/Beekeeping/bees.rsi
+    drawdepth: Mobs
+    noRot: true
+    layers:
+    - state: scout
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+    - state: scout-grey
+      color: "#E79A3F"
+      map: [ "enum.BeeForagerVisualLayers.Grey" ]
+    - state: scout-angry
+      map: [ "enum.BeeForagerVisualLayers.Angry" ]
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: scout
+      Critical:
+        Base: scout
+      Dead:
+        Base: scout
+
+# The queen defending her broken hive: twice as tough, sees her targets only up to 7 tiles, and attacks only those
+# who were near the hive and anyone who hits her. The queen item rides inside.
+- type: entity
+  parent: BaseMobBeehiveAngry
+  id: MobBeehiveAngryQueen
+  name: angry queen bee
+  description: The queen of a destroyed hive, defending it.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: BeehiveAngryQueen
+  - type: Sprite
+    sprite: _RedStar/Objects/Specific/Beekeeping/bees.rsi
+    drawdepth: Mobs
+    noRot: true
+    layers:
+    - state: queen-base
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+    - state: queen-grey
+      color: "#E79A3F"
+      map: [ "enum.BeeForagerVisualLayers.Grey" ]
+    - state: queen-wings
+    - state: queen-base-angry
+      map: [ "enum.BeeForagerVisualLayers.Angry" ]
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: queen-base
+      Critical:
+        Base: queen-base
+      Dead:
+        Base: queen-base
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      20: Dead
+  - type: NpcFactionMember
+    factions:
+    - Passive
+  - type: NPCRetaliation
+  - type: FactionException
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+    blackboard:
+      VisionRadius: !type:Single
+        7
+      AggroVisionRadius: !type:Single
+        7
+  - type: ContainerContainer
+    containers:
+      queen: !type:ContainerSlot

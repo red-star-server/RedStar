@@ -1,10 +1,15 @@
 using System.Numerics;
 using Content.Server._RedStar.Beekeeping.Components;
 using Content.Server._RedStar.Beekeeping.Data;
+using Content.Shared.Audio;
+using Content.Shared.Database;
+using Content.Shared.Throwing;
+using Content.Shared._RedStar.Beekeeping;
 using Content.Shared._RedStar.Beekeeping.Components;
 using Content.Shared._RedStar.Beekeeping.Visuals;
-using Content.Shared.Audio;
-using Content.Shared.Throwing;
+using Robust.Shared.Containers;
+using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 
@@ -34,14 +39,16 @@ public sealed partial class BeeQueenSystem
             var contained = _container.TryGetContainingContainer(uid, out var holder);
             UpdateBeeSound((uid, homing), !contained);
 
-            // Inside a hive the colony buzzes for her: her own hand-sound would still be heard from there.
-            var quiet = contained && HasComp<BeehiveComponent>(holder!.Owner);
+            // Inside a swarm or a hive the colony buzzes for her: her own hand-sound would still be heard from there.
+            var quiet = contained && (HasComp<BeeSwarmComponent>(holder!.Owner) || HasComp<BeehiveComponent>(holder.Owner));
             if (TryComp<AmbientSoundComponent>(uid, out var heard) && heard.Enabled == quiet)
                 _ambient.SetAmbience(uid, !quiet);
 
             // In a hand, a bag or a locker, or still in the air after a throw: not on its own yet.
             if (contained || HasComp<ThrownItemComponent>(uid))
             {
+                // Let go again, she tries at once.
+                homing.NextNestTry = now;
                 StopHoming((uid, homing));
                 continue;
             }
@@ -53,13 +60,15 @@ public sealed partial class BeeQueenSystem
                 if (home is { } own && !CanFlyHome(uid, xform, homing, own))
                     home = null;
 
-                // A queen with no hive of her own takes any empty one she can see.
+                // A queen with no hive of her own takes any empty one she can see before looking for a nest.
                 if (home == null && HasComp<BeeQueenComponent>(uid))
                     home = FindFreeHive(uid, xform, homing);
 
                 if (home is not { } found)
                 {
                     StopHoming((uid, homing));
+                    if (TryNest((uid, homing), xform, now))
+                        continue;
                 }
                 else
                 {
@@ -215,7 +224,59 @@ public sealed partial class BeeQueenSystem
     }
 
     /// <summary>
-    /// The nearest hive without a queen that she can fly to in a straight line.
+    /// A queen let go with nowhere to fly back to takes off like a swarm, on her own, to a locker or a crate and
+    /// founds a wild hive there. Returns whether she left.
+    /// </summary>
+    private bool TryNest(Entity<BeeHomingComponent> homing, TransformComponent xform, TimeSpan now)
+    {
+        if (!TryComp<BeeQueenComponent>(homing, out var queen) || now < homing.Comp.NextNestTry)
+            return false;
+
+        homing.Comp.NextNestTry = now + homing.Comp.NestRetry;
+
+        if (xform.GridUid is not { } grid ||
+            xform.ParentUid != grid ||
+            !TryComp<MapGridComponent>(grid, out var gridComp) ||
+            _swarm.CountWildHives(xform.MapUid) >= _cfg.GetCVar(BeekeepingCVars.WildHiveLimit))
+        {
+            return false;
+        }
+
+        // Only into a locker or a crate, never a bare corner. With none in sight she sets off to look for one.
+        var origin = _transform.GetMapCoordinates(homing, xform);
+        var storage = _swarm.PickNestStorage(homing, queen.NestRange, grid, origin);
+        var home = xform.LocalPosition;
+        Vector2 site;
+        if (storage is { } chosen)
+        {
+            site = _transform.WithEntityId(Transform(chosen).Coordinates, grid).Position;
+        }
+        else
+        {
+            site = _swarm.SearchHop(homing, origin, (grid, gridComp), BeeSwarmSystem.SearchHopLength);
+        }
+
+        // She has no hive: the errand's hive is left empty, she never flies back.
+        if (_errands.Release(default, xform, queen.NestFlyerPrototype, storage, null,
+                storage == null ? new EntityCoordinates(grid, site) : null) is not { } flyer ||
+            !TryComp<BeeSwarmComponent>(flyer, out var swarm) ||
+            !_container.Insert(homing.Owner, _container.EnsureContainer<ContainerSlot>(flyer, swarm.Container), force: true))
+        {
+            return false;
+        }
+
+        swarm.WildHive = queen.WildHivePrototype;
+        swarm.Storage = storage;
+        _swarm.SetSearching((flyer, swarm), storage == null);
+        _errands.SetSize(flyer, BeeFlightSize.Full);
+
+        _adminLog.Add(LogType.Action, LogImpact.Low,
+            $"{ToPrettyString(homing):queen} was let go and flew off to found a wild hive");
+        return true;
+    }
+
+    /// <summary>
+    /// The nearest hive without a queen that she can fly to in a straight line. Wild hives keep their own queens.
     /// </summary>
     private readonly HashSet<Entity<BeehiveComponent>> _nearbyHives = new();
 
@@ -233,7 +294,8 @@ public sealed partial class BeeQueenSystem
         foreach (var (uid, comp) in _nearbyHives)
         {
             var hiveXform = Transform(uid);
-            if (hiveXform.ParentUid != grid ||
+            if (comp.Wild ||
+                hiveXform.ParentUid != grid ||
                 _itemSlots.GetItemOrNull(uid, comp.QueenSlot) != null ||
                 !_hive.HasRoomForQueen((uid, comp)))
             {

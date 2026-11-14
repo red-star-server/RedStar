@@ -1,0 +1,38 @@
+# What falls out of a broken meat hive. One kind is picked by weight for each piece of meat (see BeeMeatPrototype).
+# A colony that bit one human nearly always gives plain meat; five different bloods already give a real chance of
+# the rarer kinds.
+- type: beeMeat
+  id: Plain
+  entities: [ FoodMeat ]
+  weight: 100
+
+- type: beeMeat
+  id: Slime
+  entities: [ FoodMeatSlime ]
+  weight: 4
+  bloodBonus:
+    Slime: 60
+
+- type: beeMeat
+  id: Chitin
+  entities: [ FoodMeatSpider ]
+  weight: 4
+  bloodBonus:
+    InsectBlood: 60
+    CopperBlood: 60
+
+# Rare: only for a colony that has had several kinds of blood, and the more kinds, the likelier.
+- type: beeMeat
+  id: Xeno
+  entities: [ FoodMeatXeno ]
+  weight: 0
+  varietyBonus: 6
+  minVariety: 3
+
+# One of each of the above at once, for a colony with a wide taste.
+- type: beeMeat
+  id: Mixed
+  entities: [ FoodMeat, FoodMeatSlime, FoodMeatSpider ]
+  weight: 0
+  varietyBonus: 5
+  minVariety: 4

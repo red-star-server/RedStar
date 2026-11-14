@@ -67,6 +67,9 @@ public abstract partial class SharedBeehiveSystem
             totals.PestControl |= trait.PestControl;
             totals.Sting |= trait.Sting;
             totals.Aggressive |= trait.Aggressive;
+            totals.AngryPerHit += trait.AngryPerHit;
+            totals.AngryDamageStep *= trait.AngryDamageStep;
+            totals.GuardedScout |= trait.GuardedScout;
         }
 
         return totals;

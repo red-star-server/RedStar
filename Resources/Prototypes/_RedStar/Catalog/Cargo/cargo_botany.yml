@@ -27,3 +27,13 @@
   cost: 300
   category: cargoproduct-category-name-hydroponics
   group: market
+
+- type: cargoProduct
+  id: HydroponicsBeekeeperSuit
+  icon:
+    sprite: _RedStar/Clothing/OuterClothing/Suits/beekeeper.rsi
+    state: icon
+  product: CrateHydroponicsBeekeeperSuit
+  cost: 400
+  category: cargoproduct-category-name-hydroponics
+  group: market

@@ -5,6 +5,7 @@
   children:
   - BeekeepingAnalyzer
   - BeekeepingQueen
+  - BeekeepingWild
 
 - type: guideEntry
   id: BeekeepingAnalyzer
@@ -15,3 +16,8 @@
   id: BeekeepingQueen
   name: guide-entry-beekeeping-queen
   text: "/ServerInfo/_RedStar/Guidebook/Service/BeekeepingQueen.xml"
+
+- type: guideEntry
+  id: BeekeepingWild
+  name: guide-entry-beekeeping-wild
+  text: "/ServerInfo/_RedStar/Guidebook/Service/BeekeepingWild.xml"

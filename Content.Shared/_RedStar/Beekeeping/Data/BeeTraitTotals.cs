@@ -26,4 +26,7 @@ public struct BeeTraitTotals()
     public bool PestControl;
     public bool Sting;
     public bool Aggressive;
+    public int AngryPerHit;
+    public float AngryDamageStep = 1f;
+    public bool GuardedScout;
 }

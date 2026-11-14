@@ -1,9 +1,11 @@
 using Content.Server._RedStar.Beekeeping.Components;
 using Content.Server._RedStar.Beekeeping.Data;
+using Content.Server._RedStar.Beekeeping.Events;
 using Content.Server.NPC.HTN;
 using Content.Shared._RedStar.Beekeeping.Components;
 using Content.Shared._RedStar.Beekeeping.Visuals;
 using Content.Shared.Audio;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Item;
 using Content.Shared.Mobs;
 using Robust.Shared.Containers;
@@ -17,7 +19,7 @@ public sealed partial class BeeErrandSystem
 {
     /// <summary>
     /// A bee in the air is picked up like any small creature: a worker on its way to a flower, or a bee flying home. Not
-    /// while it is inside a flower or the hive, and not the scout on its trip or a bee on any other errand.
+    /// while it is inside a flower, a vent or the hive, and not the scout on its trip or a bee on any other errand.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnPickupAttempt(Entity<BeeErrandComponent> ent, ref GettingPickedUpAttemptEvent args)
@@ -104,6 +106,24 @@ public sealed partial class BeeErrandSystem
     }
 
     /// <summary>
+    /// Someone hurt a forager or the scout: the colony may send angry bees after them (the angry hive decides).
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnDamaged(Entity<BeeErrandComponent> ent, ref DamageDealtEvent args)
+    {
+        if (ent.Comp.Kind is not (BeeErrandKind.Forage or BeeErrandKind.Scout) ||
+            args.Origin is not { } attacker ||
+            !args.Damage.AnyPositive() ||
+            TerminatingOrDeleted(ent.Comp.Hive))
+        {
+            return;
+        }
+
+        var ev = new BeeErrandAttackedEvent(ent, ent.Comp.Hive, attacker);
+        RaiseLocalEvent(ref ev);
+    }
+
+    /// <summary>
     /// A killed bee is gone at once; it never makes it home.
     /// </summary>
     [SubscribeLocalEvent]
@@ -114,8 +134,9 @@ public sealed partial class BeeErrandSystem
     }
 
     /// <summary>
-    /// A bee that goes without its errand being over (killed, out of time looking for its way) is a worker the colony
-    /// loses. The scout keeps its place; only what it found is lost.
+    /// A bee that goes without its errand being over (killed, lost in the pipes, out of time looking for its way) is a
+    /// worker the colony loses. The scout keeps its place; only what it found is lost. A swarm's bees left the colony when
+    /// it set off.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnTerminating(Entity<BeeErrandComponent> ent, ref EntityTerminatingEvent args)
@@ -125,7 +146,10 @@ public sealed partial class BeeErrandSystem
 
         ent.Comp.Ended = true;
         hive.Foragers.Remove(ent);
-        if (ent.Comp.Kind == BeeErrandKind.Forage)
+        if (ent.Comp.Kind is BeeErrandKind.Forage or BeeErrandKind.Hunt)
             _hive.RemoveHomeBee((ent.Comp.Hive, hive));
+
+        var ev = new BeeErrandLostEvent(ent, ent.Comp.Hive, ent.Comp.Kind);
+        RaiseLocalEvent(ref ev);
     }
 }

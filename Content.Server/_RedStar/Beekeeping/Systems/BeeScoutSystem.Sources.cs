@@ -104,6 +104,9 @@ public sealed partial class BeeScoutSystem
     {
         plant = null;
 
+        if (hive.Comp.Diet == BeehiveDiet.Meat)
+            return _meat.CheckCreature(hive, hiveXform, hiveMap, source.Tray);
+
         if (TerminatingOrDeleted(source.Tray) || !_trayQuery.TryComp(source.Tray, out var tray))
             return BeeSourceCheck.Invalid;
 
@@ -181,6 +184,13 @@ public sealed partial class BeeScoutSystem
 
         if (comp.VisitBudget < 1f)
             return;
+
+        if (comp.Diet == BeehiveDiet.Meat)
+        {
+            _meat.Hunt(hive);
+            comp.VisitBudget = Math.Min(comp.VisitBudget, 1f);
+            return;
+        }
 
         var now = _timing.CurTime;
         var xform = Transform(hive);
