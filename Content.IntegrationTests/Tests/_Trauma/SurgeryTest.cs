@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Numerics;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
@@ -9,8 +8,7 @@ using Content.Shared._Trauma.Body.Cavity;
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared._Trauma.Common.Traumas;
 using Content.Shared._Trauma.Surgery;
-using Content.Shared._Trauma.Surgery.Steps;
-using Content.Shared._Trauma.Surgery.Steps.Parts;
+using Content.Shared._Trauma.Surgery.Graph;
 using Content.Shared._Trauma.Traumas;
 using Content.Shared._Trauma.Wounds;
 using Content.Shared.Body;
@@ -30,8 +28,7 @@ public sealed partial class SurgeryTest : GameTest
 {
     [SidedDependency(Side.Server)] private BodySystem _body = default!;
     [SidedDependency(Side.Server)] private BodyPartSystem _parts = default!;
-    [SidedDependency(Side.Server)] private SurgerySystem _surgery = default!;
-    [SidedDependency(Side.Server)] private SurgeryStateSystem _surgeryState = default!;
+    [SidedDependency(Side.Server)] private SurgeryGraphSystem _graph = default!;
     [SidedDependency(Side.Server)] private SharedHandsSystem _hands = default!;
     [SidedDependency(Side.Server)] private InventorySystem _inventory = default!;
     [SidedDependency(Side.Server)] private StandingStateSystem _standing = default!;
@@ -41,10 +38,10 @@ public sealed partial class SurgeryTest : GameTest
 
     private static readonly ProtoId<OrganCategoryPrototype> Arm = "ArmLeft";
     private static readonly ProtoId<OrganCategoryPrototype> Torso = "Torso";
-    private static readonly ProtoId<OrganCategoryPrototype> Head = "Head";
     private static readonly ProtoId<ToolQualityPrototype> BoneHealing = "BoneHealing";
     private static readonly ProtoId<ToolQualityPrototype> BoneSetting = "BoneSetting";
     private static readonly EntProtoId BluntWound = "WoundBlunt";
+    private static readonly ProtoId<SurgeryStagePrototype> Closed = "Closed";
 
     private async Task<(EntityUid Surgeon, EntityUid Patient)> SetupPatient()
     {
@@ -70,62 +67,75 @@ public sealed partial class SurgeryTest : GameTest
         return (surgeon, patient);
     }
 
-    private async Task Operate(EntityUid surgeon, EntityUid patient, EntityUid part, EntProtoId procedure, EntityUid? organ = null)
+    /// <summary>
+    /// Runs every step of a procedure, picking the tool each step asks for.
+    /// </summary>
+    private async Task Operate(EntityUid surgeon, EntityUid part,
+        ProtoId<SurgeryProcedurePrototype> procedure,
+        ProtoId<OrganCategoryPrototype>? organ = null,
+        EntityUid? organItem = null)
     {
-        for (var i = 0; i < 20; i++)
+        var instance = new SurgeryProcedureInstance(procedure, organ);
+        var proc = Server.ProtoMan.Index(procedure);
+
+        for (var i = 0; i < proc.Steps.Count; i++)
         {
-            var finished = false;
+            var step = proc.Steps[i];
+            var index = i;
             var duration = 0f;
             await Server.WaitAssertion(() =>
             {
-                var surgery = _surgery.GetSingleton(procedure)!.Value;
-                if (_surgery.GetNextStep(patient, part, surgery, surgeon) is not { } next)
-                {
-                    finished = true;
-                    return;
-                }
-
-                var stepId = next.Surgery.Comp.Steps[next.Step];
-                var step = _surgery.GetSingleton(stepId)!.Value;
-                var data = SComp<SurgeryStepComponent>(step);
-                var tool = data.ToolQualities is { Count: > 0 } qualities
-                    ? qualities.First().ToString() switch
-                    {
-                        "Drilling" => SSpawn("Drill"),
-                        "Slicing" => SSpawn("Scalpel"),
-                        "Retracting" => SSpawn("Retractor"),
-                        "Sawing" => SSpawn("Saw"),
-                        "Clamping" => SSpawn("Hemostat"),
-                        "BoneHealing" => SSpawn("BoneGel"),
-                        "Cauterizing" => SSpawn("Cautery"),
-                        "Suturing" => SSpawn("MedicalStitches"),
-                        "Tending" => SSpawn("Hemostat"),
-                        "Manipulating" => SSpawn("Hemostat"),
-                        "BoneSetting" => SSpawn("Bonesetter"),
-                        var quality => throw new InvalidOperationException($"Unexpected surgery quality {quality} in {stepId}"),
-                    }
-                    : data.RequiredItemComponent switch
-                    {
-                        "InternalChildOrgan" => organ!.Value,
-                        "BodyPart" => organ!.Value,
-                        var component => throw new InvalidOperationException($"Unexpected surgery tool {component} in {stepId}"),
-                    };
-
+                var tool = ToolFor(step, organItem, procedure, index);
                 if (_hands.GetActiveItem(surgeon) is { } held)
                     Assert.That(_hands.TryDrop(surgeon, held), Is.True);
                 Assert.That(_hands.TryPickupAnyHand(surgeon, tool), Is.True,
-                    $"{procedure}/{stepId}: could not pick up {SEntMan.ToPrettyString(tool)}");
-                Assert.That(_surgery.TryDoSurgeryStep(patient, part, surgeon, SComp<MetaDataComponent>(next.Surgery).EntityPrototype!.ID, stepId, out var error), Is.True, $"{procedure}/{stepId}: {error}");
-                // Allow repeatable treatment to complete, including its final cancellation check.
-                duration = (float) data.Duration.TotalSeconds * 3 + 1;
-            });
+                    $"{procedure}[{index}]: could not pick up {SEntMan.ToPrettyString(tool)}");
 
-            if (finished)
-                return;
+                Assert.That(_graph.CanPerformStep(part, surgeon, instance, index, out var popup), Is.True,
+                    $"{procedure}[{index}]: {popup}");
+                Assert.That(_graph.TryPerformStep(part, surgeon, instance, index), Is.True,
+                    $"{procedure}[{index}]: step refused");
+
+                // Repeatable treatment needs several cycles to drain the remaining work.
+                duration = (float) step.Duration.TotalSeconds * (step.Repeatable ? 8 : 1) + 1;
+            });
             await RunSeconds(duration);
         }
 
-        Assert.Fail($"Surgery {procedure} did not finish");
+        await Server.WaitAssertion(() =>
+        {
+            var comp = SComp<OperatedComponent>(part);
+            Assert.That(comp.ActiveProcedure, Is.Null, $"{procedure} did not finish");
+        });
+    }
+
+    private EntityUid ToolFor(SurgeryStepEntry step, EntityUid? organItem, string procedure, int index)
+    {
+        if (step.ProcedureOrgan || step.Organ is not null)
+        {
+            Assert.That(organItem, Is.Not.Null, $"{procedure}[{index}]: step needs an organ in hand");
+            return organItem!.Value;
+        }
+
+        if (step.AnyItem)
+            return SSpawn("Pen");
+
+        Assert.That(step.Quality, Is.Not.Null, $"{procedure}[{index}]: step declares no tool");
+        return SSpawn(step.Quality.Value.Id switch
+        {
+            "Drilling" => "Drill",
+            "Slicing" => "Scalpel",
+            "Retracting" => "Retractor",
+            "Sawing" => "Saw",
+            "Clamping" => "Hemostat",
+            "BoneHealing" => "BoneGel",
+            "Cauterizing" => "Cautery",
+            "Suturing" => "MedicalStitches",
+            "Tending" => "Hemostat",
+            "Manipulating" => "Hemostat",
+            "BoneSetting" => "Bonesetter",
+            var quality => throw new InvalidOperationException($"Unexpected surgery quality {quality} in {procedure}[{index}]"),
+        });
     }
 
     [Test]
@@ -140,22 +150,22 @@ public sealed partial class SurgeryTest : GameTest
             Assert.That(_trauma.ApplyBoneTrauma(arm, (wound!.Value.Owner, SComp<TraumaInflicterComponent>(wound.Value.Owner)), 34), Is.True);
         });
 
-        await Operate(surgeon, patient, arm, "SurgeryOpenIncision");
-        await Operate(surgeon, patient, arm, "SurgeryMendBones");
-        await Operate(surgeon, patient, arm, "SurgeryCloseIncision");
+        await Operate(surgeon, arm, "OpenIncision");
+        await Operate(surgeon, arm, "MendBones");
+        await Operate(surgeon, arm, "CloseIncision");
+
         await Server.WaitAssertion(() =>
         {
             var bone = SComp<BoneComponent>(arm);
             Assert.That(bone.BoneIntegrity, Is.EqualTo(bone.IntegrityCap));
             Assert.That(_trauma.HasWoundableTrauma(arm, TraumaType.BoneDamage), Is.False);
-            Assert.That(_surgeryState.HasStep(arm, SurgeryStepFlags.IncisionOpen), Is.False);
-            Assert.That(_surgeryState.HasStep(arm, SurgeryStepFlags.BonesSawed), Is.False);
+            Assert.That(_graph.GetStage(arm), Is.EqualTo(Closed));
         });
     }
 
-    [TestCase("Heart", "SurgeryRemoveHeart", "SurgeryInsertHeart")]
-    [TestCase("Appendix", "SurgeryRemoveAppendix", "SurgeryInsertAppendix")]
-    public async Task OrganCanBeRemovedAndReinsertedThroughSurgery(string organCategory, string removal, string insertion)
+    [TestCase("Heart")]
+    [TestCase("Appendix")]
+    public async Task OrganCanBeRemovedAndReinsertedThroughSurgery(string organCategory)
     {
         var (surgeon, patient) = await SetupPatient();
         ProtoId<OrganCategoryPrototype> category = organCategory;
@@ -167,9 +177,11 @@ public sealed partial class SurgeryTest : GameTest
             organ = _body.GetOrgan(patient, category)!.Value;
         });
 
-        await Operate(surgeon, patient, torso, removal);
+        await Operate(surgeon, torso, "OpenRibcage");
+        await Operate(surgeon, torso, "RemoveOrgan", category);
         await Server.WaitAssertion(() => Assert.That(_body.GetOrgan(patient, category), Is.Null));
-        await Operate(surgeon, patient, torso, insertion, organ);
+
+        await Operate(surgeon, torso, "InsertOrgan", category, organ);
         await Server.WaitAssertion(() =>
         {
             Assert.That(_body.GetOrgan(patient, category), Is.EqualTo(organ));
@@ -201,20 +213,33 @@ public sealed partial class SurgeryTest : GameTest
         await Server.WaitAssertion(() =>
         {
             arm = _body.GetOrgan(patient, Arm)!.Value;
-            Assert.That(_surgery.GetSingleton("MobHuman"), Is.Null);
             Assert.That(_hands.TryPickupAnyHand(surgeon, SSpawn("Scalpel")), Is.True);
-            Assert.That(_surgery.TryDoSurgeryStep(patient, arm, surgeon, "SurgeryOpenIncision", "SurgeryStepOpenIncisionScalpel", out _), Is.True);
+            Assert.That(_graph.TryPerformStep(arm, surgeon, new SurgeryProcedureInstance("OpenIncision", null), 0), Is.True);
             Assert.That(_body.RemoveOrgan(patient, arm), Is.True);
         });
         await RunSeconds(8);
-        await Server.WaitAssertion(() => Assert.That(_surgeryState.HasStep(arm, SurgeryStepFlags.IncisionOpen), Is.False));
+        await Server.WaitAssertion(() => Assert.That(_graph.GetStage(arm), Is.EqualTo(Closed)));
+
         EntityUid torso = default;
         await Server.WaitAssertion(() => torso = _body.GetOrgan(patient, Torso)!.Value);
-        await Operate(surgeon, patient, torso, "SurgeryAttachLeftArm", arm);
+        await Operate(surgeon, torso, "AttachPart", Arm, arm);
         await Server.WaitAssertion(() =>
         {
             Assert.That(_body.GetOrgan(patient, Arm), Is.EqualTo(arm));
             Assert.That(SEntMan.HasComponent<OrganReattachedComponent>(arm), Is.False);
+        });
+    }
+
+    [Test]
+    public async Task ClothingOverThePartBlocksSurgery()
+    {
+        var (surgeon, patient) = await SetupPatient();
+        await Server.WaitAssertion(() =>
+        {
+            var torso = _body.GetOrgan(patient, Torso)!.Value;
+            Assert.That(_inventory.TryEquip(patient, SSpawn("ClothingUniformJumpsuitColorGrey"), "innerclothing", force: true), Is.True);
+            Assert.That(_hands.TryPickupAnyHand(surgeon, SSpawn("Scalpel")), Is.True);
+            Assert.That(_graph.CanPerformStep(torso, surgeon, new SurgeryProcedureInstance("OpenIncision", null), 0, out _), Is.False);
         });
     }
 
@@ -225,7 +250,8 @@ public sealed partial class SurgeryTest : GameTest
         EntityUid torso = default;
         EntityUid selected = default;
         await Server.WaitAssertion(() => torso = _body.GetOrgan(patient, Torso)!.Value);
-        await Operate(surgeon, patient, torso, "SurgeryOpenRibcage");
+        await Operate(surgeon, torso, "OpenRibcage");
+
         await Server.WaitAssertion(() =>
         {
             // Leave the last tool in the first hand and select an item in the other hand.
@@ -233,7 +259,7 @@ public sealed partial class SurgeryTest : GameTest
             Assert.That(_hands.TryGetEmptyHand(surgeon, out var hand), Is.True);
             Assert.That(_hands.TryPickupAnyHand(surgeon, selected), Is.True);
             Assert.That(_hands.TrySetActiveHand(surgeon, hand), Is.True);
-            Assert.That(_surgery.TryDoSurgeryStep(patient, torso, surgeon, "SurgeryInsertItem", "SurgeryStepInsertItem", out _), Is.True);
+            Assert.That(_graph.TryPerformStep(torso, surgeon, new SurgeryProcedureInstance("InsertCavityItem", null), 0), Is.True);
         });
         await RunSeconds(14);
         await Server.WaitAssertion(() =>
@@ -241,7 +267,7 @@ public sealed partial class SurgeryTest : GameTest
             var containers = Server.System<SharedContainerSystem>();
             Assert.That(containers.TryGetContainer(torso, "_part_cavity", out var cavity), Is.True);
             Assert.That(cavity!.ContainedEntities, Does.Contain(selected));
-            Assert.That(_surgery.TryDoSurgeryStep(patient, torso, surgeon, "SurgeryInsertItem", "SurgeryStepRemoveItem", out _), Is.True);
+            Assert.That(_graph.TryPerformStep(torso, surgeon, new SurgeryProcedureInstance("RemoveCavityItem", null), 0), Is.True);
         });
         await RunSeconds(14);
         await Server.WaitAssertion(() =>
@@ -268,5 +294,4 @@ public sealed partial class SurgeryTest : GameTest
             Assert.That(_trauma.HasWoundableTrauma(torso, TraumaType.BoneDamage), Is.True);
         });
     }
-
 }

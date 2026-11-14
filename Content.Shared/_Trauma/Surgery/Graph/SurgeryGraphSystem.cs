@@ -256,6 +256,12 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
             return false;
         }
 
+        if (IsCovered(part, body))
+        {
+            popup = Loc.GetString("surgery-ui-window-steps-error-armor");
+            return false;
+        }
+
         if (!_proto.TryIndex(instance.Procedure, out var proc) || stepIndex < 0 || stepIndex >= proc.Steps.Count)
             return false;
 
@@ -291,13 +297,12 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
             return false;
 
         var held = _hands.GetActiveItemOrSelf(user);
-        if (!MatchTool(procedure.Steps[stepIndex], held, instance.Organ))
-        {
-            popup = Loc.GetString("surgery-graph-wrong-tool");
-            return false;
-        }
+        if (MatchTool(procedure.Steps[stepIndex], held, instance.Organ))
+            return true;
 
-        return true;
+        popup = Loc.GetString("surgery-graph-wrong-tool");
+        return false;
+
     }
 
     [SubscribeLocalEvent]
@@ -306,26 +311,27 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         var comp = ent.Comp;
         comp.IsOperating = false;
         comp.DoAfter = null;
-        // Any bail-out below must also stop a running repeat loop.
         args.Repeat = false;
 
         if (args.Cancelled || args.Handled)
             return;
 
+        args.Handled = true;
         if (comp.ActiveProcedure != args.Procedure || comp.ActiveOrgan != args.Organ || comp.CompletedSteps != args.StepIndex)
             return;
 
         if (!_proto.TryIndex(args.Procedure, out var procedure) || args.StepIndex >= procedure.Steps.Count)
             return;
 
-        var body = _body.GetBody(ent) ?? ent;
+        if (_body.GetBody(ent) is not { } body)
+            return;
+
         var surgeon = args.User;
         var used = args.Used;
 
         if (!ConditionsMet(ent, procedure, args.Organ))
             return;
 
-        // The patient may have stood up during the DoAfter; abort before mutating anything.
         if (!IsLyingDown(body, surgeon, false))
             return;
 
@@ -333,7 +339,6 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         if (used is { } item && !MatchTool(step, item, args.Organ))
             return;
 
-        // A failed mandatory effect aborts the step without advancing the graph.
         foreach (var effect in step.Effects)
         {
             if (!effect.Apply(ent, surgeon, used, args.Organ, EntityManager))
@@ -348,7 +353,6 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
                 QueueDel(consumed);
         }
 
-        // Repeatable steps keep the do-after running while work remains (bleeding, trauma, wounds).
         if (step.Repeatable && step.RepeatWhile is { } repeatWhile &&
             repeatWhile.CheckWithInvert(ent, args.Organ, EntityManager))
         {
@@ -356,7 +360,6 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
             comp.IsOperating = true;
             HandleSanitization(ent, body, surgeon);
             Dirty(ent, comp);
-            args.Handled = true;
             return;
         }
 
@@ -379,7 +382,6 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         }
 
         Dirty(ent, comp);
-        args.Handled = true;
     }
 
     private TimeSpan GetStepDuration(SurgeryStepEntry step, EntityUid surgeon, EntityUid body, EntityUid held)
@@ -396,6 +398,24 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
             speed *= surgeonSpeed.SpeedModifier;
 
         return step.Duration / speed;
+    }
+
+    private bool IsCovered(EntityUid part, EntityUid body)
+    {
+        if (!TryComp<BodyPartComponent>(part, out var partComp))
+            return false;
+
+        var slots = BodyEquipmentSystem.GetCoveringSlots(partComp.PartType);
+        if (slots == SlotFlags.NONE || !_inventory.TryGetContainerSlotEnumerator(body, out var enumerator, slots))
+            return false;
+
+        while (enumerator.MoveNext(out var slot))
+        {
+            if (slot.ContainedEntity is not null)
+                return true;
+        }
+
+        return false;
     }
 
     public bool IsLyingDown(EntityUid entity, EntityUid user, bool showPopup)
