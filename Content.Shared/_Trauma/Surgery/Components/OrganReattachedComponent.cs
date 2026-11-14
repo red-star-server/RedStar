@@ -1,6 +1,6 @@
 using Robust.Shared.GameStates;
 
-namespace Content.Shared._Trauma.Surgery.Steps.Parts;
+namespace Content.Shared._Trauma.Surgery;
 
 /// <summary>
 /// Added to reattached bodyparts or internal organs just before the surgery is finished.
