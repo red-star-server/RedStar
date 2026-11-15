@@ -50,7 +50,6 @@
   id: RemoveTongue
   name: surgery-procedure-remove-tongue
   from: [Incised]
-  categories: [Tongue]
   conditions:
   - !type:OrganPresentCondition
     organ: Tongue
@@ -67,6 +66,7 @@
   name: surgery-procedure-attach-part
   from: [Incised, SkullOpen, RibcageOpen]
   organMode: HeldItem
+  categories: [Head, ArmLeft, ArmRight, HandLeft, HandRight, LegLeft, LegRight, FootLeft, FootRight, Tail, Wings]
   conditions:
   - !type:PartRemovedCondition
   - !type:TraumaPresentCondition

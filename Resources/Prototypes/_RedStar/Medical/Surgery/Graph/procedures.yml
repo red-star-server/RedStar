@@ -5,10 +5,6 @@
   to: Incised
   conditions:
   - !type:PartPresentCondition
-  - !type:PartComponentCondition
-    inverted: true
-    components:
-    - type: XenoBodyPart
   steps:
   - name: surgery-step-cut-scalpel
     quality: Slicing
@@ -279,23 +275,21 @@
   - name: surgery-step-careful-incision
     quality: Slicing
     duration: 3
-    effects:
-    - !type:DamageEffect
-      sleepModifier: 0.5
-      damage:
-        types:
-          Bloodloss: 5
   - name: surgery-step-repair-tissue
     quality: Tending
-    duration: 5
+    duration: 1
     repeatable: true
     repeatWhile: !type:WoundedCondition
       damageGroup: Brute
     effects:
     - !type:TendWoundsEffect
       mainGroup: Brute
-      healMultiplier: 0.07
-      damage: {}
+      damage:
+        types:
+          Blunt: -5
+          Slash: -5
+          Piercing: -5
+          Ballistic: -5
   - name: surgery-step-seal-tend-wound
     quality: Cauterizing
     duration: 2
@@ -317,23 +311,21 @@
   - name: surgery-step-careful-incision
     quality: Slicing
     duration: 3
-    effects:
-    - !type:DamageEffect
-      sleepModifier: 0.5
-      damage:
-        types:
-          Bloodloss: 5
   - name: surgery-step-repair-tissue
     quality: Tending
-    duration: 5
+    duration: 1
     repeatable: true
     repeatWhile: !type:WoundedCondition
       damageGroup: Burn
     effects:
     - !type:TendWoundsEffect
       mainGroup: Burn
-      healMultiplier: 0.07
-      damage: {}
+      damage:
+        types:
+          Heat: -5
+          Cold: -5
+          Shock: -5
+          Caustic: -5
   - name: surgery-step-seal-tend-wound
     quality: Cauterizing
     duration: 2
