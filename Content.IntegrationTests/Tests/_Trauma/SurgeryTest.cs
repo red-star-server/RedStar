@@ -256,8 +256,8 @@ public sealed partial class SurgeryTest : GameTest
                 $"Surgery should be available before clothing is equipped: {uncoveredPopup}");
 
             var uniform = SSpawn("ClothingUniformJumpsuitColorGrey");
-            Assert.That(_inventory.TryEquip(patient, uniform, "innerclothing", force: true), Is.True);
-            Assert.That(_inventory.TryGetSlotEntity(patient, "innerclothing", out var equipped), Is.True);
+            Assert.That(_inventory.TryEquip(patient, uniform, "jumpsuit", force: true), Is.True);
+            Assert.That(_inventory.TryGetSlotEntity(patient, "jumpsuit", out var equipped), Is.True);
             Assert.That(equipped, Is.EqualTo(uniform));
 
             Assert.That(
