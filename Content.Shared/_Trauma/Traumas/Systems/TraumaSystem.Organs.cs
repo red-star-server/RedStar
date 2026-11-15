@@ -1,3 +1,4 @@
+using Content.Shared._Trauma.Common.Thresholds;
 using System.Linq;
 using Content.Shared._Trauma.Common.Traumas;
 using Content.Shared._Trauma.Wounds;
@@ -84,8 +85,6 @@ public partial class TraumaSystem
 
         if (!ent.Comp.IntegrityModifiers.TryAdd((identifier, effectOwner), severity))
             return false;
-
-        //DirtyField(ent, ent.Comp, nameof(InternalChildOrganComponent.IntegrityModifiers));
         UpdateOrganIntegrity(ent);
 
         return true;
@@ -107,10 +106,21 @@ public partial class TraumaSystem
             return false;
 
         ent.Comp.IntegrityModifiers[key] = value + change;
-        //DirtyField(ent, ent.Comp, nameof(InternalChildOrganComponent.IntegrityModifiers));
         UpdateOrganIntegrity(ent);
 
         return true;
+    }
+
+    /// <summary>
+    /// Adds <paramref name="change"/> to a named adjustment to organ integrity, creating it if it does not exist yet.
+    /// </summary>
+    public bool AddOrganDamageModifier(Entity<InternalChildOrganComponent?> ent,
+        FixedPoint2 change,
+        EntityUid effectOwner,
+        string identifier)
+    {
+        return TryChangeOrganDamageModifier(ent, change, effectOwner, identifier) ||
+            TryCreateOrganDamageModifier(ent, change, effectOwner, identifier);
     }
 
     /// <summary>
@@ -125,8 +135,6 @@ public partial class TraumaSystem
 
         if (!ent.Comp.IntegrityModifiers.Remove((identifier, effectOwner)))
             return false;
-
-        //DirtyField(ent, ent.Comp, nameof(InternalChildOrganComponent.IntegrityModifiers));
 
         if (_traumaQuery.TryComp(effectOwner, out var trauma))
             RemoveTrauma((effectOwner, trauma));
@@ -159,15 +167,7 @@ public partial class TraumaSystem
         RaiseLocalEvent(ent, ref ev);
 
         var oldSeverity = ent.Comp.OrganSeverity;
-        var nearestSeverity = oldSeverity;
-        foreach (var (severity, value) in ent.Comp.IntegrityThresholds.OrderByDescending(kv => kv.Value))
-        {
-            if (ent.Comp.OrganIntegrity < value)
-                continue;
-
-            nearestSeverity = severity;
-            break;
-        }
+        var nearestSeverity = SeverityThresholds.Nearest(ent.Comp.IntegrityThresholds, ent.Comp.OrganIntegrity, oldSeverity);
 
         if (nearestSeverity == ent.Comp.OrganSeverity)
             return;

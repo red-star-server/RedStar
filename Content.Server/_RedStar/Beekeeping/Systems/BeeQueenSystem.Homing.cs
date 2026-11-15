@@ -258,10 +258,15 @@ public sealed partial class BeeQueenSystem
 
         // She has no hive: the errand's hive is left empty, she never flies back.
         if (_errands.Release(default, xform, queen.NestFlyerPrototype, storage, null,
-                storage == null ? new EntityCoordinates(grid, site) : null) is not { } flyer ||
-            !TryComp<BeeSwarmComponent>(flyer, out var swarm) ||
+                storage == null ? new EntityCoordinates(grid, site) : null) is not { } flyer)
+        {
+            return false;
+        }
+
+        if (!TryComp<BeeSwarmComponent>(flyer, out var swarm) ||
             !_container.Insert(homing.Owner, _container.EnsureContainer<ContainerSlot>(flyer, swarm.Container), force: true))
         {
+            Del(flyer);
             return false;
         }
 

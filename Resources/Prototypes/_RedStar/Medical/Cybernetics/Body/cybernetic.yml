@@ -121,7 +121,6 @@
   id: OrganJWLArmRight
   name: J.W.L right arm
 
-# W SPEED
 
 - type: entity
   abstract: true
@@ -174,7 +173,7 @@
   components:
   - type: Sprite
     layers:
-    - state: eyes # combined
+    - state: eyes
   - type: InternalChildOrgan
     intCap: 21
     integrity: 21
@@ -190,7 +189,6 @@
     - type: FlashImmunity
       showInExamine: false
     - type: EyeProtection
-    # jack of all trades master of none
 
 - type: entity
   parent: OrganCyberneticEyes
@@ -230,7 +228,6 @@
       - BiologicalMetaphysical
     - type: FlashImmunity
       showInExamine: false
-    # no welding protection
 
 - type: entity
   parent: OrganCyberneticEyes
@@ -252,7 +249,6 @@
       - Inorganic
       - Silicon
     - type: EyeProtection
-    # no flash protection
 
 # Lungs
 

@@ -1,0 +1,37 @@
+﻿- type: entity
+  parent: BasePlant
+  id: SakuraPlants
+  categories: [HideSpawnMenu]
+  name: sakura tree
+  components:
+  - type: Sprite
+    sprite: _RedStar/Objects/Specific/Hydroponics/sakura.rsi
+  - type: PlantData
+    name: seeds-sakura-name
+    packetPrototype: SakuraSeeds
+    productPrototypes: [ FoodSakuraFlower ]
+  - type: Plant
+    lifespan: 55
+    maturation: 6
+    production: 3
+    yield: 3
+    potency: 10
+    growthStages: 5
+  - type: PlantHarvest
+    harvestRepeat: Repeat
+  - type: PlantGrowth
+    waterConsumption: 0.6
+  - type: PlantChemicals
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 4
+        potencyDivisor: 20
+      Vitamin:
+        min: 1
+        max: 4
+        potencyDivisor: 25
+      SakuraJuice:
+        min: 1
+        max: 5
+        potencyDivisor: 5

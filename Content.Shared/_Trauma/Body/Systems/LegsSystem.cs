@@ -33,7 +33,7 @@ public sealed partial class LegsSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnAttemptStopPulling(Entity<LegsComponent> ent, ref AttemptStopPullingEvent args) // Goobstation
+    private void OnAttemptStopPulling(Entity<LegsComponent> ent, ref AttemptStopPullingEvent args)
     {
         if (args.User is not {} user || !Exists(user))
             return;

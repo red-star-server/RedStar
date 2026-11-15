@@ -8,8 +8,8 @@ public enum TraumaType
     BoneDamage,
     OrganDamage,
     VeinsDamage,
-    NerveDamage, // pain
-    Dismemberment,
+    NerveDamage,
+    Dismemberment
 }
 
 [Serializable, NetSerializable]
@@ -17,7 +17,7 @@ public enum OrganSeverity
 {
     Normal = 0,
     Damaged = 1,
-    Destroyed = 2, // obliterated
+    Destroyed = 2
 }
 
 [Serializable, NetSerializable]
@@ -26,5 +26,5 @@ public enum BoneSeverity
     Normal = 0,
     Damaged = 1,
     Cracked = 2,
-    Broken = 3, // Ha-ha.
+    Broken = 3
 }

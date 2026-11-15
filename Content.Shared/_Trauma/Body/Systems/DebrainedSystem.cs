@@ -1,13 +1,11 @@
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared._Trauma.DelayedDeath;
-using Content.Shared.Body;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Speech;
 using Content.Shared.Standing;
 using Content.Shared.Stunnable;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Shared._Trauma.Body;
@@ -18,12 +16,10 @@ namespace Content.Shared._Trauma.Body;
 /// </summary>
 public sealed partial class DebrainedSystem : EntitySystem
 {
-    [Dependency] private BodySystem _body = default!;
+    [Dependency] private VitalOrganSystem _vitalOrgan = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private StandingStateSystem _standing = default!;
-
-    public static readonly ProtoId<OrganCategoryPrototype> Heart = "Heart";
 
     [SubscribeLocalEvent]
     private void OnComponentInit(EntityUid uid, DebrainedComponent _, ComponentInit args)
@@ -44,8 +40,7 @@ public sealed partial class DebrainedSystem : EntitySystem
             return;
 
         RemComp<StunnedComponent>(uid);
-        if (_body.GetOrgan(uid, Heart) != null)
-            RemComp<DelayedDeathComponent>(uid);
+        _vitalOrgan.TryClearDelayedDeath(uid);
     }
 
     [SubscribeLocalEvent]
@@ -61,7 +56,7 @@ public sealed partial class DebrainedSystem : EntitySystem
         args.Cancel();
     }
 
-    [SubscribeLocalEvent(before: new []{ typeof(DamageableSystem), typeof(BodyRestoreSystem) })]
+    [SubscribeLocalEvent(before: [typeof(DamageableSystem), typeof(BodyRestoreSystem)])]
     private void OnRejuvenate(Entity<DebrainedComponent> ent, ref RejuvenateEvent args)
     {
         RemCompDeferred(ent, ent.Comp);

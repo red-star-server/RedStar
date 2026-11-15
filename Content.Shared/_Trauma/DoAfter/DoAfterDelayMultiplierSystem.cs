@@ -17,7 +17,7 @@ public sealed partial class DoAfterDelayMultiplierSystem : EntitySystem
     private void OnModify(Entity<DoAfterDelayMultiplierComponent> ent, ref BodyRelayedEvent<ModifyDoAfterDelayEvent> args)
     {
         var ev = args.Args;
-        ev.Multiplier *= ent.Comp.Multiplier;
+        ev.Scale(ent.Comp.Multiplier);
         args.Args = ev;
     }
 }

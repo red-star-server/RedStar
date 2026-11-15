@@ -36,21 +36,17 @@ public sealed partial class BatteryDrinkerSystem : EntitySystem
             return;
 
         if (!TryComp<BatteryDrinkerComponent>(args.User, out var drinkerComp) ||
-            // Goobstation Start - Energycrit
             _whitelist.IsWhitelistPass(drinkerComp.Blacklist, uid) ||
             !_powerCell.TryGetBatteryFromEntityOrSlot(args.User, out _) ||
             !_powerCell.TryGetBatteryFromEntityOrSlot(uid, out var battery) ||
-            !HasComp<BatteryDrinkerSourceComponent>(battery.Value)) // can't eat literally any battery
-            // Goobstation End - Energycrit
+            !HasComp<BatteryDrinkerSourceComponent>(battery.Value))
             return;
 
         AlternativeVerb verb = new()
         {
-            // Goobstation - Energycrit
             Act = () => DrinkBattery(uid, battery.Value, args.User, drinkerComp),
             Text = Loc.GetString("battery-drinker-verb-drink"),
             Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/smite.svg.192dpi.png")),
-            // Goobstation - Energycrit: dont block removing power cells
             Priority = -5
         };
 

@@ -19,11 +19,9 @@ public sealed partial class BodySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private MobStateSystem _mob = default!;
     [Dependency] private StandingStateSystem _standing = default!;
-    private readonly List<EntityUid> _extremities = [];
 
     [Dependency] private CommonBodyCacheSystem _cache = default!;
     [Dependency] private CommonBodyPartSystem _part = default!;
-    [Dependency] private OrganRelationSystem _relation = default!;
     [Dependency] private EntityQuery<InternalChildOrganComponent> _internalQuery;
 
     /// <summary>
@@ -68,8 +66,6 @@ public sealed partial class BodySystem
         "Torso"
     ];
 
-    private readonly HashSet<ProtoId<OrganCategoryPrototype>> _coveredParts = new();
-
     /// <summary>
     /// Tries to enable a given organ, letting systems run logic.
     /// Returns true if it is valid and now enabled.
@@ -81,7 +77,7 @@ public sealed partial class BodySystem
             return false;
 
         if (HasComp<EnabledOrganComponent>(organ))
-            return true; // already enabled
+            return true;
 
         var attemptEv = new OrganEnableAttemptEvent(body);
         RaiseLocalEvent(organ, ref attemptEv);
@@ -90,7 +86,6 @@ public sealed partial class BodySystem
 
         EnsureComp<EnabledOrganComponent>(organ);
 
-        // let other systems do their logic now
         var ev = new OrganEnabledEvent(body);
         RaiseLocalEvent(organ, ref ev);
         return true;
@@ -106,7 +101,7 @@ public sealed partial class BodySystem
             return false;
 
         if (!TryComp<EnabledOrganComponent>(organ, out var enabled))
-            return true; // already disabled
+            return true;
 
         // no attempt event that wouldn't make any sense
 
@@ -170,34 +165,6 @@ public sealed partial class BodySystem
     }
 
     /// <summary>
-    /// Gets the fraction of bodyparts that are vital.
-    /// For a torso or torso+head this is 1, for invalid bodies this is 0.
-    /// Non-bodies will return 1 for damage scaling etc.
-    /// </summary>
-    public float GetVitalBodyPartRatio(Entity<BodyComponent?> body)
-    {
-        if (!_bodyQuery.Resolve(body, ref body.Comp, false) || body.Comp.Organs?.ContainedEntities is not {} organs)
-            return 1f;
-
-        // VitalParts is a static array; moving it to OrganCategoryPrototype would allow data-driven configuration.
-        int total = 0;
-        int vital = 0;
-        foreach (var organ in organs)
-        {
-            if (GetCategory(organ) is not {} category || !BodyParts.Contains(category))
-                continue;
-
-            total++;
-            if (VitalParts.Contains(category))
-                vital++;
-        }
-
-        return vital == 0
-            ? 0f // no dividing by zero incase a body somehow has no parts?!
-            : (float) total / vital;
-    }
-
-    /// <summary>
     /// Get the number of vital parts for an entity, falls back to 1 for non-mobs.
     /// </summary>
     public int GetVitalParts(Entity<BodyComponent?> body)
@@ -205,7 +172,7 @@ public sealed partial class BodySystem
         if (!_bodyQuery.Resolve(body, ref body.Comp, false) || body.Comp.Organs?.ContainedEntities is not {} organs)
             return 1;
 
-        int vital = 0;
+        var vital = 0;
         foreach (var organ in organs)
         {
             if (GetCategory(organ) is {} category && VitalParts.Contains(category))
@@ -290,16 +257,14 @@ public sealed partial class BodySystem
             return false;
 
         if (container.Contains(organ))
-            return true; // it was already inserted
+            return true;
 
         var ev = new OrganInsertAttemptEvent(body, organ);
         RaiseLocalEvent(body, ref ev);
         if (!ev.Cancelled)
             RaiseLocalEvent(organ, ref ev);
-        if (ev.Cancelled)
-            return false;
 
-        return _container.Insert(organ.Owner, container);
+        return !ev.Cancelled && _container.Insert(organ.Owner, container);
     }
 
     /// <summary>
@@ -314,16 +279,14 @@ public sealed partial class BodySystem
             return false;
 
         if (!container.Contains(organ))
-            return true; // it was already removed
+            return true;
 
         var ev = new OrganRemoveAttemptEvent(body, organ);
         RaiseLocalEvent(body, ref ev);
         if (!ev.Cancelled)
             RaiseLocalEvent(organ, ref ev);
-        if (ev.Cancelled)
-            return false;
 
-        return _container.Remove(organ.Owner, container);
+        return !ev.Cancelled && _container.Remove(organ.Owner, container);
     }
 
     /// <summary>
@@ -354,7 +317,6 @@ public sealed partial class BodySystem
         return ev.Handled;
     }
 
-    // no marking api anymore lol have to write one myself
     #region Markings
 
     /// <summary>
@@ -367,10 +329,7 @@ public sealed partial class BodySystem
         Color? color = null,
         bool force = false)
     {
-        if (GetOrgan(body, category) is not {} organ)
-            return false; // no organ found
-
-        return AddOrganMarking(organ, marking, color, force);
+        return GetOrgan(body, category) is {} organ && AddOrganMarking(organ, marking, color, force);
     }
 
     /// <summary>
@@ -383,7 +342,7 @@ public sealed partial class BodySystem
         bool force = false)
     {
         if (!Resolve(organ, ref organ.Comp))
-            return false; // organ doesn't support markings
+            return false;
 
         var markingData = organ.Comp.MarkingData;
         var proto = ProtoMan.Index(marking);
@@ -391,28 +350,25 @@ public sealed partial class BodySystem
         if (!force)
         {
             if (proto.GroupWhitelist?.Contains(markingData.Group) == false)
-                return false; // marking isn't whitelisted for this species/group
+                return false;
 
             if (!markingData.Layers.Contains(layer))
-                return false; // this organ doesn't support the needed marking layer
+                return false;
         }
 
         var markings = organ.Comp.Markings;
-        // ensure there's a list of markings for the given layer
         if (!markings.TryGetValue(layer, out var list))
         {
             list = [];
             markings[layer] = list;
         }
 
-        // check for duplicates first
         foreach (var data in list)
         {
             if (data.MarkingId == marking)
-                return false; // duplicate found, skip adding it
+                return false;
         }
 
-        // good to go
         list.Add(new Marking(marking, color != null
             ? Enumerable.Repeat(color.Value, proto.Sprites.Count)
             : []));
@@ -421,20 +377,6 @@ public sealed partial class BodySystem
     }
 
     #endregion
-
-    /// <summary>
-    /// Returns true if a bodypart has no child parts.
-    /// </summary>
-    public bool IsExtremity(EntityUid part)
-    {
-        foreach (var child in _relation.AllChildren(part))
-        {
-            if (!_internalQuery.HasComp(child))
-                return false;
-        }
-
-        return true;
-    }
 
     #region Targeting
 
@@ -470,14 +412,14 @@ public sealed partial class BodySystem
             return TargetBodyPart.Chest;
 
         if (_mob.IsIncapacitated(target)
-            || _standing.IsDown(target))
+            || _standing.IsDown(target) || !targetComp.TargetOdds.TryGetValue(targetPart, out var odds))
             return targetPart;
 
-        var totalWeight = targetComp.TargetOdds[targetPart].Values.Sum();
+        var totalWeight = odds.Values.Sum();
         var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(target));
         var randomValue = rand.NextFloat() * totalWeight;
 
-        foreach (var (part, weight) in targetComp.TargetOdds[targetPart])
+        foreach (var (part, weight) in odds)
         {
             if (randomValue <= weight)
                 return part;
@@ -540,29 +482,6 @@ public sealed partial class BodySystem
             return attackerComp.Target;
 
         return GetRandomBodyPart(target);
-    }
-
-    /// <summary>
-    /// Gets a random bodypart that has no child parts, like a hand or an arm with no hand attached.
-    /// </summary>
-    public TargetBodyPart GetRandomExtremity(Entity<BodyComponent?> body)
-    {
-        if (!_bodyQuery.Resolve(body, ref body.Comp, false))
-            return TargetBodyPart.Chest;
-
-        _extremities.Clear();
-        foreach (var part in GetExternalOrgans(body))
-        {
-            if (IsExtremity(part))
-                _extremities.Add(part);
-        }
-
-        if (_extremities.Count == 0)
-            return TargetBodyPart.Chest; // should never happen...
-
-        var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(body));
-        var picked = rand.Pick(_extremities);
-        return _part.GetTargetBodyPart(picked) ?? TargetBodyPart.Chest;
     }
 
     #endregion

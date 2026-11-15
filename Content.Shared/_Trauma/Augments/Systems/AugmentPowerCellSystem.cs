@@ -58,7 +58,6 @@ public sealed partial class AugmentPowerCellSystem : EntitySystem
             _alerts.ClearAlert(uid, augment.Comp.NoBatteryAlert);
 
             var batt = battery.Value;
-            // number from 0-10... it works
             var chargePercent = (short) _battery.GetRemainingUses(batt.Owner, batt.Comp.MaxCharge * 0.1f);
             _alerts.ShowAlert(uid, augment.Comp.BatteryAlert, chargePercent);
         }
@@ -96,7 +95,6 @@ public sealed partial class AugmentPowerCellSystem : EntitySystem
         UpdateDrawRate(drawEnt, args.Body);
 
         _powerCell.SetDrawEnabled(drawEnt, false);
-        // disable every augment that needs power
         foreach (var augment in _augment.GetAugments(args.Body))
         {
             if (_drawQuery.HasComp(augment))
@@ -123,7 +121,6 @@ public sealed partial class AugmentPowerCellSystem : EntitySystem
                 _body.DisableOrgan(augment);
         }
 
-        // stop drawing if it loses power
         UpdateDrawRate(ent.Owner);
     }
 

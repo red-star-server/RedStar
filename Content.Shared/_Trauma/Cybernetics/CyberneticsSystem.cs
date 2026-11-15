@@ -50,7 +50,6 @@ public sealed partial class CyberneticsSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnEnableAttempt(Entity<CyberneticsComponent> ent, ref OrganEnableAttemptEvent args)
     {
-        // prevent enabling the organ while emped
         args.Cancelled |= ent.Comp.Disabled;
     }
 
@@ -61,7 +60,7 @@ public sealed partial class CyberneticsSystem : EntitySystem
             return;
 
         var ev = args.Args;
-        ev.Multiplier *= 10;
+        ev.Scale(ent.Comp.DisabledDoAfterMultiplier);
         args.Args = ev;
     }
 }
