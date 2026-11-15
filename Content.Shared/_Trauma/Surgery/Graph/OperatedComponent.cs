@@ -1,0 +1,36 @@
+using Content.Shared.Body;
+using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
+
+namespace Content.Shared._Trauma.Surgery.Graph;
+
+/// <summary>
+/// Surgery graph state of a body part: its current stage and the procedure in progress.
+/// </summary>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class OperatedComponent : Component
+{
+    [DataField, AutoNetworkedField]
+    public ProtoId<SurgeryStagePrototype>? Stage;
+
+    [DataField, AutoNetworkedField]
+    public ProtoId<SurgeryProcedurePrototype>? ActiveProcedure;
+
+    [DataField, AutoNetworkedField]
+    public ProtoId<OrganCategoryPrototype>? ActiveOrgan;
+
+    [DataField, AutoNetworkedField]
+    public int CompletedSteps;
+
+    [ViewVariables]
+    public int AppliedStepEffects;
+
+    [ViewVariables]
+    public int AppliedProcedureEffects;
+
+    [ViewVariables]
+    public bool IsFinalizing;
+
+    [ViewVariables]
+    public bool IsOperating;
+}

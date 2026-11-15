@@ -1,5 +1,7 @@
 - type: organCategory
   id: AugmentCharger
+  surgeryDepth: 2
 
 - type: organCategory
   id: AugmentPowerCell
+  surgeryDepth: 2

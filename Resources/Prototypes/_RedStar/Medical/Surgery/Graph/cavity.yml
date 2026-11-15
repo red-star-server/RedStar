@@ -1,0 +1,141 @@
+- type: surgeryProcedure
+  id: InsertCavityItem
+  name: surgery-procedure-insert-cavity-item
+  from: [RibcageOpen]
+  conditions:
+  - !type:CavityItemPresentCondition
+    inverted: true
+  steps:
+  - name: surgery-step-insert-item
+    anyItem: true
+    requireHeldItem: true
+    duration: 4
+    effects:
+    - !type:InsertCavityItemEffect
+
+- type: surgeryProcedure
+  id: RemoveCavityItem
+  name: surgery-procedure-remove-cavity-item
+  from: [RibcageOpen]
+  conditions:
+  - !type:CavityItemPresentCondition
+  steps:
+  - name: surgery-step-remove-item
+    anyItem: true
+    duration: 4
+    effects:
+    - !type:RemoveCavityItemEffect
+
+- type: surgeryProcedure
+  id: CreateTailSlot
+  name: surgery-procedure-create-tail-slot
+  from: [Incised]
+  conditions:
+  - !type:PartTypeCondition
+    parts: [Torso]
+  - !type:OrganSlotCondition
+    organSlot: Tail
+    inverted: true
+  - !type:BodyComponentCondition
+    blacklist:
+      components:
+      - Silicon
+  steps:
+  - name: surgery-step-saw-bones
+    quality: Sawing
+    duration: 4
+  - name: surgery-step-create-joint
+    quality: BoneHealing
+    duration: 2
+  - name: surgery-step-stitch-joint
+    quality: Suturing
+    duration: 5
+  - name: surgery-step-carve-cavity
+    quality: Slicing
+    icon:
+      sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/scalpel.rsi
+      state: scalpel
+    duration: 6
+    effects:
+    - !type:AddOrganSlotEffect
+      organSlot: Tail
+
+- type: surgeryProcedure
+  id: CreateWingsSlot
+  name: surgery-procedure-create-wings-slot
+  from: [Incised]
+  conditions:
+  - !type:PartTypeCondition
+    parts: [Torso]
+  - !type:OrganSlotCondition
+    organSlot: Wings
+    inverted: true
+  - !type:BodyComponentCondition
+    blacklist:
+      components:
+      - Silicon
+  steps:
+  - name: surgery-step-saw-bones
+    quality: Sawing
+    duration: 4
+  - name: surgery-step-create-joint
+    quality: BoneHealing
+    duration: 2
+  - name: surgery-step-stitch-joint
+    quality: Suturing
+    duration: 5
+  - name: surgery-step-carve-cavity
+    quality: Slicing
+    icon:
+      sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/scalpel.rsi
+      state: scalpel
+    duration: 6
+    effects:
+    - !type:AddOrganSlotEffect
+      organSlot: Wings
+
+- type: surgeryProcedure
+  id: CreatePowerCellSlot
+  name: surgery-procedure-create-power-cell-slot
+  from: [RibcageOpen]
+  conditions:
+  - !type:OrganSlotCondition
+    organSlot: AugmentPowerCell
+    inverted: true
+  - !type:BodyComponentCondition
+    blacklist:
+      components:
+      - Silicon
+  steps:
+  - name: surgery-step-carve-cavity
+    quality: Slicing
+    icon:
+      sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/scalpel.rsi
+      state: scalpel
+    duration: 6
+    effects:
+    - !type:AddOrganSlotEffect
+      organSlot: AugmentPowerCell
+
+- type: surgeryProcedure
+  id: CreateChargerSlot
+  name: surgery-procedure-create-charger-slot
+  from: [RibcageOpen]
+  conditions:
+  - !type:OrganSlotCondition
+    organSlot: AugmentCharger
+    inverted: true
+  - !type:BodyComponentCondition
+    blacklist:
+      components:
+      - Silicon
+  steps:
+  - name: surgery-step-carve-cavity
+    quality: Slicing
+    icon:
+      sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/scalpel.rsi
+      state: scalpel
+    duration: 6
+    effects:
+    - !type:AddOrganSlotEffect
+      organSlot: AugmentCharger

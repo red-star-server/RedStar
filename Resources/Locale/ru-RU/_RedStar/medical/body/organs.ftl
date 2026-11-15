@@ -9,3 +9,5 @@ markings-organ-Heart = Сердце
 markings-organ-Stomach = Желудок
 markings-organ-Liver = Печень
 markings-organ-Kidneys = Почки
+markings-organ-AugmentPowerCell = Батарея аугмента
+markings-organ-AugmentCharger = Зарядник аугмента
