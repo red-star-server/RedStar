@@ -100,8 +100,6 @@ public sealed partial class SurgeryTest : GameTest
                 Assert.That(_graph.TryPerformStep(part, surgeon, instance, index), Is.True,
                     $"{procedure}[{index}]: step refused");
 
-                // Mirror GetStepDuration: a tool's SpeedModifier divides the step duration,
-                // so waiting the raw duration cancels the DoAfter on the next tool swap.
                 var speed = SEntMan.TryGetComponent<ToolComponent>(tool, out var toolComp)
                     ? toolComp.SpeedModifier
                     : 1f;

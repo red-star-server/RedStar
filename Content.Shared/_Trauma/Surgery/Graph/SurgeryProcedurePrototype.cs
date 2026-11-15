@@ -50,9 +50,6 @@ public sealed partial class SurgeryProcedurePrototype : IPrototype
     [DataField]
     public List<ProtoId<OrganCategoryPrototype>> Categories = [];
 
-    /// <summary>
-    /// Ordering in the surgery UI.
-    /// </summary>
     [DataField]
     public int Priority;
 
@@ -99,9 +96,6 @@ public sealed partial class SurgeryStepEntry
     [DataField]
     public bool AnyItem;
 
-    /// <summary>
-    /// Require an item in the active hand (reject empty hands) before starting the step.
-    /// </summary>
     [DataField]
     public bool RequireHeldItem;
 
