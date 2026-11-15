@@ -92,7 +92,9 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         var activeOrgan = operated?.ActiveOrgan;
 
         bool Available(SurgeryProcedurePrototype proc, ProtoId<OrganCategoryPrototype>? organ)
-            => ConditionsMet(part, proc, organ) || (activeProc == proc.ID && activeOrgan == organ);
+            => activeProc is { } active
+                ? active == proc.ID && activeOrgan == organ
+                : ConditionsMet(part, proc, organ);
 
         foreach (var procedure in _proto.EnumeratePrototypes<SurgeryProcedurePrototype>())
         {
@@ -125,6 +127,9 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
                     {
                         foreach (var category in procedure.Categories)
                         {
+                            if (!partComp.Slots.Contains(category))
+                                continue;
+
                             if (Available(procedure, category))
                                 result.Add(new SurgeryProcedureInstance(procedure.ID, category));
                         }
@@ -150,10 +155,17 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
             return true;
 
         if (step.ProcedureOrgan)
-            return instanceOrgan is { } procedureOrgan && _body.GetCategory(held) == procedureOrgan;
+        {
+            return instanceOrgan is { } procedureOrgan
+                   && TryComp<OrganComponent>(held, out var heldOrgan)
+                   && heldOrgan.Category == procedureOrgan;
+        }
 
         if (step.Organ is { } organ)
-            return _body.GetCategory(held) == organ;
+        {
+            return TryComp<OrganComponent>(held, out var heldOrgan)
+                   && heldOrgan.Category == organ;
+        }
 
         if (step.Quality is { } quality)
             return _tool.HasQuality(held, quality);
@@ -297,7 +309,7 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
                 if (stepIndex != completed)
                     return false;
             }
-            else if (stepIndex != 0)
+            else
             {
                 return false;
             }
