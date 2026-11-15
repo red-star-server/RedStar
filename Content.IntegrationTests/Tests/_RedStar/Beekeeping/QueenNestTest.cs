@@ -6,7 +6,6 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Storage.Components;
 using Content.Shared._RedStar.Beekeeping.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 using Robust.Shared.Spawners;
 using Robust.Shared.Containers;
 
@@ -109,31 +108,34 @@ public sealed class QueenNestTest : GameTest
     public async Task QueenLifetime()
     {
         var server = Server;
+        var map = await Pair.CreateTestMap();
         var slots = server.System<ItemSlotsSystem>();
         EntityUid hive = default;
         EntityUid queen = default;
 
         await server.WaitPost(() =>
         {
-            hive = server.EntMan.SpawnEntity("Beehive", MapCoordinates.Nullspace);
-            queen = server.EntMan.SpawnEntity("BeeQueen", MapCoordinates.Nullspace);
-        });
-        await RunSeconds(2);
-
-        await server.WaitPost(() =>
-        {
+            hive = server.EntMan.SpawnAttachedTo("Beehive", map.GridCoords);
+            queen = server.EntMan.SpawnAttachedTo("BeeQueen", map.GridCoords);
             Assert.That(server.EntMan.GetComponent<BeeQueenComponent>(queen).DiesAt, Is.Not.Null);
             var comp = server.EntMan.GetComponent<BeehiveComponent>(hive);
-            Assert.That(slots.TryInsert(hive, comp.QueenSlot, queen, null));
+            Assert.That(slots.TryInsert(hive, comp.QueenSlot, queen, null), Is.True);
         });
-        await RunSeconds(2);
+        await RunTicksSync(5);
 
         await server.WaitPost(() =>
         {
-            Assert.That(server.EntMan.GetComponent<BeeQueenComponent>(queen).DiesAt, Is.Null);
-            var comp = server.EntMan.GetComponent<BeehiveComponent>(hive);
-            slots.TryEject(hive, comp.QueenSlot, null, out _);
-            server.EntMan.GetComponent<BeeQueenComponent>(queen).Lifetime = TimeSpan.FromSeconds(1);
+            var queenComp = server.EntMan.GetComponent<BeeQueenComponent>(queen);
+            Assert.That(queenComp.DiesAt, Is.Null);
+            Assert.That(server.EntMan.HasComponent<TimedDespawnComponent>(queen), Is.False);
+
+            queenComp.Lifetime = TimeSpan.FromSeconds(1);
+            var hiveComp = server.EntMan.GetComponent<BeehiveComponent>(hive);
+            Assert.That(slots.TryEject(hive, hiveComp.QueenSlot, null, out var ejected), Is.True);
+            Assert.That(ejected, Is.EqualTo(queen));
+            Assert.That(queenComp.DiesAt, Is.Not.Null);
+            // A queen on the floor would otherwise try to return to her old hive.
+            server.EntMan.DeleteEntity(hive);
         });
         await RunSeconds(4);
 

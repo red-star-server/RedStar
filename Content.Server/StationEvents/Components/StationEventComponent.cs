@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -32,9 +33,11 @@ public sealed partial class StationEventComponent : Component
     public Color EndAnnouncementColor = Color.Gold;
 
     [DataField]
+    [AllowStereo]
     public SoundSpecifier? StartAudio;
 
     [DataField]
+    [AllowStereo]
     public SoundSpecifier? EndAudio;
 
     /// <summary>
@@ -69,6 +72,14 @@ public sealed partial class StationEventComponent : Component
     /// </remarks>
     [DataField]
     public int MinimumPlayers;
+
+    // RS14-start
+    /// <summary>
+    ///     The maximum server player count at which this event can run. Unbounded by default.
+    /// </summary>
+    [DataField]
+    public int MaximumPlayers = int.MaxValue;
+    // RS14-end
 
     /// <summary>
     ///     How many times this even can occur in a single round

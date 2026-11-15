@@ -4,8 +4,6 @@ using Content.Shared._Trauma.Common.Wounds;
 
 namespace Content.Server._Trauma.PartStatus;
 
-// collecting a body parts information together
-// ik its another bs level of abstraction but i think it helps for now..
 public sealed class PartStatus(
     BodyPartType partType,
     BodyPartSymmetry partSymmetry,

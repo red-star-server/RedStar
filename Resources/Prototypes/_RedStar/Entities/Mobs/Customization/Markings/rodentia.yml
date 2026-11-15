@@ -1,0 +1,391 @@
+﻿# HEAD
+
+## DEFAULTS
+
+- type: marking
+  id: RodentiaHeadTopEarDefault
+  bodyPart: HeadTop
+  groupWhitelist: [Human]
+  coloring:
+    default:
+      type: !type:TattooColoring
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/ear_markings.rsi
+    state: mouse
+  - sprite: _RedStar/Mobs/Customization/Rodentia/ear_markings.rsi
+    state: mouse_overlay
+
+- type: marking
+  id: RodentiaTailDefault
+  bodyPart: Tail
+  groupWhitelist: [Human]
+  coloring:
+    default:
+      type: !type:TattooColoring
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/tail_markings.rsi
+    state: mouse
+
+## EARS
+
+- type: marking
+  id: RodentiaHeadTopEarBat
+  bodyPart: HeadTop
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/ear_markings.rsi
+    state: bat
+
+- type: marking
+  id: RodentiaHeadTopEarBatLarge
+  bodyPart: HeadTop
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/ear_markings.rsi
+    state: bat_large
+
+- type: marking
+  id: RodentiaHeadTopEarHamster
+  bodyPart: HeadTop
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/ear_markings.rsi
+    state: hamster
+  - sprite: _RedStar/Mobs/Customization/Rodentia/ear_markings.rsi
+    state: hamster_overlay
+
+- type: marking
+  id: RodentiaHeadTopEarLong
+  bodyPart: HeadTop
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/ear_markings.rsi
+    state: long
+  - sprite: _RedStar/Mobs/Customization/Rodentia/ear_markings.rsi
+    state: long_overlay
+
+- type: marking
+  id: RodentiaHeadTopEarMouse
+  bodyPart: HeadTop
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/ear_markings.rsi
+    state: mouse
+  - sprite: _RedStar/Mobs/Customization/Rodentia/ear_markings.rsi
+    state: mouse_overlay
+
+- type: marking
+  id: RodentiaHeadTopEarMouseLarge
+  bodyPart: HeadTop
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/ear_markings.rsi
+    state: mouse_large
+  - sprite: _RedStar/Mobs/Customization/Rodentia/ear_markings.rsi
+    state: mouse_large_overlay
+
+- type: marking
+  id: RodentiaHeadTopEarPointy
+  bodyPart: HeadTop
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/ear_markings.rsi
+    state: pointy
+
+- type: marking
+  id: RodentiaHeadTopEarRabbit
+  bodyPart: HeadTop
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/ear_markings.rsi
+    state: rabbit
+  - sprite: _RedStar/Mobs/Customization/Rodentia/ear_markings.rsi
+    state: rabbit_overlay
+
+- type: marking
+  id: RodentiaHeadTopEarSmall
+  bodyPart: HeadTop
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/ear_markings.rsi
+    state: small
+
+## SNOUTS
+
+- type: marking
+  id: RodentiaSnoutBat
+  bodyPart: Snout
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/snout_markings.rsi
+    state: bat
+  - sprite: _RedStar/Mobs/Customization/Rodentia/snout_markings.rsi
+    state: bat_nose
+
+- type: marking
+  id: RodentiaSnoutBatCounter
+  bodyPart: Snout
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/snout_markings.rsi
+    state: bat
+  - sprite: _RedStar/Mobs/Customization/Rodentia/snout_markings.rsi
+    state: bat_nose
+  - sprite: _RedStar/Mobs/Customization/Rodentia/snout_markings.rsi
+    state: bat_overlay
+
+- type: marking
+  id: RodentiaSnoutFlat
+  bodyPart: Snout
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/snout_markings.rsi
+    state: flat
+  - sprite: _RedStar/Mobs/Customization/Rodentia/snout_markings.rsi
+    state: flat_nose
+
+- type: marking
+  id: RodentiaSnoutFlatCounter
+  bodyPart: Snout
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/snout_markings.rsi
+    state: flat
+  - sprite: _RedStar/Mobs/Customization/Rodentia/snout_markings.rsi
+    state: flat_nose
+  - sprite: _RedStar/Mobs/Customization/Rodentia/snout_markings.rsi
+    state: flat_overlay
+
+- type: marking
+  id: RodentiaSnoutRound
+  bodyPart: Snout
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/snout_markings.rsi
+    state: round
+  - sprite: _RedStar/Mobs/Customization/Rodentia/snout_markings.rsi
+    state: round_nose
+
+- type: marking
+  id: RodentiaSnoutRoundCounter
+  bodyPart: Snout
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/snout_markings.rsi
+    state: round
+  - sprite: _RedStar/Mobs/Customization/Rodentia/snout_markings.rsi
+    state: round_nose
+  - sprite: _RedStar/Mobs/Customization/Rodentia/snout_markings.rsi
+    state: round_overlay
+
+## CHEEKS
+
+- type: marking
+  id: RodentiaCheeksRound
+  bodyPart: HeadSide
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/cheek_markings.rsi
+    state: cheeks
+
+- type: marking
+  id: RodentiaCheeksRoundCounter
+  bodyPart: HeadSide
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/cheek_markings.rsi
+    state: cheeks
+  - sprite: _RedStar/Mobs/Customization/Rodentia/cheek_markings.rsi
+    state: cheeks_overlay
+
+- type: marking
+  id: RodentiaCheeksFluff
+  bodyPart: HeadSide
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/cheek_markings.rsi
+    state: fluff
+
+- type: marking
+  id: RodentiaCheeksFluffCounter
+  bodyPart: HeadSide
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/cheek_markings.rsi
+    state: fluff
+  - sprite: _RedStar/Mobs/Customization/Rodentia/cheek_markings.rsi
+    state: fluff_overlay
+
+- type: marking
+  id: RodentiaCheeksFluffAlt
+  bodyPart: HeadSide
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/cheek_markings.rsi
+    state: fluff_alt
+
+- type: marking
+  id: RodentiaCheeksFluffAltCounter
+  bodyPart: HeadSide
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/cheek_markings.rsi
+    state: fluff_alt
+  - sprite: _RedStar/Mobs/Customization/Rodentia/cheek_markings.rsi
+    state: fluff_alt_overlay
+
+- type: marking
+  id: RodentiaCheeksWhiskers # for no-cost markings
+  bodyPart: HeadTop # for layering
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/cheek_markings.rsi
+    state: whiskers
+
+# BODY
+
+## TAIL
+
+- type: marking
+  id: RodentiaTailBeaver
+  bodyPart: Tail
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/tail_markings.rsi
+    state: beaver
+
+- type: marking
+  id: RodentiaTailHamster
+  bodyPart: Tail
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/tail_markings.rsi
+    state: hamster
+
+- type: marking
+  id: RodentiaTailLong
+  bodyPart: Tail
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/tail_markings.rsi
+    state: long
+
+- type: marking
+  id: RodentiaTailLongCounter
+  bodyPart: Tail
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/tail_markings.rsi
+    state: long
+  - sprite: _RedStar/Mobs/Customization/Rodentia/tail_markings.rsi
+    state: long_overlay
+
+- type: marking
+  id: RodentiaTailLongCounterTip
+  bodyPart: Tail
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/tail_markings.rsi
+    state: long
+  - sprite: _RedStar/Mobs/Customization/Rodentia/tail_markings.rsi
+    state: long_overlay
+  - sprite: _RedStar/Mobs/Customization/Rodentia/tail_markings.rsi
+    state: long_tip
+
+- type: marking
+  id: RodentiaTailMouse
+  bodyPart: Tail
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/tail_markings.rsi
+    state: mouse
+
+- type: marking
+  id: RodentiaTailRabbit
+  bodyPart: Tail
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/tail_markings.rsi
+    state: rabbit
+
+- type: marking
+  id: RodentiaTailRabbitCounter
+  bodyPart: Tail
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/tail_markings.rsi
+    state: rabbit
+  - sprite: _RedStar/Mobs/Customization/Rodentia/tail_markings.rsi
+    state: rabbit_overlay
+
+- type: marking
+  id: RodentiaTailShort
+  bodyPart: Tail
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/tail_markings.rsi
+    state: short
+
+- type: marking
+  id: RodentiaTailSquirrel
+  bodyPart: Tail
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/tail_markings.rsi
+    state: squirrel
+
+- type: marking
+  id: RodentiaTailSquirrelBicolor
+  bodyPart: Tail
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/tail_markings.rsi
+    state: squirrel
+  - sprite: _RedStar/Mobs/Customization/Rodentia/tail_markings.rsi
+    state: squirrel_overlay
+
+## PATTERNS
+
+- type: marking
+  id: RodentiaChestCountershade
+  bodyPart: Chest
+  groupWhitelist: [Human]
+  sexRestriction: Male
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/body_markings.rsi
+    state: countershade
+
+- type: marking
+  id: RodentiaChestCountershadeF
+  bodyPart: Chest
+  groupWhitelist: [Human]
+  sexRestriction: Female
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/body_markings.rsi
+    state: countershade_f
+
+- type: marking
+  id: RodentiaChestFawn
+  bodyPart: Chest
+  groupWhitelist: [Human]
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/body_markings.rsi
+    state: fawn
+
+- type: marking
+  id: RodentiaChestHooded
+  bodyPart: Chest
+  groupWhitelist: [Human]
+  sexRestriction: Male
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/body_markings.rsi
+    state: hooded
+
+- type: marking
+  id: RodentiaChestHoodedF
+  bodyPart: Chest
+  groupWhitelist: [Human]
+  sexRestriction: Female
+  sprites:
+  - sprite: _RedStar/Mobs/Customization/Rodentia/body_markings.rsi
+    state: hooded_f

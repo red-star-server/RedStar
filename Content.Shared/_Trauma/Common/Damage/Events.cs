@@ -7,12 +7,3 @@ namespace Content.Shared._Trauma.Common.Damage;
 /// </summary>
 [ByRefEvent]
 public readonly record struct DamageSetEvent(FixedPoint2 Damage);
-
-/// <summary>
-/// Raised on a mob that used /suicide when killing it
-/// </summary>
-[ByRefEvent]
-public record struct SuicideLethalDamageEvent;
-
-[ByRefEvent]
-public record struct LifeStealHealEvent;

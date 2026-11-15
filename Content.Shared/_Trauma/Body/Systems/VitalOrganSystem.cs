@@ -23,16 +23,59 @@ public sealed partial class VitalOrganSystem : EntitySystem
         if (TerminatingOrDeleted(args.Target) || _timing.ApplyingState)
             return;
 
-        EnsureComp<DelayedDeathComponent>(args.Target);
+        var death = EnsureComp<DelayedDeathComponent>(args.Target);
+        var key = GetKey(ent.Owner);
+        death.MissingOrgans[key] = death.MissingOrgans.GetValueOrDefault(key) + 1;
+        Dirty(args.Target, death);
     }
 
     [SubscribeLocalEvent]
     private void OnInserted(Entity<VitalOrganComponent> ent, ref OrganGotInsertedEvent args)
     {
-        if (_timing.ApplyingState || TerminatingOrDeleted(ent) || TerminatingOrDeleted(args.Target))
+        if (_timing.ApplyingState || TerminatingOrDeleted(ent) || TerminatingOrDeleted(args.Target) ||
+            !TryComp<DelayedDeathComponent>(args.Target, out var death))
             return;
 
-        if (_body.GetOrgan(args.Target, Brain) != null)
-            RemComp<DelayedDeathComponent>(args.Target);
+        var key = GetKey(ent.Owner);
+        if (death.MissingOrgans.TryGetValue(key, out var count))
+        {
+            if (count > 1)
+                death.MissingOrgans[key] = count - 1;
+            else
+                death.MissingOrgans.Remove(key);
+
+            Dirty(args.Target, death);
+        }
+
+        TryClearDelayedDeath((args.Target, death));
+    }
+
+    /// <summary>
+    /// Removes <see cref="DelayedDeathComponent"/> if no vital organ is missing and the body has a brain.
+    /// </summary>
+    public bool TryClearDelayedDeath(Entity<DelayedDeathComponent?> body)
+    {
+        if (!Resolve(body, ref body.Comp, false) ||
+            _body.GetOrgan(body.Owner, Brain) == null)
+            return false;
+
+        if (body.Comp.MissingOrgans.Remove(CategoryKey(Brain)))
+            Dirty(body);
+
+        if (body.Comp.MissingOrgans.Count > 0)
+            return false;
+
+        RemComp(body.Owner, body.Comp);
+        return true;
+    }
+
+    private static string CategoryKey(ProtoId<OrganCategoryPrototype> category) => $"category:{category.Id}";
+
+    private string GetKey(EntityUid organ)
+    {
+        if (_body.GetCategory(organ) is { } category)
+            return CategoryKey(category);
+
+        return MetaData(organ).EntityPrototype is { } proto ? $"prototype:{proto.ID}" : $"entity:{organ}";
     }
 }

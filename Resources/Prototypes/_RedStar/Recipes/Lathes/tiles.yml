@@ -7,3 +7,54 @@
   parent: BaseMarbleTileRecipe
   id: FloorTileItemDarkMarbleMono
   result: FloorTileItemDarkMarbleMono
+
+# Ironsand Concrete
+
+- type: latheRecipe
+  parent: BaseConcreteTileRecipe
+  id: FloorTileItemIronsandConcrete
+  result: FloorTileItemIronsandConcrete
+
+- type: latheRecipe
+  parent: BaseConcreteTileRecipe
+  id: FloorTileItemIronsandConcreteMono
+  result: FloorTileItemIronsandConcreteMono
+
+- type: latheRecipe
+  parent: BaseConcreteTileRecipe
+  id: FloorTileItemIronsandConcreteSmooth
+  result: FloorTileItemIronsandConcreteSmooth
+
+# Old Concrete
+
+- type: latheRecipe
+  parent: BaseConcreteTileRecipe
+  id: FloorTileItemOldConcrete
+  result: FloorTileItemOldConcrete
+
+- type: latheRecipe
+  parent: BaseConcreteTileRecipe
+  id: FloorTileItemOldConcreteMono
+  result: FloorTileItemOldConcreteMono
+
+- type: latheRecipe
+  parent: BaseConcreteTileRecipe
+  id: FloorTileItemOldConcreteSmooth
+  result: FloorTileItemOldConcreteSmooth
+
+# White Concrete
+
+- type: latheRecipe
+  parent: BaseConcreteTileRecipe
+  id: FloorTileItemWhiteConcrete
+  result: FloorTileItemWhiteConcrete
+
+- type: latheRecipe
+  parent: BaseConcreteTileRecipe
+  id: FloorTileItemWhiteConcreteMono
+  result: FloorTileItemWhiteConcreteMono
+
+- type: latheRecipe
+  parent: BaseConcreteTileRecipe
+  id: FloorTileItemWhiteConcreteSmooth
+  result: FloorTileItemWhiteConcreteSmooth

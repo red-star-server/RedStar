@@ -204,17 +204,17 @@
   id: FloorIronsandTile
   target: FloorAsteroidIronsand
 
-- type: tileAlias
-  id: FloorIronsandConcrete
-  target: FloorAsteroidIronsand
+#- type: tileAlias
+#  id: FloorIronsandConcrete
+#  target: FloorAsteroidIronsand
 
-- type: tileAlias
-  id: FloorIronsandConcreteMono
-  target: FloorAsteroidIronsand
+#- type: tileAlias
+#  id: FloorIronsandConcreteMono
+#  target: FloorAsteroidIronsand
 
-- type: tileAlias
-  id: FloorIronsandConcreteSmooth
-  target: FloorAsteroidIronsand
+#- type: tileAlias
+#  id: FloorIronsandConcreteSmooth
+#  target: FloorAsteroidIronsand
 
 - type: tileAlias
   id: FloorGrayConcrete
@@ -228,17 +228,17 @@
   id: FloorGrayConcreteSmooth
   target: FloorConcreteSmooth
 
-- type: tileAlias
-  id: FloorOldConcrete
-  target: FloorConcrete
+#- type: tileAlias
+#  id: FloorOldConcrete
+#  target: FloorConcrete
 
-- type: tileAlias
-  id: FloorOldConcreteMono
-  target: FloorConcreteMono
+#- type: tileAlias
+#  id: FloorOldConcreteMono
+#  target: FloorConcreteMono
 
-- type: tileAlias
-  id: FloorOldConcreteSmooth
-  target: FloorConcreteSmooth
+#- type: tileAlias
+#  id: FloorOldConcreteSmooth
+#  target: FloorConcreteSmooth
 
 - type: tileAlias
   id: IronsandPacked
