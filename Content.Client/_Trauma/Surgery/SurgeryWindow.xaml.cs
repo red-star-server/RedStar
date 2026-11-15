@@ -102,9 +102,30 @@ public sealed partial class SurgeryWindow : FancyWindow
         View(ViewType.Surgeries);
     }
 
-    private void Update() { UpdateParts();
+    private void Update() { UpdateParts(); UpdateDisabledPanel();
         if (_part is not { } p) return;
         UpdateProcedures(p); UpdateSteps(p);
+    }
+
+    private void UpdateDisabledPanel()
+    {
+        if (_player.LocalEntity is not { } player || Deleted(_owner))
+        {
+            DisabledPanel.Visible = false;
+            DisabledPanel.MouseFilter = MouseFilterMode.Ignore;
+            return;
+        }
+
+        var lying = _graph.IsLyingDown(_owner, player, false);
+        DisabledPanel.Visible = !lying;
+        DisabledPanel.MouseFilter = lying ? MouseFilterMode.Ignore : MouseFilterMode.Stop;
+
+        if (lying || DisabledLabel.GetMessage() is not null)
+            return;
+
+        var msg = new FormattedMessage();
+        msg.AddMarkupOrThrow($"[color=red][font size=16]{Loc.GetString("surgery-error-laying")}[/font][/color]");
+        DisabledLabel.SetMessage(msg);
     }
 
     private void UpdateParts()
