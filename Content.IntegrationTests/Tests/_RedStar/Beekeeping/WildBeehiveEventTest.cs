@@ -149,6 +149,43 @@ public sealed class WildBeehiveEventTest : GameTest
         });
     }
 
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task EventSwarmCannotSettleAfterLosingItsLockerOrQueenCapacity(bool capacityReached)
+    {
+        var server = Server;
+        var entities = server.EntMan;
+        var map = await Pair.CreateTestMap();
+        var swarms = server.System<BeeSwarmSystem>();
+        Entity<BeeSwarmComponent> eventSwarm = default;
+
+        await server.WaitAssertion(() =>
+        {
+            BuildRoom(map);
+            var grid = map.Grid.Owner;
+            entities.SpawnAttachedTo("GasVentPump", At(grid, 4, 0));
+            var locker = entities.SpawnAttachedTo("ClosetMaintenance", At(grid, 6, 0));
+            Plant(At(grid, 3, 1));
+
+            StartEvent();
+            var query = entities.EntityQueryEnumerator<WildBeehiveEventSwarmComponent, BeeSwarmComponent>();
+            Assert.That(query.MoveNext(out var uid, out _, out var swarm), Is.True);
+            eventSwarm = (uid, swarm!);
+            Assert.That(eventSwarm.Comp.Storage, Is.EqualTo(locker));
+            if (!capacityReached)
+                entities.DeleteEntity(locker);
+        });
+
+        if (capacityReached)
+            await OverrideCVar(Side.Server, BeekeepingCVars.ActiveHiveLimit, 0);
+
+        await server.WaitAssertion(() =>
+        {
+            swarms.LandSwarm(eventSwarm);
+            Assert.That(swarms.CountWildHives(map.MapUid), Is.Zero);
+        });
+    }
+
     [TestCase("nothing-to-eat")]
     [TestCase("meat-limit")]
     [TestCase("not-a-locker")]

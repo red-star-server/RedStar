@@ -579,16 +579,55 @@ public sealed partial class BeeSwarmSystem : EntitySystem
             return;
         }
 
-        foreach (var queen in new List<EntityUid>(container.ContainedEntities))
+        if (HasComp<WildBeehiveEventSwarmComponent>(swarm))
         {
-            _container.Remove(queen, container, force: true);
-            if (!_itemSlots.TryInsert(wild, wildComp.QueenSlot, queen, null))
-                _transform.DropNextTo(queen, wild);
+            // The station announcement promises a populated hive in a locker or crate.
+            if (swarm.Comp.Storage is not { } nest ||
+                TerminatingOrDeleted(nest) ||
+                !TryComp<EntityStorageComponent>(nest, out var storageComp) ||
+                storageComp.Open ||
+                storageComp.Contents.ContainedEntities.Count >= storageComp.Capacity ||
+                _container.IsEntityInContainer(nest) ||
+                Transform(nest).GridUid != xform.GridUid ||
+                storageComp.Contents.ContainedEntities.Any(HasComp<BeehiveComponent>) ||
+                !_hive.HasRoomForQueen((wild, wildComp)) ||
+                (swarm.Comp.Diet == BeehiveDiet.Meat &&
+                 _meat.CountMeatHives(xform.MapUid, swarm) >= _cfg.GetCVar(BeekeepingCVars.MeatHiveLimit)) ||
+                !_entityStorage.Insert(wild, nest, storageComp) ||
+                container.ContainedEntities.Count != 1 ||
+                !TrySettleEventQueen())
+            {
+                Del(wild);
+                DropSwarmQueen(swarm);
+                return;
+            }
+        }
+        else
+        {
+            foreach (var queen in new List<EntityUid>(container.ContainedEntities))
+            {
+                _container.Remove(queen, container, force: true);
+                if (!_itemSlots.TryInsert(wild, wildComp.QueenSlot, queen, null))
+                    _transform.DropNextTo(queen, wild);
+            }
+
+            // An ordinary swarm can still settle on the floor if its storage is gone.
+            if (swarm.Comp.Storage is { } storage && !TerminatingOrDeleted(storage))
+                _entityStorage.Insert(wild, storage);
         }
 
-        // Into the storage it chose, if it is still there and has room; otherwise the hive stays on the floor.
-        if (swarm.Comp.Storage is { } storage && !TerminatingOrDeleted(storage))
-            _entityStorage.Insert(wild, storage);
+        bool TrySettleEventQueen()
+        {
+            var queen = container.ContainedEntities[0];
+            if (!_container.Remove(queen, container, force: true))
+                return false;
+
+            if (_itemSlots.TryInsert(wild, wildComp.QueenSlot, queen, null))
+                return true;
+
+            _transform.DropNextTo(queen, swarm.Owner);
+            return false;
+        }
 
         // A lone queen starts the colony like a new hive does; a swarm brings its bees.
         if (swarm.Comp.Bees > 0)
