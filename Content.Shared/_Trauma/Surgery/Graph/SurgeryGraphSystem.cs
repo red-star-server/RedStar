@@ -21,10 +21,6 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Trauma.Surgery.Graph;
 
-/// <summary>
-/// Surgery as a graph of stages (anatomical states of a part) connected by procedures.
-/// The UI picks a procedure explicitly; the engine validates and executes its steps.
-/// </summary>
 public sealed partial class SurgeryGraphSystem : EntitySystem
 {
     public static readonly ProtoId<SurgeryStagePrototype> DefaultStage = "Closed";
@@ -79,10 +75,6 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         return true;
     }
 
-    /// <summary>
-    /// Expands procedures available at the part's current stage into concrete instances
-    /// (generic organ procedures become one instance per organ/slot) and filters by conditions.
-    /// </summary>
     public List<SurgeryProcedureInstance> GetAvailableProcedures(EntityUid part)
     {
         var stage = GetStage(part);
@@ -91,8 +83,8 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         var activeProc = operated?.ActiveProcedure;
         var activeOrgan = operated?.ActiveOrgan;
 
-        bool Available(SurgeryProcedurePrototype proc, ProtoId<OrganCategoryPrototype>? organ)
-            => activeProc is { } active
+        bool Available(SurgeryProcedurePrototype proc, ProtoId<OrganCategoryPrototype>? organ) =>
+            activeProc is { } active
                 ? active == proc.ID && activeOrgan == organ
                 : ConditionsMet(part, proc, organ);
 
@@ -177,23 +169,18 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
 
     #region Execution
 
-    /// <summary>
-    /// Validates a procedure step without side effects (UI highlighting).
-    /// </summary>
     public bool CanPerformStep(EntityUid part, EntityUid user, SurgeryProcedureInstance instance, int stepIndex, out string? popup)
     {
-        return ValidateStep(part, user, instance, stepIndex, out popup, out _, out _, out _);
+        return ValidateStep(part, user, instance, stepIndex, out popup, out _, out _);
     }
 
-    /// <summary>
-    /// Validates and starts a procedure step's do-after.
-    /// </summary>
     public bool TryPerformStep(EntityUid part, EntityUid user, SurgeryProcedureInstance instance, int stepIndex)
     {
-        if (!ValidateStep(part, user, instance, stepIndex, out var popup, out var procedure, out _, out var body))
+        if (!ValidateStep(part, user, instance, stepIndex, out var popup, out var procedure, out var body))
         {
             if (popup is { } text)
                 _popup.PopupEntity(text, user, user, PopupType.Medium);
+
             return false;
         }
 
@@ -247,11 +234,10 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
     }
 
     private bool ValidateStep(EntityUid part, EntityUid user, SurgeryProcedureInstance instance, int stepIndex,
-        out string? popup, out SurgeryProcedurePrototype procedure, out OperatedComponent? comp, out EntityUid body)
+        out string? popup, out SurgeryProcedurePrototype procedure, out EntityUid body)
     {
         popup = null;
         procedure = default!;
-        comp = null;
         body = default!;
 
         if (!TryComp<BodyPartComponent>(part, out _))
@@ -280,7 +266,9 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
             return false;
         }
 
-        if (!_proto.TryIndex(instance.Procedure, out var proc) || stepIndex < 0 || stepIndex >= proc.Steps.Count)
+        if (!_proto.TryIndex(instance.Procedure, out var proc) ||
+            stepIndex < 0 ||
+            stepIndex >= proc.Steps.Count)
             return false;
 
         procedure = proc;
@@ -288,7 +276,7 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         if (!InstanceAllowed(part, proc, instance))
             return false;
 
-        TryComp(part, out comp);
+        TryComp<OperatedComponent>(part, out var comp);
 
         var operating = comp?.IsOperating ?? false;
         var stage = comp?.Stage ?? DefaultStage;
@@ -304,15 +292,8 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
 
         if (activeProc is { } active)
         {
-            if (active == instance.Procedure && activeOrgan == instance.Organ)
-            {
-                if (stepIndex != completed)
-                    return false;
-            }
-            else
-            {
+            if (active != instance.Procedure || activeOrgan != instance.Organ || stepIndex != completed)
                 return false;
-            }
         }
         else if (stepIndex != 0)
         {
@@ -336,8 +317,8 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         popup = step.Quality is { } quality && _proto.TryIndex(quality, out var qualityProto)
             ? Loc.GetString("surgery-graph-requires-quality", ("quality", Loc.GetString(qualityProto.Name)))
             : Loc.GetString("surgery-graph-wrong-tool");
-        return false;
 
+        return false;
     }
 
     private bool InstanceAllowed(EntityUid part, SurgeryProcedurePrototype procedure, SurgeryProcedureInstance instance)
@@ -369,10 +350,14 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
             return;
 
         args.Handled = true;
-        if (comp.ActiveProcedure != args.Procedure || comp.ActiveOrgan != args.Organ || comp.CompletedSteps != args.StepIndex)
+        if (comp.ActiveProcedure != args.Procedure ||
+            comp.ActiveOrgan != args.Organ ||
+            comp.CompletedSteps != args.StepIndex)
             return;
 
-        if (!_proto.TryIndex(args.Procedure, out var procedure) || args.StepIndex >= procedure.Steps.Count)
+        if (!_proto.TryIndex(args.Procedure, out var procedure) ||
+            args.StepIndex < 0 ||
+            args.StepIndex >= procedure.Steps.Count)
             return;
 
         if (_body.GetBody(ent) is not { } body)
@@ -388,45 +373,57 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
             return;
 
         var step = procedure.Steps[args.StepIndex];
-        if (step.RequireHeldItem && (used is null || used == surgeon))
+        var item = used ?? surgeon;
+
+        if (step.RequireHeldItem && item == surgeon)
             return;
 
-        if (used is { } item && !MatchTool(step, item, args.Organ))
+        if (!MatchTool(step, item, args.Organ))
             return;
 
-        foreach (var effect in step.Effects)
+        for (var i = comp.AppliedStepEffects; i < step.Effects.Count; i++)
         {
-            if (!effect.Apply(ent, surgeon, used, args.Organ, EntityManager))
+            if (!step.Effects[i].Apply(ent, surgeon, used, args.Organ, EntityManager))
+            {
+                Dirty(ent, comp);
                 return;
+            }
+
+            comp.AppliedStepEffects = i + 1;
         }
 
-        if (step.Consume && used is { } consumed && !TerminatingOrDeleted(consumed) && _hands.IsHolding(surgeon, consumed))
-        {
-            if (_stackQuery.TryComp(consumed, out var stack))
-                _stack.TryUse((consumed, stack), 1);
-            else
-                QueueDel(consumed);
-        }
-
-        if (step.Repeatable && step.RepeatWhile is { } repeatWhile &&
+        if (!comp.IsFinalizing &&
+            step is { Repeatable: true, RepeatWhile: { } repeatWhile } &&
             repeatWhile.CheckWithInvert(ent, args.Organ, EntityManager))
         {
+            ConsumeStepItem(step, surgeon, used);
+            comp.AppliedStepEffects = 0;
+
             args.Repeat = true;
             comp.IsOperating = true;
+
             HandleSanitization(ent, body, surgeon);
             Dirty(ent, comp);
             return;
         }
 
-        HandleSanitization(ent, body, surgeon);
-
         if (args.StepIndex + 1 >= procedure.Steps.Count)
         {
-            foreach (var effect in procedure.Effects)
+            comp.IsFinalizing = true;
+
+            for (var i = comp.AppliedProcedureEffects; i < procedure.Effects.Count; i++)
             {
-                if (!effect.Apply(ent, surgeon, used, args.Organ, EntityManager))
+                if (!procedure.Effects[i].Apply(ent, surgeon, used, args.Organ, EntityManager))
+                {
+                    Dirty(ent, comp);
                     return;
+                }
+
+                comp.AppliedProcedureEffects = i + 1;
             }
+
+            ConsumeStepItem(step, surgeon, used);
+            HandleSanitization(ent, body, surgeon);
 
             comp.Stage = procedure.To ?? comp.Stage;
             comp.ActiveProcedure = null;
@@ -435,10 +432,31 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         }
         else
         {
+            ConsumeStepItem(step, surgeon, used);
+            HandleSanitization(ent, body, surgeon);
+
             comp.CompletedSteps = args.StepIndex + 1;
         }
 
+        comp.AppliedStepEffects = 0;
+        comp.AppliedProcedureEffects = 0;
+        comp.IsFinalizing = false;
+
         Dirty(ent, comp);
+    }
+
+    private void ConsumeStepItem(SurgeryStepEntry step, EntityUid surgeon, EntityUid? used)
+    {
+        if (!step.Consume ||
+            used is not { } consumed ||
+            TerminatingOrDeleted(consumed) ||
+            !_hands.IsHolding(surgeon, consumed))
+            return;
+
+        if (_stackQuery.TryComp(consumed, out var stack))
+            _stack.TryUse((consumed, stack), 1);
+        else
+            QueueDel(consumed);
     }
 
     private TimeSpan GetStepDuration(SurgeryStepEntry step, EntityUid surgeon, EntityUid body, EntityUid held)
@@ -526,8 +544,5 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
     #endregion
 }
 
-/// <summary>
-/// A concrete procedure: the prototype plus the organ category it was expanded with.
-/// </summary>
 [Serializable]
 public readonly record struct SurgeryProcedureInstance(ProtoId<SurgeryProcedurePrototype> Procedure, ProtoId<OrganCategoryPrototype>? Organ);

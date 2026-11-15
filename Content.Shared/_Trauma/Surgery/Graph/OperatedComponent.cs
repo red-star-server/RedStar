@@ -24,6 +24,15 @@ public sealed partial class OperatedComponent : Component
     public int CompletedSteps;
 
     [ViewVariables]
+    public int AppliedStepEffects;
+
+    [ViewVariables]
+    public int AppliedProcedureEffects;
+
+    [ViewVariables]
+    public bool IsFinalizing;
+
+    [ViewVariables]
     public bool IsOperating;
 
     [ViewVariables]
