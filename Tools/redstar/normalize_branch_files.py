@@ -7,9 +7,10 @@ from pathlib import Path
 BOM = b"\xef\xbb\xbf"
 
 
-def git_output(*args: str) -> list[Path]:
+def git_output(repo: Path, *args: str) -> list[Path]:
     result = subprocess.run(
         ["git", *args],
+        cwd=repo,
         capture_output=True,
         check=True,
     )
@@ -21,23 +22,23 @@ def git_output(*args: str) -> list[Path]:
     ]
 
 
-def get_branch_files(base: str) -> set[Path]:
+def get_branch_files(repo: Path, base: str) -> set[Path]:
     files = set()
 
-    # Files committed in the current branch.
     files.update(git_output(
+        repo,
         "diff", "--name-only", "-z",
         "--diff-filter=ACMR", f"{base}...HEAD"
     ))
 
-    # All tracked working-tree changes, staged and unstaged.
     files.update(git_output(
+        repo,
         "diff", "--name-only", "-z",
         "--diff-filter=ACMR", "HEAD"
     ))
 
-    # New untracked files.
     files.update(git_output(
+        repo,
         "ls-files", "--others", "--exclude-standard", "-z"
     ))
 
@@ -47,20 +48,19 @@ def get_branch_files(base: str) -> set[Path]:
 def normalize(data: bytes) -> tuple[bytes, bool]:
     original = data
 
-    # Remove UTF-8 BOM.
+    if b"\0" in data:
+        return original, False
+
     if data.startswith(BOM):
         data = data[len(BOM):]
 
-    # Skip binary and non-UTF-8 files.
     try:
         content = data.decode("utf-8")
     except UnicodeDecodeError:
         return original, False
 
-    # Normalize CRLF and standalone CR to LF.
     content = content.replace("\r\n", "\n").replace("\r", "\n")
 
-    # Ensure a final newline.
     if content and not content.endswith("\n"):
         content += "\n"
 
@@ -106,7 +106,7 @@ def main():
         parser.error(f"Directory does not exist: {root}")
 
     try:
-        files = get_branch_files(args.base)
+        files = get_branch_files(repo, args.base)
     except subprocess.CalledProcessError as error:
         parser.error(
             f"Git error. Check base branch '{args.base}': {error}"
@@ -122,12 +122,20 @@ def main():
     print()
 
     for relative in sorted(files):
-        file = (repo / relative).resolve()
+
+        original_path = repo / relative
+
+        if original_path.is_symlink():
+            skipped += 1
+            print(f"[SKIPPED SYMLINK] {relative}")
+            continue
+
+        file = original_path.resolve()
 
         if not file.is_relative_to(root):
             continue
 
-        if not file.is_file() or file.is_symlink():
+        if not file.is_file():
             continue
 
         checked += 1
@@ -154,7 +162,7 @@ def main():
     print()
     print(f"Files checked: {checked}")
     print(f"Files changed: {changed}")
-    print(f"Errors:        {skipped}")
+    print(f"Files skipped/errors: {skipped}")
 
 
 if __name__ == "__main__":
