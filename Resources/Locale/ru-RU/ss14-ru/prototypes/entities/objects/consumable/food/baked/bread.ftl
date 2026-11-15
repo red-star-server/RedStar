@@ -72,6 +72,7 @@ ent-FoodBreadTwoSlice = два ломтика
     .desc = Классика.
 ent-MobBreadDog = хлебака
     .desc = Это хлеб. Это собака. Это... хлебака?
+    .suffix = { ent-SimpleMobBase.suffix }
 ent-FoodBreadNutriBatard = питательный батард
     .desc = Бон 'петит!
 ent-FoodBreadCottonNutriBatard = хлопковый батард

@@ -126,7 +126,6 @@
   products:
     Boyarsky: 6
 
-# Mead from honey. The sugar recipe in the upstream Mead reaction stays as it is.
 - type: reaction
   id: MeadHoney
   reactants:
@@ -136,3 +135,15 @@
       amount: 1
   products:
     Mead: 2
+
+- type: reaction
+  id: CherryBlossom
+  reactants:
+    SakuraJuice:
+      amount: 1
+    SodaWater:
+      amount: 1
+    Vermouth:
+      amount: 1
+  products:
+    CherryBlossom: 3

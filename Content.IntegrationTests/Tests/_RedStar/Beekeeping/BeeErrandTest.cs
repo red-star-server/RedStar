@@ -5,7 +5,9 @@ using Content.Server._RedStar.Beekeeping.Systems;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared._RedStar.Beekeeping.Components;
 using Content.Shared.Atmos;
+using Content.Shared.CCVar;
 using Content.Shared.Hands.EntitySystems;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -22,12 +24,28 @@ public sealed class BeeErrandTest : GameTest
 {
     private EntityUid _hive;
     private EntityUid _tray;
+    private bool? _previousPathfinding;
+
+    [TearDown]
+    public async Task RestorePathfinding()
+    {
+        if (_previousPathfinding is not { } previous)
+            return;
+
+        _previousPathfinding = null;
+        var server = Server;
+        await server.WaitPost(() => server.ResolveDependency<IConfigurationManager>().SetCVar(CCVars.PathfindingEnabled, previous));
+    }
 
     private async Task Build(TestMapData map)
     {
         var server = Server;
         await server.WaitPost(() =>
         {
+            var config = server.ResolveDependency<IConfigurationManager>();
+            _previousPathfinding = config.GetCVar(CCVars.PathfindingEnabled);
+            config.SetCVar(CCVars.PathfindingEnabled, true);
+
             // Breathable air: bees do not fly into vacuum.
             var air = new GasMixture(Atmospherics.CellVolume)
             {

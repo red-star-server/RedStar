@@ -1,0 +1,40 @@
+﻿- type: entity
+  parent: [FoodCakeBase, BaseSlicingRefinableFood]
+  id: FoodSakuraCake
+  name: sakura blossom cake
+  description: A delicate cake carrying the scent of cherry blossom petals.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Objects/Consumable/Food/Baked/sakura_cake.rsi
+    state: sakuracake
+  - type: Tag
+    tags:
+    - Cake
+    - FinishedMeal
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodSakuraCakeSlice
+      amount: 8
+  - type: FlavorProfile
+    flavors:
+      - sweetdough
+      - sakura
+
+- type: entity
+  parent: FoodCakeSliceBase
+  id: FoodSakuraCakeSlice
+  name: slice of sakura blossom cake
+  description: A slice of cake that puts you in a romantic mood.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Objects/Consumable/Food/Baked/sakura_cake.rsi
+    state: sakura-slice
+  - type: Tag
+    tags:
+    - Cake
+    - FinishedMeal
+    - Slice
+  - type: FlavorProfile
+    flavors:
+      - sweetdough
+      - sakura

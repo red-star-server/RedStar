@@ -7,3 +7,27 @@
   flavor: bread
   color: "#381600"
   recognizable: true
+
+- type: reagent
+  parent: BaseJuice
+  id: SakuraJuice
+  name: reagent-name-sakurajuice
+  desc: reagent-desc-sakurajuice
+  physicalDesc: reagent-physical-desc-aromatic
+  flavor: sakura
+  color: "#d2a2bc"
+
+- type: reagent
+  parent: BaseAlcohol
+  id: CherryBlossom
+  name: reagent-name-cherryblossom
+  desc: reagent-desc-cherryblossom
+  physicalDesc: reagent-physical-desc-aromatic
+  flavor: cherryblossom
+  color: "#e2bed2"
+  metamorphicSprite:
+    sprite: _RedStar/Objects/Consumable/Drinks/cherryblossom.rsi
+    state: icon-empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false

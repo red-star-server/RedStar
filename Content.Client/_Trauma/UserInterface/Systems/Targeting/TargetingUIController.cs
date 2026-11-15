@@ -29,13 +29,11 @@ public sealed partial class TargetingUIController : UIController, IOnStateEntere
 
             try
             {
-                // separated hud has its own container for it
                 var container = screen.FindControl<LayoutContainer>("ViewportContainer");
                 CreateTargetingControl(container);
             }
             catch (ArgumentException)
             {
-                // default hud, just add it directly
                 CreateTargetingControl(screen);
             }
         };

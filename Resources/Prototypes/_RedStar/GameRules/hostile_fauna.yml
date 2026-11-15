@@ -1,0 +1,59 @@
+- type: entity
+  id: SlimesSpawnHordeLowPop
+  parent: SlimesSpawnHorde
+  components:
+  - type: StationEvent
+    minimumPlayers: 0
+    maximumPlayers: 14
+  - type: VentHordeRule
+    table: !type:GroupSelector
+      rolls: 1, 3
+      children:
+      - id: MobAdultSlimesBlueAngry
+      - id: MobAdultSlimesGreenAngry
+      - id: MobAdultSlimesYellowAngry
+
+- type: entity
+  id: SnakeSpawnHordeLowPop
+  parent: SnakeSpawnHorde
+  components:
+  - type: StationEvent
+    minimumPlayers: 0
+    maximumPlayers: 14
+  - type: VentHordeRule
+    table: !type:GroupSelector
+      rolls: 1, 3
+      children:
+      - id: MobPurpleSnake
+      - id: MobSmallPurpleSnake
+      - id: MobCobraSpace
+
+- type: entity
+  id: SpiderSpawnHordeLowPop
+  parent: SpiderSpawnHorde
+  components:
+  - type: StationEvent
+    minimumPlayers: 0
+    maximumPlayers: 14
+  - type: VentHordeRule
+    table: !type:GroupSelector
+      rolls: 1, 3
+      children:
+      - id: MobGiantSpiderTarantulaAngry
+      - id: MobGiantSpiderHunterAngry
+      - id: MobGiantSpiderGuardAngry
+      - id: MobGiantSpiderMidwifeAngry
+      - id: MobGiantSpiderNurseAngry
+
+- type: entity
+  id: SpiderClownSpawnHordeLowPop
+  parent: SpiderClownSpawnHorde
+  components:
+  - type: StationEvent
+    minimumPlayers: 0
+    maximumPlayers: 19
+  - type: VentHordeRule
+    table: !type:GroupSelector
+      rolls: 1, 3
+      children:
+      - id: MobGiantSpiderClownAngry

@@ -1,10 +1,10 @@
-ent-SarinSlowdownStatusEffect = sarin slowdown
+ent-SarinSlowdownStatusEffect = замедление от зарина
     .desc = { ent-StatusEffectSlowdown.desc }
-ent-ProbitalSlowdownStatusEffect = probital slowdown
+ent-ProbitalSlowdownStatusEffect = замедление от пробитала
     .desc = { ent-StatusEffectSlowdown.desc }
-ent-TirimolSlowdownStatusEffect = tirimol slowdown
+ent-TirimolSlowdownStatusEffect = замедление от тиримола
     .desc = { ent-StatusEffectSlowdown.desc }
-ent-AtropineSlowdownStatusEffect = atropine slowdown
+ent-AtropineSlowdownStatusEffect = замедление от атропина
     .desc = { ent-StatusEffectSlowdown.desc }
-ent-EpinephrineStatusEffect = epinephrine rush
+ent-EpinephrineStatusEffect = прилив адреналина
     .desc = { ent-StatusEffectSpeed.desc }

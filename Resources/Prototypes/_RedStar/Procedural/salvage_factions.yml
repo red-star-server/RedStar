@@ -1,0 +1,65 @@
+- type: salvageFaction
+  id: Spiders
+  desc: salvage-faction-spiders
+  entries:
+  - proto: MobGiantSpiderTarantulaAngry
+  - proto: MobGiantSpiderHunterAngry
+    cost: 2
+  - proto: MobGiantSpiderGuardAngry
+    cost: 2
+  - proto: MobGiantSpiderMidwifeAngry
+    cost: 5
+  - proto: MobGiantSpiderNurseAngry
+    cost: 5
+  - proto: MobGiantSpiderClownAngry
+    cost: 5
+    prob: 0.02
+
+- type: salvageFaction
+  id: Lavaland
+  desc: salvage-faction-lavaland
+  entries:
+  - proto: MobWatcherLavaland
+  - proto: MobWatcherMagmawing
+    cost: 5
+    prob: 0.1
+  - proto: MobWatcherIcewing
+    cost: 5
+    prob: 0.1
+  - proto: MobHivelord
+    cost: 3
+    prob: 0.05
+  - proto: MobGoliath
+    cost: 10
+    prob: 0.02
+
+- type: salvageFaction
+  id: Argocytes
+  desc: salvage-faction-argocytes
+  entries:
+  - proto: MobArgocyteSlurva
+  - proto: MobArgocyteBarrier
+  - proto: MobArgocyteSkitter
+  - proto: MobArgocyteSwiper
+  - proto: MobArgocyteMolder
+  - proto: MobArgocytePouncer
+    cost: 2
+    prob: 0.1
+  - proto: MobArgocyteGlider
+    cost: 1
+    prob: 0.1
+  - proto: MobArgocyteHarvester
+    cost: 5
+    prob: 0.1
+  - proto: MobArgocyteCrawler
+    cost: 5
+    prob: 0.1
+  - proto: MobArgocyteEnforcer
+    cost: 10
+    prob: 0.02
+  - proto: MobArgocyteFounder
+    cost: 10
+    prob: 0.02
+  - proto: MobArgocyteLeviathing
+    cost: 15
+    prob: 0.01

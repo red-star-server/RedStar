@@ -69,6 +69,15 @@ public sealed partial class WoundableComponent : Component
     [ViewVariables]
     public Container Wounds = default!;
 
+    [DataField]
+    public Dictionary<WoundableSeverity, float> OrganTraumaChanceMultipliers = new()
+    {
+        { WoundableSeverity.Moderate, 0.1f },
+        { WoundableSeverity.Severe, 0.4f },
+        { WoundableSeverity.Critical, 0.7f },
+        { WoundableSeverity.Mangled, 1f }
+    };
+
     /// <summary>
     /// Whether this woundable can be removed from a body..
     /// </summary>
@@ -93,6 +102,6 @@ public sealed partial class WoundableComponent : Component
     [DataField]
     public Dictionary<TraumaType, FixedPoint2> TraumaDeductions = new()
     {
-        {TraumaType.Dismemberment, 0.3f},
+        {TraumaType.Dismemberment, 0.3f}
     };
 }
