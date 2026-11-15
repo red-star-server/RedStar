@@ -181,7 +181,7 @@
 - type: surgeryProcedure
   id: HealOrgans
   name: surgery-procedure-heal-organs
-  from: [Incised, SkullOpen, RibcageOpen]
+  from: [SkullOpen, RibcageOpen]
   conditions:
   - !type:BleedsPresentCondition
     inverted: true

@@ -23,7 +23,7 @@ public sealed partial class AffixPartEffect : SurgeryStepEffect
 
         var patient = GetPatient(target, entityManager);
         if (entityManager.System<BodySystem>().GetOrgan(patient, category) is not { } part)
-            return true;
+            return false;
 
         entityManager.System<WoundSystem>().TryHealWounds(part, HealAmount, out _, damageGroup: Brute);
         entityManager.RemoveComponent<OrganReattachedComponent>(part);

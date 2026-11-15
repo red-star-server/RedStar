@@ -15,9 +15,10 @@ public sealed partial class AffixOrganEffect : SurgeryStepEffect
         if ((Organ ?? organ) is not { } category)
             return false;
 
-        if (entityManager.System<BodyPartSystem>().GetOrgan(target, category) is { } organUid)
-            entityManager.RemoveComponent<OrganReattachedComponent>(organUid);
+        if (entityManager.System<BodyPartSystem>().GetOrgan(target, category) is not { } organUid)
+            return false;
 
+        entityManager.RemoveComponent<OrganReattachedComponent>(organUid);
         return true;
     }
 }

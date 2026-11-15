@@ -31,7 +31,6 @@ public sealed partial class SurgeryTest
                 if (procedure.To is { } to)
                 {
                     Assert.That(proto.HasIndex(to), Is.True, $"{procedure.ID} references unknown stage {to}");
-                    reachable.Add(to);
                 }
 
                 foreach (var category in procedure.Categories)
@@ -53,6 +52,21 @@ public sealed partial class SurgeryTest
 
                     if (step.Organ is { } organ)
                         Assert.That(proto.HasIndex(organ), Is.True, $"{name} references unknown organ category {organ}");
+                }
+            }
+
+            var changed = true;
+            while (changed)
+            {
+                changed = false;
+                foreach (var procedure in procedures)
+                {
+                    if (!procedure.From.Any(reachable.Contains) ||
+                        procedure.To is not { } to)
+                        continue;
+
+                    if (reachable.Add(to))
+                        changed = true;
                 }
             }
 

@@ -18,7 +18,7 @@ public sealed partial class RemoveCavityItemEffect : SurgeryStepEffect
         if (ev.Container is not { } container)
             return false;
 
-        return container.ContainedEntity is not { } contained ||
+        return container.ContainedEntity is { } contained &&
                entityManager.System<SharedHandsSystem>().TryPickupAnyHand(user, contained);
     }
 }
