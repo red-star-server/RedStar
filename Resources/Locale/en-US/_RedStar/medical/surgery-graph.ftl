@@ -1,6 +1,7 @@
 surgery-procedure-organ = { $procedure } ({ $organ })
 surgery-graph-wrong-tool = This step needs a different tool.
 surgery-graph-requires-quality = This step requires a tool with the "{$quality}" quality.
+surgery-graph-requires-item = This step requires holding an item in your hand.
 
 surgery-stage-closed = Closed
 surgery-stage-incised = Incised

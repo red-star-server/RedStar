@@ -8,6 +8,7 @@
   steps:
   - name: surgery-step-insert-item
     anyItem: true
+    requireHeldItem: true
     duration: 4
     effects:
     - !type:CavityEffect

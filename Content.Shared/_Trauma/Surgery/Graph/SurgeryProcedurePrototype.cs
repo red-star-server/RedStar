@@ -99,6 +99,12 @@ public sealed partial class SurgeryStepEntry
     [DataField]
     public bool AnyItem;
 
+    /// <summary>
+    /// Require an item in the active hand (reject empty hands) before starting the step.
+    /// </summary>
+    [DataField]
+    public bool RequireHeldItem;
+
     [DataField]
     public TimeSpan Duration = TimeSpan.FromSeconds(2);
 

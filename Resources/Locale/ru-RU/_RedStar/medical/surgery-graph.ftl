@@ -1,6 +1,7 @@
 surgery-procedure-organ = { $procedure } ({ $organ })
 surgery-graph-wrong-tool = Для этого шага нужен другой инструмент.
 surgery-graph-requires-quality = Требуется инструмент с качеством «{$quality}».
+surgery-graph-requires-item = Для этого шага нужно держать предмет в руке.
 
 surgery-stage-closed = Закрыто
 surgery-stage-incised = Разрез

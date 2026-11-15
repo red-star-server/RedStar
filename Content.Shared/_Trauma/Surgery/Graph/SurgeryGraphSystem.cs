@@ -87,6 +87,12 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
     {
         var stage = GetStage(part);
         var result = new List<SurgeryProcedureInstance>();
+        TryComp<OperatedComponent>(part, out var operated);
+        var activeProc = operated?.ActiveProcedure;
+        var activeOrgan = operated?.ActiveOrgan;
+
+        bool Available(SurgeryProcedurePrototype proc, ProtoId<OrganCategoryPrototype>? organ)
+            => ConditionsMet(part, proc, organ) || (activeProc == proc.ID && activeOrgan == organ);
 
         foreach (var procedure in _proto.EnumeratePrototypes<SurgeryProcedurePrototype>())
         {
@@ -96,7 +102,7 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
             switch (procedure.OrganMode)
             {
                 case SurgeryOrganMode.None:
-                    if (ConditionsMet(part, procedure, null))
+                    if (Available(procedure, null))
                         result.Add(new SurgeryProcedureInstance(procedure.ID, null));
                     break;
 
@@ -106,7 +112,7 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
                         if (procedure.Categories.Count > 0 && !procedure.Categories.Contains(category))
                             continue;
 
-                        if (ConditionsMet(part, procedure, category))
+                        if (Available(procedure, category))
                             result.Add(new SurgeryProcedureInstance(procedure.ID, category));
                     }
                     break;
@@ -119,7 +125,7 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
                     {
                         foreach (var category in procedure.Categories)
                         {
-                            if (ConditionsMet(part, procedure, category))
+                            if (Available(procedure, category))
                                 result.Add(new SurgeryProcedureInstance(procedure.ID, category));
                         }
                     }
@@ -127,7 +133,7 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
                     {
                         foreach (var category in partComp.Slots)
                         {
-                            if (ConditionsMet(part, procedure, category))
+                            if (Available(procedure, category))
                                 result.Add(new SurgeryProcedureInstance(procedure.ID, category));
                         }
                     }
@@ -301,10 +307,17 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
             return false;
         }
 
-        if (!ConditionsMet(part, procedure, instance.Organ))
+        var continuing = activeProc == instance.Procedure && activeOrgan == instance.Organ;
+        if (!continuing && !ConditionsMet(part, procedure, instance.Organ))
             return false;
 
         var step = procedure.Steps[stepIndex];
+        if (step.RequireHeldItem && held == user)
+        {
+            popup = Loc.GetString("surgery-graph-requires-item");
+            return false;
+        }
+
         if (MatchTool(step, held, instance.Organ))
             return true;
 
@@ -356,9 +369,6 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         var surgeon = args.User;
         var used = args.Used;
 
-        if (!ConditionsMet(ent, procedure, args.Organ))
-            return;
-
         if (!IsLyingDown(body, surgeon, false))
             return;
 
@@ -366,6 +376,9 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
             return;
 
         var step = procedure.Steps[args.StepIndex];
+        if (step.RequireHeldItem && (used is null || used == surgeon))
+            return;
+
         if (used is { } item && !MatchTool(step, item, args.Organ))
             return;
 
