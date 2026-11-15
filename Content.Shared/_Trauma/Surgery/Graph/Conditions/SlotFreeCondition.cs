@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared._Trauma.Surgery.Graph.Conditions;
 
 [Serializable]
-public sealed partial class PartRemovedCondition : SurgeryStepCondition
+public sealed partial class SlotFreeCondition : SurgeryStepCondition
 {
     [DataField]
     public ProtoId<OrganCategoryPrototype>? Category;

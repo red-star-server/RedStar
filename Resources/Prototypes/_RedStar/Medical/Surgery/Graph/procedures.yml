@@ -3,8 +3,6 @@
   name: surgery-procedure-open-incision
   from: [Closed]
   to: Incised
-  conditions:
-  - !type:PartPresentCondition
   steps:
   - name: surgery-step-cut-scalpel
     quality: Slicing
@@ -28,8 +26,6 @@
   from: [Incised]
   to: Closed
   priority: 1
-  conditions:
-  - !type:PartPresentCondition
   steps:
   - name: surgery-step-cauterize
     quality: Cauterizing
@@ -61,14 +57,11 @@
     duration: 2
 
 - type: surgeryProcedure
-  id: CloseSkull
-  name: surgery-procedure-close-skull
-  from: [SkullOpen]
+  id: CloseBones
+  name: surgery-procedure-close-bones
+  from: [SkullOpen, RibcageOpen]
   to: Closed
   priority: 1
-  conditions:
-  - !type:PartTypeCondition
-    parts: [Head]
   steps:
   - name: surgery-step-close-bones
     quality: Retracting
@@ -104,35 +97,6 @@
   - name: surgery-step-prise-bones
     quality: Retracting
     duration: 2
-
-- type: surgeryProcedure
-  id: CloseRibcage
-  name: surgery-procedure-close-ribcage
-  from: [RibcageOpen]
-  to: Closed
-  priority: 1
-  conditions:
-  - !type:PartTypeCondition
-    parts: [Torso]
-  steps:
-  - name: surgery-step-close-bones
-    quality: Retracting
-    duration: 2
-  - name: surgery-step-seal-bones
-    quality: BoneHealing
-    duration: 2
-  - name: surgery-step-cauterize
-    quality: Cauterizing
-    duration: 2
-    effects:
-    - !type:DamageEffect
-      sleepModifier: 2
-      damage:
-        types:
-          Heat: -5
-    - !type:ComponentEffect
-      remove:
-      - type: OrganReattached
 
 - type: surgeryProcedure
   id: Amputate

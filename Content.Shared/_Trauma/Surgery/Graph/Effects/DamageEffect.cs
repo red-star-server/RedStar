@@ -1,8 +1,6 @@
-using Content.Shared.Bed.Sleep;
 using Content.Shared.Body;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
-using Content.Shared.StatusEffectNew;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Trauma.Surgery.Graph.Effects;
@@ -22,8 +20,7 @@ public sealed partial class DamageEffect : SurgeryStepEffect
     public override bool Apply(EntityUid target, EntityUid? surgeon, EntityUid? usedItem, ProtoId<OrganCategoryPrototype>? organ, IEntityManager entityManager)
     {
         var damage = new DamageSpecifier(Damage);
-        var body = entityManager.System<BodySystem>().GetBody(target) ?? target;
-        if (entityManager.System<StatusEffectsSystem>().HasEffectComp<ForcedSleepingStatusEffectComponent>(body))
+        if (IsAsleep(GetPatient(target, entityManager), entityManager))
             damage *= SleepModifier;
 
         entityManager.System<DamageableSystem>()

@@ -28,7 +28,7 @@
   categories: [Brain, Eyes, Ears, Heart, Lungs, Liver, Stomach, Kidneys, Appendix, Tongue, AugmentPowerCell, AugmentCharger]
   conditions:
   - !type:OrganExposedCondition
-  - !type:PartRemovedCondition
+  - !type:SlotFreeCondition
   steps:
   - name: surgery-step-insert-organ
     procedureOrgan: true
@@ -49,7 +49,7 @@
 - type: surgeryProcedure
   id: RemoveTongue
   name: surgery-procedure-remove-tongue
-  from: [Incised]
+  from: [Incised, SkullOpen]
   conditions:
   - !type:OrganPresentCondition
     organ: Tongue
@@ -68,7 +68,7 @@
   organMode: HeldItem
   categories: [Head, ArmLeft, ArmRight, HandLeft, HandRight, LegLeft, LegRight, FootLeft, FootRight, Tail, Wings]
   conditions:
-  - !type:PartRemovedCondition
+  - !type:SlotFreeCondition
   - !type:TraumaPresentCondition
     trauma: Dismemberment
     inverted: true

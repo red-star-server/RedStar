@@ -1,5 +1,4 @@
 using Content.Shared.Body;
-using Content.Shared.DoAfter;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -34,7 +33,4 @@ public sealed partial class OperatedComponent : Component
 
     [ViewVariables]
     public bool IsOperating;
-
-    [ViewVariables]
-    public DoAfterId? DoAfter;
 }

@@ -10,10 +10,6 @@ public abstract partial class SurgeryStepCondition
     [DataField]
     public bool Inverted;
 
-    /// <summary>
-    /// Organ category of the concrete procedure instance, null for non-parameterized procedures.
-    /// Organ-aware conditions use it when their own organ field is unset.
-    /// </summary>
     public bool CheckWithInvert(EntityUid target, ProtoId<OrganCategoryPrototype>? organ, IEntityManager entityManager)
     {
         var result = Check(target, organ, entityManager);

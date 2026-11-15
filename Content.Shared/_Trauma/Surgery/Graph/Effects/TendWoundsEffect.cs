@@ -20,6 +20,9 @@ public sealed partial class TendWoundsEffect : SurgeryStepEffect
     [DataField]
     public float HealMultiplier = 0.07f;
 
+    [DataField]
+    public float DeadModifier = 0.2f;
+
     public override bool Apply(EntityUid target, EntityUid? surgeon, EntityUid? usedItem, ProtoId<OrganCategoryPrototype>? organ, IEntityManager entityManager)
     {
         var wounds = entityManager.System<WoundSystem>();
@@ -28,15 +31,13 @@ public sealed partial class TendWoundsEffect : SurgeryStepEffect
             return true;
 
         var bonus = HealMultiplier * severity;
-        var body = entityManager.System<BodySystem>().GetBody(target) ?? target;
-        if (entityManager.System<MobStateSystem>().IsDead(body))
-            bonus *= 0.2f;
+        if (entityManager.System<MobStateSystem>().IsDead(GetPatient(target, entityManager)))
+            bonus *= DeadModifier;
 
-        var adjusted = new DamageSpecifier(Damage);
-        var group = IoCManager.Resolve<IPrototypeManager>().Index(MainGroup);
-        foreach (var type in group.DamageTypes)
+        var adjusted = new DamageSpecifier();
+        foreach (var (type, amount) in Damage.DamageDict)
         {
-            adjusted.DamageDict[type] = adjusted.DamageDict.GetValueOrDefault(type) - bonus;
+            adjusted.DamageDict[type] = amount - bonus;
         }
 
         entityManager.System<DamageableSystem>().ChangeDamage(target, adjusted, true, origin: surgeon, ignoreBlockers: true);

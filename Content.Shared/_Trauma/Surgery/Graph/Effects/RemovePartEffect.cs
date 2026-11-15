@@ -9,9 +9,8 @@ public sealed partial class RemovePartEffect : SurgeryStepEffect
 {
     public override bool Apply(EntityUid target, EntityUid? surgeon, EntityUid? usedItem, ProtoId<OrganCategoryPrototype>? organ, IEntityManager entityManager)
     {
-        var body = entityManager.System<BodySystem>();
-        var patient = body.GetBody(target) ?? target;
-        if (!body.RemoveOrgan(patient, target))
+        var patient = GetPatient(target, entityManager);
+        if (!entityManager.System<BodySystem>().RemoveOrgan(patient, target))
             return false;
 
         if (surgeon is { } user)

@@ -45,14 +45,38 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
     private static readonly ProtoId<DamageTypePrototype> Poison = "Poison";
     private static readonly FixedPoint2 SepsisDamageLimit = FixedPoint2.New(90);
 
-    private bool _noSelfOperate;
+    private readonly Dictionary<ProtoId<SurgeryStagePrototype>, List<SurgeryProcedurePrototype>> _byStage = new();
+
+    private bool _canOperateOnSelf;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        Subs.CVar(_cfg, SurgeryCVars.CanOperateOnSelf, x => _noSelfOperate = !x, true);
-        ValidatePrototypes();
+        Subs.CVar(_cfg, SurgeryCVars.CanOperateOnSelf, x => _canOperateOnSelf = x, true);
+        RebuildCache();
+    }
+
+    [SubscribeLocalEvent]
+    private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
+    {
+        if (args.WasModified<SurgeryProcedurePrototype>())
+            RebuildCache();
+    }
+
+    private void RebuildCache()
+    {
+        _byStage.Clear();
+        foreach (var procedure in _proto.EnumeratePrototypes<SurgeryProcedurePrototype>())
+        {
+            foreach (var from in procedure.From)
+            {
+                if (!_byStage.TryGetValue(from, out var list))
+                    _byStage[from] = list = [];
+
+                list.Add(procedure);
+            }
+        }
     }
 
     #region Queries
@@ -62,6 +86,15 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         return TryComp<OperatedComponent>(part, out var operated) && operated.Stage is { } stage
             ? stage
             : DefaultStage;
+    }
+
+    public bool IsOrganExposed(EntityUid part, ProtoId<OrganCategoryPrototype> category)
+    {
+        if (!_proto.TryIndex(category, out var categoryProto))
+            return false;
+
+        var depth = _proto.TryIndex(GetStage(part), out var stage) ? stage.Depth : 0;
+        return depth >= categoryProto.SurgeryDepth;
     }
 
     public bool ConditionsMet(EntityUid part, SurgeryProcedurePrototype procedure, ProtoId<OrganCategoryPrototype>? organ)
@@ -77,8 +110,10 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
 
     public List<SurgeryProcedureInstance> GetAvailableProcedures(EntityUid part)
     {
-        var stage = GetStage(part);
         var result = new List<SurgeryProcedureInstance>();
+        if (!_byStage.TryGetValue(GetStage(part), out var candidates))
+            return result;
+
         TryComp<OperatedComponent>(part, out var operated);
         var activeProc = operated?.ActiveProcedure;
         var activeOrgan = operated?.ActiveOrgan;
@@ -88,11 +123,8 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
                 ? active == proc.ID && activeOrgan == organ
                 : ConditionsMet(part, proc, organ);
 
-        foreach (var procedure in _proto.EnumeratePrototypes<SurgeryProcedurePrototype>())
+        foreach (var procedure in candidates)
         {
-            if (!procedure.From.Contains(stage))
-                continue;
-
             switch (procedure.OrganMode)
             {
                 case SurgeryOrganMode.None:
@@ -213,7 +245,7 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
             DuplicateCondition = DuplicateConditions.SameEvent,
         };
 
-        if (!_doAfter.TryStartDoAfter(args, out var doAfter))
+        if (!_doAfter.TryStartDoAfter(args, out _))
         {
             comp.ActiveProcedure = prevProcedure;
             comp.ActiveOrgan = prevOrgan;
@@ -222,7 +254,6 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
             return false;
         }
 
-        comp.DoAfter = doAfter;
         Dirty(part, comp);
 
         if (step.Sound is { } sound)
@@ -247,17 +278,8 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         if (!_targetQuery.HasComp(body))
             return false;
 
-        if (!IsLyingDown(body, user, false))
-        {
-            popup = Loc.GetString("surgery-error-laying");
+        if (!CanOperate(body, user, out popup))
             return false;
-        }
-
-        if (_noSelfOperate && user == body)
-        {
-            popup = Loc.GetString("surgery-error-self-surgery");
-            return false;
-        }
 
         var held = _hands.GetActiveItemOrSelf(user);
         if (IsCovered(part, body, user, held))
@@ -343,11 +365,13 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
     {
         var comp = ent.Comp;
         comp.IsOperating = false;
-        comp.DoAfter = null;
         args.Repeat = false;
 
         if (args.Cancelled || args.Handled)
+        {
+            ResetUnstarted(ent);
             return;
+        }
 
         args.Handled = true;
         if (comp.ActiveProcedure != args.Procedure ||
@@ -360,32 +384,26 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
             args.StepIndex >= procedure.Steps.Count)
             return;
 
-        if (_body.GetBody(ent) is not { } body)
-            return;
-
         var surgeon = args.User;
         var used = args.Used;
-
-        if (!IsLyingDown(body, surgeon, false))
-            return;
-
-        if (IsCovered(ent, body, surgeon, used ?? _hands.GetActiveItemOrSelf(surgeon)))
-            return;
-
         var step = procedure.Steps[args.StepIndex];
         var item = used ?? surgeon;
 
-        if (step.RequireHeldItem && item == surgeon)
+        if (_body.GetBody(ent) is not { } body ||
+            !IsLyingDown(body) ||
+            IsCovered(ent, body, surgeon, used ?? _hands.GetActiveItemOrSelf(surgeon)) ||
+            step.RequireHeldItem && item == surgeon ||
+            !MatchTool(step, item, args.Organ))
+        {
+            ResetUnstarted(ent);
             return;
-
-        if (!MatchTool(step, item, args.Organ))
-            return;
+        }
 
         for (var i = comp.AppliedStepEffects; i < step.Effects.Count; i++)
         {
             if (!step.Effects[i].Apply(ent, surgeon, used, args.Organ, EntityManager))
             {
-                Dirty(ent, comp);
+                FailStep(ent, surgeon);
                 return;
             }
 
@@ -415,7 +433,7 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
             {
                 if (!procedure.Effects[i].Apply(ent, surgeon, used, args.Organ, EntityManager))
                 {
-                    Dirty(ent, comp);
+                    FailStep(ent, surgeon);
                     return;
                 }
 
@@ -445,6 +463,23 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         Dirty(ent, comp);
     }
 
+    private void ResetUnstarted(Entity<OperatedComponent> ent)
+    {
+        var comp = ent.Comp;
+        if (comp.CompletedSteps != 0 || comp.AppliedStepEffects != 0 || comp.ActiveProcedure == null)
+            return;
+
+        comp.ActiveProcedure = null;
+        comp.ActiveOrgan = null;
+        Dirty(ent);
+    }
+
+    private void FailStep(Entity<OperatedComponent> ent, EntityUid surgeon)
+    {
+        ResetUnstarted(ent);
+        _popup.PopupEntity(Loc.GetString("surgery-graph-step-failed"), surgeon, surgeon, PopupType.Medium);
+    }
+
     private void ConsumeStepItem(SurgeryStepEntry step, EntityUid surgeon, EntityUid? used)
     {
         if (!step.Consume ||
@@ -472,7 +507,7 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         if (TryComp<SurgerySpeedModifierComponent>(surgeon, out var surgeonSpeed))
             speed *= surgeonSpeed.SpeedModifier;
 
-        return step.Duration / speed;
+        return step.Duration / MathF.Max(speed, 0.01f);
     }
 
     private bool IsCovered(EntityUid part, EntityUid body, EntityUid user, EntityUid held)
@@ -496,7 +531,23 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         return false;
     }
 
-    public bool IsLyingDown(EntityUid entity, EntityUid user, bool showPopup)
+    public bool CanOperate(EntityUid body, EntityUid user, out string? error)
+    {
+        error = null;
+        if (!IsLyingDown(body))
+        {
+            error = Loc.GetString("surgery-error-laying");
+            return false;
+        }
+
+        if (_canOperateOnSelf || user != body)
+            return true;
+
+        error = Loc.GetString("surgery-error-self-surgery");
+        return false;
+    }
+
+    public bool IsLyingDown(EntityUid entity)
     {
         if (_standing.IsDown(entity))
             return true;
@@ -504,17 +555,11 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         if (!TryComp<BuckleComponent>(entity, out var buckle))
             return true;
 
-        if (TryComp<StrapComponent>(buckle.BuckledTo, out var strap))
-        {
-            var rotation = strap.Rotation;
-            if (rotation.GetCardinalDir() is Direction.West or Direction.East)
-                return true;
-        }
+        if (!TryComp<StrapComponent>(buckle.BuckledTo, out var strap))
+            return false;
 
-        if (showPopup)
-            _popup.PopupEntity(Loc.GetString("surgery-error-laying"), user, user);
-
-        return false;
+        var rotation = strap.Rotation;
+        return rotation.GetCardinalDir() is Direction.West or Direction.East;
     }
 
     #endregion

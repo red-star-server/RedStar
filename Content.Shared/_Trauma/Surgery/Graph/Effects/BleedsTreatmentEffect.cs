@@ -43,7 +43,7 @@ public sealed partial class BleedsTreatmentEffect : SurgeryStepEffect
         if (!changed)
             return true;
 
-        var body = entityManager.System<BodySystem>().GetBody(target) ?? target;
+        var body = GetPatient(target, entityManager);
         if (!entityManager.HasComponent<BloodstreamComponent>(body))
             return true;
 
