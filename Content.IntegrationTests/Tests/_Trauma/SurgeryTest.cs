@@ -246,9 +246,24 @@ public sealed partial class SurgeryTest : GameTest
         await Server.WaitAssertion(() =>
         {
             var torsoPart = GetPartByType(patient, BodyPartType.Torso);
-            Assert.That(_inventory.TryEquip(patient, SSpawn("ClothingUniformJumpsuitColorGrey"), "innerclothing", force: true), Is.True);
+            var instance = new SurgeryProcedureInstance("OpenIncision", null);
+
             Assert.That(_hands.TryPickupAnyHand(surgeon, SSpawn("Scalpel")), Is.True);
-            Assert.That(_graph.CanPerformStep(torsoPart, surgeon, new SurgeryProcedureInstance("OpenIncision", null), 0, out _), Is.False);
+
+            Assert.That(
+                _graph.CanPerformStep(torsoPart, surgeon, instance, 0, out var uncoveredPopup),
+                Is.True,
+                $"Surgery should be available before clothing is equipped: {uncoveredPopup}");
+
+            var uniform = SSpawn("ClothingUniformJumpsuitColorGrey");
+            Assert.That(_inventory.TryEquip(patient, uniform, "innerclothing", force: true), Is.True);
+            Assert.That(_inventory.TryGetSlotEntity(patient, "innerclothing", out var equipped), Is.True);
+            Assert.That(equipped, Is.EqualTo(uniform));
+
+            Assert.That(
+                _graph.CanPerformStep(torsoPart, surgeon, instance, 0, out _),
+                Is.False,
+                "Surgery should be blocked while the torso is covered by clothing");
         });
     }
 
