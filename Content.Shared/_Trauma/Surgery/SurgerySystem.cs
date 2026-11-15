@@ -18,10 +18,10 @@ public sealed partial class SurgerySystem : EntitySystem
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SurgeryGraphSystem _graph = default!;
-    [Dependency] private EntityQuery<SurgeryTargetComponent> _targetQuery;
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
     [Dependency] private BodySystem _body = default!;
+    [Dependency] private EntityQuery<SurgeryTargetComponent> _targetQuery;
 
     private bool _noSelfOperate;
 
@@ -98,7 +98,7 @@ public sealed partial class SurgerySystem : EntitySystem
 
     private void AttemptStartSurgery(EntityUid user, EntityUid target)
     {
-        if (!IsLyingDown(target, user))
+        if (!_graph.IsLyingDown(target, user, true))
             return;
         if (_noSelfOperate && user == target)
         {
@@ -125,7 +125,4 @@ public sealed partial class SurgerySystem : EntitySystem
             DoContactInteraction = true
         });
     }
-
-    public bool IsLyingDown(EntityUid entity, EntityUid user, bool showPopup = true)
-        => _graph.IsLyingDown(entity, user, showPopup);
 }
