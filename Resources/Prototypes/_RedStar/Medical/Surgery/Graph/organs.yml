@@ -1,4 +1,4 @@
-﻿- type: surgeryProcedure
+- type: surgeryProcedure
   id: RemoveOrgan
   name: surgery-procedure-remove-organ
   from: [Incised, SkullOpen, RibcageOpen]

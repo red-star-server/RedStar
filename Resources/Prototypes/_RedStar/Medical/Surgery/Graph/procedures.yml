@@ -1,4 +1,4 @@
-﻿- type: surgeryProcedure
+- type: surgeryProcedure
   id: OpenIncision
   name: surgery-procedure-open-incision
   from: [Closed]

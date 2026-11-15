@@ -1,4 +1,4 @@
-﻿- type: surgeryProcedure
+- type: surgeryProcedure
   id: InsertCavityItem
   name: surgery-procedure-insert-cavity-item
   from: [RibcageOpen]

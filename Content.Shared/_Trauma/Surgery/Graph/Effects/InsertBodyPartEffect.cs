@@ -1,4 +1,4 @@
-﻿using Content.Shared._Trauma.Body;
+using Content.Shared._Trauma.Body;
 using Content.Shared.Body;
 using Robust.Shared.Prototypes;
 

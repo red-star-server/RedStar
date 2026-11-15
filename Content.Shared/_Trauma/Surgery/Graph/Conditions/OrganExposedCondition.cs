@@ -1,13 +1,8 @@
 using Content.Shared.Body;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Trauma.Surgery.Graph.Conditions;
 
-/// <summary>
-/// The part is opened deep enough for the organ: stage depth >= the category's SurgeryDepth.
-/// Lets a single generic procedure serve organs at different dissection depths.
-/// </summary>
 [Serializable]
 public sealed partial class OrganExposedCondition : SurgeryStepCondition
 {

@@ -1,4 +1,4 @@
-﻿- type: surgeryStage
+- type: surgeryStage
   id: Closed
   name: surgery-stage-closed
   depth: 0
