@@ -24,6 +24,7 @@ public sealed partial class SurgeryWindow : FancyWindow
     private BodySystem _body;
     private SurgeryGraphSystem _graph;
     private SharedHandsSystem _hands;
+    private SpriteSystem _sprite;
     private EntityQuery<BodyPartComponent> _partQuery;
 
     public event Action<NetEntity, ProtoId<SurgeryProcedurePrototype>, int, ProtoId<OrganCategoryPrototype>?>? OnPerformStep;
@@ -42,6 +43,7 @@ public sealed partial class SurgeryWindow : FancyWindow
         _body = _ent.System<BodySystem>();
         _graph = _ent.System<SurgeryGraphSystem>();
         _hands = _ent.System<SharedHandsSystem>();
+        _sprite = _ent.System<SpriteSystem>();
         _partQuery = _ent.GetEntityQuery<BodyPartComponent>();
         PartsButton.OnPressed += _ => ViewParts();
         SurgeriesButton.OnPressed += _ => { _selected = null; if (_part is { } p) ViewPart(p); };
@@ -78,10 +80,17 @@ public sealed partial class SurgeryWindow : FancyWindow
         var netPart = _ent.GetNetEntity(part);
         for (var i = 0; i < proc.Steps.Count; i++)
         {
+            var step = proc.Steps[i];
             var btn = new ChoiceControl();
             var msg = new FormattedMessage();
-            msg.AddText(Loc.GetString(proc.Steps[i].Name));
-            btn.Set(msg, null);
+            msg.AddText(Loc.GetString(step.Name));
+
+            var icon = step.Icon;
+            if (icon is null && step.Quality is { } quality && _proto.TryIndex(quality, out var qualityProto))
+                icon = qualityProto.Icon;
+            var texture = icon is null ? null : _sprite.Frame0(icon);
+
+            btn.Set(msg, texture);
             var idx = i;
             btn.Button.OnPressed += _ => OnPerformStep?.Invoke(netPart, inst.Procedure, idx, inst.Organ);
             Steps.AddChild(btn);

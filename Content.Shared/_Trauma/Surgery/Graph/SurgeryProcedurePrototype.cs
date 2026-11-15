@@ -2,6 +2,7 @@ using Content.Shared.Body;
 using Content.Shared.Tools;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared._Trauma.Surgery.Graph;
 
@@ -79,6 +80,12 @@ public sealed partial class SurgeryStepEntry
 
     [DataField]
     public ProtoId<ToolQualityPrototype>? Quality;
+
+    /// <summary>
+    /// Optional step icon. Falls back to the tool quality's icon when unset.
+    /// </summary>
+    [DataField]
+    public SpriteSpecifier? Icon;
 
     [DataField]
     public ProtoId<OrganCategoryPrototype>? Organ;

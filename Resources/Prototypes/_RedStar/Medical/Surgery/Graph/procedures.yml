@@ -8,6 +8,9 @@
   steps:
   - name: surgery-step-cut-scalpel
     quality: Slicing
+    icon:
+      sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/scalpel.rsi
+      state: scalpel
     duration: 2
     effects:
     - !type:DamageEffect
@@ -253,6 +256,9 @@
   steps:
   - name: surgery-step-remove-dead-skin
     quality: Slicing
+    icon:
+      sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/scalpel.rsi
+      state: scalpel
     duration: 4
   - name: surgery-step-clear-bone-leftovers
     quality: Sawing
@@ -274,6 +280,9 @@
   steps:
   - name: surgery-step-careful-incision
     quality: Slicing
+    icon:
+      sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/scalpel.rsi
+      state: scalpel
     duration: 3
   - name: surgery-step-repair-tissue
     quality: Tending
@@ -310,6 +319,9 @@
   steps:
   - name: surgery-step-careful-incision
     quality: Slicing
+    icon:
+      sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/scalpel.rsi
+      state: scalpel
     duration: 3
   - name: surgery-step-repair-tissue
     quality: Tending

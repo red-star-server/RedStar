@@ -53,6 +53,9 @@
     duration: 5
   - name: surgery-step-carve-cavity
     quality: Slicing
+    icon:
+      sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/scalpel.rsi
+      state: scalpel
     duration: 6
     effects:
     - !type:AddOrganSlotEffect
@@ -84,6 +87,9 @@
     duration: 5
   - name: surgery-step-carve-cavity
     quality: Slicing
+    icon:
+      sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/scalpel.rsi
+      state: scalpel
     duration: 6
     effects:
     - !type:AddOrganSlotEffect
@@ -106,6 +112,9 @@
   steps:
   - name: surgery-step-carve-cavity
     quality: Slicing
+    icon:
+      sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/scalpel.rsi
+      state: scalpel
     duration: 6
     effects:
     - !type:AddOrganSlotEffect
@@ -128,6 +137,9 @@
   steps:
   - name: surgery-step-carve-cavity
     quality: Slicing
+    icon:
+      sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/scalpel.rsi
+      state: scalpel
     duration: 6
     effects:
     - !type:AddOrganSlotEffect
