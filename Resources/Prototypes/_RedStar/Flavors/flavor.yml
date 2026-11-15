@@ -1,0 +1,9 @@
+﻿- type: flavor
+  id: sakura
+  flavorType: Base
+  description: flavor-complex-sakura
+
+- type: flavor
+  id: cherryblossom
+  flavorType: Base
+  description: flavor-complex-cherryblossom

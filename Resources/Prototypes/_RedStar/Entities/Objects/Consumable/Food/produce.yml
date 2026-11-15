@@ -1,0 +1,32 @@
+﻿- type: entity
+  parent: FoodProduceBase
+  id: FoodSakuraFlower
+  name: sakura blossom
+  description: A delicate pink blossom carrying the faint scent of spring.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Objects/Specific/Hydroponics/sakura.rsi
+  - type: Clothing
+    slots:
+    - HEAD
+    quickEquip: false
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+      - ReagentId: SakuraJuice
+        Quantity: 5
+  - type: Tag
+    tags:
+    - Flower
+  - type: FlavorProfile
+    flavors:
+      - sakura
+  - type: Produce
+    plantId: SakuraPlants
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: SakuraJuice
+        Quantity: 5

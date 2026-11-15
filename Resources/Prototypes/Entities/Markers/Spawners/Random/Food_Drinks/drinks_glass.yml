@@ -123,6 +123,17 @@
         - id: DrinkShakeWhite
         - id: DrinkTheMartinez
         - id: DrinkMoonshineGlass
+        # RS14-start
+        - id: DrinkAlexanderGlass
+        - id: DrinkBadTouchGlass
+        - id: DrinkBoyarskyGlass
+        - id: DrinkBrambleGlass
+        - id: DrinkMaiTaiGlass
+        - id: DrinkNegroniGlass
+        - id: DrinkOldFashionedGlass
+        - id: DrinkPalomaGlass
+        - id: DrinkYorshGlass
+        # RS14-end
       - !type:GroupSelector #rare
         weight: 0.05
         children:
@@ -139,4 +150,7 @@
         - id: DrinkHoochGlass
         - id: DrinkBeepskySmashGlass
         - id: DrinkBacchusBlessing
+        # RS14-start
+        - id: DrinkCherryBlossomGlass
+        # RS14-end
     offset: 0.0

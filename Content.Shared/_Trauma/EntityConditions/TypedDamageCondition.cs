@@ -50,12 +50,15 @@ public sealed partial class TypedDamageCondition : EntityConditionBase<TypedDama
             if (MathF.Abs(groupDamage.Float() - MathF.Round(groupDamage.Float())) < 0.02)
                 groupDamage = MathF.Round(groupDamage.Float());
             if (groupDamage > 0)
+            {
                 damages.Add(
-                Loc.GetString("health-change-display",
-                    ("kind", group.LocalizedName),
-                    ("amount", MathF.Abs(groupDamage.Float())),
-                    ("deltasign", 1))
+                    Loc.GetString("health-change-display",
+                        ("kind", group.LocalizedName),
+                        ("amount", MathF.Abs(groupDamage.Float())),
+                        ("deltasign", 1))
                 );
+            }
+
             foreach (var damageType in group.DamageTypes)
             {
                 comparison.DamageDict[damageType] -= lowestDamage;
@@ -72,7 +75,7 @@ public sealed partial class TypedDamageCondition : EntityConditionBase<TypedDama
         {
             damages.Add(
                 Loc.GetString("health-change-display",
-                    ("kind", prototype.Index<DamageTypePrototype>(kind).LocalizedName),
+                    ("kind", prototype.Index(kind).LocalizedName),
                     ("amount", MathF.Abs(amount.Float())),
                     ("deltasign", 1))
                 );
@@ -123,7 +126,6 @@ public sealed partial class TypedDamageConditionSystem : EntityConditionSystem<D
             foreach (var damageType in group.DamageTypes)
             {
                 comparison.DamageDict[damageType] -= lowestDamage;
-                // not a fan, but it's needed
                 if (MathF.Abs(comparison.DamageDict[damageType].Float()
                     - MathF.Round(comparison.DamageDict[damageType].Float()))
                     < 0.02)

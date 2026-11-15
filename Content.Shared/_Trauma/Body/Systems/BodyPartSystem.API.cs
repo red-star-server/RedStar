@@ -170,9 +170,7 @@ public sealed partial class BodyPartSystem
     /// </summary>
     public bool CanInsertOrgan(Entity<BodyPartComponent?> part, [ForbidLiteral] ProtoId<OrganCategoryPrototype> category)
         => _query.Resolve(part, ref part.Comp) &&
-            // the part needs a slot
             part.Comp.Slots.Contains(category) &&
-            // the slot can't already be occupied
             !part.Comp.Children.ContainsKey(category);
 
     /// <summary>
@@ -209,7 +207,6 @@ public sealed partial class BodyPartSystem
     {
         if (!_query.Resolve(part, ref part.Comp) ||
             _body.GetCategory(organ) is not {} category ||
-            // couldnt' be inserted anyway
             !part.Comp.Slots.Contains(category))
             return false;
 
@@ -247,30 +244,29 @@ public sealed partial class BodyPartSystem
     public bool RestoreInitialChild(Entity<BodyPartComponent?> part, [ForbidLiteral] ProtoId<OrganCategoryPrototype> slot, bool recursive = true)
     {
         if (!_query.Resolve(part, ref part.Comp) ||
-            !part.Comp.Slots.Contains(slot) || // slot doesn't exist on this part
-            _body.GetBody(part.Owner) is not {} body || // this part isn't attached to a body
-            !TryComp<InitialBodyComponent>(body, out var initial)) // the body has no default organs to use
+            !part.Comp.Slots.Contains(slot) ||
+            _body.GetBody(part.Owner) is not {} body ||
+            !TryComp<InitialBodyComponent>(body, out var initial))
             return false;
 
-        // slot is already occupied, just restore its organs
         if (part.Comp.Children.TryGetValue(slot, out var old))
             return RestoreInitialOrgans(old);
 
         var organs = initial.Organs;
         if (!organs.TryGetValue(slot, out var proto))
-            return false; // it doesn't have the organ we want
+            return false;
 
         var organ = PredictedSpawnNextToOrDrop(proto, body);
         DebugTools.Assert(_body.GetCategory(organ) == slot, $"Organ {ToPrettyString(organ)} for {ToPrettyString(body)}'s initial {slot} organ had the wrong category!");
         if (!InsertOrgan(part, organ))
         {
             Del(organ);
-            return false; // some system prevented inserting it
+            return false;
         }
 
-        if (recursive) // if it's a part, try to restore its children too
+        if (recursive)
             RestoreInitialOrgans(organ, recursive);
-        return true; // restored!
+        return true;
     }
 
     /// <summary>

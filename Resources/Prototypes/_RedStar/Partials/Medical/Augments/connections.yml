@@ -60,7 +60,6 @@
   - type: Lathe
     dynamicPacks:
     - PowerAugments
-    - ToolAugments
 
 - type: entity
   id: TurboItemRechargerCircuitboard

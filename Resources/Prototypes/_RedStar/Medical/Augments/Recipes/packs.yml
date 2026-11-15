@@ -3,13 +3,3 @@
   recipes:
   - AugmentPowerCellSlotCasing
   - AugmentRechargerCasing
-
-- type: latheRecipePack
-  id: ToolAugments
-  recipes:
-  - AugmentToolPanelCasing
-  - AugmentUtilityPanelElectronics
-  - AugmentBotanyPanelElectronics
-  - AugmentSurgeryPanelElectronics
-  - AugmentStrengthCasing
-  - AugmentStrengthElectronics

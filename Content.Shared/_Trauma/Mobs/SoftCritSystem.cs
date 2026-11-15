@@ -47,7 +47,7 @@ public sealed partial class SoftCritSystem : EntitySystem
     [SubscribeLocalEvent(before: [typeof(VocalSystem)])]
     private void OnEmoteAction(Entity<SoftCritMobComponent> ent, ref EmoteActionEvent args)
     {
-        args.Handled = true; // shush
+        args.Handled = true;
     }
 
     [SubscribeLocalEvent]
@@ -69,7 +69,6 @@ public sealed partial class SoftCritSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnSpeechTypeOverride(Entity<SoftCritMobComponent> ent, ref SpeechTypeOverrideEvent args)
     {
-        // Soft critical state limits speech.
         if (args.DesiredType == InGameICChatType.Speak)
             args.DesiredType = InGameICChatType.Whisper;
     }
@@ -98,13 +97,12 @@ public sealed partial class SoftCritSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnUnbuckleAttempt(Entity<SoftCritMobComponent> ent, ref UnbuckleAttemptEvent args)
     {
-        // can't unbuckle yourself if you are in softcrit
         args.Cancelled |= args.Buckle.Owner == args.User;
     }
 
     [SubscribeLocalEvent]
     private void OnRadioSendAttempt(Entity<SoftCritMobComponent> ent, ref RadioSendAttemptEvent args)
     {
-        args.Cancelled = true; // no yapping on radio chuddy
+        args.Cancelled = true;
     }
 }

@@ -39,3 +39,9 @@
   name: Geoffrey Day - Трава у дома
   path:
     path: /Audio/_RedStar/Jukebox/trava.ogg
+
+- type: jukebox
+  id: Bees
+  name: Sons of Russia - Кто пчелок уважает
+  path:
+    path: /Audio/_RedStar/Jukebox/Kto_Pchelok_Uvajaet.ogg

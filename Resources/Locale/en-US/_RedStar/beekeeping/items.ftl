@@ -9,3 +9,5 @@ reagent-desc-honey = Sweet, sticky honey from a beehive.
 
 reagent-name-royal-jelly = royal jelly
 reagent-desc-royal-jelly = Thick white jelly from a queen bee's egg. Heals a little poisoning; in a queen it makes room for one more trait.
+reagent-name-liquid-beeswax = liquid wax
+reagent-desc-liquid-beeswax = Melted candle wax. Heated past 340 K, it sets into a piece of beeswax.

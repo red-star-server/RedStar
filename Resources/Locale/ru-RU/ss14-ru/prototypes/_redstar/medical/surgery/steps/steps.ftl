@@ -62,7 +62,3 @@ ent-SurgeryStepOpenOrganSlot = Carve out a cavity
     .desc = { ent-SurgeryStepBase.desc }
 ent-SurgeryStepSealOrganWound = Seal wounds
     .desc = { ent-SurgeryStepBase.desc }
-ent-SurgeryStepLobotomize = Lobotomize patient
-    .desc = { ent-SurgeryStepBase.desc }
-ent-SurgeryStepMendBrainTissue = Mend brain tissue
-    .desc = { ent-SurgeryStepBase.desc }

@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent: !Clear [ BaseItem ]
   id: BaseToolSurgery
   components:
   - type: Sprite
@@ -11,7 +11,7 @@
     - SurgeryTool
 
 - type: entity
-  parent: BaseToolSurgery
+  parent: !Clear [ BaseToolSurgery ]
   id: Cautery
   name: cautery
   description: A surgical tool used to cauterize open wounds.
@@ -34,7 +34,7 @@
     useSound: /Audio/_RedStar/Medical/Surgery/cautery1.ogg
 
 - type: entity
-  parent: [ BaseToolSurgery, BaseMedicalScienceContraband ] # Trauma - Made it contraband
+  parent: !Clear [ BaseToolSurgery, BaseMedicalScienceContraband ]
   id: Drill
   name: drill
   description: A surgical drill for making holes into hard material.
@@ -61,7 +61,7 @@
     useSound: /Audio/_RedStar/Medical/Surgery/saw.ogg
 
 - type: entity
-  parent: [ BaseToolSurgery, BaseMedicalScienceContraband ] # Trauma - Made it contraband
+  parent: !Clear [ BaseToolSurgery, BaseMedicalScienceContraband ]
   id: Scalpel
   name: scalpel
   description: A surgical tool used to make incisions into flesh.
@@ -73,7 +73,7 @@
   - type: Tool
     qualities:
       - Slicing
-    speedModifier: 0.66 # pretend the sixes go on forever :)
+    speedModifier: 0.66
     useSound: /Audio/_RedStar/Medical/Surgery/scalpel1.ogg
   - type: Utensil
     types:
@@ -95,10 +95,10 @@
       path: /Audio/Weapons/bladeslice.ogg
 
 - type: entity
-  parent: [ Scalpel, BaseMinorContraband] # Trauma - Contraband the prison shiv.
+  parent: !Clear [ Scalpel, BaseMinorContraband ]
   id: ScalpelShiv
   name: shiv
-  description: A pointy piece of glass, abraded to an edge and wrapped in tape for a handle. # Could become a decent tool or weapon with right tool mods.
+  description: A pointy piece of glass, abraded to an edge and wrapped in tape for a handle.
   components:
   - type: Sprite
     sprite: _RedStar/Medical/LegacyTools/scalpel.rsi
@@ -109,7 +109,7 @@
     heldPrefix: shiv
 
 - type: entity
-  parent: Scalpel
+  parent: !Clear [ Scalpel ]
   id: ScalpelAdvanced
   name: advanced scalpel
   description: Made of more expensive materials, sharper and generally more reliable.
@@ -131,7 +131,7 @@
     speedModifier: 1.35
 
 - type: entity
-  parent: Scalpel
+  parent: !Clear [ Scalpel ]
   id: ScalpelLaser
   name: laser scalpel
   description: A scalpel which uses a directed laser to slice instead of a blade, for more precise surgery while also cauterizing as it cuts.
@@ -149,7 +149,7 @@
     speedModifier: 1.75
 
 - type: entity
-  parent: BaseToolSurgery
+  parent: !Clear [ BaseToolSurgery ]
   id: Retractor
   name: retractor
   description: A surgical tool used to hold open incisions.
@@ -166,7 +166,7 @@
     useSound: /Audio/_RedStar/Medical/Surgery/retractor1.ogg
 
 - type: entity
-  parent: BaseToolSurgery
+  parent: !Clear [ BaseToolSurgery ]
   id: Hemostat
   name: hemostat
   description: A surgical tool used to compress blood vessels to prevent bleeding.
@@ -186,7 +186,7 @@
     useSound: /Audio/_RedStar/Medical/Surgery/retractor1.ogg
 
 - type: entity
-  parent: [ BaseToolSurgery, BaseMedicalScienceContraband ] # Trauma - Made it contraband
+  parent: !Clear [ BaseToolSurgery, BaseMedicalScienceContraband ]
   id: Saw
   name: metal saw
   description: For cutting wood and other objects to pieces. Or sawing bones, in case of emergency.
@@ -202,17 +202,17 @@
     sprite: _RedStar/Medical/LegacyTools/saw.rsi
     storedRotation: 90
   - type: Tool
-    useSound: # Trauma
+    useSound:
       path: /Audio/_RedStar/Medical/Surgery/bone_saw.ogg
     qualities:
       - Sawing
       - Slicing
 
 - type: entity
-  parent: [Saw, BaseMinorContraband] # Trauma - add contraband mark
+  parent: !Clear [ Saw, BaseMinorContraband ]
   id: SawImprov
   name: choppa
-  description: A wicked serrated blade made of whatever nasty sharp things you could find. # It would make a pretty decent weapon, given there are more space for some tool mods too.
+  description: A wicked serrated blade made of whatever nasty sharp things you could find.
   components:
   - type: Sprite
     state: improv
@@ -231,7 +231,7 @@
     speedModifier: 0.5
 
 - type: entity
-  parent: Saw
+  parent: !Clear [ Saw ]
   id: SawElectric
   name: circular saw
   description: For heavy duty cutting.
@@ -239,7 +239,6 @@
   - type: Tag
     tags:
     - SurgeryTool
-    - CircularSaw
   - type: Sprite
     sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/circular-saw.rsi
     state: circular-saw
@@ -256,11 +255,11 @@
     qualities:
       - Sawing
     speedModifier: 1.5
-    useSound: # Trauma
+    useSound:
       path: /Audio/_RedStar/Medical/Surgery/saw.ogg
 
 - type: entity
-  parent: [ SawElectric ]
+  parent: !Clear [ SawElectric ]
   id: SawAdvanced
   name: advanced circular saw
   description: You think you can cut anything with it.

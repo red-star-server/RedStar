@@ -1,0 +1,12 @@
+# Heated past the melting point of wax, liquid wax sets into a piece of beeswax.
+- type: reaction
+  id: SolidifyBeeswax
+  impact: Low
+  quantized: true
+  minTemp: 340
+  reactants:
+    LiquidBeeswax:
+      amount: 10
+  effects:
+  - !type:SpawnEntity
+    entity: Beeswax

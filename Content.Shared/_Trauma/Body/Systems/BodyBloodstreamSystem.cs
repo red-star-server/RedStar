@@ -10,6 +10,7 @@ using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
+using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -21,6 +22,7 @@ public sealed partial class BodyBloodstreamSystem : EntitySystem
     [Dependency] private BodySystem _body = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private INetManager _net = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private WoundSystem _wound = default!;
@@ -42,8 +44,8 @@ public sealed partial class BodyBloodstreamSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var bleedsQuery = EntityQueryEnumerator<BleedInflicterComponent>();
         var now = _timing.CurTime;
+        var bleedsQuery = EntityQueryEnumerator<BleedInflicterComponent>();
         while (bleedsQuery.MoveNext(out var ent, out var bleeds))
         {
             var bleeding = bleeds.BleedingAmount > 0 && CanWoundBleed((ent, bleeds));
@@ -53,26 +55,32 @@ public sealed partial class BodyBloodstreamSystem : EntitySystem
                 DirtyField(ent, bleeds, nameof(BleedInflicterComponent.IsBleeding));
             }
 
-            if (!bleeds.IsBleeding)
-                continue;
-
-            var totalTime = bleeds.ScalingFinishesAt - bleeds.ScalingStartsAt;
-            var currentTime = bleeds.ScalingFinishesAt - now;
-
-            if (totalTime <= currentTime || bleeds.ScalingLimit >= bleeds.Scaling)
-                continue;
-
-            var newBleeds = FixedPoint2.Clamp(
-                (totalTime / currentTime) / (bleeds.ScalingLimit - bleeds.Scaling),
-                0,
-                bleeds.ScalingLimit);
-
-            if (bleeds.Scaling == newBleeds)
-                continue;
-
-            bleeds.Scaling = newBleeds;
-            DirtyField(ent, bleeds, nameof(BleedInflicterComponent.Scaling));
+            if (!_net.IsClient && bleeds.IsBleeding && bleeds.Scaling < bleeds.ScalingLimit)
+                UpdateScaling((ent, bleeds), now);
         }
+    }
+
+    private void UpdateScaling(Entity<BleedInflicterComponent> ent, TimeSpan now)
+    {
+        var duration = ent.Comp.ScalingFinishesAt - ent.Comp.ScalingStartsAt;
+        if (duration <= TimeSpan.Zero)
+            return;
+
+        var progress = (float) Math.Clamp((now - ent.Comp.ScalingStartsAt) / duration, 0.0, 1.0);
+        var target = FixedPoint2.New(1f + (ent.Comp.ScalingLimit.Float() - 1f) * progress);
+        if (target <= ent.Comp.Scaling)
+            return;
+
+        ent.Comp.Scaling = target;
+        DirtyField(ent, ent.Comp, nameof(BleedInflicterComponent.Scaling));
+
+        if (!TryComp<WoundComponent>(ent, out var wound) ||
+            _body.GetBody(wound.HoldingWoundable) is not { } body ||
+            !HasComp<BloodstreamComponent>(body))
+            return;
+
+        var update = new BloodstreamUpdateEvent();
+        RaiseLocalEvent(body, ref update);
     }
 
     /// <summary>
@@ -188,7 +196,7 @@ public sealed partial class BodyBloodstreamSystem : EntitySystem
 
         var nearestModifier = ent.Comp.BleedingModifiers.FirstOrNull();
         if (nearestModifier == null)
-            return true; // No modifiers. return true
+            return true;
 
         var lastCanBleed = true;
         var lastPriority = int.MinValue;
@@ -212,8 +220,6 @@ public sealed partial class BodyBloodstreamSystem : EntitySystem
             args.Component.WoundSeverityPoint < component.SeverityThreshold)
             return;
 
-        // wounds that BLEED will not HEAL.
-        // wounds that bleed. will you heal them, to me?
         component.BleedingAmountRaw = args.Component.WoundSeverityPoint * _bleedingSeverity;
 
         var formula = (float) (args.Component.WoundSeverityPoint / _bleedScaleTime * component.ScalingSpeed);
@@ -250,11 +256,7 @@ public sealed partial class BodyBloodstreamSystem : EntitySystem
             || args.NewSeverity < args.OldSeverity)
             return;
 
-        var oldBleedsAmount = args.OldSeverity * _bleedingSeverity;
         component.BleedingAmountRaw = args.NewSeverity * _bleedingSeverity;
-
-        var severityPenalty = component.BleedingAmountRaw - oldBleedsAmount / _bleedScaleTime;
-        component.SeverityPenalty += severityPenalty;
 
         var formula = (float) (args.NewSeverity / _bleedScaleTime * component.ScalingSpeed);
         component.ScalingFinishesAt = _timing.CurTime + TimeSpan.FromSeconds(formula);
@@ -264,11 +266,8 @@ public sealed partial class BodyBloodstreamSystem : EntitySystem
         {
             component.ScalingLimit += 0.6;
             component.IsBleeding = true;
-            // When bleeding is reopened, the severity is increased
         }
 
-        // dummy fix as me and pretty much nobody else currently knows HOW EXACTLY was is supposed to work, womp womp
-        // seems to work fine though so why not
         if (component.BleedingAmountRaw > 0)
             component.Scaling = 1;
 
@@ -276,9 +275,6 @@ public sealed partial class BodyBloodstreamSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    /// <summary>
-    /// Updates bleeding suppression when the remover wound severity changes.
-    /// </summary>
     public void OnBleedRemoverSeverityUpdate(Entity<BleedRemoverComponent> ent, ref WoundSeverityPointChangedEvent args)
     {
         var delta = args.NewSeverity - args.OldSeverity;
@@ -311,7 +307,7 @@ public sealed partial class BodyBloodstreamSystem : EntitySystem
             var totalPartBleeds = FixedPoint2.Zero;
             foreach (var wound in _wound.GetWoundableWounds(part.AsNullable()))
             {
-            if (_bleedQuery.TryComp(wound, out var bleeds) && bleeds.IsBleeding)
+                if (_bleedQuery.TryComp(wound, out var bleeds) && bleeds.IsBleeding)
                     totalPartBleeds += bleeds.BleedingAmount;
             }
             total += totalPartBleeds;

@@ -43,7 +43,7 @@ public sealed partial class RandomOrganEffectsSystem : EntitySystem
             if (now < comp.NextUpdate)
                 continue;
 
-            if (_body.GetBody(uid) is not {} body) // do nothing when not installed
+            if (_body.GetBody(uid) is not {} body)
                 continue;
 
             // don't predict effects for other players

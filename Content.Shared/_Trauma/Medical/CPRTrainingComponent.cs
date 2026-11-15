@@ -26,7 +26,7 @@ public sealed partial class CPRTrainingComponent : Component
     /// Chance to make the patient inhale after a compression, if their lungs are healthy.
     /// </summary>
     [DataField]
-    public float InhaleChance = 0.6f; // better than nothing but proper training would help
+    public float InhaleChance = 0.6f;
 
     /// <summary>
     /// Sound played after each compression.
