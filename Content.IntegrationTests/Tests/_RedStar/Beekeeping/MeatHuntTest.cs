@@ -5,12 +5,14 @@ using Content.IntegrationTests.Fixtures;
 using Content.Server._RedStar.Beekeeping.Components;
 using Content.Server._RedStar.Beekeeping.Data;
 using Content.Server._RedStar.Beekeeping.Systems;
+using Content.Shared.CCVar;
 using Content.Shared.Destructible;
 using Content.Shared.Tools.Components;
 using Content.Shared._RedStar.Beekeeping;
 using Content.Shared._RedStar.Beekeeping.Components;
 using Content.Shared._RedStar.Beekeeping.Data;
 using Content.Shared._RedStar.Beekeeping.Visuals;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -28,12 +30,28 @@ public sealed class MeatHuntTest : GameTest
     private EntityUid _entry;
     private EntityUid _exit;
     private EntityUid _human;
+    private bool? _previousPathfinding;
+
+    [TearDown]
+    public async Task RestorePathfinding()
+    {
+        if (_previousPathfinding is not { } previous)
+            return;
+
+        _previousPathfinding = null;
+        var server = Server;
+        await server.WaitPost(() => server.ResolveDependency<IConfigurationManager>().SetCVar(CCVars.PathfindingEnabled, previous));
+    }
 
     private async Task Build(TestMapData map)
     {
         var server = Server;
         await server.WaitPost(() =>
         {
+            var config = server.ResolveDependency<IConfigurationManager>();
+            _previousPathfinding = config.GetCVar(CCVars.PathfindingEnabled);
+            config.SetCVar(CCVars.PathfindingEnabled, true);
+
             var grid = map.Grid.Owner;
             var mapSys = server.System<SharedMapSystem>();
             var plating = new Tile(server.ResolveDependency<ITileDefinitionManager>()["Plating"].TileId);
