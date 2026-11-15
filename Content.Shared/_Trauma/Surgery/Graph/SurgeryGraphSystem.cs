@@ -304,10 +304,13 @@ public sealed partial class SurgeryGraphSystem : EntitySystem
         if (!ConditionsMet(part, procedure, instance.Organ))
             return false;
 
-        if (MatchTool(procedure.Steps[stepIndex], held, instance.Organ))
+        var step = procedure.Steps[stepIndex];
+        if (MatchTool(step, held, instance.Organ))
             return true;
 
-        popup = Loc.GetString("surgery-graph-wrong-tool");
+        popup = step.Quality is { } quality && _proto.TryIndex(quality, out var qualityProto)
+            ? Loc.GetString("surgery-graph-requires-quality", ("quality", Loc.GetString(qualityProto.Name)))
+            : Loc.GetString("surgery-graph-wrong-tool");
         return false;
 
     }
