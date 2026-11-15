@@ -17,6 +17,7 @@ using Content.Server.Storage.EntitySystems;
 using Content.Shared._RedStar.Beekeeping;
 using Content.Shared._RedStar.Beekeeping.Components;
 using Content.Shared.Atmos;
+using Content.Shared.CCVar;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
@@ -24,6 +25,7 @@ using Content.Shared.EntityTable.EntitySelectors;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Station.Components;
 using Content.Shared.Storage.Components;
+using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -37,15 +39,23 @@ public sealed class WildBeehiveEventTest : GameTest
 {
     private static readonly EntProtoId Rule = "WildBeehiveEvent";
     private readonly List<EntityUid> _rules = new();
+    private bool? _previousPathfinding;
     private static PoolSettings StationScenario => new() { Connected = true, Fresh = true };
 
     [TearDown]
     public async Task RemoveRules()
     {
-        await Server.WaitPost(() =>
+        var server = Server;
+        await server.WaitPost(() =>
         {
             foreach (var rule in _rules)
-                Server.EntMan.DeleteEntity(rule);
+                server.EntMan.DeleteEntity(rule);
+
+            if (_previousPathfinding is { } previous)
+            {
+                _previousPathfinding = null;
+                server.ResolveDependency<IConfigurationManager>().SetCVar(CCVars.PathfindingEnabled, previous);
+            }
         });
     }
 
@@ -235,6 +245,10 @@ public sealed class WildBeehiveEventTest : GameTest
         EntityUid locker = default;
         await server.WaitAssertion(() =>
         {
+            var config = server.ResolveDependency<IConfigurationManager>();
+            _previousPathfinding = config.GetCVar(CCVars.PathfindingEnabled);
+            config.SetCVar(CCVars.PathfindingEnabled, true);
+
             BuildRoom(map);
             var grid = map.Grid.Owner;
             entities.SpawnEntity("GasVentPump", At(grid, 0, 0));
