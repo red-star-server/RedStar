@@ -1,4 +1,4 @@
-﻿surgery-procedure-organ = { $procedure } ({ $organ })
+surgery-procedure-organ = { $procedure } ({ $organ })
 surgery-graph-wrong-tool = Для этого шага нужен другой инструмент.
 
 surgery-stage-closed = Закрыто
@@ -12,7 +12,7 @@ surgery-procedure-open-skull = Вскрыть череп
 surgery-procedure-close-skull = Закрыть череп
 surgery-procedure-open-ribcage = Вскрыть грудную клетку
 surgery-procedure-close-ribcage = Закрыть грудную клетку
-surgery-procedure-amputate = Ампутация
+surgery-procedure-amputate = Ампутировать
 surgery-procedure-stop-bleeding = Остановить кровотечение
 surgery-procedure-mend-bones = Срастить кости
 surgery-procedure-heal-organs = Вылечить органы
