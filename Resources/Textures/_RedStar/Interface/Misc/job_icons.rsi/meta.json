@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken and from https://github.com/TauCetiStation/TauCetiClassic/blob/HEAD/icons/hud/hud.dmi",
+    "size": {
+        "x": 8,
+        "y": 8
+    },
+    "states": [
+        {
+            "name": "Surgeon"
+        }
+    ]
+}
