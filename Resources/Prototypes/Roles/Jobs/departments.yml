@@ -69,6 +69,7 @@
   - Psychologist
   - Paramedic
   - Geneticist #RS14
+  - Surgeon #RS14
 
 - type: department
   id: Science

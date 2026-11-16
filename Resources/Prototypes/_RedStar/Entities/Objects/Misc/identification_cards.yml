@@ -17,3 +17,21 @@
       state: Geneticist
   - type: PresetIdCard
     job: Geneticist
+
+- type: entity
+  parent: IDCardStandard
+  id: SurgeonIDCard
+  name: surgeon ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: stripe_top
+      color: *color-medical-top
+    - state: stripe_bottom
+      color: *color-medical-bottom
+    - sprite: _RedStar/Interface/Misc/job_icons.rsi
+      offset: *icon-offset
+      state: Surgeon
+  - type: PresetIdCard
+    job: Surgeon
