@@ -179,6 +179,42 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
             var organs = markingManager.GetOrgans(species);
             skinColor = coloration.Strategy.EnsureVerified(skinColor);
 
+            // RS14-start
+            var layerOwners = new Dictionary<HumanoidVisualLayers, ProtoId<OrganCategoryPrototype>>();
+            foreach (var (organ, organProtoId) in organs)
+            {
+                if (!markingManager.TryGetMarkingData(organProtoId, out var organData))
+                    continue;
+
+                foreach (var layer in organData.Value.Layers)
+                {
+                    if (layerOwners.TryGetValue(layer, out var owner) && owner != "Torso")
+                        continue;
+
+                    layerOwners[layer] = organ;
+                }
+            }
+
+            foreach (var (organ, sets) in appearance.Markings)
+            {
+                foreach (var (layer, markings) in sets)
+                {
+                    if (!layerOwners.TryGetValue(layer, out var owner) || owner == organ)
+                        continue;
+
+                    var source = validatedMarkings[organ].ShallowClone();
+                    source.Remove(layer);
+                    validatedMarkings[organ] = source;
+
+                    var destination = validatedMarkings.GetValueOrDefault(owner)?.ShallowClone() ?? new();
+                    var moved = destination.GetValueOrDefault(layer)?.ShallowClone() ?? [];
+                    moved.AddRange(markings);
+                    destination[layer] = moved;
+                    validatedMarkings[owner] = destination;
+                }
+            }
+            // RS14-end
+
             foreach (var (organ, _) in appearance.Markings)
             {
                 if (!organs.ContainsKey(organ))
@@ -193,7 +229,7 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
                     continue;
                 }
 
-                var actualMarkings = appearance.Markings.GetValueOrDefault(organ)?.ShallowClone() ?? new();
+                var actualMarkings = validatedMarkings.GetValueOrDefault(organ)?.ShallowClone() ?? new(); // RS14
 
                 markingManager.EnsureValidColors(actualMarkings);
                 markingManager.EnsureValidGroupAndSex(actualMarkings, organData.Value.Group, sex);

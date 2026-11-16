@@ -1,0 +1,77 @@
+- type: entity
+  abstract: true
+  parent: [ OrganBase, OrganBaseParent, OrganBaseExternal ]
+  id: OrganBaseTorsoTailless
+  name: torso
+  components:
+  - type: Organ
+    category: Torso
+  - type: Sprite
+    state: torso
+  - type: VisualOrgan
+    layer: enum.HumanoidVisualLayers.Chest
+    data:
+      state: torso
+  - type: VisualOrganMarkings
+    markingData:
+      layers:
+      - Chest
+      - Overlay
+      - Special
+  - type: BodyPart
+    partType: Torso
+    slots:
+    - Head
+    - ArmLeft
+    - ArmRight
+    - LegLeft
+    - LegRight
+    - Appendix
+    - Lungs
+    - Heart
+    - Stomach
+    - Liver
+    - Kidneys
+    - Tail
+  - type: UnremoveableOrgan
+
+- type: entity
+  abstract: true
+  parent: [ OrganBaseLimb, OrganBaseParent, OrganBaseChildExternal ]
+  id: OrganBaseTail
+  name: tail
+  components:
+  - type: Organ
+    category: Tail
+  - type: BodyPart
+    partType: Tail
+    slots: []
+  - type: VisualOrgan
+    layer: enum.HumanoidVisualLayers.Tail
+    data: {}
+  - type: VisualOrganMarkings
+    markingData:
+      layers:
+      - Tail
+      - TailOverlay
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Tail
+    - enum.HumanoidVisualLayers.TailOverlay
+
+- type: entity
+  parent: [ OrganBaseTail, OrganReptilianExternal ]
+  id: OrganReptilianTail
+  name: tail
+  components:
+  - type: Sprite
+    sprite: Mobs/Customization/reptilian_parts.rsi
+    state: tail_smooth_primary
+
+- type: entity
+  parent: [ OrganBaseTail, OrganVulpkaninExternal ]
+  id: OrganVulpkaninTail
+  name: tail
+  components:
+  - type: Sprite
+    sprite: _RedStar/Mobs/Customization/vulpkanin.rsi
+    state: vulp_tail
