@@ -1,0 +1,38 @@
+- type: job
+  id: Surgeon
+  name: job-name-surgeon
+  description: job-description-surgeon
+  playTimeTracker: JobSurgeon
+  requirements:
+    - !type:RoleTimeRequirement
+      role: JobMedicalDoctor
+      time: 5h
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 10h
+  startingGear: SurgeonGear
+  icon: "JobIconSurgeon"
+  supervisors: job-supervisors-cmo
+  guides: [ Medical, Surgery ]
+  access:
+  - Medical
+  - Maintenance
+  extendedAccess:
+  - Chemistry
+
+- type: startingGear
+  id: SurgeonGear
+  equipment:
+    id: SurgeonPDA
+    ears: ClothingHeadsetMedical
+
+- type: chameleonOutfit
+  id: SurgeonChameleonOutfit
+  job: Surgeon
+  equipment:
+    head: ClothingHeadHatSurgcapBlue
+    eyes: ClothingEyesHudMedical
+    mask: ClothingMaskSterile
+    neck: ClothingNeckStethoscope
+    outerClothing: ClothingOuterCoatLab
+    gloves: ClothingHandsGlovesLatex

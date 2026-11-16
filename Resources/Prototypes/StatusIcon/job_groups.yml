@@ -55,6 +55,7 @@
   - JobIconParamedic
   - JobIconPsychologist
   - JobIconGeneticist
+  - JobIconSurgeon # RS14
   - JobIconVirologist
 
 - type: jobIconGroup

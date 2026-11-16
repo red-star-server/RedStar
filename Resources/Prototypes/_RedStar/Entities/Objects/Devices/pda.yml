@@ -21,3 +21,40 @@
   - type: GuideHelp
     guides:  
     - MedicalDoctor #TODO make a guide for geneticist
+
+- type: entity
+  parent: BaseMedicalPDA
+  id: SurgeonPDA
+  name: surgeon PDA
+  description: Smells faintly of antiseptic.
+  components:
+  - type: Pda
+    id: SurgeonIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-surgeon
+  - type: Sprite
+    sprite: Objects/Devices/pda.rsi
+    layers:
+    - map: [ "enum.PdaVisualLayers.Base" ]
+      sprite: _RedStar/Objects/Devices/pda.rsi
+      state: pda-surgeon
+    - state: light_overlay
+      map: [ "enum.PdaVisualLayers.Flashlight" ]
+      shader: unshaded
+      visible: false
+    - state: id_overlay
+      map: [ "enum.PdaVisualLayers.IdLight" ]
+      shader: unshaded
+      visible: false
+  - type: PdaBorderColor
+    borderColor: "#d7d7d0"
+    accentVColor: "#447987"
+  - type: Icon
+    sprite: _RedStar/Objects/Devices/pda.rsi
+    state: pda-surgeon
+  - type: GuideHelp
+    guides:
+    - Surgery

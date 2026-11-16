@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from ss220 at https://github.com/ss220-space/Paradise/blob/a5877fa400335e01d4b8fffb25c61f11436dabcf/icons/obj/pda.dmi, edited by andrew_fenriz and zeroqwq (discord)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "pda-surgeon"
+        }
+    ]
+}
