@@ -87,7 +87,6 @@ ent-MaterialScrewSingle = { ent-MaterialScrew }
     .suffix = Single
 
 research-technology-basic-augmentation = Basic augmentation
-research-technology-implanted-tools = Implanted tools
 research-technology-basic-cybernetics = Basic cybernetics
 research-technology-advanced-cybernetics = Advanced cybernetics
 reagent-name-microplastics = microplastics

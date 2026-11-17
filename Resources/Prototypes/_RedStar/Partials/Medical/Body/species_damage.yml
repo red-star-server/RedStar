@@ -118,6 +118,7 @@
 
 - type: entity
   id: OrganVulpkanin
+  abstract: true
   components:
   - type: Injurable
     damageContainer: Vulpkanin

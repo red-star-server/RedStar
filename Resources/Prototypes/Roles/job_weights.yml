@@ -49,4 +49,7 @@
     Warden: 5
     Psychologist: 0
     Reporter: 0
-    Geneticist: 0 #RS14
+    # RS14-start
+    Geneticist: 0
+    Surgeon: 0
+    # RS14-end

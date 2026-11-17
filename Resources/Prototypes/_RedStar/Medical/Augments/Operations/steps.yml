@@ -1,9 +1,0 @@
-- type: entity
-  parent: SurgeryStepInsertOrgan
-  id: SurgeryStepInsertAugmentPowerCellSlot
-  name: Add power cell slot
-
-- type: entity
-  parent: SurgeryStepInsertOrgan
-  id: SurgeryStepInsertAugmentPowerCellCharger
-  name: Add power cell charger

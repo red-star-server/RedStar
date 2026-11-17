@@ -30,30 +30,40 @@
 
 - type: organCategory
   id: Brain
+  surgeryDepth: 2 # RS14
 
 - type: organCategory
   id: Eyes
+  surgeryDepth: 2 # RS14
 
 - type: organCategory
   id: Tongue
+  surgeryDepth: 1 # RS14
 
 - type: organCategory
   id: Appendix
+  surgeryDepth: 2 # RS14
 
 - type: organCategory
   id: Ears
+  surgeryDepth: 2 # RS14
 
 - type: organCategory
   id: Lungs
+  surgeryDepth: 2 # RS14
 
 - type: organCategory
   id: Heart
+  surgeryDepth: 2 # RS14
 
 - type: organCategory
   id: Stomach
+  surgeryDepth: 2 # RS14
 
 - type: organCategory
   id: Liver
+  surgeryDepth: 2 # RS14
 
 - type: organCategory
   id: Kidneys
+  surgeryDepth: 2 # RS14

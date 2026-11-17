@@ -5,12 +5,10 @@ popup-trauma-BoneDamage-Damaged = Вы чувствуете слабую бол�
 popup-trauma-BoneDamage-Cracked = Вы чувствуете резкую боль в области: { $part }!
 popup-trauma-BoneDamage-Broken = Вы слышите громкий хруст в области: { $part }!!
 self-inspect-trauma-BoneDamage = болит изнутри
-self-inspect-trauma-BoneDamage-Large = ощущается вывих
 inspect-trauma-BoneDamage = виден вывих
 
 popup-trauma-OrganDamage-Damaged = Вы чувствуете, что с { $part } что-то не так...
 popup-trauma-OrganDamage-Destroyed = Вы чувствуете очень резкую боль в области: { $part }!
-self-inspect-trauma-OrganDamage = неприятные ощущения при каждом вдохе.
 
 inspect-wound-minor = небольшие повреждения
 inspect-wound-moderate = повреждения
