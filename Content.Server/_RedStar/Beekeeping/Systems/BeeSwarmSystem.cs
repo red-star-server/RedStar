@@ -98,13 +98,13 @@ public sealed partial class BeeSwarmSystem : EntitySystem
 
         var hiveMap = _transform.GetMapCoordinates(hive, xform);
         var modifier = RollSwarmModifier();
-        var range = comp.SwarmRange * modifier.RangeMultiplier;
+        var range = comp.SwarmRange * (modifier?.RangeMultiplier ?? 1f);
 
         // A vent in sight that leads somewhere comes first: the swarm dives in and comes out elsewhere in the network.
         // Otherwise a free locker in sight, and with none the swarm sets off to look for one.
         EntityUid? storage = null;
         Vector2 site;
-        var ventRoute = modifier.SkipVents ? null : FindSwarmVentRoute(hive, grid, hiveMap, range);
+        var ventRoute = modifier is { SkipVents: true } ? null : FindSwarmVentRoute(hive, grid, hiveMap, range);
 
         // Only exits with a place to nest near them: a swarm that comes out where there is none just flies about.
         if (ventRoute is { } found)
@@ -151,14 +151,14 @@ public sealed partial class BeeSwarmSystem : EntitySystem
             return false;
         }
 
-        var leaving = abandon ? comp.Bees : Math.Max(1, (int) (comp.Bees * modifier.ColonyShare));
+        var leaving = abandon ? comp.Bees : Math.Max(1, (int) (comp.Bees * (modifier?.ColonyShare ?? 0.5f)));
         comp.Bees -= leaving;
         swarmComp.Bees = leaving;
         swarmComp.WildHive = comp.WildHivePrototype;
         swarmComp.Storage = storage;
         swarmComp.VentExit = ventRoute?.Exit;
         swarmComp.NestRange = range;
-        swarmComp.Modifier = modifier.ID;
+        swarmComp.Modifier = modifier?.ID;
         SetSearching((swarm, swarmComp), ventRoute == null && storage == null);
 
         if (abandon)
@@ -198,9 +198,9 @@ public sealed partial class BeeSwarmSystem : EntitySystem
     }
 
     /// <summary>
-    /// One quirk for the swarm, by weight. Without any prototypes a plain swarm.
+    /// One quirk for the swarm, by weight. Null without any prototypes: a plain swarm.
     /// </summary>
-    private SwarmModifierPrototype RollSwarmModifier()
+    private SwarmModifierPrototype? RollSwarmModifier()
     {
         var weights = new Dictionary<SwarmModifierPrototype, float>();
         foreach (var modifier in _proto.EnumeratePrototypes<SwarmModifierPrototype>())
@@ -209,7 +209,7 @@ public sealed partial class BeeSwarmSystem : EntitySystem
                 weights[modifier] = modifier.Weight;
         }
 
-        return weights.Count > 0 ? _random.Pick(weights) : _proto.Index(PlainSwarm);
+        return weights.Count > 0 ? _random.Pick(weights) : null;
     }
 
     /// <summary>
@@ -223,14 +223,14 @@ public sealed partial class BeeSwarmSystem : EntitySystem
         if (count <= 0)
             return;
 
+        var xform = Transform(hive);
+        if (xform.GridUid is not { } grid || !TryComp<MapGridComponent>(grid, out var gridComp))
+            return;
+
         for (var i = 0; i < count; i++)
         {
             _hive.RemoveHomeBee(hive);
         }
-
-        var xform = Transform(hive);
-        if (xform.GridUid is not { } grid || !TryComp<MapGridComponent>(grid, out var gridComp))
-            return;
 
         // Off in a random direction, as far as it can fly in a straight line, up to the scouting range.
         var hiveMap = _transform.GetMapCoordinates(hive, xform);
@@ -377,11 +377,6 @@ public sealed partial class BeeSwarmSystem : EntitySystem
         LandSwarm(ent);
         args.Result = BeeErrandArrival.Gone;
     }
-
-    /// <summary>
-    /// The swarm with no quirk, for a server with no other quirks in its data.
-    /// </summary>
-    private static readonly ProtoId<SwarmModifierPrototype> PlainSwarm = "Plain";
 
     /// <summary>
     /// Where a searching swarm or queen flies next: a few tries for a random direction with room to fly, failing that

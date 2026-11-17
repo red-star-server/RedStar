@@ -115,7 +115,7 @@ public sealed partial class BeeErrandSystem : EntitySystem
             {
                 stop = OpenVent(errand.VentEntry);
                 if (stop == null)
-                    ClearRoute(errand);
+                    ClearRoute(uid, errand);
             }
             else
             {
@@ -161,10 +161,12 @@ public sealed partial class BeeErrandSystem : EntitySystem
         return vent is { } uid && !TerminatingOrDeleted(uid) && !_weldable.IsWelded(uid) ? uid : null;
     }
 
-    private static void ClearRoute(BeeErrandComponent errand)
+    private void ClearRoute(EntityUid uid, BeeErrandComponent errand)
     {
         errand.VentEntry = null;
         errand.VentExit = null;
+        if (TryComp<BeeSwarmComponent>(uid, out var swarm))
+            swarm.VentExit = null;
     }
 
     /// <summary>

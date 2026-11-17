@@ -136,8 +136,8 @@ public sealed partial class BeeQueenSystem : EntitySystem
 
             if (!swarm.Comp.Searching)
                 StopQueenTimer((contained, queen));
-            // A stopped timer can still be present until deferred removal runs.
-            else if (!TryComp<TimedDespawnComponent>(contained, out var timer) || !timer.Running)
+            // DiesAt, not the timer component: a stopped one lingers until deferred removal runs.
+            else if (queen.DiesAt == null)
                 StartQueenTimer((contained, queen));
         }
     }
