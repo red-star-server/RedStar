@@ -87,12 +87,6 @@
     hideableLayers: !Clear []
 
 - type: entity
-  id: MobReptilian
-  components:
-  - type: Wagging
-    organ: Tail
-
-- type: entity
   id: AppearanceVulpkanin
   components:
   - type: InitialBody
@@ -102,9 +96,3 @@
 - type: entity
   id: OrganVulpkaninTorso
   parent: !Clear [ OrganBaseTorsoSexed, OrganBaseTorsoTailless, OrganVulpkaninExternal ]
-
-- type: entity
-  id: MobVulpkanin
-  components:
-  - type: Wagging
-    organ: Tail

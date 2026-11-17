@@ -37,7 +37,7 @@
 
 - type: entity
   abstract: true
-  parent: [ OrganBaseLimb, OrganBaseParent, OrganBaseChildExternal ]
+  parent: [ OrganBaseLimb, OrganBaseChildExternal ]
   id: OrganBaseTail
   name: tail
   components:
