@@ -42,7 +42,6 @@ public sealed partial class BeeScoutSystem
             if (source.Tray != tray)
                 continue;
 
-            // Seen again: an inactive place gets a visit right away; an active one keeps its visit timer.
             if (!source.Active)
                 source.NextVisit = now;
 

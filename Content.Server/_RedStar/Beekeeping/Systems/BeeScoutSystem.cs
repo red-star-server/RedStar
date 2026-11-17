@@ -51,7 +51,6 @@ public sealed partial class BeeScoutSystem : EntitySystem
 
         if (comp.NextScoutTrip == TimeSpan.Zero)
         {
-            // The first trip of a new colony goes out within seconds; the normal pauses follow it.
             comp.NextScoutTrip = comp.ScoutFirstTripNow
                 ? now + comp.FirstScoutDelay
                 : now + RandomTrip(comp, _hive.GetHiveTotals(hive).ScoutPause);
@@ -62,7 +61,6 @@ public sealed partial class BeeScoutSystem : EntitySystem
         if (now < comp.NextScoutTrip)
             return;
 
-        // The pause starts over once this trip is done. Nothing new in sight: try again after a pause.
         comp.NextScoutTrip = ScoutTrip(hive) ? TimeSpan.Zero : now + RandomTrip(comp);
     }
 
@@ -83,7 +81,6 @@ public sealed partial class BeeScoutSystem : EntitySystem
         if (_found.Count == 0)
             return false;
 
-        // With nobody around to watch the trip, the hive simply learns what the scout found.
         var xform = Transform(hive);
         if (!_errands.SomeoneWatching(xform.Coordinates))
         {

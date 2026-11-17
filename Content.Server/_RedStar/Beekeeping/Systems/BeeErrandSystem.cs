@@ -75,7 +75,6 @@ public sealed partial class BeeErrandSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        // Only the bees diving into something right now, for the fraction of a second it takes.
         var now = _timing.CurTime;
         var query = EntityQueryEnumerator<BeeErrandComponent>();
         while (query.MoveNext(out var uid, out var errand))
@@ -124,7 +123,6 @@ public sealed partial class BeeErrandSystem : EntitySystem
 
             if (stop == null)
             {
-                // A spot to fly to, or nothing: then the bee acts where it is, and whoever sent it says what next.
                 coordinates = errand.Spot ?? Transform(uid).Coordinates;
                 range = errand.Spot == null ? float.MaxValue : errand.StopRange;
                 Face(uid, coordinates);
@@ -187,8 +185,7 @@ public sealed partial class BeeErrandSystem : EntitySystem
         if (!TryComp<BeeErrandComponent>(uid, out var errand))
             return;
 
-        // It stops where it is to act: nothing steers it until the next stop is planned, and a flying body keeps
-        // drifting.
+        // Nothing steers the bee while it acts, so a flying body would keep drifting.
         _physics.SetLinearVelocity(uid, Vector2.Zero);
 
         var bee = new Entity<BeeErrandComponent>(uid, errand);
@@ -237,7 +234,6 @@ public sealed partial class BeeErrandSystem : EntitySystem
     /// </summary>
     private void Arrive(Entity<BeeErrandComponent> bee)
     {
-        // Into fire or air its hive could not work in, a bee does not dive: it turns back.
         if (bee.Comp.Target is { } target &&
             !TerminatingOrDeleted(target) &&
             TryComp<BeehiveComponent>(bee.Comp.Hive, out var hive) &&
@@ -250,7 +246,6 @@ public sealed partial class BeeErrandSystem : EntitySystem
         var ev = new BeeErrandArrivedEvent(bee.Comp.Target);
         RaiseLocalEvent(bee, ref ev);
 
-        // An empty spot with nothing handling it: there is nothing to do there, go home.
         var result = ev.Handled ? ev.Result
             : bee.Comp.Target == null ? BeeErrandArrival.TurnBack
             : BeeErrandArrival.Visit;
@@ -267,7 +262,6 @@ public sealed partial class BeeErrandSystem : EntitySystem
                 bee.Comp.Stage = BeeErrandStage.Back;
                 break;
             case BeeErrandArrival.KeepGoing:
-                // A target that keeps moving off is given up after a few tries; a searching swarm keeps on.
                 if (bee.Comp.Kind != BeeErrandKind.Swarm && ++bee.Comp.Retargets > MaxRetargets)
                     bee.Comp.Stage = BeeErrandStage.Back;
                 break;
@@ -380,7 +374,6 @@ public sealed partial class BeeErrandSystem : EntitySystem
     /// </summary>
     private void EnterHive(Entity<BeeErrandComponent> bee)
     {
-        // A bee taken out of the hive comes back like one brought by hand; turned away, it stays outside.
         if (TryComp<BeeItemComponent>(bee, out var item) && item.CountedOutside)
         {
             bee.Comp.Ended = true;

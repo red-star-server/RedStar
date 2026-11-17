@@ -35,7 +35,6 @@ public sealed partial class BeeQueenSystem
         var query = EntityQueryEnumerator<BeeHomingComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var homing, out var xform))
         {
-            // Held or packed away it buzzes quietly; free, it buzzes like a flying bee.
             var contained = _container.TryGetContainingContainer(uid, out var holder);
             UpdateBeeSound((uid, homing), !contained);
 
@@ -44,7 +43,6 @@ public sealed partial class BeeQueenSystem
             if (TryComp<AmbientSoundComponent>(uid, out var heard) && heard.Enabled == quiet)
                 _ambient.SetAmbience(uid, !quiet);
 
-            // In a hand, a bag or a locker, or still in the air after a throw: not on its own yet.
             if (contained || HasComp<ThrownItemComponent>(uid))
             {
                 // Let go again, she tries at once.
@@ -60,7 +58,6 @@ public sealed partial class BeeQueenSystem
                 if (home is { } own && !CanFlyHome(uid, xform, homing, own))
                     home = null;
 
-                // A queen with no hive of her own takes any empty one she can see before looking for a nest.
                 if (home == null && HasComp<BeeQueenComponent>(uid))
                     home = FindFreeHive(uid, xform, homing);
 
@@ -195,7 +192,6 @@ public sealed partial class BeeQueenSystem
             return null;
         }
 
-        // A queen only goes back into a hive that has no queen and would take her.
         if (HasComp<BeeQueenComponent>(uid) &&
             (_itemSlots.GetItemOrNull(hiveUid, comp.QueenSlot) != null || !_hive.HasRoomForQueen((hiveUid, comp))))
         {
@@ -239,7 +235,6 @@ public sealed partial class BeeQueenSystem
             return false;
         }
 
-        // Only into a locker or a crate, never a bare corner. With none in sight she sets off to look for one.
         var origin = _transform.GetMapCoordinates(homing, xform);
         var storage = _swarm.PickNestStorage(homing, queen.NestRange, grid, origin);
         Vector2 site;

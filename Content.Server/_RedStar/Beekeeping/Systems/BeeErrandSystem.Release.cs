@@ -27,7 +27,6 @@ public sealed partial class BeeErrandSystem
         var now = _timing.CurTime;
         var xform = Transform(hive);
 
-        // The visits are counted already: with nobody around to see them, the bees are not shown at all.
         if (!SomeoneWatching(xform.Coordinates))
         {
             comp.PendingForagers.Clear();
@@ -42,7 +41,6 @@ public sealed partial class BeeErrandSystem
 
             comp.PendingForagers.RemoveAt(i);
 
-            // No bee flies off into fire or bad air; the visit is counted all the same.
             if (!TerminatingOrDeleted(tray) && _hive.AirFor(comp, tray) == BeehivePauseReason.None)
                 TrySpawnForager(hive, xform, tray);
         }
@@ -95,7 +93,7 @@ public sealed partial class BeeErrandSystem
         EntityCoordinates? spot = null,
         BeeErrandKind kind = BeeErrandKind.Forage)
     {
-        var bee = Spawn(prototype, hiveXform.Coordinates);
+        var bee = SpawnAttachedTo(prototype, hiveXform.Coordinates);
         if (!HasComp<HTNComponent>(bee))
         {
             Log.Error($"{prototype} has no {nameof(HTNComponent)} and cannot fly an errand");
@@ -111,8 +109,7 @@ public sealed partial class BeeErrandSystem
 
         errand.Hive = hive;
 
-        // A bee that can be held already is its colony's bee in the air: it carries the traits and knows its hive, so
-        // the analyzer reads it like one in a hand.
+        // A released bee carries its colony's traits and hive so it can be caught and analyzed like one in a hand.
         if (TryComp<BeeItemComponent>(bee, out var item) && TryComp<BeehiveComponent>(hive, out var hiveComp))
         {
             item.SourceHive = hive;
@@ -123,7 +120,6 @@ public sealed partial class BeeErrandSystem
         errand.Spot = spot;
         errand.VentEntry = route?.Entry;
         errand.VentExit = route?.Exit;
-        // It grows out of the hive as it sets off.
         SetSize(bee, BeeFlightSize.Growing);
         return bee;
     }

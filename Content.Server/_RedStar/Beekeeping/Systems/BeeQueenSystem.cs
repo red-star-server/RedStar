@@ -225,7 +225,7 @@ public sealed partial class BeeQueenSystem : EntitySystem
     private void RollTrait(Entity<BeeQueenComponent> queen)
     {
         var comp = queen.Comp;
-        // Every roll wears the queen down a little more, for the rolls after this one.
+        // This roll still uses the old instability; the increment applies to the rolls after it.
         comp.Instability++;
         Dirty(queen);
         var instability = comp.Instability - 1;
@@ -327,7 +327,7 @@ public sealed partial class BeeQueenSystem : EntitySystem
             return;
 
         comp.EmergencyQueenSince = null;
-        var queenNew = Spawn(comp.DaughterQueenPrototype, Transform(hive).Coordinates);
+        var queenNew = SpawnAttachedTo(comp.DaughterQueenPrototype, Transform(hive).Coordinates);
         if (!_itemSlots.TryInsert(hive.Owner, comp.QueenSlot, queenNew, null))
         {
             Del(queenNew);
@@ -420,7 +420,6 @@ public sealed partial class BeeQueenSystem : EntitySystem
             bee.Comp.Charges = Math.Max(1, bee.Comp.Charges + totals.PollinatorCharges);
         bee.Comp.PollinationMutation = totals.PollinationMutation;
 
-        // A long-lived colony's bees last longer outside.
         if (!MathHelper.CloseTo(totals.Lifetime, 1f) && TryComp<TimedDespawnComponent>(bee, out var despawn))
         {
             despawn.Lifetime *= totals.Lifetime;
@@ -428,7 +427,6 @@ public sealed partial class BeeQueenSystem : EntitySystem
         }
         Dirty(bee);
 
-        // With a sting, the bee carries some of the queen's payload; its colour shows the payload it took.
         Color? color = null;
         if (totals.Sting &&
             _solutions.TryGetSolution(queenUid, queen.Solution, out var soln, out var solution) &&

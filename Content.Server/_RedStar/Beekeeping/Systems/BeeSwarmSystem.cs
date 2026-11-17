@@ -99,13 +99,10 @@ public sealed partial class BeeSwarmSystem : EntitySystem
         var modifier = RollSwarmModifier();
         var range = comp.SwarmRange * (modifier?.RangeMultiplier ?? 1f);
 
-        // A vent in sight that leads somewhere comes first: the swarm dives in and comes out elsewhere in the network.
-        // Otherwise a free locker in sight, and with none the swarm sets off to look for one.
         EntityUid? storage = null;
         Vector2 site;
         var ventRoute = modifier is { SkipVents: true } ? null : FindSwarmVentRoute(hive, grid, hiveMap, range);
 
-        // Only exits with a place to nest near them: a swarm that comes out where there is none just flies about.
         if (ventRoute is { } found)
         {
             var nestExits = NestExits(found.Exits, range, grid);
@@ -132,7 +129,6 @@ public sealed partial class BeeSwarmSystem : EntitySystem
             return false;
         }
 
-        // The old queen goes with the swarm; when swarming, a young one from the egg takes her place.
         var slot = _container.EnsureContainer<ContainerSlot>(swarm, swarmComp.Container);
         if (!_itemSlots.TryGetSlot(hive.Owner, comp.QueenSlot, out var queenSlot) ||
             queenSlot.ContainerSlot is not { } queenContainer ||
@@ -144,7 +140,6 @@ public sealed partial class BeeSwarmSystem : EntitySystem
 
         if (!_container.Insert(oldQueen, slot, force: true))
         {
-            // She could not be moved: she goes back into the hive and nothing swarms.
             _container.Insert(oldQueen, queenContainer, force: true);
             Del(swarm);
             return false;
@@ -169,7 +164,7 @@ public sealed partial class BeeSwarmSystem : EntitySystem
             return true;
         }
 
-        var daughter = Spawn(comp.DaughterQueenPrototype, xform.Coordinates);
+        var daughter = SpawnAttachedTo(comp.DaughterQueenPrototype, xform.Coordinates);
         if (TryComp<BeeQueenComponent>(daughter, out var daughterComp))
             InheritTraits(oldQueenComp, daughterComp);
         if (!_itemSlots.TryInsert(hive.Owner, comp.QueenSlot, daughter, null))
@@ -230,7 +225,6 @@ public sealed partial class BeeSwarmSystem : EntitySystem
             _hive.RemoveHomeBee(hive);
         }
 
-        // Off in a random direction, as far as it can fly in a straight line, up to the scouting range.
         var hiveMap = _transform.GetMapCoordinates(hive, xform);
         var direction = _random.NextAngle().ToVec();
         var distance = Math.Min(comp.ScoutRange, _scout.FreeFlight(hiveMap, direction, comp.ScoutRange, hive) - 0.5f);
@@ -281,8 +275,6 @@ public sealed partial class BeeSwarmSystem : EntitySystem
         if (_nestStorages.Count == 0)
             return null;
 
-        // What makes a place taken is gathered once for the whole search: the hives around and the lockers swarms are
-        // already flying to.
         _hivesNear.Clear();
         _lookup.GetEntitiesInRange(hiveMap, range + 1f, _hivesNear);
         _swarmTargets.Clear();
@@ -448,7 +440,7 @@ public sealed partial class BeeSwarmSystem : EntitySystem
             return;
         }
 
-        var wild = Spawn(swarm.Comp.WildHive, xform.Coordinates);
+        var wild = SpawnAttachedTo(swarm.Comp.WildHive, xform.Coordinates);
         if (!TryComp<BeehiveComponent>(wild, out var wildComp) ||
             !_container.TryGetContainer(swarm, swarm.Comp.Container, out var container))
         {
@@ -464,7 +456,6 @@ public sealed partial class BeeSwarmSystem : EntitySystem
                 _transform.DropNextTo(queen, wild);
         }
 
-        // Into the storage it chose, if it is still there and has room; otherwise the hive stays on the floor.
         if (swarm.Comp.Storage is { } storage && !TerminatingOrDeleted(storage))
             _entityStorage.Insert(wild, storage);
 

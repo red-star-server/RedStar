@@ -37,7 +37,6 @@ public sealed partial class BeekeepingClearCommand : LocalizedEntityCommands
         var removed = 0;
         removed += Clear<BeeSwarmComponent>(map);
 
-        // Bees out on errands are in the air for a short while anyway; whatever is out now goes.
         removed += Clear<BeeErrandComponent>(map);
 
         var hives = EntityManager.EntityQueryEnumerator<BeehiveComponent, TransformComponent>();
