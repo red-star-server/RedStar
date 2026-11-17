@@ -1,9 +1,9 @@
 using Content.Server._RedStar.Beekeeping.Components;
-using Content.Shared.NodeContainer.NodeGroups;
 using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.NodeContainer;
+using Content.Shared.NodeContainer.NodeGroups;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
@@ -109,15 +109,6 @@ public sealed partial class BeeSwarmSystem
         }
 
         return nest;
-    }
-
-    /// <summary>
-    /// Every other vent pump of the entry's network a bee could come out of: not welded, on the same map. A new list.
-    /// </summary>
-    public List<EntityUid> NetworkExits(Entity<GasVentPumpComponent> entry)
-    {
-        FindNetworkVents(entry);
-        return [.._ventExits];
     }
 
     /// <summary>

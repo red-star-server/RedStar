@@ -141,10 +141,6 @@ beekeeping-queen-trait-lost = Матка потеряла признак: { $tra
 beekeeping-queen-trait-replaced = Матка получила признак { $trait } вместо признака { $old }.
 beekeeping-queen-trait-nothing = Мутаген не подействовал: у матки нет места для признаков.
 
-cmd-beekeeping_clear-desc = Убирает со своей карты злых пчёл, злых маток, рои, заблудившихся пчёл и дикие ульи. С "all" со всех карт.
-cmd-beekeeping_clear-help = Использование: beekeeping_clear [all]
-cmd-beekeeping_clear-no-map = Нет своей карты: зайдите в тело или укажите "all".
-cmd-beekeeping_clear-done = Убрано: { $count }.
 beekeeping-queen-hive-limit = Матка не приживается: в секторе слишком много ульев.
 beekeeping-bee-bite = Пчела кусает вас за руку!
 beekeeping-bee-sting = Пчела жалит вас в руку!
@@ -160,6 +156,7 @@ beekeeping-queen-slots-max = У матки уже столько слотов, �
 beekeeping-hive-crowd-swarm = Пчёлам тесно: часть колонии улетает роем!
 beekeeping-hive-abandon = В улье нет рамок: матка улетает из него со всеми пчёлами!
 beekeeping-hive-swarm = Старая матка улетает из улья с роем! В улье осталась молодая матка.
+
 ## Apiary analyzer
 
 apiary-analyzer-section-traits = Признаки
@@ -254,6 +251,10 @@ bee-trait-lazy-queen = Вялая матка
 bee-trait-lazy-queen-desc = Яйцо матки откладывается заметно позже.
 bee-trait-fragile-egg = Хрупкое яйцо
 bee-trait-fragile-egg-desc = Яйцо матки живёт вдвое меньше, молочко нужно собирать быстро.
+apiary-analyzer-row-instability = Нестабильность
+
+## Модификаторы роя
+
 beekeeping-hive-examine-swarm-modifier = Рой был особенный: [color={ $color }]{ $name }[/color]. { $desc }
 swarm-modifier-plain = Обычный рой
 swarm-modifier-plain-desc = Ничем не примечателен.
@@ -269,4 +270,10 @@ swarm-modifier-wanderer = Странник
 swarm-modifier-wanderer-desc = Искал вентиляцию и гнездо вдвое дальше.
 swarm-modifier-tainted = Заражённый улей
 swarm-modifier-tainted-desc = В сотах что-то подозрительное.
-apiary-analyzer-row-instability = Нестабильность
+
+## Команды
+
+cmd-beekeeping_clear-desc = Убирает со своей карты злых пчёл, злых маток, рои, заблудившихся пчёл и дикие ульи. С "all" со всех карт.
+cmd-beekeeping_clear-help = Использование: beekeeping_clear [all]
+cmd-beekeeping_clear-no-map = Нет своей карты: зайдите в тело или укажите "all".
+cmd-beekeeping_clear-done = Убрано: { $count }.

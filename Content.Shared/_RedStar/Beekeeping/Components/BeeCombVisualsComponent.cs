@@ -34,5 +34,5 @@ public sealed partial class BeeCombVisualsComponent : Component
     /// Reagents that make up the honey itself and so take the base colors of the layers.
     /// </summary>
     [DataField]
-    public List<ProtoId<ReagentPrototype>> HoneyReagents = new() { "Honey", "Vitamin" };
+    public List<ProtoId<ReagentPrototype>> HoneyReagents = ["Honey", "Vitamin"];
 }

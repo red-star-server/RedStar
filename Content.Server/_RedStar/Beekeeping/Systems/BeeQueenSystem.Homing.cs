@@ -1,12 +1,12 @@
 using System.Numerics;
 using Content.Server._RedStar.Beekeeping.Components;
 using Content.Server._RedStar.Beekeeping.Data;
-using Content.Shared.Audio;
-using Content.Shared.Database;
-using Content.Shared.Throwing;
 using Content.Shared._RedStar.Beekeeping;
 using Content.Shared._RedStar.Beekeeping.Components;
 using Content.Shared._RedStar.Beekeeping.Visuals;
+using Content.Shared.Audio;
+using Content.Shared.Database;
+using Content.Shared.Throwing;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -181,9 +181,6 @@ public sealed partial class BeeQueenSystem
             _physics.SetLinearVelocity(homing, Vector2.Zero, body: body);
     }
 
-    /// <summary>
-    /// The hive this queen would fly to, or null if there is none to go back to.
-    /// </summary>
     private Entity<BeehiveComponent>? GetHomingHive(EntityUid uid)
     {
         EntityUid? hive = null;
@@ -245,7 +242,6 @@ public sealed partial class BeeQueenSystem
         // Only into a locker or a crate, never a bare corner. With none in sight she sets off to look for one.
         var origin = _transform.GetMapCoordinates(homing, xform);
         var storage = _swarm.PickNestStorage(homing, queen.NestRange, grid, origin);
-        var home = xform.LocalPosition;
         Vector2 site;
         if (storage is { } chosen)
         {
@@ -253,7 +249,7 @@ public sealed partial class BeeQueenSystem
         }
         else
         {
-            site = _swarm.SearchHop(homing, origin, (grid, gridComp), BeeSwarmSystem.SearchHopLength);
+            site = _swarm.SearchHop(homing, origin, (grid, gridComp), BeeSwarmComponent.DefaultSearchHop);
         }
 
         // She has no hive: the errand's hive is left empty, she never flies back.
@@ -280,11 +276,11 @@ public sealed partial class BeeQueenSystem
         return true;
     }
 
+    private readonly HashSet<Entity<BeehiveComponent>> _nearbyHives = [];
+
     /// <summary>
     /// The nearest hive without a queen that she can fly to in a straight line. Wild hives keep their own queens.
     /// </summary>
-    private readonly HashSet<Entity<BeehiveComponent>> _nearbyHives = [];
-
     private Entity<BeehiveComponent>? FindFreeHive(EntityUid queen, TransformComponent xform, BeeHomingComponent homing)
     {
         if (xform.GridUid is not { } grid || xform.ParentUid != grid)

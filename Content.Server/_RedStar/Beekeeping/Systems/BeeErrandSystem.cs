@@ -61,9 +61,6 @@ public sealed partial class BeeErrandSystem : EntitySystem
     /// </summary>
     private const int MaxRetargets = 6;
 
-    /// <summary>
-    /// The HTN task of a bee on an errand.
-    /// </summary>
     private static readonly ProtoId<HTNCompoundPrototype> ErrandTask = "BeeErrandCompound";
 
     /// <summary>
@@ -153,9 +150,6 @@ public sealed partial class BeeErrandSystem : EntitySystem
         return true;
     }
 
-    /// <summary>
-    /// The vent, if it is still there and open.
-    /// </summary>
     private EntityUid? OpenVent(EntityUid? vent)
     {
         return vent is { } uid && !TerminatingOrDeleted(uid) && !_weldable.IsWelded(uid) ? uid : null;

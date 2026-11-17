@@ -29,7 +29,7 @@ public sealed partial class BeehiveComponent : Component
     /// Item slots that hold frames, in the order they are filled and numbered on the sprite.
     /// </summary>
     [DataField]
-    public List<string> FrameSlots = new() { "frame1", "frame2", "frame3", "frame4" };
+    public List<string> FrameSlots = ["frame1", "frame2", "frame3", "frame4"];
 
     #endregion
 
@@ -55,7 +55,7 @@ public sealed partial class BeehiveComponent : Component
     /// one.
     /// </summary>
     [ViewVariables]
-    public List<ProtoId<BeeTraitPrototype>> ColonyTraits = new();
+    public List<ProtoId<BeeTraitPrototype>> ColonyTraits = [];
 
     /// <summary>
     /// How long a queenless colony with the trait takes to raise a new queen.
@@ -162,7 +162,7 @@ public sealed partial class BeehiveComponent : Component
     public int WildMaxBees = 15;
 
     /// <summary>
-    /// Combs inside a wild hive. They fall out when it is broken. Server only.
+    /// Combs inside a wild hive. They fall out when it is broken.
     /// </summary>
     [DataField]
     public int WildCombs;
@@ -485,7 +485,7 @@ public sealed partial class BeehiveComponent : Component
     /// When each resting worker is ready again.
     /// </summary>
     [ViewVariables]
-    public List<TimeSpan> RestingWorkers = new();
+    public List<TimeSpan> RestingWorkers = [];
 
     /// <summary>
     /// The scout rests until then after a trip in someone's hands.
@@ -605,7 +605,7 @@ public sealed partial class BeehiveComponent : Component
     /// Trays the hive knows. The hive remembers the tray itself: unbolted and moved, it is still found.
     /// </summary>
     [ViewVariables]
-    public List<BeehiveSource> KnownSources = new();
+    public List<BeehiveSource> KnownSources = [];
 
     /// <summary>
     /// Worker visits that are due but not made yet. Never banks more than one: idle workers do not save up.
@@ -633,13 +633,13 @@ public sealed partial class BeehiveComponent : Component
     /// Visible forager bees of this hive that are in the air.
     /// </summary>
     [ViewVariables]
-    public List<EntityUid> Foragers = new();
+    public List<EntityUid> Foragers = [];
 
     /// <summary>
     /// Visible foragers still to fly out, with the time each one leaves.
     /// </summary>
     [ViewVariables]
-    public List<(EntityUid Tray, TimeSpan At)> PendingForagers = new();
+    public List<(EntityUid Tray, TimeSpan At)> PendingForagers = [];
 
     /// <summary>
     /// Visits made at the same time are shown spread over this long.

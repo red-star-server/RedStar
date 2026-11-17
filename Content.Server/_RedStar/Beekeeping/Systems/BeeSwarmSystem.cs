@@ -1,22 +1,22 @@
+using System.Numerics;
 using Content.Server._RedStar.Beekeeping.Components;
 using Content.Server._RedStar.Beekeeping.Data;
 using Content.Server._RedStar.Beekeeping.Events;
-using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Stacks;
-using Content.Shared.Chemistry.Components;
 using Content.Server.Stack;
-using System.Numerics;
-using Content.Shared.Administration.Logs;
-using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Database;
-using Content.Shared.Popups;
-using Content.Shared.Random.Helpers;
-using Content.Shared.Storage.Components;
-using Content.Shared.Storage.EntitySystems;
 using Content.Shared._RedStar.Beekeeping;
 using Content.Shared._RedStar.Beekeeping.Components;
 using Content.Shared._RedStar.Beekeeping.Data;
 using Content.Shared._RedStar.Beekeeping.Prototypes;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Database;
+using Content.Shared.Popups;
+using Content.Shared.Random.Helpers;
+using Content.Shared.Stacks;
+using Content.Shared.Storage.Components;
+using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -52,13 +52,12 @@ public sealed partial class BeeSwarmSystem : EntitySystem
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private BeeScoutSystem _scout = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private SharedEntityStorageSystem _entityStorage = default!;
 
     private readonly HashSet<Entity<BeehiveComponent>> _hivesNear = [];
     private readonly HashSet<EntityUid> _swarmTargets = [];
     private readonly HashSet<Entity<EntityStorageComponent>> _nestStorages = [];
     private readonly List<EntityUid> _storageCandidates = [];
-
-    [Dependency] private SharedEntityStorageSystem _entityStorage = default!;
 
     /// <summary>
     /// The egg died with nobody collecting the jelly: the old queen swarms out, if the colony is big enough, a nest
@@ -122,7 +121,7 @@ public sealed partial class BeeSwarmSystem : EntitySystem
             storage = PickNestStorage(hive, range, grid, hiveMap);
             site = storage is { } chosen
                 ? _transform.WithEntityId(Transform(chosen).Coordinates, grid).Position
-                : SearchHop(hive, hiveMap, (grid, gridComp), SearchHopLength);
+                : SearchHop(hive, hiveMap, (grid, gridComp), BeeSwarmComponent.DefaultSearchHop);
         }
 
         if (_errands.Release(hive, xform, comp.SwarmPrototype, storage,
@@ -179,7 +178,6 @@ public sealed partial class BeeSwarmSystem : EntitySystem
             Log.Warning($"{ToPrettyString(hive)} could not take its young queen after swarming");
             _transform.DropNextTo(daughter, hive.Owner);
         }
-
 
         _hive.UpdateAmbience(hive);
         _popup.PopupEntity(Loc.GetString("beekeeping-hive-swarm"), hive);
@@ -344,8 +342,6 @@ public sealed partial class BeeSwarmSystem : EntitySystem
 
         return false;
     }
-
-    public const float SearchHopLength = 5f;
 
     /// <summary>
     /// What a swarm or a lone queen does where its errand took it: bees with no queen scatter, a swarm out of the pipes

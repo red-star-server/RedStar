@@ -140,10 +140,6 @@ beekeeping-queen-trait-lost = The queen lost a trait: { $trait }.
 beekeeping-queen-trait-replaced = The queen gained { $trait } in place of { $old }.
 beekeeping-queen-trait-nothing = The mutagen did nothing: the queen has no room for traits.
 
-cmd-beekeeping_clear-desc = Removes angry bees, angry queens, swarms, lost bees and wild hives from your map. With "all", from every map.
-cmd-beekeeping_clear-help = Usage: beekeeping_clear [all]
-cmd-beekeeping_clear-no-map = You have no map: take a body or pass "all".
-cmd-beekeeping_clear-done = Removed: { $count }.
 beekeeping-queen-hive-limit = The queen does not take: there are too many hives in the sector.
 beekeeping-bee-bite = The bee bites your hand!
 beekeeping-bee-sting = The bee stings your hand!
@@ -159,6 +155,7 @@ beekeeping-queen-slots-max = The queen already has as many slots as she can.
 beekeeping-hive-crowd-swarm = The bees are too crowded: part of the colony flies off in a swarm!
 beekeeping-hive-abandon = The hive has no frames: the queen leaves it with all her bees!
 beekeeping-hive-swarm = The old queen leaves the hive with a swarm! A young queen stays behind.
+
 ## Apiary analyzer
 
 apiary-analyzer-section-traits = Traits
@@ -253,6 +250,10 @@ bee-trait-lazy-queen = Lazy queen
 bee-trait-lazy-queen-desc = The queen's egg comes much later.
 bee-trait-fragile-egg = Fragile egg
 bee-trait-fragile-egg-desc = The queen's egg lives half as long, collect the jelly fast.
+apiary-analyzer-row-instability = Instability
+
+## Swarm modifiers
+
 beekeeping-hive-examine-swarm-modifier = The swarm was special: [color={ $color }]{ $name }[/color]. { $desc }
 swarm-modifier-plain = Plain swarm
 swarm-modifier-plain-desc = Nothing special about it.
@@ -268,4 +269,10 @@ swarm-modifier-wanderer = Wanderer
 swarm-modifier-wanderer-desc = It looked for a vent and a nest twice as far.
 swarm-modifier-tainted = Tainted hive
 swarm-modifier-tainted-desc = Something is off about the combs.
-apiary-analyzer-row-instability = Instability
+
+## Commands
+
+cmd-beekeeping_clear-desc = Removes angry bees, angry queens, swarms, lost bees and wild hives from your map. With "all", from every map.
+cmd-beekeeping_clear-help = Usage: beekeeping_clear [all]
+cmd-beekeeping_clear-no-map = You have no map: take a body or pass "all".
+cmd-beekeeping_clear-done = Removed: { $count }.

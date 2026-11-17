@@ -6,6 +6,7 @@ using Content.Shared._RedStar.Beekeeping.Components;
 using Content.Shared._RedStar.Beekeeping.Data;
 using Content.Shared._RedStar.Beekeeping.Visuals;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server._RedStar.Beekeeping.Systems;
 
@@ -88,7 +89,7 @@ public sealed partial class BeeErrandSystem
     /// </summary>
     public EntityUid? Release(EntityUid hive,
         TransformComponent hiveXform,
-        string prototype,
+        EntProtoId prototype,
         EntityUid? target,
         (EntityUid Entry, EntityUid Exit)? route,
         EntityCoordinates? spot = null,
