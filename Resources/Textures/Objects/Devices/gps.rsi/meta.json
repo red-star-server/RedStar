@@ -1,7 +1,7 @@
 {
     "version": 1,
-    "license": "CC-BY-SA-3.0",
-    "copyright": "tgstation at 3ddd840268e33bbcf316f242e6a972b84e6b773c, Inhand sprites by onesch",
+    "license": "CC0-1.0",
+    "copyright": "By AraiMaia for Funky Station",
     "size": {
         "x": 32,
         "y": 32
@@ -22,14 +22,6 @@
             "name": "active",
             "delays": [
                 [
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
                     0.1,
                     0.1,
                     0.1,
