@@ -25,15 +25,17 @@ public sealed partial class WaggingSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnOrganInserted(Entity<VisualOrganMarkingsComponent> ent, ref OrganGotInsertedEvent args)
+    private void OnOrganInserted(Entity<VisualBodyComponent> ent, ref OrganInsertedIntoEvent args)
     {
-        if (_net.IsClient || !HasComp<VisualBodyComponent>(args.Target.Owner))
+        if (_net.IsClient)
             return;
 
-        if (Comp<OrganComponent>(ent).Category is not { } category || !HasAnimatedTail(ent.Comp.Markings))
+        if (args.Organ.Comp.Category is not { } category ||
+            !TryComp<VisualOrganMarkingsComponent>(args.Organ.Owner, out var markings) ||
+            !HasAnimatedTail(markings.Markings))
             return;
 
-        EnsureWagging(args.Target.Owner, category);
+        EnsureWagging(ent.Owner, category);
     }
 
     private void EnsureWagging(EntityUid body, ProtoId<OrganCategoryPrototype> organ)
