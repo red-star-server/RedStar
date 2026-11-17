@@ -52,7 +52,7 @@ public sealed partial class BeeItemSystem : EntitySystem
     private static readonly TimeSpan MarkerCheckInterval = TimeSpan.FromSeconds(1);
 
     private TimeSpan _nextMarkerCheck;
-    private readonly List<Entity<BeePollinatedComponent, PlantHolderComponent>> _expiredMarkers = new();
+    private readonly List<Entity<BeePollinatedComponent, PlantHolderComponent>> _expiredMarkers = [];
 
     #region Applying
 

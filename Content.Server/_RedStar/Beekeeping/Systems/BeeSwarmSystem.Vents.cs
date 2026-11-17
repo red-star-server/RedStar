@@ -1,7 +1,8 @@
 using Content.Server._RedStar.Beekeeping.Components;
 using Content.Shared.NodeContainer.NodeGroups;
 using Content.Server.Atmos.Piping.Unary.Components;
-using Content.Shared.Mobs.Components;
+using Content.Server.NodeContainer.EntitySystems;
+using Content.Server.NodeContainer.Nodes;
 using Content.Shared.NodeContainer;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Map;
@@ -17,10 +18,11 @@ namespace Content.Server._RedStar.Beekeeping.Systems;
 public sealed partial class BeeSwarmSystem
 {
     [Dependency] private WeldableSystem _weldable = default!;
+    [Dependency] private NodeContainerSystem _nodeContainer = default!;
 
-    private readonly HashSet<Entity<GasVentPumpComponent>> _ventsNear = new();
-    private readonly List<Entity<GasVentPumpComponent>> _ventCandidates = new();
-    private readonly List<EntityUid> _ventExits = new();
+    private readonly HashSet<Entity<GasVentPumpComponent>> _ventsNear = [];
+    private readonly List<Entity<GasVentPumpComponent>> _ventCandidates = [];
+    private readonly List<EntityUid> _ventExits = [];
     private readonly Dictionary<INodeGroup, List<EntityUid>> _networkCache = new();
 
     /// <summary>
@@ -66,8 +68,7 @@ public sealed partial class BeeSwarmSystem
     /// </summary>
     private List<EntityUid>? CachedNetwork(Entity<GasVentPumpComponent> vent)
     {
-        if (!TryComp<NodeContainerComponent>(vent, out var nodes) ||
-            !nodes.Nodes.TryGetValue(vent.Comp.Inlet, out var node) ||
+        if (!_nodeContainer.TryGetNode<PipeNode>(vent.Owner, vent.Comp.Inlet, out var node) ||
             node.NodeGroup is not { } group)
         {
             return null;
@@ -89,10 +90,10 @@ public sealed partial class BeeSwarmSystem
     public List<EntityUid> NestExits(EntityUid entry, float range, EntityUid grid)
     {
         if (!TryComp<GasVentPumpComponent>(entry, out var pump))
-            return new List<EntityUid>();
+            return [];
 
         FindNetworkVents((entry, pump));
-        return NestExits(new List<EntityUid>(_ventExits), range, grid);
+        return NestExits([.._ventExits], range, grid);
     }
 
     /// <summary>
@@ -116,7 +117,7 @@ public sealed partial class BeeSwarmSystem
     public List<EntityUid> NetworkExits(Entity<GasVentPumpComponent> entry)
     {
         FindNetworkVents(entry);
-        return new List<EntityUid>(_ventExits);
+        return [.._ventExits];
     }
 
     /// <summary>
@@ -127,8 +128,7 @@ public sealed partial class BeeSwarmSystem
     private void FindNetworkVents(Entity<GasVentPumpComponent> entry)
     {
         _ventExits.Clear();
-        if (!TryComp<NodeContainerComponent>(entry, out var nodes) ||
-            !nodes.Nodes.TryGetValue(entry.Comp.Inlet, out var node) ||
+        if (!_nodeContainer.TryGetNode<PipeNode>(entry.Owner, entry.Comp.Inlet, out var node) ||
             node.NodeGroup is not { } group)
         {
             return;
@@ -140,7 +140,7 @@ public sealed partial class BeeSwarmSystem
         {
             if (uid == entry.Owner ||
                 xform.MapID != map ||
-                !ventNodes.Nodes.TryGetValue(pump.Inlet, out var ventNode) ||
+                !_nodeContainer.TryGetNode<PipeNode>(ventNodes, pump.Inlet, out var ventNode) ||
                 ventNode.NodeGroup != group ||
                 TerminatingOrDeleted(uid) ||
                 _weldable.IsWelded(uid))

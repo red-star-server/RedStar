@@ -27,7 +27,7 @@ public sealed partial class ApiaryAnalyzerSystem : SharedApiaryAnalyzerSystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedSolutionContainerSystem _solutions = default!;
 
-    private readonly List<Entity<BeeFrameComponent>> _frames = new();
+    private readonly List<Entity<BeeFrameComponent>> _frames = [];
     private TimeSpan _nextUpdate;
 
     public override void Update(float frameTime)

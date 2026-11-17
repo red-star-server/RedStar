@@ -60,7 +60,7 @@ public sealed partial class BeeQueenSystem : EntitySystem
     /// <summary>
     /// Queens whose solution changed. Sorted out in the update, not inside the change event itself.
     /// </summary>
-    private readonly HashSet<EntityUid> _changedQueens = new();
+    private readonly HashSet<EntityUid> _changedQueens = [];
 
     private readonly Dictionary<(ProtoId<BeeTraitPrototype> Trait, bool Gain), float> _rollOutcomes = new();
 

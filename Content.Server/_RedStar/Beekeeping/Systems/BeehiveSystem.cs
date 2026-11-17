@@ -48,7 +48,7 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
     /// </summary>
     private const float MaxUpdateSeconds = 5f;
 
-    private readonly List<Entity<BeeFrameComponent>> _frames = new();
+    private readonly List<Entity<BeeFrameComponent>> _frames = [];
 
     [SubscribeLocalEvent]
     private void OnMapInit(Entity<BeehiveComponent> ent, ref MapInitEvent args)

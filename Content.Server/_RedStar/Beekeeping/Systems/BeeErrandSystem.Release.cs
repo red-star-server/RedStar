@@ -77,7 +77,7 @@ public sealed partial class BeeErrandSystem
             return false;
         }
 
-        Comp<BeeErrandComponent>(bee).Found = new List<EntityUid>(found);
+        Comp<BeeErrandComponent>(bee).Found = [..found];
         hive.Comp.ScoutFlyer = bee;
         return true;
     }

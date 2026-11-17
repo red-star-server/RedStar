@@ -283,7 +283,7 @@ public sealed partial class BeeQueenSystem
     /// <summary>
     /// The nearest hive without a queen that she can fly to in a straight line. Wild hives keep their own queens.
     /// </summary>
-    private readonly HashSet<Entity<BeehiveComponent>> _nearbyHives = new();
+    private readonly HashSet<Entity<BeehiveComponent>> _nearbyHives = [];
 
     private Entity<BeehiveComponent>? FindFreeHive(EntityUid queen, TransformComponent xform, BeeHomingComponent homing)
     {

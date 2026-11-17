@@ -3,17 +3,12 @@ using Content.Server._RedStar.Beekeeping.Data;
 using Content.Server._RedStar.Beekeeping.Events;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Stacks;
-using Content.Shared.DoAfter;
 using Content.Shared.Chemistry.Components;
 using Content.Server.Stack;
-using Content.Server.Construction;
-using Content.Shared.Destructible;
-using System.Linq;
 using System.Numerics;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
-using Content.Shared.Maps;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Storage.Components;
@@ -57,12 +52,11 @@ public sealed partial class BeeSwarmSystem : EntitySystem
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private BeeScoutSystem _scout = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
-    [Dependency] private TurfSystem _turf = default!;
 
-    private readonly HashSet<Entity<BeehiveComponent>> _hivesNear = new();
-    private readonly HashSet<EntityUid> _swarmTargets = new();
-    private readonly HashSet<Entity<EntityStorageComponent>> _nestStorages = new();
-    private readonly List<EntityUid> _storageCandidates = new();
+    private readonly HashSet<Entity<BeehiveComponent>> _hivesNear = [];
+    private readonly HashSet<EntityUid> _swarmTargets = [];
+    private readonly HashSet<Entity<EntityStorageComponent>> _nestStorages = [];
+    private readonly List<EntityUid> _storageCandidates = [];
 
     [Dependency] private SharedEntityStorageSystem _entityStorage = default!;
 
@@ -113,10 +107,9 @@ public sealed partial class BeeSwarmSystem : EntitySystem
         var ventRoute = modifier.SkipVents ? null : FindSwarmVentRoute(hive, grid, hiveMap, range);
 
         // Only exits with a place to nest near them: a swarm that comes out where there is none just flies about.
-        List<EntityUid>? nestExits = null;
         if (ventRoute is { } found)
         {
-            nestExits = NestExits(found.Exits, range, grid);
+            var nestExits = NestExits(found.Exits, range, grid);
             ventRoute = nestExits.Count > 0 ? (found.Entry, _random.Pick(nestExits), nestExits) : null;
         }
 
@@ -241,8 +234,7 @@ public sealed partial class BeeSwarmSystem : EntitySystem
 
         // Off in a random direction, as far as it can fly in a straight line, up to the scouting range.
         var hiveMap = _transform.GetMapCoordinates(hive, xform);
-        var angle = _random.NextFloat() * MathF.Tau;
-        var direction = new Vector2(MathF.Cos(angle), MathF.Sin(angle));
+        var direction = _random.NextAngle().ToVec();
         var distance = Math.Min(comp.ScoutRange, _scout.FreeFlight(hiveMap, direction, comp.ScoutRange, hive) - 0.5f);
         var target = _map.WorldToLocal(grid, gridComp, hiveMap.Position + direction * Math.Max(distance, 0.5f));
         if (_errands.Release(hive, xform, comp.LeavingSwarmPrototype, null, null, new EntityCoordinates(grid, target)) is not { } swarm ||
@@ -401,8 +393,7 @@ public sealed partial class BeeSwarmSystem : EntitySystem
         var distance = 0f;
         for (var i = 0; i < 4 && distance < 1f; i++)
         {
-            var angle = _random.NextFloat() * MathF.Tau;
-            direction = new Vector2(MathF.Cos(angle), MathF.Sin(angle));
+            direction = _random.NextAngle().ToVec();
             distance = Math.Min(length, _scout.FreeFlight(origin, direction, length, flyer) - 0.5f);
         }
 

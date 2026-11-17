@@ -71,8 +71,8 @@ public sealed partial class BeeErrandSystem : EntitySystem
     /// </summary>
     private const float WatchRange = 15f;
 
-    private readonly HashSet<Entity<BeeErrandComponent>> _errandsNear = new();
-    private readonly HashSet<Entity<ActorComponent>> _watchers = new();
+    private readonly HashSet<Entity<BeeErrandComponent>> _errandsNear = [];
+    private readonly HashSet<Entity<ActorComponent>> _watchers = [];
 
     public override void Update(float frameTime)
     {

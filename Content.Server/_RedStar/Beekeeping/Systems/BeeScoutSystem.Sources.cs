@@ -25,7 +25,7 @@ public sealed partial class BeeScoutSystem
     [Dependency] private EntityQuery<PlantComponent> _plantQuery;
     [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery;
 
-    private readonly HashSet<Entity<PlantTrayComponent>> _foundTrays = new();
+    private readonly HashSet<Entity<PlantTrayComponent>> _foundTrays = [];
 
     #region Known places
 

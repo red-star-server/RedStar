@@ -27,8 +27,8 @@ public sealed partial class BeeScoutSystem : EntitySystem
     [Dependency] private BeehiveSystem _hive = default!;
     [Dependency] private IGameTiming _timing = default!;
 
-    private readonly List<EntityUid> _found = new();
-    private readonly List<(EntityUid Tray, float Distance)> _candidates = new();
+    private readonly List<EntityUid> _found = [];
+    private readonly List<(EntityUid Tray, float Distance)> _candidates = [];
 
     /// <summary>
     /// While the scout is home it flies out every so often; the pause between trips starts when it is back. A scout
