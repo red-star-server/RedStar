@@ -7,6 +7,8 @@ namespace Content.Shared.Humanoid;
 
 public sealed partial class HumanoidCharacterAppearance
 {
+    private static readonly ISawmill Sawmill = Logger.GetSawmill("humanoid");
+
     private static void MigrateMarkingsToLayerOwners(
         Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> markings,
         Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> validatedMarkings,
@@ -22,31 +24,50 @@ public sealed partial class HumanoidCharacterAppearance
             foreach (var layer in organData.Value.Layers)
             {
                 if (!layerOwners.TryGetValue(layer, out var owner) || (owner == "Torso" && organ != "Torso"))
+                {
                     layerOwners[layer] = organ;
+                    continue;
+                }
+
+                if (owner != "Torso" && organ != "Torso")
+                    Sawmill.Warning($"Visual layer {layer} is claimed by both {owner} and {organ}; keeping {owner}.");
             }
         }
 
+        var working = new Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>>();
+
         foreach (var (organ, sets) in markings)
         {
-            Dictionary<HumanoidVisualLayers, List<Marking>>? source = null;
-
             foreach (var (layer, layerMarkings) in sets)
             {
                 if (!layerOwners.TryGetValue(layer, out var owner) || owner == organ)
                     continue;
 
-                source ??= validatedMarkings[organ].ShallowClone();
-                source.Remove(layer);
+                Working(organ).Remove(layer);
 
-                var destination = validatedMarkings.GetValueOrDefault(owner)?.ShallowClone() ?? new();
+                var destination = Working(owner);
                 var moved = destination.GetValueOrDefault(layer)?.ShallowClone() ?? [];
                 moved.AddRange(layerMarkings);
                 destination[layer] = moved;
-                validatedMarkings[owner] = destination;
             }
+        }
 
-            if (source is not null)
-                validatedMarkings[organ] = source;
+        foreach (var (organ, sets) in working)
+        {
+            validatedMarkings[organ] = sets;
+        }
+
+        return;
+
+        Dictionary<HumanoidVisualLayers, List<Marking>> Working(ProtoId<OrganCategoryPrototype> organ)
+        {
+            if (working.TryGetValue(organ, out var sets))
+                return sets;
+
+            sets = validatedMarkings.GetValueOrDefault(organ)?.ShallowClone() ?? new();
+            working[organ] = sets;
+
+            return sets;
         }
     }
 }

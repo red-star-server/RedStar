@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Body;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
@@ -11,34 +10,55 @@ public sealed partial class WaggingSystem
 {
     [Dependency] private INetManager _net = default!;
 
+    private const string AnimatedSuffix = "Animated";
+
     [SubscribeLocalEvent(after: [typeof(BodySystem)])]
     private void OnMarkingsApplied(Entity<VisualBodyComponent> ent, ref ApplyOrganMarkingsEvent args)
     {
-        if (_net.IsClient)
-            return;
-
-        if (!TryFindAnimatedTail(args.Markings, "Tail", out var organ) &&
-            !TryFindAnimatedTail(args.Markings, "Torso", out organ))
-            return;
-
-        EnsureWagging(ent.Owner, organ);
+        if (!_net.IsClient)
+            SyncWagging(ent);
     }
 
     [SubscribeLocalEvent]
     private void OnOrganInserted(Entity<VisualBodyComponent> ent, ref OrganInsertedIntoEvent args)
     {
-        if (_net.IsClient)
-            return;
-
-        if (args.Organ.Comp.Category is not { } category ||
-            !TryComp<VisualOrganMarkingsComponent>(args.Organ.Owner, out var markings) ||
-            !HasAnimatedTail(markings.Markings))
-            return;
-
-        EnsureWagging(ent.Owner, category);
+        if (!_net.IsClient)
+            SyncWagging(ent);
     }
 
-    private void EnsureWagging(EntityUid body, ProtoId<OrganCategoryPrototype> organ)
+    [SubscribeLocalEvent]
+    private void OnOrganRemoved(Entity<VisualBodyComponent> ent, ref OrganRemovedFromEvent args)
+    {
+        if (!_net.IsClient)
+            SyncWagging(ent);
+    }
+
+    private void SyncWagging(Entity<VisualBodyComponent> ent)
+    {
+        if (!_visualBody.TryGatherMarkingsData(ent.AsNullable(), [HumanoidVisualLayers.Tail], out _, out _, out var applied))
+            return;
+
+        if (TryGetTailAnimation(applied, "Tail", out var animated))
+        {
+            EnsureWagging(ent.Owner, "Tail", animated);
+            return;
+        }
+
+        if (TryGetTailAnimation(applied, "Torso", out animated))
+        {
+            EnsureWagging(ent.Owner, "Torso", animated);
+            return;
+        }
+
+        if (!TryComp<WaggingComponent>(ent.Owner, out var comp) || comp.ActionEntity is not { } action)
+            return;
+
+        _actions.RemoveAction(ent.Owner, action);
+        comp.ActionEntity = null;
+        DirtyField<WaggingComponent>(ent.Owner, nameof(WaggingComponent.ActionEntity));
+    }
+
+    private void EnsureWagging(EntityUid body, ProtoId<OrganCategoryPrototype> organ, bool animated)
     {
         var component = EnsureComp<WaggingComponent>(body);
 
@@ -48,6 +68,12 @@ public sealed partial class WaggingSystem
             DirtyField<WaggingComponent>(body, nameof(WaggingComponent.Organ));
         }
 
+        if (component.Wagging != animated)
+        {
+            component.Wagging = animated;
+            DirtyField<WaggingComponent>(body, nameof(WaggingComponent.Wagging));
+        }
+
         if (component.ActionEntity is not null)
             return;
 
@@ -55,18 +81,32 @@ public sealed partial class WaggingSystem
         DirtyField<WaggingComponent>(body, nameof(WaggingComponent.ActionEntity));
     }
 
-    private bool TryFindAnimatedTail(
-        Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> markings,
+    private bool TryGetTailAnimation(
+        Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> applied,
         ProtoId<OrganCategoryPrototype> category,
-        out ProtoId<OrganCategoryPrototype> organ)
+        out bool animated)
     {
-        organ = category;
-        return markings.TryGetValue(category, out var sets) && HasAnimatedTail(sets);
-    }
+        animated = false;
 
-    private bool HasAnimatedTail(Dictionary<HumanoidVisualLayers, List<Marking>> markings)
-    {
-        return markings.TryGetValue(HumanoidVisualLayers.Tail, out var tails) &&
-               tails.Any(tail => ProtoMan.HasIndex<MarkingPrototype>(tail.MarkingId.Id + "Animated"));
+        if (!applied.TryGetValue(category, out var sets) ||
+            !sets.TryGetValue(HumanoidVisualLayers.Tail, out var tails))
+            return false;
+
+        var found = false;
+        foreach (var tail in tails)
+        {
+            var id = tail.MarkingId.Id;
+            if (ProtoMan.HasIndex<MarkingPrototype>(id + AnimatedSuffix))
+            {
+                found = true;
+            }
+            else if (id.EndsWith(AnimatedSuffix) && ProtoMan.HasIndex<MarkingPrototype>(id[..^AnimatedSuffix.Length]))
+            {
+                found = true;
+                animated = true;
+            }
+        }
+
+        return found;
     }
 }
