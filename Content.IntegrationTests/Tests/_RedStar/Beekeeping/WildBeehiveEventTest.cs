@@ -230,8 +230,12 @@ public sealed class WildBeehiveEventTest : GameTest
                 entities.GetComponent<WeldableComponent>(vent).IsWelded = true;
 
             StartEvent();
-            Assert.That(entities.EntityQuery<BeeSwarmComponent>(), Is.Empty);
-            Assert.That(entities.EntityQuery<BeeQueenComponent>(), Is.Empty);
+            Assert.That(entities.AllEntities<BeeSwarmComponent>().Any(ent => IsOnTestMap(ent.Owner)), Is.False,
+                "the event must not spawn a swarm on the station");
+            Assert.That(entities.AllEntities<BeeQueenComponent>().Any(ent => IsOnTestMap(ent.Owner)), Is.False,
+                "the event must not spawn a queen on the station");
+
+            bool IsOnTestMap(EntityUid uid) => entities.GetComponent<TransformComponent>(uid).MapUid == map.MapUid;
         });
     }
 
