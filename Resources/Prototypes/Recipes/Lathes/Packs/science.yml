@@ -9,7 +9,7 @@
   # - CircuitImprinterMachineCircuitboard
   # RS14-end
   - ExosuitFabricatorMachineCircuitboard
-  - CutterMachineCircuitboard
+  #- CutterMachineCircuitboard
   - BorgChargerCircuitboard
 
 ## Dynamic
@@ -72,11 +72,11 @@
   id: ScienceBoards
   recipes:
   - TurboItemRechargerCircuitboard
-  - AutolatheHyperConvectionMachineCircuitboard
-  - ProtolatheHyperConvectionMachineCircuitboard
-  - CircuitImprinterHyperConvectionMachineCircuitboard
-  - ResearchPointDiskTerminalCircuitboard # RS14
-  # RS14-start - Moved to SharedBoards.
+  # RS14-start
+  #- AutolatheHyperConvectionMachineCircuitboard
+  #- ProtolatheHyperConvectionMachineCircuitboard
+  #- CircuitImprinterHyperConvectionMachineCircuitboard
+  - ResearchPointDiskTerminalCircuitboard
   # - FlatpackerMachineCircuitboard
   # - SheetifierMachineCircuitboard
   # - PowerCageRechargerCircuitboard

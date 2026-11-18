@@ -115,3 +115,11 @@ MutagenicCellInjectorCircuitboard: MutagenicInjectorCircuitboard
 # 2026-10-23
 TechDiskComputerCircuitboard: ResearchPointDiskTerminalCircuitboard
 ComputerTechnologyDiskTerminal: ComputerResearchPointDiskTerminal
+
+# 2026-11-18
+AutolatheHyperConvection: null
+ProtolatheHyperConvection: null
+CircuitImprinterHyperConvection: null
+AutolatheHyperConvectionMachineCircuitboard: null
+ProtolatheHyperConvectionMachineCircuitboard: null
+CircuitImprinterHyperConvectionMachineCircuitboard: null
