@@ -215,6 +215,7 @@
     unlitIdleState: unlit
     unlitRunningState: unlit-building
     staticPacks:
+    - SharedBoardsStatic
     - ServiceBoardsStatic
     - MaterialsStatic
     - LightsStatic
@@ -224,6 +225,7 @@
     - ChemistryStatic
     - HydroponicsStatic
     - BeekeepingStatic
+    - TapeRecorderStatic
     dynamicPacks:
     - Janitor
     - Instruments

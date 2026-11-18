@@ -1,3 +1,0 @@
-# Role timers
-
-JobGeneticist = geneticist

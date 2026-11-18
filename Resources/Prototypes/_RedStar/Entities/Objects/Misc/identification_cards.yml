@@ -13,7 +13,25 @@
     - state: stripe_bottom
       color: &color-medical-bottom "#325f7a"
     - sprite: &icon-rsi Interface/Misc/job_icons.rsi
-      offset: &icon-offset -0.1875, 0.0 #3 pixels left, 2 pixels up # RS14
+      offset: &icon-offset -0.1875, 0.0 #3 pixels left, 2 pixels up
       state: Geneticist
   - type: PresetIdCard
     job: Geneticist
+
+- type: entity
+  parent: IDCardStandard
+  id: SurgeonIDCard
+  name: surgeon ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: stripe_top
+      color: *color-medical-top
+    - state: stripe_bottom
+      color: *color-medical-bottom
+    - sprite: _RedStar/Interface/Misc/job_icons.rsi
+      offset: *icon-offset
+      state: Surgeon
+  - type: PresetIdCard
+    job: Surgeon

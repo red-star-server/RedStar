@@ -1,13 +1,7 @@
 using System.Linq;
-using Content.Shared._Trauma.Augments;
-using Content.Shared.Actions.Components;
 using Content.Shared.Body;
-using Content.Shared.Item.ItemToggle;
 using Content.Shared.Power.EntitySystems;
-using Content.Shared.PowerCell.Components;
-using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Verbs;
-using Content.Shared.Weapons.Melee;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -17,7 +11,10 @@ namespace Content.IntegrationTests.Tests._Trauma;
 
 public sealed partial class SurgeryTest
 {
+    private static readonly ProtoId<OrganCategoryPrototype> Head = "Head";
     private static readonly ProtoId<OrganCategoryPrototype> AugmentCell = "AugmentPowerCell";
+    private static readonly ProtoId<OrganCategoryPrototype> AugmentCharger = "AugmentCharger";
+    private static readonly ProtoId<OrganCategoryPrototype> CyberneticEyes = "Eyes";
 
     private void InsertAugmentCell(EntityUid slot, EntityUid battery)
     {
@@ -25,10 +22,6 @@ public sealed partial class SurgeryTest
         Assert.That(containers.TryGetContainer(slot, "cell_slot", out var container), Is.True);
         Assert.That(containers.Insert(battery, container!), Is.True);
     }
-
-    private static readonly ProtoId<OrganCategoryPrototype> AugmentCharger = "AugmentCharger";
-
-    private static readonly ProtoId<OrganCategoryPrototype> CyberneticEyes = "Eyes";
 
     [Test]
     public async Task CyberneticEffectsFollowOrganState()
@@ -41,17 +34,17 @@ public sealed partial class SurgeryTest
             Assert.That(_parts.RemoveOrgan(head, oldEyes), Is.True);
             var eyes = SSpawn("OrganCyberneticEyesMedical");
             Assert.That(_parts.InsertOrgan(head, eyes), Is.True);
-            Assert.That(SEntMan.HasComponent<Content.Shared.Flash.Components.FlashImmunityComponent>(patient), Is.True);
+            Assert.That(SEntMan.HasComponent<Shared.Flash.Components.FlashImmunityComponent>(patient), Is.True);
 
             Assert.That(_body.DisableOrgan(eyes), Is.True);
-            Assert.That(SEntMan.HasComponent<Content.Shared.Flash.Components.FlashImmunityComponent>(patient), Is.False);
+            Assert.That(SEntMan.HasComponent<Shared.Flash.Components.FlashImmunityComponent>(patient), Is.False);
             Assert.That(_body.EnableOrgan(eyes), Is.True);
-            Assert.That(SEntMan.HasComponent<Content.Shared.Flash.Components.FlashImmunityComponent>(patient), Is.True);
+            Assert.That(SEntMan.HasComponent<Shared.Flash.Components.FlashImmunityComponent>(patient), Is.True);
 
             Assert.That(_body.DisableOrgan(eyes), Is.True);
             Assert.That(_parts.RemoveOrgan(head, eyes), Is.True);
             Assert.That(_body.EnableOrgan(eyes), Is.False);
-            Assert.That(SEntMan.HasComponent<Content.Shared.Flash.Components.FlashImmunityComponent>(patient), Is.False);
+            Assert.That(SEntMan.HasComponent<Shared.Flash.Components.FlashImmunityComponent>(patient), Is.False);
         });
     }
 
@@ -80,5 +73,4 @@ public sealed partial class SurgeryTest
         await RunSeconds(3);
         await Server.WaitAssertion(() => Assert.That(Server.System<SharedBatterySystem>().GetCharge(battery).Charge, Is.GreaterThan(100)));
     }
-
 }

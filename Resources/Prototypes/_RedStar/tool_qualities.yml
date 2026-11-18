@@ -3,51 +3,60 @@
   name: tool-quality-cauterizing-name
   toolName: tool-quality-cauterizing-tool-name
   spawn: Cautery
+  icon: { sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/cautery.rsi, state: cautery }
 
 - type: tool
   id: Drilling
   name: tool-quality-drilling-name
   toolName: tool-quality-drilling-tool-name
   spawn: Drill
+  icon: { sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/drill.rsi, state: drill }
 
 - type: tool
   id: Retracting
   name: tool-quality-retracting-name
   toolName: tool-quality-retracting-tool-name
   spawn: Retractor
+  icon: { sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/retractor.rsi, state: retractor }
 
 - type: tool
   id: Clamping
   name: tool-quality-clamping-name
   toolName: tool-quality-clamping-tool-name
   spawn: Hemostat
+  icon: { sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/hemostat.rsi, state: hemostat }
 
 - type: tool
   id: Suturing
   name: tool-quality-suturing-name
   toolName: tool-quality-suturing-tool-name
   spawn: MedicalStitches
+  icon: { sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/stitches.rsi, state: stitches }
 
 - type: tool
   id: BoneHealing
   name: tool-quality-bone-healing-name
   toolName: tool-quality-bone-healing-tool-name
   spawn: BoneGel
+  icon: { sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/bone-gel.rsi, state: bone-gel }
 
 - type: tool
   id: BoneSetting
   name: tool-quality-bone-setting-name
   toolName: tool-quality-bone-setting-tool-name
   spawn: Bonesetter
+  icon: { sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/bonesetter.rsi, state: bonesetter }
 
 - type: tool
   id: Tending
   name: tool-quality-tending-name
   toolName: tool-quality-tending-tool-name
   spawn: Hemostat
+  icon: { sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/hemostat.rsi, state: hemostat }
 
 - type: tool
   id: Manipulating
   name: tool-quality-manipulating-name
   toolName: tool-quality-manipulating-tool-name
   spawn: Hemostat
+  icon: { sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/hemostat.rsi, state: hemostat }

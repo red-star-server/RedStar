@@ -15,6 +15,14 @@
     - !type:DepartmentTimeRequirement
       department: Medical
       time: 10h
+      # RS14-start
+    - !type:RoleTimeRequirement
+      role: JobGeneticist
+      time: 2.5h
+    - !type:RoleTimeRequirement
+      role: JobSurgeon
+      time: 2.5h
+      # RS14-end
   startingGear: CMOGear
   icon: "JobIconChiefMedicalOfficer"
   supervisors: job-supervisors-captain

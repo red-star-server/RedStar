@@ -6,6 +6,6 @@ public sealed partial class EntryPoint
 {
     private void InitializeTraumaPrototypes()
     {
-        _prototypeManager.PartialDirectory(new ResPath("/Prototypes/_RedStar/Partials/Medical"), 1);
+        _prototypeManager.PartialDirectory(new ResPath("/Prototypes/_RedStar/Partials"), 1);
     }
 }

@@ -1,8 +1,8 @@
 ent-BaseSpeciesAppearance = { ent-BaseSpeciesAppearanceOrganless }
     .desc = { ent-BaseSpeciesAppearanceOrganless.desc }
-ent-OrganDionaTongue = { ent-OrganDionaInternal }
+ent-OrganDionaTongue = язык
     .desc = { ent-OrganBaseTongue.desc }
     .suffix = { ent-OrganDionaInternal.suffix }
-ent-OrganSlimePersonTongue = { ent-OrganSlimePersonInternal }
+ent-OrganSlimePersonTongue = язык
     .desc = { ent-OrganBaseTongue.desc }
     .suffix = { ent-OrganSlimePersonInternal.suffix }
