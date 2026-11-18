@@ -1,8 +1,8 @@
 - type: cargoProduct
   id: LivestockSkrellkeyCube
   icon:
-    sprite: Objects/Misc/monkeycube.rsi
-    state: box
+    sprite: _RedStar/Objects/Misc/ancestorcube.rsi
+    state: box_skrellkey
   product: SkrellkeyCubeBox
   container:
     entity: WrappedParcel
@@ -14,8 +14,8 @@
 - type: cargoProduct
   id: LivestockStokkeyCube
   icon:
-    sprite: Objects/Misc/monkeycube.rsi
-    state: box
+    sprite: _RedStar/Objects/Misc/ancestorcube.rsi
+    state: box_stokkey
   product: StokkeyCubeBox
   container:
     entity: WrappedParcel
@@ -27,8 +27,8 @@
 - type: cargoProduct
   id: LivestockTajkeyCube
   icon:
-    sprite: Objects/Misc/monkeycube.rsi
-    state: box
+    sprite: _RedStar/Objects/Misc/ancestorcube.rsi
+    state: box_tajkey
   product: TajkeyCubeBox
   container:
     entity: WrappedParcel
@@ -40,8 +40,8 @@
 - type: cargoProduct
   id: LivestockWolflingCube
   icon:
-    sprite: Objects/Misc/monkeycube.rsi
-    state: box
+    sprite: _RedStar/Objects/Misc/ancestorcube.rsi
+    state: box_wolfling
   product: WolflingCubeBox
   container:
     entity: WrappedParcel

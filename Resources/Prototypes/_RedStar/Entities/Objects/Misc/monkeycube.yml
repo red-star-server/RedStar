@@ -58,8 +58,8 @@
         id: SkrellkeyCubeWrapped
         amount: 8
   - type: Sprite
-    sprite: Objects/Misc/monkeycube.rsi
-    state: box
+    sprite: _RedStar/Objects/Misc/ancestorcube.rsi
+    state: box_skrellkey
 
 - type: entity
   parent: MonkeyCubeBox
@@ -73,8 +73,8 @@
         id: StokkeyCubeWrapped
         amount: 8
   - type: Sprite
-    sprite: Objects/Misc/monkeycube.rsi
-    state: box
+    sprite: _RedStar/Objects/Misc/ancestorcube.rsi
+    state: box_stokkey
 
 - type: entity
   parent: MonkeyCubeBox
@@ -88,8 +88,8 @@
         id: TajkeyCubeWrapped
         amount: 8
   - type: Sprite
-    sprite: Objects/Misc/monkeycube.rsi
-    state: box
+    sprite: _RedStar/Objects/Misc/ancestorcube.rsi
+    state: box_tajkey
 
 - type: entity
   parent: MonkeyCubeBox
@@ -103,5 +103,5 @@
         id: WolflingCubeWrapped
         amount: 8
   - type: Sprite
-    sprite: Objects/Misc/monkeycube.rsi
-    state: box
+    sprite: _RedStar/Objects/Misc/ancestorcube.rsi
+    state: box_wolfling
