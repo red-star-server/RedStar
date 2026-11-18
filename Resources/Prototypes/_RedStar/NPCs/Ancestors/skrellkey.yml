@@ -1,0 +1,77 @@
+﻿- type: entity
+  name: neara
+  id: MobSkrellkey
+  parent: MobBaseAncestor
+  description: Skrell's ancient ancestor in the flesh. Loves water and seems to want to find a way to kill you.
+  components:
+  - type: NameIdentifier
+    group: Monkey
+  - type: MonkeyAccent
+  - type: Speech
+    speechSounds: Monkey
+    speechVerb: Monkey
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: skrellkey
+      sprite: _RedStar/Mobs/Animals/Ancestors/skrellkey.rsi
+    - map: ["jumpsuit"]
+    - map: ["enum.HumanoidVisualLayers.Handcuffs"]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+    - map: ["ears"]
+    - map: ["id"]
+    - map: ["outerClothing"]
+    - map: ["mask"]
+    - map: ["head"]
+    - map: ["clownedon"]
+      sprite: "Effects/creampie.rsi"
+      state: "creampie_human"
+      visible: false
+  - type: AlwaysRevolutionaryConvertible
+  - type: GhostTakeoverAvailable
+  - type: PermanentStatusEffects
+    statusEffects:
+    - StatusEffectClumsyMonkey
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-skrellkey
+  - type: GhostRole
+    prob: 0.05
+    makeSentient: true
+    name: ghost-role-information-skrellkey-name
+    description: ghost-role-information-skrellkey-description
+    rules: ghost-role-information-nonantagonist-rules
+  - type: Reactive
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
+    reactions:
+    - reagents: [Water, SpaceCleaner]
+      methods: [Touch]
+      effects:
+      - !type:WashCreamPie
+    - reagents: [Water]
+      methods: [Touch]
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: -1
+            Blunt: -1
+            Poison: -0.75
+    - reagents: [Holywater]
+      methods: [Touch]
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: -0.25
+            Blunt: -0.25
+  - type: Damageable
+    damageModifierSet: Skrell
+  - type: Injurable
+    damageContainer: Biological
+  - type: SolutionScanner

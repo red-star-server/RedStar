@@ -1,0 +1,46 @@
+﻿- type: entity
+  name: wolpin
+  id: MobWolfling
+  parent: MobBaseAncestor
+  description: Genetically Vulpakins brother, they are a lot of fun to burn but carefully, they have a plan.
+  components:
+  - type: NameIdentifier
+    group: Monkey
+  - type: Speech
+    speechSounds: Monkey
+    speechVerb: Monkey
+  - type: MonkeyAccent
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-primate
+  - type: AlwaysRevolutionaryConvertible
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: wolfling
+      sprite: _RedStar/Mobs/Animals/Ancestors/wolfling.rsi
+    - map: ["jumpsuit"]
+    - map: ["enum.HumanoidVisualLayers.Handcuffs"]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+    - map: ["ears"]
+    - map: ["id"]
+    - map: ["outerClothing"]
+    - map: ["mask"]
+    - map: ["head"]
+    - map: ["clownedon"]
+      sprite: "Effects/creampie.rsi"
+      state: "creampie_human"
+      visible: false
+  - type: GhostRole
+    prob: 0.05
+    makeSentient: true
+    name: ghost-role-information-wolfling-name
+    description: ghost-role-information-wolfling-description
+    rules: ghost-role-information-nonantagonist-rules
+  - type: GhostTakeoverAvailable
+  - type: PermanentStatusEffects
+    statusEffects:
+    - StatusEffectClumsyMonkey
