@@ -1,0 +1,313 @@
+- type: surgeryProcedure
+  id: OpenIncision
+  name: surgery-procedure-open-incision
+  from: [Closed]
+  to: Incised
+  steps:
+  - name: surgery-step-cut-scalpel
+    quality: Slicing
+    icon:
+      sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/scalpel.rsi
+      state: scalpel
+    duration: 2
+    effects:
+    - !type:DamageEffect
+      sleepModifier: 0.5
+      damage:
+        types:
+          Bloodloss: 10
+  - name: surgery-step-retract-skin
+    quality: Retracting
+    duration: 2
+
+- type: surgeryProcedure
+  id: CloseIncision
+  name: surgery-procedure-close-incision
+  from: [Incised]
+  to: Closed
+  priority: 1
+  steps:
+  - name: surgery-step-cauterize
+    quality: Cauterizing
+    duration: 2
+    effects:
+    - !type:DamageEffect
+      sleepModifier: 2
+      damage:
+        types:
+          Heat: -5
+    - !type:ComponentEffect
+      remove:
+      - type: OrganReattached
+
+- type: surgeryProcedure
+  id: OpenSkull
+  name: surgery-procedure-open-skull
+  from: [Incised]
+  to: SkullOpen
+  conditions:
+  - !type:PartTypeCondition
+    parts: [Head]
+  steps:
+  - name: surgery-step-saw-bones
+    quality: Sawing
+    duration: 4
+  - name: surgery-step-prise-bones
+    quality: Retracting
+    duration: 2
+
+- type: surgeryProcedure
+  id: CloseBones
+  name: surgery-procedure-close-bones
+  from: [SkullOpen, RibcageOpen]
+  to: Closed
+  priority: 1
+  steps:
+  - name: surgery-step-close-bones
+    quality: Retracting
+    duration: 2
+  - name: surgery-step-seal-bones
+    quality: BoneHealing
+    duration: 2
+  - name: surgery-step-cauterize
+    quality: Cauterizing
+    duration: 2
+    effects:
+    - !type:DamageEffect
+      sleepModifier: 2
+      damage:
+        types:
+          Heat: -5
+    - !type:ComponentEffect
+      remove:
+      - type: OrganReattached
+
+- type: surgeryProcedure
+  id: OpenRibcage
+  name: surgery-procedure-open-ribcage
+  from: [Incised]
+  to: RibcageOpen
+  conditions:
+  - !type:PartTypeCondition
+    parts: [Torso]
+  steps:
+  - name: surgery-step-saw-bones
+    quality: Sawing
+    duration: 4
+  - name: surgery-step-prise-bones
+    quality: Retracting
+    duration: 2
+
+- type: surgeryProcedure
+  id: Amputate
+  name: surgery-procedure-amputate
+  from: [Incised, SkullOpen]
+  conditions:
+  - !type:HasBodyCondition
+  - !type:PartTypeCondition
+    parts: [Torso]
+    inverted: true
+  steps:
+  - name: surgery-step-saw-bones
+    quality: Sawing
+    duration: 4
+  - name: surgery-step-clamp-bleeders
+    quality: Clamping
+    duration: 2
+    effects:
+    - !type:DamageEffect
+      sleepModifier: 2
+      damage:
+        types:
+          Bloodloss: -5
+  - name: surgery-step-amputate
+    quality: Sawing
+    duration: 8
+    effects:
+    - !type:RemovePartEffect
+
+- type: surgeryProcedure
+  id: StopBleeding
+  name: surgery-procedure-stop-bleeding
+  from: [Incised, SkullOpen, RibcageOpen]
+  conditions:
+  - !type:BleedsPresentCondition
+  steps:
+  - name: surgery-step-clamp-bleeders
+    quality: Clamping
+    duration: 4
+    repeatable: true
+    repeatWhile: !type:BleedsPresentCondition
+    effects:
+    - !type:BleedsTreatmentEffect
+      amount: 2
+  - name: surgery-step-stitch
+    quality: Suturing
+    duration: 5
+
+- type: surgeryProcedure
+  id: MendBones
+  name: surgery-procedure-mend-bones
+  from: [Incised, SkullOpen, RibcageOpen]
+  conditions:
+  - !type:BleedsPresentCondition
+    inverted: true
+  - !type:TraumaPresentCondition
+    trauma: BoneDamage
+  steps:
+  - name: surgery-step-saw-bones
+    quality: Sawing
+    duration: 4
+  - name: surgery-step-clamp-bleeders
+    quality: Clamping
+    duration: 2
+    effects:
+    - !type:DamageEffect
+      sleepModifier: 2
+      damage:
+        types:
+          Bloodloss: -5
+  - name: surgery-step-mend-bones
+    quality: BoneHealing
+    duration: 7
+    repeatable: true
+    repeatWhile: !type:TraumaPresentCondition
+      trauma: BoneDamage
+    effects:
+    - !type:TraumaTreatmentEffect
+      traumaType: BoneDamage
+      amount: 17
+
+- type: surgeryProcedure
+  id: HealOrgans
+  name: surgery-procedure-heal-organs
+  from: [SkullOpen, RibcageOpen]
+  conditions:
+  - !type:BleedsPresentCondition
+    inverted: true
+  - !type:TraumaPresentCondition
+    trauma: OrganDamage
+  steps:
+  - name: surgery-step-clamp-bleeders
+    quality: Clamping
+    duration: 2
+    effects:
+    - !type:DamageEffect
+      sleepModifier: 2
+      damage:
+        types:
+          Bloodloss: -5
+  - name: surgery-step-heal-organs
+    quality: Manipulating
+    duration: 7
+    repeatable: true
+    repeatWhile: !type:TraumaPresentCondition
+      trauma: OrganDamage
+    effects:
+    - !type:TraumaTreatmentEffect
+      traumaType: OrganDamage
+      amount: 17
+
+- type: surgeryProcedure
+  id: FixDismemberment
+  name: surgery-procedure-fix-dismemberment
+  from: [Incised, SkullOpen, RibcageOpen]
+  conditions:
+  - !type:BleedsPresentCondition
+    inverted: true
+  - !type:TraumaPresentCondition
+    trauma: Dismemberment
+  steps:
+  - name: surgery-step-remove-dead-skin
+    quality: Slicing
+    icon:
+      sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/scalpel.rsi
+      state: scalpel
+    duration: 4
+  - name: surgery-step-clear-bone-leftovers
+    quality: Sawing
+    duration: 5
+  - name: surgery-step-stitch-dismemberment
+    quality: Suturing
+    duration: 8
+    effects:
+    - !type:TraumaTreatmentEffect
+      traumaType: Dismemberment
+
+- type: surgeryProcedure
+  id: TendBruteWounds
+  name: surgery-procedure-tend-brute
+  from: [Closed]
+  conditions:
+  - !type:WoundedCondition
+    damageGroup: Brute
+  steps:
+  - name: surgery-step-careful-incision
+    quality: Slicing
+    icon:
+      sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/scalpel.rsi
+      state: scalpel
+    duration: 3
+  - name: surgery-step-repair-tissue
+    quality: Tending
+    duration: 1
+    repeatable: true
+    repeatWhile: !type:WoundedCondition
+      damageGroup: Brute
+    effects:
+    - !type:TendWoundsEffect
+      mainGroup: Brute
+      damage:
+        types:
+          Blunt: -5
+          Slash: -5
+          Piercing: -5
+          Ballistic: -5
+  - name: surgery-step-seal-tend-wound
+    quality: Cauterizing
+    duration: 2
+    effects:
+    - !type:DamageEffect
+      sleepModifier: 2
+      damage:
+        types:
+          Heat: -5
+
+- type: surgeryProcedure
+  id: TendBurnWounds
+  name: surgery-procedure-tend-burn
+  from: [Closed]
+  conditions:
+  - !type:WoundedCondition
+    damageGroup: Burn
+  steps:
+  - name: surgery-step-careful-incision
+    quality: Slicing
+    icon:
+      sprite: _RedStar/Medical/Objects/Specific/Medical/Surgery/scalpel.rsi
+      state: scalpel
+    duration: 3
+  - name: surgery-step-repair-tissue
+    quality: Tending
+    duration: 1
+    repeatable: true
+    repeatWhile: !type:WoundedCondition
+      damageGroup: Burn
+    effects:
+    - !type:TendWoundsEffect
+      mainGroup: Burn
+      damage:
+        types:
+          Heat: -5
+          Cold: -5
+          Shock: -5
+          Caustic: -5
+  - name: surgery-step-seal-tend-wound
+    quality: Cauterizing
+    duration: 2
+    effects:
+    - !type:DamageEffect
+      sleepModifier: 2
+      damage:
+        types:
+          Heat: -5

@@ -1,0 +1,96 @@
+- type: !PartialOnly latheRecipe
+  id: BluespaceBeaker
+  materials:
+    BlueSpaceCrystal: 200
+
+- type: !PartialOnly latheRecipe
+  id: SyringeBluespace
+  materials:
+    BlueSpaceCrystal: 100
+
+- type: !PartialOnly latheRecipe
+  id: TeleporterChipBlank
+  materials:
+    BlueSpaceCrystal: 100
+
+- type: !PartialOnly latheRecipe
+  id: ClothingBackpackHolding
+  materials:
+    BlueSpaceCrystal: 500
+
+- type: !PartialOnly latheRecipe
+  id: DeviceDesynchronizer
+  materials:
+    RedSpaceCrystal: 200
+
+- type: !PartialOnly latheRecipe
+  id: TrashBagHolding
+  materials:
+    BlueSpaceCrystal: 400
+
+- type: !PartialOnly latheRecipe
+  id: PowerCellMicroreactor
+  materials:
+    Steel: !Remove
+    Titanium: 500
+
+- type: !PartialOnly latheRecipe
+  id: PowerDrill
+  materials:
+    Steel: !Remove
+    Titanium: 600
+
+- type: !PartialOnly latheRecipe
+  id: WelderExperimental
+  materials:
+    Steel: !Remove
+    Titanium: 800
+
+- type: !PartialOnly latheRecipe
+  id: JawsOfLife
+  materials:
+    Steel: !Remove
+    Titanium: 1000
+
+- type: !PartialOnly latheRecipe
+  id: WeaponAdvancedLaser
+  materials:
+    Steel: !Remove
+    Titanium: 1500
+
+- type: !PartialOnly latheRecipe
+  id: WeaponTemperatureGun
+  materials:
+    Steel: !Remove
+    Titanium: 2000
+
+- type: !PartialOnly latheRecipe
+  id: BaseMarbleTileRecipe
+  materials:
+    Steel: !Remove
+    Glass: !Remove
+    Marble: 50
+
+- type: !PartialOnly latheRecipe
+  id: StationTeleporterMachineCircuitboard
+  materials:
+    Steel: 100
+    Glass: 500
+    Gold: 100
+    BlueSpaceCrystal: 300
+
+- type: !PartialOnly latheRecipe
+  id: CargoTelepadMachineCircuitboard
+  materials:
+    Steel: 100
+    Glass: 500
+    Gold: 100
+    BlueSpaceCrystal: 200
+
+- type: !PartialOnly latheRecipe
+  id: StationTeleportersControlCircuitboard
+  materials:
+    Steel: 100
+    Glass: 500
+    Gold: 100
+    BlueSpaceCrystal: 200

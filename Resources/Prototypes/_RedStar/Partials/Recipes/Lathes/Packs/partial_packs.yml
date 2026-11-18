@@ -1,0 +1,70 @@
+- type: !PartialOnly latheRecipePack
+  id: CargoBoards
+  recipes:
+  - SalvageExpeditionsComputerCircuitboard
+
+- type: !PartialOnly latheRecipePack
+  id: ClothingCommand
+  recipes:
+  - ClothingHeadCaptainHat
+
+- type: !PartialOnly latheRecipePack
+  id: ClothingSecurity
+  recipes:
+  - ClothingHeadHatCapHoS
+
+- type: !PartialOnly latheRecipePack
+  id: OreSmelting
+  recipes:
+  - SheetTitanium1
+  - SheetTitaniumGlass1
+
+- type: !PartialOnly latheRecipePack
+  id: AdvancedSmelting
+  recipes:
+  - SheetPlastitanium1
+  - SheetPlastitaniumGlass1
+
+- type: !PartialOnly latheRecipePack
+  id: FloorConcreteTilesStatic
+  recipes:
+  - FloorTileItemIronsandConcrete
+  - FloorTileItemIronsandConcreteMono
+  - FloorTileItemIronsandConcreteSmooth
+  - FloorTileItemOldConcrete
+  - FloorTileItemOldConcreteMono
+  - FloorTileItemOldConcreteSmooth
+  - FloorTileItemWhiteConcrete
+  - FloorTileItemWhiteConcreteMono
+  - FloorTileItemWhiteConcreteSmooth
+
+- type: !PartialOnly latheRecipePack
+  id: FloorMarbleTilesStatic
+  recipes:
+  - FloorTileItemWhiteMarbleMono
+  - FloorTileItemDarkMarbleMono
+
+- type: !PartialOnly latheRecipePack
+  id: AdvancedTools
+  recipes:
+  - !Remove Fulton
+  - !Remove FultonBeacon
+
+- type: !PartialOnly latheRecipePack
+  id: ScienceBoardsStatic
+  recipes:
+  - !Remove ProtolatheMachineCircuitboard
+  - !Remove AutolatheMachineCircuitboard
+  - !Remove CircuitImprinterMachineCircuitboard
+  - !Remove CutterMachineCircuitboard
+
+- type: !PartialOnly latheRecipePack
+  id: ScienceBoards
+  recipes:
+  - !Remove AutolatheHyperConvectionMachineCircuitboard
+  - !Remove ProtolatheHyperConvectionMachineCircuitboard
+  - !Remove CircuitImprinterHyperConvectionMachineCircuitboard
+  - !Remove FlatpackerMachineCircuitboard
+  - !Remove SheetifierMachineCircuitboard
+  - !Remove PowerCageRechargerCircuitboard
+  - ResearchPointDiskTerminalCircuitboard
