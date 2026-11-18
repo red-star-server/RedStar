@@ -59,6 +59,39 @@ public sealed class WildHiveLimitTest : GameTest
     }
 
     [Test]
+    public async Task RejectedQueenDoesNotLeaveAnEmptyWildHive()
+    {
+        var server = Server;
+        var map = await Pair.CreateTestMap();
+        var swarms = server.System<BeeSwarmSystem>();
+        var slots = server.System<ItemSlotsSystem>();
+        var containers = server.System<SharedContainerSystem>();
+        await OverrideCVar(Side.Server, BeekeepingCVars.ActiveHiveLimit, 1);
+        await OverrideCVar(Side.Server, BeekeepingCVars.WildHiveLimit, 1);
+
+        await server.WaitAssertion(() =>
+        {
+            var entities = server.EntMan;
+            var hive = entities.SpawnAttachedTo("Beehive", map.GridCoords);
+            var hiveComp = entities.GetComponent<BeehiveComponent>(hive);
+            var queen = entities.SpawnAttachedTo("BeeQueen", map.GridCoords);
+            Assert.That(slots.TryInsert(hive, hiveComp.QueenSlot, queen, null), Is.True);
+            Assert.That(swarms.TryAbandon((hive, hiveComp)), Is.True);
+            Assert.That(containers.TryGetContainingContainer(queen, out var carrier), Is.True);
+            var swarm = carrier!.Owner;
+
+            // The active slot opens when the queen leaves and is filled again before she lands.
+            var replacement = entities.SpawnAttachedTo("BeeQueen", map.GridCoords);
+            Assert.That(slots.TryInsert(hive, hiveComp.QueenSlot, replacement, null), Is.True);
+            swarms.LandSwarm((swarm, entities.GetComponent<BeeSwarmComponent>(swarm)));
+
+            Assert.That(swarms.CountWildHives(map.MapUid), Is.Zero);
+            Assert.That(entities.EntityExists(queen), Is.True);
+            Assert.That(containers.TryGetContainingContainer(queen, out _), Is.False);
+        });
+    }
+
+    [Test]
     public async Task OnlyOneOfTwoAirborneSwarmsCanNestAtLimitOne()
     {
         var server = Server;

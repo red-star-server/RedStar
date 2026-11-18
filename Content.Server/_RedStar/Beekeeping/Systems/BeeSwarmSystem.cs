@@ -65,6 +65,9 @@ public sealed partial class BeeSwarmSystem : EntitySystem
     /// </summary>
     public bool TrySwarm(Entity<BeehiveComponent> hive)
     {
+        if (!hive.Comp.Wild && hive.Comp.MaxBees == 0)
+            return false;
+
         return TryLeave(hive, false);
     }
 
@@ -434,20 +437,25 @@ public sealed partial class BeeSwarmSystem : EntitySystem
             return;
         }
 
+        if (!_container.TryGetContainer(swarm, swarm.Comp.Container, out var container) ||
+            container is not ContainerSlot { ContainedEntity: { } queen })
+        {
+            return;
+        }
+
         var wild = SpawnAttachedTo(swarm.Comp.WildHive, xform.Coordinates);
-        if (!TryComp<BeehiveComponent>(wild, out var wildComp) ||
-            !_container.TryGetContainer(swarm, swarm.Comp.Container, out var container))
+        if (!TryComp<BeehiveComponent>(wild, out var wildComp) || !_container.Remove(queen, container, force: true))
         {
             Del(wild);
             DropSwarmQueen(swarm);
             return;
         }
 
-        foreach (var queen in new List<EntityUid>(container.ContainedEntities))
+        if (!_itemSlots.TryInsert(wild, wildComp.QueenSlot, queen, null))
         {
-            _container.Remove(queen, container, force: true);
-            if (!_itemSlots.TryInsert(wild, wildComp.QueenSlot, queen, null))
-                _transform.DropNextTo(queen, wild);
+            _transform.DropNextTo(queen, swarm.Owner);
+            Del(wild);
+            return;
         }
 
         if (swarm.Comp.Storage is { } storage &&

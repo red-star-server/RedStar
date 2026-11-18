@@ -151,6 +151,38 @@ public sealed class HiveAbandonTest : GameTest
     /// Правило: матка одна в улье без рамок тоже улетает искать новый дом.
     /// </summary>
     [Test]
+    public async Task ExpiredEggDoesNotSplitAColonyWaitingToAbandon()
+    {
+        const int startingBees = 6;
+        await Build(startingBees);
+        var server = Server;
+        await server.WaitPost(() =>
+        {
+            var comp = server.EntMan.GetComponent<BeehiveComponent>(_hive);
+            comp.HasEgg = true;
+            comp.EggDiesAt = server.Timing.CurTime;
+        });
+
+        await RunSeconds(2);
+        await server.WaitAssertion(() =>
+        {
+            var comp = server.EntMan.GetComponent<BeehiveComponent>(_hive);
+            Assert.That(comp.HasEgg, Is.False);
+            Assert.That(comp.Bees, Is.EqualTo(startingBees));
+            Assert.That(QueenHome(), Is.True);
+        });
+
+        await RunSeconds(6);
+        await server.WaitAssertion(() =>
+        {
+            var container = server.System<SharedContainerSystem>();
+            Assert.That(container.TryGetContainingContainer(_queen, out var swarm), Is.True);
+            Assert.That(server.EntMan.GetComponent<BeeSwarmComponent>(swarm!.Owner).Bees, Is.EqualTo(startingBees));
+            Assert.That(server.EntMan.GetComponent<BeehiveComponent>(_hive).Bees, Is.Zero);
+        });
+    }
+
+    [Test]
     public async Task LoneQueenLeavesToo()
     {
         await Build(0);
