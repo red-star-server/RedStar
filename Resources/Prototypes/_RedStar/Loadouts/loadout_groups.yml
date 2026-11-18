@@ -664,3 +664,30 @@
   - RegularLabCoat
   - GeneticistLabCoat
   - GeneticistWintercoat
+
+- type: loadoutGroup
+  id: SurgeonHead
+  name: loadout-group-surgeon-head
+  minLimit: 0
+  loadouts:
+  - BlueSurgeryCap
+  - GreenSurgeryCap
+  - PurpleSurgeryCap
+
+- type: loadoutGroup
+  id: SurgeonJumpsuit
+  name: loadout-group-surgeon-jumpsuit
+  loadouts:
+  - MedicalBlueScrubs
+  - MedicalGreenScrubs
+  - MedicalPurpleScrubs
+  - MedicalDoctorJumpsuit
+  - MedicalDoctorJumpskirt
+
+- type: loadoutGroup
+  id: SurgeonOuterClothing
+  name: loadout-group-surgeon-outerclothing
+  minLimit: 0
+  loadouts:
+  - RegularLabCoat
+  - MedicalDoctorWintercoat

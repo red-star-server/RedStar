@@ -58,7 +58,7 @@
   result: PowerCellMicroreactorPrinted
   completetime: 10
   materials:
-    Titanium: 500 # RS14
+    Steel: 500
     Glass: 400
     Uranium: 200
     Gold: 100

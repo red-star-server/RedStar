@@ -1,9 +1,0 @@
-materials-bluespace-crystal = bluespace crystal
-materials-redspace-crystal = redspace crystal
-materials-raw-bluespace-crystal = bluespace ore
-materials-raw-redspace-crystal = redspace ore
-materials-raw-titanium = titanium ore
-materials-titanium = titanium
-materials-plastitanium = plastitanium
-materials-titaniumglass = titanium glass
-materials-plastitaniumglass = plastitanium glass

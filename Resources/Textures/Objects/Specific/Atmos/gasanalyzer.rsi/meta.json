@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from wallening at https://github.com/wall-nerds/wallening/commit/cff5df2e3d45a18afe5619a8c130e1ba50ab4ef5.",
+  "license": "CC0-1.0",
+  "copyright": "By AraiMaia for Funky Station",
   "size": {
     "x": 32,
     "y": 32
@@ -25,10 +25,24 @@
           0.1,
           0.1,
           0.1,
-          3.0,
-          0.3,
-          0.2,
-          0.8
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
         ]
       ]
     }

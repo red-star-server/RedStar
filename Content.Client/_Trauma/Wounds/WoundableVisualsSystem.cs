@@ -153,21 +153,13 @@ public sealed partial class WoundableVisualsSystem : EntitySystem
         foreach (var (group, _) in visuals.Comp.DamageGroupSprites)
         {
             var layerKey = BuildLayerKey(partLayer, group);
-            if (!_sprite.LayerMapTryGet(ent, layerKey, out var layer, false))
-                continue;
-
             _displacement.EnsureDisplacementIsNotOnSprite((ent, ent.Comp), layerKey);
-            _sprite.RemoveLayer(ent, layer);
-            _sprite.LayerMapRemove(ent, layerKey);
+            _sprite.RemoveLayer(ent, layerKey, false);
         }
 
         var bleedingKey = BuildLayerKey(partLayer, BleedingSuffix);
-        if (!_sprite.LayerMapTryGet(ent, bleedingKey, out var bleedLayer, false))
-            return;
-
         _displacement.EnsureDisplacementIsNotOnSprite((ent, ent.Comp), bleedingKey);
-        _sprite.RemoveLayer(ent, bleedLayer, out _, false);
-        _sprite.LayerMapRemove(ent, bleedingKey, out _);
+        _sprite.RemoveLayer(ent, bleedingKey, false);
     }
 
     private void AddDamageLayerToSprite(Entity<SpriteComponent?> ent,

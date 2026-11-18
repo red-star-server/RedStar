@@ -10,8 +10,8 @@ public sealed partial class SurgeryBui : BoundUserInterface
     public SurgeryBui(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
         _window = this.CreateWindow<SurgeryWindow>();
-        _window.OnPerformStep += (part, surgery, step) => SendPredictedMessage(new SurgeryStepChosenBuiMsg(part, surgery, step));
-
+        _window.OnPerformStep += (part, procedure, stepIndex, organ) =>
+            SendPredictedMessage(new SurgeryStepChosenBuiMsg(part, procedure, stepIndex, organ));
         _window.SetOwner(Owner);
     }
 }

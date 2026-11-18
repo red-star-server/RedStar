@@ -55,20 +55,20 @@
   recipeUnlocks:
   - FlatpackerMachineCircuitboard
 
-- type: technology
-  id: IndustrialEngineering
-  name: research-technology-industrial-engineering
-  icon:
-    sprite: Structures/Machines/protolathe_hypercon.rsi
-    state: building
-  discipline: Industrial
-  tier: 1
-  cost: 10000
-  recipeUnlocks:
-  - AutolatheHyperConvectionMachineCircuitboard
-  - ProtolatheHyperConvectionMachineCircuitboard
-  - CircuitImprinterHyperConvectionMachineCircuitboard
-  - SheetifierMachineCircuitboard
+#- type: technology
+#  id: IndustrialEngineering
+#  name: research-technology-industrial-engineering
+#  icon:
+#    sprite: Structures/Machines/protolathe_hypercon.rsi
+#    state: building
+#  discipline: Industrial
+#  tier: 1
+#  cost: 10000
+#  recipeUnlocks:
+#  - AutolatheHyperConvectionMachineCircuitboard
+#  - ProtolatheHyperConvectionMachineCircuitboard
+#  - CircuitImprinterHyperConvectionMachineCircuitboard
+#  - SheetifierMachineCircuitboard
 
 - type: technology
   id: PowerGeneration

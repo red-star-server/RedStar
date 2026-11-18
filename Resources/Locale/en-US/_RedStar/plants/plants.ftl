@@ -1,1 +1,0 @@
-seeds-sakura-name = sakura

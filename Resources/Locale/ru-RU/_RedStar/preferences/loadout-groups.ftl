@@ -19,3 +19,7 @@ loadout-group-geneticist-head = Генетик, голова
 loadout-group-geneticist-jumpsuit = Генетик, комбинезон
 loadout-group-geneticist-backpack = Генетик, рюкзак
 loadout-group-geneticist-outerclothing = Генетик, верхняя одежда
+
+loadout-group-surgeon-head = Хирург, голова
+loadout-group-surgeon-jumpsuit = Хирург, комбинезон
+loadout-group-surgeon-outerclothing = Хирург, верхняя одежда

@@ -1,4 +1,4 @@
-ent-OrganRuminantStomach = { ent-OrganAnimalInternal }
+ent-OrganRuminantStomach = желудок
     .desc = { ent-OrganBaseStomach.desc }
     .suffix = Травоядное животное
 ent-SolutionStomachRuminant = { ent-SolutionStomach }

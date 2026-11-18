@@ -14,3 +14,20 @@
   - SurvivalMedical
   - Trinkets
   - GroupSpeciesBreathToolMedical
+
+- type: roleLoadout
+  id: JobSurgeon
+  groups:
+  - SurgeonUnderwear
+  - GroupTankHarness
+  - SurgeonHead
+  - MedicalMask
+  - SurgeonJumpsuit
+  - MedicalBackpack
+  - SurgeonOuterClothing
+  - MedicalShoes
+  - Glasses
+  - AssistiveItems
+  - SurvivalMedical
+  - Trinkets
+  - GroupSpeciesBreathToolMedical
