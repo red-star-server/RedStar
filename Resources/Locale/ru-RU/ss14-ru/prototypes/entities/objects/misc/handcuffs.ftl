@@ -1,3 +1,5 @@
+ent-BaseHandcuffs = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
 ent-Handcuffs = наручники
     .desc = Используется для удержания преступников и прочих засранцев.
 ent-Cablecuffs = самодельные наручники
