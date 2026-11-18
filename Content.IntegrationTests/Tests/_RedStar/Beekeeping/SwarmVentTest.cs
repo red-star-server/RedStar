@@ -1,6 +1,8 @@
 #nullable enable
 using System.Numerics;
 using Content.IntegrationTests.Fixtures;
+using Content.Server._RedStar.Beekeeping.Components;
+using Content.Server._RedStar.Beekeeping.Data;
 using Content.Server._RedStar.Beekeeping.Systems;
 using Content.Shared.Tools.Components;
 using Robust.Shared.GameObjects;
@@ -15,6 +17,34 @@ namespace Content.IntegrationTests.Tests._RedStar.Beekeeping;
 [TestOf(typeof(BeeSwarmSystem))]
 public sealed class SwarmVentTest : GameTest
 {
+    [Test]
+    public async Task WeldingTheEntryAfterPlanningPreventsTheDive()
+    {
+        var server = Server;
+        var map = await Pair.CreateTestMap();
+        var errands = server.System<BeeErrandSystem>();
+
+        await server.WaitAssertion(() =>
+        {
+            var entities = server.EntMan;
+            var hive = entities.SpawnAttachedTo("Beehive", map.GridCoords);
+            var entry = entities.SpawnAttachedTo("GasVentPump", map.GridCoords);
+            var exit = entities.SpawnAttachedTo("GasVentPump", map.GridCoords);
+            var bee = errands.Release(hive, entities.GetComponent<TransformComponent>(hive),
+                "BeePollinator", null, (entry, exit));
+            Assert.That(bee, Is.Not.Null);
+            Assert.That(errands.TryGetNextStop(bee!.Value, out _, out _), Is.True);
+
+            entities.GetComponent<WeldableComponent>(entry).IsWelded = true;
+            errands.StartAct(bee.Value);
+
+            var errand = entities.GetComponent<BeeErrandComponent>(bee.Value);
+            Assert.That(errand.Act, Is.EqualTo(BeeErrandAct.None));
+            Assert.That(errand.VentEntry, Is.Null);
+            Assert.That(errand.VentExit, Is.Null);
+        });
+    }
+
     [Test]
     public async Task VentRouteAndWelding()
     {

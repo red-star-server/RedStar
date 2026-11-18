@@ -312,14 +312,8 @@ public sealed partial class BeeSwarmSystem : EntitySystem
     /// </summary>
     private bool NestTaken(Entity<EntityStorageComponent> storage, TransformComponent storageXform)
     {
-        if (_swarmTargets.Contains(storage.Owner))
+        if (_swarmTargets.Contains(storage.Owner) || StorageContainsHive(storage.Comp))
             return true;
-
-        foreach (var contained in storage.Comp.Contents.ContainedEntities)
-        {
-            if (HasComp<BeehiveComponent>(contained))
-                return true;
-        }
 
         // An open locker keeps its hive on top of it rather than inside.
         foreach (var hive in _hivesNear)
@@ -394,13 +388,13 @@ public sealed partial class BeeSwarmSystem : EntitySystem
             !TryComp<MapGridComponent>(grid, out var gridComp) ||
             !_container.TryGetContainer(swarm, swarm.Comp.Container, out var container) ||
             container.ContainedEntities.Count == 0 ||
-            !TryComp<BeeQueenComponent>(container.ContainedEntities[0], out var queen))
+            !HasComp<BeeQueenComponent>(container.ContainedEntities[0]))
         {
             return false;
         }
 
         var origin = _transform.GetMapCoordinates(swarm, xform);
-        if (PickNestStorage(swarm, queen.NestRange, grid, origin) is { } storage)
+        if (PickNestStorage(swarm, swarm.Comp.NestRange, grid, origin) is { } storage)
         {
             SetSearching(swarm, false);
             swarm.Comp.Storage = storage;
@@ -456,8 +450,16 @@ public sealed partial class BeeSwarmSystem : EntitySystem
                 _transform.DropNextTo(queen, wild);
         }
 
-        if (swarm.Comp.Storage is { } storage && !TerminatingOrDeleted(storage))
-            _entityStorage.Insert(wild, storage);
+        if (swarm.Comp.Storage is { } storage &&
+            !TerminatingOrDeleted(storage) &&
+            TryComp<EntityStorageComponent>(storage, out var storageComp) &&
+            Transform(storage).GridUid == xform.GridUid &&
+            !_container.IsEntityInContainer(storage) &&
+            storageComp.Contents.ContainedEntities.Count < storageComp.Capacity &&
+            !StorageContainsHive(storageComp))
+        {
+            _entityStorage.Insert(wild, storage, storageComp);
+        }
 
         // A lone queen starts the colony like a new hive does; a swarm brings its bees.
         if (swarm.Comp.Bees > 0)
@@ -477,6 +479,17 @@ public sealed partial class BeeSwarmSystem : EntitySystem
 
         _adminLog.Add(LogType.EntitySpawn, LogImpact.Low,
             $"A bee swarm built {ToPrettyString(wild):hive} with {wildComp.Bees} bees");
+    }
+
+    private bool StorageContainsHive(EntityStorageComponent storage)
+    {
+        foreach (var contained in storage.Contents.ContainedEntities)
+        {
+            if (HasComp<BeehiveComponent>(contained))
+                return true;
+        }
+
+        return false;
     }
 
     /// <summary>

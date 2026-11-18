@@ -254,8 +254,7 @@ public sealed partial class BeeQueenSystem
             return false;
         }
 
-        if (!TryComp<BeeSwarmComponent>(flyer, out var swarm) ||
-            !_container.Insert(homing.Owner, _container.EnsureContainer<ContainerSlot>(flyer, swarm.Container), force: true))
+        if (!TryComp<BeeSwarmComponent>(flyer, out var swarm))
         {
             Del(flyer);
             return false;
@@ -263,7 +262,15 @@ public sealed partial class BeeQueenSystem
 
         swarm.WildHive = queen.WildHivePrototype;
         swarm.Storage = storage;
+        swarm.NestRange = queen.NestRange;
         _swarm.SetSearching((flyer, swarm), storage == null);
+
+        if (!_container.Insert(homing.Owner, _container.EnsureContainer<ContainerSlot>(flyer, swarm.Container), force: true))
+        {
+            Del(flyer);
+            return false;
+        }
+
         _errands.SetSize(flyer, BeeFlightSize.Full);
 
         _adminLog.Add(LogType.Action, LogImpact.Low,

@@ -134,7 +134,14 @@ public sealed partial class BeeErrandSystem : EntitySystem
             if (TerminatingOrDeleted(errand.Hive) || _container.IsEntityInContainer(errand.Hive) && _scout.StorageOf(errand.Hive) == null)
                 return false;
 
-            stop = errand.VentExit != null && errand.PipedOut && !errand.PipedBack ? OpenVent(errand.VentExit) : null;
+            stop = null;
+            if (errand.VentExit != null && errand.PipedOut && !errand.PipedBack)
+            {
+                stop = OpenVent(errand.VentExit);
+                if (stop == null)
+                    ClearRoute(uid, errand);
+            }
+
             if (stop == null)
             {
                 stop = errand.Hive;
@@ -193,7 +200,11 @@ public sealed partial class BeeErrandSystem : EntitySystem
         {
             if (errand.VentEntry != null && !errand.PipedOut)
             {
-                DiveInto(bee, BeeErrandAct.Pipe, errand.VentEntry.Value);
+                if (OpenVent(errand.VentEntry) is { } entry)
+                    DiveInto(bee, BeeErrandAct.Pipe, entry);
+                else
+                    ClearRoute(uid, errand);
+
                 return;
             }
 
@@ -203,7 +214,11 @@ public sealed partial class BeeErrandSystem : EntitySystem
 
         if (errand.VentExit != null && errand.PipedOut && !errand.PipedBack)
         {
-            DiveInto(bee, BeeErrandAct.Pipe, errand.VentExit.Value);
+            if (OpenVent(errand.VentExit) is { } exit)
+                DiveInto(bee, BeeErrandAct.Pipe, exit);
+            else
+                ClearRoute(uid, errand);
+
             return;
         }
 

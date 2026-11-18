@@ -148,15 +148,26 @@ public sealed class QueenNestTest : GameTest
         var server = Server;
         var map = await Pair.CreateTestMap();
         EntityUid queen = default;
-        await server.WaitPost(() => queen = server.EntMan.SpawnAttachedTo("BeeQueen", map.GridCoords));
+        TimeSpan? originalDeadline = null;
+        const float nestRange = 20f;
+        await server.WaitPost(() =>
+        {
+            queen = server.EntMan.SpawnAttachedTo("BeeQueen", map.GridCoords);
+            var queenComp = server.EntMan.GetComponent<BeeQueenComponent>(queen);
+            queenComp.NestRange = nestRange;
+            originalDeadline = queenComp.DiesAt;
+            Assert.That(originalDeadline, Is.Not.Null);
+        });
 
         await RunSeconds(3);
         await server.WaitAssertion(() =>
         {
             var containers = server.System<SharedContainerSystem>();
             Assert.That(containers.TryGetContainingContainer(queen, out var container), Is.True);
-            Assert.That(server.EntMan.GetComponent<BeeSwarmComponent>(container!.Owner).Searching, Is.True);
-            Assert.That(server.EntMan.GetComponent<BeeQueenComponent>(queen).DiesAt, Is.Not.Null);
+            var swarm = server.EntMan.GetComponent<BeeSwarmComponent>(container!.Owner);
+            Assert.That(swarm.Searching, Is.True);
+            Assert.That(swarm.NestRange, Is.EqualTo(nestRange));
+            Assert.That(server.EntMan.GetComponent<BeeQueenComponent>(queen).DiesAt, Is.EqualTo(originalDeadline));
             Assert.That(server.EntMan.HasComponent<TimedDespawnComponent>(queen), Is.True);
         });
     }
