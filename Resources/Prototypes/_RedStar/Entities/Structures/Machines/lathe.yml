@@ -215,6 +215,7 @@
     unlitIdleState: unlit
     unlitRunningState: unlit-building
     staticPacks:
+    - SharedBoardsStatic
     - ServiceBoardsStatic
     - MaterialsStatic
     - LightsStatic
