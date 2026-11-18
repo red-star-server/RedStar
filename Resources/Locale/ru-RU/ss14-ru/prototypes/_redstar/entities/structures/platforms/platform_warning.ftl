@@ -1,0 +1,12 @@
+ent-PlatformWarning = { ent-Platform }
+    .desc = { ent-Platform.desc }
+    .suffix = Предупреждающая
+ent-PlatformWarningCorner = { ent-PlatformCorner }
+    .desc = { ent-PlatformCorner.desc }
+    .suffix = Предупреждающая, Угловая
+ent-PlatformWarningCornerSmall = { ent-PlatformCornerSmall }
+    .desc = { ent-PlatformCornerSmall.desc }
+    .suffix = Предупреждающая, Угловая, Малая
+ent-PlatformWarningRound = { ent-PlatformRound }
+    .desc = { ent-PlatformRound.desc }
+    .suffix = Предупреждающая, Круглая
