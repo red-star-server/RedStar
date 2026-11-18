@@ -1,22 +1,29 @@
 ﻿- type: entity
-  parent: BaseStructure
-  id: BasePlatform
   abstract: true
+  parent: BaseRailing
+  id: BasePlatform
   name: platform
   description: Basic platform meant to protect idiots like you from falling.
   components:
-  - type: Sprite
-    drawdepth: SmallObjects
-    sprite: _RedStar/Structures/Platforms/platform.rsi
-  - type: Icon
-    sprite: _RedStar/Structures/Platforms/platform.rsi
-  - type: Physics
-    bodyType: Static
-  - type: InteractionOutline
-  - type: Repairable
-  - type: Climbable
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -6
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          PartRodMetal1:
+            min: 0
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: RCDDeconstructable
-    cost: 20 # Funkystation
+    cost: 20
     delay: 2
     fx: EffectRCDDeconstruct2
 
@@ -25,121 +32,123 @@
   id: Platform
   components:
   - type: Sprite
+    sprite: _RedStar/Structures/Platforms/platform.rsi
     state: side
   - type: Icon
+    sprite: _RedStar/Structures/Platforms/platform.rsi
     state: side
-  - type: Destructible
-    thresholds:
-    - trigger: !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-    - trigger: !type:DamageTrigger
-        damage: 20
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
-          params:
-            volume: -6
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PartRodMetal1:
-            min: 0
-            max: 1
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,-0.25"
+        density: 1000
+        mask:
+        - TableMask
+        layer:
+        - TableLayer
+  - type: Construction
+    node: railing
 
 - type: entity
   parent: BasePlatform
   id: PlatformCorner
+  suffix: Corner
   components:
   - type: Sprite
+    sprite: _RedStar/Structures/Platforms/platform.rsi
     state: corner
   - type: Icon
+    sprite: _RedStar/Structures/Platforms/platform.rsi
     state: corner
-  - type: Destructible
-    thresholds:
-    - trigger: !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-    - trigger: !type:DamageTrigger
-        damage: 20
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
-          params:
-            volume: -6
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PartRodMetal1:
-            min: 0
-            max: 2
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,-0.25"
+        density: 1000
+        mask:
+        - TableMask
+        layer:
+        - TableLayer
+      fix2:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "0.25,-0.49,0.49,0.49"
+        density: 1000
+        mask:
+        - TableMask
+        layer:
+        - TableLayer
+  - type: Construction
+    node: railingCorner
 
 - type: entity
   parent: BasePlatform
   id: PlatformCornerSmall
+  suffix: Corner, small
   components:
   - type: Sprite
+    sprite: _RedStar/Structures/Platforms/platform.rsi
     state: corner_small
   - type: Icon
+    sprite: _RedStar/Structures/Platforms/platform.rsi
     state: corner_small
-  - type: Destructible
-    thresholds:
-    - trigger: !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-    - trigger: !type:DamageTrigger
-        damage: 20
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
-          params:
-            volume: -6
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PartRodMetal1:
-            min: 0
-            max: 1
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,0.25,-0.25,0.49"
+        density: 1000
+        mask:
+        - TableMask
+        layer:
+        - TableLayer
+  - type: Construction
+    node: railingCornerSmall
 
 - type: entity
   parent: BasePlatform
   id: PlatformRound
+  suffix: Round
   components:
   - type: Sprite
+    sprite: _RedStar/Structures/Platforms/platform.rsi
     state: end
   - type: Icon
+    sprite: _RedStar/Structures/Platforms/platform.rsi
     state: end
-  - type: Destructible
-    thresholds:
-    - trigger: !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-    - trigger: !type:DamageTrigger
-        damage: 20
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
-          params:
-            volume: -6
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PartRodMetal1:
-            min: 0
-            max: 2
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,-0.25"
+        density: 1000
+        mask:
+        - TableMask
+        layer:
+        - TableLayer
+      fix2:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,-0.25,0.49"
+        density: 1000
+        mask:
+        - TableMask
+        layer:
+        - TableLayer
+      fix3:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "0.25,-0.49,0.49,0.49"
+        density: 1000
+        mask:
+        - TableMask
+        layer:
+        - TableLayer
+  - type: Construction
+    node: railingRound

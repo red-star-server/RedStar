@@ -1,145 +1,39 @@
 - type: entity
-  parent: BaseStructure
-  id: BasePlatformWood
-  abstract: true
-  name: platform
-  description: Basic platform warning meant to protect idiots like you from falling.
-  components:
-  - type: Sprite
-    drawdepth: SmallObjects
-    sprite: _RedStar/Structures/Platforms/platform_wood.rsi
-  - type: Icon
-    sprite: _RedStar/Structures/Platforms/platform_wood.rsi
-  - type: Physics
-    bodyType: Static
-  - type: InteractionOutline
-  - type: Repairable
-  - type: Climbable
-  - type: RCDDeconstructable
-    cost: 20 # Funkystation
-    delay: 2
-    fx: EffectRCDDeconstruct2
-
-- type: entity
-  parent: BasePlatformWood
+  parent: Platform
   id: PlatformWood
+  suffix: Wood
   components:
   - type: Sprite
-    state: side
+    sprite: _RedStar/Structures/Platforms/platform_wood.rsi
   - type: Icon
-    state: side
-  - type: Destructible
-    thresholds:
-    - trigger: !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-    - trigger: !type:DamageTrigger
-        damage: 20
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
-          params:
-            volume: -6
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PartRodMetal1:
-            min: 0
-            max: 1
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+    sprite: _RedStar/Structures/Platforms/platform_wood.rsi
 
 - type: entity
-  parent: BasePlatformWood
+  parent: PlatformCorner
   id: PlatformCornerWood
+  suffix: Wood, corner
   components:
   - type: Sprite
-    state: corner
+    sprite: _RedStar/Structures/Platforms/platform_wood.rsi
   - type: Icon
-    state: corner
-  - type: Destructible
-    thresholds:
-    - trigger: !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-    - trigger: !type:DamageTrigger
-        damage: 20
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
-          params:
-            volume: -6
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PartRodMetal1:
-            min: 0
-            max: 2
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+    sprite: _RedStar/Structures/Platforms/platform_wood.rsi
 
 - type: entity
-  parent: BasePlatformWood
+  parent: PlatformCornerSmall
   id: PlatformCornerSmallWood
+  suffix: Wood, corner, small
   components:
   - type: Sprite
-    state: corner_small
+    sprite: _RedStar/Structures/Platforms/platform_wood.rsi
   - type: Icon
-    state: corner_small
-  - type: Destructible
-    thresholds:
-    - trigger: !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-    - trigger: !type:DamageTrigger
-        damage: 20
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
-          params:
-            volume: -6
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PartRodMetal1:
-            min: 0
-            max: 1
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+    sprite: _RedStar/Structures/Platforms/platform_wood.rsi
 
 - type: entity
-  parent: BasePlatformWood
+  parent: PlatformRound
   id: PlatformRoundWood
+  suffix: Wood, round
   components:
   - type: Sprite
-    state: end
+    sprite: _RedStar/Structures/Platforms/platform_wood.rsi
   - type: Icon
-    state: end
-  - type: Destructible
-    thresholds:
-    - trigger: !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-    - trigger: !type:DamageTrigger
-        damage: 20
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
-          params:
-            volume: -6
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PartRodMetal1:
-            min: 0
-            max: 2
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+    sprite: _RedStar/Structures/Platforms/platform_wood.rsi
