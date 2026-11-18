@@ -170,11 +170,7 @@
     - id: RubberStampDetective
     - id: HoloprojectorSecurity
     - id: BoxEvidenceMarkers
-    # RS14-start
-    - id: BoxTapeRecorder
-    - id: CassetteTape
-      amount: 2
-    # RS14-end
+    - id: BoxTapeRecorder # RS14
     - id: HandLabeler
     - id: PlushieLizardJobDetective
       prob: 0.02
