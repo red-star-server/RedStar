@@ -94,6 +94,7 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
         if (!ent.Comp.FrameSlots.Contains(id))
             return;
 
+        ent.Comp.AbandonAt = null;
         UpdateMaxBees(ent);
         UpdateHiveAppearance(ent);
     }
@@ -282,11 +283,19 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
                         _swarm.LeaveInSwarm(hive, comp.Bees + comp.OutBees - comp.MaxBees);
                 }
 
-                comp.Crowding = BeehiveCrowding.Leaving;
-                if (now >= comp.NextCrowdingLeave)
+                if (comp.Bees + comp.OutBees <= comp.MaxBees)
                 {
-                    comp.NextCrowdingLeave = now + comp.CrowdingLeaveInterval;
-                    RemoveHomeBee(hive);
+                    comp.CrowdedSince = null;
+                    comp.Crowding = BeehiveCrowding.None;
+                }
+                else
+                {
+                    comp.Crowding = BeehiveCrowding.Leaving;
+                    if (now >= comp.NextCrowdingLeave)
+                    {
+                        comp.NextCrowdingLeave = now + comp.CrowdingLeaveInterval;
+                        RemoveHomeBee(hive);
+                    }
                 }
             }
         }
