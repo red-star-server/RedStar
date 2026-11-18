@@ -1,0 +1,35 @@
+- type: entity
+  parent: RehydratableAnimalCube
+  id: SkrellkeyCube
+  name: neara cube
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobSkrellkey
+
+- type: entity
+  parent: RehydratableAnimalCube
+  id: StokkeyCube
+  name: stok cube
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobStokkey
+
+- type: entity
+  parent: RehydratableAnimalCube
+  id: TajkeyCube
+  name: farwa cube
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobTajkey
+
+- type: entity
+  parent: RehydratableAnimalCube
+  id: WolflingCube
+  name: wolpin cube
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobWolfling
