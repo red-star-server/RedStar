@@ -224,6 +224,7 @@
     - ChemistryStatic
     - HydroponicsStatic
     - BeekeepingStatic
+    - TapeRecorderStatic # RS14
     dynamicPacks:
     - Janitor
     - Instruments

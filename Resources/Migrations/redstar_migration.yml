@@ -117,6 +117,12 @@ TechDiskComputerCircuitboard: ResearchPointDiskTerminalCircuitboard
 ComputerTechnologyDiskTerminal: ComputerResearchPointDiskTerminal
 
 # 2026-11-18
+Autolathe: null
+Protolathe: null
+CircuitImprinter: null
+AutolatheMachineCircuitboard: null
+ProtolatheMachineCircuitboard: null
+CircuitImprinterMachineCircuitboard: null
 AutolatheHyperConvection: null
 ProtolatheHyperConvection: null
 CircuitImprinterHyperConvection: null
