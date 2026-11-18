@@ -23,7 +23,7 @@ public sealed partial class GeneMetabolismSystem : EntitySystem
 
     [SubscribeLocalEvent]
     private void OnMetabolicMultiplier(Entity<StatusEffectContainerComponent> ent, ref GetMetabolicMultiplierEvent args) =>
-        args.Multiplier *= GetMultiplier(ent);
+        args.Multiply(GetMultiplier(ent));
 
     private float GetMultiplier(Entity<StatusEffectContainerComponent> ent)
     {
