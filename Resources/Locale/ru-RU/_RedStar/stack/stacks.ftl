@@ -53,3 +53,8 @@ stack-titanium-rods = { $amount ->
     [few] титановых стержня
     *[other] титановых стержней
 }
+stack-screw = { $amount ->
+    [1] винт
+    [few] винта
+    *[other] винтов
+}
