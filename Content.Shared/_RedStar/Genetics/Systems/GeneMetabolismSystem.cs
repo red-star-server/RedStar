@@ -3,7 +3,6 @@ using Content.Shared._RedStar.Genetics.Components;
 using Content.Shared.Body.Events;
 using Content.Shared.Metabolism;
 using Content.Shared.StatusEffectNew;
-using Content.Shared.StatusEffectNew.Components;
 
 namespace Content.Shared._RedStar.Genetics.Systems;
 
@@ -22,25 +21,12 @@ public sealed partial class GeneMetabolismSystem : EntitySystem
         _pendingRefresh.Add(args.Target);
 
     [SubscribeLocalEvent]
-    private void OnMetabolicMultiplier(Entity<StatusEffectContainerComponent> ent, ref GetMetabolicMultiplierEvent args) =>
-        args.Multiply(GetMultiplier(ent));
-
-    private float GetMultiplier(Entity<StatusEffectContainerComponent> ent)
+    private void OnMetabolicMultiplier(Entity<GeneMetabolismComponent> ent, ref StatusEffectRelayedEvent<GetMetabolicMultiplierEvent> args)
     {
-        var multiplier = 1f;
-        var minimum = 0f;
-        var maximum = float.PositiveInfinity;
-        foreach (var uid in ent.Comp.ActiveStatusEffects?.ContainedEntities ?? [])
-        {
-            if (!TryComp<GeneMetabolismComponent>(uid, out var metabolism) ||
-                !TryComp<StatusEffectComponent>(uid, out var status) || !status.Applied || TerminatingOrDeleted(uid))
-                continue;
-
-            multiplier += metabolism.IntervalModifier;
-            minimum = MathF.Max(minimum, metabolism.MinimumMultiplier);
-            maximum = MathF.Min(maximum, metabolism.MaximumMultiplier);
-        }
-        return Math.Clamp(multiplier, minimum, MathF.Max(minimum, maximum));
+        var multiplier = Math.Clamp(1f + ent.Comp.IntervalModifier, ent.Comp.MinimumMultiplier, ent.Comp.MaximumMultiplier);
+        var arg = args.Args;
+        arg.Multiply(multiplier);
+        args.Args = arg;
     }
 
     public override void Update(float frameTime)
