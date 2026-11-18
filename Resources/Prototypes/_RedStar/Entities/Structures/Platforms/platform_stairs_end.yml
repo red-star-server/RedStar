@@ -1,0 +1,98 @@
+- type: entity
+  abstract: true
+  parent: Stairs
+  id: BasePlatformStairs
+  name: platform
+  description: Basic platform meant to protect idiots like you from falling.
+  components:
+  - type: Rotatable
+
+- type: entity
+  parent: BasePlatformStairs
+  id: StairsDarkPlatform1
+  suffix: Dark, stairs 1
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Platforms/platform_stairs_end.rsi
+    state: dark_stairs_1
+
+- type: entity
+  parent: BasePlatformStairs
+  id: StairsDarkPlatform2
+  suffix: Dark, stairs 2
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Platforms/platform_stairs_end.rsi
+    state: dark_stairs_2
+
+- type: entity
+  parent: BasePlatformStairs
+  id: StairsGrayPlatform1
+  suffix: Gray, stairs 1
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Platforms/platform_stairs_end.rsi
+    state: gray_stairs_1
+
+- type: entity
+  parent: BasePlatformStairs
+  id: StairsGrayPlatform2
+  suffix: Gray, stairs 2
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Platforms/platform_stairs_end.rsi
+    state: gray_stairs_2
+
+- type: entity
+  parent: BasePlatformStairs
+  id: StairsWhitePlatform1
+  suffix: White, stairs 1
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Platforms/platform_stairs_end.rsi
+    state: white_stairs_1
+
+- type: entity
+  parent: BasePlatformStairs
+  id: StairsWhitePlatform2
+  suffix: White, stairs 2
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Platforms/platform_stairs_end.rsi
+    state: white_stairs_2
+
+- type: entity
+  parent: BasePlatformStairs
+  id: StairsWarningPlatform1
+  suffix: Warning, stairs 1
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Platforms/platform_stairs_end.rsi
+    state: warning_stairs_1
+
+- type: entity
+  parent: BasePlatformStairs
+  id: StairsWarningPlatform2
+  suffix: Warning, stairs 2
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Platforms/platform_stairs_end.rsi
+    state: warning_stairs_2
+
+- type: entity
+  parent: BasePlatformStairs
+  id: StairsWoodPlatform1
+  suffix: Wood, stairs 1
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Platforms/platform_stairs_end.rsi
+    state: wood_stairs_1
+
+- type: entity
+  parent: BasePlatformStairs
+  id: StairsWoodPlatform2
+  suffix: Wood, stairs 2
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Platforms/platform_stairs_end.rsi
+    state: wood_stairs_2
