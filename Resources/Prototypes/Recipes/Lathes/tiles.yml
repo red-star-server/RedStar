@@ -99,9 +99,8 @@
   - Tiles
   - Marble
   materials:
-    #Steel: 25
-    #Glass: 25
-    Marble: 50 # RS14
+    Steel: 25
+    Glass: 25
 
 - type: latheRecipe
   abstract: true

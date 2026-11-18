@@ -3,9 +3,8 @@
 - type: latheRecipePack
   id: SharedBoardsStatic
   recipes:
-  - ProtolatheMachineCircuitboard
-  - AutolatheMachineCircuitboard
-  - CircuitImprinterMachineCircuitboard
+  - CutterMachineCircuitboard
+  - SheetifierMachineCircuitboard
 
 - type: latheRecipePack
   id: XenobiologyToolsStatic
@@ -56,7 +55,6 @@
   recipes:
   - TurboItemRechargerCircuitboard
   - FlatpackerMachineCircuitboard
-  - SheetifierMachineCircuitboard
   - PowerCageRechargerCircuitboard
 
 - type: latheRecipePack

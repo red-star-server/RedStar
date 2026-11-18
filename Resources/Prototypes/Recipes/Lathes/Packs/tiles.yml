@@ -64,17 +64,6 @@
   - FloorTileItemConcrete
   - FloorTileItemConcreteMono
   - FloorTileItemConcreteSmooth
-  # RS14-start
-  - FloorTileItemIronsandConcrete
-  - FloorTileItemIronsandConcreteMono
-  - FloorTileItemIronsandConcreteSmooth
-  - FloorTileItemOldConcrete
-  - FloorTileItemOldConcreteMono
-  - FloorTileItemOldConcreteSmooth
-  - FloorTileItemWhiteConcrete
-  - FloorTileItemWhiteConcreteMono
-  - FloorTileItemWhiteConcreteSmooth
-  # RS14-end
 
 - type: latheRecipePack
   id: CircuitFloorsStatic
@@ -88,8 +77,6 @@
   recipes:
   - FloorTileItemWhiteMarble
   - FloorTileItemDarkMarble
-  - FloorTileItemWhiteMarbleMono # RS14
-  - FloorTileItemDarkMarbleMono # RS14
 
 - type: latheRecipePack
   id: FloorShuttleTilesStatic

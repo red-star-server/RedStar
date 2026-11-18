@@ -57,7 +57,6 @@
     Silver: 300
     Plasma: 1000
     Uranium: 100
-    BlueSpaceCrystal: 400 # RS14
 
 - type: latheRecipe
   id: LightReplacer
