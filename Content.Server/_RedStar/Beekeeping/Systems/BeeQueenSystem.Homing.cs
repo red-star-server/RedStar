@@ -91,7 +91,7 @@ public sealed partial class BeeQueenSystem
 
             FaceHome((uid, homing), xform, delta);
 
-            if (distance <= homing.Speed * frameTime)
+            if (distance <= MathF.Max(homing.Speed * frameTime, homing.ArriveRange))
             {
                 if (TryComp<PhysicsComponent>(uid, out var snapBody))
                     _physics.SetLinearVelocity(uid, Vector2.Zero, body: snapBody);
@@ -236,7 +236,7 @@ public sealed partial class BeeQueenSystem
         }
 
         var origin = _transform.GetMapCoordinates(homing, xform);
-        var storage = _swarm.PickNestStorage(homing, queen.NestRange, grid, origin);
+        var storage = _swarm.PickNestStorage(homing, queen.NestRange, grid, origin, nestParents: queen.NestParents);
         Vector2 site;
         if (storage is { } chosen)
         {

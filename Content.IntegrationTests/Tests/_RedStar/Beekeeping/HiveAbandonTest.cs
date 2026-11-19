@@ -3,6 +3,7 @@ using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server._RedStar.Beekeeping.Components;
+using Content.Server._RedStar.Beekeeping.Systems;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared._RedStar.Beekeeping;
 using Content.Shared._RedStar.Beekeeping.Components;
@@ -212,7 +213,7 @@ public sealed class HiveAbandonTest : GameTest
         await server.WaitAssertion(() =>
         {
             var comp = server.EntMan.GetComponent<BeehiveComponent>(_hive);
-            Assert.That(comp.Bees, Is.EqualTo(comp.MaxBees));
+            Assert.That(server.System<BeehiveSystem>().ColonySize((_hive, comp)), Is.EqualTo(comp.MaxBees));
         });
     }
 

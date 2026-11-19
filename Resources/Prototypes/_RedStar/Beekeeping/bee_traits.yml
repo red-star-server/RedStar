@@ -175,3 +175,22 @@
   color: "#D8A7A7"
   bad: true
   eggLife: 0.5
+
+# Every hit on the hive lets two bees out instead of one, and a smaller blow lets another out.
+- type: beeTrait
+  id: Hotheaded
+  name: bee-trait-hotheaded
+  description: bee-trait-hotheaded-desc
+  color: "#FF7043"
+  bad: true
+  angryPerHit: 1
+  angryDamageStep: 0.5
+
+# Rarer than the others: the scout comes out of the hive last when the bees are angry.
+- type: beeTrait
+  id: GuardedScout
+  name: bee-trait-guarded-scout
+  description: bee-trait-guarded-scout-desc
+  color: "#4FC3F7"
+  weight: 0.5
+  guardedScout: true

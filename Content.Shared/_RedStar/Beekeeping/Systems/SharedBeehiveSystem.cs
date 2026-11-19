@@ -37,6 +37,14 @@ public abstract partial class SharedBeehiveSystem : EntitySystem
     }
 
     /// <summary>
+    /// The colony counted against the hive's limit: its bees at home and outside, and the queen, who takes a place too.
+    /// </summary>
+    public int ColonySize(Entity<BeehiveComponent> hive)
+    {
+        return hive.Comp.Bees + hive.Comp.OutBees + (GetQueen(hive) != null ? 1 : 0);
+    }
+
+    /// <summary>
     /// Inserted frames in slot order. The index in this list is the frame number on the sprite.
     /// </summary>
     public void GetFrames(Entity<BeehiveComponent> hive, List<Entity<BeeFrameComponent>> frames)

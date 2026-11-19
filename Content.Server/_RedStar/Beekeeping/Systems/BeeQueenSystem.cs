@@ -80,12 +80,13 @@ public sealed partial class BeeQueenSystem : EntitySystem
     }
 
     /// <summary>
-    /// A hive, or a swarm that knows where it is going, keeps the queen alive.
+    /// A hive, a swarm that knows where it is going or an angry queen guarding her keeps the queen alive.
     /// </summary>
     private bool IsQueenHome(EntityUid holder)
     {
         return HasComp<BeehiveComponent>(holder) ||
-               TryComp<BeeSwarmComponent>(holder, out var swarm) && !swarm.Searching;
+               TryComp<BeeSwarmComponent>(holder, out var swarm) && !swarm.Searching ||
+               HasComp<BeehiveAngryQueenComponent>(holder);
     }
 
     /// <summary>

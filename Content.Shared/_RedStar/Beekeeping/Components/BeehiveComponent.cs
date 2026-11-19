@@ -42,11 +42,17 @@ public sealed partial class BeehiveComponent : Component
     public int Bees;
 
     /// <summary>
-    /// Bees of this hive that are outside, as items in hands or foragers. They count against <see cref="MaxBees"/> but do
+    /// Bees of this hive that are outside, as items or angry bees. They count against <see cref="MaxBees"/> but do
     /// no work.
     /// </summary>
     [DataField]
     public int OutBees;
+
+    /// <summary>
+    /// Of <see cref="OutBees"/>, the angry bees in the air.
+    /// </summary>
+    [DataField]
+    public int AngryOut;
 
     #region Emergency queen
 
@@ -95,7 +101,7 @@ public sealed partial class BeehiveComponent : Component
     public TimeSpan EggDiesAt;
 
     /// <summary>
-    /// The colony has to stay full this long for an egg to appear. Bees in hands and foragers outside count.
+    /// The colony has to stay full this long for an egg to appear. Bees in hands and angry bees outside count.
     /// </summary>
     [DataField, GuidebookData]
     public TimeSpan EggFullTime = TimeSpan.FromMinutes(3);
@@ -174,6 +180,31 @@ public sealed partial class BeehiveComponent : Component
     public int MaxWildCombs = 8;
 
     /// <summary>
+    /// What the colony lives on. Plants like every hive; a meat hive is a wild one that grew where there were
+    /// creatures and no plants, and feeds on blood.
+    /// </summary>
+    [DataField]
+    public BeehiveDiet Diet = BeehiveDiet.Plants;
+
+    /// <summary>
+    /// How far around where a swarm comes out it looks for plants and creatures to choose its diet, in tiles.
+    /// </summary>
+    [DataField]
+    public float DietRange = 8f;
+
+    /// <summary>
+    /// A creature lighter than this is small, in kilograms of its fixtures. A mouse weighs about 13, a human about 70.
+    /// </summary>
+    [DataField]
+    public float SmallCreatureMass = 30f;
+
+    /// <summary>
+    /// Small creatures count for the choice of diet only when at least this many are around.
+    /// </summary>
+    [DataField]
+    public int MinSmallCreatures = 2;
+
+    /// <summary>
     /// The quirk of the swarm that built this wild hive, shown when it is examined.
     /// </summary>
     [DataField]
@@ -220,6 +251,61 @@ public sealed partial class BeehiveComponent : Component
     /// </summary>
     [DataField]
     public EntProtoId DaughterQueenPrototype = "BeeQueen";
+
+    #endregion
+
+    #region Angry hive
+
+    /// <summary>
+    /// Bees that fly out on every hit, on top of the ones for lost health.
+    /// </summary>
+    [DataField]
+    public int AngryPerHit = 1;
+
+    /// <summary>
+    /// Every this much damage taken lets one more bee out. What is left over counts towards the next one.
+    /// </summary>
+    [DataField]
+    public float AngryDamageStep = 10f;
+
+    /// <summary>
+    /// Damage taken that has not let a bee out yet. Server only.
+    /// </summary>
+    [ViewVariables]
+    public float AngryDamageProgress;
+
+    /// <summary>
+    /// Most angry bees of this hive in the air at once.
+    /// </summary>
+    [DataField, GuidebookData]
+    public int MaxAngryBees = 10;
+
+    /// <summary>
+    /// Bees that fly out when a frame is taken out of a hive with aggressive bees.
+    /// </summary>
+    [DataField]
+    public int FrameAngerBees = 2;
+
+    /// <summary>
+    /// Payload each angry bee takes from the queen when it flies out.
+    /// </summary>
+    [DataField]
+    public float PayloadPerAngryBee = 2f;
+
+    [DataField]
+    public EntProtoId AngryBeePrototype = "MobBeehiveAngryBee";
+
+    [DataField]
+    public EntProtoId AngryScoutPrototype = "MobBeehiveAngryScout";
+
+    [DataField]
+    public EntProtoId AngryQueenPrototype = "MobBeehiveAngryQueen";
+
+    /// <summary>
+    /// The scout flying as an angry bee, if it is. Only one at a time. Server only.
+    /// </summary>
+    [ViewVariables]
+    public EntityUid? AngryScout;
 
     #endregion
 
@@ -274,7 +360,7 @@ public sealed partial class BeehiveComponent : Component
     /// Bees a colony starts with when a queen is put into a truly empty hive: one scout and the rest workers.
     /// </summary>
     [DataField]
-    public int StartingBees = 5;
+    public int StartingBees = 4;
 
     /// <summary>
     /// How many of the bees at home scout instead of carrying nectar.
@@ -538,7 +624,7 @@ public sealed partial class BeehiveComponent : Component
     public float MaxTemperature = 323.15f;
 
     /// <summary>
-    /// Water vapor on the hive's tile, in moles, from which its bees are calm: aggressive bees picked up there do not sting. They keep working.
+    /// Water vapor on the hive's tile, in moles, from which its bees are calm: no angry bees come out. They keep working.
     /// </summary>
     [DataField]
     public float CalmVaporMoles = 1f;
@@ -640,6 +726,15 @@ public sealed partial class BeehiveComponent : Component
     /// </summary>
     [ViewVariables]
     public List<(EntityUid Tray, TimeSpan At)> PendingForagers = [];
+
+    /// <summary>
+    /// A forager or the scout hit by someone: the hive sends angry bees after them, at most this often.
+    /// </summary>
+    [DataField]
+    public TimeSpan DefenseCooldown = TimeSpan.FromSeconds(5);
+
+    [ViewVariables, AutoPausedField]
+    public TimeSpan NextDefense;
 
     /// <summary>
     /// Visits made at the same time are shown spread over this long.

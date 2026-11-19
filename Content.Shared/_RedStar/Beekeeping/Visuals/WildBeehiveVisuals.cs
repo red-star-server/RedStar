@@ -9,4 +9,9 @@ namespace Content.Shared._RedStar.Beekeeping.Visuals;
 public enum WildBeehiveVisuals : byte
 {
     Honey,
+
+    /// <summary>
+    /// Bool: a meat hive shows the stripes layer, tinted by what the hive lives on.
+    /// </summary>
+    Meat,
 }
