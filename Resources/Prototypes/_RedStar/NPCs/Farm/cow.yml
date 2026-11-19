@@ -1,0 +1,165 @@
+﻿- type: entity
+  parent: SolutionLarge
+  id: SolutionUdderChocolate
+  categories: [HideSpawnMenu]
+  components:
+  - type: Solution
+    id: udder # TODO This should really use a different id...
+    solution:
+      reagents:
+      - ReagentId: MilkChocolate
+        Quantity: 30
+  - type: SatiationProduction
+    producer: Parent
+    delay: 30
+    minimumSatiationThreshold: Peckish
+  # TODO: toxins from bloodstream !?
+  - type: SolutionProducer
+    generated:
+      reagents:
+      - ReagentId: MilkChocolate
+        Quantity: 25
+
+- type: entity
+  parent: SolutionLarge
+  id: SolutionUdderStrawberry
+  categories: [HideSpawnMenu]
+  components:
+  - type: Solution
+    id: udder # TODO This should really use a different id...
+    solution:
+      reagents:
+      - ReagentId: MilkChocolate
+        Quantity: 30
+  - type: SatiationProduction
+    producer: Parent
+    delay: 30
+    minimumSatiationThreshold: Peckish
+  # TODO: toxins from bloodstream !?
+  - type: SolutionProducer
+    generated:
+      reagents:
+      - ReagentId: MilkChocolate
+        Quantity: 25
+
+- type: entity
+  parent: SolutionLarge
+  id: SolutionUdderBanana
+  categories: [HideSpawnMenu]
+  components:
+  - type: Solution
+    id: udder # TODO This should really use a different id...
+    solution:
+      reagents:
+      - ReagentId: MilkBanana
+        Quantity: 30
+  - type: SatiationProduction
+    producer: Parent
+    delay: 30
+    minimumSatiationThreshold: Peckish
+  # TODO: toxins from bloodstream !?
+  - type: SolutionProducer
+    generated:
+      reagents:
+      - ReagentId: MilkBanana
+        Quantity: 25
+
+- type: entity
+  parent: SolutionLarge
+  id: SolutionUdderPilk
+  categories: [HideSpawnMenu]
+  components:
+  - type: Solution
+    id: udder # TODO This should really use a different id...
+    solution:
+      reagents:
+      - ReagentId: Pilk
+        Quantity: 30
+  - type: SatiationProduction
+    producer: Parent
+    delay: 30
+    minimumSatiationThreshold: Peckish
+  # TODO: toxins from bloodstream !?
+  - type: SolutionProducer
+    generated:
+      reagents:
+      - ReagentId: Pilk
+        Quantity: 25
+
+- type: entity
+  name: chocolate cow
+  parent: MobCow
+  id: MobCowChocolate
+  description: Moo.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: cow
+      sprite: _Funkystation/Mobs/Animals/chocolate_cow.rsi
+  - type: SolutionManager
+    solutions:
+    - SolutionUdderChocolate
+  - type: Butcherable
+    spawned:
+    - id: FoodSnackChocolateBar
+      amount: 5
+
+- type: entity
+  name: strawberry cow
+  parent: MobCow
+  id: MobCowStrawberry
+  description: Moo.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: cow
+      sprite: _Funkystation/Mobs/Animals/strawberry_cow.rsi
+  - type: SolutionManager
+    solutions:
+    - SolutionUdderStrawberry
+  - type: Butcherable
+    spawned:
+    - id: FoodFrozenSandwichStrawberry #Change to actual strawberries if someone implments them
+      amount: 2
+
+- type: entity
+  name: banana cow
+  parent: MobCow
+  id: MobCowBanana
+  description: Moo.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: cow
+      sprite: _Funkystation/Mobs/Animals/banana_cow.rsi
+  - type: SolutionManager
+    solutions:
+    - SolutionUdderBanana
+  - type: Butcherable
+    spawned:
+    - id: FoodBanana
+      amount: 5
+    - id: TrashBananaPeel
+      amount: 5
+
+- type: entity
+  parent: MobCow
+  id: MobCowPilk
+  description: Moo.
+  suffix: Pilk
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: cow
+      sprite: Mobs/Animals/cow.rsi
+  - type: SolutionManager
+    solutions:
+    - SolutionUdderPilk
