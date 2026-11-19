@@ -1,2 +1,2 @@
 ent-XenoArtifactEffectCowSpawn = { ent-BaseXenoArtifactEffect }
-    .desc = Spontaneous organic creation
+    .desc = Создание организмов
