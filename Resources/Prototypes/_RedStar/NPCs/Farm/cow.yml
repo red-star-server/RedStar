@@ -1,7 +1,7 @@
 ﻿- type: entity
   parent: SolutionLarge
   id: SolutionUdderChocolate
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     id: udder # TODO This should really use a different id...
@@ -23,13 +23,13 @@
 - type: entity
   parent: SolutionLarge
   id: SolutionUdderStrawberry
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     id: udder # TODO This should really use a different id...
     solution:
       reagents:
-      - ReagentId: MilkChocolate
+      - ReagentId: MilkStrawberry
         Quantity: 30
   - type: SatiationProduction
     producer: Parent
@@ -39,13 +39,13 @@
   - type: SolutionProducer
     generated:
       reagents:
-      - ReagentId: MilkChocolate
+      - ReagentId: MilkStrawberry
         Quantity: 25
 
 - type: entity
   parent: SolutionLarge
   id: SolutionUdderBanana
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     id: udder # TODO This should really use a different id...
@@ -67,7 +67,7 @@
 - type: entity
   parent: SolutionLarge
   id: SolutionUdderPilk
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     id: udder # TODO This should really use a different id...
@@ -87,17 +87,17 @@
         Quantity: 25
 
 - type: entity
-  name: chocolate cow
   parent: MobCow
   id: MobCowChocolate
+  name: chocolate cow
   description: Moo.
   components:
   - type: Sprite
     drawdepth: Mobs
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: cow
-      sprite: _Funkystation/Mobs/Animals/chocolate_cow.rsi
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+      sprite: _RedStar/Mobs/Animals/Farm/chocolate_cow.rsi
   - type: SolutionManager
     solutions:
     - SolutionUdderChocolate
@@ -107,37 +107,37 @@
       amount: 5
 
 - type: entity
-  name: strawberry cow
   parent: MobCow
   id: MobCowStrawberry
+  name: strawberry cow
   description: Moo.
   components:
   - type: Sprite
     drawdepth: Mobs
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: cow
-      sprite: _Funkystation/Mobs/Animals/strawberry_cow.rsi
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+      sprite: _RedStar/Mobs/Animals/Farm/strawberry_cow.rsi
   - type: SolutionManager
     solutions:
     - SolutionUdderStrawberry
   - type: Butcherable
     spawned:
-    - id: FoodFrozenSandwichStrawberry #Change to actual strawberries if someone implments them
+    - id: FoodFrozenSandwichStrawberry # Change to actual strawberries if someone implements them
       amount: 2
 
 - type: entity
-  name: banana cow
   parent: MobCow
   id: MobCowBanana
+  name: banana cow
   description: Moo.
   components:
   - type: Sprite
     drawdepth: Mobs
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: cow
-      sprite: _Funkystation/Mobs/Animals/banana_cow.rsi
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+      sprite: _RedStar/Mobs/Animals/Farm/banana_cow.rsi
   - type: SolutionManager
     solutions:
     - SolutionUdderBanana
@@ -151,15 +151,15 @@
 - type: entity
   parent: MobCow
   id: MobCowPilk
-  description: Moo.
   suffix: Pilk
+  description: Moo.
   components:
   - type: Sprite
     drawdepth: Mobs
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: cow
-      sprite: Mobs/Animals/cow.rsi
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+      sprite: Mobs/Animals/Farm/cow.rsi
   - type: SolutionManager
     solutions:
     - SolutionUdderPilk
