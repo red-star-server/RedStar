@@ -31,10 +31,16 @@ public sealed partial class PlantDataComponent : Component
     public EntProtoId PacketPrototype;
 
     /// <summary>
-    /// The plant prototypes this plant may mutate into when prompted to.
+    /// Directed species mutations available from this plant. // RS14
     /// </summary>
     [DataField, AutoNetworkedField]
-    public List<EntProtoId> MutationPrototypes = [];
+    public List<PlantSpeciesMutation> Mutations = []; // RS14
+
+    /// <summary>
+    /// Existing RedStar mutation destinations kept while plant prototypes move to the directed graph. // RS14
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public List<EntProtoId> MutationPrototypes = []; // RS14
 
     /// <summary>
     /// The entity prototypes that are spawned when this type of seed is harvested.

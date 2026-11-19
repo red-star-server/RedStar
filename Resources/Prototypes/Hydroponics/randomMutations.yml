@@ -223,6 +223,12 @@
       persists: false
       effect: !type:PlantChangeTraits
         trait: PlantTraitSeedless
+    # RS14: genetic instability is inherited through PlantClone.
+    - name: ChangeGeneticInstability
+      baseOdds: 0.036
+      persists: false
+      effect: !type:PlantAdjustGeneticInstability
+        amount: 15
     - name: Lignification
       baseOdds: 0.036
       persists: false
