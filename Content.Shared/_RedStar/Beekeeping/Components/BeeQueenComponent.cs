@@ -66,7 +66,7 @@ public sealed partial class BeeQueenComponent : Component
     /// Her traits, innate ones included.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public List<ProtoId<BeeTraitPrototype>> Traits = new();
+    public List<ProtoId<BeeTraitPrototype>> Traits = [];
 
     /// <summary>
     /// Traits she can hold besides the innate ones. A new trait with no free slot replaces a random one.

@@ -1,5 +1,8 @@
 using Content.Shared._RedStar.Beekeeping.Data;
 
+using Content.Server._RedStar.Beekeeping.Systems;
+using Content.Shared._RedStar.Beekeeping.Prototypes;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server._RedStar.Beekeeping.Components;
 
@@ -8,18 +11,17 @@ namespace Content.Server._RedStar.Beekeeping.Components;
 /// to a nest site it picked, and builds a wild hive there with its bees. The queen item rides inside it; if the swarm
 /// is gone before it lands, the queen drops where it was.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(BeeSwarmSystem), typeof(BeeQueenSystem), typeof(BeeErrandSystem), typeof(WildBeehiveRuleSystem))]
 public sealed partial class BeeSwarmComponent : Component
 {
+    public const float DefaultSearchHop = 5f;
+
     /// <summary>
     /// Container holding the old queen.
     /// </summary>
     [DataField]
     public string Container = "queen";
 
-    /// <summary>
-    /// Bees that left with the swarm.
-    /// </summary>
     [ViewVariables]
     public int Bees;
 
@@ -33,7 +35,7 @@ public sealed partial class BeeSwarmComponent : Component
     /// The wild hive to build.
     /// </summary>
     [ViewVariables]
-    public string WildHive = "WildBeehive";
+    public EntProtoId WildHive = "WildBeehive";
 
     /// <summary>
     /// The locker, closet or crate the swarm moves into, if it found one. Null: a free wall corner.
@@ -58,7 +60,7 @@ public sealed partial class BeeSwarmComponent : Component
     /// How far she flies on one hop while searching.
     /// </summary>
     [DataField]
-    public float SearchHop = 5f;
+    public float SearchHop = DefaultSearchHop;
 
     /// <summary>
     /// The vent the swarm comes out of, if it left through the vents. Null once it is out.
@@ -76,5 +78,5 @@ public sealed partial class BeeSwarmComponent : Component
     /// The quirk rolled when the swarm left; the wild hive it builds keeps it.
     /// </summary>
     [ViewVariables]
-    public string? Modifier;
+    public ProtoId<SwarmModifierPrototype>? Modifier;
 }

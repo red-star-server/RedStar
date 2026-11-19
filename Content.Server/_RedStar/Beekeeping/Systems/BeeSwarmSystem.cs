@@ -1,41 +1,21 @@
+using System.Linq;
+using System.Numerics;
 using Content.Server._RedStar.Beekeeping.Components;
 using Content.Server._RedStar.Beekeeping.Data;
 using Content.Server._RedStar.Beekeeping.Events;
+using Content.Server.Stack;
 using Content.Shared._RedStar.Beekeeping;
 using Content.Shared._RedStar.Beekeeping.Components;
 using Content.Shared._RedStar.Beekeeping.Data;
 using Content.Shared._RedStar.Beekeeping.Prototypes;
-using Robust.Shared.Timing;
-using Robust.Shared.Spawners;
-using Content.Shared.Weapons.Melee.Events;
-using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Stacks;
-using Content.Shared.NPC.Systems;
-using Content.Shared.NPC.Components;
-using Content.Shared.Mobs.Systems;
-using Content.Shared.Mobs.Components;
-using Content.Shared.Mobs;
-using Content.Shared.Inventory;
-using Content.Shared.Hands;
-using Content.Shared.FixedPoint;
-using Content.Shared.Examine;
-using Content.Shared.Destructible;
-using Content.Shared.Damage.Systems;
-using Content.Shared.CombatMode.Pacification;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Body.Systems;
-using Content.Server.Stack;
-using Content.Server.NPC.Systems;
-using Content.Server.NPC.HTN;
-using Content.Server.Atmos.Components;
-using System.Linq;
-using System.Numerics;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
-using Content.Shared.Maps;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
+using Content.Shared.Stacks;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Configuration;
@@ -74,14 +54,12 @@ public sealed partial class BeeSwarmSystem : EntitySystem
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private BeeScoutSystem _scout = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
-    [Dependency] private TurfSystem _turf = default!;
-
-    private readonly HashSet<Entity<BeehiveComponent>> _hivesNear = new();
-    private readonly HashSet<EntityUid> _swarmTargets = new();
-    private readonly HashSet<Entity<EntityStorageComponent>> _nestStorages = new();
-    private readonly List<EntityUid> _storageCandidates = new();
-
     [Dependency] private SharedEntityStorageSystem _entityStorage = default!;
+
+    private readonly HashSet<Entity<BeehiveComponent>> _hivesNear = [];
+    private readonly HashSet<EntityUid> _swarmTargets = [];
+    private readonly HashSet<Entity<EntityStorageComponent>> _nestStorages = [];
+    private readonly List<EntityUid> _storageCandidates = [];
 
     /// <summary>
     /// The egg died with nobody collecting the jelly: the old queen swarms out, if the colony is big enough, a nest
@@ -89,6 +67,9 @@ public sealed partial class BeeSwarmSystem : EntitySystem
     /// </summary>
     public bool TrySwarm(Entity<BeehiveComponent> hive)
     {
+        if (!hive.Comp.Wild && hive.Comp.MaxBees == 0)
+            return false;
+
         return TryLeave(hive, false);
     }
 
@@ -121,15 +102,12 @@ public sealed partial class BeeSwarmSystem : EntitySystem
 
         var hiveMap = _transform.GetMapCoordinates(hive, xform);
         var modifier = RollSwarmModifier();
-        var range = comp.SwarmRange * modifier.RangeMultiplier;
+        var range = comp.SwarmRange * (modifier?.RangeMultiplier ?? 1f);
 
-        // A vent in sight that leads somewhere comes first: the swarm dives in and comes out elsewhere in the network.
-        // Otherwise a free locker in sight, and with none the swarm sets off to look for one.
         EntityUid? storage = null;
         Vector2 site;
-        var ventRoute = modifier.SkipVents ? null : FindSwarmVentRoute(hive, grid, hiveMap, range);
+        var ventRoute = modifier is { SkipVents: true } ? null : FindSwarmVentRoute(hive, grid, hiveMap, range);
 
-        // Only exits with a place to nest near them: a swarm that comes out where there is none just flies about.
         List<EntityUid>? nestExits = null;
         if (ventRoute is { } found)
         {
@@ -146,7 +124,7 @@ public sealed partial class BeeSwarmSystem : EntitySystem
             storage = PickNestStorage(hive, range, grid, hiveMap, nestParents: oldQueenComp.NestParents);
             site = storage is { } chosen
                 ? _transform.WithEntityId(Transform(chosen).Coordinates, grid).Position
-                : SearchHop(hive, hiveMap, (grid, gridComp), SearchHopLength);
+                : SearchHop(hive, hiveMap, (grid, gridComp), BeeSwarmComponent.DefaultSearchHop);
         }
 
         if (_errands.Release(hive, xform, comp.SwarmPrototype, storage,
@@ -157,7 +135,6 @@ public sealed partial class BeeSwarmSystem : EntitySystem
             return false;
         }
 
-        // The old queen goes with the swarm; when swarming, a young one from the egg takes her place.
         var slot = _container.EnsureContainer<ContainerSlot>(swarm, swarmComp.Container);
         if (!_itemSlots.TryGetSlot(hive.Owner, comp.QueenSlot, out var queenSlot) ||
             queenSlot.ContainerSlot is not { } queenContainer ||
@@ -169,20 +146,19 @@ public sealed partial class BeeSwarmSystem : EntitySystem
 
         if (!_container.Insert(oldQueen, slot, force: true))
         {
-            // She could not be moved: she goes back into the hive and nothing swarms.
             _container.Insert(oldQueen, queenContainer, force: true);
             Del(swarm);
             return false;
         }
 
-        var leaving = abandon ? comp.Bees : Math.Max(1, (int) (comp.Bees * modifier.ColonyShare));
+        var leaving = abandon ? comp.Bees : Math.Max(1, (int) (comp.Bees * (modifier?.ColonyShare ?? 0.5f)));
         comp.Bees -= leaving;
         swarmComp.Bees = leaving;
         swarmComp.WildHive = comp.WildHivePrototype;
         swarmComp.Storage = storage;
         swarmComp.VentExit = ventRoute?.Exit;
         swarmComp.NestRange = range;
-        swarmComp.Modifier = modifier.ID;
+        swarmComp.Modifier = modifier?.ID;
         // What the swarm lives on follows what is around the places it can settle at: all the exits that have a nest
         // near them, or, with no vents, around the hive.
         swarmComp.Diet = nestExits is { Count: > 0 }
@@ -225,7 +201,7 @@ public sealed partial class BeeSwarmSystem : EntitySystem
             return true;
         }
 
-        var daughter = Spawn(comp.DaughterQueenPrototype, xform.Coordinates);
+        var daughter = SpawnAttachedTo(comp.DaughterQueenPrototype, xform.Coordinates);
         if (TryComp<BeeQueenComponent>(daughter, out var daughterComp))
             InheritTraits(oldQueenComp, daughterComp);
         if (!_itemSlots.TryInsert(hive.Owner, comp.QueenSlot, daughter, null))
@@ -258,9 +234,9 @@ public sealed partial class BeeSwarmSystem : EntitySystem
     }
 
     /// <summary>
-    /// One quirk for the swarm, by weight. Without any prototypes a plain swarm.
+    /// One quirk for the swarm, by weight. Null without any prototypes: a plain swarm.
     /// </summary>
-    private SwarmModifierPrototype RollSwarmModifier()
+    private SwarmModifierPrototype? RollSwarmModifier()
     {
         var weights = new Dictionary<SwarmModifierPrototype, float>();
         foreach (var modifier in _proto.EnumeratePrototypes<SwarmModifierPrototype>())
@@ -269,7 +245,7 @@ public sealed partial class BeeSwarmSystem : EntitySystem
                 weights[modifier] = modifier.Weight;
         }
 
-        return weights.Count > 0 ? _random.Pick(weights) : _proto.Index(PlainSwarm);
+        return weights.Count > 0 ? _random.Pick(weights) : null;
     }
 
     /// <summary>
@@ -283,19 +259,17 @@ public sealed partial class BeeSwarmSystem : EntitySystem
         if (count <= 0)
             return;
 
+        var xform = Transform(hive);
+        if (xform.GridUid is not { } grid || !TryComp<MapGridComponent>(grid, out var gridComp))
+            return;
+
         for (var i = 0; i < count; i++)
         {
             _hive.RemoveHomeBee(hive);
         }
 
-        var xform = Transform(hive);
-        if (xform.GridUid is not { } grid || !TryComp<MapGridComponent>(grid, out var gridComp))
-            return;
-
-        // Off in a random direction, as far as it can fly in a straight line, up to the scouting range.
         var hiveMap = _transform.GetMapCoordinates(hive, xform);
-        var angle = _random.NextFloat() * MathF.Tau;
-        var direction = new Vector2(MathF.Cos(angle), MathF.Sin(angle));
+        var direction = _random.NextAngle().ToVec();
         var distance = Math.Min(comp.ScoutRange, _scout.FreeFlight(hiveMap, direction, comp.ScoutRange, hive) - 0.5f);
         var target = _map.WorldToLocal(grid, gridComp, hiveMap.Position + direction * Math.Max(distance, 0.5f));
         if (_errands.Release(hive, xform, comp.LeavingSwarmPrototype, null, null, new EntityCoordinates(grid, target)) is not { } swarm ||
@@ -345,8 +319,6 @@ public sealed partial class BeeSwarmSystem : EntitySystem
         if (_nestStorages.Count == 0)
             return null;
 
-        // What makes a place taken is gathered once for the whole search: the hives around and the lockers swarms are
-        // already flying to.
         _hivesNear.Clear();
         _lookup.GetEntitiesInRange(hiveMap, range + 1f, _hivesNear);
         _swarmTargets.Clear();
@@ -434,14 +406,8 @@ public sealed partial class BeeSwarmSystem : EntitySystem
     /// </summary>
     private bool NestTaken(Entity<EntityStorageComponent> storage, TransformComponent storageXform)
     {
-        if (_swarmTargets.Contains(storage.Owner))
+        if (_swarmTargets.Contains(storage.Owner) || StorageContainsHive(storage.Comp))
             return true;
-
-        foreach (var contained in storage.Comp.Contents.ContainedEntities)
-        {
-            if (HasComp<BeehiveComponent>(contained))
-                return true;
-        }
 
         // An open locker keeps its hive on top of it rather than inside.
         foreach (var hive in _hivesNear)
@@ -456,8 +422,6 @@ public sealed partial class BeeSwarmSystem : EntitySystem
 
         return false;
     }
-
-    public const float SearchHopLength = 5f;
 
     /// <summary>
     /// What a swarm or a lone queen does where its errand took it: bees with no queen scatter, a swarm out of the pipes
@@ -491,11 +455,6 @@ public sealed partial class BeeSwarmSystem : EntitySystem
     }
 
     /// <summary>
-    /// The swarm with no quirk, for a server with no other quirks in its data.
-    /// </summary>
-    private static readonly ProtoId<SwarmModifierPrototype> PlainSwarm = "Plain";
-
-    /// <summary>
     /// Where a searching swarm or queen flies next: a few tries for a random direction with room to fly, failing that
     /// it stays put and tries again next time. Grid coordinates.
     /// </summary>
@@ -505,8 +464,7 @@ public sealed partial class BeeSwarmSystem : EntitySystem
         var distance = 0f;
         for (var i = 0; i < 4 && distance < 1f; i++)
         {
-            var angle = _random.NextFloat() * MathF.Tau;
-            direction = new Vector2(MathF.Cos(angle), MathF.Sin(angle));
+            direction = _random.NextAngle().ToVec();
             distance = Math.Min(length, _scout.FreeFlight(origin, direction, length, flyer) - 0.5f);
         }
 
@@ -530,7 +488,7 @@ public sealed partial class BeeSwarmSystem : EntitySystem
         }
 
         var origin = _transform.GetMapCoordinates(swarm, xform);
-        if (PickNestStorage(swarm, queen.NestRange, grid, origin, nestParents: queen.NestParents) is { } storage)
+        if (PickNestStorage(swarm, swarm.Comp.NestRange, grid, origin, nestParents: queen.NestParents) is { } storage)
         {
             SetSearching(swarm, false);
             swarm.Comp.Storage = storage;
@@ -570,9 +528,14 @@ public sealed partial class BeeSwarmSystem : EntitySystem
             return;
         }
 
-        var wild = Spawn(swarm.Comp.WildHive, xform.Coordinates);
-        if (!TryComp<BeehiveComponent>(wild, out var wildComp) ||
-            !_container.TryGetContainer(swarm, swarm.Comp.Container, out var container))
+        if (!_container.TryGetContainer(swarm, swarm.Comp.Container, out var container) ||
+            container is not ContainerSlot { ContainedEntity: { } queen })
+        {
+            return;
+        }
+
+        var wild = SpawnAttachedTo(swarm.Comp.WildHive, xform.Coordinates);
+        if (!TryComp<BeehiveComponent>(wild, out var wildComp))
         {
             Del(wild);
             DropSwarmQueen(swarm);
@@ -589,44 +552,42 @@ public sealed partial class BeeSwarmSystem : EntitySystem
                 storageComp.Contents.ContainedEntities.Count >= storageComp.Capacity ||
                 _container.IsEntityInContainer(nest) ||
                 Transform(nest).GridUid != xform.GridUid ||
-                storageComp.Contents.ContainedEntities.Any(HasComp<BeehiveComponent>) ||
+                StorageContainsHive(storageComp) ||
                 !_hive.HasRoomForQueen((wild, wildComp)) ||
                 (swarm.Comp.Diet == BeehiveDiet.Meat &&
                  _meat.CountMeatHives(xform.MapUid, swarm) >= _cfg.GetCVar(BeekeepingCVars.MeatHiveLimit)) ||
-                !_entityStorage.Insert(wild, nest, storageComp) ||
-                container.ContainedEntities.Count != 1 ||
-                !TrySettleEventQueen())
+                !_entityStorage.Insert(wild, nest, storageComp))
             {
                 Del(wild);
                 DropSwarmQueen(swarm);
                 return;
             }
         }
-        else
-        {
-            foreach (var queen in new List<EntityUid>(container.ContainedEntities))
-            {
-                _container.Remove(queen, container, force: true);
-                if (!_itemSlots.TryInsert(wild, wildComp.QueenSlot, queen, null))
-                    _transform.DropNextTo(queen, wild);
-            }
 
-            // An ordinary swarm can still settle on the floor if its storage is gone.
-            if (swarm.Comp.Storage is { } storage && !TerminatingOrDeleted(storage))
-                _entityStorage.Insert(wild, storage);
+        if (!_container.Remove(queen, container, force: true))
+        {
+            Del(wild);
+            DropSwarmQueen(swarm);
+            return;
         }
 
-        bool TrySettleEventQueen()
+        if (!_itemSlots.TryInsert(wild, wildComp.QueenSlot, queen, null))
         {
-            var queen = container.ContainedEntities[0];
-            if (!_container.Remove(queen, container, force: true))
-                return false;
-
-            if (_itemSlots.TryInsert(wild, wildComp.QueenSlot, queen, null))
-                return true;
-
             _transform.DropNextTo(queen, swarm.Owner);
-            return false;
+            Del(wild);
+            return;
+        }
+
+        if (!HasComp<WildBeehiveEventSwarmComponent>(swarm) &&
+            swarm.Comp.Storage is { } storage &&
+            !TerminatingOrDeleted(storage) &&
+            TryComp<EntityStorageComponent>(storage, out var ordinaryStorage) &&
+            Transform(storage).GridUid == xform.GridUid &&
+            !_container.IsEntityInContainer(storage) &&
+            ordinaryStorage.Contents.ContainedEntities.Count < ordinaryStorage.Capacity &&
+            !StorageContainsHive(ordinaryStorage))
+        {
+            _entityStorage.Insert(wild, storage, ordinaryStorage);
         }
 
         // A lone queen starts the colony like a new hive does; a swarm brings its bees.
@@ -656,6 +617,17 @@ public sealed partial class BeeSwarmSystem : EntitySystem
 
         var landed = new BeeSwarmLandedEvent(wild);
         RaiseLocalEvent(swarm, ref landed);
+    }
+
+    private bool StorageContainsHive(EntityStorageComponent storage)
+    {
+        foreach (var contained in storage.Contents.ContainedEntities)
+        {
+            if (HasComp<BeehiveComponent>(contained))
+                return true;
+        }
+
+        return false;
     }
 
     /// <summary>

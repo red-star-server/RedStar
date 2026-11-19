@@ -1,0 +1,12 @@
+ent-PlatformWhite = { ent-Platform }
+    .desc = { ent-Platform.desc }
+    .suffix = Белая
+ent-PlatformCornerWhite = { ent-PlatformCorner }
+    .desc = { ent-PlatformCorner.desc }
+    .suffix = Белая, Угловая
+ent-PlatformCornerSmallWhite = { ent-PlatformCornerSmall }
+    .desc = { ent-PlatformCornerSmall.desc }
+    .suffix = Белая, Угловая, Малая
+ent-PlatformRoundWhite = { ent-PlatformRound }
+    .desc = { ent-PlatformRound.desc }
+    .suffix = Белая, Круглая

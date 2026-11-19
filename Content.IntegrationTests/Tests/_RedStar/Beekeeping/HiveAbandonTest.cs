@@ -3,6 +3,7 @@ using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server._RedStar.Beekeeping.Components;
+using Content.Server._RedStar.Beekeeping.Systems;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared._RedStar.Beekeeping;
 using Content.Shared._RedStar.Beekeeping.Components;
@@ -151,6 +152,38 @@ public sealed class HiveAbandonTest : GameTest
     /// Правило: матка одна в улье без рамок тоже улетает искать новый дом.
     /// </summary>
     [Test]
+    public async Task ExpiredEggDoesNotSplitAColonyWaitingToAbandon()
+    {
+        const int startingBees = 6;
+        await Build(startingBees);
+        var server = Server;
+        await server.WaitPost(() =>
+        {
+            var comp = server.EntMan.GetComponent<BeehiveComponent>(_hive);
+            comp.HasEgg = true;
+            comp.EggDiesAt = server.Timing.CurTime;
+        });
+
+        await RunSeconds(2);
+        await server.WaitAssertion(() =>
+        {
+            var comp = server.EntMan.GetComponent<BeehiveComponent>(_hive);
+            Assert.That(comp.HasEgg, Is.False);
+            Assert.That(comp.Bees, Is.EqualTo(startingBees));
+            Assert.That(QueenHome(), Is.True);
+        });
+
+        await RunSeconds(6);
+        await server.WaitAssertion(() =>
+        {
+            var container = server.System<SharedContainerSystem>();
+            Assert.That(container.TryGetContainingContainer(_queen, out var swarm), Is.True);
+            Assert.That(server.EntMan.GetComponent<BeeSwarmComponent>(swarm!.Owner).Bees, Is.EqualTo(startingBees));
+            Assert.That(server.EntMan.GetComponent<BeehiveComponent>(_hive).Bees, Is.Zero);
+        });
+    }
+
+    [Test]
     public async Task LoneQueenLeavesToo()
     {
         await Build(0);
@@ -163,15 +196,66 @@ public sealed class HiveAbandonTest : GameTest
     }
 
     [Test]
-    public async Task ClearingSwarmsDeletesTheirQueens()
+    public async Task CrowdedHiveKeepsTheBeesThatFitAfterMassDeparture()
+    {
+        await Build(4);
+        var server = Server;
+        await server.WaitPost(() =>
+        {
+            var comp = server.EntMan.GetComponent<BeehiveComponent>(_hive);
+            var frame = server.EntMan.SpawnAttachedTo("BeeFrame", _map.GridCoords);
+            Assert.That(server.System<ItemSlotsSystem>().TryInsert(_hive, comp.FrameSlots[0], frame, null), Is.True);
+            comp.CrowdingGrace = TimeSpan.Zero;
+            comp.Bees = comp.MaxBees + 2;
+        });
+
+        await RunSeconds(2);
+        await server.WaitAssertion(() =>
+        {
+            var comp = server.EntMan.GetComponent<BeehiveComponent>(_hive);
+            Assert.That(server.System<BeehiveSystem>().ColonySize((_hive, comp)), Is.EqualTo(comp.MaxBees));
+        });
+    }
+
+    [Test]
+    public async Task BrieflyInsertedFrameRestartsAbandonCountdown()
+    {
+        await Build(4);
+        await RunSeconds(3);
+
+        var server = Server;
+        await server.WaitPost(() =>
+        {
+            var comp = server.EntMan.GetComponent<BeehiveComponent>(_hive);
+            Assert.That(comp.AbandonAt, Is.Not.Null);
+            var frame = server.EntMan.SpawnAttachedTo("BeeFrame", _map.GridCoords);
+            var slots = server.System<ItemSlotsSystem>();
+            Assert.That(slots.TryInsert(_hive, comp.FrameSlots[0], frame, null), Is.True);
+            Assert.That(slots.TryEject(_hive, comp.FrameSlots[0], null, out _), Is.True);
+        });
+
+        await RunSeconds(4);
+        await server.WaitAssertion(() => Assert.That(QueenHome(), Is.True));
+        await RunSeconds(4);
+        await server.WaitAssertion(() => Assert.That(QueenInSwarm(), Is.True));
+    }
+
+    [Test]
+    public async Task ClearingSwarmsDeletesTheirQueensAndLooseAggressiveBees()
     {
         await Build(4);
         await RunSeconds((float) ShortAbandon.TotalSeconds + 2);
 
         var server = Server;
+        EntityUid aggressive = default;
+        EntityUid calm = default;
         await server.WaitPost(() =>
         {
             Assert.That(QueenInSwarm(), Is.True);
+            aggressive = server.EntMan.SpawnAttachedTo("BeePollinator", _map.GridCoords);
+            calm = server.EntMan.SpawnAttachedTo("BeePollinator", _map.GridCoords);
+            server.EntMan.GetComponent<BeeItemComponent>(aggressive).Traits.Add("Aggressive");
+            Assert.That(server.EntMan.HasComponent<BeeErrandComponent>(aggressive), Is.False);
             server.ResolveDependency<IConsoleHost>().ExecuteCommand("beekeeping_clear all");
         });
 
@@ -181,6 +265,8 @@ public sealed class HiveAbandonTest : GameTest
             Assert.That(server.EntMan.EntityQuery<BeeSwarmComponent>(), Is.Empty);
             Assert.That(server.EntMan.Deleted(_queen), Is.True, "the cleared swarm left its queen behind");
             Assert.That(server.EntMan.Deleted(_hive), Is.False);
+            Assert.That(server.EntMan.Deleted(aggressive), Is.True);
+            Assert.That(server.EntMan.Deleted(calm), Is.False);
         });
     }
 }

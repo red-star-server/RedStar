@@ -50,7 +50,7 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
     /// </summary>
     private const float MaxUpdateSeconds = 5f;
 
-    private readonly List<Entity<BeeFrameComponent>> _frames = new();
+    private readonly List<Entity<BeeFrameComponent>> _frames = [];
 
     [SubscribeLocalEvent]
     private void OnMapInit(Entity<BeehiveComponent> ent, ref MapInitEvent args)
@@ -96,6 +96,7 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
         if (!ent.Comp.FrameSlots.Contains(id))
             return;
 
+        ent.Comp.AbandonAt = null;
         UpdateMaxBees(ent);
         UpdateHiveAppearance(ent);
     }
@@ -193,7 +194,6 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
         comp.BeeProgress = 0f;
         comp.ScoutState = comp.Bees > 0 ? BeeScoutState.Home : BeeScoutState.Lost;
         comp.ScoutReplaceAt = Timing.CurTime;
-        // The hive shows it is alive: the first scout flight starts a few seconds after the queen goes in.
         comp.ScoutFirstTripNow = comp.Bees > 0;
         UpdateAmbience(ent);
     }
@@ -209,8 +209,7 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
             if (now < comp.NextUpdate)
                 continue;
 
-            // A long server hitch is worked off over the next updates instead of being lost: each one takes at most
-            // MaxUpdateSeconds of the time that passed and leaves the rest for later.
+            // The clamp defers the rest of a long hitch to later updates instead of losing it.
             var passed = Math.Clamp((float) (now - comp.LastUpdate).TotalSeconds, 0f, MaxUpdateSeconds);
             comp.LastUpdate += TimeSpan.FromSeconds(passed);
             comp.NextUpdate = now + UpdateInterval;
@@ -235,7 +234,6 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
         }
         else
         {
-            // A paused hive does not scout; the trip starts over once the air is fine again.
             hive.Comp.NextScoutTrip = TimeSpan.Zero;
             _scout.RecallScout(hive.Comp);
         }
@@ -253,7 +251,6 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
         var now = Timing.CurTime;
         var waitingToAbandon = !comp.Wild && hasQueen && comp.MaxBees == 0;
 
-        // Without a queen the colony slowly dies out.
         if (hasQueen || comp.Bees <= 0)
         {
             comp.NextQueenlessDecay = now + comp.QueenlessDecayInterval;
@@ -284,8 +281,6 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
             }
             else
             {
-                // The moment the grace runs out, the extra bees leave together as a swarm; with an egg in the hive the
-                // old queen goes with them and a young one stays. Bees still too many after that leave one by one.
                 if (comp.Crowding != BeehiveCrowding.Leaving)
                 {
                     if (comp.HasEgg && _swarm.TrySwarm(hive))
@@ -294,22 +289,28 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
                         _swarm.LeaveInSwarm(hive, ColonySize(hive) - comp.MaxBees);
                 }
 
-                comp.Crowding = BeehiveCrowding.Leaving;
-                if (now >= comp.NextCrowdingLeave)
+                if (ColonySize(hive) <= comp.MaxBees)
                 {
-                    comp.NextCrowdingLeave = now + comp.CrowdingLeaveInterval;
-                    RemoveHomeBee(hive);
+                    comp.CrowdedSince = null;
+                    comp.Crowding = BeehiveCrowding.None;
+                }
+                else
+                {
+                    comp.Crowding = BeehiveCrowding.Leaving;
+                    if (now >= comp.NextCrowdingLeave)
+                    {
+                        comp.NextCrowdingLeave = now + comp.CrowdingLeaveInterval;
+                        RemoveHomeBee(hive);
+                    }
                 }
             }
         }
 
-        // No frames is no home: after a while the queen leaves with the whole colony. Wild hives have no frames.
         if (waitingToAbandon)
         {
             comp.AbandonAt ??= now + comp.AbandonTime;
             if (now >= comp.AbandonAt)
             {
-                // With nowhere to go (too many wild hives) she tries again a bit later.
                 comp.AbandonAt = _swarm.TryAbandon(hive) ? null : now + AbandonRetry;
             }
         }
@@ -318,7 +319,6 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
             comp.AbandonAt = null;
         }
 
-        // A worker takes the place of a lost scout once the delay is over and enough bees are home.
         if (comp.ScoutState == BeeScoutState.Lost &&
             now >= comp.ScoutReplaceAt &&
             comp.Bees >= comp.ScoutReplaceMinBees)
@@ -365,11 +365,7 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
     public void UpdateMaxBees(Entity<BeehiveComponent> hive)
     {
         GetFrames(hive, _frames);
-        var max = hive.Comp.Wild ? hive.Comp.WildMaxBees : _frames.Count * hive.Comp.BeesPerFrame;
-        if (hive.Comp.MaxBees == max)
-            return;
-
-        hive.Comp.MaxBees = max;
+        hive.Comp.MaxBees = hive.Comp.Wild ? hive.Comp.WildMaxBees : _frames.Count * hive.Comp.BeesPerFrame;
     }
 
     #endregion
@@ -405,7 +401,6 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
             {
                 comp.BeeProgress -= beeCost;
                 comp.Bees++;
-                // The colony has no scout: the new bee is born one.
                 if (comp.ScoutState == BeeScoutState.Lost)
                     comp.ScoutState = BeeScoutState.Home;
                 var rate = Math.Max(traits.LayRate, 0.01f);
@@ -437,7 +432,7 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
             changed = true;
         }
 
-        // Nowhere left to put a finished comb: keep it ready for the next empty frame.
+        // Bank at most one finished comb for the next empty frame.
         comp.CombProgress = Math.Min(comp.CombProgress, 1f);
 
         if (changed)

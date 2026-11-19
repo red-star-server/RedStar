@@ -60,7 +60,7 @@ public sealed partial class BeeQueenSystem : EntitySystem
     /// <summary>
     /// Queens whose solution changed. Sorted out in the update, not inside the change event itself.
     /// </summary>
-    private readonly HashSet<EntityUid> _changedQueens = new();
+    private readonly HashSet<EntityUid> _changedQueens = [];
 
     private readonly Dictionary<(ProtoId<BeeTraitPrototype> Trait, bool Gain), float> _rollOutcomes = new();
 
@@ -137,8 +137,8 @@ public sealed partial class BeeQueenSystem : EntitySystem
 
             if (!swarm.Comp.Searching)
                 StopQueenTimer((contained, queen));
-            // A stopped timer can still be present until deferred removal runs.
-            else if (!TryComp<TimedDespawnComponent>(contained, out var timer) || !timer.Running)
+            // DiesAt, not the timer component: a stopped one lingers until deferred removal runs.
+            else if (queen.DiesAt == null)
                 StartQueenTimer((contained, queen));
         }
     }
@@ -226,7 +226,7 @@ public sealed partial class BeeQueenSystem : EntitySystem
     private void RollTrait(Entity<BeeQueenComponent> queen)
     {
         var comp = queen.Comp;
-        // Every roll wears the queen down a little more, for the rolls after this one.
+        // This roll still uses the old instability; the increment applies to the rolls after it.
         comp.Instability++;
         Dirty(queen);
         var instability = comp.Instability - 1;
@@ -328,7 +328,7 @@ public sealed partial class BeeQueenSystem : EntitySystem
             return;
 
         comp.EmergencyQueenSince = null;
-        var queenNew = Spawn(comp.DaughterQueenPrototype, Transform(hive).Coordinates);
+        var queenNew = SpawnAttachedTo(comp.DaughterQueenPrototype, Transform(hive).Coordinates);
         if (!_itemSlots.TryInsert(hive.Owner, comp.QueenSlot, queenNew, null))
         {
             Del(queenNew);
@@ -421,7 +421,6 @@ public sealed partial class BeeQueenSystem : EntitySystem
             bee.Comp.Charges = Math.Max(1, bee.Comp.Charges + totals.PollinatorCharges);
         bee.Comp.PollinationMutation = totals.PollinationMutation;
 
-        // A long-lived colony's bees last longer outside.
         if (!MathHelper.CloseTo(totals.Lifetime, 1f) && TryComp<TimedDespawnComponent>(bee, out var despawn))
         {
             despawn.Lifetime *= totals.Lifetime;
@@ -429,7 +428,6 @@ public sealed partial class BeeQueenSystem : EntitySystem
         }
         Dirty(bee);
 
-        // With a sting, the bee carries some of the queen's payload; its colour shows the payload it took.
         Color? color = null;
         if (totals.Sting &&
             _solutions.TryGetSolution(queenUid, queen.Solution, out var soln, out var solution) &&

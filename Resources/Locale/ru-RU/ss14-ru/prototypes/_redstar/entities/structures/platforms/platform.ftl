@@ -1,0 +1,13 @@
+ent-BasePlatform = платформа
+    .desc = Простая платформа, предназначенная для защиты таких идиотов, как вы, от падения.
+ent-Platform = { ent-BasePlatform }
+    .desc = { ent-BasePlatform.desc }
+ent-PlatformCorner = { ent-BasePlatform }
+    .desc = { ent-BasePlatform.desc }
+    .suffix = Угловая
+ent-PlatformCornerSmall = { ent-BasePlatform }
+    .desc = { ent-BasePlatform.desc }
+    .suffix = Угловая, Малая
+ent-PlatformRound = { ent-BasePlatform }
+    .desc = { ent-BasePlatform.desc }
+    .suffix = Круглая

@@ -1,11 +1,12 @@
 #nullable enable
 using System.Numerics;
 using Content.IntegrationTests.Fixtures;
+using Content.Server._RedStar.Beekeeping.Components;
+using Content.Server._RedStar.Beekeeping.Data;
 using Content.Server._RedStar.Beekeeping.Systems;
 using Content.Shared.Tools.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
 
 namespace Content.IntegrationTests.Tests._RedStar.Beekeeping;
@@ -13,15 +14,42 @@ namespace Content.IntegrationTests.Tests._RedStar.Beekeeping;
 /// <summary>
 /// A swarm picks a vent it can see and an exit vent in the same pipe network; a welded vent does not count.
 /// </summary>
-[TestOf(typeof(BeehiveSystem))]
+[TestOf(typeof(BeeSwarmSystem))]
 public sealed class SwarmVentTest : GameTest
 {
+    [Test]
+    public async Task WeldingTheEntryAfterPlanningPreventsTheDive()
+    {
+        var server = Server;
+        var map = await Pair.CreateTestMap();
+        var errands = server.System<BeeErrandSystem>();
+
+        await server.WaitAssertion(() =>
+        {
+            var entities = server.EntMan;
+            var hive = entities.SpawnAttachedTo("Beehive", map.GridCoords);
+            var entry = entities.SpawnAttachedTo("GasVentPump", map.GridCoords);
+            var exit = entities.SpawnAttachedTo("GasVentPump", map.GridCoords);
+            var bee = errands.Release(hive, entities.GetComponent<TransformComponent>(hive),
+                "BeePollinator", null, (entry, exit));
+            Assert.That(bee, Is.Not.Null);
+            Assert.That(errands.TryGetNextStop(bee!.Value, out _, out _), Is.True);
+
+            entities.GetComponent<WeldableComponent>(entry).IsWelded = true;
+            errands.StartAct(bee.Value);
+
+            var errand = entities.GetComponent<BeeErrandComponent>(bee.Value);
+            Assert.That(errand.Act, Is.EqualTo(BeeErrandAct.None));
+            Assert.That(errand.VentEntry, Is.Null);
+            Assert.That(errand.VentExit, Is.Null);
+        });
+    }
+
     [Test]
     public async Task VentRouteAndWelding()
     {
         var server = Server;
         var map = await Pair.CreateTestMap();
-        var hiveSystem = server.System<BeehiveSystem>();
         EntityUid hive = default;
         EntityUid entry = default;
         EntityUid exit = default;
@@ -35,7 +63,9 @@ public sealed class SwarmVentTest : GameTest
             for (var x = 0; x <= 6; x++)
             {
                 for (var y = 0; y <= 1; y++)
+                {
                     mapSys.SetTile(grid, map.Grid.Comp, new Vector2i(x, y), plating);
+                }
             }
 
             EntityCoordinates At(float x, float y) => new(grid, new Vector2(x + 0.5f, y + 0.5f));
@@ -120,7 +150,6 @@ public sealed class SwarmVentTest : GameTest
     {
         var server = Server;
         var map = await Pair.CreateTestMap();
-        var hiveSystem = server.System<BeehiveSystem>();
         EntityUid entry = default;
         EntityUid bare = default;
         EntityUid withCloset = default;
@@ -133,7 +162,9 @@ public sealed class SwarmVentTest : GameTest
             for (var x = 0; x <= 20; x++)
             {
                 for (var y = 0; y <= 2; y++)
+                {
                     mapSys.SetTile(grid, map.Grid.Comp, new Vector2i(x, y), plating);
+                }
             }
 
             EntityCoordinates At(float x, float y) => new(grid, new Vector2(x + 0.5f, y + 0.5f));
@@ -142,7 +173,9 @@ public sealed class SwarmVentTest : GameTest
             bare = server.EntMan.SpawnEntity("GasVentPump", At(8, 1));
             withCloset = server.EntMan.SpawnEntity("GasVentPump", At(18, 1));
             for (var x = 1; x <= 18; x++)
+            {
                 server.EntMan.SpawnEntity("GasPipeFourway", At(x, 0));
+            }
 
             server.EntMan.SpawnEntity("ClosetMaintenance", At(18, 2));
         });

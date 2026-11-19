@@ -1,0 +1,12 @@
+ent-PlatformWood = { ent-Platform }
+    .desc = { ent-Platform.desc }
+    .suffix = Деревянная
+ent-PlatformCornerWood = { ent-PlatformCorner }
+    .desc = { ent-PlatformCorner.desc }
+    .suffix = Деревянная, Угловая
+ent-PlatformCornerSmallWood = { ent-PlatformCornerSmall }
+    .desc = { ent-PlatformCornerSmall.desc }
+    .suffix = Деревянная, Угловая, Малая
+ent-PlatformRoundWood = { ent-PlatformRound }
+    .desc = { ent-PlatformRound.desc }
+    .suffix = Деревянная, Круглая

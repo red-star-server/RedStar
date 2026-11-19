@@ -1,8 +1,9 @@
 using Content.Server._RedStar.Beekeeping.Components;
-using Content.Shared.NodeContainer.NodeGroups;
 using Content.Server.Atmos.Piping.Unary.Components;
-using Content.Shared.Mobs.Components;
+using Content.Server.NodeContainer.EntitySystems;
+using Content.Server.NodeContainer.Nodes;
 using Content.Shared.NodeContainer;
+using Content.Shared.NodeContainer.NodeGroups;
 using Content.Shared.Tools.Systems;
 using Content.Shared._RedStar.Beekeeping.Data;
 using Robust.Shared.Map;
@@ -19,6 +20,7 @@ namespace Content.Server._RedStar.Beekeeping.Systems;
 public sealed partial class BeeSwarmSystem
 {
     [Dependency] private WeldableSystem _weldable = default!;
+    [Dependency] private NodeContainerSystem _nodeContainer = default!;
 
     /// <summary>
     /// How far around a place a meat swarm counts the living creatures when it looks for a quiet one, in tiles.
@@ -73,8 +75,7 @@ public sealed partial class BeeSwarmSystem
     /// </summary>
     private List<EntityUid>? CachedNetwork(Entity<GasVentPumpComponent> vent)
     {
-        if (!TryComp<NodeContainerComponent>(vent, out var nodes) ||
-            !nodes.Nodes.TryGetValue(vent.Comp.Inlet, out var node) ||
+        if (!_nodeContainer.TryGetNode<PipeNode>(vent.Owner, vent.Comp.Inlet, out var node) ||
             node.NodeGroup is not { } group)
         {
             return null;
@@ -97,7 +98,7 @@ public sealed partial class BeeSwarmSystem
         IReadOnlyCollection<EntProtoId>? nestParents = null)
     {
         if (!TryComp<GasVentPumpComponent>(entry, out var pump))
-            return new List<EntityUid>();
+            return [];
 
         FindNetworkVents((entry, pump));
         return NestExits(new List<EntityUid>(_ventExits), range, grid, nestParents);
@@ -203,8 +204,7 @@ public sealed partial class BeeSwarmSystem
     private void FindNetworkVents(Entity<GasVentPumpComponent> entry)
     {
         _ventExits.Clear();
-        if (!TryComp<NodeContainerComponent>(entry, out var nodes) ||
-            !nodes.Nodes.TryGetValue(entry.Comp.Inlet, out var node) ||
+        if (!_nodeContainer.TryGetNode<PipeNode>(entry.Owner, entry.Comp.Inlet, out var node) ||
             node.NodeGroup is not { } group)
         {
             return;
@@ -216,7 +216,7 @@ public sealed partial class BeeSwarmSystem
         {
             if (uid == entry.Owner ||
                 xform.MapID != map ||
-                !ventNodes.Nodes.TryGetValue(pump.Inlet, out var ventNode) ||
+                !_nodeContainer.TryGetNode<PipeNode>(ventNodes, pump.Inlet, out var ventNode) ||
                 ventNode.NodeGroup != group ||
                 TerminatingOrDeleted(uid) ||
                 _weldable.IsWelded(uid))
