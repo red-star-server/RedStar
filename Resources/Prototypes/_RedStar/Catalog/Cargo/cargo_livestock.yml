@@ -1,0 +1,51 @@
+- type: cargoProduct
+  id: LivestockSkrellkeyCube
+  icon:
+    sprite: _RedStar/Objects/Misc/ancestorcube.rsi
+    state: box_skrellkey
+  product: SkrellkeyCubeBox
+  container:
+    entity: WrappedParcel
+    containerId: contents
+  cost: 2000
+  category: cargoproduct-category-name-livestock
+  group: market
+
+- type: cargoProduct
+  id: LivestockStokkeyCube
+  icon:
+    sprite: _RedStar/Objects/Misc/ancestorcube.rsi
+    state: box_stokkey
+  product: StokkeyCubeBox
+  container:
+    entity: WrappedParcel
+    containerId: contents
+  cost: 2000
+  category: cargoproduct-category-name-livestock
+  group: market
+
+- type: cargoProduct
+  id: LivestockTajkeyCube
+  icon:
+    sprite: _RedStar/Objects/Misc/ancestorcube.rsi
+    state: box_tajkey
+  product: TajkeyCubeBox
+  container:
+    entity: WrappedParcel
+    containerId: contents
+  cost: 2000
+  category: cargoproduct-category-name-livestock
+  group: market
+
+- type: cargoProduct
+  id: LivestockWolflingCube
+  icon:
+    sprite: _RedStar/Objects/Misc/ancestorcube.rsi
+    state: box_wolfling
+  product: WolflingCubeBox
+  container:
+    entity: WrappedParcel
+    containerId: contents
+  cost: 2000
+  category: cargoproduct-category-name-livestock
+  group: market

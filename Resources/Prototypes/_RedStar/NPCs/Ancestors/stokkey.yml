@@ -1,0 +1,70 @@
+﻿- type: entity
+  parent: MobBaseAncestor
+  id: MobStokkey
+  name: stok
+  description: The brutal progenitor of the Vox. Absolutely terrifying.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: stokkey
+      sprite: _RedStar/Mobs/Animals/Ancestors/stokkey.rsi
+    - map: [ "jumpsuit" ]
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+    - map: [ "ears" ]
+    - map: [ "id" ]
+    - map: [ "outerClothing" ]
+    - map: [ "mask" ]
+    - map: [ "head" ]
+  - type: NameIdentifier
+    group: Monkey
+  - type: Speech
+    speechSounds: Vox
+    speechVerb: Vox
+    allowedEmotes: [ 'Click', 'Chitter', 'Hiss', 'Caw' ]
+  - type: Vocal
+    emoteSounds: UnisexVox
+  - type: TypingIndicator
+    proto: vox
+  - type: Damageable
+    damageModifierSet: Vox
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: AmmoniaBlood
+        Quantity: 150
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatChicken
+      amount: 5
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Heat
+        damage: 1500
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawnInContainer: true
+        spawn:
+          FoodMeatChickenFriedVox:
+            min: 3
+            max: 5
+  - type: GhostTakeoverAvailable
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-stokkey
+  - type: PermanentStatusEffects
+    statusEffects:
+    - StatusEffectClumsyMonkey
+  - type: AlwaysRevolutionaryConvertible
+  - type: GhostRole
+    prob: 0.05
+    makeSentient: true
+    name: ghost-role-information-stokkey-name
+    description: ghost-role-information-stokkey-description
+    rules: ghost-role-information-nonantagonist-rules

@@ -1,0 +1,43 @@
+- type: entity
+  parent: CrateGenericSteel
+  id: CrateNPCSkrellkeyCube
+  name: neara cube crate
+  description: A crate containing single box of neara cubes.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: SkrellkeyCubeBox
+
+- type: entity
+  parent: CrateGenericSteel
+  id: CrateNPCStokkeyCube
+  name: stok cube crate
+  description: A crate containing single box of stok cubes.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: StokkeyCubeBox
+
+- type: entity
+  parent: CrateGenericSteel
+  id: CrateNPCTajkeyCube
+  name: farwa cube crate
+  description: A crate containing single box of farwa cubes.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: TajkeyCubeBox
+
+- type: entity
+  parent: CrateGenericSteel
+  id: CrateNPCWolflingCube
+  name: wolpin cube crate
+  description: A crate containing single box of wolpin cubes.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: WolflingCubeBox

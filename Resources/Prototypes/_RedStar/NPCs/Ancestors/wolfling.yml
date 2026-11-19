@@ -1,0 +1,65 @@
+﻿- type: entity
+  parent: MobBaseAncestor
+  id: MobWolfling
+  name: wolpin
+  description: Genetically Vulpakins brother, they are a lot of fun to burn but carefully, they have a plan.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: wolfling
+      sprite: _RedStar/Mobs/Animals/Ancestors/wolfling.rsi
+    - map: [ "jumpsuit" ]
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+    - map: [ "ears" ]
+    - map: [ "id" ]
+    - map: [ "outerClothing" ]
+    - map: [ "mask" ]
+    - map: [ "head" ]
+  - type: NameIdentifier
+    group: Monkey
+  - type: Speech
+    speechSounds: Vulpkanin
+    speechVerb: Vulpkanin
+    allowedEmotes: [ 'Bark', 'Snarl', 'Whine', 'Howl', 'Growl' ]
+  - type: GrowlingAccent
+  - type: Vocal
+    emoteSounds: MaleVulpkanin
+  - type: TypingIndicator
+    proto: vulpkanin
+  - type: Damageable
+    damageModifierSet: Vulpkanin
+  - type: MessyDrinker
+    spillChance: 0.33
+  - type: TemperatureDamage
+    heatDamageThreshold: 320
+    coldDamageThreshold: 230
+    coldDamage:
+      types:
+        Cold: 0.05
+    heatDamage:
+      types:
+        Heat: 2.5
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: SulfurBlood
+        Quantity: 150
+  - type: GhostTakeoverAvailable
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-wolfling
+  - type: PermanentStatusEffects
+    statusEffects:
+    - StatusEffectClumsyMonkey
+  - type: AlwaysRevolutionaryConvertible
+  - type: GhostRole
+    prob: 0.05
+    makeSentient: true
+    name: ghost-role-information-wolfling-name
+    description: ghost-role-information-wolfling-description
+    rules: ghost-role-information-nonantagonist-rules
