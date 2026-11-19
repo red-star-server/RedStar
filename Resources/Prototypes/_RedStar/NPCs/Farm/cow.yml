@@ -1,0 +1,162 @@
+- type: entity
+  parent: MobCow
+  id: MobCowChocolate
+  name: chocolate cow
+  description: Moo.
+  components:
+  - type: Butcherable
+    spawned:
+    - id: FoodSnackChocolateBar
+      amount: 5
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodSnackChocolateBar
+      amount: 5
+  - type: SolutionManager
+    solutions:
+    - SolutionUdderChocolate
+  - type: Sprite
+    sprite: _RedStar/Mobs/Animals/Farm/chocolate_cow.rsi
+    drawdepth: Mobs
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+  - type: Reproductive
+    minHungerThreshold: Peckish
+    partnerWhitelist:
+      tags:
+      - Cow
+    offspring:
+    - id: MobCowChocolate
+
+- type: entity
+  parent: SolutionLarge
+  id: SolutionUdderChocolate
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SatiationProduction
+    producer: Parent
+    delay: 30
+    minimumSatiationThreshold: Peckish
+  - type: Solution
+    id: udder # TODO This should really use a different id...
+    solution:
+      reagents:
+      - ReagentId: MilkChocolate
+        Quantity: 30
+  # TODO: toxins from bloodstream !?
+  - type: SolutionProducer
+    generated:
+      reagents:
+      - ReagentId: MilkChocolate
+        Quantity: 25
+
+- type: entity
+  parent: MobCow
+  id: MobCowStrawberry
+  name: strawberry cow
+  description: Moo.
+  components:
+  - type: Butcherable
+    spawned:
+    - id: FoodFrozenSandwichStrawberry # Change to actual strawberries if someone implements them
+      amount: 2
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodFrozenSandwichStrawberry # Change to actual strawberries if someone implements them
+      amount: 2
+  - type: SolutionManager
+    solutions:
+    - SolutionUdderStrawberry
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+      sprite: _RedStar/Mobs/Animals/Farm/strawberry_cow.rsi
+  - type: Reproductive
+    minHungerThreshold: Peckish
+    partnerWhitelist:
+      tags:
+      - Cow
+    offspring:
+    - id: MobCowStrawberry
+
+- type: entity
+  parent: SolutionLarge
+  id: SolutionUdderStrawberry
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SatiationProduction
+    producer: Parent
+    delay: 30
+    minimumSatiationThreshold: Peckish
+  - type: Solution
+    id: udder # TODO This should really use a different id...
+    solution:
+      reagents:
+      - ReagentId: MilkStrawberry
+        Quantity: 30
+  # TODO: toxins from bloodstream !?
+  - type: SolutionProducer
+    generated:
+      reagents:
+      - ReagentId: MilkStrawberry
+        Quantity: 25
+
+- type: entity
+  parent: MobCow
+  id: MobCowBanana
+  name: banana cow
+  description: Moo.
+  components:
+  - type: Butcherable
+    spawned:
+    - id: FoodBanana
+      amount: 5
+    - id: TrashBananaPeel
+      amount: 5
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodBanana
+      amount: 5
+    - id: TrashBananaPeel
+      amount: 5
+  - type: SolutionManager
+    solutions:
+    - SolutionUdderBanana
+  - type: Sprite
+    sprite: _RedStar/Mobs/Animals/Farm/banana_cow.rsi
+    drawdepth: Mobs
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+  - type: Reproductive
+    minHungerThreshold: Peckish
+    partnerWhitelist:
+      tags:
+      - Cow
+    offspring:
+    - id: MobCowBanana
+
+- type: entity
+  parent: SolutionLarge
+  id: SolutionUdderBanana
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SatiationProduction
+    producer: Parent
+    delay: 30
+    minimumSatiationThreshold: Peckish
+  - type: Solution
+    id: udder # TODO This should really use a different id...
+    solution:
+      reagents:
+      - ReagentId: MilkBanana
+        Quantity: 30
+  # TODO: toxins from bloodstream !?
+  - type: SolutionProducer
+    generated:
+      reagents:
+      - ReagentId: MilkBanana
+        Quantity: 25

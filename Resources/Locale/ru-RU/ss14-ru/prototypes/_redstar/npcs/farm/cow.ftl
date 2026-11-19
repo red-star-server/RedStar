@@ -1,0 +1,15 @@
+ent-MobCowChocolate = шоколадная корова
+    .desc = Муу.
+    .suffix = { ent-MobCow.suffix }
+ent-SolutionUdderChocolate = { ent-SolutionLarge }
+    .desc = { ent-SolutionLarge.desc }
+ent-MobCowStrawberry = клубничная корова
+    .desc = Муу.
+    .suffix = { ent-MobCow.suffix }
+ent-SolutionUdderStrawberry = { ent-SolutionLarge }
+    .desc = { ent-SolutionLarge.desc }
+ent-MobCowBanana = банановая корова
+    .desc = Муу.
+    .suffix = { ent-MobCow.suffix }
+ent-SolutionUdderBanana = { ent-SolutionLarge }
+    .desc = { ent-SolutionLarge.desc }

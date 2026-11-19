@@ -131,6 +131,10 @@
       weight: 4
     - id: XenoArtifactEffectCreationGasCarbonDioxide
       weight: 4
+    # RS14-start
+    - id: XenoArtifactEffectCowSpawn
+      weight: 3
+    # RS14-end
 
 - type: entityTable
   id: XenoArtifactEffectsHandheldOnlyTable
