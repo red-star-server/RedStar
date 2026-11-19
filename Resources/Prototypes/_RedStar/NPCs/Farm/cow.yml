@@ -17,6 +17,13 @@
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: alive
+  - type: Reproductive
+    minHungerThreshold: Peckish
+    partnerWhitelist:
+      tags:
+      - Cow
+    offspring:
+    - id: MobCowChocolate
 
 - type: entity
   parent: SolutionLarge
@@ -59,6 +66,13 @@
     - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: alive
       sprite: _RedStar/Mobs/Animals/Farm/strawberry_cow.rsi
+  - type: Reproductive
+    minHungerThreshold: Peckish
+    partnerWhitelist:
+      tags:
+      - Cow
+    offspring:
+    - id: MobCowStrawberry
 
 - type: entity
   parent: SolutionLarge
@@ -103,6 +117,13 @@
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: alive
+  - type: Reproductive
+    minHungerThreshold: Peckish
+    partnerWhitelist:
+      tags:
+      - Cow
+    offspring:
+    - id: MobCowBanana
 
 - type: entity
   parent: SolutionLarge
