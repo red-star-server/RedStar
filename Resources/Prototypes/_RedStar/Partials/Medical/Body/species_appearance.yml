@@ -71,3 +71,28 @@
   - type: ChildOrgan
     parents:
     - Torso
+
+- type: entity
+  id: AppearanceReptilian
+  components:
+  - type: InitialBody
+    organs:
+      Tail: OrganReptilianTail
+
+- type: entity
+  id: OrganReptilianTorso
+  parent: !Clear [ OrganBaseTorsoSexed, OrganBaseTorsoTailless, OrganReptilianExternal ]
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers: !Clear []
+
+- type: entity
+  id: AppearanceVulpkanin
+  components:
+  - type: InitialBody
+    organs:
+      Tail: OrganVulpkaninTail
+
+- type: entity
+  id: OrganVulpkaninTorso
+  parent: !Clear [ OrganBaseTorsoSexed, OrganBaseTorsoTailless, OrganVulpkaninExternal ]
