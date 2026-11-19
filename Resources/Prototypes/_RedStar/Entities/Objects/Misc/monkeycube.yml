@@ -1,0 +1,107 @@
+- type: entity
+  parent: BaseWrappedCube
+  id: SkrellkeyCubeWrapped
+  name: neara cube
+  description: Unwrap this to get a neara cube.
+  components:
+  - type: SpawnItemsOnUse
+    items:
+    - id: SkrellkeyCube
+  - type: Sprite
+    state: wrapper
+
+- type: entity
+  parent: BaseWrappedCube
+  id: StokkeyCubeWrapped
+  name: stok cube
+  description: Unwrap this to get a stok cube.
+  components:
+  - type: SpawnItemsOnUse
+    items:
+    - id: StokkeyCube
+  - type: Sprite
+    state: wrapper
+
+- type: entity
+  parent: BaseWrappedCube
+  id: TajkeyCubeWrapped
+  name: farwa cube
+  description: Unwrap this to get a farwa cube.
+  components:
+  - type: SpawnItemsOnUse
+    items:
+    - id: TajkeyCube
+  - type: Sprite
+    state: wrapper
+
+- type: entity
+  parent: BaseWrappedCube
+  id: WolflingCubeWrapped
+  name: wolpin cube
+  description: Unwrap this to get a wolpin cube.
+  components:
+  - type: SpawnItemsOnUse
+    items:
+    - id: WolflingCube
+  - type: Sprite
+    state: wrapper
+
+- type: entity
+  parent: MonkeyCubeBox
+  id: SkrellkeyCubeBox
+  name: neara cube box
+  description: Condensed nearas in a cube. Just add water!
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: SkrellkeyCubeWrapped
+        amount: 8
+  - type: Sprite
+    sprite: _RedStar/Objects/Misc/ancestorcube.rsi
+    state: box_skrellkey
+
+- type: entity
+  parent: MonkeyCubeBox
+  id: StokkeyCubeBox
+  name: stok cube box
+  description: Condensed stoks in a cube. Just add water!
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: StokkeyCubeWrapped
+        amount: 8
+  - type: Sprite
+    sprite: _RedStar/Objects/Misc/ancestorcube.rsi
+    state: box_stokkey
+
+- type: entity
+  parent: MonkeyCubeBox
+  id: TajkeyCubeBox
+  name: farwa cube box
+  description: Condensed farwas in a cube. Just add water!
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: TajkeyCubeWrapped
+        amount: 8
+  - type: Sprite
+    sprite: _RedStar/Objects/Misc/ancestorcube.rsi
+    state: box_tajkey
+
+- type: entity
+  parent: MonkeyCubeBox
+  id: WolflingCubeBox
+  name: wolpin cube box
+  description: Condensed wolpins in a cube. Just add water!
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: WolflingCubeWrapped
+        amount: 8
+  - type: Sprite
+    sprite: _RedStar/Objects/Misc/ancestorcube.rsi
+    state: box_wolfling

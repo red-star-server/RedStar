@@ -59,8 +59,6 @@ public sealed partial class ApiaryAnalyzerWindow : FancyWindow
         HiveBox.Visible = hive;
         BeeBox.Visible = !hive;
 
-        // A hive lists its colony's traits on the left; a queen or a bee has its own lines there and every trait
-        // explained on the right.
         Traits.Visible = hive;
         BeeInfo.Visible = !hive || state.HasQueen || state.Diet == BeehiveDiet.Meat;
         Traits.SetMessage(TraitList(state));
@@ -149,13 +147,12 @@ public sealed partial class ApiaryAnalyzerWindow : FancyWindow
     private static void AddRow(GridContainer grid, string name, string value, Color? color = null)
     {
         grid.AddChild(new Label { Text = Loc.GetString(name), Margin = new Thickness(0, 0, 8, 0) });
-        // Values sit against the right edge, so they line up whatever the labels' widths.
         var label = new Label
         {
             Text = value,
             FontColorOverride = color,
             HorizontalExpand = true,
-            HorizontalAlignment = Control.HAlignment.Right
+            HorizontalAlignment = HAlignment.Right
         };
         if (color == null)
             label.StyleClasses.Add(StyleClass.LabelWeak);
@@ -219,7 +216,6 @@ public sealed partial class ApiaryAnalyzerWindow : FancyWindow
             Frames.AddChild(WeakLabel("apiary-analyzer-frames-none"));
         foreach (var frame in state.Frames)
         {
-            // One row per frame: its picture, which follows the combs as it fills and gets capped, and the count.
             var row = new BoxContainer
             {
                 Orientation = BoxContainer.LayoutOrientation.Horizontal,
@@ -247,7 +243,6 @@ public sealed partial class ApiaryAnalyzerWindow : FancyWindow
         if (state.Trays.Count == 0)
             Trays.AddChild(WeakLabel(meat ? "apiary-analyzer-targets-none" : "apiary-analyzer-trays-none"));
         // Longest plant names first, so the list narrows downwards.
-        // Rows alternate between two backgrounds, like the harvest chemicals of the plant analyzer.
         var stripe = 0;
         foreach (var (tray, name) in state.Trays
                      .Select(tray => (tray, TrayName(tray)))
@@ -324,7 +319,6 @@ public sealed partial class ApiaryAnalyzerWindow : FancyWindow
             Margin = new Thickness(4, 2)
         };
 
-        // A bar on the left: green for a ripe plant, yellow while it grows, red for nothing the workers can reach.
         var (barColor, barTip) = tray.State switch
         {
             ApiaryTrayState.Ripe => (Color.FromHex("#98C379"), tray.Creature ? "apiary-analyzer-creature-ripe" : "apiary-analyzer-tray-ripe"),
@@ -419,7 +413,6 @@ public sealed partial class ApiaryAnalyzerWindow : FancyWindow
 
     private void AddQueenRows(ApiaryAnalyzerState state)
     {
-        // Coloured like the stats: grey when nothing special, red for wear on the queen.
         AddRow(BeeInfo, "apiary-analyzer-row-slots",
             Loc.GetString("apiary-analyzer-of", ("value", state.UsedSlots), ("max", state.Slots)), Color.DimGray);
         AddRow(BeeInfo, "apiary-analyzer-row-instability", state.Instability.ToString(),

@@ -56,7 +56,6 @@ public sealed partial class BeehiveSystem
 
         args.Handled = true;
 
-        // Someone may have taken her in the meantime.
         if (!ItemSlots.TryGetSlot(ent.Owner, ent.Comp.QueenSlot, out var slot) ||
             slot.Item is not { } queen ||
             !_actionBlocker.CanPickup(args.User, queen) ||
@@ -117,13 +116,12 @@ public sealed partial class BeehiveSystem
 
         args.Handled = true;
 
-        // The hive may have changed during the do-after: check again.
         if (!CanTakeBee(ent, args.User, args.Role, true))
             return;
 
         var comp = ent.Comp;
         var proto = args.Role == BeeRole.Scout ? comp.ScoutPrototype : comp.PollinatorPrototype;
-        var bee = Spawn(proto, Transform(args.User).Coordinates);
+        var bee = SpawnAttachedTo(proto, Transform(args.User).Coordinates);
         if (!TryComp<BeeItemComponent>(bee, out var item))
         {
             Log.Error($"{proto} has no {nameof(BeeItemComponent)}");
@@ -143,7 +141,6 @@ public sealed partial class BeehiveSystem
         _queen.GiveTraits(ent, (bee, item));
         item.CountedOutside = true;
 
-        // With no free hand it lands on the floor and flies straight back in.
         _hands.PickupOrDrop(args.User, bee);
         if (!_container.IsEntityInContainer(bee))
             _errands.FlyHome((bee, item));
@@ -305,8 +302,7 @@ public sealed partial class BeehiveSystem
 
         if (ent.Comp.Role == BeeRole.Scout)
         {
-            // Lifetime over: the delay has already passed, a worker takes over at once.
-            // Killed or destroyed earlier: a new scout after the full delay.
+            // A scout whose lifetime ran out is replaced at once; one killed earlier waits the full delay.
             comp.ScoutState = BeeScoutState.Lost;
             comp.ScoutReplaceAt = Timing.CurTime + (ent.Comp.Expired ? TimeSpan.Zero : comp.ScoutReplaceDelay);
             if (ent.Comp.Expired && comp.Bees >= comp.ScoutReplaceMinBees)

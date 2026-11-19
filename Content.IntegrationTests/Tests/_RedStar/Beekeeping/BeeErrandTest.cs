@@ -59,7 +59,9 @@ public sealed class BeeErrandTest : GameTest
             for (var x = 0; x <= 5; x++)
             {
                 for (var y = -1; y <= 1; y++)
+                {
                     mapSystem.SetTile(map.Grid.Owner, map.Grid.Comp, new Vector2i(x, y), map.Tile.Tile);
+                }
             }
 
             _hive = server.EntMan.SpawnEntity("Beehive", new EntityCoordinates(map.Grid, 0.5f, 0.5f));

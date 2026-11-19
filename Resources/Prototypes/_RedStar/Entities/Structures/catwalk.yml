@@ -1,0 +1,156 @@
+﻿- type: entity
+  parent: Catwalk
+  id: BrokenCatwalk
+  name: broken catwalk
+  description: This catwalk has seen better days.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/brokencatwalk.rsi
+  - type: Icon
+    sprite: _RedStar/Structures/brokencatwalk.rsi
+    state: broken
+
+- type: entity
+  abstract: true
+  parent: Catwalk
+  id: BaseCatwalkStatic
+  components:
+  - type: IconSmooth
+    enabled: false
+    states: []
+  - type: RCDDeconstructable
+    cost: 20
+    delay: 2
+    fx: EffectRCDDeconstruct2
+
+- type: entity
+  parent: BaseCatwalkStatic
+  id: CatwalkDark
+  suffix: Dark
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/catwalk.rsi
+    state: dark
+  - type: Icon
+    sprite: _RedStar/Structures/catwalk.rsi
+    state: dark
+
+- type: entity
+  parent: BaseCatwalkStatic
+  id: CatwalkDarkOpen
+  suffix: Dark, open
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/catwalk.rsi
+    state: dark_open
+  - type: Icon
+    sprite: _RedStar/Structures/catwalk.rsi
+    state: dark_open
+
+- type: entity
+  parent: BaseCatwalkStatic
+  id: CatwalkGray
+  suffix: Gray
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/catwalk.rsi
+    state: gray
+  - type: Icon
+    sprite: _RedStar/Structures/catwalk.rsi
+    state: gray
+
+- type: entity
+  parent: BaseCatwalkStatic
+  id: CatwalkGrayOpen
+  suffix: Gray, open
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/catwalk.rsi
+    state: gray_open
+  - type: Icon
+    sprite: _RedStar/Structures/catwalk.rsi
+    state: gray_open
+
+- type: entity
+  parent: BaseCatwalkStatic
+  id: CatwalkWhite
+  suffix: White
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/catwalk.rsi
+    state: white
+  - type: Icon
+    sprite: _RedStar/Structures/catwalk.rsi
+    state: white
+
+- type: entity
+  parent: BaseCatwalkStatic
+  id: CatwalkWhiteOpen
+  suffix: White, open
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/catwalk.rsi
+    state: white_open
+  - type: Icon
+    sprite: _RedStar/Structures/catwalk.rsi
+    state: white_open
+
+- type: entity
+  parent: BaseCatwalkStatic
+  id: CatwalkSmooth
+  suffix: Smooth
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/catwalk.rsi
+    state: smooth
+  - type: Icon
+    sprite: _RedStar/Structures/catwalk.rsi
+    state: smooth
+
+- type: entity
+  parent: BaseCatwalkStatic
+  id: CatwalkDarkWarning
+  suffix: Dark, warning
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/catwalk.rsi
+    state: dark_warning
+  - type: Icon
+    sprite: _RedStar/Structures/catwalk.rsi
+    state: dark_warning
+
+- type: entity
+  parent: BaseCatwalkStatic
+  id: CatwalkDarkWarningOpen
+  suffix: Dark, warning, open
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/catwalk.rsi
+    state: dark_warning_open
+  - type: Icon
+    sprite: _RedStar/Structures/catwalk.rsi
+    state: dark_warning_open
+
+- type: entity
+  parent: BaseCatwalkStatic
+  id: CatwalkTitanium
+  suffix: Titanium
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/catwalk.rsi
+    state: titanium
+  - type: Icon
+    sprite: _RedStar/Structures/catwalk.rsi
+    state: titanium
+
+- type: entity
+  parent: BaseCatwalkStatic
+  id: CatwalkGlass
+  suffix: Glass
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/catwalk.rsi
+    state: glas
+  - type: Icon
+    sprite: _RedStar/Structures/catwalk.rsi
+    state: glas

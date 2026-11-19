@@ -1,0 +1,39 @@
+- type: entity
+  parent: Platform
+  id: PlatformWhite
+  suffix: White
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Platforms/platform_white.rsi
+  - type: Icon
+    sprite: _RedStar/Structures/Platforms/platform_white.rsi
+
+- type: entity
+  parent: PlatformCorner
+  id: PlatformCornerWhite
+  suffix: White, corner
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Platforms/platform_white.rsi
+  - type: Icon
+    sprite: _RedStar/Structures/Platforms/platform_white.rsi
+
+- type: entity
+  parent: PlatformCornerSmall
+  id: PlatformCornerSmallWhite
+  suffix: White, corner, small
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Platforms/platform_white.rsi
+  - type: Icon
+    sprite: _RedStar/Structures/Platforms/platform_white.rsi
+
+- type: entity
+  parent: PlatformRound
+  id: PlatformRoundWhite
+  suffix: White, round
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Platforms/platform_white.rsi
+  - type: Icon
+    sprite: _RedStar/Structures/Platforms/platform_white.rsi

@@ -1,0 +1,19 @@
+- type: latheRecipe
+  parent: BaseCubeRecipe
+  id: SkrellkeyCube
+  result: SkrellkeyCube
+
+- type: latheRecipe
+  parent: BaseCubeRecipe
+  id: StokkeyCube
+  result: StokkeyCube
+
+- type: latheRecipe
+  parent: BaseCubeRecipe
+  id: TajkeyCube
+  result: TajkeyCube
+
+- type: latheRecipe
+  parent: BaseCubeRecipe
+  id: WolflingCube
+  result: WolflingCube

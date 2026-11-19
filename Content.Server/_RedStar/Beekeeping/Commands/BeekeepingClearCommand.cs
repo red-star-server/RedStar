@@ -1,14 +1,15 @@
-using Content.Server.Administration;
 using Content.Server._RedStar.Beekeeping.Components;
-using Content.Shared.Administration;
+using Content.Server._RedStar.Beekeeping.Systems;
+using Content.Server.Administration;
 using Content.Shared._RedStar.Beekeeping.Components;
+using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.Containers;
 
 namespace Content.Server._RedStar.Beekeeping.Commands;
 
 /// <summary>
-/// Removes the bees that got out of hand on the admin's map: angry bees, angry queens, swarms, bees on errands and wild
+/// Removes the bees that got out of hand on the admin's map: swarms, bees on errands, loose aggressive bees and wild
 /// hives. Hives built by players and the bees in their hands are left alone. With "all", every map.
 /// </summary>
 [AdminCommand(AdminFlags.Admin)]
@@ -16,6 +17,7 @@ public sealed partial class BeekeepingClearCommand : LocalizedEntityCommands
 {
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedContainerSystem _containers = default!;
+    [Dependency] private BeehiveSystem _hive = default!;
 
     public override string Command => "beekeeping_clear";
 
@@ -25,21 +27,33 @@ public sealed partial class BeekeepingClearCommand : LocalizedEntityCommands
         EntityUid? map = null;
         if (!all)
         {
-            if (shell.Player?.AttachedEntity is not { } player)
+            if (shell.Player?.AttachedEntity is not { } player || _transform.GetMap(player) is not { } playerMap)
             {
                 shell.WriteError(Loc.GetString("cmd-beekeeping_clear-no-map"));
                 return;
             }
 
-            map = _transform.GetMap(player);
+            map = playerMap;
         }
 
         var removed = 0;
+        removed += Clear<BeeSwarmComponent>(map);
         removed += Clear<BeehiveAngryBeeComponent>(map);
         removed += Clear<BeehiveAngryQueenComponent>(map);
 
-        // Bees out on errands are in the air for a short while anyway; whatever is out now goes.
         removed += Clear<BeeErrandComponent>(map);
+        var bees = EntityManager.EntityQueryEnumerator<BeeItemComponent, TransformComponent>();
+        while (bees.MoveNext(out var uid, out var bee, out var xform))
+        {
+            if ((map == null || xform.MapUid == map) &&
+                !_containers.IsEntityInContainer(uid) &&
+                _hive.GetTotals(bee.Traits).Aggressive &&
+                EntityManager.TryQueueDeleteEntity(uid))
+            {
+                removed++;
+            }
+        }
+
 
         var hives = EntityManager.EntityQueryEnumerator<BeehiveComponent, TransformComponent>();
         while (hives.MoveNext(out var uid, out var hive, out var xform))

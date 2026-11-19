@@ -1,5 +1,5 @@
-using Content.Shared.Storage.Components;
 using Content.Shared._RedStar.Beekeeping.Components;
+using Content.Shared.Storage.Components;
 
 namespace Content.Shared._RedStar.Beekeeping.Systems;
 

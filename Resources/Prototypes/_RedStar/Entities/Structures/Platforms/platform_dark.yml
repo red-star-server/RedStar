@@ -1,0 +1,39 @@
+- type: entity
+  parent: Platform
+  id: PlatformDark
+  suffix: Dark
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Platforms/platform_dark.rsi
+  - type: Icon
+    sprite: _RedStar/Structures/Platforms/platform_dark.rsi
+
+- type: entity
+  parent: PlatformCorner
+  id: PlatformCornerDark
+  suffix: Dark, corner
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Platforms/platform_dark.rsi
+  - type: Icon
+    sprite: _RedStar/Structures/Platforms/platform_dark.rsi
+
+- type: entity
+  parent: PlatformCornerSmall
+  id: PlatformCornerSmallDark
+  suffix: Dark, corner, small
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Platforms/platform_dark.rsi
+  - type: Icon
+    sprite: _RedStar/Structures/Platforms/platform_dark.rsi
+
+- type: entity
+  parent: PlatformRound
+  id: PlatformRoundDark
+  suffix: Dark, round
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Platforms/platform_dark.rsi
+  - type: Icon
+    sprite: _RedStar/Structures/Platforms/platform_dark.rsi

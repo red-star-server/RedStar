@@ -32,6 +32,7 @@
     flavors:
     - honey
   - type: Solution
+    id: food
     solution:
       reagents:
       - ReagentId: Honey

@@ -18,6 +18,7 @@
   - type: GravityAffected
   - type: Physics
     bodyType: Dynamic
+  - type: Pullable
   - type: Fixtures
     fixtures:
       fix1:
