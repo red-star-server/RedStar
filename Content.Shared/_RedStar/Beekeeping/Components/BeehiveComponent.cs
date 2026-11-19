@@ -29,7 +29,7 @@ public sealed partial class BeehiveComponent : Component
     /// Item slots that hold frames, in the order they are filled and numbered on the sprite.
     /// </summary>
     [DataField]
-    public List<string> FrameSlots = ["frame1", "frame2", "frame3", "frame4"];
+    public List<string> FrameSlots = new() { "frame1", "frame2", "frame3", "frame4" };
 
     #endregion
 
