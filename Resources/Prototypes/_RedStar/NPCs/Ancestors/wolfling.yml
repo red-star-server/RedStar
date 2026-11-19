@@ -36,7 +36,7 @@
     damageModifierSet: Vulpkanin
   - type: GhostTakeoverAvailable
   - type: SentienceTarget
-    flavorKind: station-event-random-sentience-flavor-primate
+    flavorKind: station-event-random-sentience-flavor-wolfling
   - type: PermanentStatusEffects
     statusEffects:
     - StatusEffectClumsyMonkey

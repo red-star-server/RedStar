@@ -1,3 +1,3 @@
-ent-MobStokkey = stok
-    .desc = The brutal progenitor of the Vox. Absolutely terrifying.
+ent-MobStokkey = сток
+    .desc = Свирепый прародитель воксов. Абсолютно ужасающ.
     .suffix = { ent-MobBaseAncestor.suffix }

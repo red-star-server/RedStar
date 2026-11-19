@@ -1,3 +1,3 @@
-ent-MobSkrellkey = neara
-    .desc = Skrell's ancient ancestor in the flesh. Loves water and seems to want to find a way to kill you.
+ent-MobSkrellkey = нэара
+    .desc = Древний предок скреллов во плоти. Обожает воду и, похоже, вынашивает план, как тебя прикончить.
     .suffix = { ent-MobBaseAncestor.suffix }

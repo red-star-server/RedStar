@@ -1,3 +1,3 @@
-ent-MobWolfling = wolpin
-    .desc = Genetically Vulpakins brother, they are a lot of fun to burn but carefully, they have a plan.
+ent-MobWolfling = вольпин
+    .desc = Генетический брат вульпканинов. Поджигать их — одно удовольствие, но осторожно: у них есть план.
     .suffix = { ent-MobBaseAncestor.suffix }
