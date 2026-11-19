@@ -1,6 +1,7 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                       xmlns:botany="clr-namespace:Content.Client.Botany.UI"
+                      xmlns:chemistry="clr-namespace:Content.Client.Chemistry.UI"
                       MinWidth="620">
     <BoxContainer Orientation="Horizontal"
                   Margin="6 4 6 8"
@@ -33,6 +34,29 @@
                                        Columns="2"
                                        HorizontalExpand="True" />
                     </BoxContainer>
+                </PanelContainer>
+
+                <!-- A queen in hand: how far along each reagent is; the info mark explains, on hover, what each does. -->
+                <PanelContainer Name="FeedingPanel"
+                                StyleClasses="BackgroundPanel"
+                                HorizontalExpand="True"
+                                Visible="False">
+                    <BoxContainer Orientation="Vertical" Margin="0 8">
+                        <Label Text="{Loc apiary-analyzer-section-feeding}"
+                               StyleClasses="LabelKeyText" />
+                        <GridContainer Name="Feeding"
+                                       Columns="2"
+                                       HorizontalExpand="True" />
+                    </BoxContainer>
+                    <!-- In the very corner of the panel: the negative margin reaches past its padding. -->
+                    <TextureRect Name="FeedingHelp"
+                                 TexturePath="/Textures/Interface/VerbIcons/information.svg.192dpi.png"
+                                 Stretch="KeepAspectCentered"
+                                 SetSize="16 16"
+                                 HorizontalAlignment="Right"
+                                 VerticalAlignment="Top"
+                                 Margin="0 5 -7 0"
+                                 MouseFilter="Stop" />
                 </PanelContainer>
 
                 <PanelContainer StyleClasses="BackgroundPanel"
@@ -100,6 +124,23 @@
                     </BoxContainer>
                 </PanelContainer>
 
+                <!-- A meat hive: what it holds, listed like the harvest chemicals of the plant analyzer. -->
+                <PanelContainer Name="ChemicalsPanel"
+                                StyleClasses="BackgroundPanelDark"
+                                HorizontalExpand="True"
+                                Visible="False">
+                    <BoxContainer Orientation="Vertical" Margin="0 8">
+                        <Label Text="{Loc 'apiary-analyzer-section-chemicals'}"
+                               StyleClasses="LabelKeyText"
+                               Margin="0 0 0 2" />
+                        <ScrollContainer MaxHeight="150"
+                                         ReturnMeasure="True">
+                            <chemistry:ReagentDisplayControl Name="Chemicals"
+                                                             EmptyMessage="{Loc 'apiary-analyzer-chemicals-none'}" />
+                        </ScrollContainer>
+                    </BoxContainer>
+                </PanelContainer>
+
                 <!-- Each frame as its live picture with its combs beside it. -->
                 <PanelContainer Name="FramesPanel"
                                 StyleClasses="BackgroundPanelDark"
@@ -115,7 +156,7 @@
                 </PanelContainer>
             </BoxContainer>
 
-            <!-- Takes whatever height is left and scrolls: it never makes the window taller. -->
+            <!-- The list sizes the window up to a limit, then scrolls. -->
             <PanelContainer StyleClasses="BackgroundPanelDark"
                             HorizontalExpand="True"
                             VerticalExpand="True">
@@ -123,7 +164,10 @@
                     <Label Name="TraysHeading"
                            StyleClasses="LabelKeyText"
                            Margin="0 0 0 6" />
-                    <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
+                    <ScrollContainer VerticalExpand="True"
+                                     HScrollEnabled="False"
+                                     ReturnMeasure="True"
+                                     MaxHeight="150">
                         <BoxContainer Name="Trays"
                                       Orientation="Vertical" />
                     </ScrollContainer>
@@ -132,21 +176,28 @@
         </BoxContainer>
 
         <!-- A queen or a bee: every trait with what it does. -->
-        <PanelContainer Name="BeeBox"
-                        StyleClasses="BackgroundPanelDark"
-                        HorizontalExpand="True"
-                        Visible="False">
-            <BoxContainer Orientation="Vertical" Margin="0 8">
-                <Label Text="{Loc apiary-analyzer-section-traits}"
-                       StyleClasses="LabelKeyText"
-                       Margin="0 0 0 2" />
-                <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
-                    <BoxContainer Name="TraitDetails"
-                                  Orientation="Vertical"
-                                  SeparationOverride="4"
-                                  MaxWidth="340" />
-                </ScrollContainer>
-            </BoxContainer>
-        </PanelContainer>
+        <BoxContainer Name="BeeBox"
+                      Orientation="Vertical"
+                      HorizontalExpand="True"
+                      SeparationOverride="4"
+                      Visible="False">
+            <PanelContainer StyleClasses="BackgroundPanelDark"
+                            VerticalExpand="True">
+                <BoxContainer Orientation="Vertical" Margin="0 8">
+                    <Label Text="{Loc apiary-analyzer-section-traits}"
+                           StyleClasses="LabelKeyText"
+                           Margin="0 0 0 2" />
+                    <!-- As tall as the traits need, up to a limit; past it they scroll. -->
+                    <ScrollContainer VerticalExpand="True"
+                                     HScrollEnabled="False"
+                                     ReturnMeasure="True"
+                                     MaxHeight="500">
+                        <BoxContainer Name="TraitDetails"
+                                      Orientation="Vertical"
+                                      MaxWidth="340" />
+                    </ScrollContainer>
+                </BoxContainer>
+            </PanelContainer>
+        </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>

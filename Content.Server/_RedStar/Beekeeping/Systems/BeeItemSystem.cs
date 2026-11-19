@@ -31,6 +31,7 @@ namespace Content.Server._RedStar.Beekeeping.Systems;
 public sealed partial class BeeItemSystem : EntitySystem
 {
     [Dependency] private BeehiveSystem _hive = default!;
+    [Dependency] private BeeQueenSystem _queen = default!;
     [Dependency] private BloodstreamSystem _bloodstream = default!;
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private InventorySystem _inventory = default!;
@@ -251,11 +252,38 @@ public sealed partial class BeeItemSystem : EntitySystem
         bee.Comp.Charges--;
         bee.Comp.Worked = true;
         Dirty(bee);
+        _queen.Reveal(bee, BeeTraitReveal.Pollination);
 
         _popup.PopupEntity(Loc.GetString(marker.Bonus
             ? "beekeeping-pollinate-bonus"
             : "beekeeping-pollinate-no-bonus"), tray, user);
     }
+
+    /// <summary>
+    /// A worker's visit pollinated the plant: the same harvest bonus a bee in hand gives, always rolled as a success, with
+    /// nothing else (no pest control, no mutation). A plant already pollinated is left as it is. Returns whether it
+    /// took.
+    /// </summary>
+    public bool FlightPollinate(EntityUid plantUid)
+    {
+        if (!_holderQuery.TryComp(plantUid, out var plant) || HasComp<BeePollinatedComponent>(plantUid))
+            return false;
+
+        var marker = AddComp<BeePollinatedComponent>(plantUid);
+        marker.Bonus = true;
+        marker.AddedYieldMod = Math.Max(0, FlightBonusYieldMod - plant.YieldMod);
+        _plantHolder.AdjustsYieldMod((plantUid, plant), marker.AddedYieldMod);
+        marker.ExpiresAt = _timing.CurTime + FlightPollinationDuration;
+        return true;
+    }
+
+    /// <summary>
+    /// The yield a worker's pollination raises a plant to, and how long it waits for the harvest: the same as a pollinator
+    /// bee's.
+    /// </summary>
+    private const int FlightBonusYieldMod = 2;
+
+    private static readonly TimeSpan FlightPollinationDuration = TimeSpan.FromMinutes(20);
 
     #endregion
 
@@ -346,6 +374,7 @@ public sealed partial class BeeItemSystem : EntitySystem
 
             _damageable.TryChangeDamage(user, ent.Comp.BiteDamage, origin: ent);
             _popup.PopupEntity(Loc.GetString("beekeeping-bee-bite"), user, user, PopupType.SmallCaution);
+            _queen.Reveal(ent, BeeTraitReveal.Aggression);
             return;
         }
 
@@ -367,6 +396,8 @@ public sealed partial class BeeItemSystem : EntitySystem
         }
 
         _popup.PopupEntity(Loc.GetString("beekeeping-bee-sting"), user, user, PopupType.SmallCaution);
+        _queen.Reveal(ent, BeeTraitReveal.Aggression);
+        _queen.Reveal(ent, BeeTraitReveal.Sting);
     }
 
     /// <summary>

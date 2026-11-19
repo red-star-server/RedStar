@@ -76,4 +76,41 @@ public sealed class ApiaryAnalyzerTest : GameTest
             Assert.That(analyzer.BuildState(server.EntMan.SpawnEntity("BeeFrame", map.GridCoords)), Is.Null);
         });
     }
+
+    /// <summary>
+    /// A scanned queen comes with what a syringe does to her; a hive with an egg and a colony big enough to swarm says
+    /// a swarm is coming.
+    /// </summary>
+    [Test]
+    public async Task FeedingAndSwarmHints()
+    {
+        var server = Server;
+        var map = await Pair.CreateTestMap();
+        var slots = server.System<ItemSlotsSystem>();
+        var analyzer = server.System<ApiaryAnalyzerSystem>();
+
+        await server.WaitAssertion(() =>
+        {
+            var queen = server.EntMan.SpawnEntity("BeeQueen", map.GridCoords);
+            var queenComp = server.EntMan.GetComponent<BeeQueenComponent>(queen);
+            queenComp.MutagenProgress = 3;
+            var alone = analyzer.BuildState(queen)!;
+            Assert.That(alone.Feeding, Is.Not.Null);
+            Assert.That(alone.Feeding!.MutagenProgress, Is.EqualTo(3f));
+            Assert.That(alone.Feeding.MutagenPerRoll, Is.EqualTo(queenComp.MutagenPerRoll.Float()));
+            Assert.That(alone.Feeding.MaxSlots, Is.EqualTo(queenComp.MaxSlots));
+
+            var hive = server.EntMan.SpawnEntity("Beehive", map.GridCoords);
+            var comp = server.EntMan.GetComponent<BeehiveComponent>(hive);
+            Assert.That(slots.TryInsert(hive, comp.FrameSlots[0], server.EntMan.SpawnEntity("BeeFrame", map.GridCoords), null));
+            Assert.That(slots.TryInsert(hive, comp.QueenSlot, queen, null));
+            comp.Bees = comp.SwarmMinBees;
+            Assert.That(analyzer.BuildState(hive)!.SwarmComing, Is.False, "no egg, no swarm");
+
+            comp.HasEgg = true;
+            comp.EggDiesAt = server.Timing.CurTime + TimeSpan.FromMinutes(2);
+            Assert.That(server.System<BeeSwarmSystem>().SwarmComing((hive, comp)));
+            Assert.That(analyzer.BuildState(hive)!.SwarmComing);
+        });
+    }
 }

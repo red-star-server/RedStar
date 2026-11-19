@@ -33,6 +33,11 @@
     noRot: true
     layers:
     - state: base
+    # Grey stripes of a meat hive; the tint is the color of what the hive lives on (for now one color for all meat).
+    - state: stripes
+      color: "#965151"
+      visible: false
+      map: [ "enum.WildBeehiveVisuals.Meat" ]
     - state: honey
       color: "#EDC200"
       visible: false
@@ -42,6 +47,10 @@
     visuals:
       enum.WildBeehiveVisuals.Honey:
         enum.WildBeehiveVisuals.Honey:
+          True: { visible: true }
+          False: { visible: false }
+      enum.WildBeehiveVisuals.Meat:
+        enum.WildBeehiveVisuals.Meat:
           True: { visible: true }
           False: { visible: false }
   - type: ItemSlots

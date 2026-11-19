@@ -1,3 +1,4 @@
+using Content.Shared._RedStar.Beekeeping.Data;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared._RedStar.Beekeeping.Prototypes;
@@ -156,4 +157,70 @@ public sealed partial class BeeTraitPrototype : IPrototype
     /// </summary>
     [DataField]
     public bool Aggressive;
+
+    /// <summary>
+    /// Angry bees let out by each hit on the hive, on top of the usual one.
+    /// </summary>
+    [DataField]
+    public int AngryPerHit;
+
+    /// <summary>
+    /// Multiplies the damage that lets one more angry bee out.
+    /// </summary>
+    [DataField]
+    public float AngryDamageStep = 1f;
+
+    /// <summary>
+    /// In each batch of angry bees the scout comes out last, only when no workers are left at home.
+    /// </summary>
+    [DataField]
+    public bool GuardedScout;
+
+    /// <summary>
+    /// The hive keeps working this many kelvin below its usual coldest air (negative: it stops sooner).
+    /// </summary>
+    [DataField]
+    public float ColdTolerance;
+
+    /// <summary>
+    /// The hive keeps working this many kelvin above its usual hottest air (negative: it stops sooner).
+    /// </summary>
+    [DataField]
+    public float HeatTolerance;
+
+    /// <summary>
+    /// The hive keeps working this many kPa past its usual pressure range on both sides (negative: it stops sooner).
+    /// </summary>
+    [DataField]
+    public float PressureTolerance;
+
+    /// <summary>
+    /// Extra wax cutting the caps off one of this colony's full frames gives.
+    /// </summary>
+    [DataField]
+    public int CapWax;
+
+    /// <summary>
+    /// Combs one cut comb of this colony gives, as a factor: 1.5 gives three combs for two, on average.
+    /// </summary>
+    [DataField]
+    public float CombYield = 1f;
+
+    /// <summary>
+    /// Chance that a worker's visit to a ripe plant also raises its next harvest, like a bee in hand does.
+    /// </summary>
+    [DataField]
+    public float FlightPollination;
+
+    /// <summary>
+    /// Examining a hive about to swarm shows how many minutes are left, not only that it is restless.
+    /// </summary>
+    [DataField]
+    public bool SwarmTimer;
+
+    /// <summary>
+    /// What shows the trait to someone watching the colony. Until then the analyzer lists it only as a hidden trait.
+    /// </summary>
+    [DataField]
+    public BeeTraitReveal Reveal = BeeTraitReveal.Observe;
 }

@@ -20,6 +20,11 @@ public sealed class ApiaryAnalyzerState : BoundUserInterfaceState
     /// </summary>
     public List<ProtoId<BeeTraitPrototype>> Traits = new();
 
+    /// <summary>
+    /// Traits nobody has seen at work yet: only how many. They are not in <see cref="Traits"/> or <see cref="Totals"/>.
+    /// </summary>
+    public int HiddenTraits;
+
     public BeeTraitTotals Totals = new();
 
     /// <summary>
@@ -29,9 +34,26 @@ public sealed class ApiaryAnalyzerState : BoundUserInterfaceState
 
     public int UsedSlots;
     public int Instability;
+    public BeehiveDiet Diet;
+
+    /// <summary>
+    /// A meat hive: pieces of meat that would fall out if it were broken now, the most it gives, the bites on the dead
+    /// that add one more piece, the chance of each kind and what the hive holds.
+    /// </summary>
+    public int MeatDrops;
+    public int MeatMax;
+    public int MeatBase;
+    public int MeatPerDrop;
+    public List<ApiaryMeatChance> MeatChances = new();
+    public List<ApiaryReagentData> Chemicals = new();
     public int Slots;
     public float Payload;
     public float PayloadCap;
+
+    /// <summary>
+    /// A scanned queen: what a syringe of each reagent does to her and how far along she is.
+    /// </summary>
+    public ApiaryQueenFeeding? Feeding;
 
     #region Hive
 
@@ -58,6 +80,11 @@ public sealed class ApiaryAnalyzerState : BoundUserInterfaceState
     public float Health;
     public float MaxHealth;
     public bool HasEgg;
+
+    /// <summary>
+    /// The egg will turn into a swarm unless the jelly is collected.
+    /// </summary>
+    public bool SwarmComing;
     public List<ApiaryFrameData> Frames = new();
     public List<ApiaryTrayData> Trays = new();
 

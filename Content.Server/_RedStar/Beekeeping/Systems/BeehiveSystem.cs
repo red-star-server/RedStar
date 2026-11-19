@@ -23,6 +23,8 @@ namespace Content.Server._RedStar.Beekeeping.Systems;
 /// </summary>
 public sealed partial class BeehiveSystem : SharedBeehiveSystem
 {
+    [Dependency] private AngryBeehiveSystem _angry = default!;
+    [Dependency] private MeatBeehiveSystem _meat = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private BeeSwarmSystem _swarm = default!;
     [Dependency] private BeeErrandSystem _errands = default!;
@@ -123,6 +125,8 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
 
         UpdateMaxBees(ent);
         UpdateHiveAppearance(ent);
+
+        _angry.AngerOnFrameRemoved(ent);
     }
 
     /// <summary>
@@ -224,7 +228,10 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
             _scout.UpdateScouting(hive);
             _scout.UpdateVisits(hive, seconds);
             if (hasQueen)
+            {
                 Produce(hive, seconds);
+                _queen.UpdateObservation(hive, seconds);
+            }
         }
         else
         {
@@ -498,6 +505,10 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
             // New honey on a frame whose caps were cut: it is filling again and caps when full.
             frame.Comp.Uncapped = false;
             _queen.TakeCombPayload(hive, frame.Comp);
+            // The frame keeps what the colony that built its combs gives when they are cut.
+            var totals = GetHiveTotals(hive);
+            frame.Comp.ColonyCapWax = totals.CapWax;
+            frame.Comp.ColonyCombYield = totals.CombYield;
             Dirty(frame);
             UpdateFrameAppearance(frame);
             return true;
@@ -555,6 +566,9 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
             args.PushMarkup(Loc.GetString("beekeeping-hive-examine-nectar",
                 ("level", GetNectarLevel(comp).ToString())));
 
+            if (comp.Wild && comp.Diet == BeehiveDiet.Meat)
+                args.PushMarkup(Loc.GetString("beekeeping-hive-examine-meat"));
+
             if (comp.Wild && comp.SwarmModifier is { } modifierId && Proto.TryIndex(modifierId, out var modifier))
             {
                 args.PushMarkup(Loc.GetString("beekeeping-hive-examine-swarm-modifier",
@@ -592,6 +606,19 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
 
             if (comp.Bees > 0 || comp.OutBees > 0)
                 PushScoutLine(comp, ref args);
+
+            if (_swarm.SwarmComing(ent))
+            {
+                if (GetHiveTotals(ent).SwarmTimer)
+                {
+                    var minutes = (int) Math.Ceiling(Math.Max(0, (comp.EggDiesAt - Timing.CurTime).TotalMinutes));
+                    args.PushMarkup(Loc.GetString("beekeeping-hive-examine-swarm-coming-timed", ("minutes", minutes)));
+                }
+                else
+                {
+                    args.PushMarkup(Loc.GetString("beekeeping-hive-examine-swarm-coming"));
+                }
+            }
 
             if (InCalmingVapor(ent, comp))
                 args.PushMarkup(Loc.GetString("beekeeping-hive-examine-vapor"));
@@ -637,14 +664,29 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
     /// </summary>
     private void UpdatePause(Entity<BeehiveComponent> hive)
     {
-        hive.Comp.Pause = AirFor(hive.Comp, hive);
+        var totals = GetHiveTotals(hive);
+        hive.Comp.Pause = AirFor(hive.Comp, hive, totals);
+
+        // The colony's air traits show when they make a difference: working where a plain colony would stop, or the other
+        // way round.
+        var plain = AirFor(hive.Comp, hive, new BeeTraitTotals());
+        if (plain != BeehivePauseReason.None && hive.Comp.Pause == BeehivePauseReason.None)
+            _queen.Reveal(hive, BeeTraitReveal.HardAir);
+        else if (plain == BeehivePauseReason.None && hive.Comp.Pause != BeehivePauseReason.None)
+            _queen.Reveal(hive, BeeTraitReveal.SoftAir);
     }
 
     /// <summary>
     /// Why bees of this hive could not work in the air where <paramref name="uid"/> is: fire, or pressure or temperature
-    /// out of the hive's range. The hive itself pauses on it, and its bees do not fly into such air.
+    /// out of the hive's range as its queen's traits widen or narrow it. The hive itself pauses on it, and its bees do
+    /// not fly into such air.
     /// </summary>
-    public BeehivePauseReason AirFor(BeehiveComponent comp, EntityUid uid)
+    public BeehivePauseReason AirFor(Entity<BeehiveComponent> hive, EntityUid uid)
+    {
+        return AirFor(hive.Comp, uid, GetHiveTotals(hive));
+    }
+
+    private BeehivePauseReason AirFor(BeehiveComponent comp, EntityUid uid, BeeTraitTotals totals)
     {
         var xform = Transform(uid);
         if (xform.GridUid is { } grid && xform.ParentUid == grid && TryComp<MapGridComponent>(grid, out var gridComp) &&
@@ -654,13 +696,13 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
         }
 
         var air = _atmos.GetContainingMixture((uid, xform), true) ?? GasMixture.SpaceGas;
-        if (air.Pressure < comp.MinPressure)
+        if (air.Pressure < comp.MinPressure - totals.PressureTolerance)
             return BeehivePauseReason.Vacuum;
-        if (air.Pressure > comp.MaxPressure)
+        if (air.Pressure > comp.MaxPressure + totals.PressureTolerance)
             return BeehivePauseReason.HighPressure;
-        if (air.Temperature < comp.MinTemperature)
+        if (air.Temperature < comp.MinTemperature - totals.ColdTolerance)
             return BeehivePauseReason.Cold;
-        if (air.Temperature > comp.MaxTemperature)
+        if (air.Temperature > comp.MaxTemperature + totals.HeatTolerance)
             return BeehivePauseReason.Heat;
 
         return BeehivePauseReason.None;
@@ -703,6 +745,8 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
             return false;
 
         hive.Comp.WildCombs++;
+        if (hive.Comp.Diet == BeehiveDiet.Meat)
+            _meat.TakeCombBlood(hive);
 
         return true;
     }
@@ -721,6 +765,7 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
         var shown = hive.Comp.MaxWildCombs > 0 &&
                     hive.Comp.WildCombs >= hive.Comp.MaxWildCombs * hive.Comp.WildHoneyShown;
         Appearance.SetData(hive, WildBeehiveVisuals.Honey, shown);
+        Appearance.SetData(hive, WildBeehiveVisuals.Meat, hive.Comp.Diet == BeehiveDiet.Meat);
     }
 
     public void UpdateFrameAppearance(Entity<BeeFrameComponent> frame)
