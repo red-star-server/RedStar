@@ -13,7 +13,12 @@ public enum BeeErrandKind : byte
     Scout,
 
     /// <summary>
+    /// A swarm or a lone queen on the way to a new home. It does not come back.
+    /// </summary>
+    Swarm,
+
+    /// <summary>
     /// A bee taken out of its hive and let go, flying back into it.
     /// </summary>
-    Return
+    Return,
 }

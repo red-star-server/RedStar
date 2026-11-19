@@ -1,0 +1,169 @@
+using Content.Server._RedStar.Beekeeping.Components;
+using Content.Server.Atmos.Piping.Unary.Components;
+using Content.Server.NodeContainer.EntitySystems;
+using Content.Server.NodeContainer.Nodes;
+using Content.Shared.NodeContainer;
+using Content.Shared.NodeContainer.NodeGroups;
+using Content.Shared.Tools.Systems;
+using Robust.Shared.Map;
+using Robust.Shared.Random;
+
+namespace Content.Server._RedStar.Beekeeping.Systems;
+
+/// <summary>
+/// A swarm can leave through the air vents: it dives into a vent it can see and comes out of another vent of the same
+/// pipe network (a welded vent blocks both ways); the dive through the pipes is the errand's (<see cref="BeeErrandSystem"/>). Only vent pumps, not scrubbers. From the exit it looks for a place
+/// to nest, as a swarm does anywhere else.
+/// </summary>
+public sealed partial class BeeSwarmSystem
+{
+    [Dependency] private WeldableSystem _weldable = default!;
+    [Dependency] private NodeContainerSystem _nodeContainer = default!;
+
+    private readonly HashSet<Entity<GasVentPumpComponent>> _ventsNear = [];
+    private readonly List<Entity<GasVentPumpComponent>> _ventCandidates = [];
+    private readonly List<EntityUid> _ventExits = [];
+    private readonly Dictionary<INodeGroup, List<EntityUid>> _networkCache = new();
+
+    /// <summary>
+    /// A vent in sight of <paramref name="origin"/> on its grid and another vent of the same network on the same map
+    /// to come out of, with all the vents of that network it could come out of. Null if there is no such pair. Each
+    /// network is gone through once, however many of its vents are in sight.
+    /// </summary>
+    public (EntityUid Entry, EntityUid Exit, List<EntityUid> Exits)? FindSwarmVentRoute(EntityUid origin,
+        EntityUid grid,
+        MapCoordinates originMap,
+        float range)
+    {
+        _ventsNear.Clear();
+        _lookup.GetEntitiesInRange(originMap, range, _ventsNear);
+
+        _ventCandidates.Clear();
+        _networkCache.Clear();
+        foreach (var vent in _ventsNear)
+        {
+            if (TerminatingOrDeleted(vent) ||
+                Transform(vent).GridUid != grid ||
+                _weldable.IsWelded(vent) ||
+                !_scout.ClearFlightPath(originMap, _transform.GetMapCoordinates(vent), origin, vent) ||
+                CachedNetwork(vent) is not { } network ||
+                !network.Exists(other => other != vent.Owner))
+            {
+                continue;
+            }
+
+            _ventCandidates.Add(vent);
+        }
+
+        if (_ventCandidates.Count == 0)
+            return null;
+
+        var entry = _random.Pick(_ventCandidates);
+        var exits = CachedNetwork(entry)!.FindAll(other => other != entry.Owner);
+        return (entry.Owner, _random.Pick(exits), exits);
+    }
+
+    /// <summary>
+    /// Every usable vent of the vent's network, the vent itself included, worked out once per search.
+    /// </summary>
+    private List<EntityUid>? CachedNetwork(Entity<GasVentPumpComponent> vent)
+    {
+        if (!_nodeContainer.TryGetNode<PipeNode>(vent.Owner, vent.Comp.Inlet, out var node) ||
+            node.NodeGroup is not { } group)
+        {
+            return null;
+        }
+
+        if (_networkCache.TryGetValue(group, out var cached))
+            return cached;
+
+        FindNetworkVents(vent);
+        var all = new List<EntityUid>(_ventExits) { vent.Owner };
+        _networkCache[group] = all;
+        return all;
+    }
+
+    /// <summary>
+    /// The exits of the entry's network from which a swarm can find a place to nest: a free locker or crate within
+    /// <paramref name="range"/> in clear sight of the vent. A swarm that comes out anywhere else only flies about.
+    /// </summary>
+    public List<EntityUid> NestExits(EntityUid entry, float range, EntityUid grid)
+    {
+        if (!TryComp<GasVentPumpComponent>(entry, out var pump))
+            return [];
+
+        FindNetworkVents((entry, pump));
+        return NestExits([.._ventExits], range, grid);
+    }
+
+    /// <summary>
+    /// Of the given exits, those with a place to nest near them.
+    /// </summary>
+    public List<EntityUid> NestExits(List<EntityUid> exits, float range, EntityUid grid)
+    {
+        var nest = new List<EntityUid>();
+        foreach (var vent in exits)
+        {
+            if (PickNestStorage(vent, range, grid, _transform.GetMapCoordinates(vent)) != null)
+                nest.Add(vent);
+        }
+
+        return nest;
+    }
+
+    /// <summary>
+    /// Fills <c>_ventExits</c> with every other vent pump of the entry's pipe network that is not welded and is on
+    /// its map. It goes through the vent pumps (a few dozen on a station) and compares their networks, not through
+    /// every pipe of the network (thousands).
+    /// </summary>
+    private void FindNetworkVents(Entity<GasVentPumpComponent> entry)
+    {
+        _ventExits.Clear();
+        if (!_nodeContainer.TryGetNode<PipeNode>(entry.Owner, entry.Comp.Inlet, out var node) ||
+            node.NodeGroup is not { } group)
+        {
+            return;
+        }
+
+        var map = Transform(entry).MapID;
+        var vents = EntityQueryEnumerator<GasVentPumpComponent, NodeContainerComponent, TransformComponent>();
+        while (vents.MoveNext(out var uid, out var pump, out var ventNodes, out var xform))
+        {
+            if (uid == entry.Owner ||
+                xform.MapID != map ||
+                !_nodeContainer.TryGetNode<PipeNode>(ventNodes, pump.Inlet, out var ventNode) ||
+                ventNode.NodeGroup != group ||
+                TerminatingOrDeleted(uid) ||
+                _weldable.IsWelded(uid))
+            {
+                continue;
+            }
+
+            _ventExits.Add(uid);
+        }
+    }
+
+    /// <summary>
+    /// Out of the vent: look for a locker or crate around the exit, or search on.
+    /// </summary>
+    public void SwarmLeftVent(Entity<BeeSwarmComponent> swarm)
+    {
+        swarm.Comp.VentExit = null;
+
+        var xform = Transform(swarm);
+        if (xform.GridUid is not { } grid)
+            return;
+
+        var origin = _transform.GetMapCoordinates(swarm, xform);
+        if (PickNestStorage(swarm, swarm.Comp.NestRange, grid, origin) is { } storage)
+        {
+            swarm.Comp.Storage = storage;
+            SetSearching(swarm, false);
+            _errands.SetTarget(swarm.Owner, storage);
+            return;
+        }
+
+        SetSearching(swarm, true);
+        ContinueSearch(swarm);
+    }
+}

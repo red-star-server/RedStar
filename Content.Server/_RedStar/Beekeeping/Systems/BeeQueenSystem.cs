@@ -1,3 +1,4 @@
+using Content.Server._RedStar.Beekeeping.Components;
 using Content.Shared._RedStar.Beekeeping.Components;
 using Content.Shared._RedStar.Beekeeping.Data;
 using Content.Shared._RedStar.Beekeeping.Prototypes;
@@ -12,6 +13,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
+using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -43,6 +45,8 @@ public sealed partial class BeeQueenSystem : EntitySystem
     [Dependency] private BeehiveSystem _hive = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private BeeSwarmSystem _swarm = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private ISharedAdminLogManager _adminLog = default!;
 
     public override void Update(float frameTime)
@@ -56,7 +60,7 @@ public sealed partial class BeeQueenSystem : EntitySystem
     /// <summary>
     /// Queens whose solution changed. Sorted out in the update, not inside the change event itself.
     /// </summary>
-    private readonly HashSet<EntityUid> _changedQueens = new();
+    private readonly HashSet<EntityUid> _changedQueens = [];
 
     private readonly Dictionary<(ProtoId<BeeTraitPrototype> Trait, bool Gain), float> _rollOutcomes = new();
 
@@ -76,37 +80,73 @@ public sealed partial class BeeQueenSystem : EntitySystem
     }
 
     /// <summary>
-    /// Queen inserted into a hive: stop the death timer.
+    /// A hive, or a swarm that knows where it is going, keeps the queen alive.
+    /// </summary>
+    private bool IsQueenHome(EntityUid holder)
+    {
+        return HasComp<BeehiveComponent>(holder) ||
+               TryComp<BeeSwarmComponent>(holder, out var swarm) && !swarm.Searching;
+    }
+
+    /// <summary>
+    /// Queen inserted into a hive or a swarm with a destination: stop the death timer.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnQueenInsertedIntoContainer(Entity<BeeQueenComponent> ent, ref EntGotInsertedIntoContainerMessage args)
     {
-        if (!HasComp<BeehiveComponent>(args.Container.Owner))
-            return;
-
-        RemCompDeferred<TimedDespawnComponent>(ent);
-        ent.Comp.DiesAt = null;
-        Dirty(ent);
+        if (IsQueenHome(args.Container.Owner))
+            StopQueenTimer(ent);
     }
 
     /// <summary>
-    /// Queen removed from a hive: start the death timer.
+    /// Queen removed from a hive or a swarm with a destination: start the death timer.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnQueenRemovedFromContainer(Entity<BeeQueenComponent> ent, ref EntGotRemovedFromContainerMessage args)
     {
-        if (HasComp<BeehiveComponent>(args.Container.Owner) && !TerminatingOrDeleted(ent))
+        if (IsQueenHome(args.Container.Owner) && !TerminatingOrDeleted(ent))
             StartQueenTimer(ent);
     }
 
     /// <summary>
-    /// Timer expired: popup and delete.
+    /// Timer expired: popup and delete. A swarm carrying her dies with her.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnQueenTimedDespawn(Entity<BeeQueenComponent> ent, ref TimedDespawnEvent args)
     {
         _popup.PopupCoordinates(Loc.GetString("beekeeping-queen-died"), Transform(ent).Coordinates, PopupType.SmallCaution);
         _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(ent):queen} died outside a hive");
+
+        if (_container.TryGetContainingContainer(ent.Owner, out var container) && HasComp<BeeSwarmComponent>(container.Owner))
+            QueueDel(container.Owner);
+    }
+
+    /// <summary>
+    /// A swarm started or stopped searching for a nest: the queen it carries starts or stops dying.
+    /// </summary>
+    public void UpdateCarriedQueenLife(Entity<BeeSwarmComponent> swarm)
+    {
+        if (!_container.TryGetContainer(swarm, swarm.Comp.Container, out var container))
+            return;
+
+        foreach (var contained in container.ContainedEntities)
+        {
+            if (!TryComp<BeeQueenComponent>(contained, out var queen))
+                continue;
+
+            if (!swarm.Comp.Searching)
+                StopQueenTimer((contained, queen));
+            // DiesAt, not the timer component: a stopped one lingers until deferred removal runs.
+            else if (queen.DiesAt == null)
+                StartQueenTimer((contained, queen));
+        }
+    }
+
+    private void StopQueenTimer(Entity<BeeQueenComponent> ent)
+    {
+        RemCompDeferred<TimedDespawnComponent>(ent);
+        ent.Comp.DiesAt = null;
+        Dirty(ent);
     }
 
     private void StartQueenTimer(Entity<BeeQueenComponent> ent)
@@ -185,7 +225,7 @@ public sealed partial class BeeQueenSystem : EntitySystem
     private void RollTrait(Entity<BeeQueenComponent> queen)
     {
         var comp = queen.Comp;
-        // Every roll wears the queen down a little more, for the rolls after this one.
+        // This roll still uses the old instability; the increment applies to the rolls after it.
         comp.Instability++;
         Dirty(queen);
         var instability = comp.Instability - 1;
@@ -287,7 +327,7 @@ public sealed partial class BeeQueenSystem : EntitySystem
             return;
 
         comp.EmergencyQueenSince = null;
-        var queenNew = Spawn(comp.DaughterQueenPrototype, Transform(hive).Coordinates);
+        var queenNew = SpawnAttachedTo(comp.DaughterQueenPrototype, Transform(hive).Coordinates);
         if (!_itemSlots.TryInsert(hive.Owner, comp.QueenSlot, queenNew, null))
         {
             Del(queenNew);
@@ -380,7 +420,6 @@ public sealed partial class BeeQueenSystem : EntitySystem
             bee.Comp.Charges = Math.Max(1, bee.Comp.Charges + totals.PollinatorCharges);
         bee.Comp.PollinationMutation = totals.PollinationMutation;
 
-        // A long-lived colony's bees last longer outside.
         if (!MathHelper.CloseTo(totals.Lifetime, 1f) && TryComp<TimedDespawnComponent>(bee, out var despawn))
         {
             despawn.Lifetime *= totals.Lifetime;
@@ -388,7 +427,6 @@ public sealed partial class BeeQueenSystem : EntitySystem
         }
         Dirty(bee);
 
-        // With a sting, the bee carries some of the queen's payload; its colour shows the payload it took.
         Color? color = null;
         if (totals.Sting &&
             _solutions.TryGetSolution(queenUid, queen.Solution, out var soln, out var solution) &&
@@ -407,7 +445,7 @@ public sealed partial class BeeQueenSystem : EntitySystem
     /// <summary>
     /// A new comb takes some of the queen's payload; it goes into the honeycombs when the frame is cut.
     /// </summary>
-    public void TakeCombPayload(Entity<BeehiveComponent> hive, BeeFrameComponent? frame)
+    public void TakeCombPayload(Entity<BeehiveComponent> hive, BeeFrameComponent frame)
     {
         if (_hive.GetQueen(hive) is not { } queenUid ||
             !TryComp<BeeQueenComponent>(queenUid, out var queen) ||
@@ -418,7 +456,7 @@ public sealed partial class BeeQueenSystem : EntitySystem
         }
 
         var taken = _solutions.SplitSolution(soln.Value, FixedPoint2.Min(queen.PayloadPerComb, solution.Volume));
-        frame?.Payload.AddSolution(taken, _proto);
+        frame.Payload.AddSolution(taken, _proto);
         UpdateQueenVisuals((queenUid, queen));
     }
 }

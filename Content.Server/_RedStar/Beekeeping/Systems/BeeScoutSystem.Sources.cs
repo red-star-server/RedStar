@@ -25,7 +25,7 @@ public sealed partial class BeeScoutSystem
     [Dependency] private EntityQuery<PlantComponent> _plantQuery;
     [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery;
 
-    private readonly HashSet<Entity<PlantTrayComponent>> _foundTrays = new();
+    private readonly HashSet<Entity<PlantTrayComponent>> _foundTrays = [];
 
     #region Known places
 
@@ -42,7 +42,6 @@ public sealed partial class BeeScoutSystem
             if (source.Tray != tray)
                 continue;
 
-            // Seen again: an inactive place gets a visit right away; an active one keeps its visit timer.
             if (!source.Active)
                 source.NextVisit = now;
 

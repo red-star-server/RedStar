@@ -6,6 +6,7 @@ using Content.Shared._RedStar.Beekeeping.Components;
 using Content.Shared._RedStar.Beekeeping.Data;
 using Content.Shared._RedStar.Beekeeping.Visuals;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server._RedStar.Beekeeping.Systems;
 
@@ -26,7 +27,6 @@ public sealed partial class BeeErrandSystem
         var now = _timing.CurTime;
         var xform = Transform(hive);
 
-        // The visits are counted already: with nobody around to see them, the bees are not shown at all.
         if (!SomeoneWatching(xform.Coordinates))
         {
             comp.PendingForagers.Clear();
@@ -41,7 +41,6 @@ public sealed partial class BeeErrandSystem
 
             comp.PendingForagers.RemoveAt(i);
 
-            // No bee flies off into fire or bad air; the visit is counted all the same.
             if (!TerminatingOrDeleted(tray) && _hive.AirFor(comp, tray) == BeehivePauseReason.None)
                 TrySpawnForager(hive, xform, tray);
         }
@@ -58,7 +57,7 @@ public sealed partial class BeeErrandSystem
         if (comp.Foragers.Count >= comp.MaxForagers || !AreaHasRoom(hiveXform.Coordinates))
             return null;
 
-        if (Release(hive, hiveXform, comp.PollinatorPrototype, target) is not { } bee)
+        if (Release(hive, hiveXform, comp.PollinatorPrototype, target, null) is not { } bee)
             return null;
 
         comp.Foragers.Add(bee);
@@ -72,12 +71,12 @@ public sealed partial class BeeErrandSystem
     {
         if (found.Count == 0 ||
             !AreaHasRoom(hiveXform.Coordinates) ||
-            Release(hive, hiveXform, hive.Comp.ScoutPrototype, found[0], BeeErrandKind.Scout) is not { } bee)
+            Release(hive, hiveXform, hive.Comp.ScoutPrototype, found[0], null, kind: BeeErrandKind.Scout) is not { } bee)
         {
             return false;
         }
 
-        Comp<BeeErrandComponent>(bee).Found = new List<EntityUid>(found);
+        Comp<BeeErrandComponent>(bee).Found = [..found];
         hive.Comp.ScoutFlyer = bee;
         return true;
     }
@@ -88,11 +87,13 @@ public sealed partial class BeeErrandSystem
     /// </summary>
     public EntityUid? Release(EntityUid hive,
         TransformComponent hiveXform,
-        string prototype,
+        EntProtoId prototype,
         EntityUid? target,
+        (EntityUid Entry, EntityUid Exit)? route,
+        EntityCoordinates? spot = null,
         BeeErrandKind kind = BeeErrandKind.Forage)
     {
-        var bee = Spawn(prototype, hiveXform.Coordinates);
+        var bee = SpawnAttachedTo(prototype, hiveXform.Coordinates);
         if (!HasComp<HTNComponent>(bee))
         {
             Log.Error($"{prototype} has no {nameof(HTNComponent)} and cannot fly an errand");
@@ -108,8 +109,7 @@ public sealed partial class BeeErrandSystem
 
         errand.Hive = hive;
 
-        // A bee that can be held already is its colony's bee in the air: it carries the traits and knows its hive, so
-        // the analyzer reads it like one in a hand.
+        // A released bee carries its colony's traits and hive so it can be caught and analyzed like one in a hand.
         if (TryComp<BeeItemComponent>(bee, out var item) && TryComp<BeehiveComponent>(hive, out var hiveComp))
         {
             item.SourceHive = hive;
@@ -117,7 +117,9 @@ public sealed partial class BeeErrandSystem
         }
 
         errand.Target = target;
-        // It grows out of the hive as it sets off.
+        errand.Spot = spot;
+        errand.VentEntry = route?.Entry;
+        errand.VentExit = route?.Exit;
         SetSize(bee, BeeFlightSize.Growing);
         return bee;
     }

@@ -10,7 +10,12 @@ public enum BeeErrandAct : byte
     Visit,
 
     /// <summary>
+    /// Into a vent, through the pipes, and out of the vent at the other end.
+    /// </summary>
+    Pipe,
+
+    /// <summary>
     /// Into the hive: the errand is over.
     /// </summary>
-    Enter
+    Enter,
 }

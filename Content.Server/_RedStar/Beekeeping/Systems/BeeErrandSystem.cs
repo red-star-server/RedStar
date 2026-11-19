@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Server._RedStar.Beekeeping.Components;
 using Content.Server._RedStar.Beekeeping.Data;
+using Content.Server._RedStar.Beekeeping.Events;
 using Content.Server.Audio;
 using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
@@ -8,6 +9,7 @@ using Content.Shared._RedStar.Beekeeping.Components;
 using Content.Shared._RedStar.Beekeeping.Data;
 using Content.Shared._RedStar.Beekeeping.Visuals;
 using Content.Shared.Popups;
+using Content.Shared.Tools.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -40,6 +42,7 @@ public sealed partial class BeeErrandSystem : EntitySystem
     [Dependency] private BeeScoutSystem _scout = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private WeldableSystem _weldable = default!;
 
     private const float DefaultShrinkTime = 0.6f;
 
@@ -49,8 +52,15 @@ public sealed partial class BeeErrandSystem : EntitySystem
     private const float HomeRange = 1f;
 
     /// <summary>
-    /// The HTN task of a bee on an errand.
+    /// How fast a bee goes through the pipes, in tiles per second of straight distance between the two vents.
     /// </summary>
+    private const float PipeSpeed = 3f;
+
+    /// <summary>
+    /// How many times a bee flies on to a target that moved before it gives up and goes home.
+    /// </summary>
+    private const int MaxRetargets = 6;
+
     private static readonly ProtoId<HTNCompoundPrototype> ErrandTask = "BeeErrandCompound";
 
     /// <summary>
@@ -58,14 +68,13 @@ public sealed partial class BeeErrandSystem : EntitySystem
     /// </summary>
     private const float WatchRange = 15f;
 
-    private readonly HashSet<Entity<BeeErrandComponent>> _errandsNear = new();
-    private readonly HashSet<Entity<ActorComponent>> _watchers = new();
+    private readonly HashSet<Entity<BeeErrandComponent>> _errandsNear = [];
+    private readonly HashSet<Entity<ActorComponent>> _watchers = [];
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        // Only the bees diving into something right now, for the fraction of a second it takes.
         var now = _timing.CurTime;
         var query = EntityQueryEnumerator<BeeErrandComponent>();
         while (query.MoveNext(out var uid, out var errand))
@@ -84,7 +93,8 @@ public sealed partial class BeeErrandSystem : EntitySystem
     #region The way
 
     /// <summary>
-    /// Where the bee flies next and how close it has to get. False when there is nowhere to go: the hive is gone.
+    /// Where the bee flies next and how close it has to get. False when there is nowhere to go: the hive is gone or the
+    /// bee has nothing left to do on the way out.
     /// </summary>
     public bool TryGetNextStop(EntityUid uid, out EntityCoordinates coordinates, out float range)
     {
@@ -94,33 +104,80 @@ public sealed partial class BeeErrandSystem : EntitySystem
             return false;
 
         range = errand.StopRange;
-        EntityUid stop;
+        EntityUid? stop;
         if (errand.Stage == BeeErrandStage.Out)
         {
-            if (errand.Target is not { } target || TerminatingOrDeleted(target))
+            if (errand.VentEntry != null && !errand.PipedOut)
             {
-                // Nothing left to fly to (the tray is gone): the bee acts where it is.
-                coordinates = Transform(uid).Coordinates;
-                range = float.MaxValue;
+                stop = OpenVent(errand.VentEntry);
+                if (stop == null)
+                    ClearRoute(uid, errand);
+            }
+            else
+            {
+                stop = null;
+            }
+
+            if (stop == null && errand.Target is { } target && !TerminatingOrDeleted(target))
+                stop = target;
+
+            if (stop == null)
+            {
+                coordinates = errand.Spot ?? Transform(uid).Coordinates;
+                range = errand.Spot == null ? float.MaxValue : errand.StopRange;
                 Face(uid, coordinates);
                 return true;
             }
-
-            stop = target;
         }
         else
         {
             if (TerminatingOrDeleted(errand.Hive) || _container.IsEntityInContainer(errand.Hive) && _scout.StorageOf(errand.Hive) == null)
                 return false;
 
-            stop = errand.Hive;
-            range = HomeRange;
+            stop = null;
+            if (errand.VentExit != null && errand.PipedOut && !errand.PipedBack)
+            {
+                stop = OpenVent(errand.VentExit);
+                if (stop == null)
+                    ClearRoute(uid, errand);
+            }
+
+            if (stop == null)
+            {
+                stop = errand.Hive;
+                range = HomeRange;
+            }
         }
 
         // A locker a wild hive sits in is flown to, not the hive inside it.
-        coordinates = Transform(_scout.StorageOf(stop) ?? stop).Coordinates;
+        coordinates = Transform(_scout.StorageOf(stop) ?? stop.Value).Coordinates;
         Face(uid, coordinates);
         return true;
+    }
+
+    private EntityUid? OpenVent(EntityUid? vent)
+    {
+        return vent is { } uid && !TerminatingOrDeleted(uid) && !_weldable.IsWelded(uid) ? uid : null;
+    }
+
+    private void ClearRoute(EntityUid uid, BeeErrandComponent errand)
+    {
+        errand.VentEntry = null;
+        errand.VentExit = null;
+        if (TryComp<BeeSwarmComponent>(uid, out var swarm))
+            swarm.VentExit = null;
+    }
+
+    /// <summary>
+    /// A new target or spot for a bee that is on its way out: a swarm's next hop or the locker it chose.
+    /// </summary>
+    public void SetTarget(Entity<BeeErrandComponent?> bee, EntityUid? target, EntityCoordinates? spot = null)
+    {
+        if (!Resolve(bee, ref bee.Comp))
+            return;
+
+        bee.Comp.Target = target;
+        bee.Comp.Spot = spot;
     }
 
     #endregion
@@ -135,14 +192,33 @@ public sealed partial class BeeErrandSystem : EntitySystem
         if (!TryComp<BeeErrandComponent>(uid, out var errand))
             return;
 
-        // It stops where it is to act: nothing steers it until the next stop is planned, and a flying body keeps
-        // drifting.
+        // Nothing steers the bee while it acts, so a flying body would keep drifting.
         _physics.SetLinearVelocity(uid, Vector2.Zero);
 
         var bee = new Entity<BeeErrandComponent>(uid, errand);
         if (errand.Stage == BeeErrandStage.Out)
         {
+            if (errand.VentEntry != null && !errand.PipedOut)
+            {
+                if (OpenVent(errand.VentEntry) is { } entry)
+                    DiveInto(bee, BeeErrandAct.Pipe, entry);
+                else
+                    ClearRoute(uid, errand);
+
+                return;
+            }
+
             Arrive(bee);
+            return;
+        }
+
+        if (errand.VentExit != null && errand.PipedOut && !errand.PipedBack)
+        {
+            if (OpenVent(errand.VentExit) is { } exit)
+                DiveInto(bee, BeeErrandAct.Pipe, exit);
+            else
+                ClearRoute(uid, errand);
+
             return;
         }
 
@@ -168,11 +244,11 @@ public sealed partial class BeeErrandSystem : EntitySystem
     }
 
     /// <summary>
-    /// At the target: a forager or the scout visits the flower. With nothing to visit it turns back.
+    /// At the target: the system of that kind of bee does what the errand is for; a forager or the scout visits the
+    /// flower.
     /// </summary>
     private void Arrive(Entity<BeeErrandComponent> bee)
     {
-        // Into fire or air its hive could not work in, a bee does not dive: it turns back.
         if (bee.Comp.Target is { } target &&
             !TerminatingOrDeleted(target) &&
             TryComp<BeehiveComponent>(bee.Comp.Hive, out var hive) &&
@@ -182,10 +258,32 @@ public sealed partial class BeeErrandSystem : EntitySystem
             return;
         }
 
-        if (bee.Comp.Target is { } visited)
-            DiveInto(bee, BeeErrandAct.Visit, visited);
-        else
-            bee.Comp.Stage = BeeErrandStage.Back;
+        var ev = new BeeErrandArrivedEvent(bee.Comp.Target);
+        RaiseLocalEvent(bee, ref ev);
+
+        var result = ev.Handled ? ev.Result
+            : bee.Comp.Target == null ? BeeErrandArrival.TurnBack
+            : BeeErrandArrival.Visit;
+
+        switch (result)
+        {
+            case BeeErrandArrival.Visit:
+                if (bee.Comp.Target is { } visited)
+                    DiveInto(bee, BeeErrandAct.Visit, visited);
+                else
+                    StartStep(bee, BeeErrandAct.Visit, BeeFlightSize.Shrinking, ShrinkTime(bee));
+                break;
+            case BeeErrandArrival.TurnBack:
+                bee.Comp.Stage = BeeErrandStage.Back;
+                break;
+            case BeeErrandArrival.KeepGoing:
+                if (bee.Comp.Kind != BeeErrandKind.Swarm && ++bee.Comp.Retargets > MaxRetargets)
+                    bee.Comp.Stage = BeeErrandStage.Back;
+                break;
+            case BeeErrandArrival.Gone:
+                End(bee);
+                break;
+        }
     }
 
     public HTNOperatorStatus UpdateAct(EntityUid uid)
@@ -204,6 +302,8 @@ public sealed partial class BeeErrandSystem : EntitySystem
         {
             case BeeErrandAct.Visit:
                 return NextVisitStep(bee);
+            case BeeErrandAct.Pipe:
+                return NextPipeStep(bee);
             case BeeErrandAct.Enter:
                 EnterHive(bee);
                 break;
@@ -235,11 +335,60 @@ public sealed partial class BeeErrandSystem : EntitySystem
     }
 
     /// <summary>
+    /// Into the vent, through the pipes, and out of the vent at the other end. If that one is shut by now, the bee is
+    /// lost in the pipes.
+    /// </summary>
+    private HTNOperatorStatus NextPipeStep(Entity<BeeErrandComponent> bee)
+    {
+        var comp = bee.Comp;
+        var outward = !comp.PipedOut;
+        switch (comp.ActStep)
+        {
+            case 0:
+                StartStep(bee, BeeErrandAct.Pipe, BeeFlightSize.Hidden, PipeTime(comp), 1);
+                return HTNOperatorStatus.Continuing;
+            case 1:
+                if (OpenVent(outward ? comp.VentExit : comp.VentEntry) is not { } exit)
+                {
+                    QueueDel(bee);
+                    return HTNOperatorStatus.Failed;
+                }
+
+                _transform.SetCoordinates(bee, Transform(exit).Coordinates);
+                Hide(bee, false);
+                StartStep(bee, BeeErrandAct.Pipe, BeeFlightSize.Growing, ShrinkTime(bee), 2);
+                return HTNOperatorStatus.Continuing;
+            default:
+                comp.Act = BeeErrandAct.None;
+                comp.ActStep = 0;
+                if (outward)
+                    comp.PipedOut = true;
+                else
+                    comp.PipedBack = true;
+                return HTNOperatorStatus.Finished;
+        }
+    }
+
+    /// <summary>
+    /// How long the bee is in the pipes: the straight distance between the two vents over the pipe speed, and a bit.
+    /// </summary>
+    private TimeSpan PipeTime(BeeErrandComponent errand)
+    {
+        if (errand.VentEntry is not { } entry || errand.VentExit is not { } exit ||
+            TerminatingOrDeleted(entry) || TerminatingOrDeleted(exit))
+        {
+            return TimeSpan.FromSeconds(1);
+        }
+
+        var distance = (_transform.GetWorldPosition(entry) - _transform.GetWorldPosition(exit)).Length();
+        return TimeSpan.FromSeconds(distance / PipeSpeed + 0.5f);
+    }
+
+    /// <summary>
     /// The bee went into its hive: the errand is over. A scout's findings become the hive's.
     /// </summary>
     private void EnterHive(Entity<BeeErrandComponent> bee)
     {
-        // A bee taken out of the hive comes back like one brought by hand; turned away, it stays outside.
         if (TryComp<BeeItemComponent>(bee, out var item) && item.CountedOutside)
         {
             bee.Comp.Ended = true;
@@ -262,7 +411,7 @@ public sealed partial class BeeErrandSystem : EntitySystem
     }
 
     /// <summary>
-    /// The errand is over without the bee being lost: it is home.
+    /// The errand is over without the bee being lost: it is home, or it built a hive, or it scattered.
     /// </summary>
     private void End(Entity<BeeErrandComponent> bee)
     {
@@ -283,7 +432,7 @@ public sealed partial class BeeErrandSystem : EntitySystem
     }
 
     /// <summary>
-    /// Inside a flower or the hive the bee is out of the way: nothing bumps into it or hits it.
+    /// Inside a flower or the pipes the bee is out of the way: nothing bumps into it or hits it.
     /// </summary>
     private void Hide(EntityUid bee, bool hidden)
     {

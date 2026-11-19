@@ -32,6 +32,16 @@ public sealed partial class BeeHomingComponent : Component
     public TimeSpan CheckInterval = TimeSpan.FromSeconds(1);
 
     /// <summary>
+    /// A queen let go with no hive to go back to flies off at once to found her own, like a swarm. When there is
+    /// nowhere to go she tries again this often.
+    /// </summary>
+    [DataField]
+    public TimeSpan NestRetry = TimeSpan.FromSeconds(5);
+
+    [ViewVariables]
+    public TimeSpan NextNestTry;
+
+    /// <summary>
     /// The hive it is flying to right now.
     /// </summary>
     [ViewVariables]

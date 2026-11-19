@@ -1,3 +1,4 @@
+using Content.Server._RedStar.Beekeeping.Events;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared._RedStar.Beekeeping;
 using Content.Shared._RedStar.Beekeeping.Components;
@@ -23,6 +24,7 @@ namespace Content.Server._RedStar.Beekeeping.Systems;
 public sealed partial class BeehiveSystem : SharedBeehiveSystem
 {
     [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private BeeSwarmSystem _swarm = default!;
     [Dependency] private BeeErrandSystem _errands = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private BeeQueenSystem _queen = default!;
@@ -37,11 +39,16 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
     private static readonly TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
 
     /// <summary>
+    /// How soon a queen that could not leave a hive without frames tries again.
+    /// </summary>
+    private static readonly TimeSpan AbandonRetry = TimeSpan.FromSeconds(30);
+
+    /// <summary>
     /// Longest stretch one update accounts for, so a long server hitch does not dump minutes of work at once.
     /// </summary>
     private const float MaxUpdateSeconds = 5f;
 
-    private readonly List<Entity<BeeFrameComponent>> _frames = new();
+    private readonly List<Entity<BeeFrameComponent>> _frames = [];
 
     [SubscribeLocalEvent]
     private void OnMapInit(Entity<BeehiveComponent> ent, ref MapInitEvent args)
@@ -54,6 +61,11 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
         UpdateHiveAppearance(ent);
         UpdateAmbience(ent);
         EnsureBeeIcons(ent);
+    }
+
+    protected override void OnQueenCaught(EntityUid flyer)
+    {
+        QueueDel(flyer);
     }
 
     [SubscribeLocalEvent]
@@ -82,6 +94,7 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
         if (!ent.Comp.FrameSlots.Contains(id))
             return;
 
+        ent.Comp.AbandonAt = null;
         UpdateMaxBees(ent);
         UpdateHiveAppearance(ent);
     }
@@ -148,13 +161,17 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
     }
 
     /// <summary>
-    /// A broken hive forgets its sources and calls its scout back.
+    /// A broken hive forgets its sources and calls its scout back; the rest of what it leaves is up to the systems
+    /// that listen to <see cref="BeehiveBrokenEvent"/>.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnHiveDestroyed(Entity<BeehiveComponent> ent, ref DestructionEventArgs args)
     {
         ent.Comp.KnownSources.Clear();
         _scout.RecallScout(ent.Comp);
+
+        var ev = new BeehiveBrokenEvent(ent);
+        RaiseLocalEvent(ref ev);
     }
 
     /// <summary>
@@ -171,7 +188,6 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
         comp.BeeProgress = 0f;
         comp.ScoutState = comp.Bees > 0 ? BeeScoutState.Home : BeeScoutState.Lost;
         comp.ScoutReplaceAt = Timing.CurTime;
-        // The hive shows it is alive: the first scout flight starts a few seconds after the queen goes in.
         comp.ScoutFirstTripNow = comp.Bees > 0;
         UpdateAmbience(ent);
     }
@@ -187,8 +203,7 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
             if (now < comp.NextUpdate)
                 continue;
 
-            // A long server hitch is worked off over the next updates instead of being lost: each one takes at most
-            // MaxUpdateSeconds of the time that passed and leaves the rest for later.
+            // The clamp defers the rest of a long hitch to later updates instead of losing it.
             var passed = Math.Clamp((float) (now - comp.LastUpdate).TotalSeconds, 0f, MaxUpdateSeconds);
             comp.LastUpdate += TimeSpan.FromSeconds(passed);
             comp.NextUpdate = now + UpdateInterval;
@@ -213,7 +228,6 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
         }
         else
         {
-            // A paused hive does not scout; the trip starts over once the air is fine again.
             hive.Comp.NextScoutTrip = TimeSpan.Zero;
             _scout.RecallScout(hive.Comp);
         }
@@ -229,8 +243,8 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
     {
         var comp = hive.Comp;
         var now = Timing.CurTime;
+        var waitingToAbandon = !comp.Wild && hasQueen && comp.MaxBees == 0;
 
-        // Without a queen the colony slowly dies out.
         if (hasQueen || comp.Bees <= 0)
         {
             comp.NextQueenlessDecay = now + comp.QueenlessDecayInterval;
@@ -241,8 +255,8 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
             RemoveHomeBee(hive);
         }
 
-        // Too many bees for the frames: a grace period to bring the frames back, then extra bees leave.
-        if (comp.Bees + comp.OutBees <= comp.MaxBees)
+        // A colony waiting to abandon a frameless hive stays together.
+        if (waitingToAbandon || comp.Bees + comp.OutBees <= comp.MaxBees)
         {
             comp.CrowdedSince = null;
             comp.Crowding = BeehiveCrowding.None;
@@ -261,17 +275,44 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
             }
             else
             {
-                // Once the grace runs out, the extra bees leave one by one.
-                comp.Crowding = BeehiveCrowding.Leaving;
-                if (now >= comp.NextCrowdingLeave)
+                if (comp.Crowding != BeehiveCrowding.Leaving)
                 {
-                    comp.NextCrowdingLeave = now + comp.CrowdingLeaveInterval;
-                    RemoveHomeBee(hive);
+                    if (comp.HasEgg && _swarm.TrySwarm(hive))
+                        _queen.EndEgg(hive);
+                    else
+                        _swarm.LeaveInSwarm(hive, comp.Bees + comp.OutBees - comp.MaxBees);
+                }
+
+                if (comp.Bees + comp.OutBees <= comp.MaxBees)
+                {
+                    comp.CrowdedSince = null;
+                    comp.Crowding = BeehiveCrowding.None;
+                }
+                else
+                {
+                    comp.Crowding = BeehiveCrowding.Leaving;
+                    if (now >= comp.NextCrowdingLeave)
+                    {
+                        comp.NextCrowdingLeave = now + comp.CrowdingLeaveInterval;
+                        RemoveHomeBee(hive);
+                    }
                 }
             }
         }
 
-        // A worker takes the place of a lost scout once the delay is over and enough bees are home.
+        if (waitingToAbandon)
+        {
+            comp.AbandonAt ??= now + comp.AbandonTime;
+            if (now >= comp.AbandonAt)
+            {
+                comp.AbandonAt = _swarm.TryAbandon(hive) ? null : now + AbandonRetry;
+            }
+        }
+        else
+        {
+            comp.AbandonAt = null;
+        }
+
         if (comp.ScoutState == BeeScoutState.Lost &&
             now >= comp.ScoutReplaceAt &&
             comp.Bees >= comp.ScoutReplaceMinBees)
@@ -318,11 +359,7 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
     public void UpdateMaxBees(Entity<BeehiveComponent> hive)
     {
         GetFrames(hive, _frames);
-        var max = _frames.Count * hive.Comp.BeesPerFrame;
-        if (hive.Comp.MaxBees == max)
-            return;
-
-        hive.Comp.MaxBees = max;
+        hive.Comp.MaxBees = hive.Comp.Wild ? hive.Comp.WildMaxBees : _frames.Count * hive.Comp.BeesPerFrame;
     }
 
     #endregion
@@ -343,7 +380,6 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
         var comp = hive.Comp;
         var traits = GetHiveTotals(hive);
 
-        // The queen lays a bee when she is ready and there is room; whatever nectar is left goes into combs.
         if (comp.Bees + comp.OutBees < comp.MaxBees && Timing.CurTime >= comp.NextLay)
         {
             var beeCost = comp.BeeCost * traits.BeeCost;
@@ -358,7 +394,6 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
             {
                 comp.BeeProgress -= beeCost;
                 comp.Bees++;
-                // The colony has no scout: the new bee is born one.
                 if (comp.ScoutState == BeeScoutState.Lost)
                     comp.ScoutState = BeeScoutState.Home;
                 var rate = Math.Max(traits.LayRate, 0.01f);
@@ -372,7 +407,7 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
             return;
 
         GetFrames(hive, _frames);
-        if (!HasRoomForComb(_frames))
+        if (comp.Wild ? comp.WildCombs >= comp.MaxWildCombs : !HasRoomForComb(_frames))
             return;
 
         var made = Math.Min(workers * comp.CombsPerWorkerPerMinute * traits.CombRate * seconds / 60f,
@@ -384,13 +419,13 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
         comp.Nectar -= made * combCost;
 
         var changed = false;
-        while (comp.CombProgress >= 1f && AddComb(hive, _frames))
+        while (comp.CombProgress >= 1f && (comp.Wild ? AddWildComb(hive) : AddComb(hive, _frames)))
         {
             comp.CombProgress -= 1f;
             changed = true;
         }
 
-        // Nowhere left to put a finished comb: keep it ready for the next empty frame.
+        // Bank at most one finished comb for the next empty frame.
         comp.CombProgress = Math.Min(comp.CombProgress, 1f);
 
         if (changed)
@@ -421,11 +456,11 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
             return ApiaryNectarUse.Idle;
 
         GetFrames(hive, _frames);
-        if (_frames.Count == 0)
+        if (!comp.Wild && _frames.Count == 0)
             return ApiaryNectarUse.NoFrames;
 
         var growing = comp.Bees + comp.OutBees < comp.MaxBees;
-        var room = HasRoomForComb(_frames);
+        var room = comp.Wild ? comp.WildCombs < comp.MaxWildCombs : HasRoomForComb(_frames);
         var workers = WorkersAtHome(comp) > 0;
 
         if (growing)
@@ -505,8 +540,11 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
             args.PushMarkup(Loc.GetString(hasQueen
                 ? "beekeeping-hive-examine-queen"
                 : "beekeeping-hive-examine-no-queen"));
-            args.PushMarkup(Loc.GetString("beekeeping-hive-examine-frames",
-                ("count", frames), ("max", comp.FrameSlots.Count)));
+            if (!comp.Wild)
+            {
+                args.PushMarkup(Loc.GetString("beekeeping-hive-examine-frames",
+                    ("count", frames), ("max", comp.FrameSlots.Count)));
+            }
 
             if (comp.Bees > 0 || comp.OutBees > 0)
             {
@@ -516,6 +554,14 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
 
             args.PushMarkup(Loc.GetString("beekeeping-hive-examine-nectar",
                 ("level", GetNectarLevel(comp).ToString())));
+
+            if (comp.Wild && comp.SwarmModifier is { } modifierId && Proto.TryIndex(modifierId, out var modifier))
+            {
+                args.PushMarkup(Loc.GetString("beekeeping-hive-examine-swarm-modifier",
+                    ("color", modifier.Color.ToHex()),
+                    ("name", Loc.GetString(modifier.Name)),
+                    ("desc", Loc.GetString(modifier.Description))));
+            }
 
             switch (comp.Crowding)
             {
@@ -529,6 +575,13 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
 
             if (!hasQueen && comp.Bees > 0)
                 args.PushMarkup(Loc.GetString("beekeeping-hive-examine-dying"));
+
+            if (comp.AbandonAt is { } abandonAt)
+            {
+                var left = abandonAt - Timing.CurTime;
+                args.PushMarkup(Loc.GetString("beekeeping-hive-examine-abandon",
+                    ("minutes", Math.Max(0, (int) left.TotalMinutes)), ("seconds", Math.Max(0, left.Seconds))));
+            }
 
             if (comp.HasEgg)
             {
@@ -614,8 +667,8 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
     }
 
     /// <summary>
-    /// Water vapor in the air calms bees: an aggressive bee picked up in it does not sting. The colony keeps working;
-    /// this is how a botanist handles a vicious hive.
+    /// Water vapor in the air calms bees: a hive standing in it lets no angry bees out, an angry bee in it calms down and
+    /// a bee in hand does not sting. The colony keeps working; this is how a botanist handles a vicious hive.
     /// </summary>
     public bool InCalmingVapor(EntityUid uid, BeehiveComponent? comp = null)
     {
@@ -625,7 +678,7 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
     }
 
     /// <summary>
-    /// Water vapor a bee in hand needs around it to stay calm, in moles on its tile.
+    /// Water vapor a bee out of any hive (an angry bee, a bee in hand) needs around it to calm down, in moles on its tile.
     /// </summary>
     public const float DefaultCalmVaporMoles = 1f;
 
@@ -640,6 +693,35 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
     #endregion
 
     #region Appearance
+
+    /// <summary>
+    /// A wild hive keeps its combs inside, up to its limit.
+    /// </summary>
+    private bool AddWildComb(Entity<BeehiveComponent> hive)
+    {
+        if (hive.Comp.WildCombs >= hive.Comp.MaxWildCombs)
+            return false;
+
+        hive.Comp.WildCombs++;
+
+        return true;
+    }
+
+    /// <summary>
+    /// A wild hive has no frames: it shows its honey once it is full enough.
+    /// </summary>
+    public override void UpdateHiveAppearance(Entity<BeehiveComponent> hive)
+    {
+        if (!hive.Comp.Wild)
+        {
+            base.UpdateHiveAppearance(hive);
+            return;
+        }
+
+        var shown = hive.Comp.MaxWildCombs > 0 &&
+                    hive.Comp.WildCombs >= hive.Comp.MaxWildCombs * hive.Comp.WildHoneyShown;
+        Appearance.SetData(hive, WildBeehiveVisuals.Honey, shown);
+    }
 
     public void UpdateFrameAppearance(Entity<BeeFrameComponent> frame)
     {
