@@ -12,11 +12,11 @@
     solutions:
     - SolutionUdderChocolate
   - type: Sprite
+    sprite: _RedStar/Mobs/Animals/Farm/chocolate_cow.rsi
     drawdepth: Mobs
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: alive
-      sprite: _RedStar/Mobs/Animals/Farm/chocolate_cow.rsi
 
 - type: entity
   parent: SolutionLarge
@@ -98,11 +98,11 @@
     solutions:
     - SolutionUdderBanana
   - type: Sprite
+    sprite: _RedStar/Mobs/Animals/Farm/banana_cow.rsi
     drawdepth: Mobs
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: alive
-      sprite: _RedStar/Mobs/Animals/Farm/banana_cow.rsi
 
 - type: entity
   parent: SolutionLarge
@@ -136,11 +136,11 @@
     solutions:
     - SolutionUdderPilk
   - type: Sprite
+    sprite: Mobs/Animals/Farm/cow.rsi
     drawdepth: Mobs
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: alive
-      sprite: Mobs/Animals/Farm/cow.rsi
 
 - type: entity
   parent: SolutionLarge
