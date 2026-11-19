@@ -68,3 +68,11 @@
   - !Remove SheetifierMachineCircuitboard
   - !Remove PowerCageRechargerCircuitboard
   - ResearchPointDiskTerminalCircuitboard
+
+- type: !PartialOnly latheRecipePack
+  id: FriendlyCubesStatic
+  recipes:
+  - SkrellkeyCube
+  - StokkeyCube
+  - TajkeyCube
+  - WolflingCube

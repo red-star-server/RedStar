@@ -26,7 +26,7 @@ public sealed partial class BeehiveSystem
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedContainerSystem _container = default!;
 
-    protected override Type[] FrameInteractBefore => new[] { typeof(ConstructionSystem) };
+    protected override Type[] FrameInteractBefore => [typeof(ConstructionSystem)];
 
     [SubscribeLocalEvent]
     private void OnFrameCut(Entity<BeeFrameComponent> ent, ref BeeFrameCutDoAfterEvent args)

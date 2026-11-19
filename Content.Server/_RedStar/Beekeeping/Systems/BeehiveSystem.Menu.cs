@@ -47,7 +47,7 @@ public sealed partial class BeehiveSystem
         if (slot.ContainedEntity != null)
             return;
 
-        var icon = Spawn(proto, Transform(hive).Coordinates);
+        var icon = SpawnAttachedTo(proto, Transform(hive).Coordinates);
         if (!_container.Insert(icon, slot))
             Del(icon);
     }
@@ -70,11 +70,10 @@ public sealed partial class BeehiveSystem
 
         _queen.AddJellyVerb(ent, ref args);
 
-        // A wild hive has no frames to take out and no bees to catch.
         if (comp.Wild)
             return;
 
-        // Frames come first, in slot order, so the alt-click takes out a frame rather than a bee.
+        // Frames outrank bees so the default alt-verb takes out a frame, in slot order.
         for (var i = 0; i < comp.FrameSlots.Count; i++)
         {
             if (!ItemSlots.TryGetSlot(ent.Owner, comp.FrameSlots[i], out var slot) || slot.Item is not { } frame)
@@ -93,7 +92,6 @@ public sealed partial class BeehiveSystem
             });
         }
 
-        // The queen, then the bees.
         if (ItemSlots.TryGetSlot(ent.Owner, comp.QueenSlot, out var queenSlot) &&
             queenSlot.Item is { } queen &&
             ItemSlots.CanEject(ent, queenSlot, user) &&

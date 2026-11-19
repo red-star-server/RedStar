@@ -53,7 +53,7 @@ public sealed partial class BeeItemSystem : EntitySystem
     private static readonly TimeSpan MarkerCheckInterval = TimeSpan.FromSeconds(1);
 
     private TimeSpan _nextMarkerCheck;
-    private readonly List<Entity<BeePollinatedComponent, PlantHolderComponent>> _expiredMarkers = new();
+    private readonly List<Entity<BeePollinatedComponent, PlantHolderComponent>> _expiredMarkers = [];
 
     #region Applying
 
@@ -94,7 +94,6 @@ public sealed partial class BeeItemSystem : EntitySystem
 
         args.Handled = true;
 
-        // The plant may have changed during the do-after: check again.
         if (!CanApply(ent, tray, args.User))
             return;
 
@@ -245,7 +244,6 @@ public sealed partial class BeeItemSystem : EntitySystem
             _plantTray.AdjustWeed(tray.AsNullable(), -bee.Comp.WeedReduction);
         }
 
-        // A mutagenic colony stirs the plant's genes.
         if (bee.Comp.PollinationMutation > 0f)
             _plantHolder.AdjustsMutationLevel(plant.AsNullable(), MutationTable, bee.Comp.PollinationMutation);
 
@@ -366,7 +364,6 @@ public sealed partial class BeeItemSystem : EntitySystem
 
         var user = args.User;
 
-        // In water vapor even an aggressive bee keeps calm.
         if (_hive.InCalmingVapor(user))
             return;
 

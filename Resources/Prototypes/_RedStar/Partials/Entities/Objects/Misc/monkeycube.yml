@@ -1,0 +1,20 @@
+- type: !PartialOnly entity
+  id: VariantCubeBox
+  description: Assorted ancestor cubes. Just add water!
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children: !Clear
+        - id: KoboldCubeWrapped
+          amount: 1
+        - id: MonkeyCubeWrapped
+          amount: 1
+        - id: SkrellkeyCubeWrapped
+          amount: 1
+        - id: StokkeyCubeWrapped
+          amount: 1
+        - id: TajkeyCubeWrapped
+          amount: 1
+        - id: WolflingCubeWrapped
+          amount: 1

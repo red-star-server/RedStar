@@ -37,7 +37,7 @@ public sealed partial class BeeItemComponent : Component
     /// The colony's traits, copied from the queen when the bee is taken out.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public List<ProtoId<BeeTraitPrototype>> Traits = new();
+    public List<ProtoId<BeeTraitPrototype>> Traits = [];
 
     /// <summary>
     /// Which of those were known about the queen when the bee was taken out.
@@ -143,7 +143,7 @@ public sealed partial class BeeItemComponent : Component
     /// Remembered trays, oldest first. Server only.
     /// </summary>
     [ViewVariables]
-    public List<EntityUid> Memory = new();
+    public List<EntityUid> Memory = [];
 
     #endregion
 

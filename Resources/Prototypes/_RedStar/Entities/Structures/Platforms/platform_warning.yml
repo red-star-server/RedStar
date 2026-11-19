@@ -1,0 +1,47 @@
+- type: entity
+  parent: Platform
+  id: PlatformWarning
+  suffix: Warning
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Platforms/platform_warning.rsi
+    state: warning_side
+  - type: Icon
+    sprite: _RedStar/Structures/Platforms/platform_warning.rsi
+    state: warning_side
+
+- type: entity
+  parent: PlatformCorner
+  id: PlatformWarningCorner
+  suffix: Warning, corner
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Platforms/platform_warning.rsi
+    state: warning_corner
+  - type: Icon
+    sprite: _RedStar/Structures/Platforms/platform_warning.rsi
+    state: warning_corner
+
+- type: entity
+  parent: PlatformCornerSmall
+  id: PlatformWarningCornerSmall
+  suffix: Warning, corner, small
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Platforms/platform_warning.rsi
+    state: warning_corner_small
+  - type: Icon
+    sprite: _RedStar/Structures/Platforms/platform_warning.rsi
+    state: warning_corner_small
+
+- type: entity
+  parent: PlatformRound
+  id: PlatformWarningRound
+  suffix: Warning, round
+  components:
+  - type: Sprite
+    sprite: _RedStar/Structures/Platforms/platform_warning.rsi
+    state: warning_round
+  - type: Icon
+    sprite: _RedStar/Structures/Platforms/platform_warning.rsi
+    state: warning_round

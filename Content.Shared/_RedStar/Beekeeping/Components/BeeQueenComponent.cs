@@ -59,7 +59,7 @@ public sealed partial class BeeQueenComponent : Component
     /// Her traits, innate ones included.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public List<ProtoId<BeeTraitPrototype>> Traits = new();
+    public List<ProtoId<BeeTraitPrototype>> Traits = [];
 
     /// <summary>
     /// Her traits someone has seen at work. The rest show in the analyzer as hidden traits until they show themselves
