@@ -91,6 +91,9 @@ public sealed partial class NpcFactionSystem
         if (!ent.Comp.Ignored.Remove(target) || !_trackerQuery.TryComp(target, out var tracker))
             return;
 
+        if (ent.Comp.Hostiles.Contains(target))
+            return;
+
         tracker.Entities.Remove(ent);
     }
     // RS14-end

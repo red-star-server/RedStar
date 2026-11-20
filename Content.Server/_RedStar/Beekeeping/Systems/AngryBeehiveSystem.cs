@@ -541,7 +541,6 @@ public sealed partial class AngryBeehiveSystem : EntitySystem
             var ignored = _faction.IsIgnored(bee.AsNullable(), target);
             if (proof && !ignored)
             {
-                _faction.DeAggroEntity(bee.AsNullable(), target);
                 _faction.IgnoreEntity(bee.AsNullable(), target.Owner);
             }
             else if (!proof && ignored)
@@ -622,7 +621,7 @@ public sealed partial class AngryBeehiveSystem : EntitySystem
             var queenMap = _transform.GetMapCoordinates(uid);
             foreach (var target in exceptions.Hostiles)
             {
-                if (TerminatingOrDeleted(target) || !_mobState.IsAlive(target))
+                if (TerminatingOrDeleted(target) || !_mobState.IsAlive(target) || IsStingProof(target))
                     continue;
 
                 queen.HadTargets = true;

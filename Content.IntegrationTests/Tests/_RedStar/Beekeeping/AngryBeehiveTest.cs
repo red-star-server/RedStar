@@ -1,6 +1,7 @@
 #nullable enable
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server._RedStar.Beekeeping.Components;
 using Content.Server._RedStar.Beekeeping.Systems;
 using Content.Shared.Containers.ItemSlots;
@@ -9,6 +10,7 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.Inventory;
 using Content.Shared.NPC.Systems;
 using Content.Shared._RedStar.Beekeeping.Components;
+using Content.Shared._RedStar.Beekeeping;
 using Content.Shared._RedStar.Beekeeping.Data;
 using Robust.Shared.GameObjects;
 
@@ -21,6 +23,54 @@ namespace Content.IntegrationTests.Tests._RedStar.Beekeeping;
 [TestOf(typeof(BeehiveComponent))]
 public sealed class AngryBeehiveTest : GameTest
 {
+    [Test]
+    public async Task QueenWithoutTargetsCalmsAndSurvives()
+    {
+        var server = Server;
+        var map = await Pair.CreateTestMap();
+        EntityUid carrier = default;
+        EntityUid queen = default;
+
+        await server.WaitAssertion(() =>
+        {
+            var hive = server.EntMan.SpawnAttachedTo("Beehive", map.GridCoords);
+            var comp = server.EntMan.GetComponent<BeehiveComponent>(hive);
+            queen = server.EntMan.SpawnAttachedTo("BeeQueen", map.GridCoords);
+            Assert.That(server.System<ItemSlotsSystem>().TryInsert(hive, comp.QueenSlot, queen, null));
+            comp.Bees = 0;
+            server.System<DamageableSystem>().TryChangeDamage(hive, new DamageSpecifier { DamageDict = { ["Blunt"] = 200 } });
+            var queens = server.EntMan.EntityQueryEnumerator<BeehiveAngryQueenComponent>();
+            Assert.That(queens.MoveNext(out carrier, out var angry));
+            Assert.That(angry.HadTargets, Is.False);
+            angry.CalmWithoutTargets = TimeSpan.FromSeconds(1);
+        });
+
+        await RunSeconds(3);
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(server.EntMan.Deleted(carrier), Is.True, "a queen without targets must land");
+            Assert.That(server.EntMan.Deleted(queen), Is.False, "landing preserves the queen item");
+        });
+    }
+
+    [Test]
+    public async Task ReturningAngryBeeCountsOnceTowardsAreaLimit()
+    {
+        await OverrideCVar(Side.Server, BeekeepingCVars.AreaBeeLimit, 2);
+        var server = Server;
+        var map = await Pair.CreateTestMap();
+        await server.WaitAssertion(() =>
+        {
+            var hive = server.EntMan.SpawnAttachedTo("Beehive", map.GridCoords);
+            var bee = server.EntMan.SpawnAttachedTo("MobBeehiveAngryBee", map.GridCoords);
+            var errands = server.System<BeeErrandSystem>();
+            errands.SendHome(bee, hive);
+            Assert.That(errands.AreaHasRoom(map.GridCoords), Is.True, "one bee with two roles occupies one place");
+            server.EntMan.SpawnAttachedTo("MobBeehiveAngryBee", map.GridCoords);
+            Assert.That(errands.AreaHasRoom(map.GridCoords), Is.False, "two distinct bees fill the limit");
+        });
+    }
+
     [Test]
     public async Task HitsAndBreaking()
     {
@@ -101,6 +151,13 @@ public sealed class AngryBeehiveTest : GameTest
 
         await server.WaitAssertion(() =>
         {
+            var air = new Content.Shared.Atmos.GasMixture(Content.Shared.Atmos.Atmospherics.CellVolume)
+            {
+                Temperature = Content.Shared.Atmos.Atmospherics.T20C,
+            };
+            air.AdjustMoles(Content.Shared.Atmos.Gas.Oxygen, Content.Shared.Atmos.Atmospherics.OxygenMolesStandard);
+            air.AdjustMoles(Content.Shared.Atmos.Gas.Nitrogen, Content.Shared.Atmos.Atmospherics.NitrogenMolesStandard);
+            server.System<Content.Server.Atmos.EntitySystems.AtmosphereSystem>().SetMapAtmosphere(map.MapUid, false, air);
             human = server.EntMan.SpawnEntity("MobHuman", map.GridCoords);
             bee = server.EntMan.SpawnEntity("MobBeehiveAngryBee", map.GridCoords);
             faction.AggroEntity(bee, human);
@@ -115,7 +172,8 @@ public sealed class AngryBeehiveTest : GameTest
         await server.WaitAssertion(() =>
         {
             Assert.That(faction.IsIgnored(bee, human), "a sealed person is ignored");
-            Assert.That(faction.GetHostiles(bee), Does.Not.Contain(human));
+            Assert.That(faction.GetHostiles(bee), Does.Contain(human), "temporary protection keeps the original hostility");
+            Assert.That(faction.GetNearbyHostiles(bee, 10f), Does.Not.Contain(human));
             Assert.That(inventory.TryUnequip(human, "head", out _, force: true));
         });
 
@@ -124,6 +182,10 @@ public sealed class AngryBeehiveTest : GameTest
         await server.WaitAssertion(() =>
         {
             Assert.That(faction.IsIgnored(bee, human), Is.False, "no longer ignored without the helmet");
+            Assert.That(server.EntMan.Deleted(bee), Is.False, "the bee must survive both equipment changes");
+            Assert.That(faction.GetNearbyHostiles(bee, 10f), Does.Contain(human));
+            server.EntMan.DeleteEntity(human);
+            Assert.That(faction.GetHostiles(bee), Does.Not.Contain(human), "the tracker still removes a deleted target");
         });
     }
 

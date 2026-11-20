@@ -58,7 +58,12 @@ public sealed partial class BeekeepingClearCommand : LocalizedEntityCommands
         var hives = EntityManager.EntityQueryEnumerator<BeehiveComponent, TransformComponent>();
         while (hives.MoveNext(out var uid, out var hive, out var xform))
         {
-            if (hive.Wild && (map == null || xform.MapUid == map) && EntityManager.TryQueueDeleteEntity(uid))
+            if (!hive.Wild || map != null && xform.MapUid != map)
+                continue;
+
+            // Administrative removal must not release a new defence after the existing bees were cleared.
+            hive.Bees = 0;
+            if (EntityManager.TryQueueDeleteEntity(uid))
                 removed++;
         }
 

@@ -170,6 +170,13 @@ public sealed partial class BeeErrandSystem
         _angryNear.Clear();
         _lookup.GetEntitiesInRange(coordinates, radius, _errandsNear);
         _lookup.GetEntitiesInRange(coordinates, radius, _angryNear);
-        return _errandsNear.Count + _angryNear.Count < limit;
+        var count = _errandsNear.Count;
+        foreach (var angry in _angryNear)
+        {
+            if (!HasComp<BeeErrandComponent>(angry))
+                count++;
+        }
+
+        return count < limit;
     }
 }
