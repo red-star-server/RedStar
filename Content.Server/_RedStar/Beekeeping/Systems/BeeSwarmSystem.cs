@@ -178,10 +178,11 @@ public sealed partial class BeeSwarmSystem : EntitySystem
         {
             if (nestExits is { Count: > 0 } && QuietestExit(nestExits, QuietRadius) is { } quietExit)
                 swarmComp.VentExit = quietExit;
-            else if (ventRoute == null && PickNestStorage(hive, range, grid, hiveMap, QuietRadius) is { } quietStorage)
+            else if (ventRoute == null && PickNestStorage(swarm, range, grid, hiveMap, QuietRadius) is { } quietStorage)
             {
                 // It flies to the place it settles in, not to the first one it saw.
                 swarmComp.Storage = quietStorage;
+                storage = quietStorage;
                 _errands.SetTarget(swarm, quietStorage);
             }
         }
@@ -323,9 +324,9 @@ public sealed partial class BeeSwarmSystem : EntitySystem
         _lookup.GetEntitiesInRange(hiveMap, range + 1f, _hivesNear);
         _swarmTargets.Clear();
         var swarms = EntityQueryEnumerator<BeeSwarmComponent>();
-        while (swarms.MoveNext(out _, out var swarm))
+        while (swarms.MoveNext(out var uid, out var swarm))
         {
-            if (swarm.Storage is { } target)
+            if (uid != origin && swarm.Storage is { } target)
                 _swarmTargets.Add(target);
         }
 

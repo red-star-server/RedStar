@@ -4,6 +4,7 @@ using System.Numerics;
 using Content.IntegrationTests.Fixtures;
 using Content.Server._RedStar.Beekeeping.Systems;
 using Content.Shared.FixedPoint;
+using Content.Shared.Inventory;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared._RedStar.Beekeeping.Components;
 using Content.Shared._RedStar.Beekeeping.Data;
@@ -22,6 +23,41 @@ namespace Content.IntegrationTests.Tests._RedStar.Beekeeping;
 [TestOf(typeof(BeehiveSystem))]
 public sealed class MeatBiteTest : GameTest
 {
+    [Test]
+    public async Task BiteStartsCooldownOnArrivalAndProtectionDoesNotCountAsABite()
+    {
+        var server = Server;
+        var map = await Pair.CreateTestMap();
+        await server.WaitAssertion(() =>
+        {
+            var hive = server.EntMan.SpawnAttachedTo("Beehive", map.GridCoords);
+            var comp = server.EntMan.GetComponent<BeehiveComponent>(hive);
+            comp.Diet = BeehiveDiet.Meat;
+            var human = server.EntMan.SpawnAttachedTo("MobHuman", map.GridCoords);
+            var bee = server.EntMan.SpawnAttachedTo("BeeForagerMeat", map.GridCoords);
+            var now = server.Timing.CurTime;
+            var source = new BeehiveSource(human, now) { NextVisit = now - TimeSpan.FromSeconds(1) };
+            comp.KnownSources.Add(source);
+            var meat = server.System<MeatBeehiveSystem>();
+            meat.BiteCreature(bee, (hive, comp), human);
+            Assert.That(source.Bites, Is.EqualTo(1));
+            Assert.That(source.NextVisit, Is.EqualTo(now + meat.MeatOf(hive).BiteInterval),
+                "travel time must not consume the interval after a bite");
+
+            var inventory = server.System<InventorySystem>();
+            var suit = server.EntMan.SpawnAttachedTo("ClothingOuterSuitEmergency", map.GridCoords);
+            var helmet = server.EntMan.SpawnAttachedTo("ClothingHeadHelmetEVA", map.GridCoords);
+            Assert.That(inventory.TryEquip(human, suit, "outerClothing", force: true));
+            Assert.That(inventory.TryEquip(human, helmet, "head", force: true));
+            var nextVisit = source.NextVisit;
+            var blood = meat.MeatOf(hive).Blood.Volume;
+            Assert.That(meat.BiteCreature(bee, (hive, comp), human), Is.False);
+            Assert.That(source.Bites, Is.EqualTo(1), "protection blocks the bite before its history changes");
+            Assert.That(source.NextVisit, Is.EqualTo(nextVisit));
+            Assert.That(meat.MeatOf(hive).Blood.Volume, Is.EqualTo(blood));
+        });
+    }
+
     [Test]
     public void BiteFactors()
     {
@@ -104,6 +140,8 @@ public sealed class MeatBiteTest : GameTest
         var hives = server.System<BeehiveSystem>();
         var hive = default(EntityUid);
         var human = default(EntityUid);
+        var mouse1 = default(EntityUid);
+        var mouse2 = default(EntityUid);
 
         EntityCoordinates At(float x) => new(map.Grid.Owner, new Vector2(x, 0.5f));
 
@@ -117,8 +155,8 @@ public sealed class MeatBiteTest : GameTest
             hive = server.EntMan.SpawnEntity("Beehive", At(0.5f));
             server.EntMan.GetComponent<BeehiveComponent>(hive).Diet = BeehiveDiet.Meat;
             human = server.EntMan.SpawnEntity("MobHuman", At(3.5f));
-            server.EntMan.SpawnEntity("MobMouse", At(5.5f));
-            server.EntMan.SpawnEntity("MobMouse", At(6.5f));
+            mouse1 = server.EntMan.SpawnEntity("MobMouse", At(5.5f));
+            mouse2 = server.EntMan.SpawnEntity("MobMouse", At(6.5f));
         });
         await RunTicksSync(5);
 
@@ -134,7 +172,7 @@ public sealed class MeatBiteTest : GameTest
             // Bitten just now: the human is left alone, the mice are still there.
             comp.KnownSources.Add(new BeehiveSource(human, now) { NextVisit = now + TimeSpan.FromSeconds(10) });
             for (var i = 0; i < 20; i++)
-                Assert.That(server.System<MeatBeehiveSystem>().PickHuntTarget((hive, comp), xform, origin, now, out _), Is.Not.EqualTo(human));
+                Assert.That(server.System<MeatBeehiveSystem>().PickHuntTarget((hive, comp), xform, origin, now, out _), Is.AnyOf(mouse1, mouse2));
         });
     }
 }

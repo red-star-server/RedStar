@@ -2,9 +2,12 @@
 using System.Numerics;
 using Content.IntegrationTests.Fixtures;
 using Content.Server._RedStar.Beekeeping.Systems;
+using Content.Server._RedStar.Beekeeping.Components;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared._RedStar.Beekeeping.Components;
 using Content.Shared._RedStar.Beekeeping.Data;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
@@ -17,6 +20,41 @@ namespace Content.IntegrationTests.Tests._RedStar.Beekeeping;
 [TestOf(typeof(BeehiveSystem))]
 public sealed class SwarmDietTest : GameTest
 {
+    [Test]
+    public async Task ReconsideringNestKeepsOwnReservationAndRespectsOtherSwarms()
+    {
+        var server = Server;
+        var map = await Pair.CreateTestMap();
+        await server.WaitAssertion(() =>
+        {
+            EntityCoordinates At(float x) => new(map.Grid.Owner, new Vector2(x, 0.5f));
+            var mapSystem = server.System<SharedMapSystem>();
+            for (var x = 0; x <= 6; x++)
+                mapSystem.SetTile(map.Grid.Owner, map.Grid.Comp, new Vector2i(x, 0), map.Tile.Tile);
+            var own = server.EntMan.SpawnAttachedTo("ClosetMaintenance", At(2.5f));
+            EntityUid Leave(float x)
+            {
+                var hive = server.EntMan.SpawnAttachedTo("Beehive", At(x));
+                var comp = server.EntMan.GetComponent<BeehiveComponent>(hive);
+                var queen = server.EntMan.SpawnAttachedTo("BeeQueen", At(x));
+                Assert.That(server.System<ItemSlotsSystem>().TryInsert(hive, comp.QueenSlot, queen, null));
+                comp.Bees = 3;
+                Assert.That(server.System<BeeSwarmSystem>().TryAbandon((hive, comp)), Is.True);
+                Assert.That(server.System<SharedContainerSystem>().TryGetContainingContainer(queen, out var container), Is.True);
+                return container!.Owner;
+            }
+
+            var swarm = Leave(0.5f);
+            var occupied = server.EntMan.SpawnAttachedTo("ClosetMaintenance", At(5.5f));
+            var other = Leave(6.5f);
+            Assert.That(server.EntMan.GetComponent<BeeSwarmComponent>(swarm).Storage, Is.EqualTo(own));
+            Assert.That(server.EntMan.GetComponent<BeeSwarmComponent>(other).Storage, Is.EqualTo(occupied));
+            var origin = server.System<SharedTransformSystem>().GetMapCoordinates(swarm);
+            Assert.That(server.System<BeeSwarmSystem>().PickNestStorage(swarm, 10f, map.Grid.Owner, origin, 8f),
+                Is.EqualTo(own), "the swarm may keep its own nest, but cannot take another swarm's reservation");
+        });
+    }
+
     [Test]
     public void ChoiceByCounts()
     {

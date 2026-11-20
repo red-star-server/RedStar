@@ -442,6 +442,13 @@ public sealed partial class MeatBeehiveSystem : EntitySystem
         var comp = hive.Comp;
         var now = _timing.CurTime;
 
+        // Suited up after the bee set off: it does not even swing or count a bite.
+        if (_angry.IsStingProof(target))
+        {
+            _popup.PopupEntity(Loc.GetString("beekeeping-bite-blocked"), target, target, PopupType.Small);
+            return false;
+        }
+
         var factor = 1f;
         foreach (var source in comp.KnownSources)
         {
@@ -455,6 +462,7 @@ public sealed partial class MeatBeehiveSystem : EntitySystem
             }
 
             source.LastSeen = now;
+            source.NextVisit = now + meatComp.BiteInterval;
 
             factor = BiteFactor(source.Bites, meatComp.BiteMinFactor);
             source.Bites++;
@@ -462,13 +470,6 @@ public sealed partial class MeatBeehiveSystem : EntitySystem
         }
 
         var dead = _mobState.IsDead(target);
-
-        // Suited up after the bee set off: it does not even swing, and the bee leaves without landing.
-        if (_angry.IsStingProof(target))
-        {
-            _popup.PopupEntity(Loc.GetString("beekeeping-bite-blocked"), target, target, PopupType.Small);
-            return false;
-        }
 
         // The bite shows even when it finds no blood to take.
         if (!dead)

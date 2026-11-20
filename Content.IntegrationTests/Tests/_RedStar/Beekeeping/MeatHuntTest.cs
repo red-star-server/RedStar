@@ -108,6 +108,13 @@ public sealed class MeatHuntTest : GameTest
             // The man is a source because of the vents; weld the far one shut and he is not.
             var source = new BeehiveSource(_human, server.Timing.CurTime);
             Assert.That(server.System<BeeScoutSystem>().GetTrayState((_hive, comp), source), Is.EqualTo(ApiaryTrayState.Ripe));
+            var meat = server.System<MeatBeehiveSystem>().MeatOf(_hive);
+            var reach = meat.VentHuntReach;
+            meat.VentHuntReach = 3f;
+            Assert.That(server.System<MeatBeehiveSystem>().FindHuntRoute((_hive, comp), origin, _human), Is.Null,
+                "a connected exit beyond the hunting range is unavailable");
+            Assert.That(server.System<BeeScoutSystem>().GetTrayState((_hive, comp), source), Is.EqualTo(ApiaryTrayState.Blind));
+            meat.VentHuntReach = reach;
             server.EntMan.GetComponent<WeldableComponent>(_exit).IsWelded = true;
             Assert.That(server.System<BeeScoutSystem>().GetTrayState((_hive, comp), source), Is.EqualTo(ApiaryTrayState.Blind));
         });

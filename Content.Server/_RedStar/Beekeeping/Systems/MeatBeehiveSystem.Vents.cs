@@ -52,7 +52,9 @@ public sealed partial class MeatBeehiveSystem
             {
                 var exitMap = _transform.GetMapCoordinates(exit);
                 var distance = (exitMap.Position - targetMap.Position).Length();
-                if (distance > range || distance >= bestDistance || !_scout.ClearFlightPath(exitMap, targetMap, exit, target))
+                if (exitMap.MapId != hiveMap.MapId ||
+                    (exitMap.Position - hiveMap.Position).Length() > meatComp.VentHuntReach ||
+                    distance > range || distance >= bestDistance || !_scout.ClearFlightPath(exitMap, targetMap, exit, target))
                     continue;
 
                 best = exit;
