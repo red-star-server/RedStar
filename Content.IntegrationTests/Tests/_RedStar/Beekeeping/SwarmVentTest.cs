@@ -99,6 +99,50 @@ public sealed class SwarmVentTest : GameTest
     }
 
     /// <summary>
+    /// A meat swarm comes out of the quietest vent of the network: not the one with a creature beside it.
+    /// </summary>
+    [Test]
+    public async Task QuietExitAvoidsCreatures()
+    {
+        var server = Server;
+        var map = await Pair.CreateTestMap();
+        var hiveSystem = server.System<BeehiveSystem>();
+        EntityUid entry = default;
+        EntityUid crowded = default;
+        EntityUid quiet = default;
+
+        await server.WaitPost(() =>
+        {
+            var grid = map.Grid.Owner;
+            var mapSys = server.System<SharedMapSystem>();
+            var plating = new Tile(server.ResolveDependency<ITileDefinitionManager>()["Plating"].TileId);
+            for (var x = 0; x <= 9; x++)
+            {
+                for (var y = 0; y <= 2; y++)
+                    mapSys.SetTile(grid, map.Grid.Comp, new Vector2i(x, y), plating);
+            }
+
+            EntityCoordinates At(float x, float y) => new(grid, new Vector2(x + 0.5f, y + 0.5f));
+
+            entry = server.EntMan.SpawnEntity("GasVentPump", At(1, 1));
+            crowded = server.EntMan.SpawnEntity("GasVentPump", At(4, 1));
+            quiet = server.EntMan.SpawnEntity("GasVentPump", At(8, 1));
+            for (var x = 1; x <= 8; x++)
+                server.EntMan.SpawnEntity("GasPipeFourway", At(x, 0));
+
+            // Someone standing next to the middle vent.
+            server.EntMan.SpawnEntity("MobHuman", At(4, 2));
+        });
+        await RunTicksSync(20);
+
+        await server.WaitAssertion(() =>
+        {
+            for (var i = 0; i < 10; i++)
+                Assert.That(server.System<BeeSwarmSystem>().QuietestExit(entry, 2f), Is.EqualTo(quiet));
+        });
+    }
+
+    /// <summary>
     /// A swarm only comes out of a vent that has a place to nest near it: a locker or crate in clear sight.
     /// </summary>
     [Test]

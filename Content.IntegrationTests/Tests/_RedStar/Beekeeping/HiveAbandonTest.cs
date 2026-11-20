@@ -255,6 +255,8 @@ public sealed class HiveAbandonTest : GameTest
             calm = server.EntMan.SpawnAttachedTo("BeePollinator", _map.GridCoords);
             server.EntMan.GetComponent<BeeItemComponent>(aggressive).Traits.Add("Aggressive");
             Assert.That(server.EntMan.HasComponent<BeeErrandComponent>(aggressive), Is.False);
+            var wild = server.EntMan.SpawnAttachedTo("WildBeehive", _map.GridCoords);
+            server.EntMan.GetComponent<BeehiveComponent>(wild).Bees = 5;
             server.ResolveDependency<IConsoleHost>().ExecuteCommand("beekeeping_clear all");
         });
 
@@ -266,6 +268,8 @@ public sealed class HiveAbandonTest : GameTest
             Assert.That(server.EntMan.Deleted(_hive), Is.False);
             Assert.That(server.EntMan.Deleted(aggressive), Is.True);
             Assert.That(server.EntMan.Deleted(calm), Is.False);
+            Assert.That(server.EntMan.EntityQuery<Content.Server._RedStar.Beekeeping.Components.BeehiveAngryBeeComponent>(), Is.Empty,
+                "clearing a populated wild hive must not release new defenders");
         });
     }
 }

@@ -53,6 +53,12 @@ public sealed partial class SwarmModifierPrototype : IPrototype
     public int WildCombs;
 
     /// <summary>
+    /// Seconds the wild hive's angry bees live; zero keeps their own lifetime.
+    /// </summary>
+    [DataField]
+    public float AngryLifetime;
+
+    /// <summary>
     /// When the wild hive is broken, the combs get a random reagent from this list.
     /// </summary>
     [DataField]
