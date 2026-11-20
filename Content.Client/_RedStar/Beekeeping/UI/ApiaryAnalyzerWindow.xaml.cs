@@ -222,10 +222,18 @@ public sealed partial class ApiaryAnalyzerWindow : FancyWindow
                 SeparationOverride = 8,
                 ToolTip = frame.Prototype is { } proto && _proto.TryIndex(proto, out var entity) ? entity.Name : null
             };
-            var picture = new SpriteView { SetSize = new Vector2(32, 32), OverrideDirection = Direction.South };
             if (_entityManager.TryGetEntity(frame.Frame, out var frameUid) && _entityManager.EntityExists(frameUid))
+            {
+                var picture = new SpriteView { SetSize = new Vector2(32, 32), OverrideDirection = Direction.South };
                 picture.SetEntity(frameUid.Value);
-            row.AddChild(picture);
+                row.AddChild(picture);
+            }
+            else
+            {
+                var picture = new EntityPrototypeView { SetSize = new Vector2(32, 32), OverrideDirection = Direction.South };
+                picture.SetPrototype(frame.Prototype);
+                row.AddChild(picture);
+            }
             row.AddChild(new Label
             {
                 Text = Loc.GetString("apiary-analyzer-frame-combs", ("combs", frame.Combs), ("max", frame.MaxCombs)),
