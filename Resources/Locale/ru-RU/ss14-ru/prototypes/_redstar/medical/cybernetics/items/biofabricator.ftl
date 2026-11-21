@@ -1,5 +1,5 @@
-ent-MedicalBiofabricator = medical biofabricator
-    .desc = Produces organs and other organic matter that can be surgically grafted onto patients with biomass.
-ent-MedicalBiofabMachineBoard = medical biofab machine board
-    .desc = A machine printed circuit board for a medical biofab.
+ent-MedicalBiofabricator = медицинский биофабрикатор
+    .desc = Производит органы и другие органические материалы, которые можно хирургически пересадить пациентам с биомассой.
+ent-MedicalBiofabMachineBoard = плата медицинского биофабрикатора
+    .desc = Печатная плата для медицинского биофабрикатора.
     .suffix = { ent-BaseMachineCircuitboard.suffix }

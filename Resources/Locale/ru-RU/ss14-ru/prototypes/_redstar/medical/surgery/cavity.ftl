@@ -1,2 +1,2 @@
-ent-ActionBodyPartBurst = burst free!
-    .desc = Dig your way out of the flesh you are trapped in!
+ent-ActionBodyPartBurst = выбраться!
+    .desc = Прорыться наружу из плоти, в которой вы застряли!

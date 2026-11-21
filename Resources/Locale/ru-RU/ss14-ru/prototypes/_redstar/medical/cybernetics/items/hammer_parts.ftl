@@ -1,10 +1,10 @@
-ent-BaseWoodenHandle = wooden handle
-    .desc = A normal wooden handle that can be used in crafting.
-ent-WoodenHandleHammer = hammer handle
+ent-BaseWoodenHandle = деревянная ручка
+    .desc = Обычная деревянная ручка, которая может использоваться в крафте.
+ent-WoodenHandleHammer = ручка молотка
     .desc = { ent-BaseWoodenHandle.desc }
-ent-MaterialScrew = steel screw
-    .desc = This screw is really rusty, you wouldn't want to get cut by it...
-    .suffix = Full
+ent-MaterialScrew = стальной винт
+    .desc = Этот винт очень ржавый, не хочется им порезаться...
+    .suffix = Полный
 ent-MaterialScrewSingle = { ent-MaterialScrew }
     .desc = { ent-MaterialScrew.desc }
-    .suffix = Single
+    .suffix = Один

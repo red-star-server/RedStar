@@ -1,2 +1,2 @@
-ent-MicroplasticsStatusEffect = microplastics buildup
+ent-MicroplasticsStatusEffect = накопление микропластика
     .desc = { ent-StatusEffectSlowdown.desc }
