@@ -141,7 +141,6 @@ public sealed partial class HealingSystem
         var healedBleed = false;
         var healedTotal = new DamageSpecifier();
         FixedPoint2 modifiedBleedStopAbility = 0;
-        var healedBleedLevel = false;
         if (healing.BloodlossModifier != 0)
         {
             var bleedBefore = 0.0;
@@ -164,9 +163,8 @@ public sealed partial class HealingSystem
         }
 
         if (healing.ModifyBloodLevel != 0)
-            healedBleedLevel = _bloodstreamSystem.TryModifyBloodLevel(ent, -healing.ModifyBloodLevel);
+            _bloodstreamSystem.TryModifyBloodLevel(ent, -healing.ModifyBloodLevel);
 
-        var leftoverHealAndTrauma = false;
         var healingLeft = healing.Damage * _damageable.UniversalTopicalsHealModifier;
         if (TryComp<BodyComponent>(ent, out _))
         {
@@ -176,32 +174,18 @@ public sealed partial class HealingSystem
             {
                 if (healing.BloodlossModifier == 0 && healing.ModifyBloodLevel >= 0 && ev.Bleeding)
                 {
-                    leftoverHealAndTrauma = true;
+                    // Healing blocked by bleeding, item has no bleed heal capability
                 }
                 else
                 {
                     var damageChanged = _damageable.ChangeDamage(targetedWoundable, healingLeft, true, origin: args.User, ignoreBlockers: healedBleed || healing.BloodlossModifier == 0);
                     healedTotal -= damageChanged;
-                    healingLeft -= damageChanged;
                 }
-            }
-            else
-            {
-                leftoverHealAndTrauma = !healedBleedLevel;
             }
         }
         else
         {
-            var healed = _damageable.ChangeDamage(ent, healing.Damage * _damageable.UniversalTopicalsHealModifier, true, origin: args.User);
-            healingLeft -= healed;
-        }
-
-        var isAnyTypeFullyConsumed = healingLeft.DamageDict.Any(d => d.Value == 0);
-
-        if (!healedBleed && !healedBleedLevel && healedTotal.GetTotal() == 0
-            && !isAnyTypeFullyConsumed && leftoverHealAndTrauma)
-        {
-            _popupSystem.PopupEntity(Loc.GetString("medical-item-requires-surgery-rebell", ("target", ent)), ent, args.User, PopupType.MediumCaution);
+            _damageable.ChangeDamage(ent, healing.Damage * _damageable.UniversalTopicalsHealModifier, true, origin: args.User);
         }
 
         if (TryComp<StackComponent>(args.Used.Value, out var stackComp))
