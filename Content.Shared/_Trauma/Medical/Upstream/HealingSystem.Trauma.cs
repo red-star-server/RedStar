@@ -11,7 +11,6 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Robust.Shared.Audio;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Medical.Healing;
 
@@ -19,22 +18,6 @@ public sealed partial class HealingSystem
 {
     [Dependency] private BodySystem _body = default!;
     [Dependency] private BodyPartSystem _healingParts = default!;
-
-    private ProtoId<OrganCategoryPrototype>[] _partHealingOrder =
-    [
-        "Head",
-        "Torso",
-        "ArmLeft",
-        "HandLeft",
-        "ArmRight",
-        "HandRight",
-        "LegLeft",
-        "FootLeft",
-        "LegRight",
-        "FootRight",
-        "Tail",
-        "Wings"
-    ];
 
     private bool AnyHealable(Entity<DamageableComponent?> part, DamageSpecifier healing)
     {
@@ -187,34 +170,24 @@ public sealed partial class HealingSystem
         var healingLeft = healing.Damage * _damageable.UniversalTopicalsHealModifier;
         if (TryComp<BodyComponent>(ent, out _))
         {
-            // Create parts to go over queue: targetted part -> head -> torso -> everything else
-            // Iterate over the parts in the predefined order until we run out of parts or run out of healing
-            var woundablesQueue = new Queue<EntityUid>();
-            woundablesQueue.Enqueue(targetedWoundable);
-            foreach (var category in _partHealingOrder)
+            var ev = new PartHealAttemptEvent();
+            RaiseLocalEvent(targetedWoundable, ref ev);
+            if (!ev.Cancelled)
             {
-                if (_body.GetOrgan(ent, category) is {} organ)
-                    woundablesQueue.Enqueue(organ);
+                if (healing.BloodlossModifier == 0 && healing.ModifyBloodLevel >= 0 && ev.Bleeding)
+                {
+                    leftoverHealAndTrauma = true;
+                }
+                else
+                {
+                    var damageChanged = _damageable.ChangeDamage(targetedWoundable, healingLeft, true, origin: args.User, ignoreBlockers: healedBleed || healing.BloodlossModifier == 0);
+                    healedTotal -= damageChanged;
+                    healingLeft -= damageChanged;
+                }
             }
-            while (woundablesQueue.Count > 0 && healingLeft.GetTotal() < 0.0)
+            else
             {
-                targetedWoundable = woundablesQueue.Dequeue();
-                var ev = new PartHealAttemptEvent();
-                RaiseLocalEvent(targetedWoundable, ref ev);
-                if (ev.Cancelled)
-                {
-                    leftoverHealAndTrauma |= !healedBleedLevel;
-                    continue;
-                }
-
-                if (healing.BloodlossModifier == 0 && healing.ModifyBloodLevel >= 0 && ev.Bleeding)  // If the healing item has no bleeding heals, and its bleeding, we raise the alert. Goobstation edit
-                {
-                    continue;
-                }
-
-                var damageChanged = _damageable.ChangeDamage(targetedWoundable, healingLeft, true, origin: args.User, ignoreBlockers: healedBleed || healing.BloodlossModifier == 0); // GOOBEDIT
-                healedTotal -= damageChanged;
-                healingLeft -= damageChanged;
+                leftoverHealAndTrauma = !healedBleedLevel;
             }
         }
         else
