@@ -110,22 +110,18 @@ public partial class WoundSystem
                 continue;
 
             var amount = FixedPoint2.Min(bleedStopAbility, previous);
-            if (bleeds.Scaling <= FixedPoint2.Zero)
-                continue;
-
-            bleeds.BleedingAmountRaw = FixedPoint2.Max(bleeds.BleedingAmountRaw - amount / bleeds.Scaling, 0);
+            bleeds.BleedingAmount = FixedPoint2.Max(previous - amount, 0);
             var healed = previous - bleeds.BleedingAmount;
             modifiedBleed += healed;
             bleedStopAbility -= healed;
 
-            if (bleeds.BleedingAmountRaw == 0)
+            if (bleeds.BleedingAmount == 0)
             {
                 bleeds.IsBleeding = false;
-                bleeds.Scaling = 0;
             }
 
-            DirtyFields(wound, bleeds, null, nameof(BleedInflicterComponent.BleedingAmountRaw),
-                nameof(BleedInflicterComponent.IsBleeding), nameof(BleedInflicterComponent.Scaling));
+            DirtyFields(wound, bleeds, null, nameof(BleedInflicterComponent.BleedingAmount),
+                nameof(BleedInflicterComponent.IsBleeding));
             if (bleedStopAbility <= 0)
                 break;
         }

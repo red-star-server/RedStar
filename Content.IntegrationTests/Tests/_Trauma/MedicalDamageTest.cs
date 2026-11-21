@@ -28,7 +28,6 @@ public sealed class MedicalDamageTest : GameTest
     [SidedDependency(Side.Server)] private BodySystem _body = default!;
     [SidedDependency(Side.Server)] private DamageableSystem _damage = default!;
     [SidedDependency(Side.Server)] private WoundSystem _wounds = default!;
-
     [SidedDependency(Side.Server)] private TraumaSystem _traumas = default!;
     [SidedDependency(Side.Server)] private IConfigurationManager _cfg = default!;
     [SidedDependency(Side.Server)] private BlindableSystem _blindable = default!;
@@ -341,24 +340,6 @@ public sealed class MedicalDamageTest : GameTest
         Assert.That(vital.ArmorPenetration, Is.EqualTo(damage.ArmorPenetration));
         Assert.That(vital.Flags, Is.EqualTo(damage.Flags));
         Assert.That(vital.WoundSeverityMultipliers, Is.EqualTo(damage.WoundSeverityMultipliers));
-    }
-
-    [TestCase(1f)]
-    [TestCase(1.4f)]
-    [RunOnSide(Side.Server)]
-    public void PartialBleedingTreatmentReducesScaledBleeding(float scaling)
-    {
-        var body = SSpawn("MobHuman");
-        var arm = _body.GetOrgan(body, "ArmLeft").Value;
-        EntProtoId slash = "Slash";
-        Assert.That(_wounds.TryInduceWound(arm, slash, 10, out var wound), Is.True);
-        var bleeds = SComp<BleedInflicterComponent>(wound.Value.Owner);
-        bleeds.Scaling = scaling;
-        var previous = bleeds.BleedingAmount;
-        Assert.That(_wounds.TryHealBleedingWounds(arm, 0.5, out var healed), Is.True);
-        Assert.That(bleeds.BleedingAmount, Is.LessThan(previous));
-        Assert.That(healed, Is.GreaterThan(FixedPoint2.Zero).And.LessThanOrEqualTo((FixedPoint2) 0.5));
-        Assert.That(previous - bleeds.BleedingAmount, Is.EqualTo(healed));
     }
 
     [Test]

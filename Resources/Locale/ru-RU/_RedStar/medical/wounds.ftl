@@ -42,17 +42,17 @@ inspect-wound-Cold-severe = обморожение
 inspect-wound-Shock-minor = ожоги от электрической дуги
 inspect-wound-Shock-moderate = следы удара током
 inspect-wound-Shock-severe = обширные электрические ожоги
-inspect-wound-Caustic-minor = сильные химические ожоги
+inspect-wound-Caustic-minor = лёгкие химические ожоги
 inspect-wound-Caustic-moderate = разъеденные ткани
 inspect-wound-Caustic-severe = некроз
 
-inspect-wound-Holy-minor = свечение
-inspect-wound-Holy-moderate = расплавленные ткани
-inspect-wound-Holy-severe = обширные кислотные ожоги
+inspect-wound-Holy-minor = светящиеся пятна
+inspect-wound-Holy-moderate = обожжённые ткани
+inspect-wound-Holy-severe = глубокие священные ожоги
 
-inspect-wound-weeping-avulsion-minor = оторванные ткани
-inspect-wound-weeping-avulsion-moderate = обширный отрыв тканей
-inspect-wound-weeping-avulsion-severe = обширный отрыв со значительной потерей тканей
+inspect-wound-weeping-avulsion-minor = ссадины с отрывом кожи
+inspect-wound-weeping-avulsion-moderate = глубокие рваные раны
+inspect-wound-weeping-avulsion-severe = обширные рваные раны с потерей тканей
 
 armor-coverage-value = - Эта броня защищает: [color=yellow]{ $type }[/color].
 armor-coverage-type-arm = руки

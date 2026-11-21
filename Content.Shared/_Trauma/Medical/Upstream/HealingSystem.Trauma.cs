@@ -11,7 +11,6 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Robust.Shared.Audio;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Medical.Healing;
 
@@ -19,22 +18,6 @@ public sealed partial class HealingSystem
 {
     [Dependency] private BodySystem _body = default!;
     [Dependency] private BodyPartSystem _healingParts = default!;
-
-    private ProtoId<OrganCategoryPrototype>[] _partHealingOrder =
-    [
-        "Head",
-        "Torso",
-        "ArmLeft",
-        "HandLeft",
-        "ArmRight",
-        "HandRight",
-        "LegLeft",
-        "FootLeft",
-        "LegRight",
-        "FootRight",
-        "Tail",
-        "Wings"
-    ];
 
     private bool AnyHealable(Entity<DamageableComponent?> part, DamageSpecifier healing)
     {
@@ -152,13 +135,12 @@ public sealed partial class HealingSystem
             return;
         }
 
-        if (!TryComp<DamageableComponent>(targetedWoundable, out var damageableComp))
+        if (!TryComp<DamageableComponent>(targetedWoundable, out _))
             return;
 
         var healedBleed = false;
         var healedTotal = new DamageSpecifier();
         FixedPoint2 modifiedBleedStopAbility = 0;
-        var healedBleedLevel = false;
         if (healing.BloodlossModifier != 0)
         {
             var bleedBefore = 0.0;
@@ -181,60 +163,29 @@ public sealed partial class HealingSystem
         }
 
         if (healing.ModifyBloodLevel != 0)
-            healedBleedLevel = _bloodstreamSystem.TryModifyBloodLevel(ent, -healing.ModifyBloodLevel);
+            _bloodstreamSystem.TryModifyBloodLevel(ent, -healing.ModifyBloodLevel);
 
-        var leftoverHealAndTrauma = false;
-        var leftoverHealAndBleed = false;
         var healingLeft = healing.Damage * _damageable.UniversalTopicalsHealModifier;
-        if (TryComp<BodyComponent>(ent, out var bodyComp))
+        if (TryComp<BodyComponent>(ent, out _))
         {
-            // Create parts to go over queue: targetted part -> head -> torso -> everything else
-            // Iterate over the parts in the predefined order until we run out of parts or run out of healing
-            var woundablesQueue = new Queue<EntityUid>();
-            woundablesQueue.Enqueue(targetedWoundable);
-            foreach (var category in _partHealingOrder)
+            var ev = new PartHealAttemptEvent();
+            RaiseLocalEvent(targetedWoundable, ref ev);
+            if (!ev.Cancelled)
             {
-                if (_body.GetOrgan(ent, category) is {} organ)
-                    woundablesQueue.Enqueue(organ);
-            }
-            while (woundablesQueue.Count > 0 && healingLeft.GetTotal() < 0.0)
-            {
-                targetedWoundable = woundablesQueue.Dequeue();
-                var ev = new PartHealAttemptEvent();
-                RaiseLocalEvent(targetedWoundable, ref ev);
-                if (ev.Cancelled)
+                if (healing.BloodlossModifier == 0 && healing.ModifyBloodLevel >= 0 && ev.Bleeding)
                 {
-                    leftoverHealAndTrauma |= !healedBleedLevel;
-                    continue;
+                    // Healing blocked by bleeding, item has no bleed heal capability
                 }
-
-                if (healing.BloodlossModifier == 0 && healing.ModifyBloodLevel >= 0 && ev.Bleeding)  // If the healing item has no bleeding heals, and its bleeding, we raise the alert. Goobstation edit
+                else
                 {
-                    leftoverHealAndBleed = true;
-                    continue;
+                    var damageChanged = _damageable.ChangeDamage(targetedWoundable, healingLeft, true, origin: args.User, ignoreBlockers: healedBleed || healing.BloodlossModifier == 0);
+                    healedTotal -= damageChanged;
                 }
-
-                var damageChanged = _damageable.ChangeDamage(targetedWoundable, healingLeft, true, origin: args.User, ignoreBlockers: healedBleed || healing.BloodlossModifier == 0); // GOOBEDIT
-                healedTotal -= damageChanged;
-                healingLeft -= damageChanged;
             }
         }
         else
         {
-            var healed = _damageable.ChangeDamage(ent, healing.Damage * _damageable.UniversalTopicalsHealModifier, true, origin: args.User);
-            healingLeft -= healed;
-        }
-
-        var isAnyTypeFullyConsumed = healingLeft.DamageDict.Any(d => d.Value == 0);
-
-        if (!healedBleed && !healedBleedLevel && healedTotal.GetTotal() == 0
-            && !isAnyTypeFullyConsumed && (leftoverHealAndTrauma || leftoverHealAndBleed))
-        {
-            if (leftoverHealAndTrauma)
-                _popupSystem.PopupEntity(Loc.GetString("medical-item-requires-surgery-rebell", ("target", ent)), ent, args.User, PopupType.MediumCaution);
-            else if (leftoverHealAndBleed) // the else is because would like to not pop both the popups at once, priority goes to the trauma popup
-                _popupSystem.PopupEntity(Loc.GetString("medical-item-cant-use-rebell", ("target", ent)), ent, args.User);
-            return;
+            _damageable.ChangeDamage(ent, healing.Damage * _damageable.UniversalTopicalsHealModifier, true, origin: args.User);
         }
 
         if (TryComp<StackComponent>(args.Used.Value, out var stackComp))
