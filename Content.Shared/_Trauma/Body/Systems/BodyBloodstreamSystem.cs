@@ -1,5 +1,4 @@
 using Content.Shared._Trauma.Common.Body;
-using Content.Shared._Trauma.Common.CCVar;
 using Content.Shared._Trauma.Traumas;
 using Content.Shared._Trauma.Wounds;
 using Content.Shared.Alert;
@@ -9,9 +8,6 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Configuration;
-using Robust.Shared.Network;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Shared._Trauma.Body;
@@ -20,9 +16,6 @@ public sealed partial class BodyBloodstreamSystem : EntitySystem
 {
     [Dependency] private AlertsSystem _alerts = default!;
     [Dependency] private BodySystem _body = default!;
-    [Dependency] private IConfigurationManager _cfg = default!;
-    [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private INetManager _net = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private WoundSystem _wound = default!;
@@ -30,58 +23,6 @@ public sealed partial class BodyBloodstreamSystem : EntitySystem
     [Dependency] private EntityQuery<WoundableComponent> _woundableQuery;
 
     private float _bleedingSeverity = 1f;
-    private float _bleedScaleTime = 1f;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        Subs.CVar(_cfg, SurgeryCVars.BleedingSeverityTrade, x => _bleedingSeverity = x, true);
-        Subs.CVar(_cfg, SurgeryCVars.BleedsScalingTime, x => _bleedScaleTime = x, true);
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var now = _timing.CurTime;
-        var bleedsQuery = EntityQueryEnumerator<BleedInflicterComponent>();
-        while (bleedsQuery.MoveNext(out var ent, out var bleeds))
-        {
-            var bleeding = bleeds.BleedingAmount > 0 && CanWoundBleed((ent, bleeds));
-            if (bleeding != bleeds.IsBleeding)
-            {
-                bleeds.IsBleeding = bleeding;
-                DirtyField(ent, bleeds, nameof(BleedInflicterComponent.IsBleeding));
-            }
-
-            if (!_net.IsClient && bleeds.IsBleeding && bleeds.Scaling < bleeds.ScalingLimit)
-                UpdateScaling((ent, bleeds), now);
-        }
-    }
-
-    private void UpdateScaling(Entity<BleedInflicterComponent> ent, TimeSpan now)
-    {
-        var duration = ent.Comp.ScalingFinishesAt - ent.Comp.ScalingStartsAt;
-        if (duration <= TimeSpan.Zero)
-            return;
-
-        var progress = (float) Math.Clamp((now - ent.Comp.ScalingStartsAt) / duration, 0.0, 1.0);
-        var target = FixedPoint2.New(1f + (ent.Comp.ScalingLimit.Float() - 1f) * progress);
-        if (target <= ent.Comp.Scaling)
-            return;
-
-        ent.Comp.Scaling = target;
-        DirtyField(ent, ent.Comp, nameof(BleedInflicterComponent.Scaling));
-
-        if (!TryComp<WoundComponent>(ent, out var wound) ||
-            _body.GetBody(wound.HoldingWoundable) is not { } body ||
-            !HasComp<BloodstreamComponent>(body))
-            return;
-
-        var update = new BloodstreamUpdateEvent();
-        RaiseLocalEvent(body, ref update);
-    }
 
     /// <summary>
     /// Add a bleed-ability modifier on woundable
@@ -220,11 +161,7 @@ public sealed partial class BodyBloodstreamSystem : EntitySystem
             args.Component.WoundSeverityPoint < component.SeverityThreshold)
             return;
 
-        component.BleedingAmountRaw = args.Component.WoundSeverityPoint * _bleedingSeverity;
-
-        var formula = (float) (args.Component.WoundSeverityPoint / _bleedScaleTime * component.ScalingSpeed);
-        component.ScalingFinishesAt = _timing.CurTime + TimeSpan.FromSeconds(formula);
-        component.ScalingStartsAt = _timing.CurTime;
+        component.BleedingAmount = args.Component.WoundSeverityPoint * _bleedingSeverity;
         component.IsBleeding = true;
 
         Dirty(uid, component);
@@ -256,20 +193,8 @@ public sealed partial class BodyBloodstreamSystem : EntitySystem
             || args.NewSeverity < args.OldSeverity)
             return;
 
-        component.BleedingAmountRaw = args.NewSeverity * _bleedingSeverity;
-
-        var formula = (float) (args.NewSeverity / _bleedScaleTime * component.ScalingSpeed);
-        component.ScalingFinishesAt = _timing.CurTime + TimeSpan.FromSeconds(formula);
-        component.ScalingStartsAt = _timing.CurTime;
-
-        if (!component.IsBleeding)
-        {
-            component.ScalingLimit += 0.6;
-            component.IsBleeding = true;
-        }
-
-        if (component.BleedingAmountRaw > 0)
-            component.Scaling = 1;
+        component.BleedingAmount = args.NewSeverity * _bleedingSeverity;
+        component.IsBleeding = true;
 
         Dirty(uid, component);
     }

@@ -22,9 +22,7 @@ public sealed partial class BleedsTreatmentEffect : SurgeryStepEffect
             if (!entityManager.TryGetComponent<BleedInflicterComponent>(wound, out var bleeds) || !bleeds.IsBleeding)
                 continue;
 
-            bleeds.ScalingFinishesAt = TimeSpan.Zero;
-            bleeds.BleedingAmountRaw = 0;
-            bleeds.Scaling = 0;
+            bleeds.BleedingAmount = FixedPoint2.Zero;
             bleeds.IsBleeding = false;
             entityManager.Dirty(wound, bleeds);
             changed = true;

@@ -435,14 +435,10 @@ public sealed partial class WoundSystem
                 if (!_bleedQuery.TryComp(wound, out var bleeds))
                     continue;
 
-                bleeds.BleedingAmountRaw += 20f;
-                bleeds.Scaling = 1f;
-                bleeds.ScalingLimit = 1f;
+                bleeds.BleedingAmount += 20f;
                 bleeds.IsBleeding = true;
                 DirtyFields(wound, bleeds, null,
-                    nameof(BleedInflicterComponent.BleedingAmountRaw),
-                    nameof(BleedInflicterComponent.Scaling),
-                    nameof(BleedInflicterComponent.ScalingLimit),
+                    nameof(BleedInflicterComponent.BleedingAmount),
                     nameof(BleedInflicterComponent.IsBleeding));
             }
         }
