@@ -4,7 +4,6 @@ using Robust.Shared.GameStates;
 namespace Content.Shared._Trauma.Traumas;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
-[AutoGenerateComponentPause]
 public sealed partial class BleedInflicterComponent : Component
 {
     /// <summary>

@@ -152,7 +152,7 @@ public sealed partial class HealingSystem
             return;
         }
 
-        if (!TryComp<DamageableComponent>(targetedWoundable, out var damageableComp))
+        if (!TryComp<DamageableComponent>(targetedWoundable, out _))
             return;
 
         var healedBleed = false;
@@ -184,9 +184,8 @@ public sealed partial class HealingSystem
             healedBleedLevel = _bloodstreamSystem.TryModifyBloodLevel(ent, -healing.ModifyBloodLevel);
 
         var leftoverHealAndTrauma = false;
-        var leftoverHealAndBleed = false;
         var healingLeft = healing.Damage * _damageable.UniversalTopicalsHealModifier;
-        if (TryComp<BodyComponent>(ent, out var bodyComp))
+        if (TryComp<BodyComponent>(ent, out _))
         {
             // Create parts to go over queue: targetted part -> head -> torso -> everything else
             // Iterate over the parts in the predefined order until we run out of parts or run out of healing
@@ -210,7 +209,6 @@ public sealed partial class HealingSystem
 
                 if (healing.BloodlossModifier == 0 && healing.ModifyBloodLevel >= 0 && ev.Bleeding)  // If the healing item has no bleeding heals, and its bleeding, we raise the alert. Goobstation edit
                 {
-                    leftoverHealAndBleed = true;
                     continue;
                 }
 
@@ -228,13 +226,9 @@ public sealed partial class HealingSystem
         var isAnyTypeFullyConsumed = healingLeft.DamageDict.Any(d => d.Value == 0);
 
         if (!healedBleed && !healedBleedLevel && healedTotal.GetTotal() == 0
-            && !isAnyTypeFullyConsumed && (leftoverHealAndTrauma || leftoverHealAndBleed))
+            && !isAnyTypeFullyConsumed && leftoverHealAndTrauma)
         {
-            if (leftoverHealAndTrauma)
-                _popupSystem.PopupEntity(Loc.GetString("medical-item-requires-surgery-rebell", ("target", ent)), ent, args.User, PopupType.MediumCaution);
-            else if (leftoverHealAndBleed) // the else is because would like to not pop both the popups at once, priority goes to the trauma popup
-                _popupSystem.PopupEntity(Loc.GetString("medical-item-cant-use-rebell", ("target", ent)), ent, args.User);
-            return;
+            _popupSystem.PopupEntity(Loc.GetString("medical-item-requires-surgery-rebell", ("target", ent)), ent, args.User, PopupType.MediumCaution);
         }
 
         if (TryComp<StackComponent>(args.Used.Value, out var stackComp))
