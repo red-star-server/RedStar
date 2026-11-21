@@ -12,15 +12,15 @@ cpr-target-rotting = {CAPITALIZE($entity)} уже не спасти...
 cpr-verb = Провести сердечно-лёгочную реанимацию
 
 condition-body-bleeding = • {$entity} истекает кровью.
-condition-body-low-blood = • У {$entity} [color=red]критически низкий[/color] уровень крови.
+condition-body-low-blood = • Уровень крови у {$entity} [color=red]критически низкий[/color].
 condition-body-part-bleeding = • {$part} существа {$entity} кровоточит.
-condition-body-trauma-BoneDamage-Broken = • Кость части тела «{$woundable}» сломана!
-condition-body-trauma-BoneDamage-Cracked = • Кость части тела «{$woundable}» выглядит почти сломанной...
-condition-body-trauma-BoneDamage-Damaged = • Обнаружено повреждение кости части тела «{$woundable}».
-condition-body-trauma-BoneDamage-Normal = • Кость части тела «{$woundable}» имеет незначительные повреждения.
-condition-body-trauma-Dismemberment = • Часть тела «{$source}» отсечена!
-condition-body-trauma-OrganDamage = • Органы части тела «{$woundable}» повреждены.
-condition-body-trauma-VeinsDamage = • Сосуды части тела «{$woundable}» повреждены.
+condition-body-trauma-BoneDamage-Broken = • Кость «{$woundable}» сломана!
+condition-body-trauma-BoneDamage-Cracked = • Кость «{$woundable}» почти сломана...
+condition-body-trauma-BoneDamage-Damaged = • Обнаружено повреждение кости «{$woundable}».
+condition-body-trauma-BoneDamage-Normal = • Кость «{$woundable}» имеет незначительные повреждения.
+condition-body-trauma-Dismemberment = • «{$source}» отсечена!
+condition-body-trauma-OrganDamage = • Органы «{$woundable}» повреждены.
+condition-body-trauma-VeinsDamage = • Сосуды «{$woundable}» повреждены.
 condition-body-unrevivable = • Организм {$entity} обладает слишком слабой конституцией и не выдержит разряда дефибриллятора.
 condition-none = • Нарушений не обнаружено.
 condition-organ-damage-Damaged = • Орган «{$organ}» повреждён.
@@ -33,4 +33,4 @@ health-analyzer-trauma-organs = Органы
 health-analyzer-trauma-chemicals = Химические вещества
 health-analyzer-trauma-conditions = Состояние
 health-analyzer-window-return-button-text = < Назад
-health-analyzer-window-entity-damage-vital-text = Общий критический урон:
+health-analyzer-window-entity-damage-vital-text = Урон жизненно важным органам:

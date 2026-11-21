@@ -1,5 +1,4 @@
 using Content.Shared._Trauma.Common.Body;
-using Content.Shared._Trauma.Traumas;
 using Content.Shared._Trauma.Wounds;
 using Content.Shared.Body;
 using Content.Shared.Body.Components;
@@ -16,22 +15,13 @@ public sealed partial class BleedsTreatmentEffect : SurgeryStepEffect
 
     public override bool Apply(EntityUid target, EntityUid? surgeon, EntityUid? usedItem, ProtoId<OrganCategoryPrototype>? organ, IEntityManager entityManager)
     {
-        var changed = false;
-        foreach (var wound in entityManager.System<WoundSystem>().GetWoundableWounds(target))
-        {
-            if (!entityManager.TryGetComponent<BleedInflicterComponent>(wound, out var bleeds) || !bleeds.IsBleeding)
-                continue;
+        var body = GetPatient(target, entityManager);
+        var woundSystem = entityManager.System<WoundSystem>();
+        var healed = woundSystem.TryHealMostSevereBleedingWoundables(body, (float)Amount, out _);
 
-            bleeds.BleedingAmount = FixedPoint2.Zero;
-            bleeds.IsBleeding = false;
-            entityManager.Dirty(wound, bleeds);
-            changed = true;
-        }
-
-        if (!changed)
+        if (!healed)
             return true;
 
-        var body = GetPatient(target, entityManager);
         if (!entityManager.HasComponent<BloodstreamComponent>(body))
             return true;
 
