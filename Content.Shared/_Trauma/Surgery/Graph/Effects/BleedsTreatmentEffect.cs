@@ -16,7 +16,6 @@ public sealed partial class BleedsTreatmentEffect : SurgeryStepEffect
 
     public override bool Apply(EntityUid target, EntityUid? surgeon, EntityUid? usedItem, ProtoId<OrganCategoryPrototype>? organ, IEntityManager entityManager)
     {
-        var healAmount = Amount;
         var changed = false;
         foreach (var wound in entityManager.System<WoundSystem>().GetWoundableWounds(target))
         {
@@ -24,15 +23,6 @@ public sealed partial class BleedsTreatmentEffect : SurgeryStepEffect
                 continue;
 
             bleeds.ScalingFinishesAt = TimeSpan.Zero;
-            if (bleeds.Scaling > healAmount)
-            {
-                bleeds.Scaling -= healAmount;
-                entityManager.Dirty(wound, bleeds);
-                changed = true;
-                break;
-            }
-
-            healAmount -= bleeds.Scaling;
             bleeds.BleedingAmountRaw = 0;
             bleeds.Scaling = 0;
             bleeds.IsBleeding = false;
