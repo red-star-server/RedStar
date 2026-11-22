@@ -264,7 +264,7 @@ public partial class TraumaSystem
         if (!_woundableQuery.Resolve(part, ref part.Comp))
             return traumaList;
 
-        var multiplier = MathF.Log(MathHelper.E + 0.1f * severity.Float());
+        var multiplier = MathF.Log(MathF.E + 0.1f * severity.Float());
 
         var target = (part, part.Comp);
         if (wound.Comp.AllowedTraumas.Contains(TraumaType.BoneDamage) &&
