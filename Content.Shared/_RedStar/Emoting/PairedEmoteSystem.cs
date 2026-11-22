@@ -12,7 +12,7 @@ namespace Content.Shared._RedStar.Emoting;
 /// <summary>
 /// Publishes gestures locally on both sides. Offers are executed only by the server implementation.
 /// </summary>
-public abstract partial class SharedPairedEmoteSystem : EntitySystem
+public abstract partial class PairedEmoteSystem : EntitySystem
 {
     [Dependency] private ActionBlockerSystem _actionBlocker = default!;
 

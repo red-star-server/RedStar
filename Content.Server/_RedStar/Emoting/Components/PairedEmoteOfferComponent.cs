@@ -8,7 +8,7 @@ namespace Content.Server._RedStar.Emoting.Components;
 /// This component is server-authoritative and only exists while the offer is active.
 /// </summary>
 [RegisterComponent, AutoGenerateComponentPause]
-[Access(typeof(PairedEmoteSystem))]
+[Access(typeof(ServerPairedEmoteSystem))]
 public sealed partial class PairedEmoteOfferComponent : Component
 {
     public EntityUid Target;

@@ -14,7 +14,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared._Floof.OfferItem;
 
-public abstract partial class SharedOfferItemSystem : EntitySystem
+public abstract partial class OfferItemSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private INetManager _net = default!;
