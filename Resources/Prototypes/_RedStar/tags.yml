@@ -2,7 +2,10 @@
   id: Beeswax
 
 - type: Tag
-  id: Dish
+  id: PetriDish
+
+- type: Tag
+  id: GeneticVial
 
 - type: Tag
   id: Honeycomb

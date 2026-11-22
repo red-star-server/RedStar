@@ -13,6 +13,7 @@ tile-spawn-window-mirror-button-text = Отзеркалить плитку
 ## Console
 
 console-line-edit-placeholder = Введите сюда команду
+console-hide = Скрыть
 
 ## OutputPanel
 

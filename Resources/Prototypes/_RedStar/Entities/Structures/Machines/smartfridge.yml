@@ -1,10 +1,23 @@
 - type: entity
   parent: SmartFridge
   id: SmartFridgeGenetics
-  name: genetics smart fridge
-  description: A refrigerated storage unit for Petri dishes.
+  name: SmartFridge
+  description: A refrigerated storage unit for keeping items cold and fresh.
+  suffix: Genetics
   components:
   - type: SmartFridge
     whitelist:
       tags:
-      - Dish
+      - GeneticVial
+
+- type: entity
+  parent: SmartFridge
+  id: SmartFridgeXenobiology
+  name: SmartFridge
+  description: A refrigerated storage unit for keeping items cold and fresh.
+  suffix: Xenobiology
+  components:
+  - type: SmartFridge
+    whitelist:
+      tags:
+      - PetriDish

@@ -6,7 +6,7 @@
   components:
   - type: Tag
     tags:
-    - Dish
+    - PetriDish
   - type: Appearance
   - type: GenericVisualizer
     visuals:

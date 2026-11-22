@@ -22,3 +22,6 @@
   - type: Item
     size: Small
     sprite: _RedStar/Objects/Specific/Xenobiology/gene_vial.rsi
+  - type: Tag
+    tags:
+    - GeneticVial
