@@ -8,8 +8,8 @@
       ClothingUniformJumpskirtJanitor: 2
     emaggedInventory:
       ClothingUniformJumpskirtJanimaid: 2
-      ClothingUniformJumpskirtElegantMaid: 1 # RS14
       ClothingUniformJumpskirtJanimaidmini: 1
+      ClothingUniformJumpskirtElegantMaid: 1 # RS14
   - name: vending-machine-category-equipment
     icon: { entity: ClothingBeltJanitor }
     startingInventory:
