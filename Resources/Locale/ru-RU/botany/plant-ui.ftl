@@ -37,7 +37,7 @@ botany-ui-tray-empty = Лоток пуст.
 botany-ui-tray-plant = В лотке растёт [color=limegreen]{ $plant }[/color].
 
 botany-ui-section-conditions = Необходимые условия
-botany-ui-condition-range = { $minimum } - { $maximum } { $unit }
+botany-ui-condition-range = { $minimum } — { $maximum } { $unit }
 botany-ui-condition-minimum = >= { $minimum } { $unit }
 botany-ui-condition-maximum = <= { $maximum } { $unit }
 botany-ui-condition-current-missing = недоступно

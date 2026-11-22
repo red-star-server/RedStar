@@ -15,7 +15,7 @@ traitor-no-one-ready = Нет готовых игроков! Нельзя зап
 
 ## TraitorDeathMatch
 traitor-death-match-title = Бой насмерть предателей
-traitor-death-match-description = Все - предатели. Все хотят смерти друг друга.
+traitor-death-match-description = Все — предатели. Все хотят смерти друг друга.
 traitor-death-match-station-is-too-unsafe-announcement = На станции слишком опасно, чтобы продолжать. У вас есть одна минута.
 traitor-death-match-end-round-description-first-line = КПК были восстановлены...
 traitor-death-match-end-round-description-entry = КПК { $originalName }, с { $tcBalance } ТК
@@ -24,7 +24,7 @@ traitor-death-match-end-round-description-entry = КПК { $originalName }, с {
 
 # TraitorRole
 traitor-role-greeting =
-    Вы - агент организации { $corporation } на задании [color = darkred]Синдиката.[/color].
+    Вы — агент организации { $corporation } на задании [color = darkred]Синдиката.[/color].
     Ваши цели и кодовые слова перечислены в меню персонажа. Воспользуйтесь своим аплинком, чтобы приобрести всё необходимое для выполнения работы.
     Смерть СССП!
 traitor-role-codewords =

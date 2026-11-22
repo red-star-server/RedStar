@@ -20,7 +20,7 @@ cryo-pod-window-status-cooling = Охлаждение пациента...
 cryo-pod-window-checklist-pressure = Герметезировано
 cryo-pod-window-checklist-chemicals = Доступные реагенты
 cryo-pod-window-checklist-temperature = Криогенная температура
-cryo-pod-window-checklist-fail = { $item } - НЕТ
+cryo-pod-window-checklist-fail = { $item } — НЕТ
 
 cryo-pod-window-warning-header = ВНИМАНИЕ
 cryo-pod-window-low-pressure-warning = Опасно низкое давление. Для безопасной работы давление газа должно составлять приблизительно 100 кПа.

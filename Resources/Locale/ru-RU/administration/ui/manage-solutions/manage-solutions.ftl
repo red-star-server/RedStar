@@ -1,4 +1,4 @@
-admin-solutions-window-title = Редактирование раствора - { $targetName }
+admin-solutions-window-title = Редактирование раствора — { $targetName }
 admin-solutions-window-solution-label = Целевой раствор:
 admin-solutions-window-solution-button = Раствор
 admin-solutions-window-solution-button-tooltip = Открывает соответствующий раствор на стороне сервера в меню ViewVariables. Полезно для дебага проблем с предсказыванием.

@@ -9,4 +9,4 @@ cmd-listroles-help = Использование: listroles
 
 cmd-rmrole-desc = Удаляет роль из разума игрока.
 cmd-rmrole-help = Использование: rmrole <session ID> <Role Type>
-                  Тип роли - это фактическое имя типа C#.
+                  Тип роли — это фактическое имя типа C#.

@@ -12,7 +12,7 @@ spellbook-knock-name = Стук
 spellbook-knock-desc = Открывает все шлюзы, ящики и шкафчики с замками в округе.
 
 spellbook-force-wall-name = Силовой барьер
-spellbook-force-wall-desc = Создайте три стены чистой энергии, через которые вы можете пройти, а другие - нет.
+spellbook-force-wall-desc = Создайте три стены чистой энергии, через которые вы можете пройти, а другие — нет.
 
 spellbook-repulse-name = Импульс
 spellbook-repulse-desc = Прикажите всем уйти с вашего пути или оттолкните их от себя.
@@ -68,7 +68,7 @@ spellbook-hammer-mjollnir-name = Мьёльнир
 spellbook-hammer-mjollnir-description = В ваших руках мощь ГРОЗЫ. Отправляйте врагов в полет с помощью мощного взмаха или броска прямо в них!
 
 spellbook-hammer-singularity-name = Молот сингулярности
-spellbook-hammer-singularity-description = Вы когда-нибудь задумывались, каково это - быть сингулярностью? Размахивайте этим молотом, чтобы притянуть всё вокруг, даже если вы промахнётесь!
+spellbook-hammer-singularity-description = Вы когда-нибудь задумывались, каково это — быть сингулярностью? Размахивайте этим молотом, чтобы притянуть всё вокруг, даже если вы промахнётесь!
 
 spellbook-staff-animation-name = Посох оживления
 spellbook-staff-animation-description = Оживите неодушевлённые предметы!
