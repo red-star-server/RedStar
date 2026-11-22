@@ -1,3 +1,4 @@
+using Content.Server._RedStar.Beekeeping.Components;
 using Content.Server._RedStar.Beekeeping.Data;
 
 namespace Content.Server._RedStar.Beekeeping.Events;

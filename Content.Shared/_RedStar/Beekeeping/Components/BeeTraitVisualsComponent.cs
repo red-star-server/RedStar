@@ -1,3 +1,4 @@
+using Content.Shared._RedStar.Beekeeping.Visuals;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared._RedStar.Beekeeping.Components;
