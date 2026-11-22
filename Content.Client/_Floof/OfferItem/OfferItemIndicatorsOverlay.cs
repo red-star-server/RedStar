@@ -12,7 +12,7 @@ public sealed class OfferItemIndicatorsOverlay : Overlay
 {
     private readonly IInputManager _inputManager;
     private readonly IEyeManager _eye;
-    private readonly OfferItemSystem _offer;
+    private readonly ClientOfferItemSystem _offer;
 
     private readonly Texture _sight;
 
@@ -23,7 +23,7 @@ public sealed class OfferItemIndicatorsOverlay : Overlay
     private const float _scale = 0.6f; // 1 is a little big
 
     public OfferItemIndicatorsOverlay(IInputManager input, IEntityManager entMan,
-            IEyeManager eye, OfferItemSystem offerSys)
+            IEyeManager eye, ClientOfferItemSystem offerSys)
     {
         _inputManager = input;
         _eye = eye;

@@ -16,7 +16,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._RedStar.Emoting;
 
-public sealed partial class PairedEmoteSystem : SharedPairedEmoteSystem
+public sealed partial class ServerPairedEmoteSystem : PairedEmoteSystem
 {
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private IGameTiming _timing = default!;

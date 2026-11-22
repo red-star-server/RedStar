@@ -17,7 +17,7 @@ using Content.Shared.Speech.Components;
 
 namespace Content.Server._Starlight.TapeRecorder;
 
-public sealed partial class TapeRecorderSystem : SharedTapeRecorderSystem
+public sealed partial class ServerTapeRecorderSystem : TapeRecorderSystem
 {
     [Dependency] private ChatSystem _chat = default!;
     [Dependency] private HandsSystem _hands = default!;
@@ -124,7 +124,7 @@ public sealed partial class TapeRecorderSystem : SharedTapeRecorderSystem
             return;
 
         var text = new StringBuilder();
-        var paper = Spawn(comp.PaperPrototype, Transform(ent).Coordinates);
+        var paper = SpawnAtPosition(comp.PaperPrototype, Transform(ent).Coordinates);
 
         // Re-recording an earlier section can append entries after later recordings.
         var data = cassette.Comp.RecordedData.OrderBy(x => x.Timestamp);

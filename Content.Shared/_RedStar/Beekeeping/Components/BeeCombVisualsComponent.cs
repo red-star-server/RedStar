@@ -1,3 +1,4 @@
+using Content.Shared._RedStar.Beekeeping.Visuals;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Prototypes;
 

@@ -5,7 +5,7 @@ using Robust.Client.Player;
 
 namespace Content.Client._Floof.OfferItem;
 
-public sealed partial class OfferItemSystem : SharedOfferItemSystem
+public sealed partial class ClientOfferItemSystem : OfferItemSystem
 {
     [Dependency] private IOverlayManager _overlayManager = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
