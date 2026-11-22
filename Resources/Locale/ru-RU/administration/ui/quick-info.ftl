@@ -8,6 +8,6 @@ admin-quick-info-username = Логин: [color=white]{ ESCAPE($username) }[/colo
 admin-quick-info-character = Персонаж: [color=white]{ ESCAPE($character) }[/color]
 admin-quick-info-character-identity = Персонаж: [color=white]{ ESCAPE($character) }[/color] (Identity: [color=white]{ ESCAPE($identity) }[/color])
 admin-quick-info-job = Стартовая должность: [color=white]{ ESCAPE($job) }[/color]
-admin-quick-info-role-type-subtype = Роль: [color={ ESCAPE-PARAM($color) }]{ ESCAPE($symbol) } { ESCAPE($type) } — { ESCAPE($subtype) }[/color]
+admin-quick-info-role-type-subtype = Роль: [color={ ESCAPE-PARAM($color) }]{ ESCAPE($symbol) } { ESCAPE($type) } - { ESCAPE($subtype) }[/color]
 admin-quick-info-role-type = Роль: [color={ $color }]{ ESCAPE($symbol) } { ESCAPE($type) }[/color]
 admin-quick-info-no-role = Нет роли

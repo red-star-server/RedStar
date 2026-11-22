@@ -105,7 +105,7 @@ figurines-rd-1 = Взорвать всех боргов!
 figurines-rd-2 = Арсенал третьего уровня? Ни за что.
 figurines-rd-3 = Где же я оставил свой скафандр...?
 figurines-rd-4 = Теперь ты думаешь порталами!
-figurines-rd-5 = Торт — это ложь!
+figurines-rd-5 = Торт - это ложь!
 figurines-rd-6 = Черта, которую я ищу в учёном, это заменяемость.
 
 figurines-scientist-1 = Кто-то другой сделал эти бомбы!
@@ -143,7 +143,7 @@ figurines-security-10 = Не сопротивляйтесь.
 figurines-warden-1 = Казните его за проникновение!
 figurines-warden-2 = В перму ублюдка за оскорбление!
 figurines-warden-3 = Мы абсолютно справедливо относимся ко всем и НЕ допускаем грубого обращения с заключёнными.
-figurines-warden-4 = Бриг — мой дом. Мой дом — бриг. Мой бриг — дом. Стоп, что?
+figurines-warden-4 = Бриг - мой дом. Мой дом - бриг. Мой бриг - дом. Стоп, что?
 figurines-warden-5 = Мыло теперь контрабанда.
 figurines-warden-6 = Ты будешь сидеть очень долго, приятель.
 
@@ -214,7 +214,7 @@ figurines-janitor-3 = Никогда в жизни не видел стольк�
 figurines-janitor-4 = Ещё один день, ещё одна лужа.
 figurines-janitor-5 = Мне даже не платят за это.
 figurines-janitor-6 = Эта лужа крови ведь не была уликой?
-figurines-janitor-7 = Моя единственная подруга — швабра.
+figurines-janitor-7 = Моя единственная подруга - швабра.
 figurines-janitor-8 = Надеюсь, это не то, о чём я думаю...
 figurines-janitor-9 = Ещё один день, ещё одно тело.
 
@@ -260,7 +260,7 @@ figurines-musician-1 = Никогда тебя не брошу!
 figurines-musician-2 = Никогда не подведу!
 figurines-musician-3 = Музыка это исскуство.
 figurines-musician-4 = Спасибо, я буду тут всю ночь.
-figurines-musician-5 = Я — человек-оркестр.
+figurines-musician-5 = Я - человек-оркестр.
 
 figurines-passenger-1 = Изоли пожалуйста.
 figurines-passenger-2 = Вызывайте эвак.
@@ -303,7 +303,7 @@ figurines-nukie-5 = Командир?.. Это шарик...
 figurines-nukie-commander-1 = ДОСТАНЬТЕ ЭТОТ ЧЁРТОВ ДИСК!
 figurines-nukie-commander-2 = Ну и хрюкеры.
 figurines-nukie-commander-3 = Синдикат передаёт привет.
-figurines-nukie-commander-4 = Провал — это не вариант.
+figurines-nukie-commander-4 = Провал - это не вариант.
 figurines-nukie-commander-5 = Упс.
 
 figurines-nukie-elite-1 = Ни слова по нанотрейзен.
@@ -316,7 +316,7 @@ figurines-nukie-elite-6 = Хорошая работа, команда.
 figurines-queen-1 = Наши владения должны расти.
 figurines-queen-2 = Улей голоден.
 figurines-queen-3 = Мы поглощаем всё.
-figurines-queen-4 = Мы — вершина эволюции.
+figurines-queen-4 = Мы - вершина эволюции.
 figurines-queen-5 = Ты всего лишь биомасса.
 figurines-queen-6 = Мы должны эволюционировать.
 

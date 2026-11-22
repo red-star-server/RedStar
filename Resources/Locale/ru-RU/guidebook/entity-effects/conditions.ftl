@@ -47,7 +47,7 @@ entity-condition-guidebook-mob-state-condition =
     пациент { $state }
 
 entity-condition-guidebook-job-condition =
-    должность цели — { $job }
+    должность цели - { $job }
 
 entity-condition-guidebook-solution-temperature =
     температура раствора составляет { $max ->

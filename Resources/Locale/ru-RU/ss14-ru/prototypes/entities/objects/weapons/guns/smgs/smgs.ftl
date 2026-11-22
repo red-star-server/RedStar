@@ -1,5 +1,5 @@
 ent-BaseWeaponSubMachineGun = базовый пистолет-пулемёт
-    .desc = Дерзай — налетай, целься и стреляй.
+    .desc = Дерзай - налетай, целься и стреляй.
 ent-WeaponSubMachineGunAtreides = Атрейдес
     .desc = Пле-ке-ке-ке-ке! Использует патроны калибра .35 авто.
 ent-WeaponSubMachineGunC20r = C-20r
