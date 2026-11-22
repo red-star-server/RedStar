@@ -4,7 +4,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client._RedStar.Xenobiology.Systems;
 
-public sealed partial class SampleVisualsSystem : EntitySystem
+public sealed partial class SampleContainerVisualizerSystem : EntitySystem
 {
     [Dependency] private SpriteSystem _sprite = default!;
 

@@ -195,10 +195,11 @@
   components:
   - type: GeneExpression
     gene: ChemicalSensitivity
-  - type: GeneResistance
-    reductions:
-      Poison: -0.15
-      Caustic: -0.15
+  - type: DamageModifierStatusEffect
+    modifiers:
+      coefficients:
+        Poison: 1.15
+        Caustic: 1.15
 
 - type: entity
   parent: StatusEffectBase
@@ -206,9 +207,10 @@
   components:
   - type: GeneExpression
     gene: ChitinousCovering
-  - type: GeneResistance
-    reductions:
-      Piercing: 0.1
+  - type: DamageModifierStatusEffect
+    modifiers:
+      coefficients:
+        Piercing: 0.9
 
 - type: entity
   parent: StatusEffectBase
@@ -216,11 +218,12 @@
   components:
   - type: GeneExpression
     gene: CompositeCarapace
-  - type: GeneResistance
-    reductions:
-      Blunt: 0.1
-      Slash: 0.1
-      Piercing: 0.1
+  - type: DamageModifierStatusEffect
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
 
 - type: entity
   parent: StatusEffectBase
@@ -251,9 +254,10 @@
   components:
   - type: GeneExpression
     gene: DenseConnectiveTissue
-  - type: GeneResistance
-    reductions:
-      Blunt: 0.1
+  - type: DamageModifierStatusEffect
+    modifiers:
+      coefficients:
+        Blunt: 0.9
 
 - type: entity
   parent: StatusEffectBase
@@ -261,9 +265,10 @@
   components:
   - type: GeneExpression
     gene: DetoxifyingMetabolism
-  - type: GeneResistance
-    reductions:
-      Poison: 0.1
+  - type: DamageModifierStatusEffect
+    modifiers:
+      coefficients:
+        Poison: 0.9
 
 - type: entity
   parent: StatusEffectBase
@@ -271,10 +276,11 @@
   components:
   - type: GeneExpression
     gene: ElasticFrame
-  - type: GeneResistance
-    reductions:
-      Blunt: 0.1
-      Slash: 0.1
+  - type: DamageModifierStatusEffect
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
 
 - type: entity
   parent: StatusEffectBase
@@ -282,9 +288,10 @@
   components:
   - type: GeneExpression
     gene: FragileBones
-  - type: GeneResistance
-    reductions:
-      Blunt: -0.2
+  - type: DamageModifierStatusEffect
+    modifiers:
+      coefficients:
+        Blunt: 1.2
 
 - type: entity
   parent: StatusEffectBase
@@ -310,9 +317,10 @@
   components:
   - type: GeneExpression
     gene: KeratinizedCovering
-  - type: GeneResistance
-    reductions:
-      Slash: 0.1
+  - type: DamageModifierStatusEffect
+    modifiers:
+      coefficients:
+        Slash: 0.9
 
 - type: entity
   parent: StatusEffectBase
@@ -320,9 +328,10 @@
   components:
   - type: GeneExpression
     gene: LamellarScales
-  - type: GeneResistance
-    reductions:
-      Heat: 0.1
+  - type: DamageModifierStatusEffect
+    modifiers:
+      coefficients:
+        Heat: 0.9
 
 - type: entity
   parent: StatusEffectBase
@@ -330,9 +339,10 @@
   components:
   - type: GeneExpression
     gene: MineralizedTissue
-  - type: GeneResistance
-    reductions:
-      Piercing: 0.1
+  - type: DamageModifierStatusEffect
+    modifiers:
+      coefficients:
+        Piercing: 0.9
 
 - type: entity
   parent: StatusEffectBase
@@ -340,10 +350,11 @@
   components:
   - type: GeneExpression
     gene: PhotonicLattice
-  - type: GeneResistance
-    reductions:
-      Heat: 0.1
-      Shock: 0.1
+  - type: DamageModifierStatusEffect
+    modifiers:
+      coefficients:
+        Heat: 0.9
+        Shock: 0.9
 
 - type: entity
   parent: StatusEffectBase
@@ -441,9 +452,10 @@
   components:
   - type: GeneExpression
     gene: ToxinTolerance
-  - type: GeneResistance
-    reductions:
-      Poison: 0.1
+  - type: DamageModifierStatusEffect
+    modifiers:
+      coefficients:
+        Poison: 0.9
 
 - type: entity
   parent: StatusEffectBase

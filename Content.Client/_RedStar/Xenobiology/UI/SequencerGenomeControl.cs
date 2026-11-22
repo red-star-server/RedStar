@@ -7,8 +7,10 @@ using Robust.Shared.Input;
 
 namespace Content.Client._RedStar.Xenobiology.UI;
 
-public sealed class SequencerGenomeControl : Control
+public sealed partial class SequencerGenomeControl : Control
 {
+    [Dependency] private IResourceCache _resourceCache = default!;
+
     private static readonly Color[] Palette =
     [
         Color.FromHex("#79D3D3"), Color.FromHex("#A8C97B"),
@@ -27,8 +29,8 @@ public sealed class SequencerGenomeControl : Control
 
     public SequencerGenomeControl()
     {
-        var resource = IoCManager.Resolve<IResourceCache>()
-            .GetResource<FontResource>("/EngineFonts/NotoSans/NotoSansMono-Regular.ttf");
+        IoCManager.InjectDependencies(this);
+        var resource = _resourceCache.GetResource<FontResource>("/EngineFonts/NotoSans/NotoSansMono-Regular.ttf");
         _font = new VectorFont(resource, 13);
         MinSize = new Vector2(340, 98);
         HorizontalExpand = true;

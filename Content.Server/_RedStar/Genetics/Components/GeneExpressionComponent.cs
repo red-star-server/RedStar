@@ -1,7 +1,7 @@
 using Content.Shared._RedStar.Genetics.Prototypes;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared._RedStar.Genetics.Components;
+namespace Content.Server._RedStar.Genetics.Components;
 
 /// <summary>
 /// Identifies a gene's persistent status effect and the resources it grants to its host.

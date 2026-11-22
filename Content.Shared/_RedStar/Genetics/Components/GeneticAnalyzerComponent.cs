@@ -7,7 +7,7 @@ namespace Content.Shared._RedStar.Genetics.Components;
 /// Handheld scanner that maintains a live genetic report while its patient remains within range.
 /// Patient data is sent only through the scanner's user interface.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
 public sealed partial class GeneticAnalyzerComponent : Component
 {
     [DataField]
@@ -28,6 +28,6 @@ public sealed partial class GeneticAnalyzerComponent : Component
     [ViewVariables]
     public EntityUid? Target;
 
-    [ViewVariables]
+    [ViewVariables, AutoPausedField]
     public TimeSpan NextUpdate;
 }

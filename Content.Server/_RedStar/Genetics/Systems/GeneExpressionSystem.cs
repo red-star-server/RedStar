@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Server._RedStar.Genetics.Components;
-using Content.Shared._RedStar.Genetics.Components;
 using Content.Shared._RedStar.Genetics.Events;
 using Content.Shared._RedStar.Genetics.Prototypes;
 using Content.Shared.Actions;

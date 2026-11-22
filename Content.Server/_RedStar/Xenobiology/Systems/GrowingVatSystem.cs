@@ -5,6 +5,7 @@ using Content.Server._RedStar.Genetics.Systems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Climbing.Systems;
+using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -137,10 +138,17 @@ public sealed partial class GrowingVatSystem : EntitySystem
     {
         foreach (var (prototype, amount) in recipe.RequiredReagents)
         {
-            container.Comp.Solution.RemoveReagent(prototype.Id, amount, ignoreReagentData: true);
-        }
+            var remaining = amount;
+            foreach (var (reagent, quantity) in container.Comp.Solution.Contents.ToArray())
+            {
+                if (reagent.Prototype != prototype.Id)
+                    continue;
 
-        _solutions.UpdateChemicals(container);
+                remaining -= _solutions.RemoveReagent(container, reagent, FixedPoint2.Min(remaining, quantity));
+                if (remaining <= FixedPoint2.Zero)
+                    break;
+            }
+        }
     }
 
     private bool TryGetActiveRecipe(Entity<GrowingVatComponent> vat, Entity<GenomeComponent> subject,
