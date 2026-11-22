@@ -7,7 +7,7 @@ namespace Content.Server._RedStar.Emoting.Components;
 /// The incoming paired emote offer shown as an alert to its recipient.
 /// </summary>
 [RegisterComponent]
-[Access(typeof(PairedEmoteSystem))]
+[Access(typeof(ServerPairedEmoteSystem))]
 public sealed partial class PairedEmoteReceivingComponent : Component
 {
     public EntityUid Initiator;

@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared._Floof.OfferItem;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
-[Access(typeof(SharedOfferItemSystem))]
+[Access(typeof(OfferItemSystem))]
 public sealed partial class OfferItemComponent : Component
 {
     /// <summary>

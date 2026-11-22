@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared._Starlight.TapeRecorder.Components;
 
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedTapeRecorderSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(TapeRecorderSystem))]
 [AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class TapeRecorderComponent : Component
 {

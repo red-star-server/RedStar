@@ -7,7 +7,7 @@ using Robust.Shared.Player;
 
 namespace Content.Shared._Floof.OfferItem;
 
-public abstract partial class SharedOfferItemSystem
+public abstract partial class OfferItemSystem
 {
     [Dependency] private ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
@@ -16,14 +16,14 @@ public abstract partial class SharedOfferItemSystem
     {
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.OfferItem, InputCmdHandler.FromDelegate(SetInOfferMode, handle: false, outsidePrediction: false))
-            .Register<SharedOfferItemSystem>();
+            .Register<OfferItemSystem>();
     }
 
     public override void Shutdown()
     {
         base.Shutdown();
 
-        CommandBinds.Unregister<SharedOfferItemSystem>();
+        CommandBinds.Unregister<OfferItemSystem>();
     }
 
     /// <summary>

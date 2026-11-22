@@ -16,7 +16,7 @@ using System.Text;
 
 namespace Content.Shared._Starlight.TapeRecorder;
 
-public abstract partial class SharedTapeRecorderSystem : EntitySystem
+public abstract partial class TapeRecorderSystem : EntitySystem
 {
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private IRobustRandom _random = default!;

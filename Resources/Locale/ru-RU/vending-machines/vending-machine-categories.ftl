@@ -2,12 +2,14 @@
 vending-machine-category-all = Все
 
 # Clothing
-vending-machine-category-clothing = Одежда
 vending-machine-category-uniforms = Униформа
+vending-machine-category-jumpsuits = Комбинезоны
+vending-machine-category-jumpskirts = Юбки-комбинезоны
 vending-machine-category-outerwear = Верхняя одежда
 vending-machine-category-headwear = Головные уборы
 vending-machine-category-footwear = Обувь
 vending-machine-category-eyewear = Очки
+vending-machine-category-gloves = Перчатки
 vending-machine-category-scarves = Шарфы
 vending-machine-category-accessories = Аксессуары
 vending-machine-category-bags = Сумки

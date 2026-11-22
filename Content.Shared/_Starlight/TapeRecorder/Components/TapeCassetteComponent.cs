@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared._Starlight.TapeRecorder.Components;
 
 // TODO: add things client needs for ui to networked state
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedTapeRecorderSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(TapeRecorderSystem))]
 [AutoGenerateComponentState]
 public sealed partial class TapeCassetteComponent : Component
 {

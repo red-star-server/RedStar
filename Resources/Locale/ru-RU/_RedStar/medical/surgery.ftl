@@ -13,5 +13,5 @@ surgery-ui-window-surgeries = < Операции
 surgery-ui-window-title = Хирургия
 surgery-verb-message = Начать хирургическую операцию.
 surgery-verb-text = Начать операцию
-trauma-surgery-title-part = Хирургия — {$part}
-trauma-surgery-title-procedure = Хирургия — {$part}, {$surgery}
+trauma-surgery-title-part = Хирургия - {$part}
+trauma-surgery-title-procedure = Хирургия - {$part}, {$surgery}

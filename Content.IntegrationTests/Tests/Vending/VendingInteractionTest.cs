@@ -37,16 +37,16 @@ public sealed class VendingInteractionTest : InteractionTest
 - type: vendingMachineInventory
   id: {Pack1}
   categories:
-  - name: vending-machine-category-equipment
-    icon: {{ sprite: error.rsi, state: error }}
+  - name: vending-machine-category-food
+    icon: {{ entity: {VendedItemProtoId} }}
     startingInventory:
       {VendedItemProtoId}: 5
 
 - type: vendingMachineInventory
   id: {Pack2}
   categories:
-  - name: vending-machine-category-equipment
-    icon: {{ sprite: error.rsi, state: error }}
+  - name: vending-machine-category-food
+    icon: {{ entity: {VendedItemProtoId} }}
     startingInventory:
       {VendedItemProtoId}: 5
 

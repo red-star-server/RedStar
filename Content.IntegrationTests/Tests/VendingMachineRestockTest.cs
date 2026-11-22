@@ -51,25 +51,25 @@ public sealed class VendingMachineRestockTest : GameTest
   id: TestInventory
   categories:
   - name: vending-machine-category-food
-    icon: {{ entity: TestRamen }}
+    icon: {{ entity: {TestRamen} }}
     startingInventory:
-      TestRamen: 1
+      {TestRamen}: 1
 
 - type: vendingMachineInventory
   id: OtherTestInventory
   categories:
   - name: vending-machine-category-food
-    icon: {{ entity: TestRamen }}
+    icon: {{ entity: {TestRamen} }}
     startingInventory:
-      TestRamen: 3
+      {TestRamen}: 3
 
 - type: vendingMachineInventory
   id: BigTestInventory
   categories:
   - name: vending-machine-category-food
-    icon: {{ entity: TestRamen }}
+    icon: {{ entity: {TestRamen} }}
     startingInventory:
-      TestRamen: 4
+      {TestRamen}: 4
 
 - type: entity
   parent: BaseVendingMachineRestock
