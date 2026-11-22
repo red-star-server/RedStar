@@ -14,5 +14,5 @@ ent-MobMonkeySyndicateAgentNukeops = { ent-MobBaseSyndicateMonkey }
     .desc = { ent-MobBaseSyndicateMonkey.desc }
     .suffix = Ядерные Оперативники
 ent-MobGuidebookMonkey = тренировочная обезьяна
-    .desc = Специально обученная обезьяна, чья единственная цель в жизни - чтобы вы кликнули на неё. Можно ли считать, что обезьяна преподала вам урок?
+    .desc = Специально обученная обезьяна, чья единственная цель в жизни — чтобы вы кликнули на неё. Можно ли считать, что обезьяна преподала вам урок?
     .suffix = { ent-MobMonkey.suffix }

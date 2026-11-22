@@ -31,4 +31,4 @@ ent-BaseFigurineCheapo = фигурка
 ent-FoamWeaponBase = { ent-BaseItem }
     .desc = { ent-BaseItem.desc }
 ent-ToyGunBase = базовый игрушечный пистолет
-    .desc = Дерзай - налетай, целься и стреляй.
+    .desc = Дерзай — налетай, целься и стреляй.
