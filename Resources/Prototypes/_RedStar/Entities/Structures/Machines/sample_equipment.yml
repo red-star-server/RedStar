@@ -39,7 +39,7 @@
       dishSlot:
         whitelist:
           tags:
-          - Dish
+          - PetriDish
   - type: GuideHelp
     guides:
     - Science
@@ -80,7 +80,7 @@
       dishSlot:
         whitelist:
           tags:
-          - Dish
+          - PetriDish
       vialSlot:
         whitelist:
           components:

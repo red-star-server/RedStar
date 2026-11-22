@@ -1,8 +1,6 @@
 - type: entity
   parent: SmartFridge
   id: SmartFridgeGenetics
-  name: SmartFridge
-  description: A refrigerated storage unit for keeping items cold and fresh.
   suffix: Genetics
   components:
   - type: SmartFridge
@@ -13,8 +11,6 @@
 - type: entity
   parent: SmartFridge
   id: SmartFridgeXenobiology
-  name: SmartFridge
-  description: A refrigerated storage unit for keeping items cold and fresh.
   suffix: Xenobiology
   components:
   - type: SmartFridge

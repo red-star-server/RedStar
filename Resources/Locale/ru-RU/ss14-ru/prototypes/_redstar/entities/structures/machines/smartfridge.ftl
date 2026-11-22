@@ -1,6 +1,6 @@
-ent-SmartFridgeGenetics = умный холодильник
-    .desc = Охлаждаемое хранилище для складирования лекарств и химикатов.
+ent-SmartFridgeGenetics = { ent-SmartFridge }
+    .desc = { ent-SmartFridge.desc }
     .suffix = Генетический
-ent-SmartFridgeXenobiology =  умный холодильник
-    .desc = Охлаждаемое хранилище для складирования лекарств и химикатов.
+ent-SmartFridgeXenobiology = { ent-SmartFridge }
+    .desc = { ent-SmartFridge.desc }
     .suffix = Ксенобиологический
