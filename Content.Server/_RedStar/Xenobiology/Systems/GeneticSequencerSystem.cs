@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Content.Server.Power.EntitySystems;
 using Content.Server._RedStar.Genetics.Systems;
 using Content.Server._RedStar.Xenobiology.Helpers;
@@ -33,7 +32,7 @@ public sealed partial class GeneticSequencerSystem : EntitySystem
     [Dependency] private SampleSystem _samples = default!;
     [Dependency] private IRobustRandom _random = default!;
 
-    private readonly ConditionalWeakTable<BiologicalSample, Dictionary<ProtoId<GenePrototype>, Puzzle>> _puzzles = new();
+    private readonly System.Runtime.CompilerServices.ConditionalWeakTable<BiologicalSample, Dictionary<ProtoId<GenePrototype>, Puzzle>> _puzzles = new();
 
     [SubscribeLocalEvent]
     private void OnOpened(Entity<GeneticSequencerComponent> ent, ref AfterActivatableUIOpenEvent args) => UpdateUI(ent);

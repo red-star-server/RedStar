@@ -75,8 +75,9 @@ public sealed partial class SampleStabilizerSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnStabilizationMessage(Entity<SampleStabilizerComponent> ent, ref SampleStabilizerUiStabilizationMessage args)
     {
+        var sampleId = args.SampleId;
         if (ent.Comp.StabilizationInProgress || !_power.IsPowered(ent.Owner) ||
-            !TryGetDish(ent, out var dish) || dish.Comp.Samples.Find(sample => sample.Id == args.SampleId) is not { } sample)
+            !TryGetDish(ent, out var dish) || dish.Comp.Samples.Find(s => s.Id == sampleId) is not { } sample)
             return;
 
         if (!TryGetBeaker(ent, out var beaker, out var solution))
@@ -132,7 +133,7 @@ public sealed partial class SampleStabilizerSystem : EntitySystem
         Entity<SolutionComponent> solution)
     {
         var sampleId = ent.Comp.StabilizationSample;
-        if (dish.Comp.Samples.Find(sample => sample.Id == sampleId) is not { } sample ||
+        if (dish.Comp.Samples.Find(s => s.Id == sampleId) is not { } sample ||
             !TryGetCost(ent.Comp, sample, out var gain, out var cost) || GetReagentAmount(ent.Comp, solution) < cost)
         {
             CancelStabilization(ent);

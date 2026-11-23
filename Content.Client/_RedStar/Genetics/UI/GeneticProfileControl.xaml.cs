@@ -117,7 +117,7 @@ public sealed partial class GeneticProfileControl : BoxContainer
         var expanded = changedPatient ? new HashSet<ProtoId<GenePrototype>>() : _rows.Where(row => row.Value.Expanded).Select(row => row.Key).ToHashSet();
         GeneList.RemoveAllChildren();
         _rows.Clear();
-        foreach (var entry in state.Genes.OrderBy(entry => Loc.GetString(_prototypes.Index(entry.Id).Name)))
+        foreach (var entry in state.Genes.OrderBy(entry => Loc.GetString(_prototypes.Index(entry.Id).Name), StringComparer.Ordinal))
         {
             var gene = _prototypes.Index(entry.Id);
             var row = new GeneRow(gene, entry.Status, expanded.Contains(entry.Id),
@@ -136,7 +136,7 @@ public sealed partial class GeneticProfileControl : BoxContainer
         var query = Search.Text.Trim();
         foreach (var row in _rows.Values)
         {
-            row.Visible = row.GeneName.Contains(query, StringComparison.CurrentCultureIgnoreCase);
+            row.Visible = row.GeneName.Contains(query, StringComparison.OrdinalIgnoreCase);
         }
 
         Empty.Text = Loc.GetString(_state is null ? "genetic-analyzer-no-data" : "genetic-analyzer-empty");
