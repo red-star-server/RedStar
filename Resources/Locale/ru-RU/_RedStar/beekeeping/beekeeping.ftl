@@ -1,7 +1,7 @@
 guide-entry-beekeeping = Пчеловодство
 guide-entry-beekeeping-analyzer = Анализатор пасеки
 guide-entry-beekeeping-queen = Матка и признаки
-guide-entry-beekeeping-wild = Рои и дикие ульи
+guide-entry-beekeeping-wild = Рои, дикие и злые пчёлы
 
 ## Улей
 
@@ -164,7 +164,7 @@ apiary-analyzer-section-colony-traits = Признаки колонии
 apiary-analyzer-section-stats = Характеристики
 apiary-analyzer-section-colony = Колония
 apiary-analyzer-section-frames = Рамки ({ $count })
-apiary-analyzer-section-trays = Известные лотки ({ $count })
+apiary-analyzer-section-trays = Известные источники ({ $count })
 apiary-analyzer-section-queen = Матка
 apiary-analyzer-section-scout = Разведчица
 apiary-analyzer-section-pollinator = Опылительница
@@ -192,7 +192,7 @@ apiary-analyzer-yes = есть
 apiary-analyzer-no = нет
 apiary-analyzer-frames-none = Рамок нет.
 apiary-analyzer-frame-combs = { $combs } из { $max } сот
-apiary-analyzer-trays-none = Разведчица ещё не нашла ни одного лотка.
+apiary-analyzer-trays-none = Разведчица ещё не нашла ни одного источника.
 apiary-analyzer-tray-empty = пустой лоток
 apiary-analyzer-tray-ripe = Растение спелое, рабочие его посещают.
 apiary-analyzer-tray-growing = Растение ещё растёт.
@@ -268,8 +268,27 @@ swarm-modifier-huge = Крупный рой
 swarm-modifier-huge-desc = Ушли три четверти колонии.
 swarm-modifier-wanderer = Странник
 swarm-modifier-wanderer-desc = Искал вентиляцию и гнездо вдвое дальше.
+swarm-modifier-fierce = Свирепый рой
+swarm-modifier-fierce-desc = Злые пчёлы этого улья живут вдвое дольше.
 swarm-modifier-tainted = Заражённый улей
 swarm-modifier-tainted-desc = В сотах что-то подозрительное.
+bee-trait-hotheaded = Вспыльчивость
+bee-trait-hotheaded-desc = Каждый удар по улью выпускает две пчелы вместо одной, а слабее удар выпускает ещё.
+bee-trait-guarded-scout = Охраняемая разведчица
+bee-trait-guarded-scout-desc = Разведчица вылетает злой последней и только когда рабочих дома не осталось.
+beekeeping-hive-examine-meat = Эти пчёлы кормятся кровью.
+apiary-analyzer-row-diet = Питание
+apiary-analyzer-diet-meat = кровь
+apiary-analyzer-creature-ripe = Рабочие могут его кусать.
+apiary-analyzer-creature-blind = Существо далеко, в укрытии или без крови: рабочие его сейчас не достанут.
+apiary-analyzer-meat = Мясо
+apiary-analyzer-meat-help = Столько кусков мяса выпадет, если разбить улей сейчас: { $base } всегда и ещё по одному за каждые { $per } укуса по мёртвым, не больше { $max }. Что может выпасть, по шансу на каждый кусок:
+apiary-analyzer-meat-chance = { $name }: { $percent }%
+apiary-analyzer-section-chemicals = Химический состав улья
+apiary-analyzer-chemicals-none = В улье пока нет химических веществ.
+apiary-analyzer-section-targets = Недавние цели ({ $count })
+apiary-analyzer-targets-none = Пчёлы ещё никого не кусали.
+beekeeping-bite-blocked = Герметичный костюм не даёт пчеле укусить.
 
 ## Команды
 

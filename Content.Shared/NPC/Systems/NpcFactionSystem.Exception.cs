@@ -79,6 +79,25 @@ public sealed partial class NpcFactionSystem
         target.Comp.Entities.Add(ent);
     }
 
+    // RS14-start
+    /// <summary>
+    /// Makes an entity that was ignored attackable again, if it was ignored.
+    /// </summary>
+    public void UnignoreEntity(Entity<FactionExceptionComponent?> ent, EntityUid target)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return;
+
+        if (!ent.Comp.Ignored.Remove(target) || !_trackerQuery.TryComp(target, out var tracker))
+            return;
+
+        if (ent.Comp.Hostiles.Contains(target))
+            return;
+
+        tracker.Entities.Remove(ent);
+    }
+    // RS14-end
+
     /// <summary>
     /// Prevents a list of entities from an enemy faction from being attacked
     /// </summary>

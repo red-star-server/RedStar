@@ -5,7 +5,7 @@
   name: swarm-modifier-plain
   description: swarm-modifier-plain-desc
   color: "#9A9A9A"
-  weight: 47.5
+  weight: 40
 
 - type: swarmModifier
   id: ShySwarm
@@ -46,6 +46,14 @@
   color: "#E0603A"
   weight: 7.5
   rangeMultiplier: 2
+
+- type: swarmModifier
+  id: FierceSwarm
+  name: swarm-modifier-fierce
+  description: swarm-modifier-fierce-desc
+  color: "#E0603A"
+  weight: 7.5
+  angryLifetime: 120
 
 - type: swarmModifier
   id: TaintedHive

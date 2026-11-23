@@ -23,6 +23,8 @@ namespace Content.Server._RedStar.Beekeeping.Systems;
 /// </summary>
 public sealed partial class BeehiveSystem : SharedBeehiveSystem
 {
+    [Dependency] private AngryBeehiveSystem _angry = default!;
+    [Dependency] private MeatBeehiveSystem _meat = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private BeeSwarmSystem _swarm = default!;
     [Dependency] private BeeErrandSystem _errands = default!;
@@ -123,6 +125,8 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
 
         UpdateMaxBees(ent);
         UpdateHiveAppearance(ent);
+
+        _angry.AngerOnFrameRemoved(ent);
     }
 
     /// <summary>
@@ -555,6 +559,9 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
             args.PushMarkup(Loc.GetString("beekeeping-hive-examine-nectar",
                 ("level", GetNectarLevel(comp).ToString())));
 
+            if (comp.Wild && comp.Diet == BeehiveDiet.Meat)
+                args.PushMarkup(Loc.GetString("beekeeping-hive-examine-meat"));
+
             if (comp.Wild && comp.SwarmModifier is { } modifierId && Proto.TryIndex(modifierId, out var modifier))
             {
                 args.PushMarkup(Loc.GetString("beekeeping-hive-examine-swarm-modifier",
@@ -703,6 +710,8 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
             return false;
 
         hive.Comp.WildCombs++;
+        if (hive.Comp.Diet == BeehiveDiet.Meat)
+            _meat.TakeCombBlood(hive);
 
         return true;
     }
@@ -721,6 +730,7 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
         var shown = hive.Comp.MaxWildCombs > 0 &&
                     hive.Comp.WildCombs >= hive.Comp.MaxWildCombs * hive.Comp.WildHoneyShown;
         Appearance.SetData(hive, WildBeehiveVisuals.Honey, shown);
+        Appearance.SetData(hive, WildBeehiveVisuals.Meat, hive.Comp.Diet == BeehiveDiet.Meat);
     }
 
     public void UpdateFrameAppearance(Entity<BeeFrameComponent> frame)
