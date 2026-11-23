@@ -20,6 +20,8 @@ namespace Content.IntegrationTests.Tests._Trauma;
 [TestOf(typeof(BodyPartSystem))]
 public sealed class BodyTest : GameTest
 {
+    private sealed class OrganRemovalListenerSystem : TestListenerSystem<OrganRemovedFromPartEvent>;
+
     [TestPrototypes]
     private const string Prototypes = @"
 - type: entity
