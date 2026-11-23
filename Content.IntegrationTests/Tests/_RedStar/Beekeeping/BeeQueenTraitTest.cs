@@ -1,9 +1,11 @@
 #nullable enable
 using Content.IntegrationTests.Fixtures;
+using Content.Server._RedStar.Beekeeping.Systems;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared._RedStar.Beekeeping.Components;
+using Content.Shared._RedStar.Beekeeping.Data;
 using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -69,12 +71,14 @@ public sealed class BeeQueenTraitTest : GameTest
         });
     }
 
-    [Test]
-    public async Task WildCombLeavesPayloadInQueen()
+    [TestCase(BeehiveDiet.Plants)]
+    [TestCase(BeehiveDiet.Meat)]
+    public async Task WildCombLeavesPayloadInQueen(BeehiveDiet diet)
     {
         var server = Server;
         var map = await Pair.CreateTestMap();
         var solutions = server.System<SharedSolutionContainerSystem>();
+        var meatHives = server.System<MeatBeehiveSystem>();
         EntityUid hive = default;
         EntityUid queen = default;
 
@@ -93,6 +97,12 @@ public sealed class BeeQueenTraitTest : GameTest
             hiveComp.NextScoutTrip = TimeSpan.MaxValue;
             hiveComp.Nectar = hiveComp.CombCost;
             hiveComp.CombProgress = 1f;
+            hiveComp.Diet = diet;
+            if (diet == BeehiveDiet.Meat)
+            {
+                var meatHive = meatHives.MeatOf(hive);
+                meatHive.Blood.AddReagent(meatHive.DefaultBlood, 5);
+            }
 
             var queenComp = server.EntMan.GetComponent<BeeQueenComponent>(queen);
             queenComp.Traits.Add("Sting");
@@ -108,6 +118,11 @@ public sealed class BeeQueenTraitTest : GameTest
             var queenComp = server.EntMan.GetComponent<BeeQueenComponent>(queen);
             Assert.That(solutions.TryGetSolution(queen, queenComp.Solution, out _, out var solution), Is.True);
             Assert.That(solution!.GetTotalPrototypeQuantity("Water").Float(), Is.EqualTo(5f));
+            if (diet == BeehiveDiet.Meat)
+            {
+                var meatHive = meatHives.MeatOf(hive);
+                Assert.That(meatHive.CombBlooded.Volume.Float(), Is.EqualTo(meatHive.CombBlood));
+            }
         });
     }
 }

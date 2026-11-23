@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Numerics;
 using Content.Server._RedStar.Beekeeping.Components;
 using Content.Server._RedStar.Beekeeping.Data;
@@ -47,6 +48,7 @@ public sealed partial class BeeSwarmSystem : EntitySystem
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private BeehiveSystem _hive = default!;
     [Dependency] private BeeErrandSystem _errands = default!;
+    [Dependency] private MeatBeehiveSystem _meat = default!;
     [Dependency] private BeeQueenSystem _queen = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
@@ -106,9 +108,10 @@ public sealed partial class BeeSwarmSystem : EntitySystem
         Vector2 site;
         var ventRoute = modifier is { SkipVents: true } ? null : FindSwarmVentRoute(hive, grid, hiveMap, range);
 
+        List<EntityUid>? nestExits = null;
         if (ventRoute is { } found)
         {
-            var nestExits = NestExits(found.Exits, range, grid);
+            nestExits = NestExits(found.Exits, range, grid, oldQueenComp.NestParents);
             ventRoute = nestExits.Count > 0 ? (found.Entry, _random.Pick(nestExits), nestExits) : null;
         }
 
@@ -118,7 +121,7 @@ public sealed partial class BeeSwarmSystem : EntitySystem
         }
         else
         {
-            storage = PickNestStorage(hive, range, grid, hiveMap);
+            storage = PickNestStorage(hive, range, grid, hiveMap, nestParents: oldQueenComp.NestParents);
             site = storage is { } chosen
                 ? _transform.WithEntityId(Transform(chosen).Coordinates, grid).Position
                 : SearchHop(hive, hiveMap, (grid, gridComp), BeeSwarmComponent.DefaultSearchHop);
@@ -156,6 +159,37 @@ public sealed partial class BeeSwarmSystem : EntitySystem
         swarmComp.VentExit = ventRoute?.Exit;
         swarmComp.NestRange = range;
         swarmComp.Modifier = modifier?.ID;
+        // What the swarm lives on follows what is around the places it can settle at: all the exits that have a nest
+        // near them, or, with no vents, around the hive.
+        swarmComp.Diet = nestExits is { Count: > 0 }
+            ? _meat.PickSwarmDietAmong(hive, nestExits.Select(vent => _transform.GetMapCoordinates(vent)))
+            : _meat.PickSwarmDiet(hive, hiveMap);
+
+        // Past the limit of meat hives on the map the swarm is a plain plant one.
+        if (swarmComp.Diet == BeehiveDiet.Meat && _meat.CountMeatHives(xform.MapUid, swarm) >= _cfg.GetCVar(BeekeepingCVars.MeatHiveLimit))
+            swarmComp.Diet = BeehiveDiet.Plants;
+
+        // Among the exits with a nest near them: a plant swarm takes the one with the most plants around, a meat swarm
+        // the quietest one and the quietest place near it, since a hive found right away is a hive broken right away.
+        if (swarmComp.Diet == BeehiveDiet.Plants && nestExits is { Count: > 0 } && RichestExit(nestExits, comp.DietRange) is { } plantExit)
+            swarmComp.VentExit = plantExit;
+
+        if (swarmComp.Diet == BeehiveDiet.Meat)
+        {
+            if (nestExits is { Count: > 0 } && QuietestExit(nestExits, QuietRadius) is { } quietExit)
+                swarmComp.VentExit = quietExit;
+            else if (ventRoute == null && PickNestStorage(hive, range, grid, hiveMap, QuietRadius, oldQueenComp.NestParents) is { } quietStorage)
+            {
+                // It flies to the place it settles in, not to the first one it saw.
+                swarmComp.Storage = quietStorage;
+                _errands.SetTarget(swarm, quietStorage);
+            }
+        }
+
+        // The exit was changed for the diet: the route goes there.
+        if (ventRoute is { } chosenRoute && swarmComp.VentExit is { } exit)
+            _errands.SetRoute(swarm, chosenRoute.Entry, exit);
+
         SetSearching((swarm, swarmComp), ventRoute == null && storage == null);
 
         if (abandon)
@@ -175,6 +209,12 @@ public sealed partial class BeeSwarmSystem : EntitySystem
             // The slot was just emptied, so this should not happen; the young queen is not lost if it does.
             Log.Warning($"{ToPrettyString(hive)} could not take its young queen after swarming");
             _transform.DropNextTo(daughter, hive.Owner);
+        }
+
+        if (swarmComp.Diet == BeehiveDiet.Meat)
+        {
+            _adminLog.Add(LogType.Action, LogImpact.Medium,
+                $"{ToPrettyString(hive):hive} released a meat swarm that will live on blood");
         }
 
         _hive.UpdateAmbience(hive);
@@ -271,7 +311,8 @@ public sealed partial class BeeSwarmSystem : EntitySystem
     /// A random locker, closet or crate in range on the grid that a swarm from <paramref name="origin"/> can fly to
     /// and that has room. Null if there is none.
     /// </summary>
-    public EntityUid? PickNestStorage(EntityUid origin, float range, EntityUid grid, MapCoordinates hiveMap)
+    public EntityUid? PickNestStorage(EntityUid origin, float range, EntityUid grid, MapCoordinates hiveMap,
+        float quietRadius = 0f, IReadOnlyCollection<EntProtoId>? nestParents = null)
     {
         _nestStorages.Clear();
         _lookup.GetEntitiesInRange(hiveMap, range, _nestStorages);
@@ -293,6 +334,7 @@ public sealed partial class BeeSwarmSystem : EntitySystem
         {
             var xform = Transform(storage);
             if (xform.GridUid != grid ||
+                nestParents is { Count: > 0 } && !MadeFrom(storage, nestParents) ||
                 _container.IsEntityInContainer(storage) ||
                 storage.Comp.Contents.ContainedEntities.Count >= storage.Comp.Capacity ||
                 NestTaken(storage, xform) ||
@@ -307,7 +349,56 @@ public sealed partial class BeeSwarmSystem : EntitySystem
         if (_storageCandidates.Count == 0)
             return null;
 
+        // The quietest ones: those with the fewest living creatures around them.
+        if (quietRadius > 0f)
+        {
+            var fewest = int.MaxValue;
+            var counts = new List<int>(_storageCandidates.Count);
+            foreach (var candidate in _storageCandidates)
+            {
+                var count = _meat.CountLivingNear(_transform.GetMapCoordinates(candidate), quietRadius);
+                counts.Add(count);
+                fewest = Math.Min(fewest, count);
+            }
+
+            for (var i = _storageCandidates.Count - 1; i >= 0; i--)
+            {
+                if (counts[i] > fewest)
+                    _storageCandidates.RemoveAt(i);
+            }
+        }
+
         return _random.Pick(_storageCandidates);
+    }
+
+    /// <summary>
+    /// Whether the entity's prototype is one of these or inherits one. Abstract bases are never indexed, so they are
+    /// matched by name in the parents lists of the prototypes that are.
+    /// </summary>
+    private bool MadeFrom(EntityUid uid, IReadOnlyCollection<EntProtoId> bases)
+    {
+        if (MetaData(uid).EntityPrototype is not { } proto)
+            return false;
+
+        foreach (var known in _proto.EnumerateParents(proto, includeSelf: true))
+        {
+            if (bases.Contains(known.ID) || known.Parents?.Any(parent => bases.Contains(parent)) == true)
+                return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// The queen a swarm carries, if it still has one.
+    /// </summary>
+    private BeeQueenComponent? CarriedQueen(Entity<BeeSwarmComponent> swarm)
+    {
+        return _container.TryGetContainer(swarm, swarm.Comp.Container, out var container) &&
+               container.ContainedEntities.Count > 0 &&
+               TryComp<BeeQueenComponent>(container.ContainedEntities[0], out var queen)
+            ? queen
+            : null;
     }
 
     /// <summary>
@@ -391,13 +482,13 @@ public sealed partial class BeeSwarmSystem : EntitySystem
             !TryComp<MapGridComponent>(grid, out var gridComp) ||
             !_container.TryGetContainer(swarm, swarm.Comp.Container, out var container) ||
             container.ContainedEntities.Count == 0 ||
-            !HasComp<BeeQueenComponent>(container.ContainedEntities[0]))
+            !TryComp<BeeQueenComponent>(container.ContainedEntities[0], out var queen))
         {
             return false;
         }
 
         var origin = _transform.GetMapCoordinates(swarm, xform);
-        if (PickNestStorage(swarm, swarm.Comp.NestRange, grid, origin) is { } storage)
+        if (PickNestStorage(swarm, swarm.Comp.NestRange, grid, origin, nestParents: queen.NestParents) is { } storage)
         {
             SetSearching(swarm, false);
             swarm.Comp.Storage = storage;
@@ -444,7 +535,36 @@ public sealed partial class BeeSwarmSystem : EntitySystem
         }
 
         var wild = SpawnAttachedTo(swarm.Comp.WildHive, xform.Coordinates);
-        if (!TryComp<BeehiveComponent>(wild, out var wildComp) || !_container.Remove(queen, container, force: true))
+        if (!TryComp<BeehiveComponent>(wild, out var wildComp))
+        {
+            Del(wild);
+            DropSwarmQueen(swarm);
+            return;
+        }
+
+        if (HasComp<WildBeehiveEventSwarmComponent>(swarm))
+        {
+            // The station announcement promises a populated hive in a locker or crate.
+            if (swarm.Comp.Storage is not { } nest ||
+                TerminatingOrDeleted(nest) ||
+                !TryComp<EntityStorageComponent>(nest, out var storageComp) ||
+                storageComp.Open ||
+                storageComp.Contents.ContainedEntities.Count >= storageComp.Capacity ||
+                _container.IsEntityInContainer(nest) ||
+                Transform(nest).GridUid != xform.GridUid ||
+                StorageContainsHive(storageComp) ||
+                !_hive.HasRoomForQueen((wild, wildComp)) ||
+                (swarm.Comp.Diet == BeehiveDiet.Meat &&
+                 _meat.CountMeatHives(xform.MapUid, swarm) >= _cfg.GetCVar(BeekeepingCVars.MeatHiveLimit)) ||
+                !_entityStorage.Insert(wild, nest, storageComp))
+            {
+                Del(wild);
+                DropSwarmQueen(swarm);
+                return;
+            }
+        }
+
+        if (!_container.Remove(queen, container, force: true))
         {
             Del(wild);
             DropSwarmQueen(swarm);
@@ -458,21 +578,28 @@ public sealed partial class BeeSwarmSystem : EntitySystem
             return;
         }
 
-        if (swarm.Comp.Storage is { } storage &&
+        if (!HasComp<WildBeehiveEventSwarmComponent>(swarm) &&
+            swarm.Comp.Storage is { } storage &&
             !TerminatingOrDeleted(storage) &&
-            TryComp<EntityStorageComponent>(storage, out var storageComp) &&
+            TryComp<EntityStorageComponent>(storage, out var ordinaryStorage) &&
             Transform(storage).GridUid == xform.GridUid &&
             !_container.IsEntityInContainer(storage) &&
-            storageComp.Contents.ContainedEntities.Count < storageComp.Capacity &&
-            !StorageContainsHive(storageComp))
+            ordinaryStorage.Contents.ContainedEntities.Count < ordinaryStorage.Capacity &&
+            !StorageContainsHive(ordinaryStorage))
         {
-            _entityStorage.Insert(wild, storage, storageComp);
+            _entityStorage.Insert(wild, storage, ordinaryStorage);
         }
 
         // A lone queen starts the colony like a new hive does; a swarm brings its bees.
         if (swarm.Comp.Bees > 0)
             wildComp.Bees = swarm.Comp.Bees;
         wildComp.ScoutState = BeeScoutState.Home;
+        wildComp.Diet = swarm.Comp.Diet;
+        if (wildComp.Diet == BeehiveDiet.Meat)
+        {
+            _adminLog.Add(LogType.EntitySpawn, LogImpact.Medium,
+                $"A meat bee swarm built {ToPrettyString(wild):hive} at {xform.Coordinates}");
+        }
         if (swarm.Comp.Modifier is { } modifierId && _proto.TryIndex<SwarmModifierPrototype>(modifierId, out var modifier))
         {
             wildComp.SwarmModifier = modifierId;
@@ -487,6 +614,9 @@ public sealed partial class BeeSwarmSystem : EntitySystem
 
         _adminLog.Add(LogType.EntitySpawn, LogImpact.Low,
             $"A bee swarm built {ToPrettyString(wild):hive} with {wildComp.Bees} bees");
+
+        var landed = new BeeSwarmLandedEvent(wild);
+        RaiseLocalEvent(swarm, ref landed);
     }
 
     private bool StorageContainsHive(EntityStorageComponent storage)
@@ -540,6 +670,9 @@ public sealed partial class BeeSwarmSystem : EntitySystem
             var combs = SpawnNextToOrDrop(comp.WildCombPrototype, args.Hive);
             if (TryComp<StackComponent>(combs, out var stack))
                 _stack.SetCount((combs, stack), comp.WildCombs);
+
+            var dropped = new WildCombsDroppedEvent(args.Hive, combs, comp.WildCombs);
+            RaiseLocalEvent(ref dropped);
 
             if (SwarmModifierOf(comp)?.CombReagent is { } fill &&
                 _solutions.TryGetSolution(combs, "food", out var combSolution, out _))

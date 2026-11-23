@@ -26,6 +26,12 @@ public sealed partial class BeeHomingComponent : Component
     public float Range = 12f;
 
     /// <summary>
+    /// How close to the hive it counts as arrived. The hive is solid: a bee pressing into it would only slide round it.
+    /// </summary>
+    [DataField]
+    public float ArriveRange = 0.6f;
+
+    /// <summary>
     /// How often it checks whether it can fly home, and whether the way is still clear while flying.
     /// </summary>
     [DataField]

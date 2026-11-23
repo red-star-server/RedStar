@@ -29,6 +29,13 @@ public sealed partial class BeeQueenComponent : Component
     public float NestRange = 12f;
 
     /// <summary>
+    /// Her swarm settles only in storages made from one of these (lockers and crates, not fridges or machines). Empty:
+    /// any storage with room.
+    /// </summary>
+    [DataField]
+    public List<EntProtoId> NestParents = new();
+
+    /// <summary>
     /// What flies off with her when she leaves to found a hive.
     /// </summary>
     [DataField]

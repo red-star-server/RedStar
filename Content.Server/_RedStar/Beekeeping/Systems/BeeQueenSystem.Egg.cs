@@ -36,7 +36,7 @@ public sealed partial class BeeQueenSystem
         var ready = hasQueen &&
                     comp.Pause == BeehivePauseReason.None &&
                     comp.MaxBees > 0 &&
-                    comp.Bees + comp.OutBees >= comp.MaxBees &&
+                    _hive.ColonySize(hive) >= comp.MaxBees &&
                     now >= comp.EggCooldownUntil;
         if (!ready)
         {

@@ -5,7 +5,9 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Shared.NodeContainer;
 using Content.Shared.NodeContainer.NodeGroups;
 using Content.Shared.Tools.Systems;
+using Content.Shared._RedStar.Beekeeping.Data;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server._RedStar.Beekeeping.Systems;
@@ -20,9 +22,14 @@ public sealed partial class BeeSwarmSystem
     [Dependency] private WeldableSystem _weldable = default!;
     [Dependency] private NodeContainerSystem _nodeContainer = default!;
 
-    private readonly HashSet<Entity<GasVentPumpComponent>> _ventsNear = [];
-    private readonly List<Entity<GasVentPumpComponent>> _ventCandidates = [];
-    private readonly List<EntityUid> _ventExits = [];
+    /// <summary>
+    /// How far around a place a meat swarm counts the living creatures when it looks for a quiet one, in tiles.
+    /// </summary>
+    public const float QuietRadius = 8f;
+
+    private readonly HashSet<Entity<GasVentPumpComponent>> _ventsNear = new();
+    private readonly List<Entity<GasVentPumpComponent>> _ventCandidates = new();
+    private readonly List<EntityUid> _ventExits = new();
     private readonly Dictionary<INodeGroup, List<EntityUid>> _networkCache = new();
 
     /// <summary>
@@ -87,28 +94,106 @@ public sealed partial class BeeSwarmSystem
     /// The exits of the entry's network from which a swarm can find a place to nest: a free locker or crate within
     /// <paramref name="range"/> in clear sight of the vent. A swarm that comes out anywhere else only flies about.
     /// </summary>
-    public List<EntityUid> NestExits(EntityUid entry, float range, EntityUid grid)
+    public List<EntityUid> NestExits(EntityUid entry, float range, EntityUid grid,
+        IReadOnlyCollection<EntProtoId>? nestParents = null)
     {
         if (!TryComp<GasVentPumpComponent>(entry, out var pump))
             return [];
 
         FindNetworkVents((entry, pump));
-        return NestExits([.._ventExits], range, grid);
+        return NestExits(new List<EntityUid>(_ventExits), range, grid, nestParents);
     }
 
     /// <summary>
     /// Of the given exits, those with a place to nest near them.
     /// </summary>
-    public List<EntityUid> NestExits(List<EntityUid> exits, float range, EntityUid grid)
+    public List<EntityUid> NestExits(List<EntityUid> exits, float range, EntityUid grid,
+        IReadOnlyCollection<EntProtoId>? nestParents = null)
     {
         var nest = new List<EntityUid>();
         foreach (var vent in exits)
         {
-            if (PickNestStorage(vent, range, grid, _transform.GetMapCoordinates(vent)) != null)
+            if (PickNestStorage(vent, range, grid, _transform.GetMapCoordinates(vent), nestParents: nestParents) != null)
                 nest.Add(vent);
         }
 
         return nest;
+    }
+
+    /// <summary>
+    /// Of the given exits, one with the most living plants around it, by chance among equals. Null if none has any,
+    /// which keeps the choice as it was.
+    /// </summary>
+    public EntityUid? RichestExit(List<EntityUid> exits, float radius)
+    {
+        var most = 0;
+        var counts = new List<int>(exits.Count);
+        foreach (var vent in exits)
+        {
+            var count = _meat.CountDietPlants(_transform.GetMapCoordinates(vent), radius);
+            counts.Add(count);
+            most = Math.Max(most, count);
+        }
+
+        if (most <= 0)
+            return null;
+
+        var best = new List<EntityUid>();
+        for (var i = 0; i < exits.Count; i++)
+        {
+            if (counts[i] == most)
+                best.Add(exits[i]);
+        }
+
+        return _random.Pick(best);
+    }
+
+    /// <summary>
+    /// Of the given exits, the one with the fewest living creatures around it, by chance among equals.
+    /// </summary>
+    public EntityUid? QuietestExit(List<EntityUid> exits, float radius)
+    {
+        if (exits.Count == 0)
+            return null;
+
+        var fewest = int.MaxValue;
+        var counts = new List<int>(exits.Count);
+        foreach (var vent in exits)
+        {
+            var count = _meat.CountLivingNear(_transform.GetMapCoordinates(vent), radius);
+            counts.Add(count);
+            fewest = Math.Min(fewest, count);
+        }
+
+        var best = new List<EntityUid>();
+        for (var i = 0; i < exits.Count; i++)
+        {
+            if (counts[i] == fewest)
+                best.Add(exits[i]);
+        }
+
+        return _random.Pick(best);
+    }
+
+    /// <summary>
+    /// The quietest other vent of the entry's network, whether or not it has a nest nearby.
+    /// </summary>
+    public EntityUid? QuietestExit(EntityUid entry, float radius)
+    {
+        if (!TryComp<GasVentPumpComponent>(entry, out var pump))
+            return null;
+
+        FindNetworkVents((entry, pump));
+        return QuietestExit(new List<EntityUid>(_ventExits), radius);
+    }
+
+    /// <summary>
+    /// Every other vent pump of the entry's network a bee could come out of: not welded, on the same map. A new list.
+    /// </summary>
+    public List<EntityUid> NetworkExits(Entity<GasVentPumpComponent> entry)
+    {
+        FindNetworkVents(entry);
+        return new List<EntityUid>(_ventExits);
     }
 
     /// <summary>
@@ -155,7 +240,8 @@ public sealed partial class BeeSwarmSystem
             return;
 
         var origin = _transform.GetMapCoordinates(swarm, xform);
-        if (PickNestStorage(swarm, swarm.Comp.NestRange, grid, origin) is { } storage)
+        if (PickNestStorage(swarm, swarm.Comp.NestRange, grid, origin, swarm.Comp.Diet == BeehiveDiet.Meat ? QuietRadius : 0f,
+                CarriedQueen(swarm)?.NestParents) is { } storage)
         {
             swarm.Comp.Storage = storage;
             SetSearching(swarm, false);

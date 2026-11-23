@@ -1,3 +1,5 @@
+using Content.Shared._RedStar.Beekeeping.Data;
+
 using Content.Server._RedStar.Beekeeping.Systems;
 using Content.Shared._RedStar.Beekeeping.Prototypes;
 using Robust.Shared.Prototypes;
@@ -9,7 +11,7 @@ namespace Content.Server._RedStar.Beekeeping.Components;
 /// to a nest site it picked, and builds a wild hive there with its bees. The queen item rides inside it; if the swarm
 /// is gone before it lands, the queen drops where it was.
 /// </summary>
-[RegisterComponent, Access(typeof(BeeSwarmSystem), typeof(BeeQueenSystem), typeof(BeeErrandSystem))]
+[RegisterComponent, Access(typeof(BeeSwarmSystem), typeof(BeeQueenSystem), typeof(BeeErrandSystem), typeof(WildBeehiveRuleSystem))]
 public sealed partial class BeeSwarmComponent : Component
 {
     public const float DefaultSearchHop = 5f;
@@ -23,6 +25,15 @@ public sealed partial class BeeSwarmComponent : Component
     [ViewVariables]
     public int Bees;
 
+    /// <summary>
+    /// What the wild hive will live on, picked where the swarm came out.
+    /// </summary>
+    [ViewVariables]
+    public BeehiveDiet Diet;
+
+    /// <summary>
+    /// The wild hive to build.
+    /// </summary>
     [ViewVariables]
     public EntProtoId WildHive = "WildBeehive";
 

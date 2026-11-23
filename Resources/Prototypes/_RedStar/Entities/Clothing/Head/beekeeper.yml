@@ -1,0 +1,11 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeekeeper
+  name: beekeeper hood
+  description: A hood with a veil that bees cannot get through.
+  components:
+  - type: Sprite
+    sprite: _RedStar/Clothing/Head/Hats/beekeeper.rsi
+  - type: Clothing
+    sprite: _RedStar/Clothing/Head/Hats/beekeeper.rsi
+  - type: PressureProtection

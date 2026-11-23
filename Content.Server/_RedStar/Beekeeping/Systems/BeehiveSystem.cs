@@ -23,6 +23,8 @@ namespace Content.Server._RedStar.Beekeeping.Systems;
 /// </summary>
 public sealed partial class BeehiveSystem : SharedBeehiveSystem
 {
+    [Dependency] private AngryBeehiveSystem _angry = default!;
+    [Dependency] private MeatBeehiveSystem _meat = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private BeeSwarmSystem _swarm = default!;
     [Dependency] private BeeErrandSystem _errands = default!;
@@ -123,6 +125,8 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
 
         UpdateMaxBees(ent);
         UpdateHiveAppearance(ent);
+
+        _angry.AngerOnFrameRemoved(ent);
     }
 
     /// <summary>
@@ -147,13 +151,15 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
     /// The same check that refuses her at the slot, so a flying queen can skip a hive that would turn her away.
     /// </summary>
     public bool HasRoomForQueen(Entity<BeehiveComponent> hive)
+        => HasRoomForQueenOnMap(Transform(hive).MapUid, hive.Owner);
+
+    public bool HasRoomForQueenOnMap(EntityUid? map, EntityUid? excludedHive = null)
     {
-        var map = Transform(hive).MapUid;
         var active = 0;
         var query = EntityQueryEnumerator<BeehiveComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var other, out var xform))
         {
-            if (uid != hive.Owner && xform.MapUid == map && GetQueen((uid, other)) != null)
+            if (uid != excludedHive && xform.MapUid == map && GetQueen((uid, other)) != null)
                 active++;
         }
 
@@ -255,8 +261,8 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
             RemoveHomeBee(hive);
         }
 
-        // A colony waiting to abandon a frameless hive stays together.
-        if (waitingToAbandon || comp.Bees + comp.OutBees <= comp.MaxBees)
+        // Excess bees leave after a grace period. A colony waiting to abandon a frameless hive stays together.
+        if (waitingToAbandon || ColonySize(hive) <= comp.MaxBees)
         {
             comp.CrowdedSince = null;
             comp.Crowding = BeehiveCrowding.None;
@@ -280,10 +286,10 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
                     if (comp.HasEgg && _swarm.TrySwarm(hive))
                         _queen.EndEgg(hive);
                     else
-                        _swarm.LeaveInSwarm(hive, comp.Bees + comp.OutBees - comp.MaxBees);
+                        _swarm.LeaveInSwarm(hive, ColonySize(hive) - comp.MaxBees);
                 }
 
-                if (comp.Bees + comp.OutBees <= comp.MaxBees)
+                if (ColonySize(hive) <= comp.MaxBees)
                 {
                     comp.CrowdedSince = null;
                     comp.Crowding = BeehiveCrowding.None;
@@ -380,7 +386,8 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
         var comp = hive.Comp;
         var traits = GetHiveTotals(hive);
 
-        if (comp.Bees + comp.OutBees < comp.MaxBees && Timing.CurTime >= comp.NextLay)
+        // The queen lays a bee when she is ready and there is room; whatever nectar is left goes into combs.
+        if (ColonySize(hive) < comp.MaxBees && Timing.CurTime >= comp.NextLay)
         {
             var beeCost = comp.BeeCost * traits.BeeCost;
             var take = Math.Min(beeCost - comp.BeeProgress, comp.Nectar);
@@ -442,7 +449,7 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
         return GetQueen(hive) != null &&
                comp.Pause == BeehivePauseReason.None &&
                WorkersAtHome(comp) > 0 &&
-               comp.Bees + comp.OutBees < comp.MaxBees &&
+               ColonySize(hive) < comp.MaxBees &&
                (comp.Nectar > 0f || comp.BeeProgress > 0f || comp.OutBees > 0);
     }
 
@@ -459,7 +466,7 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
         if (!comp.Wild && _frames.Count == 0)
             return ApiaryNectarUse.NoFrames;
 
-        var growing = comp.Bees + comp.OutBees < comp.MaxBees;
+        var growing = ColonySize(hive) < comp.MaxBees;
         var room = comp.Wild ? comp.WildCombs < comp.MaxWildCombs : HasRoomForComb(_frames);
         var workers = WorkersAtHome(comp) > 0;
 
@@ -549,11 +556,14 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
             if (comp.Bees > 0 || comp.OutBees > 0)
             {
                 args.PushMarkup(Loc.GetString("beekeeping-hive-examine-bees",
-                    ("bees", comp.Bees), ("max", comp.MaxBees), ("outside", comp.OutBees)));
+                    ("bees", comp.Bees + (GetQueen(ent) != null ? 1 : 0)), ("max", comp.MaxBees), ("outside", comp.OutBees)));
             }
 
             args.PushMarkup(Loc.GetString("beekeeping-hive-examine-nectar",
                 ("level", GetNectarLevel(comp).ToString())));
+
+            if (comp.Wild && comp.Diet == BeehiveDiet.Meat)
+                args.PushMarkup(Loc.GetString("beekeeping-hive-examine-meat"));
 
             if (comp.Wild && comp.SwarmModifier is { } modifierId && Proto.TryIndex(modifierId, out var modifier))
             {
@@ -703,6 +713,8 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
             return false;
 
         hive.Comp.WildCombs++;
+        if (hive.Comp.Diet == BeehiveDiet.Meat)
+            _meat.TakeCombBlood(hive);
 
         return true;
     }
@@ -721,6 +733,7 @@ public sealed partial class BeehiveSystem : SharedBeehiveSystem
         var shown = hive.Comp.MaxWildCombs > 0 &&
                     hive.Comp.WildCombs >= hive.Comp.MaxWildCombs * hive.Comp.WildHoneyShown;
         Appearance.SetData(hive, WildBeehiveVisuals.Honey, shown);
+        Appearance.SetData(hive, WildBeehiveVisuals.Meat, hive.Comp.Diet == BeehiveDiet.Meat);
     }
 
     public void UpdateFrameAppearance(Entity<BeeFrameComponent> frame)
