@@ -17,7 +17,7 @@ public sealed partial class SampleStabilizerWindow : FancyWindow
     [Dependency] private IEntityManager _entities = default!;
     [Dependency] private IPrototypeManager _prototypes = default!;
 
-    public event Action<int>? OnStabilization;
+    public event Action<NetEntity, int>? OnStabilization;
 
     private SampleEntryControl? _selected;
     private IReadOnlyList<SampleView> _samples = [];
@@ -37,8 +37,8 @@ public sealed partial class SampleStabilizerWindow : FancyWindow
         IoCManager.InjectDependencies(this);
         StabilizationButton.OnPressed += _ =>
         {
-            if (_selected is { } selected && !_stabilizationInProgress)
-                OnStabilization?.Invoke(selected.Sample.Id);
+            if (_selected is { } selected && _dish is { } dish && !_stabilizationInProgress)
+                OnStabilization?.Invoke(dish, selected.Sample.Id);
         };
     }
 

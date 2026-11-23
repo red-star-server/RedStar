@@ -12,8 +12,13 @@ public enum SampleStabilizerUiKey
 }
 
 [Serializable, NetSerializable]
-public sealed class SampleStabilizerUiStabilizationMessage(int sampleId) : BoundUserInterfaceMessage
+public sealed class SampleStabilizerUiStabilizationMessage(NetEntity dish, int sampleId) : BoundUserInterfaceMessage
 {
+    /// <summary>
+    /// Dish the sample was selected from. Sample IDs are unique only within one dish.
+    /// </summary>
+    public readonly NetEntity Dish = dish;
+
     public readonly int SampleId = sampleId;
 }
 

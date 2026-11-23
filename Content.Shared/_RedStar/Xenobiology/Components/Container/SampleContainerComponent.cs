@@ -50,6 +50,13 @@ public sealed partial class SampleContainerComponent : Component
     public bool AllowTransfer = true;
 
     /// <summary>
+    /// Whether SampleSystem keeps the container's label equal to its sample name or sample count.
+    /// The label appears in parentheses after the item name, for example in smart fridges.
+    /// </summary>
+    [DataField]
+    public bool LabelBySamples;
+
+    /// <summary>
     /// Whether a collector may take samples out of this container.
     /// </summary>
     [DataField]

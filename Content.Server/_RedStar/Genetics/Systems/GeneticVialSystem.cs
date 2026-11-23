@@ -1,9 +1,12 @@
+using System.Linq;
 using Content.Server._RedStar.Xenobiology.Systems;
 using Content.Shared._RedStar.Genetics.Components;
 using Content.Shared._RedStar.Genetics.Prototypes;
 using Content.Shared._RedStar.Genetics.Visuals;
 using Content.Shared._RedStar.Xenobiology.Components.Container;
+using Content.Shared.Labels.EntitySystems;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server._RedStar.Genetics.Systems;
 
@@ -11,9 +14,11 @@ public sealed partial class GeneticVialSystem : EntitySystem
 {
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SampleSystem _samples = default!;
+    [Dependency] private LabelSystem _labels = default!;
+    [Dependency] private IPrototypeManager _prototypes = default!;
 
     [SubscribeLocalEvent]
-    private void OnMapInit(Entity<GeneticVialComponent> ent, ref MapInitEvent args) => UpdateVisual(ent);
+    private void OnMapInit(Entity<GeneticVialComponent> ent, ref MapInitEvent args) => UpdateContents(ent);
 
     /// <summary>
     /// Returns whether the vial lacks the gene; does not validate the gene prototype.
@@ -41,7 +46,7 @@ public sealed partial class GeneticVialSystem : EntitySystem
             vial.Comp.Revision++;
             return false;
         }
-        UpdateVisual(vial);
+        UpdateContents(vial);
         return true;
     }
 
@@ -54,9 +59,22 @@ public sealed partial class GeneticVialSystem : EntitySystem
             return;
         vial.Comp.Genes.Clear();
         vial.Comp.Revision++;
-        UpdateVisual(vial);
+        UpdateContents(vial);
     }
 
-    private void UpdateVisual(Entity<GeneticVialComponent> vial) =>
+    private void UpdateContents(Entity<GeneticVialComponent> vial)
+    {
         _appearance.SetData(vial, GeneticVialVisuals.Filled, vial.Comp.Genes.Count > 0);
+
+        var genes = vial.Comp.Genes;
+        var text = genes.Count switch
+        {
+            0 => null,
+            <= 2 => string.Join(", ", genes.Select(id => Loc.GetString(_prototypes.Index(id).Name)).Order()),
+            var count => Loc.GetString("genetic-vial-label-many", ("count", count))
+        };
+
+        if (_labels.GetLabelText(vial.Owner) != (text is null ? null : FormattedMessage.EscapeText(text)))
+            _labels.Label(vial, text);
+    }
 }

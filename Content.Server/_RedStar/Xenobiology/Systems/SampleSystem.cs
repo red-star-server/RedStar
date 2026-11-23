@@ -3,18 +3,23 @@ using Content.Shared._RedStar.Genetics.Prototypes;
 using Content.Shared._RedStar.Xenobiology.Components.Container;
 using Content.Shared._RedStar.Xenobiology.Data;
 using Content.Shared._RedStar.Xenobiology.Events;
+using Content.Shared.Labels.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server._RedStar.Xenobiology.Systems;
 
 public sealed partial class SampleSystem : EntitySystem
 {
     [Dependency] private SharedContainerSystem _containers = default!;
+    [Dependency] private LabelSystem _labels = default!;
 
     [SubscribeLocalEvent]
     private void OnSamplesChanged(Entity<SampleContainerComponent> ent, ref SampleContainerChangedEvent args)
     {
+        UpdateLabel(ent);
+
         if (!_containers.TryGetContainingContainer(ent.Owner, out var container))
             return;
 
@@ -33,6 +38,22 @@ public sealed partial class SampleSystem : EntitySystem
             if (sample.Id == 0)
                 sample.Id = NextSampleId(ent.Comp);
         }
+    }
+
+    private void UpdateLabel(Entity<SampleContainerComponent> ent)
+    {
+        if (!ent.Comp.LabelBySamples)
+            return;
+
+        var text = ent.Comp.Samples.Count switch
+        {
+            0 => null,
+            1 => ent.Comp.Samples[0].Name,
+            var count => Loc.GetString("sample-container-label-many", ("count", count))
+        };
+
+        if (_labels.GetLabelText(ent.Owner) != (text is null ? null : FormattedMessage.EscapeText(text)))
+            _labels.Label(ent, text);
     }
 
     /// <summary>

@@ -15,6 +15,7 @@ using Content.Shared._RedStar.Xenobiology.Components.Machines;
 using Content.Shared._RedStar.Xenobiology.Data;
 using Content.Shared._RedStar.Xenobiology.Events;
 using Content.Shared._RedStar.Xenobiology.UI;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 
@@ -27,6 +28,7 @@ public sealed partial class SampleStabilizerSystem : EntitySystem
     [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
     [Dependency] private SharedSolutionContainerSystem _solutions = default!;
+    [Dependency] private SharedContainerSystem _containers = default!;
     [Dependency] private SampleSystem _samples = default!;
     [Dependency] private IGameTiming _timing = default!;
 
@@ -55,6 +57,18 @@ public sealed partial class SampleStabilizerSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
+    private void OnBeakerSolutionChanged(Entity<SolutionManagerComponent> beaker, ref SolutionChangedEvent args)
+    {
+        if (!_containers.TryGetContainingContainer(beaker.Owner, out var container) ||
+            !TryComp<SampleStabilizerComponent>(container.Owner, out var stabilizer) ||
+            container.ID != stabilizer.BeakerSlot ||
+            _itemSlots.GetItemOrNull(container.Owner, stabilizer.BeakerSlot) != beaker.Owner)
+            return;
+
+        UpdateUI((container.Owner, stabilizer));
+    }
+
+    [SubscribeLocalEvent]
     private void OnDestruction(Entity<SampleStabilizerComponent> ent, ref DestructionEventArgs args) => CancelStabilization(ent);
 
     [SubscribeLocalEvent]
@@ -77,7 +91,8 @@ public sealed partial class SampleStabilizerSystem : EntitySystem
     {
         var sampleId = args.SampleId;
         if (ent.Comp.StabilizationInProgress || !_power.IsPowered(ent.Owner) ||
-            !TryGetDish(ent, out var dish) || dish.Comp.Samples.Find(s => s.Id == sampleId) is not { } sample)
+            !TryGetDish(ent, out var dish) || dish.Owner != GetEntity(args.Dish) ||
+            dish.Comp.Samples.Find(s => s.Id == sampleId) is not { } sample)
             return;
 
         if (!TryGetBeaker(ent, out var beaker, out var solution))
