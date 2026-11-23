@@ -41,7 +41,7 @@ public sealed partial class BodyPartSystem
     public Dictionary<ProtoId<OrganCategoryPrototype>, Entity<OrganComponent>> GetPartOrgans(Entity<BodyPartComponent?> part)
     {
         if (!_query.Resolve(part, ref part.Comp) ||
-            _body.GetBody(part.Owner) is not {} body)
+            _body.GetBody(part.Owner) is null)
             return [];
 
         var organs = new Dictionary<ProtoId<OrganCategoryPrototype>, Entity<OrganComponent>>();

@@ -5,7 +5,7 @@ namespace Content.Shared._Trauma.Common.Body;
 /// Useful to avoid having to order 20 systems after it.
 /// </summary>
 [ByRefEvent]
-public record struct BodyInitEvent();
+public record struct BodyInitEvent;
 
 /// <summary>
 /// Event raised on the body then organ to allow prevention of insertion.

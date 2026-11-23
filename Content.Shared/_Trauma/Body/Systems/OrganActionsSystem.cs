@@ -1,7 +1,6 @@
 using Content.Shared._Trauma.Common.Body;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
-using Content.Shared.Body;
 
 namespace Content.Shared._Trauma.Body;
 
@@ -9,8 +8,6 @@ public sealed partial class OrganActionsSystem : EntitySystem
 {
     [Dependency] private ActionContainerSystem _actionContainer = default!;
     [Dependency] private SharedActionsSystem _actions = default!;
-
-    [Dependency] private EntityQuery<OrganComponent> _organQuery;
 
     [SubscribeLocalEvent]
     private void OnMapInit(Entity<OrganActionsComponent> ent, ref MapInitEvent args)

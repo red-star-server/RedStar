@@ -166,7 +166,7 @@ public sealed class BodyTest : GameTest
         var body = SSpawn(prototype);
         var root = _parts.GetRootPart(body);
         Assert.That(root, Is.Not.Null);
-        Assert.That(_body.GetCategory(root.Value.Owner).Value.Id, Is.EqualTo("Torso"));
+        Assert.That(_body.GetCategory(root.Value.Owner)?.Id, Is.EqualTo("Torso"));
 
         var cache = SComp<BodyCacheComponent>(body);
         Assert.That(cache.Organs.Count, Is.EqualTo(SComp<InitialBodyComponent>(body).Organs.Count));
@@ -311,7 +311,7 @@ public sealed class BodyTest : GameTest
         Assert.That(_body.RemoveOrgan(body, arm), Is.True);
         Assert.That(_body.GetOrgan(body, "ArmLeft"), Is.Null);
         Assert.That(_body.GetOrgan(body, "HandLeft"), Is.Null);
-        Assert.That(_parts.GetSeveredOrgansContainer(arm).ContainedEntities, Does.Contain(hand));
+        Assert.That(_parts.GetSeveredOrgansContainer(arm)?.ContainedEntities, Does.Contain(hand));
         Assert.That(SEntMan.HasComponent<EnabledOrganComponent>(hand), Is.False);
 
         Assert.That(_body.InsertOrgan(body, arm), Is.True);
@@ -440,7 +440,7 @@ public sealed class BodyTest : GameTest
         Assert.That(_body.GetOrgan(body, "Brain"), Is.Null);
         Assert.That(SEntMan.HasComponent<DebrainedComponent>(body), Is.True);
         Assert.That(SComp<BrainComponent>(brain).Active, Is.False);
-        Assert.That(_parts.GetSeveredOrgansContainer(head).ContainedEntities, Does.Contain(brain));
+        Assert.That(_parts.GetSeveredOrgansContainer(head)?.ContainedEntities, Does.Contain(brain));
 
         Assert.That(_body.InsertOrgan(body, head), Is.True);
         Assert.That(_body.GetOrgan(body, "Brain"), Is.EqualTo(brain));

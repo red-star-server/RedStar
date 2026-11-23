@@ -34,13 +34,13 @@ public sealed partial class DelayedDeathComponent : Component
     public Dictionary<string, int> MissingOrgans = [];
 
     /// <summary>
-    /// What message is displayed when the time runs out - Goobstation
+    /// What message is displayed when the time runs out.
     /// </summary>
     [DataField]
     public LocId DeathMessageId;
 
     /// <summary>
-    /// What the defib displays when attempting to revive this entity. - Goobstation
+    /// What the defib displays when attempting to revive this entity.
     /// </summary>
     [DataField]
     public LocId DefibFailMessageId = "defibrillator-missing-organs";

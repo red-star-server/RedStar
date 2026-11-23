@@ -1,8 +1,5 @@
 namespace Content.Shared._Trauma.Common.Body;
 
-/// <summary>
-/// Minimal API for BodySystem to use while keeping the actual code in goob module
-/// </summary>
 public abstract partial class CommonInsideBodyPartSystem : EntitySystem
 {
     /// <summary>

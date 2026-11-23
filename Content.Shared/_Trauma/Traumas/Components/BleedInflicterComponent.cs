@@ -13,7 +13,7 @@ public sealed partial class BleedInflicterComponent : Component
     public bool IsBleeding;
 
     /// <summary>
-    ///     The severity it requires for the wound to have, so bleeds can be induced
+    /// The severity it requires for the wound to have, so bleeds can be induced
     /// </summary>
     [DataField, AutoNetworkedField]
     public FixedPoint2 SeverityThreshold = FixedPoint2.Zero;

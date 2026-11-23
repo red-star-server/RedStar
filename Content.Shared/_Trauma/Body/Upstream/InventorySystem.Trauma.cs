@@ -3,7 +3,7 @@ using Robust.Shared.Map;
 
 namespace Content.Shared.Inventory;
 
-public partial class InventorySystem : EntitySystem
+public partial class InventorySystem
 {
     [Dependency] private RandomHelperSystem _randomHelper = default!;
 

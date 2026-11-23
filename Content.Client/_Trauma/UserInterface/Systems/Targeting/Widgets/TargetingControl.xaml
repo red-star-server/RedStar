@@ -1,6 +1,3 @@
-<!--
--->
-
 <widgets:TargetingControl
     xmlns="https://spacestation14.io"
     xmlns:widgets="using:Content.Client._Trauma.UserInterface.Systems.Targeting.Widgets"

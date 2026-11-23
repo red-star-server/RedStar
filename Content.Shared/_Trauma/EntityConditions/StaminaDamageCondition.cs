@@ -20,7 +20,7 @@ public sealed partial class StaminaDamageCondition : EntityConditionBase<Stamina
 
     public override string EntityConditionGuidebookText(IPrototypeManager prototype)
         => Loc.GetString("reagent-effect-condition-guidebook-stamina-damage-threshold",
-            ("max", float.IsPositiveInfinity(Max) ? (float) int.MaxValue : Max),
+            ("max", float.IsPositiveInfinity(Max) ? int.MaxValue : Max),
             ("min", Min));
 }
 

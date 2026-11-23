@@ -234,7 +234,7 @@ public sealed partial class PartStatusSystem : EntitySystem
         var overallSeverity = GetOverallWoundSeverity(partStatus.DamageSeverities);
         if (overallSeverity != WoundSeverity.Healed)
         {
-            var localeText = $"inspect-wound-{overallSeverity.ToString().ToLower()}";
+            var localeText = $"inspect-wound-{overallSeverity.ToString().ToLowerInvariant()}";
             sb.Append(Loc.GetString(localeText));
             hasStatus = true;
         }
@@ -288,7 +288,7 @@ public sealed partial class PartStatusSystem : EntitySystem
                 continue;
 
             var cappedSeverity = severity > WoundSeverity.Severe ? WoundSeverity.Severe : severity;
-            var localeText = $"inspect-wound-{type}-{cappedSeverity.ToString().ToLower()}";
+            var localeText = $"inspect-wound-{type}-{cappedSeverity.ToString().ToLowerInvariant()}";
             descriptions.Add(Loc.GetString(localeText));
         }
 
