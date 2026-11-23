@@ -6,12 +6,21 @@ namespace Content.Shared._RedStar.Xenobiology.Components.Tools;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class SampleCollectorComponent : Component
 {
+    /// <summary>
+    /// Time needed to collect a sample.
+    /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public TimeSpan Delay = TimeSpan.FromSeconds(4f);
 
+    /// <summary>
+    /// Damage dealt to a living target by taking a biopsy.
+    /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public DamageSpecifier? Damage;
 
+    /// <summary>
+    /// Distance the user may move before collection is interrupted.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public float MovementThreshold = 0.5f;
 

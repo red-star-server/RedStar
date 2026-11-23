@@ -1,9 +1,11 @@
+using Content.Server._RedStar.Genetics.Systems;
 namespace Content.Server._RedStar.Genetics.Components;
 
 /// <summary>
 /// Controls one linked genetic chamber through its dedicated device port.
 /// </summary>
 [RegisterComponent]
+[Access(typeof(GeneticsConsoleSystem))]
 public sealed partial class GeneticsConsoleComponent : Component
 {
     public const string ChamberPort = "GeneticChamberSender";

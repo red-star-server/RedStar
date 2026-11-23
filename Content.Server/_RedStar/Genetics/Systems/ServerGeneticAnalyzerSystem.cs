@@ -44,6 +44,10 @@ public sealed partial class ServerGeneticAnalyzerSystem : GeneticAnalyzerSystem
             return;
         }
 
+        if (_ui.TryGetUiState<GeneticAnalyzerUiState>(analyzer.Owner, GeneticAnalyzerUiKey.Key, out var previous) &&
+            previous.Equals(report))
+            return;
+
         _ui.SetUiState(analyzer.Owner, GeneticAnalyzerUiKey.Key, report);
     }
 

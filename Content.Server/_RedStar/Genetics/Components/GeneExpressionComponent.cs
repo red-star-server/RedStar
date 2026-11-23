@@ -1,3 +1,4 @@
+using Content.Server._RedStar.Genetics.Systems;
 using Content.Shared._RedStar.Genetics.Prototypes;
 using Robust.Shared.Prototypes;
 
@@ -8,8 +9,12 @@ namespace Content.Server._RedStar.Genetics.Components;
 /// Components already present on the host retain their configuration.
 /// </summary>
 [RegisterComponent]
+[Access(typeof(GeneExpressionSystem))]
 public sealed partial class GeneExpressionComponent : Component
 {
+    /// <summary>
+    /// Gene expressed by this status effect.
+    /// </summary>
     [DataField(required: true)]
     public ProtoId<GenePrototype> Gene;
 

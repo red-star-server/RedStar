@@ -44,11 +44,11 @@ public sealed partial class GeneticProfileControl : BoxContainer
         IoCManager.InjectDependencies(this);
         PatientPanel.PanelOverride = new StyleBoxFlat
         {
-            BackgroundColor = Color.FromHex("#202832"),
-            BorderColor = Color.FromHex("#6A9BA6"),
+            BackgroundColor = GeneticsUi.PanelDark,
+            BorderColor = GeneticsUi.Border,
             BorderThickness = new Thickness(0, 0, 0, 2)
         };
-        LoadBar.BackgroundStyleBoxOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#171C24") };
+        LoadBar.BackgroundStyleBoxOverride = new StyleBoxFlat { BackgroundColor = GeneticsUi.BarBackground };
         Search.OnTextChanged += _ => FilterGenes();
         Clear();
     }
@@ -103,7 +103,7 @@ public sealed partial class GeneticProfileControl : BoxContainer
 
         var overloaded = state.Load > state.MaximumLoad;
         var full = state.Load >= state.MaximumLoad && state.Load > 0;
-        var loadColor = Color.FromHex(overloaded ? "#E08086" : full ? "#E0B773" : "#85D5CA");
+        var loadColor = overloaded ? GeneticsUi.Danger : full ? GeneticsUi.Warning : GeneticsUi.Accent;
         LoadValue.Text = Loc.GetString("genetic-analyzer-load-value", ("load", MathF.Round(state.LoadPercentage)));
         LoadValue.FontColorOverride = loadColor;
         LoadBar.Value = Math.Clamp(state.LoadPercentage / 100, 0, 1);
@@ -117,7 +117,7 @@ public sealed partial class GeneticProfileControl : BoxContainer
         var expanded = changedPatient ? new HashSet<ProtoId<GenePrototype>>() : _rows.Where(row => row.Value.Expanded).Select(row => row.Key).ToHashSet();
         GeneList.RemoveAllChildren();
         _rows.Clear();
-        foreach (var entry in state.Genes.OrderBy(gene => Loc.GetString($"gene-{gene.Id}-name")))
+        foreach (var entry in state.Genes.OrderBy(entry => Loc.GetString(_prototypes.Index(entry.Id).Name)))
         {
             var gene = _prototypes.Index(entry.Id);
             var row = new GeneRow(gene, entry.Status, expanded.Contains(entry.Id),
@@ -151,12 +151,12 @@ public sealed partial class GeneticProfileControl : BoxContainer
 
         public GeneRow(GenePrototype gene, GeneStatus? status, bool expanded, float loadPercentage, Action? selected)
         {
-            GeneName = Loc.GetString($"gene-{gene.ID}-name");
-            var color = CategoryColor(gene.Category);
+            GeneName = Loc.GetString(gene.Name);
+            var color = GeneticsUi.CategoryColor(gene.Category);
             var inactive = status is GeneStatus.Raw or GeneStatus.Suppressed;
             PanelOverride = new StyleBoxFlat
             {
-                BackgroundColor = Color.FromHex("#252B35"),
+                BackgroundColor = GeneticsUi.Panel,
                 BorderColor = color,
                 BorderThickness = new Thickness(3, 0, 0, 0)
             };
@@ -180,8 +180,8 @@ public sealed partial class GeneticProfileControl : BoxContainer
             }
             header.AddChild(new Label
             {
-                Text = Loc.GetString($"genetic-analyzer-category-{gene.Category.ToString().ToLowerInvariant()}"),
-                FontColorOverride = inactive ? Color.FromHex("#E0B773") : color,
+                Text = Loc.GetString(GeneticsUi.CategoryLabel(gene.Category)),
+                FontColorOverride = inactive ? GeneticsUi.Warning : color,
                 ToolTip = inactive
                     ? Loc.GetString(status == GeneStatus.Raw ? "genetic-analyzer-dormant" : "genetic-analyzer-suppressed")
                     : null
@@ -197,7 +197,7 @@ public sealed partial class GeneticProfileControl : BoxContainer
                 Visible = expanded && selected is null
             };
             var description = new RichTextLabel { HorizontalExpand = true };
-            description.SetMessage(Loc.GetString($"gene-{gene.ID}-desc"));
+            description.SetMessage(Loc.GetString(gene.Description));
             _details.AddChild(description);
             _details.AddChild(new Label
             {
@@ -211,14 +211,5 @@ public sealed partial class GeneticProfileControl : BoxContainer
                 toggle.Text = args.Pressed ? "\u2212" : "+";
             };
         }
-
-        private static Color CategoryColor(GeneCategory category) => Color.FromHex(category switch
-        {
-            GeneCategory.Beneficial => "#85D5AD",
-            GeneCategory.Pathological => "#E58D98",
-            GeneCategory.Mixed => "#E0BE7D",
-            GeneCategory.Cosmetic => "#C0A5E0",
-            _ => "#9ABBD1"
-        });
     }
 }

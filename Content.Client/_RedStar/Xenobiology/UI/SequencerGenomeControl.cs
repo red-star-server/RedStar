@@ -18,6 +18,10 @@ public sealed partial class SequencerGenomeControl : Control
         Color.FromHex("#6EA7D1"), Color.FromHex("#D98F9B")
     ];
 
+    private static readonly Color Link = Color.FromHex("#4B6573");
+    private static readonly Color Halo = Color.FromHex("#344A59");
+    private static readonly Color Core = Color.FromHex("#152431");
+
     private readonly Font _font;
     private SequencerMarkerView[] _markers = [];
     private int _selected = -1;
@@ -74,12 +78,12 @@ public sealed partial class SequencerGenomeControl : Control
             {
                 var prior = (OriginX + Step * (i - 1) + 38) * scale;
                 handle.DrawLine(new Vector2(prior + 18 * scale, center),
-                    new Vector2(x - 18 * scale, center), Color.FromHex("#4B6573"));
+                    new Vector2(x - 18 * scale, center), Link);
             }
             if (i == _selected)
-                handle.DrawCircle(new Vector2(x, center), 29 * scale, Color.FromHex("#344A59"));
+                handle.DrawCircle(new Vector2(x, center), 29 * scale, Halo);
             handle.DrawCircle(new Vector2(x, center), 20 * scale, tint);
-            handle.DrawCircle(new Vector2(x, center), 11 * scale, Color.FromHex("#152431"));
+            handle.DrawCircle(new Vector2(x, center), 11 * scale, Core);
             handle.DrawLine(new Vector2(x - 8 * scale, center - 8 * scale),
                 new Vector2(x + 8 * scale, center + 8 * scale), tint);
             handle.DrawLine(new Vector2(x - 8 * scale, center + 8 * scale),

@@ -17,6 +17,7 @@ namespace Content.Server._RedStar.Genetics.Systems;
 /// </summary>
 public sealed partial class GeneticsConsoleSystem : EntitySystem
 {
+    [Dependency] private PowerReceiverSystem _power = default!;
     [Dependency] private GeneticChamberSystem _chambers = default!;
     [Dependency] private ServerGenomeSystem _genomes = default!;
     [Dependency] private DeviceLinkSystem _links = default!;
@@ -35,14 +36,14 @@ public sealed partial class GeneticsConsoleSystem : EntitySystem
     private bool TryGetChamber(Entity<GeneticsConsoleComponent> console, out Entity<GeneticChamberComponent> chamber)
     {
         chamber = default;
-        if (!this.IsPowered(console.Owner, EntityManager) || !Transform(console).Anchored)
+        if (!_power.IsPowered(console.Owner) || !Transform(console).Anchored)
             return false;
         var linked = _links.GetLinkedSinks(console.Owner, GeneticsConsoleComponent.ChamberPort);
         if (linked.Count != 1)
             return false;
         var uid = linked.First();
         if (TerminatingOrDeleted(uid) || !TryComp<GeneticChamberComponent>(uid, out var component) ||
-            !Transform(uid).Anchored || !this.IsPowered(uid, EntityManager) ||
+            !Transform(uid).Anchored || !_power.IsPowered(uid) ||
             !_transform.InRange(Transform(console).Coordinates, Transform(uid).Coordinates, console.Comp.MaxDistance))
             return false;
         chamber = (uid, component);
@@ -162,7 +163,11 @@ public sealed partial class GeneticsConsoleSystem : EntitySystem
                     (chamber.Comp.Ends - chamber.Comp.Started).TotalSeconds, 0, 1);
             }
         }
-        _ui.SetUiState(console.Owner, GeneticsConsoleUiKey.Key,
-            new GeneticsConsoleUiState(profile, status, procedures, beaker, progress, operation));
+        var state = new GeneticsConsoleUiState(profile, status, procedures, beaker, progress, operation);
+        if (_ui.TryGetUiState<GeneticsConsoleUiState>(console.Owner, GeneticsConsoleUiKey.Key, out var previous) &&
+            previous.Equals(state))
+            return;
+
+        _ui.SetUiState(console.Owner, GeneticsConsoleUiKey.Key, state);
     }
 }

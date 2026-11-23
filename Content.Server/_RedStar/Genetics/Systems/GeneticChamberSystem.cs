@@ -13,7 +13,6 @@ using Content.Shared.Database;
 using Content.Shared.Power;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Containers;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -24,12 +23,12 @@ namespace Content.Server._RedStar.Genetics.Systems;
 /// </summary>
 public sealed partial class GeneticChamberSystem : EntitySystem
 {
+    [Dependency] private PowerReceiverSystem _power = default!;
     [Dependency] private ServerGenomeSystem _genomes = default!;
     [Dependency] private SharedSolutionContainerSystem _solutions = default!;
     [Dependency] private ItemSlotsSystem _slots = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IAdminLogManager _logs = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
 
     private TimeSpan _nextUpdate;
 
@@ -67,7 +66,7 @@ public sealed partial class GeneticChamberSystem : EntitySystem
     {
         if (!Resolve(chamber, ref chamber.Comp, logMissing: false) || TerminatingOrDeleted(chamber) ||
             chamber.Comp.Patient is not null || TerminatingOrDeleted(console) || TerminatingOrDeleted(patient) ||
-            !this.IsPowered(chamber.Owner, EntityManager) || !Transform(chamber).Anchored || GetPatient(chamber) != patient ||
+            !_power.IsPowered(chamber.Owner) || !Transform(chamber).Anchored || GetPatient(chamber) != patient ||
             !_genomes.TryGetGeneStatus(patient, gene, out var status) || !procedure.CanProcess(status) ||
             procedure == GeneticProcedure.Activate && !_genomes.IsGeneCompatible(patient, gene) ||
             !chamber.Comp.Procedures.TryGetValue(procedure, out var settings) ||
@@ -83,9 +82,9 @@ public sealed partial class GeneticChamberSystem : EntitySystem
         chamber.Comp.InitialStatus = status;
         chamber.Comp.Operation = procedure;
         chamber.Comp.Consumed = FixedPoint2.Zero;
-        chamber.Comp.NextSound = _timing.CurTime;
         chamber.Comp.Started = _timing.CurTime;
         chamber.Comp.Ends = _timing.CurTime + settings.Duration;
+        EnsureComp<ActiveGeneticChamberComponent>(chamber);
         _logs.Add(LogType.Action, LogImpact.Medium,
             $"{ToPrettyString(user)} started genetic {procedure} of {gene} on {ToPrettyString(patient)} using {ToPrettyString(chamber)}.");
         return true;
@@ -127,6 +126,7 @@ public sealed partial class GeneticChamberSystem : EntitySystem
         chamber.Comp.Console = null;
         chamber.Comp.Beaker = null;
         chamber.Comp.Consumed = FixedPoint2.Zero;
+        RemComp<ActiveGeneticChamberComponent>(chamber);
         if (console is not { } controller || Deleted(controller))
             return;
 
@@ -141,10 +141,10 @@ public sealed partial class GeneticChamberSystem : EntitySystem
             return;
         _nextUpdate = _timing.CurTime + TimeSpan.FromSeconds(0.5);
 
-        var chambers = EntityQueryEnumerator<GeneticChamberComponent, MetaDataComponent>();
-        while (chambers.MoveNext(out var uid, out var chamber, out var metadata))
+        var chambers = EntityQueryEnumerator<ActiveGeneticChamberComponent, GeneticChamberComponent, MetaDataComponent>();
+        while (chambers.MoveNext(out var uid, out _, out var chamber, out var metadata))
         {
-            if (chamber.Patient is not null && !metadata.EntityPaused)
+            if (!metadata.EntityPaused)
                 Process((uid, chamber));
         }
     }
@@ -171,11 +171,6 @@ public sealed partial class GeneticChamberSystem : EntitySystem
             return;
         }
         component.Consumed += _solutions.RemoveReagent(solution, settings.Reagent.Id, required);
-        if (required > FixedPoint2.Zero && _timing.CurTime >= component.NextSound)
-        {
-            _audio.PlayPvs(component.InjectionSound, chamber.Owner);
-            component.NextSound = _timing.CurTime + component.InjectionSoundInterval;
-        }
         if (_timing.CurTime < component.Ends)
             return;
 

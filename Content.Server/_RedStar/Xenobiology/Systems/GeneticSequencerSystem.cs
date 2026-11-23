@@ -1,9 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Content.Server.Power.EntitySystems;
 using Content.Server._RedStar.Genetics.Systems;
 using Content.Server._RedStar.Xenobiology.Helpers;
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.GameTicking;
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.UserInterface;
@@ -11,6 +12,7 @@ using Content.Shared._RedStar.Genetics.Components;
 using Content.Shared._RedStar.Genetics.Prototypes;
 using Content.Shared._RedStar.Xenobiology.Components.Container;
 using Content.Shared._RedStar.Xenobiology.Components.Machines;
+using Content.Shared._RedStar.Xenobiology.Data;
 using Content.Shared._RedStar.Xenobiology.Events;
 using Content.Shared._RedStar.Xenobiology.UI;
 using Robust.Shared.Containers;
@@ -22,6 +24,7 @@ namespace Content.Server._RedStar.Xenobiology.Systems;
 
 public sealed partial class GeneticSequencerSystem : EntitySystem
 {
+    [Dependency] private PowerReceiverSystem _power = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
     [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
@@ -30,17 +33,7 @@ public sealed partial class GeneticSequencerSystem : EntitySystem
     [Dependency] private SampleSystem _samples = default!;
     [Dependency] private IRobustRandom _random = default!;
 
-    // Discoveries are shared by every sequencer and reset at round restart.
-    private readonly HashSet<ProtoId<GenePrototype>> _decoded = [];
-    // Each gene retains its puzzle for the round; family codes must be unique across genes.
-    private readonly Dictionary<ProtoId<GenePrototype>, Puzzle> _puzzles = [];
-
-    [SubscribeLocalEvent]
-    private void OnRoundRestart(RoundRestartCleanupEvent args)
-    {
-        _decoded.Clear();
-        _puzzles.Clear();
-    }
+    private readonly ConditionalWeakTable<BiologicalSample, Dictionary<ProtoId<GenePrototype>, Puzzle>> _puzzles = new();
 
     [SubscribeLocalEvent]
     private void OnOpened(Entity<GeneticSequencerComponent> ent, ref AfterActivatableUIOpenEvent args) => UpdateUI(ent);
@@ -65,20 +58,22 @@ public sealed partial class GeneticSequencerSystem : EntitySystem
     private void OnPowerChanged(Entity<GeneticSequencerComponent> ent, ref PowerChangedEvent args) => UpdateUI(ent);
 
     private bool TryGetMarker(Entity<GeneticSequencerComponent> ent, int sampleId, string family,
-        out Entity<SampleContainerComponent> dish, out ProtoId<GenePrototype> gene)
+        out Entity<SampleContainerComponent> dish, [NotNullWhen(true)] out BiologicalSample? sample,
+        out ProtoId<GenePrototype> gene)
     {
         gene = default;
-        if (!this.IsPowered(ent.Owner, EntityManager) || !TryGetDish(ent, out dish))
+        sample = null;
+        if (!_power.IsPowered(ent.Owner) || !TryGetDish(ent, out dish))
         {
             dish = default;
             return false;
         }
-        var sample = dish.Comp.Samples.Find(s => s.Id == sampleId);
+        sample = dish.Comp.Samples.Find(s => s.Id == sampleId);
         if (sample?.GetGenome() is not { } genome)
             return false;
         foreach (var id in genome.Genes)
         {
-            if (GetPuzzle(id).FamilyCode != family)
+            if (GetPuzzle(sample, id).FamilyCode != family)
                 continue;
             gene = id;
             return true;
@@ -89,10 +84,10 @@ public sealed partial class GeneticSequencerSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnDecode(Entity<GeneticSequencerComponent> ent, ref GeneticSequencerDecodeMessage args)
     {
-        if (!TryGetMarker(ent, args.SampleId, args.Family, out var dish, out var id) ||
-            _decoded.Contains(id))
+        if (!TryGetMarker(ent, args.SampleId, args.Family, out var dish, out var sample, out var id) ||
+            sample.IsDecoded(id))
             return;
-        var puzzle = GetPuzzle(id);
+        var puzzle = GetPuzzle(sample, id);
         var count = puzzle.Order.Length;
         if (args.Order is not { } order || order.Length != count || order.Distinct().Count() != count ||
             order.Any(index => index < 0 || index >= count))
@@ -110,21 +105,18 @@ public sealed partial class GeneticSequencerSystem : EntitySystem
             return;
         }
 
-        _decoded.Add(id);
-        _popup.PopupEntity(Loc.GetString("genetic-sequencer-discovered", ("gene", Loc.GetString($"gene-{id}-name"))),
+        if (!_samples.TryMarkDecoded(dish.AsNullable(), args.SampleId, id))
+            return;
+
+        _popup.PopupEntity(Loc.GetString("genetic-sequencer-discovered", ("gene", Loc.GetString(_prototypes.Index(id).Name))),
             ent, args.Actor, PopupType.Medium);
-        var query = EntityQueryEnumerator<GeneticSequencerComponent>();
-        while (query.MoveNext(out var uid, out var component))
-        {
-            UpdateUI((uid, component));
-        }
     }
 
     [SubscribeLocalEvent]
     private void OnExtract(Entity<GeneticSequencerComponent> ent, ref GeneticSequencerExtractMessage args)
     {
-        if (!TryGetMarker(ent, args.SampleId, args.Family, out var dish, out var id) ||
-            !_decoded.Contains(id) || !TryGetVial(ent, out var vial) || args.Vial != GetNetEntity(vial.Owner))
+        if (!TryGetMarker(ent, args.SampleId, args.Family, out var dish, out var sample, out var id) ||
+            !sample.IsDecoded(id) || !TryGetVial(ent, out var vial) || args.Vial != GetNetEntity(vial.Owner))
             return;
 
         if (!_vials.TryExtract(dish, args.SampleId, vial, id))
@@ -155,7 +147,7 @@ public sealed partial class GeneticSequencerSystem : EntitySystem
     {
         if (TerminatingOrDeleted(ent))
             return;
-        if (!this.IsPowered(ent.Owner, EntityManager) || !TryGetDish(ent, out var dish))
+        if (!_power.IsPowered(ent.Owner) || !TryGetDish(ent, out var dish))
         {
             _userInterface.SetUiState(ent.Owner, GeneticSequencerUiKey.Key,
                 new GeneticSequencerUiState([], null, null));
@@ -165,30 +157,32 @@ public sealed partial class GeneticSequencerSystem : EntitySystem
         var samples = dish.Comp.Samples.Select(sample => new SequencerSampleView(new SampleView(sample),
             sample.GetGenome() is { } genome
                 ? genome.Genes.OrderBy(id => id.Id, StringComparer.Ordinal)
-                    .Select(id => Marker(id, sample.Stability, vial)).ToArray()
+                    .Select(id => Marker(sample, id, vial)).ToArray()
                 : [])).ToArray();
         _userInterface.SetUiState(ent.Owner, GeneticSequencerUiKey.Key,
             new GeneticSequencerUiState(samples, GetNetEntity(dish.Owner),
                 vial is { } present ? GetNetEntity(present.Owner) : null));
     }
 
-    private SequencerMarkerView Marker(ProtoId<GenePrototype> id, float stability, Entity<GeneticVialComponent>? vial)
+    private SequencerMarkerView Marker(BiologicalSample sample, ProtoId<GenePrototype> id,
+        Entity<GeneticVialComponent>? vial)
     {
-        var puzzle = GetPuzzle(id);
-        var known = _decoded.Contains(id);
+        var puzzle = GetPuzzle(sample, id);
+        var known = sample.IsDecoded(id);
         return new SequencerMarkerView(puzzle.FamilyCode, puzzle.Fragments, known,
-            known ? Loc.GetString($"gene-{id}-name") : string.Empty,
-            known && stability >= _prototypes.Index(id).MinimumStability &&
-            vial is { } inserted && _vials.CanAdd(inserted, id));
+            known ? Loc.GetString(_prototypes.Index(id).Name) : string.Empty,
+            known && vial is { } inserted && _vials.CanAdd(inserted, id));
     }
 
-    private Puzzle GetPuzzle(ProtoId<GenePrototype> id)
+    private Puzzle GetPuzzle(BiologicalSample sample, ProtoId<GenePrototype> id)
     {
-        if (_puzzles.TryGetValue(id, out var cached))
+        var puzzles = _puzzles.GetOrCreateValue(sample);
+        if (puzzles.TryGetValue(id, out var cached))
             return cached;
+
         var puzzle = SequencerPuzzleGenerator.Generate(_random, _prototypes.Index(id).FragmentCount,
-            family => _puzzles.Values.Any(existing => existing.FamilyCode == family));
-        _puzzles.Add(id, puzzle);
+            family => puzzles.Values.Any(existing => existing.FamilyCode == family));
+        puzzles.Add(id, puzzle);
         return puzzle;
     }
 }

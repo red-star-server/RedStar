@@ -1,3 +1,5 @@
+using Content.Server._RedStar.Xenobiology.Components;
+using Content.Server.Administration.Logs;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Power.EntitySystems;
@@ -5,6 +7,7 @@ using Content.Server._RedStar.Genetics.Systems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Climbing.Systems;
+using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -28,6 +31,8 @@ namespace Content.Server._RedStar.Xenobiology.Systems;
 /// </summary>
 public sealed partial class GrowingVatSystem : EntitySystem
 {
+    [Dependency] private PowerReceiverSystem _power = default!;
+    [Dependency] private IAdminLogManager _logs = default!;
     [Dependency] private SharedContainerSystem _containers = default!;
     [Dependency] private ClimbSystem _climb = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
@@ -44,12 +49,13 @@ public sealed partial class GrowingVatSystem : EntitySystem
         _appearance.SetData(ent, GrowingVatVisuals.Processing, false);
 
     [SubscribeLocalEvent]
-    private void OnPowerChanged(Entity<GrowingVatComponent> ent, ref PowerChangedEvent args) =>
-        ent.Comp.NeedsEvaluation = true;
+    private void OnStartup(Entity<GrowingVatComponent> ent, ref ComponentStartup args) => Reevaluate(ent);
 
     [SubscribeLocalEvent]
-    private void OnSolutionChanged(Entity<GrowingVatComponent> ent, ref SolutionChangedEvent args) =>
-        ent.Comp.NeedsEvaluation = true;
+    private void OnPowerChanged(Entity<GrowingVatComponent> ent, ref PowerChangedEvent args) => Reevaluate(ent);
+
+    [SubscribeLocalEvent]
+    private void OnSolutionChanged(Entity<GrowingVatComponent> ent, ref SolutionChangedEvent args) => Reevaluate(ent);
 
     [SubscribeLocalEvent]
     private void OnGenomeChanged(Entity<GenomeComponent> ent, ref GenomeChangedEvent args) =>
@@ -63,7 +69,13 @@ public sealed partial class GrowingVatSystem : EntitySystem
     {
         if (_containers.TryGetContainingContainer(subject, out var slot) &&
             TryComp<GrowingVatComponent>(slot.Owner, out var vat) && slot.ID == vat.SubjectSlot)
-            vat.NeedsEvaluation = true;
+            Reevaluate((slot.Owner, vat));
+    }
+
+    private void Reevaluate(Entity<GrowingVatComponent> vat)
+    {
+        vat.Comp.NeedsEvaluation = true;
+        EnsureComp<ActiveGrowingVatComponent>(vat);
     }
 
     [SubscribeLocalEvent]
@@ -77,14 +89,14 @@ public sealed partial class GrowingVatSystem : EntitySystem
     private void OnInserted(Entity<GrowingVatComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
         if (args.Container.ID == ent.Comp.SubjectSlot)
-            ent.Comp.NeedsEvaluation = true;
+            Reevaluate(ent);
     }
 
     [SubscribeLocalEvent]
     private void OnContainerRemoved(Entity<GrowingVatComponent> ent, ref EntRemovedFromContainerMessage args)
     {
         if (args.Container.ID == ent.Comp.SubjectSlot)
-            ent.Comp.NeedsEvaluation = true;
+            Reevaluate(ent);
     }
 
     [SubscribeLocalEvent]
@@ -171,7 +183,7 @@ public sealed partial class GrowingVatSystem : EntitySystem
             container.ContainedEntities.FirstOrDefault() is { Valid: true } occupant && !IsValidSubject(occupant))
             Eject(vat, occupant);
 
-        if (vat.Comp.Subject is { } subject && this.IsPowered(vat.Owner, EntityManager) &&
+        if (vat.Comp.Subject is { } subject && _power.IsPowered(vat.Owner) &&
             TryGetSubject(vat, out var contained) && subject == contained.Owner &&
             TryGetActiveRecipe(vat, contained, out _, out _))
             return;
@@ -182,7 +194,7 @@ public sealed partial class GrowingVatSystem : EntitySystem
 
     private void TryStart(Entity<GrowingVatComponent> vat)
     {
-        if (vat.Comp.Subject is not null || !this.IsPowered(vat.Owner, EntityManager) ||
+        if (vat.Comp.Subject is not null || !_power.IsPowered(vat.Owner) ||
             !TryGetSubject(vat, out var subject) || !TryGetRecipe(vat, subject, out var recipe))
             return;
 
@@ -225,8 +237,8 @@ public sealed partial class GrowingVatSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-        var query = EntityQueryEnumerator<GrowingVatComponent, MetaDataComponent>();
-        while (query.MoveNext(out var uid, out var component, out var metadata))
+        var query = EntityQueryEnumerator<ActiveGrowingVatComponent, GrowingVatComponent, MetaDataComponent>();
+        while (query.MoveNext(out var uid, out _, out var component, out var metadata))
         {
             if (metadata.EntityPaused)
                 continue;
@@ -237,9 +249,15 @@ public sealed partial class GrowingVatSystem : EntitySystem
                 component.NeedsEvaluation = false;
                 Evaluate(vat);
             }
-            if (component.EndTime is not { } end || _timing.CurTime < end)
+            if (component.EndTime is not { } end)
+            {
+                RemComp<ActiveGrowingVatComponent>(uid);
                 continue;
-            if (component.Subject is not { } subject || !this.IsPowered(uid, EntityManager) ||
+            }
+
+            if (_timing.CurTime < end)
+                continue;
+            if (component.Subject is not { } subject || !_power.IsPowered(uid) ||
                 !TryGetSubject(vat, out var contained) || subject != contained.Owner ||
                 !TryGetActiveRecipe(vat, contained, out var recipe, out var solution))
             {
@@ -249,9 +267,13 @@ public sealed partial class GrowingVatSystem : EntitySystem
 
             Cancel(vat);
             SpendReagents(solution, recipe);
-            var success = _genomes.TryTransformGenes(contained.AsNullable(), recipe.RequiredGenes, recipe.ResultGene);
-            _popup.PopupEntity(Loc.GetString(success ? "growing-vat-success" : "growing-vat-failure"),
-                vat, subject, success ? PopupType.Medium : PopupType.MediumCaution);
+            if (_genomes.TryTransformGenes(contained.AsNullable(), recipe.RequiredGenes, recipe.ResultGene))
+            {
+                _logs.Add(LogType.Action, LogImpact.Medium,
+                    $"{ToPrettyString(vat)} transformed the genes of {ToPrettyString(subject)} into {recipe.ResultGene}.");
+                _popup.PopupEntity(Loc.GetString("growing-vat-success"), vat, subject, PopupType.Medium);
+            }
+
             Eject(vat, subject);
         }
     }

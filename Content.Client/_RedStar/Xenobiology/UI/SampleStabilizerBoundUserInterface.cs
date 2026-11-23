@@ -14,8 +14,8 @@ public sealed class SampleStabilizerBoundUserInterface(EntityUid owner, Enum uiK
 
         _window = this.CreateWindow<SampleStabilizerWindow>();
         _window.Owner = Owner;
-        _window.OnStabilization += (sampleA, sampleB) =>
-            SendMessage(new SampleStabilizerUiStabilizationMessage(sampleA, sampleB));
+        _window.OnStabilization += sampleId =>
+            SendMessage(new SampleStabilizerUiStabilizationMessage(sampleId));
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

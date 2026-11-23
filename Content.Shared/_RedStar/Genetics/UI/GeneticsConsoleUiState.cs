@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared._RedStar.Genetics.Data;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Serialization;
@@ -38,6 +39,13 @@ public sealed class GeneticsConsoleUiState(
     public bool Busy => Status == GeneticsConsoleStatus.Working;
     public readonly float Progress = progress;
     public readonly GeneticProcedure? Operation = operation;
+
+    public override bool Equals(object? obj) =>
+        obj is GeneticsConsoleUiState other && Equals(Profile, other.Profile) && Status == other.Status &&
+        Procedures.SequenceEqual(other.Procedures) && Progress.Equals(other.Progress) && Operation == other.Operation &&
+        (Beaker is null ? other.Beaker is null : other.Beaker is not null && Beaker.SequenceEqual(other.Beaker));
+
+    public override int GetHashCode() => HashCode.Combine(Profile, Status, Procedures.Count, Progress, Operation);
 }
 
 [Serializable, NetSerializable]

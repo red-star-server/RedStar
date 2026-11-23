@@ -11,26 +11,24 @@ public sealed partial class GeneticVialSystem : EntitySystem
 {
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SampleSystem _samples = default!;
-    [Dependency] private IPrototypeManager _prototypes = default!;
 
     [SubscribeLocalEvent]
     private void OnMapInit(Entity<GeneticVialComponent> ent, ref MapInitEvent args) => UpdateVisual(ent);
 
     /// <summary>
-    /// Returns whether the vial lacks the gene; does not validate the gene prototype or sample stability.
+    /// Returns whether the vial lacks the gene; does not validate the gene prototype.
     /// </summary>
     public bool CanAdd(Entity<GeneticVialComponent> vial, ProtoId<GenePrototype> id) =>
         !vial.Comp.Genes.Contains(id);
 
     /// <summary>
-    /// Moves a gene from the selected sample into the vial if stability permits and the vial lacks it.
+    /// Moves a gene from the selected sample into the vial if the vial lacks it.
     /// Observers are notified after the vial contains the gene; a rejected extraction leaves both unchanged.
     /// </summary>
     public bool TryExtract(Entity<SampleContainerComponent> dish, int sampleId,
         Entity<GeneticVialComponent> vial, ProtoId<GenePrototype> id)
     {
         if (dish.Comp.Samples.Find(candidate => candidate.Id == sampleId) is not { } sample ||
-            !_prototypes.TryIndex(id, out var gene) || sample.Stability < gene.MinimumStability ||
             sample.GetGenome() is not { } genome || !genome.Genes.Contains(id) || !CanAdd(vial, id))
             return false;
 

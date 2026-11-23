@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared._RedStar.Genetics.Data;
 using Content.Shared._RedStar.Genetics.Prototypes;
 using Content.Shared._RedStar.Genetics.Systems;
@@ -29,6 +30,12 @@ public sealed class GeneticAnalyzerUiState(
     public readonly int MaximumLoad = maximumLoad;
     public readonly List<GeneticAnalyzerGene> Genes = genes;
     public float LoadPercentage => GenomeSystem.CalculateLoadPercentage(Load, MaximumLoad);
+
+    public override bool Equals(object? obj) =>
+        obj is GeneticAnalyzerUiState other && Target == other.Target && InRange == other.InRange &&
+        Load == other.Load && MaximumLoad == other.MaximumLoad && Genes.SequenceEqual(other.Genes);
+
+    public override int GetHashCode() => HashCode.Combine(Target, InRange, Load, MaximumLoad, Genes.Count);
 }
 
 /// <summary>
