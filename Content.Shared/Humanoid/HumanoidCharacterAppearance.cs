@@ -179,6 +179,8 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
             var organs = markingManager.GetOrgans(species);
             skinColor = coloration.Strategy.EnsureVerified(skinColor);
 
+            MigrateMarkingsToLayerOwners(appearance.Markings, validatedMarkings, organs, markingManager); // RS14
+
             foreach (var (organ, _) in appearance.Markings)
             {
                 if (!organs.ContainsKey(organ))
@@ -193,7 +195,7 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
                     continue;
                 }
 
-                var actualMarkings = appearance.Markings.GetValueOrDefault(organ)?.ShallowClone() ?? new();
+                var actualMarkings = validatedMarkings.GetValueOrDefault(organ)?.ShallowClone() ?? new(); // RS14
 
                 markingManager.EnsureValidColors(actualMarkings);
                 markingManager.EnsureValidGroupAndSex(actualMarkings, organData.Value.Group, sex);

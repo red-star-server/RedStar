@@ -10,3 +10,5 @@ ent-OrganBaseHand = { ent-OrganBaseExternal }
     .desc = { ent-OrganBaseExternal.desc }
 ent-OrganBaseFoot = { ent-OrganBaseExternal }
     .desc = { ent-OrganBaseExternal.desc }
+ent-OrganBaseTail = { ent-OrganBaseLimb }
+    .desc = { ent-OrganBaseLimb.desc }
