@@ -15,7 +15,6 @@ using Content.Shared._RedStar.Xenobiology.Components.Machines;
 using Content.Shared._RedStar.Xenobiology.Data;
 using Content.Shared._RedStar.Xenobiology.Events;
 using Content.Shared._RedStar.Xenobiology.UI;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 
@@ -31,6 +30,12 @@ public sealed partial class SampleStabilizerSystem : EntitySystem
     [Dependency] private SharedContainerSystem _containers = default!;
     [Dependency] private SampleSystem _samples = default!;
     [Dependency] private IGameTiming _timing = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        EntityManager.EventBus.SubscribeEvent(EventSource.Local, this, (ref SolutionChangedEvent ev) => OnBeakerSolutionChanged(ev.Solution.Owner));
+    }
 
     [SubscribeLocalEvent]
     private void OnPowerChanged(Entity<SampleStabilizerComponent> ent, ref PowerChangedEvent args)
@@ -56,13 +61,12 @@ public sealed partial class SampleStabilizerSystem : EntitySystem
             UpdateUI(ent);
     }
 
-    [SubscribeLocalEvent]
-    private void OnBeakerSolutionChanged(Entity<SolutionManagerComponent> beaker, ref SolutionChangedEvent args)
+    private void OnBeakerSolutionChanged(EntityUid beaker)
     {
-        if (!_containers.TryGetContainingContainer(beaker.Owner, out var container) ||
+        if (!_containers.TryGetContainingContainer(beaker, out var container) ||
             !TryComp<SampleStabilizerComponent>(container.Owner, out var stabilizer) ||
             container.ID != stabilizer.BeakerSlot ||
-            _itemSlots.GetItemOrNull(container.Owner, stabilizer.BeakerSlot) != beaker.Owner)
+            _itemSlots.GetItemOrNull(container.Owner, stabilizer.BeakerSlot) != beaker)
             return;
 
         UpdateUI((container.Owner, stabilizer));

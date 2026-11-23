@@ -124,7 +124,7 @@
       dishSlot:
         whitelist:
           tags:
-          - Dish
+          - PetriDish
       beakerSlot:
         whitelist:
           components:
