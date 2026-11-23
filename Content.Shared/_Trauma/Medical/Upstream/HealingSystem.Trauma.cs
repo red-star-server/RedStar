@@ -203,14 +203,14 @@ public sealed partial class HealingSystem
         if (ent != args.User)
         {
             _adminLogger.Add(LogType.Healed,
-                $"{ToPrettyString(args.User):user} healed {ToPrettyString(ent):target} for {healedTotal.GetTotal():damage} damage"); // Goobstation
+                $"{ToPrettyString(args.User):user} healed {ToPrettyString(ent):target} for {healedTotal.GetTotal():damage} damage");
         }
         else
         {
             _adminLogger.Add(LogType.Healed,
-                $"{ToPrettyString(args.User):user} healed themselves for {healedTotal.GetTotal():damage} damage"); // Goobstation
+                $"{ToPrettyString(args.User):user} healed themselves for {healedTotal.GetTotal():damage} damage");
         }
-        _audio.PlayPredicted(healing.HealingEndSound, ent, ent, AudioParams.Default.WithVariation(0.125f).WithVolume(1f)); // Goob edit
+        _audio.PlayPredicted(healing.HealingEndSound, ent, ent, AudioParams.Default.WithVariation(0.125f).WithVolume(1f));
 
         args.Repeat = !dontRepeat && IsAnythingToHeal(args.User, ent, (args.Used.Value, healing));
         args.Handled = true;

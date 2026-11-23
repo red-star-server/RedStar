@@ -109,8 +109,6 @@ public sealed partial class HealingSystem : EntitySystem
         }
 
         // RS14-start
-        // Goobstation
-        // Only play sound if this is not a body part (body parts are handled by OnBodyDoAfter)
         if (!HasComp<BodyComponent>(target.Owner))
             _audio.PlayPredicted(healing.HealingEndSound, target.Owner, args.User);
         // RS14-end
@@ -242,9 +240,6 @@ public sealed partial class HealingSystem : EntitySystem
             ? healing.Comp.Delay
             : healing.Comp.Delay * GetScaledHealingPenalty(target, healing.Comp.SelfHealPenaltyMultiplier);
         // RS14-start
-
-        // Play sound when starting the healing action
-        // Goobstation
         _audio.PlayPredicted(healing.Comp.HealingBeginSound, target, user);
         // RS14-end
 
