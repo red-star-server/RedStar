@@ -39,6 +39,12 @@ public sealed partial class BeeItemComponent : Component
     [DataField, AutoNetworkedField]
     public List<ProtoId<BeeTraitPrototype>> Traits = [];
 
+    /// <summary>
+    /// Which of those were known about the queen when the bee was taken out.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public List<ProtoId<BeeTraitPrototype>> Known = new();
+
     #region Bite
 
     /// <summary>

@@ -51,6 +51,7 @@ public sealed partial class BeeQueenSystem
 
         comp.EggFullSince = null;
         comp.HasEgg = true;
+        Reveal(hive, BeeTraitReveal.Egg);
         comp.EggDiesAt = now + comp.EggLifetime * traits.EggLife;
     }
 

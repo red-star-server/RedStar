@@ -1,3 +1,5 @@
+using Content.Shared._RedStar.Beekeeping.Data;
+
 using Content.Server._RedStar.Beekeeping.Systems;
 using Content.Shared._RedStar.Beekeeping.Prototypes;
 using Robust.Shared.Prototypes;
@@ -23,6 +25,15 @@ public sealed partial class BeeSwarmComponent : Component
     [ViewVariables]
     public int Bees;
 
+    /// <summary>
+    /// What the wild hive will live on, picked where the swarm came out.
+    /// </summary>
+    [ViewVariables]
+    public BeehiveDiet Diet;
+
+    /// <summary>
+    /// The wild hive to build.
+    /// </summary>
     [ViewVariables]
     public EntProtoId WildHive = "WildBeehive";
 

@@ -67,10 +67,84 @@ public sealed partial class BeeQueenSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnQueenMapInit(Entity<BeeQueenComponent> ent, ref MapInitEvent args)
     {
+        if (ent.Comp.KnownAtStart && ent.Comp.Known.Count == 0)
+            ent.Comp.Known.AddRange(ent.Comp.Traits);
         UpdateQueenVisuals(ent);
 
         if (!_container.IsEntityInContainer(ent))
             StartQueenTimer(ent);
+    }
+
+    /// <summary>
+    /// Something the colony did showed its traits of this kind: the hive's queen learns them, and says so.
+    /// </summary>
+    public void Reveal(Entity<BeehiveComponent> hive, BeeTraitReveal how)
+    {
+        if (_hive.GetQueen(hive) is { } queen && TryComp<BeeQueenComponent>(queen, out var comp))
+            Reveal((queen, comp), how);
+    }
+
+    public void Reveal(Entity<BeeQueenComponent> queen, BeeTraitReveal how)
+    {
+        foreach (var id in queen.Comp.Traits)
+        {
+            if (queen.Comp.Known.Contains(id) || !_proto.Resolve(id, out var trait) || trait.Reveal != how)
+                continue;
+
+            Learn(queen, trait);
+        }
+    }
+
+    /// <summary>
+    /// A bee in hand did something that shows a trait: its queen learns it, if the bee still has a hive to tell, and the
+    /// bee knows it from now on.
+    /// </summary>
+    public void Reveal(Entity<BeeItemComponent> bee, BeeTraitReveal how)
+    {
+        foreach (var id in bee.Comp.Traits)
+        {
+            if (bee.Comp.Known.Contains(id) || !_proto.Resolve(id, out var trait) || trait.Reveal != how)
+                continue;
+
+            bee.Comp.Known.Add(id);
+            Dirty(bee);
+        }
+
+        if (bee.Comp.SourceHive is { } hive && TryComp<BeehiveComponent>(hive, out var hiveComp))
+            Reveal((hive, hiveComp), how);
+    }
+
+    private void Learn(Entity<BeeQueenComponent> queen, BeeTraitPrototype trait)
+    {
+        queen.Comp.Known.Add(trait.ID);
+        Dirty(queen);
+
+        // Said at the hive she lives in, or at herself.
+        var where = _container.TryGetContainingContainer(queen.Owner, out var container) ? container.Owner : queen.Owner;
+        _popup.PopupEntity(Loc.GetString("beekeeping-trait-revealed", ("trait", Loc.GetString(trait.Name))), where);
+    }
+
+    /// <summary>
+    /// While she works in a hive, one of her hidden traits that shows in nothing reveals itself now and then.
+    /// </summary>
+    public void UpdateObservation(Entity<BeehiveComponent> hive, float seconds)
+    {
+        if (_hive.GetQueen(hive) is not { } queenUid || !TryComp<BeeQueenComponent>(queenUid, out var queen))
+            return;
+
+        queen.Observed += TimeSpan.FromSeconds(seconds);
+        if (queen.Observed < queen.ObserveTime)
+            return;
+
+        queen.Observed = TimeSpan.Zero;
+        foreach (var id in queen.Traits)
+        {
+            if (!queen.Known.Contains(id) && _proto.Resolve(id, out var trait) && trait.Reveal == BeeTraitReveal.Observe)
+            {
+                Learn((queenUid, queen), trait);
+                return;
+            }
+        }
     }
 
     [SubscribeLocalEvent]
@@ -80,12 +154,13 @@ public sealed partial class BeeQueenSystem : EntitySystem
     }
 
     /// <summary>
-    /// A hive, or a swarm that knows where it is going, keeps the queen alive.
+    /// A hive, a swarm that knows where it is going or an angry queen guarding her keeps the queen alive.
     /// </summary>
     private bool IsQueenHome(EntityUid holder)
     {
         return HasComp<BeehiveComponent>(holder) ||
-               TryComp<BeeSwarmComponent>(holder, out var swarm) && !swarm.Searching;
+               TryComp<BeeSwarmComponent>(holder, out var swarm) && !swarm.Searching ||
+               HasComp<BeehiveAngryQueenComponent>(holder);
     }
 
     /// <summary>
@@ -243,24 +318,29 @@ public sealed partial class BeeQueenSystem : EntitySystem
 
         var (picked, gain) = _random.Pick(_rollOutcomes);
 
-        var name = Loc.GetString(_proto.Index(picked).Name);
+        // A new trait is hidden until it shows itself; a lost one is named only if it was known.
+        string NameOf(ProtoId<BeeTraitPrototype> id) => comp.Known.Contains(id)
+            ? Loc.GetString(_proto.Index(id).Name)
+            : Loc.GetString("beekeeping-trait-hidden");
+
         string message;
         if (!gain)
         {
+            message = Loc.GetString("beekeeping-queen-trait-lost", ("trait", NameOf(picked)));
             comp.Traits.Remove(picked);
-            message = Loc.GetString("beekeeping-queen-trait-lost", ("trait", name));
+            comp.Known.Remove(picked);
         }
         else if (_proto.Index(picked).Innate || _hive.SlottedTraits(comp) < comp.Slots)
         {
             comp.Traits.Add(picked);
-            message = Loc.GetString("beekeeping-queen-trait-gained", ("trait", name));
+            message = Loc.GetString("beekeeping-queen-trait-gained-hidden");
         }
         else if (comp.Slots > 0 && RandomSlottedTrait(comp) is { } replaced)
         {
+            message = Loc.GetString("beekeeping-queen-trait-replaced-hidden", ("old", NameOf(replaced)));
             comp.Traits.Remove(replaced);
+            comp.Known.Remove(replaced);
             comp.Traits.Add(picked);
-            message = Loc.GetString("beekeeping-queen-trait-replaced",
-                ("trait", name), ("old", Loc.GetString(_proto.Index(replaced).Name)));
         }
         else
         {
@@ -414,6 +494,7 @@ public sealed partial class BeeQueenSystem : EntitySystem
 
         var totals = _hive.GetTotals(queen.Traits);
         bee.Comp.Traits = new List<ProtoId<BeeTraitPrototype>>(queen.Traits);
+        bee.Comp.Known = new List<ProtoId<BeeTraitPrototype>>(queen.Known);
         bee.Comp.PestControl = totals.PestControl;
         bee.Comp.DoubleYieldChance = Math.Clamp(bee.Comp.DoubleYieldChance * totals.PollinationChance, 0f, 1f);
         if (bee.Comp.Role == BeeRole.Pollinator)

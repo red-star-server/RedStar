@@ -84,6 +84,15 @@ public sealed partial class BeeFrameComponent : Component
     public float CutDelay = 1f;
 
     /// <summary>
+    /// What the colony that built the combs gives when they are cut: extra wax from the caps, and combs as a factor.
+    /// </summary>
+    [ViewVariables]
+    public int ColonyCapWax;
+
+    [ViewVariables]
+    public float ColonyCombYield = 1f;
+
+    /// <summary>
     /// A full frame whose wax caps were cut off: it shows as a honey frame until the combs are cut too.
     /// </summary>
     [DataField, AutoNetworkedField]

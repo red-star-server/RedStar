@@ -67,6 +67,16 @@ public abstract partial class SharedBeehiveSystem
             totals.PestControl |= trait.PestControl;
             totals.Sting |= trait.Sting;
             totals.Aggressive |= trait.Aggressive;
+            totals.AngryPerHit += trait.AngryPerHit;
+            totals.AngryDamageStep *= trait.AngryDamageStep;
+            totals.GuardedScout |= trait.GuardedScout;
+            totals.ColdTolerance += trait.ColdTolerance;
+            totals.HeatTolerance += trait.HeatTolerance;
+            totals.PressureTolerance += trait.PressureTolerance;
+            totals.CapWax += trait.CapWax;
+            totals.CombYield *= trait.CombYield;
+            totals.FlightPollination += trait.FlightPollination;
+            totals.SwarmTimer |= trait.SwarmTimer;
         }
 
         return totals;
@@ -98,16 +108,28 @@ public abstract partial class SharedBeehiveSystem
     }
 
     /// <summary>
-    /// "Name, Name" with each name in its colour, or a "none" line.
+    /// "Name, Name" with each name in its colour, the ones nobody has seen yet as hidden traits, or a "none" line.
     /// </summary>
-    protected string TraitList(IReadOnlyCollection<ProtoId<BeeTraitPrototype>> traits)
+    protected string TraitList(IReadOnlyCollection<ProtoId<BeeTraitPrototype>> traits,
+        IReadOnlyCollection<ProtoId<BeeTraitPrototype>> known)
     {
         if (traits.Count == 0)
             return Loc.GetString("beekeeping-traits-none");
 
-        return string.Join(", ", traits.Select(id => Proto.Resolve(id, out var trait)
-            ? $"[color={trait.Color.ToHex()}]{Loc.GetString(trait.Name)}[/color]"
-            : id.Id));
+        return string.Join(", ", traits.Select(id => !known.Contains(id)
+            ? $"[color=gray]{Loc.GetString("beekeeping-trait-hidden")}[/color]"
+            : Proto.Resolve(id, out var trait)
+                ? $"[color={trait.Color.ToHex()}]{Loc.GetString(trait.Name)}[/color]"
+                : id.Id));
+    }
+
+    /// <summary>
+    /// The traits of the set that someone has seen at work: what the analyzer adds up and shows.
+    /// </summary>
+    public static List<ProtoId<BeeTraitPrototype>> KnownOf(IEnumerable<ProtoId<BeeTraitPrototype>> traits,
+        IReadOnlyCollection<ProtoId<BeeTraitPrototype>> known)
+    {
+        return traits.Where(known.Contains).ToList();
     }
 
     [SubscribeLocalEvent]
@@ -115,7 +137,7 @@ public abstract partial class SharedBeehiveSystem
     {
         using (args.PushGroup(nameof(BeeQueenComponent)))
         {
-            args.PushMarkup(Loc.GetString("beekeeping-queen-examine-traits", ("traits", TraitList(ent.Comp.Traits))));
+            args.PushMarkup(Loc.GetString("beekeeping-queen-examine-traits", ("traits", TraitList(ent.Comp.Traits, ent.Comp.Known))));
             args.PushMarkup(Loc.GetString("beekeeping-queen-examine-slots",
                 ("used", SlottedTraits(ent.Comp)), ("slots", ent.Comp.Slots)));
 

@@ -62,6 +62,29 @@ public sealed partial class BeeQueenComponent : Component
     public List<ProtoId<BeeTraitPrototype>> Traits = [];
 
     /// <summary>
+    /// Her traits someone has seen at work. The rest show in the analyzer as hidden traits until they show themselves
+    /// (<see cref="BeeTraitPrototype.Reveal"/>).
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public List<ProtoId<BeeTraitPrototype>> Known = new();
+
+    /// <summary>
+    /// A queen from the cargo crate: her traits are known from the start.
+    /// </summary>
+    [DataField]
+    public bool KnownAtStart = true;
+
+    /// <summary>
+    /// How long she has to work in a hive for one of her hidden traits that shows in nothing to reveal itself, and how
+    /// long she has worked towards the next one.
+    /// </summary>
+    [DataField]
+    public TimeSpan ObserveTime = TimeSpan.FromMinutes(10);
+
+    [ViewVariables]
+    public TimeSpan Observed;
+
+    /// <summary>
     /// Traits she can hold besides the innate ones. A new trait with no free slot replaces a random one.
     /// </summary>
     [DataField, AutoNetworkedField, GuidebookData]
@@ -151,7 +174,7 @@ public sealed partial class BeeQueenComponent : Component
     /// Most trait slots royal jelly can give.
     /// </summary>
     [DataField, GuidebookData]
-    public int MaxSlots = 3;
+    public int MaxSlots = 4;
 
     /// <summary>
     /// Royal jelly injected but not enough for a slot yet. Server only.

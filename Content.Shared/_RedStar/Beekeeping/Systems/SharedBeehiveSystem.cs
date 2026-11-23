@@ -104,7 +104,7 @@ public abstract partial class SharedBeehiveSystem : EntitySystem
             }
 
             if (comp.Traits.Count > 0)
-                args.PushMarkup(Loc.GetString("beekeeping-bee-examine-traits", ("traits", TraitList(comp.Traits))));
+                args.PushMarkup(Loc.GetString("beekeeping-bee-examine-traits", ("traits", TraitList(comp.Traits, comp.Known))));
 
             if (comp.ExpiresAt > TimeSpan.Zero && comp.ExpiresAt - Timing.CurTime <= comp.DyingWarning)
                 args.PushMarkup(Loc.GetString("beekeeping-bee-examine-dying"));
