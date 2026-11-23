@@ -114,8 +114,6 @@ public sealed partial class PartStatusUIController : UIController, IOnStateEnter
     /// </summary>
     public Texture GetTexture(SpriteSpecifier specifier)
     {
-        _sprite ??= _entMan.System<SpriteSystem>();
-
         return _sprite.Frame0(specifier);
     }
 

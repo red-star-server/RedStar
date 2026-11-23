@@ -85,8 +85,8 @@ public sealed partial class HealingSystem
     }
 
     /// <summary>
-    ///     This function tries to return the first limb that has one of the damage type we are trying to heal
-    ///     Returns true or false if next damaged part exists.
+    /// This function tries to return the first limb that has one of the damage type we are trying to heal
+    /// Returns true or false if next damaged part exists.
     /// </summary>
     public bool TryGetNextDamagedPart(EntityUid ent, HealingComponent healing, out EntityUid? part)
     {

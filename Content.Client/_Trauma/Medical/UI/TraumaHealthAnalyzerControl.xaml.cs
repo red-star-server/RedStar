@@ -99,7 +99,7 @@ public sealed partial class TraumaHealthAnalyzerControl : BoxContainer
 
         DamageLabel.Text = _damageable.GetTotalDamage(target.Value).ToString();
 
-        var showAlerts = state.Unrevivable == true || state.Bleeding.Count > 0;
+        var showAlerts = state.Unrevivable || state.Bleeding.Count > 0;
 
         AlertsDivider.Visible = showAlerts;
         AlertsContainer.Visible = showAlerts;
@@ -230,7 +230,7 @@ public sealed partial class TraumaHealthAnalyzerControl : BoxContainer
         rootContainer.AddChild(new TextureRect
         {
             SetSize = new Vector2(30, 30),
-            Texture = GetTexture(id.ToLower())
+            Texture = GetTexture(id.ToLowerInvariant())
         });
 
         rootContainer.AddChild(CreateDiagnosticItemLabel(text));

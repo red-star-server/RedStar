@@ -140,7 +140,7 @@ public sealed class MedicalTreatmentTest : GameTest
         ProtoId<ReagentPrototype> ichor = "Ichor";
         var effects = _prototypes.Index(ichor).Metabolisms!.Metabolisms["Bloodstream"].Effects;
         _effects.TryApplyEffects(body, effects);
-        Assert.That(SComp<BoneComponent>(arm).BoneIntegrity, Is.EqualTo(before + (FixedPoint2) 1.5f));
+        Assert.That(SComp<BoneComponent>(arm).BoneIntegrity, Is.EqualTo(before + 1.5f));
     }
 
     [Test]
@@ -151,8 +151,11 @@ public sealed class MedicalTreatmentTest : GameTest
         var arm = _body.GetOrgan(body, Arm)!.Value;
         var head = _body.GetOrgan(body, Head)!.Value;
         foreach (var part in new[] { TargetBodyPart.LeftArm, TargetBodyPart.Head })
+        {
             _damage.ChangeDamage(body, new DamageSpecifier { DamageDict = { ["Blunt"] = 10 } },
                 true, targetPart: part, canMiss: false);
+        }
+
         ProtoId<ReagentPrototype> bicaridine = "Bicaridine";
         var effects = _prototypes.Index(bicaridine).Metabolisms!.Metabolisms["Bloodstream"].Effects;
         _effects.TryApplyEffects(body, effects);

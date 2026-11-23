@@ -63,7 +63,7 @@ public sealed partial class OrganComponentsSystem : EntitySystem
     {
         if (ent.Comp.OnRemove is {} removed)
             EntityManager.AddComponents(body, removed);
-        if (ent.Comp.OnAdd is not { } added)
+        if (ent.Comp.OnAdd is null)
             return;
 
         foreach (var name in ent.Comp.AddedKeys)

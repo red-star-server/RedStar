@@ -124,7 +124,7 @@ public partial class TraumaSystem
     public void UpdateBodyBoneAlert(Entity<BodyComponent?> body)
     {
         var hasBrokenBones = false;
-        foreach (var bone in _body.EnumerateOrgans<BoneComponent>(body, _boneQuery))
+        foreach (var bone in _body.EnumerateOrgans(body, _boneQuery))
         {
             if (bone.Comp2.BoneSeverity != BoneSeverity.Broken) continue;
             hasBrokenBones = true;

@@ -6,20 +6,20 @@ namespace Content.Shared._Trauma.Power;
 public sealed partial class BatteryDrinkerSourceComponent : Component
 {
     /// <summary>
-    ///     The max amount of power this source can provide in one sip.
-    ///     No limit if zero.
+    /// The max amount of power this source can provide in one sip.
+    /// No limit if zero.
     /// </summary>
     [DataField]
     public float MaxAmount;
 
     /// <summary>
-    ///     The multiplier for the drink speed.
+    /// The multiplier for the drink speed.
     /// </summary>
     [DataField]
     public float DrinkSpeedMulti = 1f;
 
     /// <summary>
-    ///     The sound to play when the battery gets drunk from.
+    /// The sound to play when the battery gets drunk from.
     /// </summary>
     [DataField]
     public SoundSpecifier? DrinkSound = new SoundCollectionSpecifier("sparks");

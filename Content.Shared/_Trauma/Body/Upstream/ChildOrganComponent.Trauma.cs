@@ -2,7 +2,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Body;
 
-public sealed partial class ChildOrganComponent : Component
+public sealed partial class ChildOrganComponent
 {
     /// <summary>
     /// The categories this organ can be a child of.

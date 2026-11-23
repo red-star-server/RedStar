@@ -24,13 +24,15 @@ public sealed partial class BatteryDrinkerSystem : EntitySystem
 
     [SubscribeLocalEvent]
     private void OnBatteryVerb(Entity<BatteryComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
-        => AddAltVerb(ent.Owner, ent.Comp, args);
+        =>
+            AddAltVerb(ent.Owner, args);
 
     [SubscribeLocalEvent]
     private void OnSlotVerb(Entity<PowerCellSlotComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
-        => AddAltVerb(ent.Owner, ent.Comp, args);
+        =>
+            AddAltVerb(ent.Owner, args);
 
-    private void AddAltVerb<TComp>(EntityUid uid, TComp component, GetVerbsEvent<AlternativeVerb> args)
+    private void AddAltVerb(EntityUid uid, GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
             return;

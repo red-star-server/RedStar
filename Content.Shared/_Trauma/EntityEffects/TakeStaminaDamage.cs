@@ -25,7 +25,7 @@ public sealed partial class TakeStaminaDamage : EntityEffectBase<TakeStaminaDama
     [DataField]
     public bool IgnoreResist;
 
-    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("reagent-effect-guidebook-deal-stamina-damage",
             ("immediate", Immediate),
             ("amount", MathF.Abs(Amount)),

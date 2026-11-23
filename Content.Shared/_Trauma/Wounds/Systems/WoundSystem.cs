@@ -19,10 +19,8 @@ public sealed partial class WoundSystem : EntitySystem
     [Dependency] private BodySystem _body = default!;
     [Dependency] private BodyPartSystem _part = default!;
     [Dependency] private SharedContainerSystem _container = default!;
-    [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private DamageableSystem _damageable = default!;
-    // Used to throw severed limbs when they are detached.
     [Dependency] private ThrowingSystem _throwing = default!;
     [Dependency] private TraumaSystem _trauma = default!;
 

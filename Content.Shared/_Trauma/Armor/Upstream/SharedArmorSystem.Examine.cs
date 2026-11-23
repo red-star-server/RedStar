@@ -26,7 +26,7 @@ public abstract partial class SharedArmorSystem
             List<string> coverageText = [];
             foreach (var part in coveredParts)
             {
-                coverageText.Add(Loc.GetString("armor-coverage-type-" + part.ToString().ToLower()));
+                coverageText.Add(Loc.GetString("armor-coverage-type-" + part.ToString().ToLowerInvariant()));
             }
 
             msg.PushNewline();
