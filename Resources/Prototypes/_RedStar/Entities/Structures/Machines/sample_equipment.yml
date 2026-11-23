@@ -39,7 +39,7 @@
       dishSlot:
         whitelist:
           tags:
-          - Dish
+          - PetriDish
   - type: GuideHelp
     guides:
     - Science
@@ -80,7 +80,7 @@
       dishSlot:
         whitelist:
           tags:
-          - Dish
+          - PetriDish
       vialSlot:
         whitelist:
           components:
@@ -92,7 +92,7 @@
   parent: BaseSampleProcessingMachine
   id: SampleStabilizer
   name: sample stabilizer
-  description: Improves the stability of identical samples in a Petri dish.
+  description: Restores the stability of a sample in a Petri dish using a reagent from a beaker.
   components:
   - type: Sprite
     sprite: _RedStar/Structures/Machines/Xenobiology/sample_stabilizer.rsi
@@ -113,6 +113,22 @@
       enum.SampleStabilizerUiKey.Key:
         type: SampleStabilizerBoundUserInterface
   - type: SampleStabilizer
+  - type: ContainerContainer
+    containers:
+      dishSlot: !type:ContainerSlot
+      beakerSlot: !type:ContainerSlot
+      machine_board: !type:Container
+      machine_parts: !type:Container
+  - type: ItemSlots
+    slots:
+      dishSlot:
+        whitelist:
+          tags:
+          - PetriDish
+      beakerSlot:
+        whitelist:
+          components:
+          - FitsInDispenser
   - type: Machine
     board: SampleStabilizerCircuitboard
 

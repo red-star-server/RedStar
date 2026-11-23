@@ -6,7 +6,7 @@
   components:
   - type: Tag
     tags:
-    - Dish
+    - PetriDish
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -28,6 +28,7 @@
     sprite: _RedStar/Objects/Specific/Xenobiology/petri_dish.rsi
   - type: SampleContainer
     maxSamples: 5
+    labelBySamples: true
     toolsTransferWhitelist:
       components:
       - SampleCollector

@@ -169,11 +169,12 @@ public sealed partial class ServerGenomeSystem : GenomeSystem
         ent.Comp.Genes.TryGetValue(id, out var status) && status == GeneStatus.Raw;
 
     /// <summary>
-    /// Checks the gene's organism whitelist and blacklist. Returns false for an unknown gene.
+    /// Checks the gene's organism whitelist and blacklist. Returns false for an unknown gene or an entity without a genome.
     /// Does not check expression state or remaining acquired load.
     /// </summary>
-    public bool IsGeneCompatible(EntityUid uid, ProtoId<GenePrototype> id) =>
-        _prototypes.TryIndex(id, out var gene) && _whitelist.CheckBoth(uid, gene.Blacklist, gene.Whitelist);
+    public bool IsGeneCompatible(Entity<GenomeComponent?> ent, ProtoId<GenePrototype> id) =>
+        Resolve(ent, ref ent.Comp, logMissing: false) && _prototypes.TryIndex(id, out var gene) &&
+        _whitelist.CheckBoth(ent.Owner, gene.Blacklist, gene.Whitelist);
 
     private int Load(IEnumerable<ProtoId<GenePrototype>> genes) =>
         genes.Sum(id => _prototypes.Index(id).LoadCost);

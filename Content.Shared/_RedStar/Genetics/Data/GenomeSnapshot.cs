@@ -10,6 +10,9 @@ namespace Content.Shared._RedStar.Genetics.Data;
 [DataDefinition]
 public sealed partial class GenomeSnapshot
 {
+    /// <summary>
+    /// Genes present in the snapshot.
+    /// </summary>
     [DataField]
     private HashSet<ProtoId<GenePrototype>> _genes = [];
 
@@ -19,6 +22,9 @@ public sealed partial class GenomeSnapshot
     /// </summary>
     public IReadOnlySet<ProtoId<GenePrototype>> Genes => _view ??= _genes.ToFrozenSet();
 
+    /// <summary>
+    /// Genome prototype the snapshot was taken from.
+    /// </summary>
     [DataField]
     public ProtoId<GenomePrototype> GenomeId { get; private set; }
 
@@ -31,9 +37,4 @@ public sealed partial class GenomeSnapshot
     }
 
     public int GeneCount => _genes.Count;
-    /// <summary>
-    /// Compares genome prototype and gene membership; gene order and expression status are irrelevant.
-    /// </summary>
-    public bool SameContents(GenomeSnapshot? other) =>
-        other is not null && GenomeId == other.GenomeId && Genes.SetEquals(other.Genes);
 }

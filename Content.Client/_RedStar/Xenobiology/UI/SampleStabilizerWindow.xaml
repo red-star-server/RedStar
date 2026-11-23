@@ -28,15 +28,13 @@
                     <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
                         <BoxContainer Orientation="Vertical" Margin="10" HorizontalExpand="True">
                             <Label Name="NoSelectionLabel" Text="{Loc 'sample-stabilizer-menu-no-selection-label'}" />
-                            <xenobio:SampleInfoControl Name="SampleInfoA" Visible="False" />
-                            <PanelContainer Name="InfoDivider" StyleClasses="LowDivider" Margin="0 8" Visible="False" />
-                            <xenobio:SampleInfoControl Name="SampleInfoB" Visible="False" />
+                            <xenobio:SampleInfoControl Name="SampleInfo" Visible="False" />
                         </BoxContainer>
                     </ScrollContainer>
                 </PanelContainer>
             </BoxContainer>
         </BoxContainer>
-        <RichTextLabel Name="IncompatibleLabel" Visible="False" Margin="0 8 0 0" />
+        <RichTextLabel Name="ReagentLabel" Margin="0 8 0 0" />
         <ProgressBar Name="StabilizationProgressBar" Visible="False" MinValue="0" MaxValue="100" Value="0"
                      Margin="0 8 0 4" HorizontalExpand="True" />
         <Button Name="StabilizationButton" Text="{Loc 'sample-stabilizer-menu-stabilization-button'}"

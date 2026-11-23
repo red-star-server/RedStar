@@ -1,11 +1,15 @@
-using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using Content.Server._RedStar.Xenobiology.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Destructible;
+using Content.Shared.FixedPoint;
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.UserInterface;
-using Content.Shared._RedStar.Genetics.Data;
 using Content.Shared._RedStar.Xenobiology.Components.Container;
 using Content.Shared._RedStar.Xenobiology.Components.Machines;
 using Content.Shared._RedStar.Xenobiology.Data;
@@ -18,11 +22,20 @@ namespace Content.Server._RedStar.Xenobiology.Systems;
 
 public sealed partial class SampleStabilizerSystem : EntitySystem
 {
+    [Dependency] private PowerReceiverSystem _power = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutions = default!;
+    [Dependency] private SharedContainerSystem _containers = default!;
     [Dependency] private SampleSystem _samples = default!;
     [Dependency] private IGameTiming _timing = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        EntityManager.EventBus.SubscribeEvent(EventSource.Local, this, (ref SolutionChangedEvent ev) => OnBeakerSolutionChanged(ev.Solution.Owner));
+    }
 
     [SubscribeLocalEvent]
     private void OnPowerChanged(Entity<SampleStabilizerComponent> ent, ref PowerChangedEvent args)
@@ -32,9 +45,9 @@ public sealed partial class SampleStabilizerSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnDishRemoved(Entity<SampleStabilizerComponent> ent, ref EntRemovedFromContainerMessage args)
+    private void OnSlotRemoved(Entity<SampleStabilizerComponent> ent, ref EntRemovedFromContainerMessage args)
     {
-        if (args.Container.ID != ent.Comp.DishSlot)
+        if (args.Container.ID != ent.Comp.DishSlot && args.Container.ID != ent.Comp.BeakerSlot)
             return;
 
         ResetStabilization(ent);
@@ -42,10 +55,21 @@ public sealed partial class SampleStabilizerSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnDishInserted(Entity<SampleStabilizerComponent> ent, ref EntInsertedIntoContainerMessage args)
+    private void OnSlotInserted(Entity<SampleStabilizerComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
-        if (args.Container.ID == ent.Comp.DishSlot)
+        if (args.Container.ID == ent.Comp.DishSlot || args.Container.ID == ent.Comp.BeakerSlot)
             UpdateUI(ent);
+    }
+
+    private void OnBeakerSolutionChanged(EntityUid beaker)
+    {
+        if (!_containers.TryGetContainingContainer(beaker, out var container) ||
+            !TryComp<SampleStabilizerComponent>(container.Owner, out var stabilizer) ||
+            container.ID != stabilizer.BeakerSlot ||
+            _itemSlots.GetItemOrNull(container.Owner, stabilizer.BeakerSlot) != beaker)
+            return;
+
+        UpdateUI((container.Owner, stabilizer));
     }
 
     [SubscribeLocalEvent]
@@ -69,25 +93,35 @@ public sealed partial class SampleStabilizerSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnStabilizationMessage(Entity<SampleStabilizerComponent> ent, ref SampleStabilizerUiStabilizationMessage args)
     {
-        if (ent.Comp.StabilizationInProgress || !this.IsPowered(ent.Owner, EntityManager) ||
-            !TryGetDish(ent, out var dish) || args.SampleAId == args.SampleBId)
+        var sampleId = args.SampleId;
+        if (ent.Comp.StabilizationInProgress || !_power.IsPowered(ent.Owner) ||
+            !TryGetDish(ent, out var dish) || dish.Owner != GetEntity(args.Dish) ||
+            dish.Comp.Samples.Find(s => s.Id == sampleId) is not { } sample)
             return;
-        var firstId = args.SampleAId;
-        var secondId = args.SampleBId;
-        var first = dish.Comp.Samples.Find(sample => sample.Id == firstId);
-        var second = dish.Comp.Samples.Find(sample => sample.Id == secondId);
-        if (first is null || second is null)
-            return;
-        if (!CanStabilize(first, second, out _))
+
+        if (!TryGetBeaker(ent, out var beaker, out var solution))
         {
-            _popup.PopupEntity(Loc.GetString("sample-stabilizer-incompatible"), ent, args.Actor, PopupType.MediumCaution);
+            _popup.PopupEntity(Loc.GetString("sample-stabilizer-no-beaker"), ent, args.Actor, PopupType.MediumCaution);
             return;
         }
 
-        ent.Comp.StabilizationSampleA = first.Id;
-        ent.Comp.StabilizationSampleB = second.Id;
+        if (!TryGetCost(ent.Comp, sample, out _, out var cost))
+        {
+            _popup.PopupEntity(Loc.GetString("sample-stabilizer-nothing-to-stabilize"), ent, args.Actor, PopupType.MediumCaution);
+            return;
+        }
+
+        if (GetReagentAmount(ent.Comp, solution) < cost)
+        {
+            _popup.PopupEntity(Loc.GetString("sample-stabilizer-not-enough-reagent"), ent, args.Actor, PopupType.MediumCaution);
+            return;
+        }
+
+        ent.Comp.StabilizationSample = sample.Id;
         ent.Comp.StabilizationDish = dish.Owner;
+        ent.Comp.StabilizationBeaker = beaker;
         ent.Comp.StabilizationEndTime = _timing.CurTime + ent.Comp.StabilizationDelay;
+        EnsureComp<ActiveSampleStabilizerComponent>(ent);
         Dirty(ent);
         UpdateUI(ent);
     }
@@ -95,60 +129,54 @@ public sealed partial class SampleStabilizerSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-        var query = EntityQueryEnumerator<SampleStabilizerComponent, MetaDataComponent>();
-        while (query.MoveNext(out var uid, out var component, out var metadata))
+        var query = EntityQueryEnumerator<ActiveSampleStabilizerComponent, SampleStabilizerComponent, MetaDataComponent>();
+        while (query.MoveNext(out var uid, out _, out var component, out var metadata))
         {
-            if (metadata.EntityPaused)
+            if (metadata.EntityPaused || component.StabilizationEndTime is not { } endTime || _timing.CurTime < endTime)
                 continue;
 
-            if (component.StabilizationEndTime is not { } endTime || _timing.CurTime < endTime)
-                continue;
             var machine = new Entity<SampleStabilizerComponent>(uid, component);
-            if (!this.IsPowered(uid, EntityManager) || !TryGetDish(machine, out var dish) ||
-                component.StabilizationDish != dish.Owner)
+            if (!_power.IsPowered(uid) || !TryGetDish(machine, out var dish) ||
+                component.StabilizationDish != dish.Owner || !TryGetBeaker(machine, out var beaker, out var solution) ||
+                component.StabilizationBeaker != beaker)
             {
                 CancelStabilization(machine);
                 continue;
             }
 
-            FinishStabilization(machine, dish);
+            FinishStabilization(machine, dish, solution);
         }
     }
 
-    private void FinishStabilization(Entity<SampleStabilizerComponent> ent, Entity<SampleContainerComponent> dish)
+    private void FinishStabilization(Entity<SampleStabilizerComponent> ent, Entity<SampleContainerComponent> dish,
+        Entity<SolutionComponent> solution)
     {
-        var first = dish.Comp.Samples.Find(sample => sample.Id == ent.Comp.StabilizationSampleA);
-        var second = dish.Comp.Samples.Find(sample => sample.Id == ent.Comp.StabilizationSampleB);
-        if (first is null || second is null || first.Id == second.Id ||
-            !CanStabilize(first, second, out var genome))
+        var sampleId = ent.Comp.StabilizationSample;
+        if (dish.Comp.Samples.Find(s => s.Id == sampleId) is not { } sample ||
+            !TryGetCost(ent.Comp, sample, out var gain, out var cost) || GetReagentAmount(ent.Comp, solution) < cost)
         {
             CancelStabilization(ent);
             return;
         }
 
-        var max = Math.Max(first.Stability, second.Stability);
-        var min = Math.Min(first.Stability, second.Stability);
-        var stability = max + (1f - max) * (ent.Comp.BaseStabilityGain + ent.Comp.DonorStabilityGain * min);
-        var result = new BiologicalSample(Color.InterpolateBetween(first.Color, second.Color, 0.5f),
-            first.Name, stability, genome);
+        _solutions.RemoveReagent(solution, ent.Comp.Reagent.Id, cost);
         ResetStabilization(ent);
-        if (_samples.ReplaceSamples(dish.AsNullable(), first.Id, second.Id, result))
+        if (_samples.TryRestoreStability(dish.AsNullable(), sample.Id, gain))
             return;
 
         UpdateUI(ent);
     }
 
-    private bool CanStabilize(BiologicalSample first, BiologicalSample second, [NotNullWhen(true)] out GenomeSnapshot? genome)
+    private static bool TryGetCost(SampleStabilizerComponent component, BiologicalSample sample, out float gain,
+        out FixedPoint2 cost)
     {
-        genome = null;
-        if (Math.Max(first.Stability, second.Stability) >= 1f ||
-            first.GetGenome() is not { } firstGenome || second.GetGenome() is not { } secondGenome ||
-            !firstGenome.SameContents(secondGenome))
-            return false;
-
-        genome = firstGenome;
-        return true;
+        gain = MathF.Min(component.MaximumGain, 1f - sample.Stability);
+        cost = FixedPoint2.New(gain / component.StabilityPerUnit);
+        return sample.HasGenome && gain > 0f && cost > FixedPoint2.Zero;
     }
+
+    private static FixedPoint2 GetReagentAmount(SampleStabilizerComponent component, Entity<SolutionComponent> solution) =>
+        solution.Comp.Solution.GetReagentQuantity(new ReagentId(component.Reagent.Id, null));
 
     private bool TryGetDish(Entity<SampleStabilizerComponent> ent, out Entity<SampleContainerComponent> dish)
     {
@@ -158,6 +186,19 @@ public sealed partial class SampleStabilizerSystem : EntitySystem
             return false;
 
         dish = (uid, container);
+        return true;
+    }
+
+    private bool TryGetBeaker(Entity<SampleStabilizerComponent> ent, out EntityUid beaker, out Entity<SolutionComponent> solution)
+    {
+        beaker = default;
+        solution = default;
+        if (_itemSlots.GetItemOrNull(ent.Owner, ent.Comp.BeakerSlot) is not { } uid ||
+            TerminatingOrDeleted(uid) || !_solutions.TryGetFitsInDispenser(uid, out var entity, out _))
+            return false;
+
+        beaker = uid;
+        solution = entity.Value;
         return true;
     }
 
@@ -173,9 +214,10 @@ public sealed partial class SampleStabilizerSystem : EntitySystem
     {
         var component = ent.Comp;
         component.StabilizationEndTime = null;
-        component.StabilizationSampleA = null;
-        component.StabilizationSampleB = null;
+        component.StabilizationSample = null;
         component.StabilizationDish = null;
+        component.StabilizationBeaker = null;
+        RemComp<ActiveSampleStabilizerComponent>(ent);
         Dirty(ent);
     }
 
@@ -185,29 +227,15 @@ public sealed partial class SampleStabilizerSystem : EntitySystem
             return;
 
         var hasDish = TryGetDish(ent, out var dish);
-        var samples = new List<SampleView>();
-        var genomes = new List<GenomeSnapshot>();
-        if (hasDish)
-        {
-            foreach (var sample in dish.Comp.Samples)
-            {
-                int? group = null;
-                if (sample.GetGenome() is { } genome)
-                {
-                    var index = genomes.FindIndex(existing => existing.SameContents(genome));
-                    if (index < 0)
-                    {
-                        index = genomes.Count;
-                        genomes.Add(genome);
-                    }
-                    group = index;
-                }
-                samples.Add(new SampleView(sample, group));
-            }
-        }
+        var hasBeaker = TryGetBeaker(ent, out _, out var solution);
         _userInterface.SetUiState(ent.Owner, SampleStabilizerUiKey.Key, new SampleStabilizerUiState(
-            samples.ToArray(),
+            hasDish ? dish.Comp.Samples.Select(sample => new SampleView(sample)).ToArray() : [],
             hasDish ? GetNetEntity(dish.Owner) : null,
+            hasBeaker,
+            ent.Comp.Reagent,
+            hasBeaker ? GetReagentAmount(ent.Comp, solution) : FixedPoint2.Zero,
+            ent.Comp.StabilityPerUnit,
+            ent.Comp.MaximumGain,
             ent.Comp.StabilizationInProgress,
             ent.Comp.StabilizationDelay.TotalSeconds));
     }

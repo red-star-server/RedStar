@@ -1,4 +1,5 @@
 using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
@@ -8,15 +9,19 @@ using Content.Shared._RedStar.Genetics.Systems;
 using Content.Shared._RedStar.Xenobiology.Components.Container;
 using Content.Shared._RedStar.Xenobiology.Components.Tools;
 using Content.Shared._RedStar.Xenobiology.Events;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._RedStar.Xenobiology.Systems;
 
 public abstract partial class SampleCollectorSystem : EntitySystem
 {
+    private static readonly ProtoId<DamageTypePrototype> CellularDamage = "Cellular";
+
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private GenomeSystem _genomes = default!;
-    [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] protected SharedPopupSystem Popup = default!;
+    [Dependency] protected DamageableSystem Damageable = default!;
+    [Dependency] protected SharedAppearanceSystem Appearance = default!;
 
     /// <summary>
     /// Handles sample transfers that do not require a biopsy delay.
@@ -42,7 +47,7 @@ public abstract partial class SampleCollectorSystem : EntitySystem
         if (!CanCollectBiopsy((ent.Owner, ent.Comp, container), target, out _, out var failure))
         {
             if (failure is not null)
-                _popup.PopupEntity(Loc.GetString(failure), ent, args.User, PopupType.SmallCaution);
+                Popup.PopupEntity(Loc.GetString(failure), ent, args.User, PopupType.SmallCaution);
             return;
         }
 
@@ -81,7 +86,7 @@ public abstract partial class SampleCollectorSystem : EntitySystem
         else
         {
             if (TryComp<DamageableComponent>(target, out var damageable) &&
-                _damageable.GetPositiveDamage((target, damageable)).DamageDict.TryGetValue("Cellular", out var damage))
+                Damageable.GetPositiveDamage((target, damageable)).DamageDict.TryGetValue(CellularDamage, out var damage))
                 cellularDamage = (float) damage;
 
             if (cellularDamage >= collector.Comp1.MaximumCellularDamage)

@@ -1,8 +1,8 @@
+using Content.Server._RedStar.Genetics.Systems;
 using Content.Shared._RedStar.Genetics.Data;
 using Content.Server._RedStar.Genetics.Data;
 using Content.Shared._RedStar.Genetics.Prototypes;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -12,6 +12,7 @@ namespace Content.Server._RedStar.Genetics.Components;
 /// Reagent-assisted processing of a single acquired gene in the contained patient.
 /// </summary>
 [RegisterComponent, AutoGenerateComponentPause]
+[Access(typeof(GeneticChamberSystem), Other = AccessPermissions.Read)]
 public sealed partial class GeneticChamberComponent : Component
 {
     /// <summary>
@@ -25,18 +26,6 @@ public sealed partial class GeneticChamberComponent : Component
     /// </summary>
     [DataField(required: true)]
     public Dictionary<GeneticProcedure, GeneticProcedureSettings> Procedures = new();
-
-    /// <summary>
-    /// Audible reagent delivery during an active procedure.
-    /// </summary>
-    [DataField]
-    public SoundSpecifier? InjectionSound = new SoundPathSpecifier("/Audio/Items/hypospray.ogg");
-
-    [DataField]
-    public TimeSpan InjectionSoundInterval = TimeSpan.FromSeconds(4);
-
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
-    public TimeSpan NextSound;
 
     /// <summary>
     /// Console that started the current procedure; prevents another controller from cancelling it.
@@ -61,9 +50,15 @@ public sealed partial class GeneticChamberComponent : Component
     /// </summary>
     public FixedPoint2 Consumed;
 
+    /// <summary>
+    /// Simulation time at which the current procedure started.
+    /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan Started;
 
+    /// <summary>
+    /// Simulation time at which the current procedure completes.
+    /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan Ends;
 }

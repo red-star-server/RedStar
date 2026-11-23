@@ -37,12 +37,28 @@ public sealed partial class SampleContainerComponent : Component
     [DataField]
     public bool InitialSamplesInitialized;
 
+    /// <summary>
+    /// Largest number of samples the container holds.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public int MaxSamples = int.MaxValue;
 
+    /// <summary>
+    /// Whether samples may be transferred into this container with a tool.
+    /// </summary>
     [DataField]
     public bool AllowTransfer = true;
 
+    /// <summary>
+    /// Whether SampleSystem keeps the container's label equal to its sample name or sample count.
+    /// The label appears in parentheses after the item name, for example in smart fridges.
+    /// </summary>
+    [DataField]
+    public bool LabelBySamples;
+
+    /// <summary>
+    /// Whether a collector may take samples out of this container.
+    /// </summary>
     [DataField]
     public bool AllowCollection = true;
 
@@ -56,9 +72,15 @@ public sealed partial class SampleContainerComponent : Component
 [DataDefinition]
 public sealed partial class SampleGenerationEntry
 {
+    /// <summary>
+    /// Genome the generated sample is taken from.
+    /// </summary>
     [DataField(required: true)]
     public ProtoId<GenomePrototype> Genome;
 
+    /// <summary>
+    /// Stability of the generated sample.
+    /// </summary>
     [DataField]
     public float Stability = 1f;
 }

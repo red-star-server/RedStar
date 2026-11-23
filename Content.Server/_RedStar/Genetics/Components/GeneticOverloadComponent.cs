@@ -1,3 +1,4 @@
+using Content.Server._RedStar.Genetics.Systems;
 using Content.Shared.Damage;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -8,8 +9,12 @@ namespace Content.Server._RedStar.Genetics.Components;
 /// Configures overload symptoms and schedules damage while acquired genes exceed safe capacity.
 /// </summary>
 [RegisterComponent, AutoGenerateComponentPause]
+[Access(typeof(GeneticOverloadSystem))]
 public sealed partial class GeneticOverloadComponent : Component
 {
+    /// <summary>
+    /// Interval between weakness refreshes and damage pulses while the host is overloaded.
+    /// </summary>
     [DataField]
     public TimeSpan PulseInterval = TimeSpan.FromSeconds(10);
 

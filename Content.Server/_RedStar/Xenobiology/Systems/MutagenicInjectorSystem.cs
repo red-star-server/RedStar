@@ -1,9 +1,12 @@
+using Content.Server._RedStar.Xenobiology.Components;
 using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Storage.EntitySystems;
 using Content.Server._RedStar.Genetics.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Database;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
 using Content.Shared.Power;
@@ -11,7 +14,6 @@ using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Verbs;
 using Content.Shared._RedStar.Genetics.Components;
-using Content.Shared._RedStar.Xenobiology.Components.Machines;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
@@ -19,6 +21,8 @@ using Robust.Shared.Timing;
 namespace Content.Server._RedStar.Xenobiology.Systems;
 public sealed partial class MutagenicInjectorSystem : EntitySystem
 {
+    [Dependency] private PowerReceiverSystem _power = default!;
+    [Dependency] private IAdminLogManager _logs = default!;
     [Dependency] private GeneticVialSystem _vials = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
@@ -55,11 +59,21 @@ public sealed partial class MutagenicInjectorSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnGetAltVerbs(Entity<MutagenicInjectorComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || args.Using is not null ||
-            Comp<EntityStorageComponent>(ent).Open || ent.Comp.InjectionEndTime is not null)
+        if (!args.CanAccess || !args.CanInteract)
             return;
 
         var user = args.User;
+        if (ent.Comp.InjectionEndTime is not null)
+        {
+            args.Verbs.Add(new AlternativeVerb
+            {
+                Text = Loc.GetString("mutagenic-injector-cancel"),
+                Act = () => CancelInjection(ent),
+                Priority = 1
+            });
+            return;
+        }
+
         args.Verbs.Add(new AlternativeVerb
         {
             Text = Loc.GetString("mutagenic-injector-start"),
@@ -83,6 +97,12 @@ public sealed partial class MutagenicInjectorSystem : EntitySystem
 
     private void TryStartInjection(Entity<MutagenicInjectorComponent> ent, EntityUid user)
     {
+        if (Comp<EntityStorageComponent>(ent).Open)
+        {
+            _popup.PopupEntity(Loc.GetString("mutagenic-injector-open"), ent, user, PopupType.MediumCaution);
+            return;
+        }
+
         if (!TryGetReadyInjection(ent, user, out var subject, out var vial))
             return;
 
@@ -90,6 +110,9 @@ public sealed partial class MutagenicInjectorSystem : EntitySystem
         ent.Comp.InjectionVial = vial.Owner;
         ent.Comp.InjectionVialRevision = vial.Comp.Revision;
         ent.Comp.InjectionEndTime = _timing.CurTime + ent.Comp.InjectionDelay;
+        EnsureComp<ActiveMutagenicInjectorComponent>(ent);
+        _logs.Add(LogType.Action, LogImpact.Medium,
+            $"{ToPrettyString(user)} started a mutagenic injection of {string.Join(", ", vial.Comp.Genes)} into {ToPrettyString(subject)} using {ToPrettyString(ent)}.");
         ent.Comp.AudioStream = _audio.PlayPvs(ent.Comp.ProcessSound, ent.Owner)?.Entity;
     }
 
@@ -127,7 +150,7 @@ public sealed partial class MutagenicInjectorSystem : EntitySystem
     {
         subject = default;
         vial = default;
-        if (!Resolve(ent, ref ent.Comp2) || !this.IsPowered(ent.Owner, EntityManager) ||
+        if (!Resolve(ent, ref ent.Comp2) || !_power.IsPowered(ent.Owner) ||
             ent.Comp2.Open || ent.Comp2.Contents.ContainedEntities.Count != 1 ||
             _itemSlots.GetItemOrNull(ent.Owner, ent.Comp1.VialSlot) is not { } vialUid ||
             !TryComp<GeneticVialComponent>(vialUid, out var contents))
@@ -142,8 +165,8 @@ public sealed partial class MutagenicInjectorSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<MutagenicInjectorComponent, EntityStorageComponent, MetaDataComponent>();
-        while (query.MoveNext(out var uid, out var component, out var storage, out var metadata))
+        var query = EntityQueryEnumerator<ActiveMutagenicInjectorComponent, MutagenicInjectorComponent, EntityStorageComponent, MetaDataComponent>();
+        while (query.MoveNext(out var uid, out _, out var component, out var storage, out var metadata))
         {
             if (metadata.EntityPaused)
                 continue;
@@ -175,6 +198,8 @@ public sealed partial class MutagenicInjectorSystem : EntitySystem
             return;
         }
 
+        _logs.Add(LogType.Action, LogImpact.Medium,
+            $"{ToPrettyString(ent)} injected {string.Join(", ", vial.Comp.Genes)} into {ToPrettyString(subject)}.");
         _vials.Clear(vial);
         CancelInjection(ent);
         _storage.OpenStorage(ent.Owner);
@@ -189,6 +214,7 @@ public sealed partial class MutagenicInjectorSystem : EntitySystem
         ent.Comp.InjectionSubject = null;
         ent.Comp.InjectionVial = null;
         ent.Comp.InjectionVialRevision = 0;
+        RemComp<ActiveMutagenicInjectorComponent>(ent);
         ent.Comp.AudioStream = _audio.Stop(ent.Comp.AudioStream);
     }
 }

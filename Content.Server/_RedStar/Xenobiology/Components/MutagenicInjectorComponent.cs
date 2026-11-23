@@ -1,19 +1,30 @@
+using Content.Server._RedStar.Xenobiology.Systems;
 using Robust.Shared.Audio;
 
-namespace Content.Shared._RedStar.Xenobiology.Components.Machines;
+namespace Content.Server._RedStar.Xenobiology.Components;
 
 /// <summary>
 /// Injects genetic material from a vial into a specimen.
 /// </summary>
 [RegisterComponent, AutoGenerateComponentPause]
+[Access(typeof(MutagenicInjectorSystem))]
 public sealed partial class MutagenicInjectorComponent : Component
 {
+    /// <summary>
+    /// Item slot holding the vial to inject.
+    /// </summary>
     [DataField]
     public string VialSlot = "vialSlot";
 
+    /// <summary>
+    /// Duration of one injection.
+    /// </summary>
     [DataField]
     public TimeSpan InjectionDelay = TimeSpan.FromSeconds(5);
 
+    /// <summary>
+    /// Sound played in a loop while injecting.
+    /// </summary>
     [DataField]
     public SoundSpecifier? ProcessSound;
 

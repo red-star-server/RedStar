@@ -12,6 +12,16 @@ public sealed partial class GenePrototype : IPrototype
     public string ID { get; private set; } = string.Empty;
 
     /// <summary>
+    /// Localization key of the gene's display name.
+    /// </summary>
+    public LocId Name => $"gene-{ID}-name";
+
+    /// <summary>
+    /// Localization key of the gene's description.
+    /// </summary>
+    public LocId Description => $"gene-{ID}-desc";
+
+    /// <summary>
     /// Research tier used to group genes in the catalogue and mutation recipes.
     /// </summary>
     [DataField]
@@ -56,12 +66,6 @@ public sealed partial class GenePrototype : IPrototype
     /// </summary>
     [DataField]
     public int FragmentCount = 4;
-
-    /// <summary>
-    /// Minimum sample stability, from zero to one, required to extract this gene.
-    /// </summary>
-    [DataField]
-    public float MinimumStability = 0.5f;
 
     /// <summary>
     /// One-time effects attempted on first activation. Resuming or cloning a gene does not replay them.

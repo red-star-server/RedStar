@@ -30,22 +30,22 @@ public sealed partial class GeneticsConsoleWindow : FancyWindow
         IoCManager.InjectDependencies(this);
         GenePanel.PanelOverride = new StyleBoxFlat
         {
-            BackgroundColor = Color.FromHex("#252B35"),
-            BorderColor = Color.FromHex("#6A9BA6"),
+            BackgroundColor = GeneticsUi.Panel,
+            BorderColor = GeneticsUi.Border,
             BorderThickness = new Thickness(2, 0, 0, 0)
         };
         ProcedurePanel.PanelOverride = new StyleBoxFlat
         {
-            BackgroundColor = Color.FromHex("#252B35"),
-            BorderColor = Color.FromHex("#6A9BA6"),
+            BackgroundColor = GeneticsUi.Panel,
+            BorderColor = GeneticsUi.Border,
             BorderThickness = new Thickness(2, 0, 0, 0)
         };
-        Progress.BackgroundStyleBoxOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#171C24") };
-        Progress.ForegroundStyleBoxOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#85D5CA") };
+        Progress.BackgroundStyleBoxOverride = new StyleBoxFlat { BackgroundColor = GeneticsUi.BarBackground };
+        Progress.ForegroundStyleBoxOverride = new StyleBoxFlat { BackgroundColor = GeneticsUi.Accent };
         BeakerPanel.PanelOverride = new StyleBoxFlat
         {
-            BackgroundColor = Color.FromHex("#202832"),
-            BorderColor = Color.FromHex("#6A9BA6"),
+            BackgroundColor = GeneticsUi.PanelDark,
+            BorderColor = GeneticsUi.Border,
             BorderThickness = new Thickness(0, 1, 0, 0)
         };
         Profile.Selectable = true;
@@ -85,7 +85,7 @@ public sealed partial class GeneticsConsoleWindow : FancyWindow
         ProcedurePanel.Visible = state.Busy;
         Progress.Value = state.Progress;
         if (state.Busy && state.Operation is { } operation)
-            Working.Text = Loc.GetString($"genetics-console-progress-{operation.ToString().ToLowerInvariant()}");
+            Working.Text = Loc.GetString(GeneticsUi.ProcedureProgress(operation));
 
         RefreshSelection();
     }
@@ -106,10 +106,11 @@ public sealed partial class GeneticsConsoleWindow : FancyWindow
         if (_state?.Profile is not { } profile || _selected is not { } gene || !profile.Genes.Any(entry => entry.Id == gene))
             return;
         var entry = profile.Genes.First(entry => entry.Id == gene);
-        SelectedName.Text = Loc.GetString($"gene-{gene}-name");
+        var prototype = _prototypes.Index(gene);
+        SelectedName.Text = Loc.GetString(prototype.Name);
         SelectedName.ToolTip = SelectedName.Text;
         Description.Visible = GeneState.Visible = true;
-        Description.SetMessage(Loc.GetString($"gene-{gene}-desc"));
+        Description.SetMessage(Loc.GetString(prototype.Description));
         GeneState.Text = Loc.GetString(entry.Status switch
         {
             GeneStatus.Raw => "genetic-analyzer-dormant",
@@ -128,7 +129,7 @@ public sealed partial class GeneticsConsoleWindow : FancyWindow
             if (!_procedures.TryGetValue(procedure.Procedure, out var button))
             {
                 var kind = procedure.Procedure;
-                button = new Button { MinHeight = 32, Text = Loc.GetString($"genetics-console-{kind.ToString().ToLowerInvariant()}") };
+                button = new Button { MinHeight = 32, Text = Loc.GetString(GeneticsUi.ProcedureLabel(kind)) };
                 button.OnPressed += _ =>
                 {
                     if (_state?.Profile?.Target is { } patient && _selected is { } selected)

@@ -12,6 +12,9 @@ namespace Content.Shared._RedStar.Genetics.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(GenomeSystem))]
 public sealed partial class GenomeComponent : Component
 {
+    /// <summary>
+    /// Genome prototype that defines the natural genes of the entity.
+    /// </summary>
     [DataField(required: true)]
     public ProtoId<GenomePrototype> GenomeId;
 

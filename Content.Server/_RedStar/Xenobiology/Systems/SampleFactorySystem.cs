@@ -28,13 +28,19 @@ public sealed partial class SampleFactorySystem : EntitySystem
             return;
 
         if (ent.Comp.InitialSamples.Count > ent.Comp.MaxSamples - ent.Comp.Samples.Count)
-            throw new InvalidOperationException($"Initial samples exceed the capacity of {ToPrettyString(ent)}.");
+        {
+            Log.Error($"Initial samples exceed the capacity of {ToPrettyString(ent)}.");
+            return;
+        }
 
         var initial = new List<(GenomeSnapshot Genome, float Stability)>();
         foreach (var entry in ent.Comp.InitialSamples)
         {
             if (!_genomes.TryGenerate(entry.Genome, out var genome))
-                throw new InvalidOperationException($"Unknown initial sample genome {entry.Genome} on {ToPrettyString(ent)}.");
+            {
+                Log.Error($"Unknown initial sample genome {entry.Genome} on {ToPrettyString(ent)}.");
+                continue;
+            }
 
             initial.Add((genome, entry.Stability));
         }
@@ -43,7 +49,7 @@ public sealed partial class SampleFactorySystem : EntitySystem
         foreach (var (genome, stability) in initial)
         {
             if (!_samples.AddSample(ent.AsNullable(), CreateSample(genome, stability)))
-                throw new InvalidOperationException($"Could not add an initial sample to {ToPrettyString(ent)}.");
+                Log.Error($"Could not add an initial sample to {ToPrettyString(ent)}.");
         }
     }
 

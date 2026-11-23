@@ -24,10 +24,10 @@ public sealed partial class ServerGeneticAnalyzerSystem : GeneticAnalyzerSystem
 
     public override void Update(float frameTime)
     {
-        var query = EntityQueryEnumerator<GeneticAnalyzerComponent>();
-        while (query.MoveNext(out var uid, out var analyzer))
+        var query = EntityQueryEnumerator<GeneticAnalyzerComponent, MetaDataComponent>();
+        while (query.MoveNext(out var uid, out var analyzer, out var metadata))
         {
-            if (analyzer.Target is null || analyzer.NextUpdate > _timing.CurTime)
+            if (metadata.EntityPaused || analyzer.Target is null || analyzer.NextUpdate > _timing.CurTime)
                 continue;
             analyzer.NextUpdate = _timing.CurTime + analyzer.UpdateInterval;
             UpdateReport((uid, analyzer));
@@ -43,6 +43,10 @@ public sealed partial class ServerGeneticAnalyzerSystem : GeneticAnalyzerSystem
             PauseReport(analyzer);
             return;
         }
+
+        if (_ui.TryGetUiState<GeneticAnalyzerUiState>(analyzer.Owner, GeneticAnalyzerUiKey.Key, out var previous) &&
+            previous.Equals(report))
+            return;
 
         _ui.SetUiState(analyzer.Owner, GeneticAnalyzerUiKey.Key, report);
     }

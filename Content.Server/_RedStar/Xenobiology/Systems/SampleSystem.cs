@@ -1,20 +1,25 @@
+using System.Linq;
 using Content.Shared._RedStar.Genetics.Prototypes;
 using Content.Shared._RedStar.Xenobiology.Components.Container;
 using Content.Shared._RedStar.Xenobiology.Data;
 using Content.Shared._RedStar.Xenobiology.Events;
+using Content.Shared.Labels.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server._RedStar.Xenobiology.Systems;
 
 public sealed partial class SampleSystem : EntitySystem
 {
-    private int _nextSampleId;
     [Dependency] private SharedContainerSystem _containers = default!;
+    [Dependency] private LabelSystem _labels = default!;
 
     [SubscribeLocalEvent]
     private void OnSamplesChanged(Entity<SampleContainerComponent> ent, ref SampleContainerChangedEvent args)
     {
+        UpdateLabel(ent);
+
         if (!_containers.TryGetContainingContainer(ent.Owner, out var container))
             return;
 
@@ -28,29 +33,34 @@ public sealed partial class SampleSystem : EntitySystem
         ent.Comp.SampleCount = ent.Comp.Samples.Count;
         Dirty(ent);
 
-        if (ent.Comp.Samples.Count > 0)
-            ReserveLoadedSampleIds();
-
         foreach (var sample in ent.Comp.Samples)
         {
             if (sample.Id == 0)
-                sample.Id = NextSampleId();
+                sample.Id = NextSampleId(ent.Comp);
         }
     }
 
-    private void ReserveLoadedSampleIds()
+    private void UpdateLabel(Entity<SampleContainerComponent> ent)
     {
-        var query = AllEntityQuery<SampleContainerComponent>();
-        while (query.MoveNext(out var container))
+        if (!ent.Comp.LabelBySamples)
+            return;
+
+        var text = ent.Comp.Samples.Count switch
         {
-            foreach (var sample in container.Samples)
-            {
-                _nextSampleId = Math.Max(_nextSampleId, sample.Id);
-            }
-        }
+            0 => null,
+            1 => ent.Comp.Samples[0].Name,
+            var count => Loc.GetString("sample-container-label-many", ("count", count))
+        };
+
+        if (_labels.GetLabelText(ent.Owner) != (text is null ? null : FormattedMessage.EscapeText(text)))
+            _labels.Label(ent, text);
     }
 
-    private int NextSampleId() => checked(++_nextSampleId);
+    /// <summary>
+    /// Sample IDs only need to be unique within one container, where they identify samples in UI messages.
+    /// </summary>
+    private static int NextSampleId(SampleContainerComponent container) =>
+        container.Samples.Count == 0 ? 1 : checked(container.Samples.Max(sample => sample.Id) + 1);
 
     private void NotifyChanged(EntityUid uid)
     {
@@ -70,7 +80,7 @@ public sealed partial class SampleSystem : EntitySystem
             ent.Comp.Samples.Count >= ent.Comp.MaxSamples)
             return false;
 
-        sample.Id = NextSampleId();
+        sample.Id = NextSampleId(ent.Comp);
         ent.Comp.Samples.Add(sample);
 
         NotifyChanged(ent);
@@ -78,20 +88,14 @@ public sealed partial class SampleSystem : EntitySystem
     }
 
     /// <summary>
-    /// Replaces two distinct samples with one new sample and notifies observers once.
-    /// Leaves the container unchanged if either input is missing or the result already has an ID.
+    /// Marks a gene of the selected sample as studied and notifies the containing machine on success.
     /// </summary>
-    public bool ReplaceSamples(Entity<SampleContainerComponent?> ent, int firstId, int secondId, BiologicalSample result)
+    public bool TryMarkDecoded(Entity<SampleContainerComponent?> ent, int sampleId, ProtoId<GenePrototype> id)
     {
-        if (!Resolve(ent, ref ent.Comp) || result.Id != 0 || firstId == secondId ||
-            ent.Comp.Samples.Find(sample => sample.Id == firstId) is not { } first ||
-            ent.Comp.Samples.Find(sample => sample.Id == secondId) is not { } second)
+        if (!Resolve(ent, ref ent.Comp) || ent.Comp.Samples.Find(candidate => candidate.Id == sampleId) is not { } sample ||
+            !sample.TryMarkDecoded(id))
             return false;
 
-        result.Id = NextSampleId();
-        ent.Comp.Samples.Remove(first);
-        ent.Comp.Samples.Remove(second);
-        ent.Comp.Samples.Add(result);
         NotifyChanged(ent);
         return true;
     }
@@ -124,7 +128,20 @@ public sealed partial class SampleSystem : EntitySystem
     }
 
     /// <summary>
-    /// Moves the first sample without changing its ID and notifies both containers.
+    /// Raises the selected sample's stability and notifies observers when it changes.
+    /// </summary>
+    public bool TryRestoreStability(Entity<SampleContainerComponent?> ent, int sampleId, float amount)
+    {
+        if (!Resolve(ent, ref ent.Comp) || ent.Comp.Samples.Find(candidate => candidate.Id == sampleId) is not { } sample ||
+            !sample.TryRestoreStability(amount))
+            return false;
+
+        NotifyChanged(ent);
+        return true;
+    }
+
+    /// <summary>
+    /// Moves the first sample, assigning a new ID only if the destination already uses it, and notifies both containers.
     /// Returns false without moving anything if the source is empty or the destination is full.
     /// </summary>
     public bool MoveFirstSample(Entity<SampleContainerComponent?> source, Entity<SampleContainerComponent?> destination)
@@ -136,6 +153,8 @@ public sealed partial class SampleSystem : EntitySystem
 
         var sample = source.Comp.Samples[0];
         source.Comp.Samples.RemoveAt(0);
+        if (destination.Comp.Samples.Exists(existing => existing.Id == sample.Id))
+            sample.Id = NextSampleId(destination.Comp);
         destination.Comp.Samples.Add(sample);
         NotifyChanged(source);
         NotifyChanged(destination);

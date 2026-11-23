@@ -35,6 +35,9 @@ public sealed partial class GeneticMutationPrototype : IPrototype
     [DataField]
     public int Priority;
 
+    /// <summary>
+    /// Time the growing vat needs to complete the mutation.
+    /// </summary>
     [DataField]
     public TimeSpan Duration = TimeSpan.FromSeconds(60);
 }

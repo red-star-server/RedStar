@@ -1,6 +1,4 @@
-using Content.Server.Popups;
 using Content.Server._RedStar.Genetics.Systems;
-using Content.Shared.Damage.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Whitelist;
@@ -10,7 +8,6 @@ using Content.Shared._RedStar.Xenobiology.Components.Tools;
 using Content.Shared._RedStar.Xenobiology.Events;
 using Content.Shared._RedStar.Xenobiology.Systems;
 using Content.Shared._RedStar.Xenobiology.Visuals;
-using Robust.Server.GameObjects;
 
 namespace Content.Server._RedStar.Xenobiology.Systems;
 
@@ -19,10 +16,7 @@ namespace Content.Server._RedStar.Xenobiology.Systems;
 /// </summary>
 public sealed partial class ServerSampleCollectorSystem : SampleCollectorSystem
 {
-    [Dependency] private AppearanceSystem _appearance = default!;
-    [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private EntityWhitelistSystem _entityWhitelist = default!;
-    [Dependency] private PopupSystem _popup = default!;
     [Dependency] private ServerGenomeSystem _genomes = default!;
     [Dependency] private SampleSystem _samples = default!;
     [Dependency] private SampleFactorySystem _factory = default!;
@@ -66,7 +60,7 @@ public sealed partial class ServerSampleCollectorSystem : SampleCollectorSystem
         if (!CanCollectBiopsy(ent, target, out var damage, out var failure))
         {
             if (failure is not null)
-                _popup.PopupEntity(Loc.GetString(failure), ent, args.Args.User, PopupType.SmallCaution);
+                Popup.PopupEntity(Loc.GetString(failure), ent, args.Args.User, PopupType.SmallCaution);
             return;
         }
 
@@ -75,9 +69,9 @@ public sealed partial class ServerSampleCollectorSystem : SampleCollectorSystem
             return;
 
         if (ent.Comp.Damage is not null)
-            _damageable.TryChangeDamage(target, ent.Comp.Damage, origin: args.Args.User);
+            Damageable.TryChangeDamage(target, ent.Comp.Damage, origin: args.Args.User);
 
-        _popup.PopupEntity(Loc.GetString("sample-collector-collected"), ent, args.Args.User);
+        Popup.PopupEntity(Loc.GetString("sample-collector-collected"), ent, args.Args.User);
         args.Handled = true;
     }
 
@@ -86,14 +80,14 @@ public sealed partial class ServerSampleCollectorSystem : SampleCollectorSystem
     {
         if (ent.Comp.SampleCount >= ent.Comp.MaxSamples)
         {
-            _popup.PopupEntity(Loc.GetString("sample-collector-full"), ent, user, PopupType.SmallCaution);
+            Popup.PopupEntity(Loc.GetString("sample-collector-full"), ent, user, PopupType.SmallCaution);
             return false;
         }
 
         if (!_samples.MoveFirstSample(target.AsNullable(), ent.AsNullable()))
             return false;
 
-        _popup.PopupEntity(Loc.GetString("sample-collector-collected"), ent, user);
+        Popup.PopupEntity(Loc.GetString("sample-collector-collected"), ent, user);
         return true;
     }
 
@@ -107,14 +101,14 @@ public sealed partial class ServerSampleCollectorSystem : SampleCollectorSystem
 
         if (ent.Comp.Empty)
         {
-            _popup.PopupEntity(Loc.GetString("sample-collector-empty"), ent, user, PopupType.SmallCaution);
+            Popup.PopupEntity(Loc.GetString("sample-collector-empty"), ent, user, PopupType.SmallCaution);
             return false;
         }
 
         if (!_samples.MoveFirstSample(ent.AsNullable(), target.AsNullable()))
             return false;
 
-        _popup.PopupEntity(Loc.GetString("sample-collector-transfer"), ent, user);
+        Popup.PopupEntity(Loc.GetString("sample-collector-transfer"), ent, user);
         return true;
     }
 
@@ -123,6 +117,6 @@ public sealed partial class ServerSampleCollectorSystem : SampleCollectorSystem
         if (!Resolve(ent, ref ent.Comp2, logMissing: false))
             return;
 
-        _appearance.SetData(ent, SampleCollectorVisuals.State, ent.Comp2.Empty);
+        Appearance.SetData(ent, SampleCollectorVisuals.State, ent.Comp2.Empty);
     }
 }

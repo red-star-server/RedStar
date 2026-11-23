@@ -1,2 +1,6 @@
-ent-SmartFridgeGenetics = умный холодильник генетика
-    .desc = Холодильная установка для хранения чашек Петри.
+ent-SmartFridgeGenetics = { ent-SmartFridge }
+    .desc = { ent-SmartFridge.desc }
+    .suffix = Генетический
+ent-SmartFridgeXenobiology = { ent-SmartFridge }
+    .desc = { ent-SmartFridge.desc }
+    .suffix = Ксенобиологический

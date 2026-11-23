@@ -8,26 +8,16 @@ namespace Content.Client._RedStar.Xenobiology.UI;
 [GenerateTypedNameReferences]
 public sealed partial class SampleInfoControl : Control
 {
-    private string _labelPrefix = string.Empty;
-
     public SampleInfoControl()
     {
         RobustXamlLoader.Load(this);
-    }
-
-    /// <summary>
-    /// Sets the localization key prefix for detail labels. Must be called before SetSample.
-    /// </summary>
-    public void SetLabelPrefix(string prefix)
-    {
-        _labelPrefix = prefix;
-        TraitsLabel.Text = Loc.GetString($"{prefix}-sample-traits-label");
+        TraitsLabel.Text = Loc.GetString("sample-info-traits-label");
     }
 
     public void SetSample(SampleView sample)
     {
         SampleNameLabel.Text = sample.Name;
-        SampleStabilityLabel.Text = Loc.GetString($"{_labelPrefix}-sample-stability-label",
+        SampleStabilityLabel.Text = Loc.GetString("sample-info-stability-label",
             ("stability", Math.Round(sample.Stability * 100f, 3)));
         SampleTraitsText.SetMessage(sample.GeneCount.ToString());
     }

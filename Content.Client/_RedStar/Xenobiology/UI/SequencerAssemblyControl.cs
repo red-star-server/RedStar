@@ -8,8 +8,10 @@ using Robust.Shared.Input;
 
 namespace Content.Client._RedStar.Xenobiology.UI;
 
-public sealed class SequencerAssemblyControl : Control
+public sealed partial class SequencerAssemblyControl : Control
 {
+    [Dependency] private IResourceCache _resourceCache = default!;
+
     private static readonly Color Back = Color.FromHex("#101923");
     private static readonly Color Card = Color.FromHex("#253646");
     private static readonly Color Outline = Color.FromHex("#415568");
@@ -41,8 +43,8 @@ public sealed class SequencerAssemblyControl : Control
 
     public SequencerAssemblyControl()
     {
-        var resource = IoCManager.Resolve<IResourceCache>()
-            .GetResource<FontResource>("/EngineFonts/NotoSans/NotoSansMono-Regular.ttf");
+        IoCManager.InjectDependencies(this);
+        var resource = _resourceCache.GetResource<FontResource>("/EngineFonts/NotoSans/NotoSansMono-Regular.ttf");
         _font = new VectorFont(resource, 14);
         MinSize = new Vector2(700, 215);
         HorizontalExpand = true;

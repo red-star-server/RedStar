@@ -54,8 +54,7 @@ public sealed partial class GeneticOverloadSystem : EntitySystem
             return;
         ent.Comp.Active = false;
         ent.Comp.NextPulse = TimeSpan.Zero;
-        if (_status.TryGetStatusEffect(ent, ent.Comp.Weakness, out var effect))
-            Del(effect.Value);
+        _status.TryRemoveStatusEffect(ent, ent.Comp.Weakness);
     }
 
     public override void Update(float frameTime)

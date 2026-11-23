@@ -4,7 +4,6 @@
   loadCost: 6
   category: Beneficial
   fragmentCount: 4
-  minimumStability: 0.5
   expression: GeneExpressionDimLightAdaptation
 
 - type: gene
@@ -12,7 +11,6 @@
   tier: 1
   loadCost: 4
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: Photosensitivity
@@ -20,7 +18,6 @@
   loadCost: 4
   category: Pathological
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: PoorVision
@@ -28,7 +25,6 @@
   loadCost: 4
   category: Pathological
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: AcuteHearing
@@ -36,7 +32,6 @@
   loadCost: 6
   category: Beneficial
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: OlfactorySensitivity
@@ -44,7 +39,6 @@
   loadCost: 5
   category: Beneficial
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: VibrationSense
@@ -52,7 +46,6 @@
   loadCost: 8
   category: Beneficial
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: TactileWhiskers
@@ -60,7 +53,6 @@
   loadCost: 4
   category: Beneficial
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: FlexibleJoints
@@ -68,7 +60,6 @@
   loadCost: 5
   category: Beneficial
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: LimbGrip
@@ -76,7 +67,6 @@
   loadCost: 8
   category: Beneficial
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: VestibularBalance
@@ -84,7 +74,6 @@
   loadCost: 6
   category: Beneficial
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: ElasticTendons
@@ -92,7 +81,6 @@
   loadCost: 5
   category: Beneficial
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: DenseMusculature
@@ -100,7 +88,6 @@
   loadCost: 10
   category: Beneficial
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: DenseConnectiveTissue
@@ -108,7 +95,6 @@
   loadCost: 10
   category: Beneficial
   fragmentCount: 4
-  minimumStability: 0.5
   expression: GeneExpressionDenseConnectiveTissue
 
 - type: gene
@@ -117,7 +103,6 @@
   loadCost: 10
   category: Beneficial
   fragmentCount: 4
-  minimumStability: 0.5
   expression: GeneExpressionMineralizedTissue
 
 - type: gene
@@ -126,7 +111,6 @@
   loadCost: 10
   category: Beneficial
   fragmentCount: 4
-  minimumStability: 0.5
   expression: GeneExpressionKeratinizedCovering
 
 - type: gene
@@ -135,7 +119,6 @@
   loadCost: 10
   category: Beneficial
   fragmentCount: 4
-  minimumStability: 0.5
   expression: GeneExpressionChitinousCovering
 
 - type: gene
@@ -144,7 +127,6 @@
   loadCost: 2
   category: Cosmetic
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: PigmentPlasticity
@@ -152,7 +134,6 @@
   loadCost: 2
   category: Cosmetic
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: MucusSecretion
@@ -160,7 +141,6 @@
   loadCost: 5
   category: Beneficial
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: SlowMetabolism
@@ -168,7 +148,6 @@
   loadCost: 6
   category: Mixed
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: HighMetabolism
@@ -176,7 +155,6 @@
   loadCost: 6
   category: Mixed
   fragmentCount: 4
-  minimumStability: 0.5
   expression: GeneExpressionHighMetabolism
 
 - type: gene
@@ -185,7 +163,6 @@
   loadCost: 4
   category: Beneficial
   fragmentCount: 4
-  minimumStability: 0.5
   expression: GeneExpressionOmnivorousDigestion
 
 - type: gene
@@ -194,7 +171,6 @@
   loadCost: 4
   category: Beneficial
   fragmentCount: 4
-  minimumStability: 0.5
   expression: GeneExpressionCelluloseDigestion
 
 - type: gene
@@ -203,14 +179,12 @@
   loadCost: 4
   category: Beneficial
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: ProteinSecretion
   tier: 1
   loadCost: 4
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: CellRenewal
@@ -218,7 +192,6 @@
   loadCost: 5
   category: Beneficial
   fragmentCount: 4
-  minimumStability: 0.5
   expression: GeneExpressionCellRenewal
 
 - type: gene
@@ -227,7 +200,6 @@
   loadCost: 6
   category: Beneficial
   fragmentCount: 4
-  minimumStability: 0.5
   expression: GeneExpressionTissuePlasticity
 
 - type: gene
@@ -236,7 +208,6 @@
   loadCost: 8
   category: Beneficial
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: WeakImmunity
@@ -244,7 +215,6 @@
   loadCost: 4
   category: Pathological
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: ChemicalSensitivity
@@ -252,7 +222,6 @@
   loadCost: 4
   category: Pathological
   fragmentCount: 4
-  minimumStability: 0.5
   expression: GeneExpressionChemicalSensitivity
 
 - type: gene
@@ -261,14 +230,12 @@
   loadCost: 6
   category: Mixed
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: ToxinProduction
   tier: 1
   loadCost: 6
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: ToxinTolerance
@@ -276,7 +243,6 @@
   loadCost: 8
   category: Beneficial
   fragmentCount: 4
-  minimumStability: 0.5
   expression: GeneExpressionToxinTolerance
 
 - type: gene
@@ -285,7 +251,6 @@
   loadCost: 8
   category: Beneficial
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: NitrogenMetabolism
@@ -293,7 +258,6 @@
   loadCost: 5
   category: Mixed
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: ColdAdaptation
@@ -301,7 +265,6 @@
   loadCost: 8
   category: Beneficial
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: HeatAdaptation
@@ -309,7 +272,6 @@
   loadCost: 8
   category: Beneficial
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: LowPressureAdaptation
@@ -317,7 +279,6 @@
   loadCost: 8
   category: Beneficial
   fragmentCount: 4
-  minimumStability: 0.5
   expression: GeneExpressionLowPressureAdaptation
 
 - type: gene
@@ -325,14 +286,12 @@
   tier: 1
   loadCost: 4
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: DefensiveAggression
   tier: 1
   loadCost: 4
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: StartleResponse
@@ -340,7 +299,6 @@
   loadCost: 4
   category: Pathological
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: FragileBones
@@ -348,7 +306,6 @@
   loadCost: 4
   category: Pathological
   fragmentCount: 4
-  minimumStability: 0.5
   expression: GeneExpressionFragileBones
 
 - type: gene
@@ -356,7 +313,6 @@
   tier: 1
   loadCost: 4
   fragmentCount: 4
-  minimumStability: 0.5
   whitelist:
     components:
     - Satiation
@@ -367,7 +323,6 @@
   tier: 1
   loadCost: 4
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: EggLayer
@@ -375,7 +330,6 @@
   loadCost: 8
   category: Beneficial
   fragmentCount: 4
-  minimumStability: 0.5
   expression: GeneExpressionEggLayer
 
 - type: gene
@@ -384,7 +338,6 @@
   loadCost: 8
   category: Beneficial
   fragmentCount: 4
-  minimumStability: 0.5
   expression: GeneExpressionLactation
 
 - type: gene
@@ -393,7 +346,6 @@
   loadCost: 3
   category: Pathological
   fragmentCount: 4
-  minimumStability: 0.5
   expression: GeneExpressionMessyDrinker
 
 - type: gene
@@ -402,7 +354,6 @@
   loadCost: 2
   category: Cosmetic
   fragmentCount: 4
-  minimumStability: 0.5
   expression: GeneExpressionBleating
 
 - type: gene
@@ -410,21 +361,18 @@
   tier: 1
   loadCost: 5
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: CollectiveSignaling
   tier: 1
   loadCost: 4
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: BroodDevelopment
   tier: 1
   loadCost: 4
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: NightVision
@@ -432,7 +380,6 @@
   loadCost: 20
   category: Beneficial
   fragmentCount: 5
-  minimumStability: 0.6
   expression: GeneExpressionNightVision
 
 - type: gene
@@ -441,7 +388,6 @@
   loadCost: 12
   category: Beneficial
   fragmentCount: 5
-  minimumStability: 0.6
 
 - type: gene
   id: NoSlip
@@ -449,7 +395,6 @@
   loadCost: 25
   category: Beneficial
   fragmentCount: 5
-  minimumStability: 0.6
   expression: GeneExpressionNoSlip
 
 - type: gene
@@ -458,7 +403,6 @@
   loadCost: 15
   category: Beneficial
   fragmentCount: 5
-  minimumStability: 0.6
   expression: GeneExpressionElasticFrame
 
 - type: gene
@@ -467,7 +411,6 @@
   loadCost: 12
   category: Beneficial
   fragmentCount: 5
-  minimumStability: 0.6
   expression: GeneExpressionLamellarScales
 
 - type: gene
@@ -476,7 +419,6 @@
   loadCost: 12
   category: Beneficial
   fragmentCount: 5
-  minimumStability: 0.6
   expression: GeneExpressionCoordinatedRepair
 
 - type: gene
@@ -485,7 +427,6 @@
   loadCost: 10
   category: Beneficial
   fragmentCount: 5
-  minimumStability: 0.6
 
 - type: gene
   id: Venomous
@@ -493,7 +434,6 @@
   loadCost: 25
   category: Beneficial
   fragmentCount: 5
-  minimumStability: 0.6
   expression: GeneExpressionVenomous
 
 - type: gene
@@ -502,7 +442,6 @@
   loadCost: 15
   category: Mixed
   fragmentCount: 5
-  minimumStability: 0.6
   expression: GeneExpressionDetoxifyingMetabolism
 
 - type: gene
@@ -511,7 +450,6 @@
   loadCost: 10
   category: Beneficial
   fragmentCount: 5
-  minimumStability: 0.6
 
 - type: gene
   id: Pacifism
@@ -519,7 +457,6 @@
   loadCost: 4
   category: Pathological
   fragmentCount: 5
-  minimumStability: 0.6
   expression: GeneExpressionPacifism
 
 - type: gene
@@ -528,7 +465,6 @@
   loadCost: 10
   category: Mixed
   fragmentCount: 5
-  minimumStability: 0.6
 
 - type: gene
   id: RadionuclideSequestration
@@ -536,7 +472,6 @@
   loadCost: 12
   category: Mixed
   fragmentCount: 5
-  minimumStability: 0.6
 
 - type: gene
   id: WebSpinning
@@ -544,7 +479,6 @@
   loadCost: 20
   category: Beneficial
   fragmentCount: 5
-  minimumStability: 0.6
   expression: GeneExpressionWebSpinning
 
 - type: gene
@@ -553,7 +487,6 @@
   loadCost: 8
   category: Beneficial
   fragmentCount: 5
-  minimumStability: 0.6
   expression: GeneExpressionParrotSpeech
 
 - type: gene
@@ -562,7 +495,6 @@
   loadCost: 20
   category: Beneficial
   fragmentCount: 6
-  minimumStability: 0.65
   expression: GeneExpressionPhotonicLattice
 
 - type: gene
@@ -571,7 +503,6 @@
   loadCost: 20
   category: Mixed
   fragmentCount: 6
-  minimumStability: 0.65
   expression: GeneExpressionRegeneration
 
 # TODO: Add venom secretion and periodic self-poisoning.
@@ -581,7 +512,6 @@
   loadCost: 25
   category: Mixed
   fragmentCount: 6
-  minimumStability: 0.65
   effects: []
 
 - type: gene
@@ -590,7 +520,6 @@
   loadCost: 35
   category: Beneficial
   fragmentCount: 6
-  minimumStability: 0.65
   expression: GeneExpressionPressureHomeostasis
 
 # TODO: Add periodic episodes of impaired movement and speech.
@@ -601,7 +530,6 @@
   loadCost: 6
   category: Pathological
   fragmentCount: 6
-  minimumStability: 0.65
   effects: []
 
 - type: gene
@@ -610,7 +538,6 @@
   loadCost: 6
   category: Cosmetic
   fragmentCount: 6
-  minimumStability: 0.65
 
 - type: gene
   id: Radiation
@@ -618,7 +545,6 @@
   loadCost: 8
   category: Pathological
   fragmentCount: 6
-  minimumStability: 0.65
   expression: GeneExpressionRadiation
 
 - type: gene
@@ -627,7 +553,6 @@
   loadCost: 40
   category: Beneficial
   fragmentCount: 7
-  minimumStability: 0.7
   expression: GeneExpressionReflection
 
 - type: gene
@@ -636,7 +561,6 @@
   loadCost: 50
   category: Beneficial
   fragmentCount: 7
-  minimumStability: 0.7
   expression: GeneExpressionInvisibility
 
 - type: gene
@@ -645,7 +569,6 @@
   loadCost: 28
   category: Mixed
   fragmentCount: 7
-  minimumStability: 0.7
   expression: GeneExpressionSomaticHomeostasis
 
 - type: gene
@@ -654,7 +577,6 @@
   loadCost: 70
   category: Beneficial
   fragmentCount: 7
-  minimumStability: 0.7
   expression: GeneExpressionDragonBreath
 
 - type: gene
@@ -663,7 +585,6 @@
   loadCost: 12
   category: Beneficial
   fragmentCount: 5
-  minimumStability: 0.6
   expression: GeneExpressionThermalRepair
 
 - type: gene
@@ -672,7 +593,6 @@
   loadCost: 20
   category: Beneficial
   fragmentCount: 6
-  minimumStability: 0.65
   expression: GeneExpressionCompositeCarapace
 
 - type: gene
@@ -681,7 +601,6 @@
   loadCost: 15
   category: Beneficial
   fragmentCount: 6
-  minimumStability: 0.65
 
 - type: gene
   id: PhotonicEmission
@@ -689,7 +608,6 @@
   loadCost: 45
   category: Beneficial
   fragmentCount: 7
-  minimumStability: 0.7
   expression: GeneExpressionPhotonicEmission
 
 - type: gene
@@ -698,7 +616,6 @@
   loadCost: 3
   category: Pathological
   fragmentCount: 4
-  minimumStability: 0.5
   expression: GeneExpressionCarnivorousDigestion
 
 - type: gene
@@ -707,7 +624,6 @@
   loadCost: 6
   category: Beneficial
   fragmentCount: 4
-  minimumStability: 0.5
   expression: GeneExpressionFabricDigestion
 
 - type: gene
@@ -715,25 +631,21 @@
   tier: 1
   loadCost: 5
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: LoadBearingTissue
   tier: 1
   loadCost: 5
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: PhotoreactiveTissue
   tier: 1
   loadCost: 4
   fragmentCount: 4
-  minimumStability: 0.5
 
 - type: gene
   id: RegenerativeBudding
   tier: 1
   loadCost: 6
   fragmentCount: 4
-  minimumStability: 0.5
