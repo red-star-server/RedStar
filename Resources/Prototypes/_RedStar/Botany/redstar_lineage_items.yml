@@ -1,0 +1,191 @@
+# RS14: seeds and produce for plant lineages implemented in RedStar.
+
+- type: entity
+  parent: SeedBase
+  id: RedStarMangoSeeds
+  components:
+  - type: Seed
+    plantId: RedStarMangoPlants
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Specific/Hydroponics/mango.rsi
+
+- type: entity
+  parent: FoodProduceBase
+  id: RedStarFoodMango
+  components:
+  - type: Produce
+    plantId: RedStarMangoPlants
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Specific/Hydroponics/mango.rsi
+    state: produce
+
+- type: entity
+  parent: SeedBase
+  id: RedStarCactusSeeds
+  components:
+  - type: Seed
+    plantId: RedStarCactusPlants
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Specific/Hydroponics/cactus.rsi
+
+- type: entity
+  parent: FoodProduceBase
+  id: RedStarFoodCactus
+  components:
+  - type: Produce
+    plantId: RedStarCactusPlants
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Specific/Hydroponics/cactus.rsi
+    state: produce
+
+- type: entity
+  parent: SeedBase
+  id: RedStarCoralCactusSeeds
+  components:
+  - type: Seed
+    plantId: RedStarCoralCactusPlants
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Specific/Hydroponics/cactus_coral.rsi
+
+- type: entity
+  parent: FoodProduceBase
+  id: RedStarFoodCoralCactus
+  components:
+  - type: Produce
+    plantId: RedStarCoralCactusPlants
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Specific/Hydroponics/cactus_coral.rsi
+    state: produce
+
+- type: entity
+  parent: SeedBase
+  id: RedStarBubbleCactusSeeds
+  components:
+  - type: Seed
+    plantId: RedStarBubbleCactusPlants
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Specific/Hydroponics/cactus_bubble.rsi
+
+- type: entity
+  parent: FoodProduceBase
+  id: RedStarFoodBubbleCactus
+  components:
+  - type: Produce
+    plantId: RedStarBubbleCactusPlants
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Specific/Hydroponics/cactus_bubble.rsi
+    state: produce
+
+- type: entity
+  parent: SeedBase
+  id: RedStarAshCactusSeeds
+  components:
+  - type: Seed
+    plantId: RedStarAshCactusPlants
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/seeds.rsi
+
+- type: entity
+  parent: FoodProduceBase
+  id: RedStarFoodAshCactus
+  components:
+  - type: Produce
+    plantId: RedStarAshCactusPlants
+  - type: Sprite
+    sprite: _DeadSpace/Lavaland/AshWalkers/cactus.rsi
+    state: produce
+
+- type: entity
+  parent: SeedBase
+  id: RedStarBombCactusSeeds
+  components:
+  - type: Seed
+    plantId: RedStarBombCactusPlants
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Specific/Hydroponics/cactus_bomb.rsi
+
+- type: entity
+  parent: FoodProduceBase
+  id: RedStarFoodBombCactus
+  components:
+  - type: Produce
+    plantId: RedStarBombCactusPlants
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Specific/Hydroponics/cactus_bomb.rsi
+    state: produce
+
+- type: entity
+  parent: SeedBase
+  id: RedStarAshPorciniSeeds
+  components:
+  - type: Seed
+    plantId: RedStarAshPorciniPlants
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/seeds.rsi
+
+- type: entity
+  parent: FoodProduceBase
+  id: RedStarFoodAshPorcini
+  components:
+  - type: Produce
+    plantId: RedStarAshPorciniPlants
+  - type: Sprite
+    sprite: _DeadSpace/Lavaland/AshWalkers/porcini.rsi
+    state: produce
+
+- type: entity
+  parent: SeedBase
+  id: RedStarAshInocybeSeeds
+  components:
+  - type: Seed
+    plantId: RedStarAshInocybePlants
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/seeds.rsi
+
+- type: entity
+  parent: FoodProduceBase
+  id: RedStarFoodAshInocybe
+  components:
+  - type: Produce
+    plantId: RedStarAshInocybePlants
+  - type: Sprite
+    sprite: _DeadSpace/Lavaland/AshWalkers/inocybe.rsi
+    state: produce
+
+- type: entity
+  parent: SeedBase
+  id: RedStarAshPolyporeSeeds
+  components:
+  - type: Seed
+    plantId: RedStarAshPolyporePlants
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/seeds.rsi
+
+- type: entity
+  parent: FoodProduceBase
+  id: RedStarFoodAshPolypore
+  components:
+  - type: Produce
+    plantId: RedStarAshPolyporePlants
+  - type: Sprite
+    sprite: _DeadSpace/Lavaland/AshWalkers/polypore.rsi
+    state: produce
+
+- type: entity
+  parent: SeedBase
+  id: RedStarAshEmberSeeds
+  components:
+  - type: Seed
+    plantId: RedStarAshEmberPlants
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/seeds.rsi
+
+- type: entity
+  parent: FoodProduceBase
+  id: RedStarFoodAshEmber
+  components:
+  - type: Produce
+    plantId: RedStarAshEmberPlants
+  - type: Sprite
+    sprite: _DeadSpace/Lavaland/AshWalkers/ember.rsi
+    state: produce
