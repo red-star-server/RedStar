@@ -16,5 +16,14 @@ public sealed class GeneticsProcedureMessage(NetEntity patient, ProtoId<GeneProt
     public readonly GeneticProcedure Procedure = procedure;
 }
 
+/// <summary>
+/// Requests injection of the inserted vial's genes into the displayed patient.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class GeneticsInjectMessage(NetEntity patient) : BoundUserInterfaceMessage
+{
+    public readonly NetEntity Patient = patient;
+}
+
 [Serializable, NetSerializable]
 public sealed class GeneticsCancelMessage : BoundUserInterfaceMessage;

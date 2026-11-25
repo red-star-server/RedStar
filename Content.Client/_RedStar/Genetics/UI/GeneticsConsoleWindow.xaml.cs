@@ -22,6 +22,7 @@ public sealed partial class GeneticsConsoleWindow : FancyWindow
     private GeneticsConsoleUiState? _state;
     private ProtoId<GenePrototype>? _selected;
     public event Action<NetEntity, ProtoId<GenePrototype>, GeneticProcedure>? ProcedureRequested;
+    public event Action<NetEntity>? InjectRequested;
     public event Action? CancelRequested;
 
     public GeneticsConsoleWindow()
@@ -42,6 +43,12 @@ public sealed partial class GeneticsConsoleWindow : FancyWindow
         };
         Progress.BackgroundStyleBoxOverride = new StyleBoxFlat { BackgroundColor = GeneticsUi.BarBackground };
         Progress.ForegroundStyleBoxOverride = new StyleBoxFlat { BackgroundColor = GeneticsUi.Accent };
+        VialPanel.PanelOverride = new StyleBoxFlat
+        {
+            BackgroundColor = GeneticsUi.PanelDark,
+            BorderColor = GeneticsUi.Border,
+            BorderThickness = new Thickness(0, 1, 0, 0)
+        };
         BeakerPanel.PanelOverride = new StyleBoxFlat
         {
             BackgroundColor = GeneticsUi.PanelDark,
@@ -52,6 +59,11 @@ public sealed partial class GeneticsConsoleWindow : FancyWindow
         Profile.ShowConnection = false;
         Profile.GeneSelected += gene => { _selected = gene; RefreshSelection(); };
         Cancel.OnPressed += _ => CancelRequested?.Invoke();
+        Inject.OnPressed += _ =>
+        {
+            if (_state?.Profile?.Target is { } patient)
+                InjectRequested?.Invoke(patient);
+        };
     }
 
     /// <summary>
@@ -82,6 +94,13 @@ public sealed partial class GeneticsConsoleWindow : FancyWindow
                         ("reagent", _prototypes.Index<ReagentPrototype>(reagent.Reagent.Prototype).LocalizedName),
                         ("amount", reagent.Quantity))));
         Beaker.SetMessage(FormattedMessage.EscapeText(beaker));
+        var vial = state.VialGenes is null
+            ? Loc.GetString("genetics-console-no-vial")
+            : state.VialGenes.Count == 0
+                ? Loc.GetString("genetics-console-empty-vial")
+                : string.Join("\n", state.VialGenes.Select(id => Loc.GetString(_prototypes.Index(id).Name)));
+        Vial.SetMessage(FormattedMessage.EscapeText(vial));
+        Inject.Disabled = state.Busy || !state.CanInject;
         ProcedurePanel.Visible = state.Busy;
         Progress.Value = state.Progress;
         if (state.Busy && state.Operation is { } operation)
@@ -113,8 +132,7 @@ public sealed partial class GeneticsConsoleWindow : FancyWindow
         Description.SetMessage(Loc.GetString(prototype.Description));
         GeneState.Text = Loc.GetString(entry.Status switch
         {
-            GeneStatus.Raw => "genetic-analyzer-dormant",
-            GeneStatus.Suppressed => "genetic-analyzer-suppressed",
+            GeneStatus.Dormant => "genetic-analyzer-dormant",
             GeneStatus.Active => "genetic-analyzer-connected",
             _ => "genetics-console-natural"
         });

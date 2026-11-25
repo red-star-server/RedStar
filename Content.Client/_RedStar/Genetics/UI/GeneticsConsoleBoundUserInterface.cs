@@ -15,6 +15,7 @@ public sealed class GeneticsConsoleBoundUserInterface(EntityUid owner, Enum uiKe
         base.Open();
         _window = this.CreateWindow<GeneticsConsoleWindow>();
         _window.ProcedureRequested += (patient, gene, procedure) => SendMessage(new GeneticsProcedureMessage(patient, gene, procedure));
+        _window.InjectRequested += patient => SendMessage(new GeneticsInjectMessage(patient));
         _window.CancelRequested += () => SendMessage(new GeneticsCancelMessage());
     }
 

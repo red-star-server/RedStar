@@ -36,14 +36,16 @@ public static class GeneticsUi
     public static LocId ProcedureLabel(GeneticProcedure procedure) => procedure switch
     {
         GeneticProcedure.Activate => "genetics-console-activate",
-        GeneticProcedure.Suppress => "genetics-console-suppress",
+        GeneticProcedure.Deactivate => "genetics-console-deactivate",
+        GeneticProcedure.Inject => "genetics-console-inject",
         _ => "genetics-console-remove"
     };
 
     public static LocId ProcedureProgress(GeneticProcedure procedure) => procedure switch
     {
         GeneticProcedure.Activate => "genetics-console-progress-activate",
-        GeneticProcedure.Suppress => "genetics-console-progress-suppress",
+        GeneticProcedure.Deactivate => "genetics-console-progress-deactivate",
+        GeneticProcedure.Inject => "genetics-console-progress-inject",
         _ => "genetics-console-progress-remove"
     };
 }

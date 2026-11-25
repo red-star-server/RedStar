@@ -1,4 +1,3 @@
-using Content.Shared.EntityEffects;
 using Content.Shared.Whitelist;
 using Content.Shared._RedStar.Genetics.Data;
 using Robust.Shared.Prototypes;
@@ -66,12 +65,6 @@ public sealed partial class GenePrototype : IPrototype
     /// </summary>
     [DataField]
     public int FragmentCount = 4;
-
-    /// <summary>
-    /// One-time effects attempted on first activation. Resuming or cloning a gene does not replay them.
-    /// </summary>
-    [DataField]
-    public EntityEffect[] Effects = [];
 
     /// <summary>
     /// Persistent status manifestation owned by this gene. Null means it has no persistent effects.

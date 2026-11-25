@@ -1,3 +1,5 @@
+using Robust.Shared.Prototypes;
+using Content.Shared._RedStar.Genetics.Prototypes;
 using System.Linq;
 using Content.Server._RedStar.Genetics.Components;
 using Content.Server.Power.EntitySystems;
@@ -57,6 +59,17 @@ public sealed partial class GeneticsConsoleSystem : EntitySystem
             _chambers.GetPatient(chamber) is not { } patient || GetNetEntity(patient) != args.Patient)
             return;
         if (_chambers.TryStartProcedure(chamber.AsNullable(), console.Owner, patient, args.Actor, args.Gene, args.Procedure))
+            console.Comp.ActiveChamber = chamber.Owner;
+        UpdateConsole(console);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnInject(Entity<GeneticsConsoleComponent> console, ref GeneticsInjectMessage args)
+    {
+        if (console.Comp.ActiveChamber is not null || !TryGetChamber(console, out var chamber) ||
+            _chambers.GetPatient(chamber) is not { } patient || GetNetEntity(patient) != args.Patient)
+            return;
+        if (_chambers.TryStartInjection(chamber.AsNullable(), console.Owner, patient, args.Actor))
             console.Comp.ActiveChamber = chamber.Owner;
         UpdateConsole(console);
     }
@@ -137,6 +150,8 @@ public sealed partial class GeneticsConsoleSystem : EntitySystem
         var status = GeneticsConsoleStatus.NoChamber;
         var progress = 0f;
         GeneticProcedure? operation = null;
+        List<ProtoId<GenePrototype>>? vialGenes = null;
+        var canInject = false;
         if (TryGetChamber(console, out var chamber))
         {
             status = GeneticsConsoleStatus.NoPatient;
@@ -155,6 +170,13 @@ public sealed partial class GeneticsConsoleSystem : EntitySystem
                     solution.Comp.Solution.GetReagentQuantity(new ReagentId(settings.Reagent.Id, null)) >= settings.Dose));
             }
 
+            if (_chambers.TryGetVial(chamber.AsNullable(), out var vial))
+            {
+                vialGenes = vial.Comp.Genes.OrderBy(id => id.Id).ToList();
+                canInject = _chambers.GetPatient(chamber) is { } occupant && _chambers.CanInject(occupant, vial) &&
+                    procedures.Find(info => info.Procedure == GeneticProcedure.Inject).CanStart;
+            }
+
             if (chamber.Comp.Patient is not null)
             {
                 status = GeneticsConsoleStatus.Working;
@@ -163,7 +185,7 @@ public sealed partial class GeneticsConsoleSystem : EntitySystem
                     (chamber.Comp.Ends - chamber.Comp.Started).TotalSeconds, 0, 1);
             }
         }
-        var state = new GeneticsConsoleUiState(profile, status, procedures, beaker, progress, operation);
+        var state = new GeneticsConsoleUiState(profile, status, procedures, beaker, progress, operation, vialGenes, canInject);
         if (_ui.TryGetUiState<GeneticsConsoleUiState>(console.Owner, GeneticsConsoleUiKey.Key, out var previous) &&
             previous.Equals(state))
             return;

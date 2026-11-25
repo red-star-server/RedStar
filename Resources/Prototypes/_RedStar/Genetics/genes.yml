@@ -512,7 +512,6 @@
   loadCost: 25
   category: Mixed
   fragmentCount: 6
-  effects: []
 
 - type: gene
   id: PressureHomeostasis
@@ -530,7 +529,6 @@
   loadCost: 6
   category: Pathological
   fragmentCount: 6
-  effects: []
 
 - type: gene
   id: AdaptivePigmentation
