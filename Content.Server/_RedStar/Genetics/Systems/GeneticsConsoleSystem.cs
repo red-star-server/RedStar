@@ -155,7 +155,7 @@ public sealed partial class GeneticsConsoleSystem : EntitySystem
         if (TryGetChamber(console, out var chamber))
         {
             status = GeneticsConsoleStatus.NoPatient;
-            if (_chambers.GetPatient(chamber) is { } patient && _genomes.TryGetReport(patient, out var patientReport))
+            if (_chambers.GetPatient(chamber) is { } patient && _genomes.TryGetAcquiredReport(patient, out var patientReport))
             {
                 profile = patientReport;
                 status = GeneticsConsoleStatus.Ready;
@@ -172,7 +172,7 @@ public sealed partial class GeneticsConsoleSystem : EntitySystem
 
             if (_chambers.TryGetVial(chamber.AsNullable(), out var vial))
             {
-                vialGenes = vial.Comp.Genes.OrderBy(id => id.Id).ToList();
+                vialGenes = vial.Comp.Genes.OrderBy(id => id.Id, StringComparer.Ordinal).ToList();
                 canInject = _chambers.GetPatient(chamber) is { } occupant && _chambers.CanInject(occupant, vial) &&
                     procedures.Find(info => info.Procedure == GeneticProcedure.Inject).CanStart;
             }
