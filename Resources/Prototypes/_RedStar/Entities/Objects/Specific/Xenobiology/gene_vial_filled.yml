@@ -27,15 +27,6 @@
 
 - type: entity
   parent: GeneticVial
-  id: GeneticVialPoorVision
-  categories: [ DoNotMap ]
-  suffix: PoorVision
-  components:
-  - type: GeneticVial
-    genes: [PoorVision]
-
-- type: entity
-  parent: GeneticVial
   id: GeneticVialAcuteHearing
   categories: [ DoNotMap ]
   suffix: AcuteHearing
@@ -96,15 +87,6 @@
   components:
   - type: GeneticVial
     genes: [VestibularBalance]
-
-- type: entity
-  parent: GeneticVial
-  id: GeneticVialElasticTendons
-  categories: [ DoNotMap ]
-  suffix: ElasticTendons
-  components:
-  - type: GeneticVial
-    genes: [ElasticTendons]
 
 - type: entity
   parent: GeneticVial
@@ -306,24 +288,6 @@
 
 - type: entity
   parent: GeneticVial
-  id: GeneticVialOxygenStorage
-  categories: [ DoNotMap ]
-  suffix: OxygenStorage
-  components:
-  - type: GeneticVial
-    genes: [OxygenStorage]
-
-- type: entity
-  parent: GeneticVial
-  id: GeneticVialNitrogenMetabolism
-  categories: [ DoNotMap ]
-  suffix: NitrogenMetabolism
-  components:
-  - type: GeneticVial
-    genes: [NitrogenMetabolism]
-
-- type: entity
-  parent: GeneticVial
   id: GeneticVialColdAdaptation
   categories: [ DoNotMap ]
   suffix: ColdAdaptation
@@ -456,15 +420,6 @@
   components:
   - type: GeneticVial
     genes: [CollectiveSignaling]
-
-- type: entity
-  parent: GeneticVial
-  id: GeneticVialBroodDevelopment
-  categories: [ DoNotMap ]
-  suffix: BroodDevelopment
-  components:
-  - type: GeneticVial
-    genes: [BroodDevelopment]
 
 - type: entity
   parent: GeneticVial
