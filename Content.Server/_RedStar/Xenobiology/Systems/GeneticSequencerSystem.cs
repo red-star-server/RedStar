@@ -30,6 +30,7 @@ public sealed partial class GeneticSequencerSystem : EntitySystem
     [Dependency] private IPrototypeManager _prototypes = default!;
     [Dependency] private GeneticVialSystem _vials = default!;
     [Dependency] private SampleSystem _samples = default!;
+    [Dependency] private GeneResearchSystem _geneResearch = default!;
     [Dependency] private IRobustRandom _random = default!;
 
     private readonly System.Runtime.CompilerServices.ConditionalWeakTable<BiologicalSample, Dictionary<ProtoId<GenePrototype>, Puzzle>> _puzzles = new();
@@ -107,6 +108,7 @@ public sealed partial class GeneticSequencerSystem : EntitySystem
         if (!_samples.TryMarkDecoded(dish.AsNullable(), args.SampleId, id))
             return;
 
+        _geneResearch.TryRegisterDiscovery(ent.Owner, id, out _);
         _popup.PopupEntity(Loc.GetString("genetic-sequencer-discovered", ("gene", Loc.GetString(_prototypes.Index(id).Name))),
             ent, args.Actor, PopupType.Medium);
     }

@@ -12,6 +12,7 @@ public sealed partial class GeneticSequencerWindow : FancyWindow
 {
     public event Action<int, string, int[]>? OnDecode;
     public event Action<int, string, NetEntity?>? OnExtract;
+    public event Action? OnServerListButtonPressed;
 
     private GeneticSequencerUiState? _state;
     private int? _primary;
@@ -42,6 +43,7 @@ public sealed partial class GeneticSequencerWindow : FancyWindow
             if (_primary is { } sampleId && Marker is { Extractable: true } marker)
                 OnExtract?.Invoke(sampleId, marker.FamilyCode, _state?.Vial);
         };
+        ServerListButton.OnPressed += _ => OnServerListButtonPressed?.Invoke();
         RefreshAssembly();
     }
 
