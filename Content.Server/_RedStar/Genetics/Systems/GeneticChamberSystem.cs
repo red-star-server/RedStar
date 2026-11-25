@@ -156,7 +156,7 @@ public sealed partial class GeneticChamberSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnRemoved(Entity<GeneticChamberComponent> chamber, ref EntRemovedFromContainerMessage args)
     {
-        if (args.Entity == chamber.Comp.Patient || args.Entity == chamber.Comp.Beaker)
+        if (args.Entity == chamber.Comp.Patient || args.Entity == chamber.Comp.Beaker || args.Entity == chamber.Comp.Vial)
             CancelProcedure(chamber.AsNullable());
     }
 
