@@ -1,3 +1,6 @@
+using Content.Shared._RedStar.Xenobiology.Components;
+using Content.Shared.Mobs.Systems;
+using Content.Shared.Mobs;
 using Content.Server._RedStar.Genetics.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -17,6 +20,7 @@ namespace Content.Server._RedStar.Xenobiology.Systems;
 public sealed partial class ServerSampleCollectorSystem : SampleCollectorSystem
 {
     [Dependency] private EntityWhitelistSystem _entityWhitelist = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private ServerGenomeSystem _genomes = default!;
     [Dependency] private SampleSystem _samples = default!;
     [Dependency] private SampleFactorySystem _factory = default!;
@@ -25,6 +29,13 @@ public sealed partial class ServerSampleCollectorSystem : SampleCollectorSystem
     private void OnCollectorSamplesChanged(Entity<SampleCollectorComponent> ent, ref SampleContainerChangedEvent args)
     {
         UpdateCollectorAppearance(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnCorpseStateChanged(Entity<SampledCorpseComponent> ent, ref MobStateChangedEvent args)
+    {
+        if (args.NewMobState != MobState.Dead)
+            RemComp<SampledCorpseComponent>(ent);
     }
 
     [SubscribeLocalEvent]
@@ -70,6 +81,9 @@ public sealed partial class ServerSampleCollectorSystem : SampleCollectorSystem
 
         if (ent.Comp.Damage is not null)
             Damageable.TryChangeDamage(target, ent.Comp.Damage, origin: args.Args.User);
+
+        if (_mobState.IsDead(target))
+            EnsureComp<SampledCorpseComponent>(target);
 
         Popup.PopupEntity(Loc.GetString("sample-collector-collected"), ent, args.Args.User);
         args.Handled = true;

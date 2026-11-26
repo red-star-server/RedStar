@@ -1,4 +1,5 @@
 using Content.Shared._RedStar.Xenobiology.UI;
+using Content.Shared.Research.Components;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 
@@ -17,6 +18,7 @@ public sealed class GeneticSequencerBoundUserInterface(EntityUid owner, Enum uiK
             SendMessage(new GeneticSequencerDecodeMessage(sample, family, order));
         _window.OnExtract += (sample, family, vial) =>
             SendMessage(new GeneticSequencerExtractMessage(sample, family, vial));
+        _window.OnServerListButtonPressed += () => SendMessage(new ConsoleServerSelectionMessage());
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

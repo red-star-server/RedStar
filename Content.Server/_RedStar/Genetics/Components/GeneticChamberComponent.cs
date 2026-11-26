@@ -22,6 +22,12 @@ public sealed partial class GeneticChamberComponent : Component
     public string BeakerSlot = "beakerSlot";
 
     /// <summary>
+    /// Item slot holding the vial whose genes the injection procedure adds to the patient.
+    /// </summary>
+    [DataField]
+    public string VialSlot = "vialSlot";
+
+    /// <summary>
     /// Reagent, total dose and duration for each available procedure.
     /// </summary>
     [DataField(required: true)]
@@ -41,6 +47,16 @@ public sealed partial class GeneticChamberComponent : Component
     /// Original reagent container. Removing or replacing it cancels processing.
     /// </summary>
     public EntityUid? Beaker;
+
+    /// <summary>
+    /// Vial captured when an injection started. Replacing it or changing its contents cancels the injection.
+    /// </summary>
+    public EntityUid? Vial;
+
+    /// <summary>
+    /// Vial contents revision captured when an injection started.
+    /// </summary>
+    public int VialRevision;
     public ProtoId<GenePrototype> Gene;
     public GeneStatus InitialStatus;
     public GeneticProcedure Operation;

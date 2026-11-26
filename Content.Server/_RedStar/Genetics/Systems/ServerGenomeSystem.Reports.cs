@@ -23,4 +23,21 @@ public sealed partial class ServerGenomeSystem
         report = new GeneticAnalyzerUiState(GetNetEntity(ent.Owner), true, GetLoad(ent), ent.Comp.MaximumLoad, genes);
         return true;
     }
+
+    /// <summary>
+    /// Builds a live report containing only acquired genes, regardless of their expression state.
+    /// Returns false until the organism's genome has been initialized.
+    /// </summary>
+    public bool TryGetAcquiredReport(Entity<GenomeComponent?> ent, [NotNullWhen(true)] out GeneticAnalyzerUiState? report)
+    {
+        report = null;
+        if (!Resolve(ent, ref ent.Comp, logMissing: false) || !ent.Comp.GenomeGenerated)
+            return false;
+
+        var genes = ent.Comp.Genes.OrderBy(entry => entry.Key.Id, StringComparer.Ordinal)
+            .Select(entry => new GeneticAnalyzerGene(entry.Key, entry.Value))
+            .ToList();
+        report = new GeneticAnalyzerUiState(GetNetEntity(ent.Owner), true, GetLoad(ent), ent.Comp.MaximumLoad, genes);
+        return true;
+    }
 }

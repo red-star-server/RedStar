@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Cloning.Events;
 using Content.Server._RedStar.Genetics.Components;
-using Content.Shared.EntityEffects;
 using Content.Shared.Whitelist;
 using Content.Shared._RedStar.Genetics.Components;
 using Content.Shared._RedStar.Genetics.Data;
@@ -16,7 +15,6 @@ namespace Content.Server._RedStar.Genetics.Systems;
 public sealed partial class ServerGenomeSystem : GenomeSystem
 {
     [Dependency] private IPrototypeManager _prototypes = default!;
-    [Dependency] private SharedEntityEffectsSystem _effects = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private GeneExpressionSystem _expressions = default!;
 
@@ -55,21 +53,8 @@ public sealed partial class ServerGenomeSystem : GenomeSystem
         RaiseLocalEvent(uid, ref changed, broadcast: true);
     }
 
-    private bool TryExpress(EntityUid uid, ProtoId<GenePrototype> id, bool firstActivation)
-    {
-        if (!IsGeneCompatible(uid, id))
-            return false;
-
-        var gene = _prototypes.Index(id);
-        if (!_expressions.TryStart(uid, gene))
-            return false;
-
-        if (!firstActivation || gene.Effects.Length == 0 || _effects.TryApplyEffects(uid, gene.Effects))
-            return true;
-
-        _expressions.Stop(uid, gene);
-        return false;
-    }
+    private bool TryExpress(EntityUid uid, ProtoId<GenePrototype> id) =>
+        IsGeneCompatible(uid, id) && _expressions.TryStart(uid, _prototypes.Index(id));
 
     [SubscribeLocalEvent]
     private void OnMapInit(Entity<GenomeComponent> ent, ref MapInitEvent args)
@@ -97,7 +82,7 @@ public sealed partial class ServerGenomeSystem : GenomeSystem
     {
         if (!ent.Comp.Genes.TryGetValue(args.Gene, out var state) || state != GeneStatus.Active)
             return;
-        ent.Comp.Genes[args.Gene] = GeneStatus.Suppressed;
+        ent.Comp.Genes[args.Gene] = GeneStatus.Dormant;
         NotifyChanged(ent.Owner);
     }
 
@@ -105,8 +90,8 @@ public sealed partial class ServerGenomeSystem : GenomeSystem
     {
         foreach (var id in ent.Comp.Genes.Where(gene => gene.Value == GeneStatus.Active).Select(gene => gene.Key).ToArray())
         {
-            if (!TryExpress(ent.Owner, id, firstActivation: false))
-                ent.Comp.Genes[id] = GeneStatus.Suppressed;
+            if (!TryExpress(ent.Owner, id))
+                ent.Comp.Genes[id] = GeneStatus.Dormant;
         }
     }
 
@@ -166,7 +151,7 @@ public sealed partial class ServerGenomeSystem : GenomeSystem
     /// </summary>
     public bool IsRaw(Entity<GenomeComponent?> ent, ProtoId<GenePrototype> id) =>
         Resolve(ent, ref ent.Comp, logMissing: false) &&
-        ent.Comp.Genes.TryGetValue(id, out var status) && status == GeneStatus.Raw;
+        ent.Comp.Genes.TryGetValue(id, out var status) && status == GeneStatus.Dormant;
 
     /// <summary>
     /// Checks the gene's organism whitelist and blacklist. Returns false for an unknown gene or an entity without a genome.
@@ -208,7 +193,7 @@ public sealed partial class ServerGenomeSystem : GenomeSystem
             return false;
         foreach (var id in incoming)
         {
-            if (ent.Comp.Genes.TryAdd(id, GeneStatus.Raw))
+            if (ent.Comp.Genes.TryAdd(id, GeneStatus.Dormant))
                 changed++;
         }
         if (changed > 0)
@@ -217,13 +202,13 @@ public sealed partial class ServerGenomeSystem : GenomeSystem
     }
 
     /// <summary>
-    /// Activates one acquired dormant gene, applying its initial effects exactly once.
+    /// Activates one acquired dormant gene.
     /// </summary>
     public bool TryActivateGene(Entity<GenomeComponent?> ent, ProtoId<GenePrototype> id)
     {
         if (!Resolve(ent, ref ent.Comp, logMissing: false) || !ent.Comp.GenomeGenerated ||
-            !ent.Comp.Genes.TryGetValue(id, out var state) || state != GeneStatus.Raw ||
-            !TryExpress(ent.Owner, id, firstActivation: true))
+            !ent.Comp.Genes.TryGetValue(id, out var state) || state != GeneStatus.Dormant ||
+            !TryExpress(ent.Owner, id))
             return false;
 
         ent.Comp.Genes[id] = GeneStatus.Active;
@@ -232,31 +217,16 @@ public sealed partial class ServerGenomeSystem : GenomeSystem
     }
 
     /// <summary>
-    /// Disables an active acquired gene without removing its genetic material or refunding reserved load.
+    /// Returns an active acquired gene to the dormant state without removing its genetic material or refunding reserved load.
     /// </summary>
-    public bool TrySuppressGene(Entity<GenomeComponent?> ent, ProtoId<GenePrototype> id)
+    public bool TryDeactivateGene(Entity<GenomeComponent?> ent, ProtoId<GenePrototype> id)
     {
         if (!Resolve(ent, ref ent.Comp, logMissing: false) ||
             !ent.Comp.Genes.TryGetValue(id, out var state) || state != GeneStatus.Active)
             return false;
 
-        ent.Comp.Genes[id] = GeneStatus.Suppressed;
+        ent.Comp.Genes[id] = GeneStatus.Dormant;
         _expressions.Stop(ent.Owner, _prototypes.Index(id));
-        NotifyChanged(ent.Owner);
-        return true;
-    }
-
-    /// <summary>
-    /// Restores a suppressed gene's persistent manifestation without repeating its one-time activation effects.
-    /// </summary>
-    public bool TryResumeGene(Entity<GenomeComponent?> ent, ProtoId<GenePrototype> id)
-    {
-        if (!Resolve(ent, ref ent.Comp, logMissing: false) ||
-            !ent.Comp.Genes.TryGetValue(id, out var state) || state != GeneStatus.Suppressed ||
-            !TryExpress(ent.Owner, id, firstActivation: false))
-            return false;
-
-        ent.Comp.Genes[id] = GeneStatus.Active;
         NotifyChanged(ent.Owner);
         return true;
     }
@@ -283,7 +253,7 @@ public sealed partial class ServerGenomeSystem : GenomeSystem
         inputs.Count > 0 && !inputs.Contains(result) && IsGeneCompatible(ent.Owner, result) &&
         Resolve(ent, ref ent.Comp, logMissing: false) && ent.Comp.GenomeGenerated &&
         !ent.Comp.Genes.ContainsKey(result) &&
-        inputs.All(id => ent.Comp.Genes.TryGetValue(id, out var status) && status == GeneStatus.Raw);
+        inputs.All(id => ent.Comp.Genes.TryGetValue(id, out var status) && status == GeneStatus.Dormant);
 
     /// <summary>
     /// Consumes the dormant input genes and adds the result, expressing it immediately.
@@ -299,8 +269,8 @@ public sealed partial class ServerGenomeSystem : GenomeSystem
             ent.Comp.Genes.Remove(id);
         }
 
-        var expressed = TryExpress(ent.Owner, result, firstActivation: true);
-        ent.Comp.Genes.Add(result, expressed ? GeneStatus.Active : GeneStatus.Raw);
+        var expressed = TryExpress(ent.Owner, result);
+        ent.Comp.Genes.Add(result, expressed ? GeneStatus.Active : GeneStatus.Dormant);
         NotifyChanged(ent.Owner);
         return true;
     }

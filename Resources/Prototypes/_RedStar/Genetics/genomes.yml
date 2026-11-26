@@ -68,7 +68,6 @@
   - Photosensitivity
   - AcuteHearing
   - HighMetabolism
-  - BroodDevelopment
   - FabricDigestion
 
 - type: genome
@@ -101,7 +100,6 @@
 - type: genome
   id: Vox
   genes:
-  - NitrogenMetabolism
   - KeratinizedCovering
   - HighMetabolism
   - ProteinSecretion
@@ -141,7 +139,6 @@
   - OlfactorySensitivity
   - AcuteHearing
   - DimLightAdaptation
-  - ElasticTendons
   - OmnivorousDigestion
 
 - type: genome
@@ -188,7 +185,6 @@
   - FlexibleJoints
   - OlfactorySensitivity
   - TactileWhiskers
-  - ElasticTendons
   - HighMetabolism
 
 - type: genome
@@ -213,7 +209,6 @@
   id: Scurret
   genes:
   - FlexibleJoints
-  - ElasticTendons
   - TactileWhiskers
   - OlfactorySensitivity
   - VestibularBalance
@@ -223,7 +218,6 @@
   genes:
   - SlowMetabolism
   - LimbGrip
-  - PoorVision
   - CelluloseDigestion
   - PassiveTemperament
   - TorporControl
@@ -231,7 +225,6 @@
 - type: genome
   id: Kangaroo
   genes:
-  - ElasticTendons
   - VestibularBalance
   - DenseMusculature
   - CelluloseDigestion
@@ -240,7 +233,6 @@
 - type: genome
   id: SpaceKangaroo
   genes:
-  - ElasticTendons
   - DenseMusculature
   - LowPressureAdaptation
   - ColdAdaptation
@@ -338,7 +330,6 @@
   - EggLayer
   - KeratinizedCovering
   - LipidStorage
-  - OxygenStorage
   - ProteinSecretion
 
 - type: genome
@@ -357,7 +348,6 @@
   - KeratinizedCovering
   - ColdAdaptation
   - LipidStorage
-  - OxygenStorage
 
 - type: genome
   id: Parrot
@@ -385,7 +375,6 @@
   - VibrationSense
   - SlowMetabolism
   - OlfactorySensitivity
-  - ElasticTendons
 
 - type: genome
   id: SpaceCobra
@@ -415,7 +404,6 @@
   - MucusSecretion
   - ChemicalSensitivity
   - PigmentPlasticity
-  - ElasticTendons
 
 - type: genome
   id: Slug
@@ -539,7 +527,6 @@
   id: Dragon
   genes:
   - HeatAdaptation
-  - OxygenStorage
   - KeratinizedCovering
   - DenseMusculature
   - LowPressureAdaptation
@@ -564,7 +551,6 @@
 - type: genome
   id: Hivelord
   genes:
-  - BroodDevelopment
   - CollectiveSignaling
   - TissuePlasticity
   - HighMetabolism
@@ -601,7 +587,6 @@
   - MineralAssimilation
   - ChitinousCovering
   - CollectiveSignaling
-  - BroodDevelopment
   - XenobioticProcessing
 
 - type: genome
@@ -666,6 +651,5 @@
   - ToxinTolerance
   - ProteinSecretion
   - CollectiveSignaling
-  - BroodDevelopment
   - LowPressureAdaptation
   - ImmuneTolerance

@@ -68,7 +68,10 @@
     interfaces:
       enum.GeneticSequencerUiKey.Key:
         type: GeneticSequencerBoundUserInterface
+      enum.ResearchClientUiKey.Key:
+        type: ResearchClientBoundUserInterface
   - type: GeneticSequencer
+  - type: ResearchClient
   - type: ContainerContainer
     containers:
       dishSlot: !type:ContainerSlot

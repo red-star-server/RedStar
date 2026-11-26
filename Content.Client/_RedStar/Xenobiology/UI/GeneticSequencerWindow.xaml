@@ -46,6 +46,7 @@
                         <Button Name="ResetButton" Text="{Loc 'genetic-sequencer-reset'}" />
                         <Button Name="DecodeButton" Text="{Loc 'genetic-sequencer-submit'}" />
                         <Button Name="ExtractButton" Text="{Loc 'genetic-sequencer-extract'}" />
+                        <Button Name="ServerListButton" Text="{Loc 'lathe-menu-server-list'}" />
                     </BoxContainer>
                 </PanelContainer>
             </BoxContainer>

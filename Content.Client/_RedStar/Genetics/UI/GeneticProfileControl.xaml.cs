@@ -153,7 +153,7 @@ public sealed partial class GeneticProfileControl : BoxContainer
         {
             GeneName = Loc.GetString(gene.Name);
             var color = GeneticsUi.CategoryColor(gene.Category);
-            var inactive = status is GeneStatus.Raw or GeneStatus.Suppressed;
+            var inactive = status == GeneStatus.Dormant;
             PanelOverride = new StyleBoxFlat
             {
                 BackgroundColor = GeneticsUi.Panel,
@@ -182,9 +182,7 @@ public sealed partial class GeneticProfileControl : BoxContainer
             {
                 Text = Loc.GetString(GeneticsUi.CategoryLabel(gene.Category)),
                 FontColorOverride = inactive ? GeneticsUi.Warning : color,
-                ToolTip = inactive
-                    ? Loc.GetString(status == GeneStatus.Raw ? "genetic-analyzer-dormant" : "genetic-analyzer-suppressed")
-                    : null
+                ToolTip = inactive ? Loc.GetString("genetic-analyzer-dormant") : null
             });
             var toggle = new Button { Text = expanded ? "\u2212" : "+", MinWidth = 28, ToggleMode = true, Pressed = expanded };
             toggle.ToolTip = Loc.GetString("genetic-analyzer-details");

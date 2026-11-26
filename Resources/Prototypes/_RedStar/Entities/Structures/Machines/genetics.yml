@@ -2,7 +2,7 @@
   parent: MedicalScanner
   id: GeneticChamber
   name: genetic chamber
-  description: A controlled environment for targeted treatment of acquired genetic modifications.
+  description: A controlled environment for injecting genes and treating acquired genetic modifications.
   components:
   - type: GeneticChamber
     procedures:
@@ -10,14 +10,18 @@
         reagent: Genezine
         dose: 10
         duration: 20
-      Suppress:
-        reagent: Genestatin
+      Deactivate:
+        reagent: Genezine
         dose: 5
         duration: 10
       Remove:
-        reagent: Genolysin
+        reagent: Genezine
         dose: 15
         duration: 30
+      Inject:
+        reagent: Genezine
+        dose: 10
+        duration: 20
   - type: Sprite
     sprite: _RedStar/Structures/Machines/scanner.rsi
   - type: DeviceLinkSink
@@ -27,13 +31,17 @@
       beakerSlot:
         whitelist:
           components: [FitsInDispenser]
+      vialSlot:
+        whitelist:
+          components: [GeneticVial]
   - type: ContainerContainer
     containers:
       beakerSlot: !type:ContainerSlot {}
+      vialSlot: !type:ContainerSlot {}
   - type: Machine
     board: GeneticChamberCircuitboard
   - type: EmptyOnMachineDeconstruct
-    containers: [scanner-bodyContainer, beakerSlot]
+    containers: [scanner-bodyContainer, beakerSlot, vialSlot]
   - type: ApcPowerReceiver
     powerLoad: 1500
   - type: GuideHelp

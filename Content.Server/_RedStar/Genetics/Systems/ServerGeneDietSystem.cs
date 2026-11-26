@@ -92,7 +92,7 @@ public sealed partial class ServerGeneDietSystem : GeneDietSystem
                     {
                         Tags = (whitelist?.Tags ?? []).Concat(additional).Distinct().ToList(),
                         Components = whitelist?.Components,
-                        Sizes = whitelist?.Sizes,
+                        Sizes = whitelist?.Sizes
                     };
                 }
             }

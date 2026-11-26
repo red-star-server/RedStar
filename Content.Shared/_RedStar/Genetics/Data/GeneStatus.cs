@@ -6,17 +6,12 @@ namespace Content.Shared._RedStar.Genetics.Data;
 public enum GeneStatus : byte
 {
     /// <summary>
-    /// Present genetic material that has not been expressed.
+    /// Present genetic material that is not expressed. It still reserves load.
     /// </summary>
-    Raw = 0,
+    Dormant = 0,
 
     /// <summary>
     /// Present genetic material whose traits are expressed.
     /// </summary>
-    Active = 1,
-
-    /// <summary>
-    /// Present genetic material whose expression can be restored without repeating initial effects.
-    /// </summary>
-    Suppressed = 2
+    Active = 1
 }

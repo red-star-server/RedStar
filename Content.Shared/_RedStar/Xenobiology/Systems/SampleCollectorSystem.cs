@@ -6,6 +6,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared._RedStar.Genetics.Components;
 using Content.Shared._RedStar.Genetics.Systems;
+using Content.Shared._RedStar.Xenobiology.Components;
 using Content.Shared._RedStar.Xenobiology.Components.Container;
 using Content.Shared._RedStar.Xenobiology.Components.Tools;
 using Content.Shared._RedStar.Xenobiology.Events;
@@ -26,9 +27,7 @@ public abstract partial class SampleCollectorSystem : EntitySystem
     /// <summary>
     /// Handles sample transfers that do not require a biopsy delay.
     /// </summary>
-    protected virtual void HandleContainerInteraction(Entity<SampleCollectorComponent> ent, ref BeforeRangedInteractEvent args)
-    {
-    }
+    protected virtual void HandleContainerInteraction(Entity<SampleCollectorComponent> ent, ref BeforeRangedInteractEvent args) { }
 
     [SubscribeLocalEvent]
     private void OnInteract(Entity<SampleCollectorComponent> ent, ref BeforeRangedInteractEvent args)
@@ -64,7 +63,7 @@ public abstract partial class SampleCollectorSystem : EntitySystem
     }
 
     /// <summary>
-    /// Checks collector capacity, genome readiness, and the donor's cellular damage.
+    /// Checks collector capacity, genome readiness, whether a corpse was already sampled, and the donor's cellular damage.
     /// Returns current damage for sample generation and a failure message key when available.
     /// Does not change either entity or display a popup.
     /// </summary>
@@ -83,6 +82,8 @@ public abstract partial class SampleCollectorSystem : EntitySystem
             failure = "sample-collector-full";
         else if (!_genomes.IsGenerated(target))
             failure = "sample-collector-target-cant-collected";
+        else if (HasComp<SampledCorpseComponent>(target))
+            failure = "sample-collector-corpse-sampled";
         else
         {
             if (TryComp<DamageableComponent>(target, out var damageable) &&
